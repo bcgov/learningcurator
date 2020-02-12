@@ -96,7 +96,7 @@ img {
 		<button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
 	</form>-->
 	<?php if(!empty($active)): ?>
-	<a class="upro" href="/users/view/<?= $active->id ?>"><?= $active->name ?></a>
+	<a class="upro" href="/"><?= $active->name ?></a>
 	<?php else: ?>
 	<a class="upro" href="/users/login">Login</a>
 	<?php endif ?>

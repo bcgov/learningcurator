@@ -131,9 +131,8 @@ public function login()
     if ($result->isValid()) {
         // redirect to /pages/home after login success
         $redirect = $this->request->getQuery('redirect', [
-            'controller' => 'Pages',
-            'action' => 'display',
-            'home',
+            'controller' => 'Users',
+            'action' => 'home',
         ]);
 
         return $this->redirect($redirect);
@@ -162,5 +161,22 @@ public function beforeFilter(\Cake\Event\EventInterface $event)
     // the infinite redirect loop issue
     $this->Authentication->addUnauthenticatedActions(['login']);
 }
+   /**
+     * Home method
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function home()
+    {
+
+	$u = $this->request->getAttribute('authentication')->getIdentity();
+        $user = $this->Users->get($u->id, [
+            'contain' => ['Pathways', 'Activities', 'Competencies','Ministries'],
+        ]);
+        $this->Authorization->authorize($user);
+        $this->set('user', $user);
+    }
 
 }

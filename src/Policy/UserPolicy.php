@@ -60,7 +60,18 @@ class UserPolicy
 	//return false;
     }
 
-
+    /**
+     * Check if $user can view home
+     *
+     * @param Authorization\IdentityInterface $user The user.
+     * @param App\Model\Entity\User $resource
+     * @return bool
+     */
+    public function canHome(IdentityInterface $user, User $resource)
+    {
+        return $this->isLearner($user, $resource);
+	//return false;
+    }
 
     protected function isLearner(IdentityInterface $user, User $resource)
     {
