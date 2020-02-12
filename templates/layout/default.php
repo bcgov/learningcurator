@@ -40,10 +40,10 @@ img {
 		<li class="nav-item">
 			<a class="nav-link" href="/categories/view/1">Leadership</a>
 		</li>
-		<li class="nav-item">
+	<!--	<li class="nav-item">
 			<a class="nav-link" href="/">About</a>
 		</li>
-
+	-->
 
 		<?php if(!empty($active)): ?>
 		<?php if($active->role_id == 5): ?>
@@ -91,10 +91,13 @@ img {
 		<?php endif ?>
 		<?php endif ?>
 	</ul>
-	<!--<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
-		<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+
+	<?php if($active->role_id == 5): ?>
+	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
+		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
 		<button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-	</form>-->
+	</form>
+	<?php endif ?>
 	<?php if(!empty($active)): ?>
 	<a class="upro" href="/"><?= $active->name ?></a>
 	<?php else: ?>

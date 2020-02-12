@@ -13,11 +13,8 @@
 <div class="row">
 <?php if (!empty($user->pathways)) : ?>
 <div class="col-md-4">
-<div class="card">
-<div class="card-header">
-	<h2><?= __('Pathways following') ?></h2>
-</div>
-<ul class="list-group list-group-flush">
+<h2><?= __('Pathways following') ?></h2>
+<ul class="list-group">
 	<?php foreach ($user->pathways as $pathways) : ?>
 	<li class="list-group-item">
 	<?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?>
@@ -25,20 +22,17 @@
 	<?php endforeach; ?>
 </ul>
 </div>
-</div>
 <?php endif; ?>
-<?php if (!empty($user->actions)) : ?>
+<?php if (!empty($user->activities)) : ?>
 <div class="col-md-4">
-<div class="card">
-<div class="card-body">
-	<h2><?= __('Actions Taken') ?></h2>
-	<?php foreach ($user->actions as $actions) : ?>
-	<div>
-		<?= $this->Html->link($actions->name, ['controller' => 'Actions', 'action' => 'view', $actions->id]) ?>
-	</div>
+<h2><?= __('Actions Taken') ?></h2>
+<ul class="list-group">
+	<?php foreach ($user->activities as $activity) : ?>
+	<li class="list-group-item">
+		<?= $this->Html->link($activity->name, ['controller' => 'Actions', 'action' => 'view', $activity->id]) ?>
+	</li>
 	<?php endforeach; ?>
-</div>
-</div>
+</ul>
 </div>
 <?php endif; ?>
 <?php if (!empty($user->competencies)) : ?>
