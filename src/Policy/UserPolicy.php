@@ -32,8 +32,9 @@ class UserPolicy
      * @param App\Model\Entity\User $resource
      * @return bool
      */
-    public function canUpdate(IdentityInterface $user, User $resource)
+    public function canEdit(IdentityInterface $user, User $resource)
     {
+        return $this->isAdmin($user, $resource);
     }
 
     /**

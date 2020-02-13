@@ -92,7 +92,7 @@ img {
 		<?php endif ?>
 	</ul>
 
-	<?php if($active->role_id == 5): ?>
+	<?php if(!empty($active->role_id) && $active->role_id == 5): ?>
 	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
 		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
 		<button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
