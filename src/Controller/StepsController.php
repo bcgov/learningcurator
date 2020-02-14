@@ -74,6 +74,7 @@ class StepsController extends AppController
         $step = $this->Steps->get($id, [
             'contain' => ['Activities', 'Pathways'],
         ]);
+        $this->Authorization->authorize($step);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $step = $this->Steps->patchEntity($step, $this->request->getData());
             if ($this->Steps->save($step)) {

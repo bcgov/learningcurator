@@ -221,6 +221,7 @@ INVESTIGATE
 <?php if(!empty($uid)): ?>
 <?php if(in_array($uid,$usersonthispathway)): ?>
 <h1 class="mb-3">You're following this pathway!</h1>
+<div class="radial"></div>
 <div>
 <?php 
 $pathwayPercent = 66;
@@ -252,12 +253,6 @@ of the way through.</div>
 <span class="badge badge-light">3</span> acitivies to watch<br>
 <span class="badge badge-light">2</span> acitivies to listen to<br>
 <span class="badge badge-light">2</span> acitivies to participate in-->
-</div>
-<div class="progress" style="height: 60px">
-  <div class="progress-bar" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100">Read (3)</div>
-  <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">Watch (3)</div>
-<!--  <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Listen</div>-->
-  <div class="progress-bar bg-warning" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100">Participate (3)</div>
 </div>
 </div>
 </div>
