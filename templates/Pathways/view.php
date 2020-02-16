@@ -118,6 +118,7 @@ $participatetotal = array();
 
 
 <?php 
+$stepTime = 0;
 $defunctacts = array();
 $requiredacts = array();
 $tertiaryacts = array();
@@ -154,11 +155,13 @@ foreach ($steps->activities as $activity) {
 			array_push($partcipatetotal,$activity);
 		}
 		$totalActivities++;
+		$stepTime = $stepTime + $activity->hours;
 		$totalTime = $totalTime + $activity->hours;
 	}
 }
 ?>
 <div class="mb-1">
+<span class="badge badge-light"><?= $stepTime ?> hours to complete</span>
 <span class="badge badge-light"><?php echo count($readcount) ?> to read</span>
 <span class="badge badge-light"><?php echo count($watchcount) ?> to watch</span>
 <span class="badge badge-light"><?php echo count($listencount) ?> to listen</span>
@@ -404,7 +407,8 @@ $pathcount = 4;
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
 var data = {
-    datasets: [{
+    datasets: [
+    {
         data: [50, 50],
         'backgroundColor':['rgba(71,189,182,1)','rgba(71,189,182,.2)'],
     },
@@ -421,7 +425,7 @@ var data = {
         'backgroundColor':['rgba(134, 33, 206,1)','rgba(134, 33, 206,.2)'],
     },
 
-],
+    ],
 
 	labels: ['Done','Not Done']
 };
@@ -429,7 +433,11 @@ var data = {
 var myDoughnutChart = new Chart(ctx, {
     type: 'doughnut',
     data: data,
-    options: { legend: { display: false }}
+    options: { 
+        legend: { 
+            display: false 
+        },
+    }
 });
 
 

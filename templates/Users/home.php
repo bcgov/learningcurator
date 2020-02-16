@@ -10,33 +10,34 @@
 <?php //$this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'btn btn-dark btn-sm']) ?>
 </div>
 <h1><?= h($user->name) ?></h1>
-<div class="row">
 <?php if (!empty($user->pathways)) : ?>
-<div class="col-md-4">
-<h2><?= __('Pathways following') ?></h2>
-<ul class="list-group">
+<h2><?= __('You\'re following these pathways') ?></h2>
+<div class="card-columns">
 	<?php foreach ($user->pathways as $pathways) : ?>
-	<li class="list-group-item">
-	<?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?>
-	</li>
+	<div class="card p-3">
+	<div><strong><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?></strong></div>
+	<div><?= h($pathways->description) ?></div>
+	</div>
 	<?php endforeach; ?>
-</ul>
 </div>
 <?php endif; ?>
 <?php if (!empty($user->activities)) : ?>
-<div class="col-md-4">
-<h2><?= __('Actions Taken') ?></h2>
-<ul class="list-group">
+<h2><?= __('You\'ve claimed these activities') ?></h2>
+<div class="card-columns">
 	<?php foreach ($user->activities as $activity) : ?>
-	<li class="list-group-item">
-		<?= $this->Html->link($activity->name, ['controller' => 'Actions', 'action' => 'view', $activity->id]) ?>
-	</li>
+	<div class="card p-3">
+		<?php if($activity->status_id == 2): ?>
+		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
+		<div><strong><?= h($activity->name) ?></strong></div>
+		<?php else: ?>
+		<div><strong><?= $this->Html->link($activity->name, ['controller' => 'Actions', 'action' => 'view', $activity->id]) ?></strong></div>
+		<?php endif ?>
+		<div><?= h($activity->description) ?></div>
+	</div>
 	<?php endforeach; ?>
-</ul>
 </div>
 <?php endif; ?>
 <?php if (!empty($user->competencies)) : ?>
-<div class="col-md-4">
 <div class="card">
 <div class="card-body">
 	<h2><?= __('Competencies developing') ?></h2>
@@ -47,6 +48,4 @@
 	<?php endforeach; ?>
 </div>
 </div>
-</div>
 <?php endif; ?>
-</div>
