@@ -148,12 +148,13 @@ foreach ($steps->activities as $activity) {
 		$totalTime = $totalTime + $activity->hours;
 	}
 }
-print 'Reading: ' . count($readcount) . ' ';
-print 'Watching: ' . count($watchcount) . ' ';
-print 'Listening: ' . count($listencount) . ' ';
-print 'Participating: ' . count($participatecount) . ' ';
 ?>
-
+<div class="mb-1">
+<span class="badge badge-light"><?php echo count($readcount) ?> to read</span>
+<span class="badge badge-light"><?php echo count($watchcount) ?> to watch</span>
+<span class="badge badge-light"><?php echo count($listencount) ?> to listen</span>
+<span class="badge badge-light"><?php echo count($participatecount) ?> to participate</span>
+</div>
 <?php foreach($requiredacts as $activity): ?>
 <div class="alert" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)">
 	
@@ -190,12 +191,10 @@ print 'Participating: ' . count($participatecount) . ' ';
 
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
-	<div>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim']]) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'float-right']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-dark']) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light']) ?>
 	<?= $this->Form->end() ?>
-	</div>
 	<?php else: ?>
 	<span class="badge badge-dark">Claimed</span>
 	<?php endif ?>
@@ -203,16 +202,17 @@ print 'Participating: ' . count($participatecount) . ' ';
 	<?php endif ?>
 
 	<span class="badge badge-danger">Required</span>
-	<span class="badge badge-dark"><?= $activity->hours ?> hours</span><br>
+	<span class="badge badge-light"><?= $activity->hours ?> hours</span><br>
+	<?php foreach($activity->tags as $tag): ?>
+	<span class="badge badge-light"><?= $tag->name ?></span>
+	<?php endforeach ?>
+
+
 	<h1 class=""><?= $activity->name ?></h1>
 	<div class=""><?= $activity->description ?></div>
 	<a target="_blank" href="<?= $activity->hyperlink ?>" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF;" class="btn btn-block btn-outline-light my-2 text-uppercase btn-lg"><?= $activity->activity_type->name ?></a>
 
 	
-	<?php foreach($activity->tags as $tag): ?>
-	<?= $tag->name ?>
-	<?php endforeach ?>
-
 </div>
 <?php endforeach ?>
 
@@ -255,7 +255,7 @@ print 'Participating: ' . count($participatecount) . ' ';
 
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'float-right']) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'float-right mt-3']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light']) ?>
 	<?= $this->Form->end() ?>
@@ -264,7 +264,12 @@ print 'Participating: ' . count($participatecount) . ' ';
 	<?php endif ?>
 	<?php else: ?>
 	<?php endif ?>
-	<span class="badge badge-dark"><?= $activity->hours ?> hours</span><br>
+	<span class="badge badge-light"><?= $activity->hours ?> hours</span><br>
+	<?php foreach($activity->tags as $tag): ?>
+	<span class="badge badge-light"><?= $tag->name ?></span>
+	<?php endforeach ?>
+
+
 	<h2 class=""><?= $activity->name ?></h2>
 	<div class=""><?= $activity->description ?></div>
 	<a target="_blank" href="<?= $activity->hyperlink ?>" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF;" class="btn btn-block my-2 text-uppercase btn-lg"><?= $activity->activity_type->name ?></a>
@@ -288,7 +293,21 @@ print 'Participating: ' . count($participatecount) . ' ';
 
 </div> <!-- /.card-body -->
 </div> <!-- /.card -->
-<div class="text-center mb-3" style="font-size: 60px; line-height: 60px;">&#8595;</div>
+<div class="text-center">
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><style>
+     
+         .line-arrow-down1{animation: line-arrow-down1-fly 3s infinite ease-in-out;}
+         @keyframes line-arrow-down1-fly{
+             0% { transform: translate3d(0, -200px, 0);}
+             30% {transform: translate3d(0, 0, 0);}
+             40% {transform: translate3d(0, -4px, 0);}
+             50% {transform: translate3d(0, 0, 0);}
+             70% {transform: translate3d(0, -4px, 0);}
+             100% {transform: translate3d(0, 240px, 0);}
+         }
+     
+    </style><path class="line-arrow-down1" d="M48.9919 5L48.9919 95M48.9919 95L85 59.1525M48.9919 95L13.75 59.1525" stroke="#000" stroke-width="2px" stroke-linecap="round" style="animation-duration: 3s;"></path></svg>
+</div>
 <?php endforeach; ?>
 <div class="card mb-3">
 <div class="card-body">
@@ -367,21 +386,32 @@ $pathcount = 4;
 var ctx = document.getElementById('myChart').getContext('2d');
 var data = {
     datasets: [{
-        data: [10, 20, 30],
-        'backgroundColor':['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 205, 86)'],
-    }],
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: [
-        'Red',
-        'Yellow',
-        'Blue'
-    ]
+        data: [50, 50],
+        'backgroundColor':['rgba(71,189,182,1)','rgba(71,189,182,.2)'],
+    },
+    {
+        data: [25, 75],
+        'backgroundColor':['rgba(240,203,86,1)','rgba(240,203,86,.2)'],
+    },
+    {
+        data: [60, 40],
+        'backgroundColor':['rgba(229,76,59,1)','rgba(229,76,59,.2)'],
+    },
+    {
+        data: [80, 20],
+        'backgroundColor':['rgba(134, 33, 206,1)','rgba(134, 33, 206,.2)'],
+    }
+]
 };
+
 var myDoughnutChart = new Chart(ctx, {
     type: 'doughnut',
     data: data,
     options: []
 });
+
+
+
 </script>
 
 
