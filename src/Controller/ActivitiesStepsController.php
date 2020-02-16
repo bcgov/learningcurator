@@ -23,6 +23,7 @@ class ActivitiesStepsController extends AppController
             'contain' => ['Activities', 'Steps'],
         ];
         $activitiesSteps = $this->paginate($this->ActivitiesSteps);
+        $this->Authorization->authorize($activitiesSteps);
 
         $this->set(compact('activitiesSteps'));
     }

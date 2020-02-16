@@ -30,8 +30,16 @@ class PathwayPolicy
      * @param App\Model\Entity\Pathway $pathway
      * @return bool
      */
-    public function canUpdate(IdentityInterface $user, Pathway $pathway)
+    public function canEdit(IdentityInterface $user, Pathway $pathway)
     {
+        if($this->isAdmin($user, $pathway)) {
+            return true;
+        } elseif($this->isCurator($user,$pathway)) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     /**
@@ -55,4 +63,20 @@ class PathwayPolicy
     public function canView(IdentityInterface $user, Pathway $pathway)
     {
     }
+
+
+
+    protected function isCurator(IdentityInterface $user, Pathway $pathway)
+    {
+        //return $user->getIdentifier('role_id') === 5;
+        return $user->role_id === 2;
+    }
+
+    protected function isAdmin(IdentityInterface $user, Pathway $pathway)
+    {
+        //return $user->getIdentifier('role_id') === 5;
+        return $user->role_id === 5;
+    }
+
+
 }

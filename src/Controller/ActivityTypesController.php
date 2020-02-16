@@ -19,6 +19,7 @@ class ActivityTypesController extends AppController
      */
     public function index()
     {
+        $this->Authorization->skipAuthorization();
         $activityTypes = $this->paginate($this->ActivityTypes);
 
         $this->set(compact('activityTypes'));
@@ -36,6 +37,7 @@ class ActivityTypesController extends AppController
         $activityType = $this->ActivityTypes->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($activityType);
 
         $this->set('activityType', $activityType);
     }
@@ -72,6 +74,7 @@ class ActivityTypesController extends AppController
         $activityType = $this->ActivityTypes->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($activityType);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activityType = $this->ActivityTypes->patchEntity($activityType, $this->request->getData());
             if ($this->ActivityTypes->save($activityType)) {

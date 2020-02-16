@@ -33,6 +33,7 @@
 </ul>
 <?php foreach ($activities as $activity): ?>
 <div>
+<?= $activity->activity_type->name ?> | 
 <?= $this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
 </div>
 <?php endforeach; ?>

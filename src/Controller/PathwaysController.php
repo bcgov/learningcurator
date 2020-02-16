@@ -76,7 +76,7 @@ class PathwaysController extends AppController
         }
 
         $pathway = $this->Pathways->get($id, [
-            'contain' => ['Categories', 'Ministries', 'Competencies', 'Steps', 'Steps.Activities', 'Steps.Activities.ActivityTypes', 'Steps.Activities.Users', 'Users'],
+            'contain' => ['Categories', 'Ministries', 'Competencies', 'Steps', 'Steps.Activities', 'Steps.Activities.ActivityTypes', 'Steps.Activities.Users', 'Steps.Activities.Tags', 'Users'],
         ]);
         //
 	// we want to be able to tell if the current user is already on this
@@ -140,6 +140,8 @@ class PathwaysController extends AppController
         $pathway = $this->Pathways->get($id, [
             'contain' => ['Competencies', 'Steps', 'Users'],
         ]);
+
+        $this->Authorization->authorize($pathway);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
             if ($this->Pathways->save($pathway)) {

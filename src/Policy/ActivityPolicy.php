@@ -20,8 +20,15 @@ class ActivityPolicy
      */
     public function canAdd(IdentityInterface $user, Activity $activity)
     {
-        // All logged in users can create articles.
-        return true;
+        if($this->isAdmin($user, $activity)) {
+            return true;
+        } elseif($this->isCurator($user,$activity)) {
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
 
     /**
@@ -31,8 +38,17 @@ class ActivityPolicy
      * @param App\Model\Entity\Activity $activity
      * @return bool
      */
-    public function canUpdate(IdentityInterface $user, Activity $activity)
+    public function canEdit(IdentityInterface $user, Activity $activity)
     {
+        if($this->isAdmin($user, $activity)) {
+            return true;
+        } elseif($this->isCurator($user,$activity)) {
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
 
     /**
@@ -44,6 +60,13 @@ class ActivityPolicy
      */
     public function canDelete(IdentityInterface $user, Activity $activity)
     {
+        if($this->isAdmin($user, $activity)) {
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
 
     /**
@@ -55,5 +78,20 @@ class ActivityPolicy
      */
     public function canView(IdentityInterface $user, Activity $activity)
     {
+        return true;
     }
+
+
+    protected function isCurator(IdentityInterface $user, Activity $activity)
+    {
+        return $user->role_id === 2;
+    }
+
+    protected function isAdmin(IdentityInterface $user, Activity $activity)
+    {
+        return $user->role_id === 5;
+    }
+
+
+
 }

@@ -122,6 +122,7 @@ class ActivitiesController extends AppController
         $activity = $this->Activities->get($id, [
             'contain' => ['Users', 'Competencies', 'Steps', 'Tags'],
         ]);
+        $this->Authorization->authorize($activity);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             if ($this->Activities->save($activity)) {
@@ -153,6 +154,7 @@ class ActivitiesController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $activity = $this->Activities->get($id);
+        $this->Authorization->authorize($activity);
         if ($this->Activities->delete($activity)) {
             $this->Flash->success(__('The activity has been deleted.'));
         } else {

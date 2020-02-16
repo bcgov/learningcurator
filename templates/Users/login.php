@@ -53,6 +53,9 @@ Identify 3 key contacts to reach out to for. Describe the benefits of mentoring 
 Understanding the elements of an effective communications/coaching approach that addresses… (include the three types here). Have career conversations with your direct reports.</div>
 </div>
 </div>
+
+
+<img src="/img/learning_agent_logo.png">
 </div>
 </div>
 </div>

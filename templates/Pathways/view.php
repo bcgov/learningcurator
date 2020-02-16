@@ -16,7 +16,7 @@ if(!empty($active)) {
 ?>
 <div class="row">
 <div class="col-md-8">
-<div class="card card-primary mb-3">
+<div class="card mb-3">
 <div class="card-body">
 <?php if($role == 2 || $role == 5): ?>
 <div class="btn-group float-right">
@@ -92,7 +92,7 @@ $listenCount = 0;
 
 ?>
 
-<div class="card card-primary">
+<div class="card ">
 <div class="card-body">
 
 <?php if($role == 2 || $role == 5): ?>
@@ -109,43 +109,47 @@ $listenCount = 0;
 
 
 <?php 
+$defunctacts = array();
 $requiredacts = array();
 $tertiaryacts = array();
+$readcount = array();
+$watchcount = array();
+$listencount = array();
+$participatecount = array();
 $act = array();
 foreach ($steps->activities as $activity) {
-	// if it's required
-	if($activity->_joinData->required == 1) {
-		array_push($requiredacts,$activity);
+	if($activity->status == 2) {
+		array_push($defunctacts,$activity);
 	} else {
-		array_push($tertiaryacts,$activity);
+		if($activity->_joinData->required == 1) {
+			array_push($requiredacts,$activity);
+		} else {
+			array_push($tertiaryacts,$activity);
+		}
+		if($activity->activity_type->name == 'Read') {
+			array_push($readcount,$activity);
+		} elseif($activity->activity_type->name == 'Watch') {
+			array_push($watchcount,$activity);
+		} elseif($activity->activity_type->name == 'Listen') {
+			array_push($listencount,$activity);
+		} elseif($activity->activity_type->name == 'Participate') {
+			array_push($participatecount,$activity);
+		}
+		$totalActivities++;
+		$totalTime = $totalTime + $activity->hours;
 	}
-	$totalActivities++;
-	$totalTime = $totalTime + $activity->hours;
-
 }
+print 'Reading: ' . count($readcount) . ' ';
+print 'Watching: ' . count($watchcount) . ' ';
+print 'Listening: ' . count($listencount) . ' ';
+print 'Participating: ' . count($participatecount) . ' ';
 ?>
 
-
-
-
-
-
-
-<?php foreach ($steps->activities as $activity) : ?>
- 
-<?php if($activity->status_id == 1): ?>
-ACTIVE
-<?php elseif($activity->status_id == 2): ?>
-DEFUNCT
-<?php endif ?>
-<?php if($activity->moderation_flag == 1): ?>
-INVESTIGATE
-<?php endif ?>
-<?php if($activity->_joinData->required == 1): ?>
-<div class="alert alert-primary">
-<?php else: ?>
-<div class="alert alert-light">
-<?php endif ?>
+<?php foreach($requiredacts as $activity): ?>
+<div class="alert" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)">
+	
+	<img width="150" src="<?= $activity->activity_type->image_path ?>" alt="Activity type glyph">
+	
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit Activity'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
@@ -165,39 +169,102 @@ INVESTIGATE
 	<?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light']) ?>
 	<?= $this->Form->end() ?>
 	</div>
+	<?php if($activity->status_id == 2): ?>
+	DEFUNCT
+	<?php endif ?>
+	<?php if($activity->moderation_flag == 1): ?>
+	INVESTIGATE
 	<?php endif ?>
 
-	<?php if($activity->_joinData->required == 1): ?>
-	<span class="badge badge-danger">Required</span>
+
 	<?php endif ?>
-	<!--<span class="badge badge-light"><?= $activity->activity_type->name ?> </span>-->
-	<span class="badge badge-primary"><?= $activity->hours ?> hours</span><br>
-	<?php if($activity->_joinData->required == 1): ?>
-	<h1><!--<?= $activity->id ?>.--> <?= $activity->name ?></h1>
-	<?php else: ?>
-	<h3><a href="<?= $activity->hyperlink ?>"><?= $activity->name ?></a></h3>
-	<?php endif ?>
-	<?= $activity->description ?>
-	<a target="_blank" href="<?= $activity->hyperlink ?>" class="btn btn-block btn-light my-2 text-uppercase btn-lg"><?= $activity->activity_type->name ?></a>
-	<?php if($activity->activity_type->name == 'Watch'): ?> 
-	<div><img src="/img/watch-mockup.png" alt="Mocked up video thumbnail" width="320"></div>
-	<?php endif ?>
+
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
 	<div>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim']]) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light']) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-dark']) ?>
 	<?= $this->Form->end() ?>
 	</div>
 	<?php else: ?>
-	<span class="badge badge-success">Claimed</span>
+	<span class="badge badge-dark">Claimed</span>
 	<?php endif ?>
 	<?php else: ?>
 	<?php endif ?>
-</div>
-<?php endforeach; ?>
 
+	<span class="badge badge-danger">Required</span>
+	<span class="badge badge-dark"><?= $activity->hours ?> hours</span><br>
+	<h1 class=""><?= $activity->name ?></h1>
+	<div class=""><?= $activity->description ?></div>
+	<a target="_blank" href="<?= $activity->hyperlink ?>" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF;" class="btn btn-block btn-outline-light my-2 text-uppercase btn-lg"><?= $activity->activity_type->name ?></a>
+
+	
+	<?php foreach($activity->tags as $tag): ?>
+	<?= $tag->name ?>
+	<?php endforeach ?>
+
+</div>
+<?php endforeach ?>
+
+
+
+
+<div class="row">
+<?php foreach($tertiaryacts as $activity): ?>
+<div class="col-md-6">
+<div class="alert" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)">
+	<img width="75" src="<?= $activity->activity_type->image_path ?>" alt="Activity type glyph">
+	<?php if($role == 2 || $role == 5): ?>
+	<div class="btn-group float-right">
+	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activitys-steps','action' => 'removeactivity', 'class' => '']]) ?>
+	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
+	<?= $this->Form->button(__('Remove'),['class'=>'btn btn-sm btn-light']) ?>
+	<?= $this->Form->end() ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle', 'class' => '']]) ?>
+	<?php if($activity->_joinData->required == 0): ?>
+	<?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 1]) ?>
+	<?php else: ?>
+	<?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 0]) ?>
+	<?php endif ?>
+	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
+	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+	<?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light']) ?>
+	<?= $this->Form->end() ?>
+	</div>
+	<?php if($activity->status_id == 2): ?>
+	<span class="badge badge-danger">DEFUNCT</span>
+	<?php endif ?>
+	<?php if($activity->moderation_flag == 1): ?>
+	<span class="badge badge-warning">INVESTIGATE</span>
+	<?php endif ?>
+
+
+	<?php endif ?>
+
+	<?php if(!empty($uid)): ?>
+	<?php if(!in_array($activity->id,$useractivitylist)): ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'float-right']) ?>
+	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light']) ?>
+	<?= $this->Form->end() ?>
+	<?php else: ?>
+	<span class="badge badge-dark">Claimed</span>
+	<?php endif ?>
+	<?php else: ?>
+	<?php endif ?>
+	<span class="badge badge-dark"><?= $activity->hours ?> hours</span><br>
+	<h2 class=""><?= $activity->name ?></h2>
+	<div class=""><?= $activity->description ?></div>
+	<a target="_blank" href="<?= $activity->hyperlink ?>" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF;" class="btn btn-block my-2 text-uppercase btn-lg"><?= $activity->activity_type->name ?></a>
+
+
+</div>
+</div>
+<?php endforeach ?>
+</div>
 
 
 
@@ -211,7 +278,13 @@ INVESTIGATE
 </div> <!-- /.card -->
 <div class="text-center mb-3" style="font-size: 60px; line-height: 60px;">&#8595;</div>
 <?php endforeach; ?>
+<div class="card mb-3">
+<div class="card-body">
+<h1>The End</h1>
 
+	<?= $this->Text->autoParagraph(h($pathway->objective)); ?>
+</div>
+</div>
 </div> <!-- /.col-md-8 -->
 <?php endif; ?>
 <div class="col-md-4">
@@ -244,6 +317,15 @@ of the way through.</div>
 <br><small><a href="#">What does this mean?</a></small>
 <?= $this->Form->end() ?>
 <?php endif ?>
+<?php else: ?>
+<h1>Follow this pathway?</h1>
+    <?= $this->Flash->render() ?>
+    <?= $this->Form->create(null, ['url' => ['controller' => 'users', 'action' => 'login']]) ?>
+        <?= $this->Form->control('email', ['required' => true, 'class' => 'form-control']) ?>
+        <?= $this->Form->control('password', ['required' => true, 'class' => 'form-control']) ?>
+    <?= $this->Form->submit(__('IDIR Login'), ['class' => 'btn btn-success btn-block mt-3']); ?>
+    <?= $this->Form->end() ?>
+
 <?php endif ?>
 
 <div class="stats my-3">
@@ -256,7 +338,7 @@ of the way through.</div>
 </div>
 </div>
 </div>
-<div class="card card-primary">
+<div class="card">
 <div class="card-body">
 <h2><?= __('Competencies') ?></h2>
 <?php if (!empty($pathway->competencies)) : ?>
