@@ -14,6 +14,15 @@ if(!empty($active)) {
 	$uid = $active->id;
 }
 ?>
+<style>
+@media (min-width: 34em) {
+    .card-columns {
+        -webkit-column-count:2;
+        -moz-column-count:2;
+        column-count:2;
+    }
+}
+</style>
 <div class="row">
 <div class="col-md-8">
 <div class="card mb-3">
@@ -156,8 +165,8 @@ foreach ($steps->activities as $activity) {
 <span class="badge badge-light"><?php echo count($participatecount) ?> to participate</span>
 </div>
 <?php foreach($requiredacts as $activity): ?>
-<div class="alert" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)">
-	
+<div class="card mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border: 0;">
+<div class="card-body">
 	<img width="150" src="<?= $activity->activity_type->image_path ?>" alt="Activity type glyph">
 	
 	<?php if($role == 2 || $role == 5): ?>
@@ -210,19 +219,24 @@ foreach ($steps->activities as $activity) {
 
 	<h1 class=""><?= $activity->name ?></h1>
 	<div class=""><?= $activity->description ?></div>
-	<a target="_blank" href="<?= $activity->hyperlink ?>" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF;" class="btn btn-block btn-outline-light my-2 text-uppercase btn-lg"><?= $activity->activity_type->name ?></a>
-
+	<a target="_blank" 
+		href="<?= $activity->hyperlink ?>" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border: 3px solid #FFF; color: #FFF; font-weight: bold;" 
+		class="btn btn-block my-2 text-uppercase btn-lg">
+			<?= $activity->activity_type->name ?>
+	</a>
 	
+</div>
 </div>
 <?php endforeach ?>
 
 
 
 
-<div class="row">
+<div class="card-columns">
 <?php foreach($tertiaryacts as $activity): ?>
-<div class="col-md-6">
-<div class="alert" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)">
+<div class="card" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
+<div class="card-body">
 	<img width="75" src="<?= $activity->activity_type->image_path ?>" alt="Activity type glyph">
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
@@ -272,7 +286,12 @@ foreach ($steps->activities as $activity) {
 
 	<h2 class=""><?= $activity->name ?></h2>
 	<div class=""><?= $activity->description ?></div>
-	<a target="_blank" href="<?= $activity->hyperlink ?>" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF;" class="btn btn-block my-2 text-uppercase btn-lg"><?= $activity->activity_type->name ?></a>
+	<a target="_blank" 
+		href="<?= $activity->hyperlink ?>" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border: 3px solid #FFF; color: #FFF; font-weight: bold;" 
+		class="btn btn-block my-2 text-uppercase btn-lg">
+			<?= $activity->activity_type->name ?>
+	</a>
 
 
 </div>
@@ -398,16 +417,19 @@ var data = {
         'backgroundColor':['rgba(229,76,59,1)','rgba(229,76,59,.2)'],
     },
     {
-        data: [80, 20],
+        data: [75, 25],
         'backgroundColor':['rgba(134, 33, 206,1)','rgba(134, 33, 206,.2)'],
-    }
-]
+    },
+
+],
+
+	labels: ['Done','Not Done']
 };
 
 var myDoughnutChart = new Chart(ctx, {
     type: 'doughnut',
     data: data,
-    options: []
+    options: { legend: { display: false }}
 });
 
 
