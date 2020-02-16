@@ -115,11 +115,8 @@ img {
 	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
 	crossorigin="anonymous"></script>
 
-<script src="https://d3js.org/d3.v5.min.js"></script>
-<script src="/radial-progress-chart/dist/radial-progress-chart.min.js"></script>
 <script>
 
-var mainChart = new RadialProgressChart('.radial', {series: [53, 24, 85]});
 
 </script>
 </body>

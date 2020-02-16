@@ -19,6 +19,7 @@ class StatusesController extends AppController
      */
     public function index()
     {
+        $this->Authorization->skipAuthorization();
         $statuses = $this->paginate($this->Statuses);
 
         $this->set(compact('statuses'));

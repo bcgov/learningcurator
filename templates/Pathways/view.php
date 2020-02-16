@@ -81,10 +81,10 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 <?php 
 $totalActivities = 0;
 $totalTime = 0;
-$readCount = 0;
-$watchCount = 0;
-$participateCount = 0;
-$listenCount = 0;
+$readtotal = array();
+$watchtotal = array();
+$listentotal = array();
+$participatetotal = array();
 ?>
 <?php foreach ($pathway->steps as $steps) : ?>
 <?php
@@ -118,22 +118,31 @@ $listencount = array();
 $participatecount = array();
 $act = array();
 foreach ($steps->activities as $activity) {
-	if($activity->status == 2) {
+	// If this is 'defunct' then we pull it out of the list 
+	if($activity->status_id == 2) {
 		array_push($defunctacts,$activity);
 	} else {
+		// if it's required
 		if($activity->_joinData->required == 1) {
 			array_push($requiredacts,$activity);
+		// Otherwise it's teriary
 		} else {
 			array_push($tertiaryacts,$activity);
 		}
+		// we want to count each type on a per step basis
+		// as well as adding to the total
 		if($activity->activity_type->name == 'Read') {
 			array_push($readcount,$activity);
+			array_push($readtotal,$activity);
 		} elseif($activity->activity_type->name == 'Watch') {
 			array_push($watchcount,$activity);
+			array_push($watchtotal,$activity);
 		} elseif($activity->activity_type->name == 'Listen') {
 			array_push($listencount,$activity);
+			array_push($listentotal,$activity);
 		} elseif($activity->activity_type->name == 'Participate') {
 			array_push($participatecount,$activity);
+			array_push($partcipatetotal,$activity);
 		}
 		$totalActivities++;
 		$totalTime = $totalTime + $activity->hours;
@@ -267,9 +276,12 @@ print 'Participating: ' . count($participatecount) . ' ';
 </div>
 
 
-
-
-
+<?php if(!empty($defunctacts)): ?>
+<h3>Defunct</h3>
+<?php foreach($defunctacts as $activity): ?>
+<?= $activity->name ?><br>
+<?php endforeach ?>
+<?php endif ?>
 
 
 
@@ -294,17 +306,16 @@ print 'Participating: ' . count($participatecount) . ' ';
 <?php if(!empty($uid)): ?>
 <?php if(in_array($uid,$usersonthispathway)): ?>
 <h1 class="mb-3">You're following this pathway!</h1>
-<div class="radial"></div>
-<div>
+Read: <?php echo count($readtotal) ?>
+Watch: <?php echo count($watchtotal) ?>
+Listen: <?php echo count($listentotal) ?>
+Participate: <?php echo count($participatetotal) ?>
 <?php 
 $pathwayPercent = 66;
 $count = 12;
 $pathcount = 4;
 ?>
-<div class="progress" style="height: 30px">
-<div class="progress-bar" role="progressbar" style="width: <?= $pathwayPercent ?>%;" aria-valuenow="<?= $pathwayPercent ?>" aria-valuemin="0" aria-valuemax="100"><?= $pathwayPercent ?>%</div>
-</div>
-of the way through.</div>
+<canvas id="myChart" width="400" height="400"></canvas>
 <div class="my-3"><em>You started following this pathway on January 17th 2020.</em></div>
 <?php else: ?>
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'add']]) ?>
@@ -351,4 +362,26 @@ of the way through.</div>
 </div>
 </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var data = {
+    datasets: [{
+        data: [10, 20, 30],
+        'backgroundColor':['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 205, 86)'],
+    }],
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+        'Red',
+        'Yellow',
+        'Blue'
+    ]
+};
+var myDoughnutChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: data,
+    options: []
+});
+</script>
+
 
