@@ -106,11 +106,21 @@ img {
 	<?php endif ?>
 	<img src="/img/bcid-grey.png" alt="" width="60">
 </nav>
-<div class="container">
+<div class="container" style="padding-bottom: 100px;">
 <div class="row justify-content-md-center">
 <div class="col">
 <?= $this->Flash->render() ?>
 <?= $this->fetch('content') ?>
+</div>
+</div>
+</div>
+<div class="container-fluid my-3 bg-white" style="padding-top: 60px;">
+<div class="row my-3">
+<div class="col-6 my-3">
+<div class="alert alert-light">
+<div><img src="/img/bcpsa-logo.png" alt="BC Public Service Agency logo"></div>
+<p>Your personal information is collected by the BC Public Service Agency in accordance with section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes of managing and administering employee development and training. If you have any questions, submit an AskMyHR request at www.gov.bc.ca/myhr/contact or call 250 952-6000.</p>
+</div>
 </div>
 </div>
 </div>
