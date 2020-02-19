@@ -15,7 +15,8 @@
 <div class="card-columns">
 	<?php foreach ($user->pathways as $pathways) : ?>
 	<div class="card p-3">
-	<div><strong><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?></strong></div>
+	<div><?= $pathways->has('category') ? $this->Html->link($pathways->category->name, ['controller' => 'Categories', 'action' => 'view', $pathways->category->id]) : '' ?></div>
+	<h2><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?></h2>
 	<div><?= h($pathways->description) ?></div>
 	</div>
 	<?php endforeach; ?>
@@ -25,7 +26,8 @@
 <h2><?= __('You\'ve claimed these activities') ?></h2>
 <div class="card-columns">
 	<?php foreach ($user->activities as $activity) : ?>
-	<div class="card p-3">
+	<div class="card p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border: 0">
+		<img src="<?= $activity->activity_type->image_path ?>" width="100">
 		<?php if($activity->status_id == 2): ?>
 		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
 		<div><strong><?= h($activity->name) ?></strong></div>

@@ -20,11 +20,14 @@ img {
 .upro,
 .upro:hover,
 .upro:active { color: #FFF } 
+.card {
+	border: 0;
+}
 </style>
 </head>
 <body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary-nav text-white mb-3">
-	<a class="navbar-brand" href="/">Learning Agent</a>
+<nav class="navbar navbar-expand-lg mb-3">
+	<a class="navbar-brand" href="/"><img src="/img/agent-logo.png" alt="" width="200"></a>
 	<button class="navbar-toggler" 
 		type="button" 
 		data-toggle="collapse" 
@@ -98,9 +101,10 @@ img {
 	<?php if(!empty($active->role_id) && $active->role_id == 5): ?>
 	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
 		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
-		<button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
 	</form>
 	<?php endif ?>
+	<img src="/img/bcid-grey.png" alt="" width="60">
 </nav>
 <div class="container">
 <div class="row justify-content-md-center">

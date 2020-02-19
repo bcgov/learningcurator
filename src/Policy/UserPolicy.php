@@ -46,6 +46,7 @@ class UserPolicy
      */
     public function canDelete(IdentityInterface $user, User $resource)
     {
+        return $this->isAdmin($user, $resource);
     }
 
     /**

@@ -90,6 +90,17 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 <?php 
 $totalActivities = 0;
 $totalTime = 0;
+$claimedcount = 0;
+$readclaim = 0;
+$watchclaim = 0;
+$listenclaim = 0;
+$participateclaim = 0;
+$readtimetotal = 0;
+$watchtimetotal = 0;
+$listentimetotal = 0;
+$participatetimetotal = 0;
+
+
 $readtotal = array();
 $watchtotal = array();
 $listentotal = array();
@@ -111,14 +122,18 @@ $participatetotal = array();
 </div> <!-- /.btn-group -->
 <?php endif ?>
 
-<h1><!--<?= h($steps->id) ?>.--> <?= h($steps->name) ?></h1>
-<div class="mb-3"><?= h($steps->description) ?></div>
 
 
 
 
 <?php 
 $stepTime = 0;
+
+$readtime = 0;
+$watchtime = 0;
+$listentime = 0;
+$participatetime = 0;
+
 $defunctacts = array();
 $requiredacts = array();
 $tertiaryacts = array();
@@ -142,17 +157,21 @@ foreach ($steps->activities as $activity) {
 		// we want to count each type on a per step basis
 		// as well as adding to the total
 		if($activity->activity_type->name == 'Read') {
+			$readcolor = $activity->activity_type->color;
 			array_push($readcount,$activity);
 			array_push($readtotal,$activity);
 		} elseif($activity->activity_type->name == 'Watch') {
+			$watchcolor = $activity->activity_type->color;
 			array_push($watchcount,$activity);
 			array_push($watchtotal,$activity);
 		} elseif($activity->activity_type->name == 'Listen') {
+			$listencolor = $activity->activity_type->color;
 			array_push($listencount,$activity);
 			array_push($listentotal,$activity);
 		} elseif($activity->activity_type->name == 'Participate') {
+			$participatecolor = $activity->activity_type->color;
 			array_push($participatecount,$activity);
-			array_push($partcipatetotal,$activity);
+			array_push($participatetotal,$activity);
 		}
 		$totalActivities++;
 		$stepTime = $stepTime + $activity->hours;
@@ -160,13 +179,18 @@ foreach ($steps->activities as $activity) {
 	}
 }
 ?>
+
+<h1>
+	<div class="float-right"><span class="badge badge-light"><?= $stepTime ?> hours</span></div>
+	<!--<?= h($steps->id) ?>.--> <?= h($steps->name) ?>
+</h1>
 <div class="mb-1">
-<span class="badge badge-light"><?= $stepTime ?> hours to complete</span>
-<span class="badge badge-light"><?php echo count($readcount) ?> to read</span>
-<span class="badge badge-light"><?php echo count($watchcount) ?> to watch</span>
-<span class="badge badge-light"><?php echo count($listencount) ?> to listen</span>
-<span class="badge badge-light"><?php echo count($participatecount) ?> to participate</span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $readcolor ?>,1)"><?php echo count($readcount) ?> to read</span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $watchcolor ?>,1)"><?php echo count($watchcount) ?> to watch</span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $listencolor ?>,1)"><?php echo count($listencount) ?> to listen</span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $participatecolor ?>,1)"><?php echo count($participatecount) ?> to participate</span>
 </div>
+<div class="alert alert-light"><?= h($steps->description) ?></div>
 <?php foreach($requiredacts as $activity): ?>
 <div class="card mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border: 0;">
 <div class="card-body">
@@ -201,6 +225,7 @@ foreach ($steps->activities as $activity) {
 
 	<?php endif ?>
 
+	<span class="badge badge-light"><?= $activity->hours ?> hours</span>
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'float-right']) ?>
@@ -208,13 +233,31 @@ foreach ($steps->activities as $activity) {
 	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light']) ?>
 	<?= $this->Form->end() ?>
 	<?php else: ?>
+	<?php
+	if($activity->activity_type->name == 'Read') {
+		$readtime = $readtime + $activity->hours;
+		$readtimetotal = $readtime + $activity->hours;
+		$readclaim++;
+	} elseif($activity->activity_type->name == 'Watch') {
+		$watchtime = $watchtime + $activity->hours;
+		$watchtimetotal = $watchtime + $activity->hours;
+		$watchclaim++;
+	} elseif($activity->activity_type->name == 'Listen') {
+		$listentime = $listentime + $activity->hours;
+		$listentimetotal = $listentime + $activity->hours;
+		$listenclaim++;
+	} elseif($activity->activity_type->name == 'Participate') {
+		$participatetime = $participatetime + $activity->hours;
+		$participatetimetotal = $participatetime + $activity->hours;
+		$participateclaim++;
+	}
+	?>
 	<span class="badge badge-dark">Claimed</span>
 	<?php endif ?>
 	<?php else: ?>
 	<?php endif ?>
 
-	<span class="badge badge-danger">Required</span>
-	<span class="badge badge-light"><?= $activity->hours ?> hours</span><br>
+	<span class="badge">REQUIRED</span><br>
 	<?php foreach($activity->tags as $tag): ?>
 	<span class="badge badge-light"><?= $tag->name ?></span>
 	<?php endforeach ?>
@@ -270,18 +313,29 @@ foreach ($steps->activities as $activity) {
 
 	<?php endif ?>
 
+	<span class="badge badge-light"><?= $activity->hours ?> hours</span>
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'float-right mt-3']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light']) ?>
-	<?= $this->Form->end() ?>
+	<?= $this->Form->end() ?><br>
 	<?php else: ?>
-	<span class="badge badge-dark">Claimed</span>
+	<?php
+	if($activity->activity_type->name == 'Read') {
+		$readclaim++;
+	} elseif($activity->activity_type->name == 'Watch') {
+		$watchclaim++;
+	} elseif($activity->activity_type->name == 'Listen') {
+		$listenclaim++;
+	} elseif($activity->activity_type->name == 'Participate') {
+		$participateclaim++;
+	}
+	?>
+	<span class="badge badge-dark">Claimed</span><br>
 	<?php endif ?>
 	<?php else: ?>
 	<?php endif ?>
-	<span class="badge badge-light"><?= $activity->hours ?> hours</span><br>
 	<?php foreach($activity->tags as $tag): ?>
 	<span class="badge badge-light"><?= $tag->name ?></span>
 	<?php endforeach ?>
@@ -316,6 +370,7 @@ foreach ($steps->activities as $activity) {
 </div> <!-- /.card-body -->
 </div> <!-- /.card -->
 <div class="text-center">
+
 <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><style>
      
          .line-arrow-down1{animation: line-arrow-down1-fly 3s infinite ease-in-out;}
@@ -344,21 +399,46 @@ foreach ($steps->activities as $activity) {
 
 <div class="card mb-3">
 <div class="card-body">
+
+
 <?php if(!empty($uid)): ?>
 <?php if(in_array($uid,$usersonthispathway)): ?>
+
 <h1 class="mb-3">You're following this pathway!</h1>
-Read: <?php echo count($readtotal) ?>
-Watch: <?php echo count($watchtotal) ?>
-Listen: <?php echo count($listentotal) ?>
-Participate: <?php echo count($participatetotal) ?>
-<?php 
-$pathwayPercent = 66;
-$count = 12;
-$pathcount = 4;
-?>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <canvas id="myChart" width="400" height="400"></canvas>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="my-3"><em>You started following this pathway on January 17th 2020.</em></div>
+
+
 <?php else: ?>
+
+
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'add']]) ?>
 <?php
     echo $this->Form->control('user_id',['type' => 'hidden', 'value' => $uid]);
@@ -368,8 +448,11 @@ $pathcount = 4;
 <?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-lg btn-dark mb-0']) ?>
 <br><small><a href="#">What does this mean?</a></small>
 <?= $this->Form->end() ?>
+
 <?php endif ?>
 <?php else: ?>
+
+
 <h1>Follow this pathway?</h1>
     <?= $this->Flash->render() ?>
     <?= $this->Form->create(null, ['url' => ['controller' => 'users', 'action' => 'login']]) ?>
@@ -383,11 +466,14 @@ $pathcount = 4;
 <div class="stats my-3">
 <span class="badge badge-light"><?= $totalActivities ?></span> Total activities<br>
 <span class="badge badge-light"><?= $totalTime ?></span> hours of time<br>
-<!--<span class="badge badge-light">4</span> acitivies to read<br>
-<span class="badge badge-light">3</span> acitivies to watch<br>
-<span class="badge badge-light">2</span> acitivies to listen to<br>
-<span class="badge badge-light">2</span> acitivies to participate in-->
+Read: <?= $readclaim ?> of <?php echo count($readtotal) ?> <?= $readtimetotal ?> hours spent<br>
+Watch: <?= $watchclaim ?> of <?php echo count($watchtotal) ?> <?= $watchtimetotal ?> hours spent<br>
+Listen: <?= $listenclaim ?> of <?php echo count($listentotal) ?> <?= $listentimetotal ?> hours spent<br>
+Participate: <?= $participateclaim ?> of <?php echo count($participatetotal) ?> <?= $participatetimetotal ?> hours spent
+
 </div>
+
+
 </div>
 </div>
 <div class="card">
@@ -403,31 +489,37 @@ $pathcount = 4;
 </div>
 </div>
 </div>
+<?php
+$readpercent = floor($readclaim / count($readtotal) * 100);
+$readpercentleft = 100 - $readpercent;
+$watchpercent = floor($watchclaim / count($watchtotal) * 100);
+$watchpercentleft = 100 - $watchpercent;
+$listenpercent = floor($listenclaim / count($listentotal) * 100);
+$listenpercentleft = 100 - $listenpercent;
+$participatepercent = floor($participateclaim / count($participatetotal) * 100);
+$participatepercentleft = 100 - $participatepercent;
+$percentages = array(
+        array($readpercent,$readpercentleft,$readcolor),
+        array($watchpercent,$watchpercentleft,$watchcolor),
+        array($listenpercent,$listenpercentleft,$listencolor),
+        array($participatepercent,$participatepercentleft,$participatecolor),
+);
+?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
 var data = {
     datasets: [
-    {
-        data: [50, 50],
-        'backgroundColor':['rgba(71,189,182,1)','rgba(71,189,182,.2)'],
-    },
-    {
-        data: [25, 75],
-        'backgroundColor':['rgba(240,203,86,1)','rgba(240,203,86,.2)'],
-    },
-    {
-        data: [60, 40],
-        'backgroundColor':['rgba(229,76,59,1)','rgba(229,76,59,.2)'],
-    },
-    {
-        data: [75, 25],
-        'backgroundColor':['rgba(134, 33, 206,1)','rgba(134, 33, 206,.2)'],
-    },
+<?php foreach($percentages as $ring): ?>
+{
+	data: [<?= $ring[0] ?>,<?= $ring[1] ?>],
+	labels: ['all the same','not all'],
+	'backgroundColor': ['rgba(<?= $ring[2] ?>,1)','rgba(<?= $ring[2] ?>,.2)']
+},
+<?php endforeach ?>
+],
 
-    ],
-
-	labels: ['Done','Not Done']
+	labels: ['Percent done','Percent left']
 };
 
 var myDoughnutChart = new Chart(ctx, {

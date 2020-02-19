@@ -1,10 +1,22 @@
 <div class="row justify-content-md-center">
 <div class="col-md-6">
+
+<img src="/img/agent_logo_wordmark.png" alt="logo">
 <div class="card">
 <div class="card-body">
-<h1>Read, Watch, Listen, Particpate</h1>
-<p>The Learning Agent shows you pathways that you can follow that will help you with your goals.</p>
-<p>We have pathways in the following areas:</p>
+<h2 class="text-center">Read, Watch, Listen, Particpate</h2>
+<h3>Your Agent creates learning pathways for you to follow which help you achieve your goals in a directed, informed, and up-to-date way.</h3>
+<h2>Follow pathways in these areas:</h2>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-md-6">
+
+
 <h1>Leadership</h1>
 <div class="card mb-2">
 <div class="card-body">

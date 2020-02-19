@@ -119,6 +119,7 @@ class ActivitiesUsersController extends AppController
      */
     public function claim()
     {
+        $this->Authorization->skipAuthorization();
 	$now = date('Y-m-d H:i:s');
 	$user = $this->request->getAttribute('authentication')->getIdentity();
 	$activitiesUsers = $this->ActivitiesUsers->newEmptyEntity();
