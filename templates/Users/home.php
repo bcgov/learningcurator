@@ -25,6 +25,15 @@
 <?php endif; ?>
 <?php if (!empty($user->activities)) : ?>
 <h2><?= __('You\'ve claimed these activities') ?></h2>
+<div class="card">
+<div class="card-body">
+<input type="text" name="activityfilter" id="activityfilter" placeholder="Filter" class="form-control mb-3">
+<div class="mb-1">
+<span class="badge badge-dark" style="background-color: rgba(240,203,86,1)">Read</span>
+<span class="badge badge-dark" style="background-color: rgba(71,189,182,1)">Watch</span>
+<span class="badge badge-dark" style="background-color: rgba(229,76,59,1)">Listen</span>
+<span class="badge badge-dark" style="background-color: rgba(134, 33, 206,1)">Participate</span>
+</div>
 <div class="card-columns">
 	<?php foreach ($user->activities as $activity) : ?>
 	<div class="card p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border: 0">
@@ -39,6 +48,9 @@
 	</div>
 	<?php endforeach; ?>
 </div>
+</div>
+</div>
+
 <?php endif; ?>
 <?php if (!empty($user->competencies)) : ?>
 <div class="card">
