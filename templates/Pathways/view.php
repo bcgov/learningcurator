@@ -271,7 +271,7 @@ foreach ($steps->activities as $activity) {
 		class="btn btn-block my-2 text-uppercase btn-lg">
 			<?= $activity->activity_type->name ?>
 	</a>
-	
+	<a href="#" class="btn btn-link btn-sm" title="Report this activity for some reason">Report</a>	
 </div>
 </div>
 <?php endforeach ?>
@@ -350,6 +350,7 @@ foreach ($steps->activities as $activity) {
 			<?= $activity->activity_type->name ?>
 	</a>
 
+	<a href="#" class="btn btn-link btn-sm" title="Report this activity for some reason">Report</a>	
 
 </div>
 </div>
@@ -409,6 +410,14 @@ foreach ($steps->activities as $activity) {
 
 
 
+<div class="stats my-3">
+
+<span class="badge badge-dark" style="background-color: rgba(<?= $readcolor ?>, 1)">Read <?= $readclaim ?> of <?php echo count($readtotal) ?></span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $watchcolor ?>, 1)">Watched <?= $watchclaim ?> of <?php echo count($watchtotal) ?></span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $listencolor ?>, 1)">Listened <?= $listenclaim ?> of <?php echo count($listentotal) ?> </span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $participatecolor ?>, 1)">Participated <?= $participateclaim ?> of <?php echo count($participatetotal) ?> </span>
+</div>
+
 
 
 
@@ -424,9 +433,10 @@ foreach ($steps->activities as $activity) {
 
 
 
-
-
-
+<div>
+<span class="badge badge-dark"><?= $totalActivities ?></span> Total activities<br>
+<span class="badge badge-dark"><?= $totalTime ?></span> hours of time<br>
+</div>
 
 
 
@@ -462,16 +472,6 @@ foreach ($steps->activities as $activity) {
     <?= $this->Form->end() ?>
 
 <?php endif ?>
-
-<div class="stats my-3">
-<span class="badge badge-light"><?= $totalActivities ?></span> Total activities<br>
-<span class="badge badge-light"><?= $totalTime ?></span> hours of time<br>
-Read: <?= $readclaim ?> of <?php echo count($readtotal) ?> <?= $readtimetotal ?> hours spent<br>
-Watch: <?= $watchclaim ?> of <?php echo count($watchtotal) ?> <?= $watchtimetotal ?> hours spent<br>
-Listen: <?= $listenclaim ?> of <?php echo count($listentotal) ?> <?= $listentimetotal ?> hours spent<br>
-Participate: <?= $participateclaim ?> of <?php echo count($participatetotal) ?> <?= $participatetimetotal ?> hours spent
-
-</div>
 
 
 </div>
