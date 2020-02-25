@@ -127,6 +127,7 @@ $participatetotal = array();
 
 
 <?php 
+
 $stepTime = 0;
 
 $readtime = 0;
@@ -158,18 +159,22 @@ foreach ($steps->activities as $activity) {
 		// as well as adding to the total
 		if($activity->activity_type->name == 'Read') {
 			$readcolor = $activity->activity_type->color;
+			$readicon = $activity->activity_type->image_path;
 			array_push($readcount,$activity);
 			array_push($readtotal,$activity);
 		} elseif($activity->activity_type->name == 'Watch') {
 			$watchcolor = $activity->activity_type->color;
+			$watchicon = $activity->activity_type->image_path;
 			array_push($watchcount,$activity);
 			array_push($watchtotal,$activity);
 		} elseif($activity->activity_type->name == 'Listen') {
 			$listencolor = $activity->activity_type->color;
+			$listenicon = $activity->activity_type->image_path;
 			array_push($listencount,$activity);
 			array_push($listentotal,$activity);
 		} elseif($activity->activity_type->name == 'Participate') {
 			$participatecolor = $activity->activity_type->color;
+			$participateicon = $activity->activity_type->image_path;
 			array_push($participatecount,$activity);
 			array_push($participatetotal,$activity);
 		}
@@ -185,16 +190,34 @@ foreach ($steps->activities as $activity) {
 	<!--<?= h($steps->id) ?>.--> <?= h($steps->name) ?>
 </h1>
 <div class="mb-1">
-<span class="badge badge-dark" style="background-color: rgba(<?= $readcolor ?>,1)"><?php echo count($readcount) ?> to read</span>
-<span class="badge badge-dark" style="background-color: rgba(<?= $watchcolor ?>,1)"><?php echo count($watchcount) ?> to watch</span>
-<span class="badge badge-dark" style="background-color: rgba(<?= $listencolor ?>,1)"><?php echo count($listencount) ?> to listen</span>
-<span class="badge badge-dark" style="background-color: rgba(<?= $participatecolor ?>,1)"><?php echo count($participatecount) ?> to participate</span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $readcolor ?>,1)">
+	<span class="fas <?= $readicon ?>"></span>
+	<?php echo count($readcount) ?> to read
+</span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $watchcolor ?>,1)">
+	<span class="fas <?= $watchicon ?>"></span>
+	<?php echo count($watchcount) ?> to watch
+</span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $listencolor ?>,1)">
+	<span class="fas <?= $listenicon ?>"></span>
+	<?php echo count($listencount) ?> to listen
+</span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $participatecolor ?>,1)">
+	<span class="fas <?= $participateicon ?>"></span>
+	<?php echo count($participatecount) ?> to participate
+</span>
 </div>
 <div class="alert alert-light"><?= h($steps->description) ?></div>
+
+
+
+
+
+
 <?php foreach($requiredacts as $activity): ?>
+
 <div class="card mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border: 0;">
 <div class="card-body">
-	<img width="150" src="<?= $activity->activity_type->image_path ?>" alt="Activity type glyph">
 	
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
@@ -265,25 +288,41 @@ foreach ($steps->activities as $activity) {
 
 	<h1 class=""><?= $activity->name ?></h1>
 	<div class=""><?= $activity->description ?></div>
+
+
 	<a target="_blank" 
 		href="<?= $activity->hyperlink ?>" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border: 3px solid #FFF; color: #FFF; font-weight: bold;" 
 		class="btn btn-block my-2 text-uppercase btn-lg">
+
+			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+			
 			<?= $activity->activity_type->name ?>
 	</a>
 	<a href="#" class="btn btn-link btn-sm" title="Report this activity for some reason">Report</a>	
 </div>
 </div>
+
 <?php endforeach ?>
+
+
+
+
+
+
+
+
+
 
 
 
 
 <div class="card-columns">
 <?php foreach($tertiaryacts as $activity): ?>
+	
 <div class="card" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 <div class="card-body">
-	<img width="75" src="<?= $activity->activity_type->image_path ?>" alt="Activity type glyph">
+	
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
@@ -323,12 +362,16 @@ foreach ($steps->activities as $activity) {
 	<?php else: ?>
 	<?php
 	if($activity->activity_type->name == 'Read') {
+		
 		$readclaim++;
 	} elseif($activity->activity_type->name == 'Watch') {
+		
 		$watchclaim++;
 	} elseif($activity->activity_type->name == 'Listen') {
+		
 		$listenclaim++;
 	} elseif($activity->activity_type->name == 'Participate') {
+		
 		$participateclaim++;
 	}
 	?>
@@ -347,6 +390,8 @@ foreach ($steps->activities as $activity) {
 		href="<?= $activity->hyperlink ?>" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border: 3px solid #FFF; color: #FFF; font-weight: bold;" 
 		class="btn btn-block my-2 text-uppercase btn-lg">
+
+			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
 			<?= $activity->activity_type->name ?>
 	</a>
 
@@ -354,6 +399,7 @@ foreach ($steps->activities as $activity) {
 
 </div>
 </div>
+
 <?php endforeach ?>
 </div>
 
@@ -370,22 +416,31 @@ foreach ($steps->activities as $activity) {
 
 </div> <!-- /.card-body -->
 </div> <!-- /.card -->
-<div class="text-center">
 
-<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><style>
-     
-         .line-arrow-down1{animation: line-arrow-down1-fly 3s infinite ease-in-out;}
-         @keyframes line-arrow-down1-fly{
-             0% { transform: translate3d(0, -200px, 0);}
-             30% {transform: translate3d(0, 0, 0);}
-             40% {transform: translate3d(0, -4px, 0);}
-             50% {transform: translate3d(0, 0, 0);}
-             70% {transform: translate3d(0, -4px, 0);}
-             100% {transform: translate3d(0, 240px, 0);}
-         }
-     
-    </style><path class="line-arrow-down1" d="M48.9919 5L48.9919 95M48.9919 95L85 59.1525M48.9919 95L13.75 59.1525" stroke="#000" stroke-width="2px" stroke-linecap="round" style="animation-duration: 3s;"></path></svg>
+<div class="text-center">
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<style>
+		.line-arrow-down1{
+			animation: line-arrow-down1-fly 3s infinite ease-in-out;
+		}
+		@keyframes line-arrow-down1-fly{
+			0% { transform: translate3d(0, -200px, 0);}
+			30% {transform: translate3d(0, 0, 0);}
+			40% {transform: translate3d(0, -4px, 0);}
+			50% {transform: translate3d(0, 0, 0);}
+			70% {transform: translate3d(0, -4px, 0);}
+			100% {transform: translate3d(0, 240px, 0);}
+		}
+	</style>
+	<path class="line-arrow-down1" 
+			d="M48.9919 5L48.9919 95M48.9919 95L85 59.1525M48.9919 95L13.75 59.1525" 
+			stroke="#000" 
+			stroke-width="2px" 
+			stroke-linecap="round" 
+			style="animation-duration: 3s;"></path>
+</svg>
 </div>
+
 <?php endforeach; ?>
 <div class="card mb-3">
 <div class="card-body">
@@ -412,10 +467,22 @@ foreach ($steps->activities as $activity) {
 
 <div class="stats my-3">
 
-<span class="badge badge-dark" style="background-color: rgba(<?= $readcolor ?>, 1)">Read <?= $readclaim ?> of <?php echo count($readtotal) ?></span>
-<span class="badge badge-dark" style="background-color: rgba(<?= $watchcolor ?>, 1)">Watched <?= $watchclaim ?> of <?php echo count($watchtotal) ?></span>
-<span class="badge badge-dark" style="background-color: rgba(<?= $listencolor ?>, 1)">Listened <?= $listenclaim ?> of <?php echo count($listentotal) ?> </span>
-<span class="badge badge-dark" style="background-color: rgba(<?= $participatecolor ?>, 1)">Participated <?= $participateclaim ?> of <?php echo count($participatetotal) ?> </span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $readcolor ?>, 1)">
+	<span class="fas <?= $readicon ?>"></span>
+	Read <?= $readclaim ?> of <?php echo count($readtotal) ?>
+</span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $watchcolor ?>, 1)">
+	<span class="fas <?= $watchicon ?>"></span>
+	Watched <?= $watchclaim ?> of <?php echo count($watchtotal) ?>
+</span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $listencolor ?>, 1)">
+	<span class="fas <?= $listenicon ?>"></span>
+	Listened <?= $listenclaim ?> of <?php echo count($listentotal) ?>
+</span>
+<span class="badge badge-dark" style="background-color: rgba(<?= $participatecolor ?>, 1)">
+	<span class="fas <?= $participateicon ?>"></span>
+	Participated <?= $participateclaim ?> of <?php echo count($participatetotal) ?> 
+</span>
 </div>
 
 
