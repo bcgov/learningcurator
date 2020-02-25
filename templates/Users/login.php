@@ -1,7 +1,7 @@
 <div class="row justify-content-md-center">
 
 <div class="col-md-4">
-<img src="/img/agent_logo_wordmark.png" alt="logo" class="mb-3">
+
 <div class="card">
 <div class="card-body">
     <?= $this->Flash->render() ?>

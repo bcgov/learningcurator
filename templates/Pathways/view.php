@@ -22,6 +22,7 @@ if(!empty($active)) {
         column-count:2;
     }
 }
+
 </style>
 <div class="row">
 <div class="col-md-8">
@@ -129,7 +130,7 @@ $participatetotal = array();
 <?php 
 
 $stepTime = 0;
-
+$stepActivityCount = 0;
 $readtime = 0;
 $watchtime = 0;
 $listentime = 0;
@@ -138,10 +139,12 @@ $participatetime = 0;
 $defunctacts = array();
 $requiredacts = array();
 $tertiaryacts = array();
+
 $readcount = array();
 $watchcount = array();
 $listencount = array();
 $participatecount = array();
+
 $act = array();
 foreach ($steps->activities as $activity) {
 	// If this is 'defunct' then we pull it out of the list 
@@ -181,33 +184,39 @@ foreach ($steps->activities as $activity) {
 		$totalActivities++;
 		$stepTime = $stepTime + $activity->hours;
 		$totalTime = $totalTime + $activity->hours;
+		$stepActivityCount++;
 	}
 }
+$readp = ceil((count($readcount) / $stepActivityCount) * 100);
+$watchp = ceil((count($watchcount) / $stepActivityCount) * 100);
+$listenp = ceil((count($listencount) / $stepActivityCount) * 100);
+$pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 ?>
 
 <h1>
 	<div class="float-right"><span class="badge badge-light"><?= $stepTime ?> hours</span></div>
 	<!--<?= h($steps->id) ?>.--> <?= h($steps->name) ?>
 </h1>
-<div class="mb-1">
-<span class="badge badge-dark" style="background-color: rgba(<?= $readcolor ?>,1)">
-	<span class="fas <?= $readicon ?>"></span>
-	<?php echo count($readcount) ?> to read
-</span>
-<span class="badge badge-dark" style="background-color: rgba(<?= $watchcolor ?>,1)">
-	<span class="fas <?= $watchicon ?>"></span>
-	<?php echo count($watchcount) ?> to watch
-</span>
-<span class="badge badge-dark" style="background-color: rgba(<?= $listencolor ?>,1)">
-	<span class="fas <?= $listenicon ?>"></span>
-	<?php echo count($listencount) ?> to listen
-</span>
-<span class="badge badge-dark" style="background-color: rgba(<?= $participatecolor ?>,1)">
-	<span class="fas <?= $participateicon ?>"></span>
-	<?php echo count($participatecount) ?> to participate
-</span>
-</div>
 <div class="alert alert-light"><?= h($steps->description) ?></div>
+<div class="progress mb-3" style="font-size: 130%; height: 40px">
+<div role="progressbar" class="progress-bar" style="width: <?= $readp ?>%; background-color: rgba(<?= $readcolor ?>,1)" aria-valuenow="<?= $readp ?>" aria-valuemin="0" aria-valuemax="100">
+	<span class="fas <?= $readicon ?>" title="<?php echo count($readcount) ?> things to read"></span>
+	<?php //echo count($readcount) ?> 
+</div>
+<div role="progressbar" class="progress-bar" style="width: <?= $watchp ?>%; background-color: rgba(<?= $watchcolor ?>,1)" aria-valuenow="<?= $watchp ?>" aria-valuemin="0" aria-valuemax="100">
+	<span class="fas <?= $watchicon ?>" title="<?php echo count($watchcount) ?> things to watch"></span>
+	<?php //echo count($watchcount) ?>
+</div>
+<div role="progressbar" class="progress-bar" style="width: <?= $listenp ?>%; background-color: rgba(<?= $listencolor ?>,1)" aria-valuenow="<?= $listenp ?>" aria-valuemin="0" aria-valuemax="100">
+	<span class="fas <?= $listenicon ?>" title="<?php echo count($listencount) ?> things to listen to"></span>
+	<?php //echo count($listencount) ?>
+</div>
+<div role="progressbar" class="progress-bar" style="width: <?= $pp ?>%; background-color: rgba(<?= $participatecolor ?>,1)" aria-valuenow="<?= $pp ?>" aria-valuemin="0" aria-valuemax="100">
+	<span class="fas <?= $participateicon ?>" title="<?php echo count($participatecount) ?> things to participate in"></span>
+	<?php //echo count($participatecount) ?> 
+</div>
+</div>
+
 
 
 
@@ -292,7 +301,7 @@ foreach ($steps->activities as $activity) {
 
 	<a target="_blank" 
 		href="<?= $activity->hyperlink ?>" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border: 3px solid #FFF; color: #FFF; font-weight: bold;" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border: 4px solid #FFF; color: #FFF; font-weight: bold;" 
 		class="btn btn-block my-2 text-uppercase btn-lg">
 
 			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
@@ -388,14 +397,20 @@ foreach ($steps->activities as $activity) {
 	<div class=""><?= $activity->description ?></div>
 	<a target="_blank" 
 		href="<?= $activity->hyperlink ?>" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border: 3px solid #FFF; color: #FFF; font-weight: bold;" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border: 4px solid #FFF; color: #FFF; font-weight: bold;" 
 		class="btn btn-block my-2 text-uppercase btn-lg">
 
 			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
 			<?= $activity->activity_type->name ?>
 	</a>
-
-	<a href="#" class="btn btn-link btn-sm" title="Report this activity for some reason">Report</a>	
+	<div class="btn-group float-right mb-3">
+		<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
+			<i class="fas fa-exclamation-triangle"></i>
+		</a>	
+		<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+			<i class="fas fa-thumbs-up"></i>
+		</a>
+	</div>
 
 </div>
 </div>

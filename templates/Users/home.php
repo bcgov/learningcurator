@@ -37,14 +37,23 @@
 <div class="card-columns">
 	<?php foreach ($user->activities as $activity) : ?>
 	<div class="card p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border: 0">
-		<img src="<?= $activity->activity_type->image_path ?>" width="100">
 		<?php if($activity->status_id == 2): ?>
 		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
 		<div><strong><?= h($activity->name) ?></strong></div>
 		<?php else: ?>
-		<div><strong><?= $this->Html->link($activity->name, ['controller' => 'Actions', 'action' => 'view', $activity->id]) ?></strong></div>
+		<h3><?= h($activity->name) ?></h3>
 		<?php endif ?>
 		<div><?= h($activity->description) ?></div>
+	<a target="_blank" 
+		href="<?= $activity->hyperlink ?>" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border: 3px solid #FFF; color: #FFF; font-weight: bold;" 
+		class="btn btn-block my-2 text-uppercase btn-lg">
+
+			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+			
+			<?= $activity->activity_type->name ?>
+	</a>
+
 	</div>
 	<?php endforeach; ?>
 </div>
