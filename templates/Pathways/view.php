@@ -292,7 +292,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<h1 class="my-1">
 		<?= $activity->name ?>
 		<?php if($role == 2 || $role == 5): ?>
-		<a class="badge badge-light" href="/activities/view/<?= $activity->id ?>">#</a>
+		<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>
 		<?php endif ?>
 	</h1>
 	<div class=""><?= $activity->description ?></div>
@@ -399,7 +399,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<h2 class="my-1">
 		<?= $activity->name ?>
 		<?php if($role == 2 || $role == 5): ?>
-		<a class="badge badge-light" href="/activities/view/<?= $activity->id ?>">#</a>
+		<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>
 		<?php endif ?>
 	</h2>
 	<div class=""><?= $activity->description ?></div>
@@ -452,6 +452,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 
 <?php if(!empty($defunctacts)): ?>
+
 <h3>Defunct</h3>
 <?php foreach($defunctacts as $activity): ?>
 <?= $activity->name ?><br>
