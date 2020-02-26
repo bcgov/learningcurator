@@ -22,7 +22,18 @@ if(!empty($active)) {
         column-count:2;
     }
 }
-
+.hours,
+.required {
+	background: rgba(255,255,255,1);
+	border-radius: 5px;
+	color: #222;
+	text-align: center;
+	text-transform: uppercase;
+	width: 130px;
+}
+.required {
+	float: right;
+}
 </style>
 <div class="row">
 <div class="col-md-8">
@@ -193,8 +204,11 @@ $listenp = ceil((count($listencount) / $stepActivityCount) * 100);
 $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 ?>
 
-<h1>
-	<div class="float-right"><span class="badge badge-light"><?= $stepTime ?> hours</span></div>
+<h1 class="text-uppercase">
+	<div class="float-right">
+	<span class="badge badge-light">
+	<i class="fas fa-clock"></i>
+	<?= $stepTime ?> hours</span></div>
 	<!--<?= h($steps->id) ?>.--> <?= h($steps->name) ?>
 </h1>
 <div class="alert alert-light"><?= h($steps->description) ?></div>
@@ -225,16 +239,19 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 <?php foreach($requiredacts as $activity): ?>
 
-<div class="card mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border: 0;">
+<div class="card mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 <div class="card-body">
-	
+	<div class="required" >
+		<i class="fas fa-check-double"></i>
+		Required
+	</div>	
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
-	<?= $this->Html->link(__('Edit Activity'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
+	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activitys-steps','action' => 'removeactivity', 'class' => '']]) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
-	<?= $this->Form->button(__('Remove from step'),['class'=>'btn btn-sm btn-light']) ?>
+	<?= $this->Form->button(__('Remove'),['class'=>'btn btn-sm btn-light']) ?>
 	<?= $this->Form->end() ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle', 'class' => '']]) ?>
 	<?php if($activity->_joinData->required == 0): ?>
@@ -248,67 +265,69 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<?= $this->Form->end() ?>
 	</div>
 	<?php if($activity->status_id == 2): ?>
-	DEFUNCT
+	<span class="badge badge-danger">DEFUNCT</span>
 	<?php endif ?>
 	<?php if($activity->moderation_flag == 1): ?>
-	INVESTIGATE
+	<span class="badge badge-warning">INVESTIGATE</span>
 	<?php endif ?>
 
 
-	<?php endif ?>
+	<?php endif; // role check ?>
 
-	<span class="badge badge-light"><?= $activity->hours ?> hours</span>
+	<div class="hours" >
+		<i class="fas fa-clock"></i>
+		<?= $activity->hours ?> hours
+	</div>
+
+	<?php foreach($activity->tags as $tag): ?>
+	<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
+	<?php endforeach ?>
+
+
+	<h1 class="my-1">
+		<?= $activity->name ?>
+		<a href="/activities/view/<?= $activity->id ?>">#</a>
+	</h1>
+	<div class=""><?= $activity->description ?></div>
+	<a target="_blank" 
+		href="<?= $activity->hyperlink ?>" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
+		class="btn btn-block my-2 text-uppercase btn-lg">
+
+			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+			<?= $activity->activity_type->name ?>
+	</a>
+		<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
+			<i class="fas fa-exclamation-triangle"></i>
+		</a>	
+		<a href="#" style="color:#333;" class="btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+			5 <i class="fas fa-thumbs-up"></i>
+		</a>
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'float-right']) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => '']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light']) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
 	<?php else: ?>
 	<?php
 	if($activity->activity_type->name == 'Read') {
-		$readtime = $readtime + $activity->hours;
-		$readtimetotal = $readtime + $activity->hours;
 		$readclaim++;
 	} elseif($activity->activity_type->name == 'Watch') {
-		$watchtime = $watchtime + $activity->hours;
-		$watchtimetotal = $watchtime + $activity->hours;
 		$watchclaim++;
 	} elseif($activity->activity_type->name == 'Listen') {
-		$listentime = $listentime + $activity->hours;
-		$listentimetotal = $listentime + $activity->hours;
 		$listenclaim++;
 	} elseif($activity->activity_type->name == 'Participate') {
-		$participatetime = $participatetime + $activity->hours;
-		$participatetimetotal = $participatetime + $activity->hours;
 		$participateclaim++;
 	}
 	?>
-	<span class="badge badge-dark">Claimed</span>
+	<div class="btn btn-light">CLAIMED <i class="fas fa-check-circle"></i></div>
 	<?php endif ?>
-	<?php else: ?>
 	<?php endif ?>
 
-	<span class="badge">REQUIRED</span><br>
-	<?php foreach($activity->tags as $tag): ?>
-	<span class="badge badge-light"><?= $tag->name ?></span>
-	<?php endforeach ?>
 
 
-	<h1 class=""><?= $activity->name ?></h1>
-	<div class=""><?= $activity->description ?></div>
 
-
-	<a target="_blank" 
-		href="<?= $activity->hyperlink ?>" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border: 4px solid #FFF; color: #FFF; font-weight: bold;" 
-		class="btn btn-block my-2 text-uppercase btn-lg">
-
-			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
-			
-			<?= $activity->activity_type->name ?>
-	</a>
-	<a href="#" class="btn btn-link btn-sm" title="Report this activity for some reason">Report</a>	
 </div>
 </div>
 
@@ -360,57 +379,58 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 
 	<?php endif ?>
+	<div class="hours" >
+		<i class="fas fa-clock"></i>
+		<?= $activity->hours ?> hours
+	</div>
 
-	<span class="badge badge-light"><?= $activity->hours ?> hours</span>
-	<?php if(!empty($uid)): ?>
-	<?php if(!in_array($activity->id,$useractivitylist)): ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'float-right mt-3']) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light']) ?>
-	<?= $this->Form->end() ?><br>
-	<?php else: ?>
-	<?php
-	if($activity->activity_type->name == 'Read') {
-		
-		$readclaim++;
-	} elseif($activity->activity_type->name == 'Watch') {
-		
-		$watchclaim++;
-	} elseif($activity->activity_type->name == 'Listen') {
-		
-		$listenclaim++;
-	} elseif($activity->activity_type->name == 'Participate') {
-		
-		$participateclaim++;
-	}
-	?>
-	<span class="badge badge-dark">Claimed</span><br>
-	<?php endif ?>
-	<?php else: ?>
-	<?php endif ?>
 	<?php foreach($activity->tags as $tag): ?>
-	<span class="badge badge-light"><?= $tag->name ?></span>
+	<a href="#" class="badge badge-light"><?= $tag->name ?></a>
 	<?php endforeach ?>
 
 
-	<h2 class=""><?= $activity->name ?></h2>
+	<h2 class="my-1"><?= $activity->name ?></h2>
 	<div class=""><?= $activity->description ?></div>
+
 	<a target="_blank" 
 		href="<?= $activity->hyperlink ?>" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border: 4px solid #FFF; color: #FFF; font-weight: bold;" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
 		class="btn btn-block my-2 text-uppercase btn-lg">
 
 			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+
 			<?= $activity->activity_type->name ?>
 	</a>
-	<div class="btn-group float-right mb-3">
-		<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
-			<i class="fas fa-exclamation-triangle"></i>
-		</a>	
-		<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-			<i class="fas fa-thumbs-up"></i>
-		</a>
-	</div>
+	<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
+		<i class="fas fa-exclamation-triangle"></i>
+	</a>	
+	<a href="#" style="color:#333;" class="btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+		33 <i class="fas fa-thumbs-up"></i>
+	</a>
+	<?php if(!empty($uid)): ?>
+	<?php if(!in_array($activity->id,$useractivitylist)): ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => '']) ?>
+	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+	<?= $this->Form->end() ?>
+	<?php else: ?>
+	<?php
+	if($activity->activity_type->name == 'Read') {
+		$readclaim++;
+	} elseif($activity->activity_type->name == 'Watch') {
+		$watchclaim++;
+	} elseif($activity->activity_type->name == 'Listen') {
+		$listenclaim++;
+	} elseif($activity->activity_type->name == 'Participate') {
+		$participateclaim++;
+	}
+	?>
+	<div class="btn btn-light">CLAIMED <i class="fas fa-check-circle"></i></div>
+	<?php endif ?>
+	<?php endif ?>
+
+
+
 
 </div>
 </div>
