@@ -105,12 +105,10 @@ img {
 		<?php endif ?>
 	</ul>
 
-	<?php if(!empty($active->role_id) && $active->role_id == 5): ?>
 	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
 		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
 		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
 	</form>
-	<?php endif ?>
 </nav>
 <div class="container" style="padding-bottom: 100px;">
 <div class="row justify-content-md-center">

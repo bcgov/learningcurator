@@ -558,7 +558,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 </div>
 </div>
-<div class="card">
+<!--<div class="card">
 <div class="card-body">
 <h2><?= __('Competencies') ?></h2>
 <?php if (!empty($pathway->competencies)) : ?>
@@ -567,7 +567,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 <?php endforeach; ?>
 <?php endif; ?>
 </div>
-</div>
+</div>-->
 </div>
 </div>
 </div>
