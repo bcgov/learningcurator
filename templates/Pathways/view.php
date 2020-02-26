@@ -22,18 +22,23 @@ if(!empty($active)) {
         column-count:2;
     }
 }
-.hours,
-.required {
+.hours {
 	background: rgba(255,255,255,1);
-	border-radius: 5px;
 	color: #222;
+}
+.required {
+	background: rgba(0,0,0,1);
+	color: #FFF;
+	float: right;
+}
+.required,
+.hours {
+	border-radius: 5px;
 	text-align: center;
 	text-transform: uppercase;
 	width: 130px;
 }
-.required {
-	float: right;
-}
+
 </style>
 <div class="row">
 <div class="col-md-8">
@@ -214,19 +219,19 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 <div class="alert alert-light"><?= h($steps->description) ?></div>
 <div class="progress mb-3" style="font-size: 130%; height: 40px">
 <div role="progressbar" class="progress-bar" style="width: <?= $readp ?>%; background-color: rgba(<?= $readcolor ?>,1)" aria-valuenow="<?= $readp ?>" aria-valuemin="0" aria-valuemax="100">
-	<span class="fas <?= $readicon ?>" title="<?php echo count($readcount) ?> things to read"></span>
+	<span class="fas <?= $readicon ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo count($readcount) ?> things to read"></span>
 	<?php //echo count($readcount) ?> 
 </div>
 <div role="progressbar" class="progress-bar" style="width: <?= $watchp ?>%; background-color: rgba(<?= $watchcolor ?>,1)" aria-valuenow="<?= $watchp ?>" aria-valuemin="0" aria-valuemax="100">
-	<span class="fas <?= $watchicon ?>" title="<?php echo count($watchcount) ?> things to watch"></span>
+	<span class="fas <?= $watchicon ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo count($watchcount) ?> things to watch"></span>
 	<?php //echo count($watchcount) ?>
 </div>
 <div role="progressbar" class="progress-bar" style="width: <?= $listenp ?>%; background-color: rgba(<?= $listencolor ?>,1)" aria-valuenow="<?= $listenp ?>" aria-valuemin="0" aria-valuemax="100">
-	<span class="fas <?= $listenicon ?>" title="<?php echo count($listencount) ?> things to listen to"></span>
+	<span class="fas <?= $listenicon ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo count($listencount) ?> things to listen to"></span>
 	<?php //echo count($listencount) ?>
 </div>
 <div role="progressbar" class="progress-bar" style="width: <?= $pp ?>%; background-color: rgba(<?= $participatecolor ?>,1)" aria-valuenow="<?= $pp ?>" aria-valuemin="0" aria-valuemax="100">
-	<span class="fas <?= $participateicon ?>" title="<?php echo count($participatecount) ?> things to participate in"></span>
+	<span class="fas <?= $participateicon ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo count($participatecount) ?> things to participate in"></span>
 	<?php //echo count($participatecount) ?> 
 </div>
 </div>
@@ -241,7 +246,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 <div class="card mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 <div class="card-body">
-	<div class="required" >
+	<div class="required" data-toggle="tooltip" data-placement="bottom" title="This activity is required to complete the step">
 		<i class="fas fa-check-double"></i>
 		Required
 	</div>	
@@ -286,7 +291,9 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 	<h1 class="my-1">
 		<?= $activity->name ?>
-		<a href="/activities/view/<?= $activity->id ?>">#</a>
+		<?php if($role == 2 || $role == 5): ?>
+		<a class="badge badge-light" href="/activities/view/<?= $activity->id ?>">#</a>
+		<?php endif ?>
 	</h1>
 	<div class=""><?= $activity->description ?></div>
 	<a target="_blank" 
@@ -389,7 +396,12 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<?php endforeach ?>
 
 
-	<h2 class="my-1"><?= $activity->name ?></h2>
+	<h2 class="my-1">
+		<?= $activity->name ?>
+		<?php if($role == 2 || $role == 5): ?>
+		<a class="badge badge-light" href="/activities/view/<?= $activity->id ?>">#</a>
+		<?php endif ?>
+	</h2>
 	<div class=""><?= $activity->description ?></div>
 
 	<a target="_blank" 

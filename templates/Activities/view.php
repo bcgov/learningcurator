@@ -4,15 +4,32 @@
  * @var \App\Model\Entity\Activity $activity
  */
 ?>
-<div class="row">
-<div class="col">
+<style>
+.bigicon {
+    border-radius: 50%;
+    color: #FFF;
+    float: right;
+    font-size: 36px;
+    height: 100px;
+    padding: 20px 0 0 5px;
+    text-align: center;
+    width: 100px;
+}
+</style>
+<div class="row justify-content-md-center">
+<div class="col-md-6">
 <div class="card" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 <div class="card-body">
-<div><?= $activity->has('category') ? $this->Html->link($activity->category->name, ['controller' => 'Categories', 'action' => 'view', $activity->category->id]) : '' ?></div>
+
+<div class="bigicon" style="background-color: rgba(<?= $activity->has('activity_type') ? $activity->activity_type->color : '' ?>,1);">
+    <i class="fas <?= $activity->has('activity_type') ? $activity->activity_type->image_path : '' ?>"></i>
+</div>
+
 <div><?= $activity->has('activity_type') ? $this->Html->link($activity->activity_type->name, ['controller' => 'ActivityTypes', 'action' => 'view', $activity->activity_type->id]) : '' ?></div>
 <h3><?= h($activity->name) ?></h3>
 <div><?= h($activity->hyperlink) ?></div>
 <div><?= __('Isbn') ?></div>
+<div><?= $activity->has('category') ? $this->Html->link($activity->category->name, ['controller' => 'Categories', 'action' => 'view', $activity->category->id]) : '' ?></div>
 <div><?= h($activity->isbn) ?></div>
 <div><?= h($activity->image_path) ?></div>
 <div><?= __('Hours') ?></div>
