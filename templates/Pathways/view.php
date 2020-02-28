@@ -279,7 +279,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 	<?php endif; // role check ?>
 
-	<div class="hours" >
+	<div class="hours" data-toggle="tooltip" data-placement="bottom" title="This activity should take approximately <?= $activity->hours ?> hours to complete">
 		<i class="fas fa-clock"></i>
 		<?= $activity->hours ?> hours
 	</div>
@@ -296,7 +296,19 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 		<?php endif ?>
 	</h1>
 	<div class=""><?= $activity->description ?></div>
+
+
+
+
+
+
+
+
+
+
+
 	<a target="_blank" 
+		data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
 		href="<?= $activity->hyperlink ?>" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
 		class="btn btn-block my-2 text-uppercase btn-lg">
@@ -304,6 +316,22 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
 			<?= $activity->activity_type->name ?>
 	</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 			<i class="fas fa-exclamation-triangle"></i>
 		</a>	
@@ -328,7 +356,8 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 		$participateclaim++;
 	}
 	?>
-	<div class="btn btn-light">CLAIMED <i class="fas fa-check-circle"></i></div>
+	<div class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
+
 	<?php endif ?>
 	<?php endif ?>
 
@@ -386,7 +415,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 
 	<?php endif ?>
-	<div class="hours" >
+	<div class="hours" data-toggle="tooltip" data-placement="bottom" title="This activity should take approximately <?= $activity->hours ?> hours to complete">
 		<i class="fas fa-clock"></i>
 		<?= $activity->hours ?> hours
 	</div>
@@ -404,7 +433,18 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	</h2>
 	<div class=""><?= $activity->description ?></div>
 
+
+
+
+
+
+
+
+
+
+
 	<a target="_blank" 
+		data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
 		href="<?= $activity->hyperlink ?>" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
 		class="btn btn-block my-2 text-uppercase btn-lg">
@@ -413,6 +453,21 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 			<?= $activity->activity_type->name ?>
 	</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 		<i class="fas fa-exclamation-triangle"></i>
 	</a>	
@@ -437,7 +492,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 		$participateclaim++;
 	}
 	?>
-	<div class="btn btn-light">CLAIMED <i class="fas fa-check-circle"></i></div>
+	<div class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
 	<?php endif ?>
 	<?php endif ?>
 
