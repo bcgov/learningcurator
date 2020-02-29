@@ -121,9 +121,9 @@ class ActivitiesStepsController extends AppController
      */
     public function requiredToggle()
     {
-        //$user = $this->Authentication->getIdentityData('id');
-	$activitiesSteps = $this->ActivitiesSteps->newEmptyEntity();
-	//$actionsUsers->user_id = $user;
+    $u = $this->request->getAttribute('authentication')->getIdentity();
+    $activitiesSteps = $this->ActivitiesSteps->newEmptyEntity();
+    $this->Authorization->authorize($activitiesSteps);
 	if($this->request->getData()['required'] == 1) {
 		$activitiesSteps->required = 1;
 	} else {
