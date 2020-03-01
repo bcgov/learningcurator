@@ -5,6 +5,7 @@ namespace App\Controller;
 
 Use Cake\ORM\TableRegistry;
 
+
 /**
  * Activities Controller
  *
@@ -49,7 +50,7 @@ class ActivitiesController extends AppController
         //
         // First let's check to see if this person is logged in or not.
         //
-	$user = $this->request->getAttribute('authentication')->getIdentity();
+	    $user = $this->request->getAttribute('authentication')->getIdentity();
         if(!empty($user)) {
             // We need create an empty array first. If nothing gets added to
             // it, so be it
@@ -68,7 +69,7 @@ class ActivitiesController extends AppController
             }
         }
         $activity = $this->Activities->get($id, [
-            'contain' => ['Statuses', 'Ministries', 'Categories', 'ActivityTypes', 'Users', 'Competencies', 'Steps', 'Tags'],
+            'contain' => ['Statuses', 'Ministries', 'Categories', 'ActivityTypes', 'Users', 'Competencies', 'Steps', 'Steps.Pathways', 'Tags'],
         ]);
 
         $this->set(compact('activity', 'useractivitylist'));

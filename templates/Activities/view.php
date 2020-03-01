@@ -135,10 +135,8 @@ if(!empty($active)) {
 <div class="card">
 <div class="card-body">
 
-
 <div><?= h($activity->hyperlink) ?></div>
 <div><?= __('Isbn') ?></div>
-<div><?= $activity->has('category') ? $this->Html->link($activity->category->name, ['controller' => 'Categories', 'action' => 'view', $activity->category->id]) : '' ?></div>
 <div><?= h($activity->isbn) ?></div>
 <div class="text">
 <strong><?= __('Licensing') ?></strong>
@@ -174,20 +172,28 @@ if(!empty($active)) {
 <?php endforeach; ?>
 <?php endif; ?>
 </div>
-<div class="related">
-<h4><?= __('Related Steps') ?></h4>
+
+<?php endif; ?>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+<div class="col-md-3">
+<div class="card">
+<div class="card-body">
+<h4><?= __('Related Pathways') ?></h4>
 <?php if (!empty($activity->steps)) : ?>
 <?php foreach ($activity->steps as $steps) : ?>
 <div>
-   <?= $this->Html->link($steps->name, ['controller' => 'Steps', 'action' => 'view', $steps->id]) ?>
+   <?= $this->Html->link($steps->pathways[0]['name'], ['controller' => 'Pathways', 'action' => 'view', $steps->pathways[0]['id']]) ?>
 </div>
 <?php endforeach; ?>
 <?php endif; ?>
 </div>
-<?php endif; ?>
 </div>
-</div>
-</div>
-</div>
+
 </div>
 </div>
