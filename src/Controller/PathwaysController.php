@@ -47,12 +47,12 @@ class PathwaysController extends AppController
     public function view($id = null)
     {
         $this->Authorization->skipAuthorization();
-        // As we loop through the resources for the steps on this pathway, we 
+        // As we loop through the activities for the steps on this pathway, we 
         // need to be able to check to see if the current user has "claimed" 
-        // that resource. Here we get the current user id and use it to select 
-        // all of the claimed resources assigned to them, and then process out 
-        // just the resource IDs into a simple array. Then, in the template 
-        // code, we can simply  if(in_array($rj->resource->id,$userresourcelist
+        // that activity. Here we get the current user id and use it to select 
+        // all of the claimed activities assigned to them, and then process out 
+        // just the activity IDs into a simple array. Then, in the template 
+        // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
         //
         // First let's check to see if this person is logged in or not.
         //

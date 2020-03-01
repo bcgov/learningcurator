@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+Use Cake\ORM\TableRegistry;
+
 /**
  * Activities Controller
  *
@@ -38,11 +40,38 @@ class ActivitiesController extends AppController
     public function view($id = null)
     {
         $this->Authorization->skipAuthorization();
+        // As we loop through the activities for the steps on this pathway, we 
+        // need to be able to check to see if the current user has "claimed" 
+        // that activity. Here we get the current user id and use it to select 
+        // all of the claimed activities assigned to them, and then process out 
+        // just the activity IDs into a simple array. Then, in the template 
+        // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
+        //
+        // First let's check to see if this person is logged in or not.
+        //
+	$user = $this->request->getAttribute('authentication')->getIdentity();
+        if(!empty($user)) {
+            // We need create an empty array first. If nothing gets added to
+            // it, so be it
+            $useractivitylist = array();
+            // Get access to the apprprioate table
+            $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
+            // Select based on currently logged in person
+            $useacts = $au->find()->where(['user_id = ' => $user->id]);
+            // convert the results into a simple array so that we can
+            // use in_array in the template
+            $useractivities = $useacts->toList();
+            // Loop through the resources and add just the ID to the 
+            // array that we will pass into the template
+            foreach($useractivities as $uact) {
+                array_push($useractivitylist, $uact['activity_id']);
+            }
+        }
         $activity = $this->Activities->get($id, [
             'contain' => ['Statuses', 'Ministries', 'Categories', 'ActivityTypes', 'Users', 'Competencies', 'Steps', 'Tags'],
         ]);
 
-        $this->set('activity', $activity);
+        $this->set(compact('activity', 'useractivitylist'));
     }
 
 

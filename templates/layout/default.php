@@ -30,10 +30,10 @@ img {
 <nav class="navbar navbar-expand-lg mb-3">
 	
 	<a class="navbar-brand" href="/" style="font-size: 300%; margin: -20px 0 0 20px">
-		<span class="fas fa-map-marker-alt" style="color: rgba(32,87,152,1); margin:-10px 0 0 -10px; transform: rotate(90deg);"></span>
-		<span class="fas fa-map-marker-alt" style="color: rgba(71,189,182,1); margin:-10px 0 0 -10px; transform: rotate(90deg);"></span>
-		<span class="fas fa-map-marker-alt" style="color: rgba(229,76,59,1); margin:-10px 0 0 -10px; transform: rotate(90deg);"></span>
-		<span class="fas fa-map-marker-alt" style="color: rgba(134, 33, 206,1); margin:-10px 0 0 -10px; transform: rotate(90deg);"></span>
+		<span class="fas fa-map-marker-alt" style="color: rgba(78,205,196,1); margin:-10px 0 0 -10px; transform: rotate(90deg);"></span>
+		<span class="fas fa-map-marker-alt" style="color: rgb(199,244,100,1); margin:-10px 0 0 -10px; transform: rotate(90deg);"></span>
+		<span class="fas fa-map-marker-alt" style="color: rgba(255,107,107,1); margin:-10px 0 0 -10px; transform: rotate(90deg);"></span>
+		<span class="fas fa-map-marker-alt" style="color: rgba(196,77,88,1); margin:-10px 0 0 -10px; transform: rotate(90deg);"></span>
 	</a>
 	<button class="navbar-toggler" 
 		type="button" 

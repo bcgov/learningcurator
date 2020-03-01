@@ -64,12 +64,8 @@ if(!empty($active)) {
 
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activitys-steps','action' => 'removeactivity', 'class' => '']]) ?>
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
-	<?= $this->Form->button(__('Remove'),['class'=>'btn btn-sm btn-light']) ?>
-	<?= $this->Form->end() ?>
+
 	</div>
 	<?php if($activity->status_id == 2): ?>
 	<span class="badge badge-danger">DEFUNCT</span>
@@ -119,17 +115,6 @@ if(!empty($active)) {
 	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
 	<?php else: ?>
-	<?php
-	if($activity->activity_type->name == 'Read') {
-		$readclaim++;
-	} elseif($activity->activity_type->name == 'Watch') {
-		$watchclaim++;
-	} elseif($activity->activity_type->name == 'Listen') {
-		$listenclaim++;
-	} elseif($activity->activity_type->name == 'Participate') {
-		$participateclaim++;
-	}
-	?>
 	<div class="btn btn-light">CLAIMED <i class="fas fa-check-circle"></i></div>
 	<?php endif ?>
 	<?php endif ?>
