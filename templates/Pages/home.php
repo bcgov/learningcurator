@@ -3,26 +3,18 @@
 
 <div class="card">
 <div class="card-body">
-<h1 class="text-uppercase">Learning Agent</h1>
-<div class="my-3" style="font-size: 130%">
-<span style="background-color: rgba(32,87,152,1);border-radius: 3px; color: #FFF; margin: 0 2px; padding: 3px 10px;">
-	<span class="fas fa-book-reader"></span>
-	Read
-</span>
-<span style="background-color: rgba(71,189,182,1);border-radius: 3px; color: #FFF; margin: 0 2px; padding: 3px 10px;">
-	<span class="fas fa-video"></span>
-	Watch
-</span>
-<span style="background-color: rgba(229,76,59,1);border-radius: 3px; color: #FFF; margin: 0 2px; padding: 3px 10px;">
-	<span class="fas fa-headphones"></span>
-	Listen
-</span>
-<span style="background-color: rgba(134, 33, 206,1);border-radius: 3px; color: #FFF; margin: 0 2px; padding: 3px 10px;">
-	<span class="fas fa-users"></span>
-	Participate
-</span>
+<h1>Welcome to the Learning Agent</h1>
+<h2>A curation space for informal learning resources.</h2> 
+<p>Just as a museum selects artifacts to display on a theme, BCPS specialist curators have chosen resources that meet a standard of quality to help you on your path to specific leadership development goals.</p>
+<p>Learning curation offers a dynamic approach to supporting your performance. As a self-directed experience, you select what, and when, and how much to engage with the learning here. If you want to dip into a few resources and sample what’s on offer, that’s fine. If you want to keep track of your progress through a learning pathway, that’s fine too! You’re in control. </p>
+<p>Begin by selecting a pathway that appeals to your needs. The next time you visit the resource, you will be taken to your profile page, where the Learning Agent keeps track of which pathways you’re on, and which learning you’ve begun.</p>
+<p>The Learning Agent does not offer credit for courses. While some pathways include recommendations to take Learning Centre courses, you will be directed to register for those through the Learning Centre as usual.  </p>
+<div class="my-3" style="font-size: 300%">
+<?php foreach($atypes as $type): ?>
+		<span class="fas fa-dot-circle" style="color: rgba(<?= $type->color ?>,1);"></span>
+		<?= $type->name ?><br>
+<?php endforeach ?>
 </div>
-<h3>Your Agent creates learning pathways for you to follow which help you achieve your goals in a directed, informed, and up-to-date way.</h3>
 </div>
 </div>
 </div>

@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+Use Cake\ORM\TableRegistry;
 
 /**
  * Application Controller
@@ -55,7 +56,12 @@ class AppController extends Controller
 	$this->loadComponent('Authorization.Authorization');
 
 	$active = $this->request->getAttribute('authentication')->getIdentity();
-	$this->set(compact('active'));
+	
+	$at = TableRegistry::getTableLocator()->get('ActivityTypes');
+	$atype = $at->find('all');
+	$atypes = $atype->toList();
+
+	$this->set(compact('active','atypes'));
         //$this->loadComponent('Authorization.Authorization');
 
     }

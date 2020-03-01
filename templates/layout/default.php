@@ -30,10 +30,9 @@ img {
 <nav class="navbar navbar-expand-lg mb-3">
 	
 	<a class="navbar-brand" href="/" style="font-size: 300%; margin: -20px 0 0 20px">
-		<span class="fas fa-map-marker-alt" style="color: rgba(78,205,196,1); margin:-10px 0 0 -10px; transform: rotate(90deg);"></span>
-		<span class="fas fa-map-marker-alt" style="color: rgb(199,244,100,1); margin:-10px 0 0 -10px; transform: rotate(90deg);"></span>
-		<span class="fas fa-map-marker-alt" style="color: rgba(255,107,107,1); margin:-10px 0 0 -10px; transform: rotate(90deg);"></span>
-		<span class="fas fa-map-marker-alt" style="color: rgba(196,77,88,1); margin:-10px 0 0 -10px; transform: rotate(90deg);"></span>
+<?php foreach($atypes as $type): ?>
+		<span class="fas fa-dot-circle" style="color: rgba(<?= $type->color ?>,1); margin:-10px 0 0 -20px;"></span>
+<?php endforeach ?>
 	</a>
 	<button class="navbar-toggler" 
 		type="button" 
