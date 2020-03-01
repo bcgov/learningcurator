@@ -24,15 +24,17 @@ img {
 .card {
 	border: 0;
 }
+
 </style>
 </head>
 <body class="bg-light">
-<nav class="navbar navbar-expand-lg mb-3">
+
+<nav class="navbar navbar-expand-lg mb-3" style="background: #FFF">
 	
-	<a class="navbar-brand" href="/" style="font-size: 300%; margin: -20px 0 0 20px">
+	<a class="navbar-brand text-uppercase" href="/" style="margin: 0 0 0 20px">
 <?php foreach($atypes as $type): ?>
-		<span class="fas fa-dot-circle" style="color: rgba(<?= $type->color ?>,1); margin:-10px 0 0 -20px;"></span>
-<?php endforeach ?>
+		<span class="fas fa-dot-circle" style="color: rgba(<?= $type->color ?>,1); font-size: 280%; margin: 0 0 0 -20px;"></span>
+<?php endforeach ?><br><span style="font-size: 16px;">Learning Agent</span>
 	</a>
 	<button class="navbar-toggler" 
 		type="button" 
@@ -49,7 +51,7 @@ img {
 
 		<?php if(!empty($active)): ?>
 		<li class="nav-item">
-			<a class="nav-link" href="/users/home"><?= $active->name ?></a>
+			<a class="nav-link" href="/users/home">Hello, <?= $active->name ?></a>
 		</li>
 		<?php endif ?>
 	<!--	<li class="nav-item">
@@ -119,7 +121,7 @@ img {
 </div>
 <div class="container-fluid mt-3 bg-white" style="padding-top: 60px;">
 <div class="row mt-3">
-<div class="col-4 mt-3">
+<div class="col-md-4 mt-3">
 <div class="alert alert-light">
 <div><img src="/img/BCID_BCPSA_rgb_pos.jpg" width="400" alt="BC Public Service Agency logo"></div>
 <p>Your personal information is collected by the BC Public Service Agency in accordance with section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes of managing and administering employee development and training. If you have any questions, submit an AskMyHR request at www.gov.bc.ca/myhr/contact or call 250 952-6000.</p>

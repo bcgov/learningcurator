@@ -19,6 +19,7 @@ class TagsController extends AppController
      */
     public function index()
     {
+        $this->Authorization->skipAuthorization();
         $tags = $this->paginate($this->Tags);
 
         $this->set(compact('tags'));
@@ -33,6 +34,7 @@ class TagsController extends AppController
      */
     public function view($id = null)
     {
+        $this->Authorization->skipAuthorization();
         $tag = $this->Tags->get($id, [
             'contain' => ['Activities'],
         ]);
@@ -48,6 +50,7 @@ class TagsController extends AppController
     public function add()
     {
         $tag = $this->Tags->newEmptyEntity();
+        $this->Authorization->authorize($tag);
         if ($this->request->is('post')) {
             $tag = $this->Tags->patchEntity($tag, $this->request->getData());
             if ($this->Tags->save($tag)) {
@@ -73,6 +76,7 @@ class TagsController extends AppController
         $tag = $this->Tags->get($id, [
             'contain' => ['Activities'],
         ]);
+        $this->Authorization->authorize($tag);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $tag = $this->Tags->patchEntity($tag, $this->request->getData());
             if ($this->Tags->save($tag)) {
@@ -97,6 +101,7 @@ class TagsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $tag = $this->Tags->get($id);
+        $this->Authorization->authorize($tag);
         if ($this->Tags->delete($tag)) {
             $this->Flash->success(__('The tag has been deleted.'));
         } else {
