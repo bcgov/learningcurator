@@ -56,7 +56,7 @@ class PathwaysController extends AppController
         //
         // First let's check to see if this person is logged in or not.
         //
-	$user = $this->request->getAttribute('authentication')->getIdentity();
+	    $user = $this->request->getAttribute('authentication')->getIdentity();
         if(!empty($user)) {
             // We need create an empty array first. If nothing gets added to
             // it, so be it
@@ -78,7 +78,7 @@ class PathwaysController extends AppController
         $pathway = $this->Pathways->get($id, [
             'contain' => ['Categories', 'Ministries', 'Competencies', 'Steps', 'Steps.Activities', 'Steps.Activities.ActivityTypes', 'Steps.Activities.Users', 'Steps.Activities.Tags', 'Users'],
         ]);
-        //
+    //
 	// we want to be able to tell if the current user is already on this
 	// pathway or not, so we take the same approach as above, parsing all
 	// the users into a single array so that we can perform a simple
@@ -94,7 +94,7 @@ class PathwaysController extends AppController
 	}
 
 
-        if(!empty($user)) {
+    if(!empty($user)) {
 		$this->set(compact('pathway', 'usersonthispathway', 'useractivitylist'));
 	} else {
 		$this->set(compact('pathway', 'usersonthispathway'));

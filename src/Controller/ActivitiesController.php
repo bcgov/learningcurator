@@ -92,10 +92,10 @@ class ActivitiesController extends AppController
     public function find()
     {
         $this->Authorization->skipAuthorization();
-	$search = $this->request->getQuery('q');
+	    $search = $this->request->getQuery('q');
         $activities = $this->Activities->find()->where(function ($exp, $query) use($search) {
             return $exp->like('name', '%'.$search.'%');
-       })->order(['name' => 'ASC']);
+        })->order(['name' => 'ASC']);
         $this->set('activities', $activities);
     }
 

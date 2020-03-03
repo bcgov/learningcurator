@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pathway $pathway
  */
+
 $this->loadHelper('Authentication.Identity');
 if ($this->Identity->isLoggedIn()) {
 	$name = $this->Identity->get('role_id');
@@ -37,6 +38,17 @@ if(!empty($active)) {
 	text-align: center;
 	text-transform: uppercase;
 	width: 130px;
+}
+.activity-badge {
+	border-radius: 50%;
+	float: left;
+	font-size: 18px;
+	height: 140px;
+	line-height: 1;
+	margin: 5px;
+	padding-top: 30px;
+	text-align: centre;
+	width: 140px;
 }
 
 </style>
@@ -295,7 +307,9 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 		<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>
 		<?php endif ?>
 	</h1>
-	<div class=""><?= $activity->description ?></div>
+	<div class="p-3" style="background: rgba(255,255,255,.3);">
+		<?= $activity->description ?>
+	</div>
 
 
 
@@ -305,6 +319,35 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 
 
+	<?php foreach($activity->tags as $tag): ?>
+
+	<?php if($tag->name == 'Learning System Course'): ?>
+
+	
+	<a target="_blank" 
+		data-toggle="tooltip" data-placement="bottom" title="Enrol in this course in the Learning System"
+		href="https://learning.gov.bc.ca/psc/CHIPSPLM_6/EMPLOYEE/ELM/c/LM_OD_EMPLOYEE_FL.LM_FND_LRN_FL.GBL?Page=LM_FND_LRN_RSLT_FL&Action=U&KWRD=<?php echo urlencode($activity->name) ?>" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
+		class="btn btn-block my-2 text-uppercase btn-lg">
+
+			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+
+			<?= $activity->activity_type->name ?>
+
+	</a>
+
+	<?php elseif($tag->name == 'YouTube'): ?>
+	<div class="mb-3 p-3 bg-white">
+		<iframe width="100%" 
+			height="315" 
+			src="https://www.youtube.com/embed/<?= h($activity->hyperlink) ?>/" 
+			frameborder="0" 
+			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+			allowfullscreen>
+		</iframe>
+	</div>
+
+	<?php else: ?>
 
 
 	<a target="_blank" 
@@ -314,8 +357,17 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 		class="btn btn-block my-2 text-uppercase btn-lg">
 
 			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+
 			<?= $activity->activity_type->name ?>
+
 	</a>
+
+
+	<?php endif ?>	
+
+	<?php endforeach ?>
+
+
 
 
 
@@ -431,7 +483,9 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 		<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>
 		<?php endif ?>
 	</h2>
-	<div class=""><?= $activity->description ?></div>
+	<div class="p-3" style="background: rgba(255,255,255,.3);">
+		<?= $activity->description ?>
+	</div>
 
 
 
@@ -507,11 +561,20 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 
 <?php if(!empty($defunctacts)): ?>
-
-<h3>Defunct</h3>
-<?php foreach($defunctacts as $activity): ?>
-<?= $activity->name ?><br>
+	<div>
+  <a class="btn btn-light" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Defunct activities
+  </a>
+</div>
+<div class="collapse" id="collapseExample">
+  <ul class="list-group">
+  <?php foreach($defunctacts as $activity): ?>
+<li class="list-group-item"><a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a></li>
 <?php endforeach ?>
+  </ul>
+</div>
+
+
 <?php endif ?>
 
 
@@ -568,25 +631,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 
 
-<div class="stats my-3">
 
-<span class="badge badge-dark" style="background-color: rgba(<?= $readcolor ?>, 1)">
-	<span class="fas <?= $readicon ?>"></span>
-	Read <?= $readclaim ?> of <?php echo count($readtotal) ?>
-</span>
-<span class="badge badge-dark" style="background-color: rgba(<?= $watchcolor ?>, 1)">
-	<span class="fas <?= $watchicon ?>"></span>
-	Watched <?= $watchclaim ?> of <?php echo count($watchtotal) ?>
-</span>
-<span class="badge badge-dark" style="background-color: rgba(<?= $listencolor ?>, 1)">
-	<span class="fas <?= $listenicon ?>"></span>
-	Listened <?= $listenclaim ?> of <?php echo count($listentotal) ?>
-</span>
-<span class="badge badge-dark" style="background-color: rgba(<?= $participatecolor ?>, 1)">
-	<span class="fas <?= $participateicon ?>"></span>
-	Participated <?= $participateclaim ?> of <?php echo count($participatetotal) ?> 
-</span>
-</div>
 
 
 
@@ -600,8 +645,26 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 <canvas id="myChart" width="400" height="400"></canvas>
 
 
-
-
+<div style="border-radius: 3px;">
+<div class="stats my-3 text-center" style="border-radius: 3px; color: #FFF; ">
+<div class="activity-badge" style="background-color: rgba(<?= $readcolor ?>, 1)">
+	<span class="fas <?= $readicon ?>" style="font-size:230%;"></span><br>
+	Read <br><?= $readclaim ?> of <?php echo count($readtotal) ?>
+</div>
+<div class="activity-badge" style="background-color: rgba(<?= $watchcolor ?>, 1)">
+	<span class="fas <?= $watchicon ?>" style="font-size:230%;"></span><br>
+	Watched <br><?= $watchclaim ?> of <?php echo count($watchtotal) ?>
+</div>
+<div class="activity-badge" style="background-color: rgba(<?= $listencolor ?>, 1)">
+	<span class="fas <?= $listenicon ?>" style="font-size:230%;"></span><br>
+	Listened <br><?= $listenclaim ?> of <?php echo count($listentotal) ?>
+</div>
+<div class="activity-badge" style="background-color: rgba(<?= $participatecolor ?>, 1)">
+	<span class="fas <?= $participateicon ?>" style="font-size:230%;"></span><br>
+	Participated <br><?= $participateclaim ?> of <?php echo count($participatetotal) ?> 
+</div>
+</div>
+</div>
 
 <div>
 <span class="badge badge-dark"><?= $totalActivities ?></span> Total activities<br>
