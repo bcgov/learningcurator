@@ -42,4 +42,5 @@ nbproject/*
 # Sass preprocessor
 .sass-cache/
 
+/webroot/bootstrap-theme/*
 /webroot/fontawesome/*
