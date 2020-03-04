@@ -11,7 +11,19 @@ use Authorization\IdentityInterface;
  */
 class UserPolicy
 {
- 
+     /**
+     * Check if $user can access main user index
+     *
+     * @param Authorization\IdentityInterface $user The user.
+     * @param App\Model\Entity\User $resource
+     * @return bool
+     */
+    public function canIndex(IdentityInterface $user, User $resource)
+    {
+        return $this->isAdmin($user, $resource);
+    }
+
+
     /**
      * Check if $user can create User
      *
@@ -34,7 +46,15 @@ class UserPolicy
      */
     public function canEdit(IdentityInterface $user, User $resource)
     {
-        return $this->isAdmin($user, $resource);
+        if($this->isAdmin($user, $resource)) {
+            return true;
+        } elseif($this->isCurator($user,$resource)) {
+            return true;
+        } elseif($this->isLearner($user,$resource)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -46,7 +66,11 @@ class UserPolicy
      */
     public function canDelete(IdentityInterface $user, User $resource)
     {
-        return $this->isAdmin($user, $resource);
+        if($this->isAdmin($user, $resource)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -58,8 +82,15 @@ class UserPolicy
      */
     public function canView(IdentityInterface $user, User $resource)
     {
-        return $this->isLearner($user, $resource);
-	//return false;
+        if($this->isAdmin($user, $resource)) {
+            return true;
+        } elseif($this->isCurator($user,$resource)) {
+            return true;
+        } elseif($this->isLearner($user,$resource)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

@@ -23,6 +23,7 @@ class UsersController extends AppController
             'contain' => ['Ministries', 'Roles'],
         ];
         $users = $this->paginate($this->Users);
+        $this->Authorization->authorize($users);
 
         $this->set(compact('users'));
     }
