@@ -6,7 +6,7 @@
 <div class="card-body">
     <?= $this->Flash->render() ?>
     <?= $this->Form->create() ?>
-        <?= $this->Form->control('email', ['required' => true, 'class' => 'form-control']) ?>
+        <?= $this->Form->control('idir', ['required' => true, 'class' => 'form-control']) ?>
         <?= $this->Form->control('password', ['required' => true, 'class' => 'form-control']) ?>
     <?= $this->Form->submit(__('IDIR Login'), ['class' => 'btn btn-dark btn-block mt-3']); ?>
     <?= $this->Form->end() ?>

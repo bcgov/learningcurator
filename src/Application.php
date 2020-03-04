@@ -132,7 +132,7 @@ protected function configAuth(): \Authentication\AuthenticationService
     // Load identifiers, ensure we check email and password fields
     $authenticationService->loadIdentifier('Authentication.Password', [
         'fields' => [
-            'username' => 'email',
+            'username' => 'idir',
             'password' => 'password',
         ]
     ]);
@@ -142,7 +142,7 @@ protected function configAuth(): \Authentication\AuthenticationService
     // Configure form data check to pick email and password
     $authenticationService->loadAuthenticator('Authentication.Form', [
         'fields' => [
-            'username' => 'email',
+            'username' => 'idir',
             'password' => 'password',
         ],
         'loginUrl' => '/users/login',
