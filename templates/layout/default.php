@@ -140,7 +140,26 @@ img {
 <script>
 
 $(function () {
-  $('[data-toggle="tooltip"]').tooltip();
+	$('[data-toggle="tooltip"]').tooltip();
+	$('.likingit').on('click',function(e){
+		var url = $(this).attr('href');
+		$(this).children('.lcount').html('Liked!');
+		e.preventDefault();
+		$.ajax({
+			type: "GET",
+			url: url,
+			data: '',
+			success: function(data)
+			{
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
 });
 </script>
 </body>

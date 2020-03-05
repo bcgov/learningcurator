@@ -387,8 +387,8 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 		<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 			<i class="fas fa-exclamation-triangle"></i>
 		</a>	
-		<a href="#" style="color:#333;" class="btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-			5 <i class="fas fa-thumbs-up"></i>
+		<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+			<?= h($activity->recommended) ?> <i class="fas fa-thumbs-up"></i>
 		</a>
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
@@ -430,7 +430,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 
 
-
+<p>The following activities are supplemental and not required to complete this pathway.</p>
 
 
 <div class="card-columns">
@@ -525,9 +525,9 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 		<i class="fas fa-exclamation-triangle"></i>
 	</a>	
-	<a href="#" style="color:#333;" class="btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-		33 <i class="fas fa-thumbs-up"></i>
-	</a>
+		<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
+		</a>
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => '']) ?>
@@ -764,7 +764,6 @@ var myDoughnutChart = new Chart(ctx, {
         },
     }
 });
-
 
 
 </script>

@@ -173,6 +173,37 @@ class ActivitiesController extends AppController
         $this->set(compact('activity', 'statuses', 'ministries', 'categories', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
     }
 
+
+/**
+* Like an activity
+*
+* @return \Cake\Http\Response|null Redirects to courses index.
+* @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+*
+*/
+public function like ($id = null)
+{
+    $activity = $this->Activities->get($id);
+    $this->Authorization->authorize($activity);
+    $newlike = $activity->recommended;
+    $newlike++;
+    $this->request->getData()['recommended'] = $newlike;
+    $activity->recommended = $newlike;
+        if ($this->request->is(['get'])) {
+            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+            if ($this->Activities->save($activity)) {
+                $this->Flash->success(__('You\'ve liked this activity. Thanks for the feedback!.'));
+		echo 'Liked!';
+                return $this->redirect($this->referer());
+	    } else {
+		    $this->Flash->error(__('The activity could not be saved. Please, try again.'));
+	    }
+        }
+
+}
+
+
+
     /**
      * Delete method
      *
@@ -207,7 +238,6 @@ public function actionImportUpload ()
 	$fileobject->moveTo($destination);
 	return $this->redirect(['action' => 'actionImport']);
 }
-
 
 /**
 * Learning Agent Standard Resources Import file

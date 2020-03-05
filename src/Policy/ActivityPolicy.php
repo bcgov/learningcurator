@@ -81,6 +81,19 @@ class ActivityPolicy
         return true;
     }
 
+    /**
+     * Check if $user can like Activity
+     *
+     * @param Authorization\IdentityInterface $user The user.
+     * @param App\Model\Entity\Activity $activity
+     * @return bool
+     */
+    public function canLike(IdentityInterface $user, Activity $activity)
+    {
+        return true;
+    }
+
+
 
     protected function isCurator(IdentityInterface $user, Activity $activity)
     {
