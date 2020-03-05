@@ -192,9 +192,8 @@ public function like ($id = null)
         if ($this->request->is(['get'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             if ($this->Activities->save($activity)) {
-                $this->Flash->success(__('You\'ve liked this activity. Thanks for the feedback!.'));
 		echo 'Liked!';
-                return $this->redirect($this->referer());
+                //return $this->redirect($this->referer());
 	    } else {
 		    $this->Flash->error(__('The activity could not be saved. Please, try again.'));
 	    }
