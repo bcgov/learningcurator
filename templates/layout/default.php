@@ -36,6 +36,13 @@ img {
 		<span class="fas fa-dot-circle" style="color: rgba(<?= $type->color ?>,1); font-size: 280%; margin: 0 0 0 -20px;"></span>
 <?php endforeach ?><br><span style="font-size: 16px;">Learning Agent</span>
 	</a>
+	<?php if(!empty($active)): ?>
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item">
+			<a class="nav-link" href="/users/home">Hello, <?= $active->name ?></a>
+		</li>
+	</ul>
+	<?php endif ?>
 	<button class="navbar-toggler" 
 		type="button" 
 		data-toggle="collapse" 
@@ -50,9 +57,9 @@ img {
 	<ul class="navbar-nav mr-auto">
 
 		<?php if(!empty($active)): ?>
-		<li class="nav-item">
+	<!--	<li class="nav-item">
 			<a class="nav-link" href="/users/home">Hello, <?= $active->name ?></a>
-		</li>
+		</li> -->
 		<?php endif ?>
 	<!--	<li class="nav-item">
 			<a class="nav-link" href="/">About</a>
