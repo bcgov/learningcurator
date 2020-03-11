@@ -551,8 +551,6 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<?php endif ?>
 
 
-
-
 </div>
 </div>
 
