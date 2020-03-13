@@ -12,6 +12,17 @@ CREATE TABLE `roles` (
   PRIMARY KEY (`id`)
 );
 
+--
+-- Dumping data for table `roles`
+--
+
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'Learner','These are regular end-users who can\'t do anything but join pathways and claim activities.','',''),(2,'Curator','Curators are the subject matter experts who create pathways, add steps, assigning activities to steps, and determining which activities are required for pathway completion.','',''),(5,'Super User','Can do anything, anywhere.','','');
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 
 --
 -- Table structure for table `ministries`
@@ -29,6 +40,19 @@ CREATE TABLE `ministries` (
   `featured` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
 );
+
+
+
+--
+-- Dumping data for table `ministries`
+--
+
+LOCK TABLES `ministries` WRITE;
+/*!40000 ALTER TABLE `ministries` DISABLE KEYS */;
+INSERT INTO `ministries` VALUES (1,'BC Public Service Agency','All Government of British Columbia Learners','','','','',1);
+/*!40000 ALTER TABLE `ministries` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 
 --
@@ -51,6 +75,19 @@ CREATE TABLE users (
 );
 
 
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Allan','ahaggett',1,5,'','allan.haggett@gov.bc.ca','$2y$10$72lxcQm.SiM.dnvK3Ldv4.A9RtIThDwlVnO1slyH./WfW/damMWVC');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
 --
 -- Table structure for table `competencies`
 --
@@ -71,6 +108,9 @@ CREATE TABLE `competencies` (
   CONSTRAINT `comp_createduser_ibfk_1` FOREIGN KEY (`createdby`) REFERENCES `users` (`id`),
   CONSTRAINT `comp_modifieduser_ibfk_1` FOREIGN KEY (`modifiedby`) REFERENCES `users` (`id`)
 );
+
+
+
 
 --
 -- Table structure for table `competencies_users`
@@ -106,6 +146,17 @@ CREATE TABLE `statuses` (
 );
 
 --
+-- Dumping data for table `statuses`
+--
+
+LOCK TABLES `statuses` WRITE;
+/*!40000 ALTER TABLE `statuses` DISABLE KEYS */;
+INSERT INTO `statuses` VALUES (1,'Active','','2020-02-02 04:00:07',1),(2,'Defunct','Activities that, for one reason or another, are no longer valid (e.g. a YouTube video that\'s been taken down)','2020-02-09 18:46:41',1);
+/*!40000 ALTER TABLE `statuses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
 -- Table structure for table `categories`
 --
 
@@ -122,6 +173,20 @@ CREATE TABLE `categories` (
   PRIMARY KEY (`id`),
   CONSTRAINT `cat_createduser_ibfk_1` FOREIGN KEY (`createdby`) REFERENCES `users` (`id`)
 );
+
+
+
+--
+-- Dumping data for table `categories`
+--
+
+LOCK TABLES `categories` WRITE;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (1,'Leadership','','','','','2020-02-02 04:07:02',1);
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 
 
 --
@@ -243,6 +308,16 @@ CREATE TABLE `activity_types` (
 );
 
 --
+-- Dumping data for table `activity_types`
+--
+
+LOCK TABLES `activity_types` WRITE;
+/*!40000 ALTER TABLE `activity_types` DISABLE KEYS */;
+INSERT INTO `activity_types` VALUES (1,'Watch','Videos to watch','196,77,60','','fa-video',0,'2020-02-02 03:10:44',1,'2020-03-02 22:40:32',1),(2,'Read','Read the things.','255,107,107','','fa-book-reader',0,'2020-02-02 03:11:03',1,'2020-03-01 01:33:56',1),(3,'Listen','Listen to the things. Podcasts; audio books...','199,244,100','','fa-headphones',0,'2020-02-02 03:11:24',1,'2020-03-01 01:34:06',1),(4,'Participate','Face to face courses','78,205,196','','fa-users',0,'2020-02-02 03:11:39',1,'2020-03-01 01:34:20',1);
+/*!40000 ALTER TABLE `activity_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `activities`
 --
 
@@ -281,6 +356,9 @@ CREATE TABLE `activities` (
   CONSTRAINT `activitycreateduser_ibfk_1` FOREIGN KEY (`createdby_id`) REFERENCES `users` (`id`),
   CONSTRAINT `activitymodifieduser_ibfk_1` FOREIGN KEY (`modifiedby_id`) REFERENCES `users` (`id`)
 );
+
+
+
 
 --
 -- Table structure for table `activities_competencies`
@@ -350,6 +428,17 @@ CREATE TABLE `tags` (
   CONSTRAINT `tagcreateduser_ibfk_1` FOREIGN KEY (`createdby`) REFERENCES `users` (`id`),
   CONSTRAINT `tagmodifieduser_ibfk_1` FOREIGN KEY (`modifiedby`) REFERENCES `users` (`id`)
 );
+
+--
+-- Dumping data for table `tags`
+--
+
+LOCK TABLES `tags` WRITE;
+/*!40000 ALTER TABLE `tags` DISABLE KEYS */;
+INSERT INTO `tags` VALUES (2,'Book','Physical book','2020-02-08 18:49:48',1,'2020-02-08 18:49:48',1),(3,'YouTube','Videos hosted on the YouTube platform (Google)','2020-02-08 18:50:17',1,'2020-02-08 18:55:46',1),(4,'Podcast','A series of audio-only recordings, usually discussions on various topics.','2020-02-08 18:50:53',1,'2020-02-08 18:50:53',1),(5,'PDF','An Adobe Portable Document Format (PDF) resource.','2020-02-08 18:51:54',1,'2020-02-08 18:51:54',1),(6,'Website','A general-purpose website','2020-02-08 18:52:25',1,'2020-02-08 18:52:25',1),(7,'Web App','An application which is accessible via the world wide web. ','2020-02-08 18:53:16',1,'2020-02-08 18:53:16',1),(8,'iOS App','A mobile app designed for Apple\'s iOS/iPadOS devices.','2020-02-08 18:53:50',1,'2020-02-08 18:53:50',1),(9,'Android App','A mobile application designed for Google\'s Android platform.','2020-02-08 18:54:17',1,'2020-02-08 18:54:17',1),(10,'eBook','Not all physical books are available in eBook format. ','2020-02-08 18:55:21',1,'2020-02-08 18:55:21',1),(11,'Vimeo','A video-hosting platform.','2020-02-08 18:56:06',1,'2020-02-08 18:56:06',1),(12,'Social Media','This activity relates somehow to social media and its platforms.','2020-02-08 18:56:43',1,'2020-02-08 18:56:43',1),(13,'Learning System Course','','2020-03-01 03:19:38',1,'2020-03-01 03:19:38',1);
+/*!40000 ALTER TABLE `tags` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 --
 -- Table structure for table `activities_tags`
