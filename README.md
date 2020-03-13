@@ -25,6 +25,7 @@ MySQL database
 Under active development; not yet alpha.
 
 ## Goals/Roadmap
+* Integration with peoplesoft learning record
 
 ## Getting Help or Reporting an Issue
 
