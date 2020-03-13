@@ -11,6 +11,7 @@ Initially this application will be used as a vehicle to contribute to the Corpor
 There are categories of pathways. Pathways have steps; steps have activities; activies are categorized and tagged. A signed in user can identify which compentencies they would like to develop, follow pathways and claim activites.
 
 ## Usage
+Follow pathways and complete the activities; get a certificate of completion.
 
 ## Requirements
 
