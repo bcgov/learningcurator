@@ -6,6 +6,7 @@
 
 <title><?= $this->fetch('title') ?></title>
 <link rel="stylesheet" href="/bootstrap-theme/dist/css/bootstrap-theme.min.css">
+<link href="/css/home.css" rel="stylesheet"> 
 <link href="/fontawesome/css/all.css" rel="stylesheet"> 
 <!--<link rel="stylesheet" 
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" 
