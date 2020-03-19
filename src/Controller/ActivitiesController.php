@@ -248,12 +248,11 @@ public function actionImportUpload ()
 public function activityImport ()
 {
 	// 
-	// ID,Organization,Title,Link,Description,Dimensions,Keywords
+	// Pathway,Step,Activity Type,Name,Hyperlink,Description,Required,Competencies,Time,Tags,Licensing,ISBN,Curator
 	//
 	$now = date('Y-m-d H:i:s');
 	//$who = $_SERVER["REMOTE_USER"];
 	//$who = $this->request->env('REMOTE_USER');
-	$who = 'ahaggett'; //$this->request->env('REMOTE_USER');
 	$desc = '';
 	if (($handle = fopen("/home/allankh/learningagent/webroot/files/standard-import.csv", "r")) !== FALSE) {
 		fgetcsv($handle);
@@ -261,7 +260,7 @@ public function activityImport ()
 		$action = $this->Activities->newEmptyEntity();
 		$action->name = utf8_encode($data[2]);
 		$action->description = utf8_encode($data[4]);
-		$action->moderator_notes = 'Imported from L@WW 2019 HWB actions';
+		$action->moderator_notes = '';
 		$action->hyperlink = $data[3];
 		$action->licensing = '';
 		$action->meta_description = '';

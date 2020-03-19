@@ -25,8 +25,12 @@ img {
 .card {
 	border: 0;
 }
-
+.multiselect-container {
+	width: 300px;
+}
 </style>
+
+<link rel="stylesheet" href="/css/bootstrap-multiselect.css" type="text/css"/>
 </head>
 <body class="bg-light">
 
@@ -144,10 +148,16 @@ img {
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
 	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
 	crossorigin="anonymous"></script>
-
+<script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
 <script>
 
 $(function () {
+
+	$('#activities-ids').multiselect({
+            enableFiltering: true,
+            filterBehavior: 'both'
+        });
+
 	$('[data-toggle="tooltip"]').tooltip();
 	$('.likingit').on('click',function(e){
 		var url = $(this).attr('href');

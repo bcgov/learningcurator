@@ -147,7 +147,7 @@ class PathwaysController extends AppController
             if ($this->Pathways->save($pathway)) {
                 $this->Flash->success(__('The pathway has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
         }
