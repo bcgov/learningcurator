@@ -189,16 +189,15 @@ public function like ($id = null)
     $newlike++;
     $this->request->getData()['recommended'] = $newlike;
     $activity->recommended = $newlike;
-        if ($this->request->is(['get'])) {
-            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
-            if ($this->Activities->save($activity)) {
-		echo 'Liked!';
-                //return $this->redirect($this->referer());
-	    } else {
-		    $this->Flash->error(__('The activity could not be saved. Please, try again.'));
-	    }
+    if ($this->request->is(['get'])) {
+        $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+        if ($this->Activities->save($activity)) {
+            echo 'Liked!';
+            //return $this->redirect($this->referer());
+        } else {
+            $this->Flash->error(__('The activity could not be saved. Please, try again.'));
         }
-
+    }
 }
 
 
@@ -228,14 +227,14 @@ public function like ($id = null)
 
 
 
-public function actionImportUpload () 
+public function activityImportUpload () 
 {
 	$fileobject = $this->request->getData('standardimportfile');
 	$destination = '/home/allankh/learningagent/webroot/files/standard-import.csv';
 
 	// Existing files with the same name will be replaced.
 	$fileobject->moveTo($destination);
-	return $this->redirect(['action' => 'actionImport']);
+	return $this->redirect(['action' => 'activityImport']);
 }
 
 /**
@@ -248,7 +247,8 @@ public function actionImportUpload ()
 public function activityImport ()
 {
 	// 
-	// Pathway,Step,Activity Type,Name,Hyperlink,Description,Required,Competencies,Time,Tags,Licensing,ISBN,Curator
+    // 0-Pathway,1-Step,2-Activity Type,3-Name,4-Hyperlink,5-Description,6-Required,
+    // 7-Competencies,8-Time,9-Tags,10-Licensing,11-ISBN,12-Curator
 	//
 	$now = date('Y-m-d H:i:s');
 	//$who = $_SERVER["REMOTE_USER"];
@@ -258,17 +258,29 @@ public function activityImport ()
 		fgetcsv($handle);
 		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 		$action = $this->Activities->newEmptyEntity();
-		$action->name = utf8_encode($data[2]);
-		$action->description = utf8_encode($data[4]);
+		$action->name = utf8_encode($data[3]);
+		$action->description = utf8_encode($data[5]);
 		$action->moderator_notes = '';
-		$action->hyperlink = $data[3];
+		$action->hyperlink = $data[4];
 		$action->licensing = '';
 		$action->meta_description = '';
 		$action->status_id = 1;
 		$action->modifiedby_id = 1;
 		$action->createdby_id = 1;
-		$action->approvedby_id = 1;
-		$action->activity_types_id = 1;
+        $action->approvedby_id = 1;
+        
+        $reqd = 0;
+        if($data[6] == 'y') $reqd = 1;
+        $action->required = $reqd;
+
+        //1-watch,2-read,3-listen,4-participate
+        $actid = 1;
+        if($data[2] == 'Watch') $actid = 1;
+        if($data[2] == 'Read') $actid = 2;
+        if($data[2] == 'Listen') $actid = 3;
+        if($data[2] == 'Participate') $actid = 4;
+        $action->activity_types_id = $actid;
+        
 		if ($this->Activities->save($action)) {
 			//echo 'yeahyeah';
 		} else {
