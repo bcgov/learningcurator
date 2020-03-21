@@ -266,9 +266,10 @@ public function activityImport ()
 		$action->meta_description = '';
 		$action->status_id = 1;
 		$action->modifiedby_id = 1;
-		$action->createdby_id = 1;
+		$action->createdby_id = utf8_encode($data[12]);
         $action->approvedby_id = 1;
-        
+        $action->hours = utf8_encode($data[8]); // TODO change this to minutes instead of hours
+
         $reqd = 0;
         if($data[6] == 'y') $reqd = 1;
         $action->required = $reqd;
