@@ -239,8 +239,11 @@ public function activityImportUpload ()
 
 /**
 * Standard Activities Import process.
+* 
 * Takes a standard CSV file of activities (headers below; sample file in repo)
 * and imports them into the database.
+*
+* #TODO should this be implemented at the Model/Table layer? probs...
 *
 * 0-Pathway,1-Step,2-Activity Type,3-Name,4-Hyperlink,5-Description,6-Required,
 * 7-Competencies,8-Time,9-Tags,10-Licensing,11-ISBN,12-Curator
