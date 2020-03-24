@@ -23,6 +23,9 @@ class UsersController extends AppController
             'contain' => ['Ministries', 'Roles'],
         ];
         $users = $this->paginate($this->Users);
+        // This doesn't work 
+        // https://discourse.cakephp.org/t/authentication-index/7506/2
+        //
         $this->Authorization->authorize($users);
 
         $this->set(compact('users'));

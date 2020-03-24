@@ -226,155 +226,114 @@ public function like ($id = null)
 
 
 
-
-public function activityImportUpload () 
-{
-	$fileobject = $this->request->getData('standardimportfile');
-	$destination = '/home/allankh/learningagent/webroot/files/standard-import.csv';
-
-	// Existing files with the same name will be replaced.
-	$fileobject->moveTo($destination);
-	return $this->redirect(['action' => 'activityImport']);
-}
-
-/**
-* Learning Agent Standard Resources Import file
-*
-* @return \Cake\Http\Response|null Redirects to courses index.
-* @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-*
-*/
-public function activityImport ()
-{
-	// 
-    // 0-Pathway,1-Step,2-Activity Type,3-Name,4-Hyperlink,5-Description,6-Required,
-    // 7-Competencies,8-Time,9-Tags,10-Licensing,11-ISBN,12-Curator
-	//
-	$now = date('Y-m-d H:i:s');
-	//$who = $_SERVER["REMOTE_USER"];
-	//$who = $this->request->env('REMOTE_USER');
-	$desc = '';
-	if (($handle = fopen("/home/allankh/learningagent/webroot/files/standard-import.csv", "r")) !== FALSE) {
-		fgetcsv($handle);
-		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-		$action = $this->Activities->newEmptyEntity();
-		$action->name = utf8_encode($data[3]);
-		$action->description = utf8_encode($data[5]);
-		$action->moderator_notes = '';
-		$action->hyperlink = $data[4];
-		$action->licensing = '';
-		$action->meta_description = '';
-		$action->status_id = 1;
-		$action->modifiedby_id = 1;
-		$action->createdby_id = 1;
-        $action->approvedby_id = 1;
-        
-        $reqd = 0;
-        if($data[6] == 'y') $reqd = 1;
-        $action->required = $reqd;
-
-        //1-watch,2-read,3-listen,4-participate
-        $actid = 1;
-        if($data[2] == 'Watch') $actid = 1;
-        if($data[2] == 'Read') $actid = 2;
-        if($data[2] == 'Listen') $actid = 3;
-        if($data[2] == 'Participate') $actid = 4;
-        $action->activity_types_id = $actid;
-        
-		if ($this->Activities->save($action)) {
-			//echo 'yeahyeah';
-		} else {
-			echo 'WTF';
-		}
-	}
-	return $this->redirect(['action' => 'index']);
-}
-}
-
-     /**
-     * PeopleSoft ELM Learning System synchronization
-     *
-     * @return \Cake\Http\Response|null Redirects to courses index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function elmCourseImport ()
+    /**
+    * Standard Activities file upload.
+    * 
+    * Takes a standard CSV file of activities and uploads it into the webroot/files
+    * directory and redirects to activityImport
+    * 
+    *
+    *
+    * @return \Cake\Http\Response|null Redirects to activityImport for processing.
+    * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found. #TODO what does it really say?
+    *
+    */
+    public function activityImportUpload () 
     {
-	    // 
-	    // elm-courses.csv headers:
-	    // "0-Course","1-Course Code","2-Delivery Method","3-Description","4-Learning Environment","5-Learning Group"
-	    //
-	    //
-	    // database schema:
-	    //mysql> explain actions;
-	    //+-------------------+--------------+------+-----+---------+----------------+
-	    //| Field             | Type         | Null | Key | Default | Extra          |
-	    //+-------------------+--------------+------+-----+---------+----------------+
-	    //| id                | int(11)      | NO   | PRI | NULL    | auto_increment |
-	    //| name              | varchar(255) | NO   |     | NULL    |                |
-	    //| hyperlink         | varchar(255) | YES  |     | NULL    |                |
-	    //| description       | text         | YES  |     | NULL    |                |
-	    //| licensing         | text         | YES  |     | NULL    |                |
-	    //| moderator_notes   | text         | YES  |     | NULL    |                |
-	    //| status            | varchar(100) | YES  |     | NULL    |                |
-	    //| meta_title        | varchar(255) | YES  |     | NULL    |                |
-	    //| meta_description  | text         | YES  |     | NULL    |                |
-	    //| featured          | int(11)      | YES  |     | 0       |                |
-	    //| moderation_flag   | int(11)      | YES  |     | 0       |                |
-	    //| file_path         | varchar(255) | YES  |     | NULL    |                |
-	    //| image_path        | varchar(255) | YES  |     | NULL    |                |
-	    //| ministry_id       | int(11)      | YES  | MUL | NULL    |                |
-	    //| category_id       | int(11)      | YES  | MUL | NULL    |                |
-	    //| method_id         | int(11)      | YES  | MUL | NULL    |                |
-	    //| approvedby        | int(11)      | NO   | MUL | NULL    |                |
-	    //| created           | datetime     | NO   |     | NULL    |                |
-	    //| createdby         | int(11)      | NO   | MUL | NULL    |                |
-	    //| modified          | datetime     | NO   |     | NULL    |                |
-	    //| modifiedby        | int(11)      | NO   | MUL | NULL    |                |
-	    //| action_types_id | int(11)      | YES  | MUL | NULL    |                |
-	    //+-------------------+--------------+------+-----+---------+----------------+
-	    //22 rows in set (0.00 sec)
-	    //
-	    $now = date('Y-m-d H:i:s');
-	    $desc = '';
-	    if (($handle = fopen("/home/allankh/learningagent/webroot/files/GBC_COURSECOUNT.csv", "r")) !== FALSE) {
-		fgetcsv($handle);
-		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-			if($data[5] == 'All Government of British Columbia Learners') {
-				$desc = '';
-				if(isset($data[3]) && $data[3] != '') {
-					$desc = utf8_encode($data[3]);
-				}
-				$action = $this->Actions->newEmptyEntity();
-				$action->name = $data[0];
-				$action->description = $desc;
-				$action->moderator_notes = '';
-				$action->licensing = '';
-				$action->meta_description = '';
-				$action->modifiedby_id = 3;
-				$action->createdby_id = 3;
-				$action->approvedby_id = 3;
-				$action->action_types_id = 1;
-				if ($this->Actions->save($action)) {
-					// 
-				} else {
-					echo 'Huh?';
-				}
-			}
-		}
-        	return $this->redirect(['action' => 'index']);
-	}
+        $fileobject = $this->request->getData('standardimportfile');
+        $destination = '/home/allankh/learningagent/webroot/files/standard-import.csv';
+
+        // Existing files with the same name will be replaced.
+        $fileobject->moveTo($destination);
+        return $this->redirect(['action' => 'activityImport']);
     }
 
-
-
-    function elmupload () 
+    /**
+    * Standard Activities Import process.
+    * 
+    * Takes a standard CSV file of activities (headers below; sample file in repo)
+    * and imports them into the database.
+    *
+    * #TODO should this be implemented at the Model/Table layer? probs...
+    *
+    * 0-Pathway,1-Step,2-Activity Type,3-Name,4-Hyperlink,5-Description,6-Required,
+    * 7-Competencies,8-Time,9-Tags,10-Licensing,11-ISBN,12-Curator
+    *
+    * ___Does NOT currently support importing pathways or steps.___ It will only 
+    * import activities. Curators then still need to create pathways and steps and 
+    * manually associate the activities. It's on the backlog to support this, but 
+    * not for MVP
+    *
+    * @return \Cake\Http\Response|null Redirects to courses index.
+    * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+    *
+    */
+    public function activityImport ()
     {
-	$fileobject = $this->request->getData('file_path');
-	$destination = '/home/allankh/learningagent/webroot/files/' . $fileobject->getClientFilename();
+        // #TODO check to see if standard-import.csv already exists,
+        // make a copy of it if it does (better yet give it a unique
+        // file name on upload and pass it in here)
+        if (($handle = fopen("/home/allankh/learningagent/webroot/files/standard-import.csv", "r")) !== FALSE) {
+            // pop the headers off so we're starting with actual data
+            fgetcsv($handle);
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
-	// Existing files with the same name will be replaced.
-	$fileobject->moveTo($destination);
-        return $this->redirect(['action' => 'elmCourseImport']);
+                // #TODO Should we check for existing activities before proceding? 
+                $action = $this->Activities->newEmptyEntity();
+
+                // Get started
+                $action->name = utf8_encode($data[3]);
+                $action->description = utf8_encode($data[5]);
+
+                // This is for a comment on a moderation action
+                // #TODO this should probably be split out into separate
+                // feature that ties into user flag reports
+                // (create a moderation table for each report; add a mod_comments
+                //   table for discussion of the reports)
+                $action->moderator_notes = '';
+
+                $action->hyperlink = url_encode($data[4]);
+                $action->licensing = utf8_encode($data[10]);
+
+                // #TODO maybe remove? automate fetch of external metadata?
+                $action->meta_description = '';
+
+                // Default to active (1) #TODO support adding inactive? why?
+                $action->status_id = 1;
+
+                // #TODO do a lookup here and get the proper ID based on the person's
+                // name (don't require a number here)
+                $action->modifiedby_id = utf8_encode($data[12]);
+                $action->createdby_id = utf8_encode($data[12]);
+                $action->approvedby_id =  utf8_encode($data[12]);
+                // #TODO change this to minutes instead of hours
+                $action->hours = utf8_encode($data[8]);
+                // Is it required?
+                $reqd = 0;
+                if($data[6] == 'y') $reqd = 1;
+                $action->required = $reqd;
+
+                // Competencies 
+
+                // Tags
+
+                //1-watch,2-read,3-listen,4-participate
+                $actid = 1;
+                if($data[2] == 'Watch') $actid = 1;
+                if($data[2] == 'Read') $actid = 2;
+                if($data[2] == 'Listen') $actid = 3;
+                if($data[2] == 'Participate') $actid = 4;
+                $action->activity_types_id = $actid;
+                
+                if ($this->Activities->save($action)) {
+                    // do nothing, move to the next activity
+                } else {
+                    echo 'Did not import ' . $data[3] . '. Something\'s wrong!<br>';
+                }
+            
+            } // endwhile
+        
+            return $this->redirect(['action' => 'index']);
+        }
     }
- 
 }
