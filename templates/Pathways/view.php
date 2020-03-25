@@ -229,25 +229,23 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<!--<?= h($steps->id) ?>.--> <?= h($steps->name) ?>
 </h1>
 <div class="alert alert-light"><?= h($steps->description) ?></div>
+
+<!--
 <div class="progress mb-3" style="font-size: 130%; height: 40px">
 <div role="progressbar" class="progress-bar" style="width: <?= $readp ?>%; background-color: rgba(<?= $readcolor ?>,1)" aria-valuenow="<?= $readp ?>" aria-valuemin="0" aria-valuemax="100">
 	<span class="fas <?= $readicon ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo count($readcount) ?> things to read"></span>
-	<?php //echo count($readcount) ?> 
 </div>
 <div role="progressbar" class="progress-bar" style="width: <?= $watchp ?>%; background-color: rgba(<?= $watchcolor ?>,1)" aria-valuenow="<?= $watchp ?>" aria-valuemin="0" aria-valuemax="100">
 	<span class="fas <?= $watchicon ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo count($watchcount) ?> things to watch"></span>
-	<?php //echo count($watchcount) ?>
 </div>
 <div role="progressbar" class="progress-bar" style="width: <?= $listenp ?>%; background-color: rgba(<?= $listencolor ?>,1)" aria-valuenow="<?= $listenp ?>" aria-valuemin="0" aria-valuemax="100">
 	<span class="fas <?= $listenicon ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo count($listencount) ?> things to listen to"></span>
-	<?php //echo count($listencount) ?>
 </div>
 <div role="progressbar" class="progress-bar" style="width: <?= $pp ?>%; background-color: rgba(<?= $participatecolor ?>,1)" aria-valuenow="<?= $pp ?>" aria-valuemin="0" aria-valuemax="100">
 	<span class="fas <?= $participateicon ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo count($participatecount) ?> things to participate in"></span>
-	<?php //echo count($participatecount) ?> 
 </div>
 </div>
-
+-->
 
 
 
@@ -318,7 +316,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 
 
-
+	<?php if(!empty($activity->tags)): ?>
 	<?php foreach($activity->tags as $tag): ?>
 
 	<?php if($tag->name == 'Learning System Course'): ?>
@@ -337,6 +335,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	</a>
 
 	<?php elseif($tag->name == 'YouTube'): ?>
+	
 	<div class="mb-3 p-3 bg-white">
 		<iframe width="100%" 
 			height="315" 
@@ -347,20 +346,6 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 		</iframe>
 	</div>
 
-	<?php else: ?>
-
-
-	<a target="_blank" 
-		data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
-		href="<?= $activity->hyperlink ?>" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
-		class="btn btn-block my-2 text-uppercase btn-lg">
-
-			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
-
-			<?= $activity->activity_type->name ?>
-
-	</a>
 
 
 	<?php endif ?>	
@@ -371,7 +356,23 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 
 
 
+	<?php else: ?>
 
+
+<a target="_blank" 
+	data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
+	href="<?= $activity->hyperlink ?>" 
+	style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
+	class="btn btn-block my-2 text-uppercase btn-lg">
+
+		<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+
+		<?= $activity->activity_type->name ?>
+
+</a>
+
+
+<?php endif ?>	
 
 
 
