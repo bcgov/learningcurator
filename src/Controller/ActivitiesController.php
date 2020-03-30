@@ -270,16 +270,16 @@ public function like ($id = null)
     */
     public function activityImport ()
     {
-        
         // #TODO check to see if standard-import.csv already exists,
         // make a copy of it if it does (better yet give it a unique
         // file name on upload and pass it in here)
+        // #TODO Use a constant for the file path
         if (($handle = fopen("/home/allankh/learningagent/webroot/files/standard-import.csv", "r")) !== FALSE) {
             // pop the headers off so we're starting with actual data
             fgetcsv($handle);
+           
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
-                //echo '<pre>'; print_r($data); continue;
                 $lic = $data[10] ?? '';
                 // #TODO Should we check for existing activities before proceding? 
                 $activity = $this->Activities->newEmptyEntity();
@@ -287,6 +287,8 @@ public function like ($id = null)
                 // Get started
                 $activity->name = utf8_encode($data[3]);
                 $activity->description = utf8_encode($data[5]);
+                // #TODO url encode this?
+                $activity->hyperlink = $data[4];
 
                 // This is for a comment on a moderation action
                 // #TODO this should probably be split out into separate
@@ -295,8 +297,6 @@ public function like ($id = null)
                 //   table for discussion of the reports)
                 $activity->moderator_notes = '';
 
-                // #TODO url encode this?
-                $activity->hyperlink = $data[4];
                 $activity->licensing = utf8_encode($lic);
 
                 // #TODO maybe remove? automate fetch of external metadata?
@@ -322,6 +322,7 @@ public function like ($id = null)
 
                 // Tags
                 // #TODO implement lookup and new if not exists
+                // https://book.cakephp.org/4/en/tutorials-and-examples/cms/tags-and-users.html
 
                 // 1-watch,2-read,3-listen,4-participate
                 $actid = 1;
@@ -334,12 +335,13 @@ public function like ($id = null)
                 if ($this->Activities->save($activity)) {
                     // do nothing, move to the next activity
                 } else {
-                    echo 'Did not import ' . $data[3] . '. Something\'s wrong!<br>';
+                    print_r($data);
+                    echo 'Did not import ' . $data[4] . '. Something\'s wrong!<br>';
                 }
             
             } // endwhile
         
-            return $this->redirect(['action' => 'index']);
+            //return $this->redirect(['action' => 'index']);
         }
     }
 }
