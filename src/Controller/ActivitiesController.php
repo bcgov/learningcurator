@@ -270,6 +270,7 @@ public function like ($id = null)
     */
     public function activityImport ()
     {
+        
         // #TODO check to see if standard-import.csv already exists,
         // make a copy of it if it does (better yet give it a unique
         // file name on upload and pass it in here)
@@ -329,7 +330,7 @@ public function like ($id = null)
                 if($data[2] == 'Listen') $actid = 3;
                 if($data[2] == 'Participate') $actid = 4;
                 $activity->activity_types_id = $actid;
-                
+                $this->Authorization->skipAuthorization();
                 if ($this->Activities->save($activity)) {
                     // do nothing, move to the next activity
                 } else {
