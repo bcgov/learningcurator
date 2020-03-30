@@ -1,3 +1,64 @@
-.test {
-    display:none;
+a {
+    -moz-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    -webkit-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    -ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    color: #0279ba;
+    text-decoration: none; 
 }
+a:hover {
+    border-bottom-color: #0279ba;
+    color: #005b8b; 
+}
+a:hover strong {
+    color: inherit; 
+}
+
+.hours {
+    background: rgba(255,255,255,1);
+    color: #222;
+    margin-bottom: 0.75em;
+    padding: 7px 0 5px 0;
+}
+
+.required {
+    background: rgba(0,0,0,1);
+    color: #FFF;
+    float: right;
+    padding: 7px 0 5px 0;
+}
+
+.badge {
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+    transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
+    padding: 7px 10px;
+    margin-bottom: 0.75em;
+}
+
+.btn-light {
+    color: #212529;
+    background-color: #ffffff;
+    border: none;
+}
+
+.btn-light:hover {
+    background-color: #464646;
+    color: #ffffff !important;
+}
+
+a.badge-light:hover, a.badge-light:focus {
+    color: #212529 !important;
+    background-color: #fbfbfb;
+}
+
+
+
+
