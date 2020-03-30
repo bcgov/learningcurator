@@ -330,7 +330,7 @@ public function like ($id = null)
                 if($data[2] == 'Listen') $actid = 3;
                 if($data[2] == 'Participate') $actid = 4;
                 $activity->activity_types_id = $actid;
-                $this->Authorization->skipAuthorization();
+                
                 if ($this->Activities->save($activity)) {
                     // do nothing, move to the next activity
                 } else {
