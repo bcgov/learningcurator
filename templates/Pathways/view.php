@@ -5,9 +5,9 @@
  */
 
 $this->loadHelper('Authentication.Identity');
-if ($this->Identity->isLoggedIn()) {
-	$name = $this->Identity->get('role_id');
-}
+//if ($this->Identity->isLoggedIn()) {
+//	$name = $this->Identity->get('role_id');
+//}
 $uid = 0;
 $role = 0;
 if(!empty($active)) {

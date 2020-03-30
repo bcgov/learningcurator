@@ -18,7 +18,7 @@
 	<div><?= $pathways->has('category') ? $this->Html->link($pathways->category->name, ['controller' => 'Categories', 'action' => 'view', $pathways->category->id]) : '' ?></div>
 	<h2><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?></h2>
 	<div><?= h($pathways->description) ?></div>
-	<img src="/img/activity-rings-mock.png">
+
 	</div>
 	<?php endforeach; ?>
 </div>
