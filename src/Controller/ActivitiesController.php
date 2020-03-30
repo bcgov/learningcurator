@@ -270,6 +270,7 @@ public function like ($id = null)
     */
     public function activityImport ()
     {
+        
         // #TODO check to see if standard-import.csv already exists,
         // make a copy of it if it does (better yet give it a unique
         // file name on upload and pass it in here)
@@ -278,54 +279,59 @@ public function like ($id = null)
             fgetcsv($handle);
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
+                //echo '<pre>'; print_r($data); continue;
+                $lic = $data[10] ?? '';
                 // #TODO Should we check for existing activities before proceding? 
-                $action = $this->Activities->newEmptyEntity();
-
+                $activity = $this->Activities->newEmptyEntity();
+                $this->Authorization->authorize($activity);
                 // Get started
-                $action->name = utf8_encode($data[3]);
-                $action->description = utf8_encode($data[5]);
+                $activity->name = utf8_encode($data[3]);
+                $activity->description = utf8_encode($data[5]);
 
                 // This is for a comment on a moderation action
                 // #TODO this should probably be split out into separate
                 // feature that ties into user flag reports
                 // (create a moderation table for each report; add a mod_comments
                 //   table for discussion of the reports)
-                $action->moderator_notes = '';
+                $activity->moderator_notes = '';
 
-                $action->hyperlink = url_encode($data[4]);
-                $action->licensing = utf8_encode($data[10]);
+                // #TODO url encode this?
+                $activity->hyperlink = $data[4];
+                $activity->licensing = utf8_encode($lic);
 
                 // #TODO maybe remove? automate fetch of external metadata?
-                $action->meta_description = '';
+                $activity->meta_description = '';
 
                 // Default to active (1) #TODO support adding inactive? why?
-                $action->status_id = 1;
+                $activity->status_id = 1;
 
                 // #TODO do a lookup here and get the proper ID based on the person's
                 // name (don't require a number here)
-                $action->modifiedby_id = utf8_encode($data[12]);
-                $action->createdby_id = utf8_encode($data[12]);
-                $action->approvedby_id =  utf8_encode($data[12]);
+                $activity->modifiedby_id = utf8_encode($data[12]);
+                $activity->createdby_id = utf8_encode($data[12]);
+                $activity->approvedby_id =  utf8_encode($data[12]);
                 // #TODO change this to minutes instead of hours
-                $action->hours = utf8_encode($data[8]);
+                $activity->hours = utf8_encode($data[8]);
                 // Is it required?
                 $reqd = 0;
                 if($data[6] == 'y') $reqd = 1;
-                $action->required = $reqd;
+                $activity->required = $reqd;
 
                 // Competencies 
+                // #TODO implement lookup and new if not exists
 
                 // Tags
+                // #TODO implement lookup and new if not exists
 
-                //1-watch,2-read,3-listen,4-participate
+                // 1-watch,2-read,3-listen,4-participate
                 $actid = 1;
                 if($data[2] == 'Watch') $actid = 1;
                 if($data[2] == 'Read') $actid = 2;
                 if($data[2] == 'Listen') $actid = 3;
                 if($data[2] == 'Participate') $actid = 4;
-                $action->activity_types_id = $actid;
-                
-                if ($this->Activities->save($action)) {
+                $activity->activity_types_id = $actid;
+                $this->Authorization->skipAuthorization();
+                if ($this->Activities->save($activity)) {
                     // do nothing, move to the next activity
                 } else {
                     echo 'Did not import ' . $data[3] . '. Something\'s wrong!<br>';

@@ -18,8 +18,15 @@ class StepPolicy
      * @param App\Model\Entity\Step $step
      * @return bool
      */
-    public function canCreate(IdentityInterface $user, Step $step)
+    public function canAdd(IdentityInterface $user, Step $step)
     {
+        if($this->isAdmin($user, $step)) {
+            return true;
+        } elseif($this->isCurator($user,$step)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -49,6 +56,13 @@ class StepPolicy
      */
     public function canDelete(IdentityInterface $user, Step $step)
     {
+        if($this->isAdmin($user, $step)) {
+            return true;
+        } elseif($this->isCurator($user,$step)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

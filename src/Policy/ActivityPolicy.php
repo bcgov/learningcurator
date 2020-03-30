@@ -52,6 +52,24 @@ class ActivityPolicy
     }
 
     /**
+     * Check if $user can import Activity
+     *
+     * @param Authorization\IdentityInterface $user The user.
+     * @param App\Model\Entity\Activity $activity
+     * @return bool
+     */
+    public function canActivityImport(IdentityInterface $user, Activity $activity)
+    {
+        if($this->isAdmin($user, $activity)) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
+
+    /**
      * Check if $user can delete Activity
      *
      * @param Authorization\IdentityInterface $user The user.

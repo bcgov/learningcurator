@@ -48,12 +48,13 @@ class StepsController extends AppController
     public function add()
     {
         $step = $this->Steps->newEmptyEntity();
+        $this->Authorization->authorize($step);
         if ($this->request->is('post')) {
             $step = $this->Steps->patchEntity($step, $this->request->getData());
             if ($this->Steps->save($step)) {
                 $this->Flash->success(__('The step has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The step could not be saved. Please, try again.'));
         }
@@ -99,6 +100,7 @@ class StepsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
+        $this->Authorization->authorize($step);
         $step = $this->Steps->get($id);
         if ($this->Steps->delete($step)) {
             $this->Flash->success(__('The step has been deleted.'));
