@@ -1,4 +1,5 @@
 <?php 
+
 foreach ($percentages as &$p) {
     unset($p);
 }

@@ -341,7 +341,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 			height="315" 
 			src="https://www.youtube.com/embed/<?= h($activity->hyperlink) ?>/" 
 			frameborder="0" 
-			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+			allow="" 
 			allowfullscreen>
 		</iframe>
 	</div>
@@ -739,6 +739,30 @@ $percentages = array(
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <script>
+
+
+
+
+var request = new XMLHttpRequest();
+request.open('GET', '/pathways/status/<?= $pathway->id ?>', true);
+
+request.onload = function() {
+  if (this.status >= 200 && this.status < 400) {
+    // Success!
+    var data = JSON.parse(this.response);
+	console.log(data.percentages);
+  } else {
+    // We reached our target server, but it returned an error
+
+  }
+};
+
+request.onerror = function() {
+  // There was a connection error of some sort
+};
+request.send();
+
+
 var ctx = document.getElementById('myChart').getContext('2d');
 var data = {
     datasets: [
@@ -765,6 +789,7 @@ var myDoughnutChart = new Chart(ctx, {
 });
 
 
+	
 </script>
 
 
