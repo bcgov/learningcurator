@@ -15,10 +15,33 @@
 <div class="card-columns">
 	<?php foreach ($user->pathways as $pathways) : ?>
 	<div class="card p-3">
-	<div><?= $pathways->has('category') ? $this->Html->link($pathways->category->name, ['controller' => 'Categories', 'action' => 'view', $pathways->category->id]) : '' ?></div>
-	<h2><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?></h2>
-	<div><?= h($pathways->description) ?></div>
+		<div><?= $pathways->has('category') ? $this->Html->link($pathways->category->name, ['controller' => 'Categories', 'action' => 'view', $pathways->category->id]) : '' ?></div>
+		<h2><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?></h2>
+		<div><?= h($pathways->description) ?></div>
+		<div class="status<?= $pathways->id ?>"></div>
 
+		<script>
+			var request<?= $pathways->id ?> = new XMLHttpRequest();
+
+			request<?= $pathways->id ?>.open('GET', '/pathways/status/<?= $pathways->id ?>', true);
+
+			request<?= $pathways->id ?>.onload = function() {
+			if (this.status >= 200 && this.status < 400) {
+				// Success!
+				var data<?= $pathways->id ?> = JSON.parse(this.response);
+				document.querySelector('.status<?= $pathways->id ?>').innerHTML = data<?= $pathways->id ?>.status;
+				console.log(data<?= $pathways->id ?>);
+			} else {
+				// We reached our target server, but it returned an error
+
+			}
+			};
+
+			request<?= $pathways->id ?>.onerror = function() {
+			// There was a connection error of some sort
+			};
+			request<?= $pathways->id ?>.send();
+		</script>
 	</div>
 	<?php endforeach; ?>
 </div>

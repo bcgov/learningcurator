@@ -15,6 +15,9 @@ if(!empty($active)) {
 	$uid = $active->id;
 }
 ?>
+
+
+
 <style>
 @media (min-width: 34em) {
     .card-columns {
@@ -191,6 +194,8 @@ foreach ($steps->activities as $activity) {
 		if($activity->activity_type->name == 'Read') {
 			$readcolor = $activity->activity_type->color;
 			$readicon = $activity->activity_type->image_path;
+			// #TODO probably shouldn't push the whole object onto
+			// the array when a simple +1 would do, but ...
 			array_push($readcount,$activity);
 			array_push($readtotal,$activity);
 		} elseif($activity->activity_type->name == 'Watch') {
@@ -739,10 +744,8 @@ $percentages = array(
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <script>
-
-
-
-
+// Start by getting the summary for this pathway independently of the page load
+//
 var request = new XMLHttpRequest();
 request.open('GET', '/pathways/status/<?= $pathway->id ?>', true);
 
@@ -756,12 +759,10 @@ request.onload = function() {
 
   }
 };
-
 request.onerror = function() {
   // There was a connection error of some sort
 };
 request.send();
-
 
 var ctx = document.getElementById('myChart').getContext('2d');
 var data = {

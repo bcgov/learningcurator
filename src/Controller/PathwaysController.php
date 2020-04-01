@@ -386,11 +386,14 @@ class PathwaysController extends AppController
                     array($listenpercent,$listenpercentleft,$listencolor),
                     array($participatepercent,$participatepercentleft,$participatecolor)
             );
-            
+            $status = 'In progress';
+            if($readpercent == 100 && $watchpercent == 100 && $listenpercent == 100 && $participatepercent == 100) {
+                $status = 'Completed!';
+            }            
             if(!empty($user)) {
 
                 
-                $this->set(compact('percentages'));
+                $this->set(compact(['percentages','status']));
                 
             
             } else {
