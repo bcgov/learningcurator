@@ -41,7 +41,6 @@
 						},
 					}
 				});
-				//console.log(data<?= $pathways->id ?>);
 			} else {
 				// We reached our target server, but it returned an error
 

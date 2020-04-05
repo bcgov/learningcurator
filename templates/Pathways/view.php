@@ -409,7 +409,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => '']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light claim', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
 	<?php else: ?>
 	<?php
@@ -547,7 +547,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => '']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light claim', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
 	<?php else: ?>
 	<?php
@@ -774,39 +774,50 @@ $percentages = array(
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <script>
+loadStatus();
+var claim = document.querySelector('.claim');
+claim.addEventListener('click', function(e) {
+	e.preventDefault();
+	loadStatus();
+
+
+});
+
 //
 // Get the summary for this pathway independently of the page load
 //
-var request = new XMLHttpRequest();
-request.open('GET', '/pathways/status/<?= $pathway->id ?>', true);
+function loadStatus() {
 
-request.onload = function() {
-  if (this.status >= 200 && this.status < 400) {
-    // Success!
-    var chartdata = JSON.parse(this.response);
-	document.querySelector('.following').innerHTML = chartdata.status;
-	var ctx = document.getElementById('myChart').getContext('2d');
-	var myDoughnutChart = new Chart(ctx, {
-		type: 'doughnut',
-		data: JSON.parse(chartdata.chartjs),
-		options: { 
-			legend: { 
-				display: false 
-			},
-		}
-	});
+	var request = new XMLHttpRequest();
+	request.open('GET', '/pathways/status/<?= $pathway->id ?>', true);
 
-  } else {
-    // We reached our target server, but it returned an error
+	request.onload = function() {
+	if (this.status >= 200 && this.status < 400) {
+		// Success!
+		var chartdata = JSON.parse(this.response);
+		document.querySelector('.following').innerHTML = chartdata.status;
+		var ctx = document.getElementById('myChart').getContext('2d');
+		var myDoughnutChart = new Chart(ctx, {
+			type: 'doughnut',
+			data: JSON.parse(chartdata.chartjs),
+			options: { 
+				legend: { 
+					display: false 
+				},
+			}
+		});
 
-  }
-};
-request.onerror = function() {
-  // There was a connection error of some sort
-};
-request.send();
+	} else {
+		// We reached our target server, but it returned an error
 
+	}
+	};
+	request.onerror = function() {
+	// There was a connection error of some sort
+	};
+	request.send();
 
+}
 
 
 	
