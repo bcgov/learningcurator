@@ -19,7 +19,6 @@
 		<h2><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?></h2>
 		<div><?= h($pathways->description) ?></div>
 		<div class="status<?= $pathways->id ?>"></div>
-
 		<script>
 			var request<?= $pathways->id ?> = new XMLHttpRequest();
 
@@ -38,7 +37,8 @@
 			};
 
 			request<?= $pathways->id ?>.onerror = function() {
-			// There was a connection error of some sort
+				// There was a connection error of some sort
+				document.querySelector('.status<?= $pathways->id ?>').innerHTML = 'Could not get status';
 			};
 			request<?= $pathways->id ?>.send();
 		</script>

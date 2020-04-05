@@ -272,7 +272,8 @@ class PathwaysController extends AppController
             $participatetotal = array();
             
             foreach ($pathway->steps as $steps) :
-            
+
+                
                 $stepTime = 0;
                 $stepActivityCount = 0;
                 $readtime = 0;
@@ -346,6 +347,7 @@ class PathwaysController extends AppController
                 endforeach; // activities
             endforeach; // steps
 
+            $overallp = ceil(((count($readcount) + count($watchcount) + count($listencount) + count($participatecount)) / $totalActivities) * 100);
             $readp = ceil((count($readcount) / $stepActivityCount) * 100);
             $watchp = ceil((count($watchcount) / $stepActivityCount) * 100);
             $listenp = ceil((count($listencount) / $stepActivityCount) * 100);
@@ -386,9 +388,11 @@ class PathwaysController extends AppController
                     array($listenpercent,$listenpercentleft,$listencolor),
                     array($participatepercent,$participatepercentleft,$participatecolor)
             );
-            $status = 'In progress';
+            $status = 'In progress ' . $overallp . '%';
             if($readpercent == 100 && $watchpercent == 100 && $listenpercent == 100 && $participatepercent == 100) {
                 $status = 'Completed!';
+                // #TODO check against current pathways_users status in db and 
+                // write a method to update the pathways_users status if it doesn't match
             }            
             if(!empty($user)) {
 

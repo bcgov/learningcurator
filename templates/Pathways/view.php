@@ -176,6 +176,11 @@ $watchcount = array();
 $listencount = array();
 $participatecount = array();
 
+$readcolor = '255,255,255';
+$watchcolor = '255,255,255';
+$listencolor = '255,255,255';
+$participatecolor = '255,255,255';
+
 $act = array();
 foreach ($steps->activities as $activity) {
 	// If this is 'defunct' then we pull it out of the list 
@@ -630,7 +635,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 <?php if(!empty($uid)): ?>
 <?php if(in_array($uid,$usersonthispathway)): ?>
 
-<h1 class="mb-3">You're following this pathway!</h1>
+<h1 class="mb-3 following">You're following this pathway!</h1>
 
 
 
@@ -727,14 +732,35 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 </div>
 </div>
 <?php
-$readpercent = floor($readclaim / count($readtotal) * 100);
-$readpercentleft = 100 - $readpercent;
-$watchpercent = floor($watchclaim / count($watchtotal) * 100);
-$watchpercentleft = 100 - $watchpercent;
-$listenpercent = floor($listenclaim / count($listentotal) * 100);
-$listenpercentleft = 100 - $listenpercent;
-$participatepercent = floor($participateclaim / count($participatetotal) * 100);
-$participatepercentleft = 100 - $participatepercent;
+
+if(!empty($readclaim) && count($readtotal) > 0) {
+	$readpercent = floor($readclaim / count($readtotal) * 100);
+	$readpercentleft = 100 - $readpercent;
+} else {
+	$readpercent = 0;
+	$readpercentleft = 100;       
+}
+if(!empty($watchclaim) && count($watchtotal) > 0) {
+	$watchpercent = floor($watchclaim / count($watchtotal) * 100);
+	$watchpercentleft = 100 - $watchpercent;
+} else {
+	$watchpercent = 0;
+	$watchpercentleft = 100;
+}
+if(!empty($listenclaim) && count($listentotal) > 0) {
+	$listenpercent = floor($listenclaim / count($listentotal) * 100);
+	$listenpercentleft = 100 - $listenpercent;
+} else {
+	$listenpercent = 0;
+	$listenpercentleft = 100;
+}
+if(!empty($participateclaim) && count($participatetotal) > 0) {
+	$participatepercent = floor($participateclaim / count($participatetotal) * 100);
+	$participatepercentleft = 100 - $participatepercent;
+} else {
+	$participatepercent = 0;
+	$participatepercentleft = 100;
+}
 $percentages = array(
         array($readpercent,$readpercentleft,$readcolor),
         array($watchpercent,$watchpercentleft,$watchcolor),
@@ -744,7 +770,8 @@ $percentages = array(
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <script>
-// Start by getting the summary for this pathway independently of the page load
+//
+// Get the summary for this pathway independently of the page load
 //
 var request = new XMLHttpRequest();
 request.open('GET', '/pathways/status/<?= $pathway->id ?>', true);
@@ -753,7 +780,8 @@ request.onload = function() {
   if (this.status >= 200 && this.status < 400) {
     // Success!
     var data = JSON.parse(this.response);
-	console.log(data.percentages);
+	document.querySelector('.following').innerHTML = data.status;
+	console.log(data);
   } else {
     // We reached our target server, but it returned an error
 

@@ -123,7 +123,7 @@ img {
 		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
 	</form>
 </nav>
-<div class="container-fluid" style="padding-bottom: 100px;">
+<div class="container" style="padding-bottom: 100px;">
 <div class="row justify-content-md-center">
 <div class="col">
 <?= $this->Flash->render() ?>
