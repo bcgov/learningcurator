@@ -14,6 +14,10 @@ if(!empty($active)) {
 	$role = $active->role_id;
 	$uid = $active->id;
 }
+
+
+
+
 ?>
 
 
@@ -779,9 +783,19 @@ request.open('GET', '/pathways/status/<?= $pathway->id ?>', true);
 request.onload = function() {
   if (this.status >= 200 && this.status < 400) {
     // Success!
-    var data = JSON.parse(this.response);
-	document.querySelector('.following').innerHTML = data.status;
-	console.log(data);
+    var chartdata = JSON.parse(this.response);
+	document.querySelector('.following').innerHTML = chartdata.status;
+	var ctx = document.getElementById('myChart').getContext('2d');
+	var myDoughnutChart = new Chart(ctx, {
+		type: 'doughnut',
+		data: JSON.parse(chartdata.chartjs),
+		options: { 
+			legend: { 
+				display: false 
+			},
+		}
+	});
+
   } else {
     // We reached our target server, but it returned an error
 
@@ -792,30 +806,7 @@ request.onerror = function() {
 };
 request.send();
 
-var ctx = document.getElementById('myChart').getContext('2d');
-var data = {
-    datasets: [
-<?php foreach($percentages as $ring): ?>
-{
-	data: [<?= $ring[0] ?>,<?= $ring[1] ?>],
-	labels: ['all the same','not all'],
-	'backgroundColor': ['rgba(<?= $ring[2] ?>,1)','rgba(<?= $ring[2] ?>,.2)']
-},
-<?php endforeach ?>
-],
 
-	labels: ['Percent done','Percent left']
-};
-
-var myDoughnutChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: data,
-    options: { 
-        legend: { 
-            display: false 
-        },
-    }
-});
 
 
 	

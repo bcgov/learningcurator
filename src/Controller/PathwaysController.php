@@ -266,10 +266,10 @@ class PathwaysController extends AppController
             $listencolor = '255,255,255';
             $participatecolor = '255,255,255';
 
-            $readtotal = array();
-            $watchtotal = array();
-            $listentotal = array();
-            $participatetotal = array();
+            $readtotal = 0;
+            $watchtotal = 0;
+            $listentotal = 0;
+            $participatetotal = 0;
             
             foreach ($pathway->steps as $steps) :
 
@@ -285,10 +285,10 @@ class PathwaysController extends AppController
                 $requiredacts = array();
                 $tertiaryacts = array();
                 
-                $readcount = array();
-                $watchcount = array();
-                $listencount = array();
-                $participatecount = array();
+                $readcount = 0;
+                $watchcount = 0;
+                $listencount = 0;
+                $participatecount = 0;
 
                 foreach ($steps->activities as $activity):
                     // If this is 'defunct' then we pull it out of the list 
@@ -309,32 +309,32 @@ class PathwaysController extends AppController
                         if($activity->activity_type->name == 'Read') {
                             $readcolor = $activity->activity_type->color;
                             $readicon = $activity->activity_type->image_path;
-                            array_push($readcount,$activity);
-                            array_push($readtotal,$activity);
+                            $readcount++;
+                            $readtotal++;
                             if(in_array($activity->id,$useractivitylist)) {
                                 $readclaim++;
                             }
                         } elseif($activity->activity_type->name == 'Watch') {
                             $watchcolor = $activity->activity_type->color;
                             $watchicon = $activity->activity_type->image_path;
-                            array_push($watchcount,$activity);
-                            array_push($watchtotal,$activity);
+                            $watchcount++;
+                            $watchtotal++;
                             if(in_array($activity->id,$useractivitylist)) {
                                 $watchclaim++;
                             }
                         } elseif($activity->activity_type->name == 'Listen') {
                             $listencolor = $activity->activity_type->color;
                             $listenicon = $activity->activity_type->image_path;
-                            array_push($listencount,$activity);
-                            array_push($listentotal,$activity);
+                            $listencount++;
+                            $listentotal++;
                             if(in_array($activity->id,$useractivitylist)) {
                                 $listenclaim++;
                             }
                         } elseif($activity->activity_type->name == 'Participate') {
                             $participatecolor = $activity->activity_type->color;
                             $participateicon = $activity->activity_type->image_path;
-                            array_push($participatecount,$activity);
-                            array_push($participatetotal,$activity);
+                            $participatecount++;
+                            $participatetotal++;
                             if(in_array($activity->id,$useractivitylist)) {
                                 $participateclaim++;
                             }
@@ -347,35 +347,36 @@ class PathwaysController extends AppController
                 endforeach; // activities
             endforeach; // steps
 
-            $overallp = ceil(((count($readcount) + count($watchcount) + count($listencount) + count($participatecount)) / $totalActivities) * 100);
-            $readp = ceil((count($readcount) / $stepActivityCount) * 100);
-            $watchp = ceil((count($watchcount) / $stepActivityCount) * 100);
-            $listenp = ceil((count($listencount) / $stepActivityCount) * 100);
-            $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
-            
-            if(!empty($readclaim) && count($readtotal) > 0) {
-                $readpercent = floor($readclaim / count($readtotal) * 100);
+            $overallp = floor((($readclaim + $watchclaim + $listenclaim + $participateclaim) / $totalActivities) * 100);
+            $readp = floor(($readcount / $stepActivityCount) * 100);
+            $watchp = floor(($watchcount / $stepActivityCount) * 100);
+            $listenp = floor(($listencount / $stepActivityCount) * 100);
+            $pp = floor(($participatecount / $stepActivityCount) * 100);
+
+
+            if(!empty($readclaim) && $readtotal > 0) {
+                $readpercent = floor(($readclaim / $readtotal) * 100);
                 $readpercentleft = 100 - $readpercent;
             } else {
                 $readpercent = 0;
                 $readpercentleft = 100;       
             }
-            if(!empty($watchclaim) && count($watchtotal) > 0) {
-                $watchpercent = floor($watchclaim / count($watchtotal) * 100);
+            if(!empty($watchclaim) && $watchtotal > 0) {
+                $watchpercent = floor(($watchclaim / $watchtotal) * 100);
                 $watchpercentleft = 100 - $watchpercent;
             } else {
                 $watchpercent = 0;
                 $watchpercentleft = 100;
             }
-            if(!empty($listenclaim) && count($listentotal) > 0) {
-                $listenpercent = floor($listenclaim / count($listentotal) * 100);
+            if(!empty($listenclaim) && $listentotal > 0) {
+                $listenpercent = floor(($listenclaim / $listentotal) * 100);
                 $listenpercentleft = 100 - $listenpercent;
             } else {
                 $listenpercent = 0;
                 $listenpercentleft = 100;
             }
-            if(!empty($participateclaim) && count($participatetotal) > 0) {
-                $participatepercent = floor($participateclaim / count($participatetotal) * 100);
+            if(!empty($participateclaim) && $participatetotal > 0) {
+                $participatepercent = floor(($participateclaim / $participatetotal) * 100);
                 $participatepercentleft = 100 - $participatepercent;
             } else {
                 $participatepercent = 0;
@@ -388,20 +389,32 @@ class PathwaysController extends AppController
                     array($listenpercent,$listenpercentleft,$listencolor),
                     array($participatepercent,$participatepercentleft,$participatecolor)
             );
+            
             $status = 'In progress ' . $overallp . '%';
             if($readpercent == 100 && $watchpercent == 100 && $listenpercent == 100 && $participatepercent == 100) {
                 $status = 'Completed!';
                 // #TODO check against current pathways_users status in db and 
                 // write a method to update the pathways_users status if it doesn't match
-            }            
+            }
+
+            $chartjs = '{"datasets": [';
+            foreach($percentages as $ring) {
+                $chartjs .= '{"data": [' . $ring[0] . ',' . $ring[1] . '],';
+                $chartjs .= '"labels": ["all the same","not all"],';
+                $chartjs .= '"backgroundColor": ["rgba(' . $ring[2] . ',1)","rgba(' . $ring[2] . ',.2)"]';
+                $chartjs .= '},';
+            }
+            $chartjs = rtrim($chartjs, ',');
+            $chartjs .= ']}';
+            
             if(!empty($user)) {
 
+                $this->set(compact(['percentages','status','chartjs']));
                 
-                $this->set(compact(['percentages','status']));
-                
-            
             } else {
+
                 return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+            
             }
 
         else:
