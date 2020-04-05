@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\User $user
 */
 ?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <div class="btn-group float-right">
 <?= $this->Html->link(__('Logout'), ['action' => 'logout', $user->id], ['class' => 'btn btn-dark btn-sm']) ?>
 <?php //$this->Html->link(__('Edit User'), ['action' => 'edit', $user->id], ['class' => 'btn btn-dark btn-sm']) ?>
@@ -19,6 +20,7 @@
 		<h2><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?></h2>
 		<div><?= h($pathways->description) ?></div>
 		<div class="status<?= $pathways->id ?>"></div>
+		<canvas id="chart<?= $pathways->id ?>" width="400" height="400"></canvas>
 		<script>
 			var request<?= $pathways->id ?> = new XMLHttpRequest();
 
@@ -29,7 +31,17 @@
 				// Success!
 				var data<?= $pathways->id ?> = JSON.parse(this.response);
 				document.querySelector('.status<?= $pathways->id ?>').innerHTML = data<?= $pathways->id ?>.status;
-				console.log(data<?= $pathways->id ?>);
+				var ctx<?= $pathways->id ?> = document.getElementById('chart<?= $pathways->id ?>').getContext('2d');
+				var myDoughnutChart = new Chart(ctx<?= $pathways->id ?>, {
+					type: 'doughnut',
+					data: JSON.parse(data<?= $pathways->id ?>.chartjs),
+					options: { 
+						legend: { 
+							display: false 
+						},
+					}
+				});
+				//console.log(data<?= $pathways->id ?>);
 			} else {
 				// We reached our target server, but it returned an error
 
