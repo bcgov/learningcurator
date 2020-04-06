@@ -562,6 +562,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	}
 	?>
 	<div class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
+
 	<?php endif ?>
 	<?php endif ?>
 
@@ -772,6 +773,14 @@ $percentages = array(
         array($participatepercent,$participatepercentleft,$participatecolor),
 );
 ?>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+	crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
+	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
+	crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <script>
 
@@ -793,8 +802,9 @@ claim.addEventListener('submit', function(e) {
 	req.onload = function() {
 		if (req.status >= 200 && req.status < 400) {
 			//console.log(req.responseText);
-			claim.innerHTML = '<span class="btn btn-dark">Claimed <i class="fas fa-check-circle"></i></span>';
 			$('body').tooltip('dispose');
+			claim.innerHTML = '<button class="btn btn-dark">Claimed <i class="fas fa-check-circle"></i></button>';
+			
 			loadStatus();
 		}
 	};
