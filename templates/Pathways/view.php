@@ -403,13 +403,13 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 			<i class="fas fa-exclamation-triangle"></i>
 		</a>	
 		<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
+			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 		</a>
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => '']) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light claim', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
 	<?php else: ?>
 	<?php
@@ -540,14 +540,14 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 		<i class="fas fa-exclamation-triangle"></i>
 	</a>	
-		<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
-		</a>
+	</a>
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => '']) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light claim', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
 	<?php else: ?>
 	<?php
@@ -774,11 +774,38 @@ $percentages = array(
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <script>
+
 loadStatus();
+
 var claim = document.querySelector('.claim');
-claim.addEventListener('click', function(e) {
+claim.addEventListener('submit', function(e) {
+
 	e.preventDefault();
-	loadStatus();
+
+	const params = serialize(claim);
+
+	// Create new Ajax request
+	const req = new XMLHttpRequest();
+	req.open('POST', claim.action, true);
+	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+
+	// Handle the events
+	req.onload = function() {
+		if (req.status >= 200 && req.status < 400) {
+			//console.log(req.responseText);
+			claim.innerHTML = '<span class="btn btn-dark">Claimed <i class="fas fa-check-circle"></i></span>';
+			$('body').tooltip('dispose');
+			loadStatus();
+		}
+	};
+	req.onerror = function() {
+		reject();
+	};
+
+	// Send it
+	req.send(params);
+	
+	
 
 
 });
@@ -820,7 +847,50 @@ function loadStatus() {
 }
 
 
-	
+const serialize = function(formEle) {
+    // Get all fields
+    const fields = [].slice.call(formEle.elements, 0);
+
+    return fields
+        .map(function(ele) {
+            const name = ele.name;
+            const type = ele.type;
+            
+            // We ignore
+            // - field that doesn't have a name
+            // - disabled field
+            // - `file` input
+            // - unselected checkbox/radio
+            if (!name ||
+                ele.disabled ||
+                type === 'file' ||
+                (/(checkbox|radio)/.test(type) && !ele.checked))
+            {
+                return '';
+            }
+
+            // Multiple select
+            if (type === 'select-multiple') {
+                return ele.options
+                    .map(function(opt) {
+                        return opt.selected
+                            ? `${encodeURIComponent(name)}=${encodeURIComponent(opt.value)}`
+                            : '';
+                    })
+                    .filter(function(item) {
+                        return item;
+                    })
+                    .join('&');
+            }
+
+            return `${encodeURIComponent(name)}=${encodeURIComponent(ele.value)}`;
+        })
+        .filter(function(item) {
+            return item;
+        })
+        .join('&');
+};
+
 </script>
 
 
