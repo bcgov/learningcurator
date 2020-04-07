@@ -178,7 +178,12 @@ public function beforeFilter(\Cake\Event\EventInterface $event)
 
 	    $u = $this->request->getAttribute('authentication')->getIdentity();
         $user = $this->Users->get($u->id, [
-            'contain' => ['Pathways', 'Pathways.Categories', 'Activities', 'Activities.ActivityTypes','Competencies','Ministries'],
+            'contain' => ['Pathways', 
+                            'Pathways.Categories', 
+                            'Activities', 
+                            'Activities.ActivityTypes',
+                            'Competencies',
+                            'Ministries'],
         ]);
         $this->Authorization->authorize($user);
         $this->set('user', $user);

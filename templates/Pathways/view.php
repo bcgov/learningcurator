@@ -5,16 +5,23 @@
  */
 
 $this->loadHelper('Authentication.Identity');
-if ($this->Identity->isLoggedIn()) {
-	$name = $this->Identity->get('role_id');
-}
+//if ($this->Identity->isLoggedIn()) {
+//	$name = $this->Identity->get('role_id');
+//}
 $uid = 0;
 $role = 0;
 if(!empty($active)) {
 	$role = $active->role_id;
 	$uid = $active->id;
 }
+
+
+
+
 ?>
+
+
+
 <style>
 @media (min-width: 34em) {
     .card-columns {
@@ -173,6 +180,11 @@ $watchcount = array();
 $listencount = array();
 $participatecount = array();
 
+$readcolor = '255,255,255';
+$watchcolor = '255,255,255';
+$listencolor = '255,255,255';
+$participatecolor = '255,255,255';
+
 $act = array();
 foreach ($steps->activities as $activity) {
 	// If this is 'defunct' then we pull it out of the list 
@@ -191,6 +203,8 @@ foreach ($steps->activities as $activity) {
 		if($activity->activity_type->name == 'Read') {
 			$readcolor = $activity->activity_type->color;
 			$readicon = $activity->activity_type->image_path;
+			// #TODO probably shouldn't push the whole object onto
+			// the array when a simple +1 would do, but ...
 			array_push($readcount,$activity);
 			array_push($readtotal,$activity);
 		} elseif($activity->activity_type->name == 'Watch') {
@@ -341,7 +355,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 			height="315" 
 			src="https://www.youtube.com/embed/<?= h($activity->hyperlink) ?>/" 
 			frameborder="0" 
-			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+			allow="" 
 			allowfullscreen>
 		</iframe>
 	</div>
@@ -389,11 +403,11 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 			<i class="fas fa-exclamation-triangle"></i>
 		</a>	
 		<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
+			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 		</a>
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => '']) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
@@ -526,12 +540,12 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 		<i class="fas fa-exclamation-triangle"></i>
 	</a>	
-		<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
-		</a>
+	</a>
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => '']) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
@@ -548,6 +562,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	}
 	?>
 	<div class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
+
 	<?php endif ?>
 	<?php endif ?>
 
@@ -625,7 +640,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 <?php if(!empty($uid)): ?>
 <?php if(in_array($uid,$usersonthispathway)): ?>
 
-<h1 class="mb-3">You're following this pathway!</h1>
+<h1 class="mb-3 following">You're following this pathway!</h1>
 
 
 
@@ -722,14 +737,35 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 </div>
 </div>
 <?php
-$readpercent = floor($readclaim / count($readtotal) * 100);
-$readpercentleft = 100 - $readpercent;
-$watchpercent = floor($watchclaim / count($watchtotal) * 100);
-$watchpercentleft = 100 - $watchpercent;
-$listenpercent = floor($listenclaim / count($listentotal) * 100);
-$listenpercentleft = 100 - $listenpercent;
-$participatepercent = floor($participateclaim / count($participatetotal) * 100);
-$participatepercentleft = 100 - $participatepercent;
+
+if(!empty($readclaim) && count($readtotal) > 0) {
+	$readpercent = floor($readclaim / count($readtotal) * 100);
+	$readpercentleft = 100 - $readpercent;
+} else {
+	$readpercent = 0;
+	$readpercentleft = 100;       
+}
+if(!empty($watchclaim) && count($watchtotal) > 0) {
+	$watchpercent = floor($watchclaim / count($watchtotal) * 100);
+	$watchpercentleft = 100 - $watchpercent;
+} else {
+	$watchpercent = 0;
+	$watchpercentleft = 100;
+}
+if(!empty($listenclaim) && count($listentotal) > 0) {
+	$listenpercent = floor($listenclaim / count($listentotal) * 100);
+	$listenpercentleft = 100 - $listenpercent;
+} else {
+	$listenpercent = 0;
+	$listenpercentleft = 100;
+}
+if(!empty($participateclaim) && count($participatetotal) > 0) {
+	$participatepercent = floor($participateclaim / count($participatetotal) * 100);
+	$participatepercentleft = 100 - $participatepercent;
+} else {
+	$participatepercent = 0;
+	$participatepercentleft = 100;
+}
 $percentages = array(
         array($readpercent,$readpercentleft,$readcolor),
         array($watchpercent,$watchpercentleft,$watchcolor),
@@ -737,33 +773,133 @@ $percentages = array(
         array($participatepercent,$participatepercentleft,$participatecolor),
 );
 ?>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+	crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
+	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
+	crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var data = {
-    datasets: [
-<?php foreach($percentages as $ring): ?>
-{
-	data: [<?= $ring[0] ?>,<?= $ring[1] ?>],
-	labels: ['all the same','not all'],
-	'backgroundColor': ['rgba(<?= $ring[2] ?>,1)','rgba(<?= $ring[2] ?>,.2)']
-},
-<?php endforeach ?>
-],
 
-	labels: ['Percent done','Percent left']
-};
+loadStatus();
 
-var myDoughnutChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: data,
-    options: { 
-        legend: { 
-            display: false 
-        },
-    }
+var claim = document.querySelector('.claim');
+claim.addEventListener('submit', function(e) {
+
+	e.preventDefault();
+
+	const params = serialize(claim);
+
+	// Create new Ajax request
+	const req = new XMLHttpRequest();
+	req.open('POST', claim.action, true);
+	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+
+	// Handle the events
+	req.onload = function() {
+		if (req.status >= 200 && req.status < 400) {
+			//console.log(req.responseText);
+			$('body').tooltip('dispose');
+			claim.innerHTML = '<button class="btn btn-dark">Claimed <i class="fas fa-check-circle"></i></button>';
+			
+			loadStatus();
+		}
+	};
+	req.onerror = function() {
+		reject();
+	};
+
+	// Send it
+	req.send(params);
+	
+	
+
+
 });
 
+//
+// Get the summary for this pathway independently of the page load
+//
+function loadStatus() {
+
+	var request = new XMLHttpRequest();
+	request.open('GET', '/pathways/status/<?= $pathway->id ?>', true);
+
+	request.onload = function() {
+	if (this.status >= 200 && this.status < 400) {
+		// Success!
+		var chartdata = JSON.parse(this.response);
+		document.querySelector('.following').innerHTML = chartdata.status;
+		var ctx = document.getElementById('myChart').getContext('2d');
+		var myDoughnutChart = new Chart(ctx, {
+			type: 'doughnut',
+			data: JSON.parse(chartdata.chartjs),
+			options: { 
+				legend: { 
+					display: false 
+				},
+			}
+		});
+
+	} else {
+		// We reached our target server, but it returned an error
+
+	}
+	};
+	request.onerror = function() {
+	// There was a connection error of some sort
+	};
+	request.send();
+
+}
+
+
+const serialize = function(formEle) {
+    // Get all fields
+    const fields = [].slice.call(formEle.elements, 0);
+
+    return fields
+        .map(function(ele) {
+            const name = ele.name;
+            const type = ele.type;
+            
+            // We ignore
+            // - field that doesn't have a name
+            // - disabled field
+            // - `file` input
+            // - unselected checkbox/radio
+            if (!name ||
+                ele.disabled ||
+                type === 'file' ||
+                (/(checkbox|radio)/.test(type) && !ele.checked))
+            {
+                return '';
+            }
+
+            // Multiple select
+            if (type === 'select-multiple') {
+                return ele.options
+                    .map(function(opt) {
+                        return opt.selected
+                            ? `${encodeURIComponent(name)}=${encodeURIComponent(opt.value)}`
+                            : '';
+                    })
+                    .filter(function(item) {
+                        return item;
+                    })
+                    .join('&');
+            }
+
+            return `${encodeURIComponent(name)}=${encodeURIComponent(ele.value)}`;
+        })
+        .filter(function(item) {
+            return item;
+        })
+        .join('&');
+};
 
 </script>
 
