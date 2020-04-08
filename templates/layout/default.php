@@ -37,9 +37,9 @@ img {
 <nav class="navbar navbar-expand-lg mb-3" style="background: #FFF">
 	
 	<a class="navbar-brand text-uppercase" href="/" style="margin: 0 0 0 20px">
-<?php foreach($atypes as $type): ?>
+	<?php foreach($atypes as $type): ?>
 		<span class="fas fa-dot-circle" style="color: rgba(<?= $type->color ?>,1); font-size: 280%; margin: 0 0 0 -20px;"></span>
-<?php endforeach ?><br><span style="font-size: 16px;">Learning Agent</span>
+	<?php endforeach ?>
 	</a>
 	<?php if(!empty($active)): ?>
 	<ul class="navbar-nav mr-auto">
@@ -152,6 +152,7 @@ $(function () {
         });
 
 	$('[data-toggle="tooltip"]').tooltip();
+
 	$('.likingit').on('click',function(e){
 		var url = $(this).attr('href');
 		$(this).children('.lcount').html('Liked!');

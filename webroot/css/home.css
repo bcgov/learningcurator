@@ -22,13 +22,6 @@ a:hover strong {
     padding: 7px 0 5px 0;
 }
 
-.required {
-    background: rgba(0,0,0,1);
-    color: #FFF;
-    float: right;
-    padding: 7px 0 5px 0;
-}
-
 .badge {
     display: inline-block;
     padding: .25em .4em;

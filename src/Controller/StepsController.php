@@ -75,13 +75,14 @@ class StepsController extends AppController
         $step = $this->Steps->get($id, [
             'contain' => ['Activities', 'Pathways'],
         ]);
+        
         $this->Authorization->authorize($step);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $step = $this->Steps->patchEntity($step, $this->request->getData());
             if ($this->Steps->save($step)) {
                 $this->Flash->success(__('The step has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $pathback = '/pathways/view/' . $step->pathways[0]->id;
+                return $this->redirect($pathback);
             }
             $this->Flash->error(__('The step could not be saved. Please, try again.'));
         }

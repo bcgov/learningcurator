@@ -4,6 +4,15 @@
  * @var \App\Model\Entity\User $user
 */
 ?>
+<style>
+@media (min-width: 34em) {
+    .card-columns {
+        -webkit-column-count:4;
+        -moz-column-count:4;
+        column-count:4;
+    }
+}
+</style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <div class="btn-group float-right">
 <?= $this->Html->link(__('Logout'), ['action' => 'logout', $user->id], ['class' => 'btn btn-dark btn-sm']) ?>
@@ -68,9 +77,9 @@
 <span class="badge badge-dark" style="background-color: rgba(229,76,59,1)">Listen</span>
 <span class="badge badge-dark" style="background-color: rgba(134, 33, 206,1)">Participate</span>
 </div>
-<div class="card-columns">
+<div class=""> 
 	<?php foreach ($user->activities as $activity) : ?>
-	<div class="card p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border: 0">
+	<div class="my-3 p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border: 0">
 		<?php if($activity->status_id == 2): ?>
 		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
 		<div><strong><?= h($activity->name) ?></strong></div>
@@ -80,7 +89,7 @@
 		<div><?= h($activity->description) ?></div>
 	<a target="_blank" 
 		href="<?= $activity->hyperlink ?>" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border: 3px solid #FFF; color: #FFF; font-weight: bold;" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
 		class="btn btn-block my-2 text-uppercase btn-lg">
 
 			<i class="fas <?= $activity->activity_type->image_path ?>"></i>

@@ -14,14 +14,7 @@ if(!empty($active)) {
 	$role = $active->role_id;
 	$uid = $active->id;
 }
-
-
-
-
 ?>
-
-
-
 <style>
 @media (min-width: 34em) {
     .card-columns {
@@ -57,7 +50,12 @@ if(!empty($active)) {
 	text-align: centre;
 	width: 140px;
 }
-
+.stickthatish {
+	position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  top: 0;
+  align-self: flex-start; /* <-- this is the fix */
+}
 </style>
 <div class="row">
 <div class="col-md-8">
@@ -82,7 +80,10 @@ if(!empty($active)) {
 	<?= $this->Text->autoParagraph(h($pathway->objective)); ?>
 	</div> <!-- /.objectives -->
 </div>
+
+
 </div>
+
 <?php if($role == 2 || $role == 5): ?>
 <a class="" 
 	data-toggle="collapse" 
@@ -122,6 +123,32 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 </div>
 <?php if (!empty($pathway->steps)) : ?>
 <div class="row">
+
+<div class="col-3 order-md-last stickthatish">
+<?php if(!empty($uid)): ?>
+<?php if(in_array($uid,$usersonthispathway)): ?>
+<div class="">
+	<div class="mb-3 following"></div>
+	<canvas id="myChart" width="250" height="250"></canvas>
+</div>
+<?php else: ?>
+<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'add']]) ?>
+<?php
+    echo $this->Form->control('user_id',['type' => 'hidden', 'value' => $uid]);
+    echo $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]);
+    echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
+?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-lg btn-dark mb-0']) ?>
+<br><small><a href="#">What does this mean?</a></small>
+<?= $this->Form->end() ?>
+
+<?php endif ?>
+<?php else: ?>
+
+<!-- not logged in -->
+
+<?php endif ?>
+</div>
 <div class="col-md-8">
 <?php 
 $totalActivities = 0;
@@ -198,41 +225,8 @@ foreach ($steps->activities as $activity) {
 		} else {
 			array_push($tertiaryacts,$activity);
 		}
-		// we want to count each type on a per step basis
-		// as well as adding to the total
-		if($activity->activity_type->name == 'Read') {
-			$readcolor = $activity->activity_type->color;
-			$readicon = $activity->activity_type->image_path;
-			// #TODO probably shouldn't push the whole object onto
-			// the array when a simple +1 would do, but ...
-			array_push($readcount,$activity);
-			array_push($readtotal,$activity);
-		} elseif($activity->activity_type->name == 'Watch') {
-			$watchcolor = $activity->activity_type->color;
-			$watchicon = $activity->activity_type->image_path;
-			array_push($watchcount,$activity);
-			array_push($watchtotal,$activity);
-		} elseif($activity->activity_type->name == 'Listen') {
-			$listencolor = $activity->activity_type->color;
-			$listenicon = $activity->activity_type->image_path;
-			array_push($listencount,$activity);
-			array_push($listentotal,$activity);
-		} elseif($activity->activity_type->name == 'Participate') {
-			$participatecolor = $activity->activity_type->color;
-			$participateicon = $activity->activity_type->image_path;
-			array_push($participatecount,$activity);
-			array_push($participatetotal,$activity);
-		}
-		$totalActivities++;
-		$stepTime = $stepTime + $activity->hours;
-		$totalTime = $totalTime + $activity->hours;
-		$stepActivityCount++;
 	}
 }
-$readp = ceil((count($readcount) / $stepActivityCount) * 100);
-$watchp = ceil((count($watchcount) / $stepActivityCount) * 100);
-$listenp = ceil((count($listencount) / $stepActivityCount) * 100);
-$pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 ?>
 
 <h1 class="text-uppercase">
@@ -243,28 +237,6 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<!--<?= h($steps->id) ?>.--> <?= h($steps->name) ?>
 </h1>
 <div class="alert alert-light"><?= h($steps->description) ?></div>
-
-<!--
-<div class="progress mb-3" style="font-size: 130%; height: 40px">
-<div role="progressbar" class="progress-bar" style="width: <?= $readp ?>%; background-color: rgba(<?= $readcolor ?>,1)" aria-valuenow="<?= $readp ?>" aria-valuemin="0" aria-valuemax="100">
-	<span class="fas <?= $readicon ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo count($readcount) ?> things to read"></span>
-</div>
-<div role="progressbar" class="progress-bar" style="width: <?= $watchp ?>%; background-color: rgba(<?= $watchcolor ?>,1)" aria-valuenow="<?= $watchp ?>" aria-valuemin="0" aria-valuemax="100">
-	<span class="fas <?= $watchicon ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo count($watchcount) ?> things to watch"></span>
-</div>
-<div role="progressbar" class="progress-bar" style="width: <?= $listenp ?>%; background-color: rgba(<?= $listencolor ?>,1)" aria-valuenow="<?= $listenp ?>" aria-valuemin="0" aria-valuemax="100">
-	<span class="fas <?= $listenicon ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo count($listencount) ?> things to listen to"></span>
-</div>
-<div role="progressbar" class="progress-bar" style="width: <?= $pp ?>%; background-color: rgba(<?= $participatecolor ?>,1)" aria-valuenow="<?= $pp ?>" aria-valuemin="0" aria-valuemax="100">
-	<span class="fas <?= $participateicon ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo count($participatecount) ?> things to participate in"></span>
-</div>
-</div>
--->
-
-
-
-
-
 
 <?php foreach($requiredacts as $activity): ?>
 
@@ -412,17 +384,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
 	<?php else: ?>
-	<?php
-	if($activity->activity_type->name == 'Read') {
-		$readclaim++;
-	} elseif($activity->activity_type->name == 'Watch') {
-		$watchclaim++;
-	} elseif($activity->activity_type->name == 'Listen') {
-		$listenclaim++;
-	} elseif($activity->activity_type->name == 'Participate') {
-		$participateclaim++;
-	}
-	?>
+
 	<div class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
 
 	<?php endif ?>
@@ -550,17 +512,7 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
 	<?php else: ?>
-	<?php
-	if($activity->activity_type->name == 'Read') {
-		$readclaim++;
-	} elseif($activity->activity_type->name == 'Watch') {
-		$watchclaim++;
-	} elseif($activity->activity_type->name == 'Listen') {
-		$listenclaim++;
-	} elseif($activity->activity_type->name == 'Participate') {
-		$participateclaim++;
-	}
-	?>
+
 	<div class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
 
 	<?php endif ?>
@@ -629,150 +581,15 @@ $pp = ceil((count($participatecount) / $stepActivityCount) * 100);
 	<?= $this->Text->autoParagraph(h($pathway->objective)); ?>
 </div>
 </div>
-</div> <!-- /.col-md-8 -->
+</div> <!-- /.col-md-12 -->
 <?php endif; ?>
-<div class="col-md-4">
-
-<div class="card mb-3">
-<div class="card-body">
-
-
-<?php if(!empty($uid)): ?>
-<?php if(in_array($uid,$usersonthispathway)): ?>
-
-<h1 class="mb-3 following">You're following this pathway!</h1>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-<canvas id="myChart" width="400" height="400"></canvas>
-
-
-<div style="border-radius: 3px;">
-<div class="stats my-3 text-center" style="border-radius: 3px; color: #FFF; ">
-<div class="activity-badge" style="background-color: rgba(<?= $readcolor ?>, 1)">
-	<span class="fas <?= $readicon ?>" style="font-size:230%;"></span><br>
-	Read <br><?= $readclaim ?> of <?php echo count($readtotal) ?>
-</div>
-<div class="activity-badge" style="background-color: rgba(<?= $watchcolor ?>, 1)">
-	<span class="fas <?= $watchicon ?>" style="font-size:230%;"></span><br>
-	Watched <br><?= $watchclaim ?> of <?php echo count($watchtotal) ?>
-</div>
-<div class="activity-badge" style="background-color: rgba(<?= $listencolor ?>, 1)">
-	<span class="fas <?= $listenicon ?>" style="font-size:230%;"></span><br>
-	Listened <br><?= $listenclaim ?> of <?php echo count($listentotal) ?>
-</div>
-<div class="activity-badge" style="background-color: rgba(<?= $participatecolor ?>, 1)">
-	<span class="fas <?= $participateicon ?>" style="font-size:230%;"></span><br>
-	Participated <br><?= $participateclaim ?> of <?php echo count($participatetotal) ?> 
 </div>
 </div>
 </div>
 
-<div>
-<span class="badge badge-dark"><?= $totalActivities ?></span> Total activities<br>
-<span class="badge badge-dark"><?= $totalTime ?></span> hours of time<br>
-</div>
-
-
-
-
-
-
-<div class="my-3"><em>You started following this pathway on January 17th 2020.</em></div>
-
-
-<?php else: ?>
-
-
-<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'add']]) ?>
-<?php
-    echo $this->Form->control('user_id',['type' => 'hidden', 'value' => $uid]);
-    echo $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]);
-    echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
-?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-lg btn-dark mb-0']) ?>
-<br><small><a href="#">What does this mean?</a></small>
-<?= $this->Form->end() ?>
-
-<?php endif ?>
-<?php else: ?>
-
-
-<h1>Follow this pathway?</h1>
-    <?= $this->Flash->render() ?>
-    <?= $this->Form->create(null, ['url' => ['controller' => 'users', 'action' => 'login']]) ?>
-        <?= $this->Form->control('email', ['required' => true, 'class' => 'form-control']) ?>
-        <?= $this->Form->control('password', ['required' => true, 'class' => 'form-control']) ?>
-    <?= $this->Form->submit(__('IDIR Login'), ['class' => 'btn btn-success btn-block mt-3']); ?>
-    <?= $this->Form->end() ?>
-
-<?php endif ?>
-
-
-</div>
-</div>
-<!--<div class="card">
-<div class="card-body">
-<h2><?= __('Competencies') ?></h2>
-<?php if (!empty($pathway->competencies)) : ?>
-<?php foreach ($pathway->competencies as $competencies) : ?>
-<?= $this->Html->link($competencies->name, ['controller' => 'Competencies', 'action' => 'view', $competencies->id]) ?>, 
-<?php endforeach; ?>
-<?php endif; ?>
-</div>
-</div>-->
-</div>
-</div>
-</div>
-<?php
-
-if(!empty($readclaim) && count($readtotal) > 0) {
-	$readpercent = floor($readclaim / count($readtotal) * 100);
-	$readpercentleft = 100 - $readpercent;
-} else {
-	$readpercent = 0;
-	$readpercentleft = 100;       
-}
-if(!empty($watchclaim) && count($watchtotal) > 0) {
-	$watchpercent = floor($watchclaim / count($watchtotal) * 100);
-	$watchpercentleft = 100 - $watchpercent;
-} else {
-	$watchpercent = 0;
-	$watchpercentleft = 100;
-}
-if(!empty($listenclaim) && count($listentotal) > 0) {
-	$listenpercent = floor($listenclaim / count($listentotal) * 100);
-	$listenpercentleft = 100 - $listenpercent;
-} else {
-	$listenpercent = 0;
-	$listenpercentleft = 100;
-}
-if(!empty($participateclaim) && count($participatetotal) > 0) {
-	$participatepercent = floor($participateclaim / count($participatetotal) * 100);
-	$participatepercentleft = 100 - $participatepercent;
-} else {
-	$participatepercent = 0;
-	$participatepercentleft = 100;
-}
-$percentages = array(
-        array($readpercent,$readpercentleft,$readcolor),
-        array($watchpercent,$watchpercentleft,$watchcolor),
-        array($listenpercent,$listenpercentleft,$listencolor),
-        array($participatepercent,$participatepercentleft,$participatecolor),
-);
-?>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
