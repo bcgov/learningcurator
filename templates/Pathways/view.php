@@ -628,6 +628,7 @@ $(document).ready(function(){
 		e.preventDefault();
 		//$('body').tooltip('dispose');
 		var form = $(this);
+		form.children('button').html('CLAIMED! <span class="fas fa-check-circle"></span>').attr('title','Good job!');
 		var url = form.attr('action');
 		$.ajax({
 			type: "POST",
@@ -635,6 +636,7 @@ $(document).ready(function(){
 			data: form.serialize(),
 			success: function(data)
 			{
+				
 				loadStatus();
 			},
 			statusCode: 
