@@ -353,6 +353,19 @@ class PathwaysController extends AppController
             $listenp = floor(($listencount / $stepActivityCount) * 100);
             $pp = floor(($participatecount / $stepActivityCount) * 100);
 
+            //$readtotal = 0;
+            //$watchtotal = 0;
+            //$listentotal = 0;
+            //$participatetotal = 0;
+            $typecounts = array('readtotal' => $readtotal, 
+                                'watchtotal' => $watchtotal, 
+                                'listentotal' => $listentotal, 
+                                'participatetotal' => $participatetotal);
+
+            $typecolors = array('readcolor' => $readcolor, 
+                                'watchcolor' => $watchcolor, 
+                                'listencolor' => $listencolor, 
+                                'participatecolor' => $participatecolor);
 
             if(!empty($readclaim) && $readtotal > 0) {
                 $readpercent = floor(($readclaim / $readtotal) * 100);
@@ -409,7 +422,7 @@ class PathwaysController extends AppController
             
             if(!empty($user)) {
 
-                $this->set(compact(['percentages','status','chartjs']));
+                $this->set(compact(['percentages','status','chartjs','typecounts','typecolors']));
                 
             } else {
 

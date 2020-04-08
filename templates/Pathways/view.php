@@ -50,11 +50,12 @@ if(!empty($active)) {
 	text-align: centre;
 	width: 140px;
 }
-.stickthatish {
-	position: -webkit-sticky; /* for Safari */
-  position: sticky;
-  top: 0;
-  align-self: flex-start; /* <-- this is the fix */
+.stickthat {
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+	top: 0;
+	align-self: flex-start; 
+	z-index: 1000;
 }
 </style>
 <div class="row">
@@ -80,8 +81,6 @@ if(!empty($active)) {
 	<?= $this->Text->autoParagraph(h($pathway->objective)); ?>
 	</div> <!-- /.objectives -->
 </div>
-
-
 </div>
 
 <?php if($role == 2 || $role == 5): ?>
@@ -116,22 +115,36 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 </div>
 </div>
 <?php endif ?>
+<div class="mb-2">
+	<span class="badge badge-dark readtotal"></span>  
+	<span class="badge badge-dark watchtotal"></span>  
+	<span class="badge badge-dark listentotal"></span>  
+	<span class="badge badge-dark participatetotal"></span>  
 </div>
 </div>
+</div>
+
 
 </div>
 </div>
 <?php if (!empty($pathway->steps)) : ?>
 <div class="row">
 
-<div class="col-3 order-md-last stickthatish">
+<div class="col-lg-4 col-md-3 col-6 order-md-last stickthat">
 <?php if(!empty($uid)): ?>
 <?php if(in_array($uid,$usersonthispathway)): ?>
-<div class="">
+<div class="card">
+<div class="card-body">
+	
 	<div class="mb-3 following"></div>
 	<canvas id="myChart" width="250" height="250"></canvas>
+
+
+</div>
 </div>
 <?php else: ?>
+	<div class="card">
+<div class="card-body">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'add']]) ?>
 <?php
     echo $this->Form->control('user_id',['type' => 'hidden', 'value' => $uid]);
@@ -141,15 +154,21 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 <?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-lg btn-dark mb-0']) ?>
 <br><small><a href="#">What does this mean?</a></small>
 <?= $this->Form->end() ?>
-
+</div>
+</div>
 <?php endif ?>
 <?php else: ?>
 
 <!-- not logged in -->
 
 <?php endif ?>
+
+
 </div>
-<div class="col-md-8">
+<div class="col-lg-8 col-md-9">
+
+
+
 <?php 
 $totalActivities = 0;
 $totalTime = 0;
@@ -601,39 +620,31 @@ foreach ($steps->activities as $activity) {
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <script>
 
-loadStatus();
+$(document).ready(function(){
 
-var claim = document.querySelector('.claim');
-claim.addEventListener('submit', function(e) {
+	loadStatus();
 
-	e.preventDefault();
-
-	const params = serialize(claim);
-
-	// Create new Ajax request
-	const req = new XMLHttpRequest();
-	req.open('POST', claim.action, true);
-	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-
-	// Handle the events
-	req.onload = function() {
-		if (req.status >= 200 && req.status < 400) {
-			//console.log(req.responseText);
-			$('body').tooltip('dispose');
-			claim.innerHTML = '<button class="btn btn-dark">Claimed <i class="fas fa-check-circle"></i></button>';
-			
-			loadStatus();
-		}
-	};
-	req.onerror = function() {
-		reject();
-	};
-
-	// Send it
-	req.send(params);
-	
-	
-
+	$('.claim').on('submit', function(e){
+		e.preventDefault();
+		//$('body').tooltip('dispose');
+		var form = $(this);
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/activities-users/claim',
+			data: form.serialize(),
+			success: function(data)
+			{
+				loadStatus();
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
 
 });
 
@@ -642,81 +653,52 @@ claim.addEventListener('submit', function(e) {
 //
 function loadStatus() {
 
-	var request = new XMLHttpRequest();
-	request.open('GET', '/pathways/status/<?= $pathway->id ?>', true);
+	var form = $(this);
+	$.ajax({
+		type: "GET",
+		url: '/pathways/status/<?= $pathway->id ?>',
+		data: '',
+		success: function(data)
+		{
+			form.find('btn').val('Claimed!');
+			var pathstatus = JSON.parse(data);
 
-	request.onload = function() {
-	if (this.status >= 200 && this.status < 400) {
-		// Success!
-		var chartdata = JSON.parse(this.response);
-		document.querySelector('.following').innerHTML = chartdata.status;
-		var ctx = document.getElementById('myChart').getContext('2d');
-		var myDoughnutChart = new Chart(ctx, {
-			type: 'doughnut',
-			data: JSON.parse(chartdata.chartjs),
-			options: { 
-				legend: { 
-					display: false 
-				},
+			$('.following').html(pathstatus.status);
+
+			//console.log(pathstatus.typecolors);
+			$('.readtotal').html(pathstatus.typecounts.readtotal + ' to read')
+							.css('backgroundColor','rgba(' + pathstatus.typecolors.readcolor + ',1)');
+			$('.watchtotal').html(pathstatus.typecounts.watchtotal + ' to watch')
+							.css('backgroundColor','rgba(' + pathstatus.typecolors.watchcolor + ',1)');
+			$('.listentotal').html(pathstatus.typecounts.listentotal + ' to listen to')
+							.css('backgroundColor','rgba(' + pathstatus.typecolors.listencolor + ',1)');
+			$('.participatetotal').html(pathstatus.typecounts.participatetotal + ' to participate in')
+							.css('backgroundColor','rgba(' + pathstatus.typecolors.participatecolor + ',1)');
+
+			var ctx = document.getElementById('myChart').getContext('2d');
+			var myDoughnutChart = new Chart(ctx, {
+				type: 'doughnut',
+				data: JSON.parse(pathstatus.chartjs),
+				options: { 
+					legend: { 
+						display: false 
+					},
+				}
+			});
+		},
+		statusCode: 
+		{
+			403: function() {
+				form.after('<div class="alert alert-warning">You must be logged in.</div>');
 			}
-		});
+		}
+	});
 
-	} else {
-		// We reached our target server, but it returned an error
 
-	}
-	};
-	request.onerror = function() {
-	// There was a connection error of some sort
-	};
-	request.send();
 
 }
 
 
-const serialize = function(formEle) {
-    // Get all fields
-    const fields = [].slice.call(formEle.elements, 0);
-
-    return fields
-        .map(function(ele) {
-            const name = ele.name;
-            const type = ele.type;
-            
-            // We ignore
-            // - field that doesn't have a name
-            // - disabled field
-            // - `file` input
-            // - unselected checkbox/radio
-            if (!name ||
-                ele.disabled ||
-                type === 'file' ||
-                (/(checkbox|radio)/.test(type) && !ele.checked))
-            {
-                return '';
-            }
-
-            // Multiple select
-            if (type === 'select-multiple') {
-                return ele.options
-                    .map(function(opt) {
-                        return opt.selected
-                            ? `${encodeURIComponent(name)}=${encodeURIComponent(opt.value)}`
-                            : '';
-                    })
-                    .filter(function(item) {
-                        return item;
-                    })
-                    .join('&');
-            }
-
-            return `${encodeURIComponent(name)}=${encodeURIComponent(ele.value)}`;
-        })
-        .filter(function(item) {
-            return item;
-        })
-        .join('&');
-};
 
 </script>
 

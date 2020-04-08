@@ -126,7 +126,7 @@ img {
 <div class="container" style="padding-bottom: 100px;">
 <div class="row justify-content-md-center">
 <div class="col">
-<?= $this->Flash->render() ?>
+<?php //$this->Flash->render() ?>
 <?= $this->fetch('content') ?>
 </div>
 </div>

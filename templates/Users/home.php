@@ -4,15 +4,7 @@
  * @var \App\Model\Entity\User $user
 */
 ?>
-<style>
-@media (min-width: 34em) {
-    .card-columns {
-        -webkit-column-count:4;
-        -moz-column-count:4;
-        column-count:4;
-    }
-}
-</style>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <div class="btn-group float-right">
 <?= $this->Html->link(__('Logout'), ['action' => 'logout', $user->id], ['class' => 'btn btn-dark btn-sm']) ?>
@@ -27,7 +19,7 @@
 	<div class="card p-3">
 		<div><?= $pathways->has('category') ? $this->Html->link($pathways->category->name, ['controller' => 'Categories', 'action' => 'view', $pathways->category->id]) : '' ?></div>
 		<h2><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?></h2>
-		<div><?= h($pathways->description) ?></div>
+		<!--<div><?= h($pathways->description) ?></div>-->
 		<div class="status<?= $pathways->id ?>"></div>
 		<canvas id="chart<?= $pathways->id ?>" width="400" height="400"></canvas>
 		<script>
@@ -66,6 +58,8 @@
 	<?php endforeach; ?>
 </div>
 <?php endif; ?>
+<div class="row mt-3 justify-content-md-center">
+<div class="col-md-8">
 <?php if (!empty($user->activities)) : ?>
 <h2><?= __('You\'ve claimed these activities') ?></h2>
 <div class="card">
@@ -99,6 +93,8 @@
 
 	</div>
 	<?php endforeach; ?>
+</div>
+</div>
 </div>
 </div>
 </div>
