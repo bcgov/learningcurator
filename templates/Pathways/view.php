@@ -625,10 +625,10 @@ $(document).ready(function(){
 	loadStatus();
 
 	$('.claim').on('submit', function(e){
+		
 		e.preventDefault();
-		//$('body').tooltip('dispose');
 		var form = $(this);
-		form.children('button').html('CLAIMED! <span class="fas fa-check-circle"></span>').attr('title','Good job!');
+		form.children('button').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
 		var url = form.attr('action');
 		$.ajax({
 			type: "POST",
