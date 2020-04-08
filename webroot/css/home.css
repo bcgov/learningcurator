@@ -37,21 +37,7 @@ a:hover strong {
     margin-bottom: 0.75em;
 }
 
-.btn-light {
-    color: #212529;
-    background-color: #ffffff;
-    border: none;
-}
 
-.btn-light:hover {
-    background-color: #464646;
-    color: #ffffff !important;
-}
-
-a.badge-light:hover, a.badge-light:focus {
-    color: #212529 !important;
-    background-color: #fbfbfb;
-}
 
 
 
