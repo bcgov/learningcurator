@@ -103,7 +103,9 @@ class ActivitiesStepsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $activitiesStep = $this->ActivitiesSteps->get($id);
-	//$activitiesSteps->activity_id = $this->request->getData()['activity_id'];
+
+	    //$activitiesSteps->activity_id = $this->request->getData()['activity_id'];
+        
         if ($this->ActivitiesSteps->delete($activitiesStep)) {
             $this->Flash->success(__('The activities step has been deleted.'));
         } else {

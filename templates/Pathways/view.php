@@ -263,7 +263,7 @@ foreach ($steps->activities as $activity) {
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activitys-steps','action' => 'removeactivity', 'class' => '']]) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'delete', 'class' => '']]) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
 	<?= $this->Form->button(__('Remove'),['class'=>'btn btn-sm btn-light']) ?>
@@ -433,7 +433,7 @@ foreach ($steps->activities as $activity) {
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activitys-steps','action' => 'removeactivity', 'class' => '']]) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'delete', 'class' => '']]) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
 	<?= $this->Form->button(__('Remove'),['class'=>'btn btn-sm btn-light']) ?>
