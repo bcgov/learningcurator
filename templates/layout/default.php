@@ -32,14 +32,14 @@ img {
 
 <link rel="stylesheet" href="/css/bootstrap-multiselect.css" type="text/css"/>
 </head>
-<body class="bg-light">
+<body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="70">
 
 <nav class="navbar navbar-expand-lg mb-3" style="background: #FFF">
 	
 	<a class="navbar-brand text-uppercase" href="/" style="margin: 0 0 0 20px">
-<?php foreach($atypes as $type): ?>
+	<?php foreach($atypes as $type): ?>
 		<span class="fas fa-dot-circle" style="color: rgba(<?= $type->color ?>,1); font-size: 280%; margin: 0 0 0 -20px;"></span>
-<?php endforeach ?><br><span style="font-size: 16px;">Learning Agent</span>
+	<?php endforeach ?>
 	</a>
 	<?php if(!empty($active)): ?>
 	<ul class="navbar-nav mr-auto">
@@ -126,7 +126,7 @@ img {
 <div class="container" style="padding-bottom: 100px;">
 <div class="row justify-content-md-center">
 <div class="col">
-<?= $this->Flash->render() ?>
+<?php //$this->Flash->render() ?>
 <?= $this->fetch('content') ?>
 </div>
 </div>
@@ -142,36 +142,6 @@ img {
 </div>
 </div>
 
-<script>
 
-$(function () {
-
-	$('#activities-ids').multiselect({
-            enableFiltering: true,
-            filterBehavior: 'both'
-        });
-
-	$('[data-toggle="tooltip"]').tooltip();
-	$('.likingit').on('click',function(e){
-		var url = $(this).attr('href');
-		$(this).children('.lcount').html('Liked!');
-		e.preventDefault();
-		$.ajax({
-			type: "GET",
-			url: url,
-			data: '',
-			success: function(data)
-			{
-			},
-			statusCode: 
-			{
-				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
-				}
-			}
-		});
-	});
-});
-</script>
 </body>
 </html>

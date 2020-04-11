@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 Use Cake\ORM\TableRegistry;
+use Cake\Utility\Text;
 
 /**
  * Pathways Controller
@@ -91,16 +92,29 @@ class PathwaysController extends AppController
 	// IDs into the array that we just created
 	foreach($pathway->users as $pu) {
 		array_push($usersonthispathway,$pu->id);
+    }
+
+    // In order to implement the scrollspy step navigation we zip through
+    // and compile a list of the steps and convert them to slugs. Now we
+    // can run through the steps and link to them outside of the main 
+    // loop #TODO in the template we're hacking this by having a separate
+    // slugify function because we don't yet store the slug when we save
+    // the step. We need to add a new entity to the steps table (also the
+    // pathways table) to do this. Fairly high priority really.
+    $stepsalongtheway = array();
+    foreach($pathway->steps as $step) {
+		array_push($stepsalongtheway,array('slug' => Text::slug(strtolower($step->name)), 'name' => $step->name));
 	}
 
 
     if(!empty($user)) {
-		$this->set(compact('pathway', 'usersonthispathway', 'useractivitylist'));
+		$this->set(compact('pathway', 'usersonthispathway','stepsalongtheway', 'useractivitylist'));
 	} else {
-		$this->set(compact('pathway', 'usersonthispathway'));
+		$this->set(compact('pathway', 'usersonthispathway','stepsalongtheway'));
 	}
 
     }
+
 
     /**
      * Add method
@@ -146,8 +160,8 @@ class PathwaysController extends AppController
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
             if ($this->Pathways->save($pathway)) {
                 $this->Flash->success(__('The pathway has been saved.'));
-
-                return $this->redirect($this->referer());
+                $pathback = '/pathways/view/' . $id;
+                return $this->redirect($pathback);
             }
             $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
         }
@@ -353,6 +367,19 @@ class PathwaysController extends AppController
             $listenp = floor(($listencount / $stepActivityCount) * 100);
             $pp = floor(($participatecount / $stepActivityCount) * 100);
 
+            //$readtotal = 0;
+            //$watchtotal = 0;
+            //$listentotal = 0;
+            //$participatetotal = 0;
+            $typecounts = array('readtotal' => $readtotal, 
+                                'watchtotal' => $watchtotal, 
+                                'listentotal' => $listentotal, 
+                                'participatetotal' => $participatetotal);
+
+            $typecolors = array('readcolor' => $readcolor, 
+                                'watchcolor' => $watchcolor, 
+                                'listencolor' => $listencolor, 
+                                'participatecolor' => $participatecolor);
 
             if(!empty($readclaim) && $readtotal > 0) {
                 $readpercent = floor(($readclaim / $readtotal) * 100);
@@ -409,7 +436,7 @@ class PathwaysController extends AppController
             
             if(!empty($user)) {
 
-                $this->set(compact(['percentages','status','chartjs']));
+                $this->set(compact(['percentages','status','chartjs','typecounts','typecolors']));
                 
             } else {
 

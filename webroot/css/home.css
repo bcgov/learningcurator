@@ -8,7 +8,7 @@ a {
     text-decoration: none; 
 }
 a:hover {
-    border-bottom-color: #0279ba;
+    /*border-bottom-color: #0279ba;*/
     color: #005b8b; 
 }
 a:hover strong {
@@ -19,13 +19,6 @@ a:hover strong {
     background: rgba(255,255,255,1);
     color: #222;
     margin-bottom: 0.75em;
-    padding: 7px 0 5px 0;
-}
-
-.required {
-    background: rgba(0,0,0,1);
-    color: #FFF;
-    float: right;
     padding: 7px 0 5px 0;
 }
 
@@ -44,21 +37,7 @@ a:hover strong {
     margin-bottom: 0.75em;
 }
 
-.btn-light {
-    color: #212529;
-    background-color: #ffffff;
-    border: none;
-}
 
-.btn-light:hover {
-    background-color: #464646;
-    color: #ffffff !important;
-}
-
-a.badge-light:hover, a.badge-light:focus {
-    color: #212529 !important;
-    background-color: #fbfbfb;
-}
 
 
 
