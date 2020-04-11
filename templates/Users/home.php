@@ -5,18 +5,22 @@
 */
 ?>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <div class="btn-group float-right">
 <?= $this->Html->link(__('Logout'), ['action' => 'logout', $user->id], ['class' => 'btn btn-dark btn-sm']) ?>
 <?php //$this->Html->link(__('Edit User'), ['action' => 'edit', $user->id], ['class' => 'btn btn-dark btn-sm']) ?>
 <?php //$this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'btn btn-dark btn-sm']) ?>
 </div>
 <h1><?= h($user->name) ?></h1>
+
+<div class="row">
+<div class="col-md-6">
 <?php if (!empty($user->pathways)) : ?>
 <h2><?= __('You\'re following these pathways') ?></h2>
-<div class="card-columns">
+<div class="row">
 	<?php foreach ($user->pathways as $pathways) : ?>
-	<div class="card p-3">
+	<div class="col-md-6 mb-3">
+	<div class="card">
+	<div class="card-body">
 		<div><?= $pathways->has('category') ? $this->Html->link($pathways->category->name, ['controller' => 'Categories', 'action' => 'view', $pathways->category->id]) : '' ?></div>
 		<h2><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?></h2>
 		<!--<div><?= h($pathways->description) ?></div>-->
@@ -55,30 +59,48 @@
 			request<?= $pathways->id ?>.send();
 		</script>
 	</div>
+	</div>
+	</div>
 	<?php endforeach; ?>
-</div>
+
 <?php endif; ?>
-<div class="row mt-3 justify-content-md-center">
-<div class="col-md-8">
+
+</div></div>
+<div class="col-md-6">
+
 <?php if (!empty($user->activities)) : ?>
 <h2><?= __('You\'ve claimed these activities') ?></h2>
 <div class="card">
 <div class="card-body">
-<input type="text" name="activityfilter" id="activityfilter" placeholder="Filter" class="form-control mb-3">
+<div id="activitylist">
+<input type="text" name="activityfilter" id="activityfilter" placeholder="Filter" class="search form-control mb-3">
+
+<?php 
+// #TODO push this code into the controller
+$ts = [];
+foreach ($user->activities as $activity) {
+	$a = $activity->activity_type->name . '|' . $activity->activity_type->color;
+	array_push($ts,$a);
+}
+$unique = array_keys(array_flip($ts)); 
+?>
+<!--
 <div class="mb-1">
-<span class="badge badge-dark" style="background-color: rgba(240,203,86,1)">Read</span>
-<span class="badge badge-dark" style="background-color: rgba(71,189,182,1)">Watch</span>
-<span class="badge badge-dark" style="background-color: rgba(229,76,59,1)">Listen</span>
-<span class="badge badge-dark" style="background-color: rgba(134, 33, 206,1)">Participate</span>
+Sort: 
+<?php foreach($unique as $type): ?>
+<?php $t = explode('|',$type) ?>
+	<a class="sort badge badge-dark" data-sort="name" style="background-color: rgba(<?= $t[1] ?>,1)"><?= $t[0] ?></a>
+<?php endforeach ?>
 </div>
-<div class=""> 
+-->
+<div class="list"> 
 	<?php foreach ($user->activities as $activity) : ?>
 	<div class="my-3 p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border: 0">
 		<?php if($activity->status_id == 2): ?>
 		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
 		<div><strong><?= h($activity->name) ?></strong></div>
 		<?php else: ?>
-		<h3><?= h($activity->name) ?></h3>
+		<h3 class="name"><?= h($activity->name) ?></h3>
 		<?php endif ?>
 		<div><?= h($activity->description) ?></div>
 	<a target="_blank" 
@@ -93,22 +115,23 @@
 
 	</div>
 	<?php endforeach; ?>
-</div>
-</div>
-</div>
+</div> <!-- /.list -->
+</div> <!-- /#activitylist -->
+</div> <!-- /.card-body -->
+</div> <!-- /.card -->
+
 </div>
 </div>
 
 <?php endif; ?>
-<?php if (!empty($user->competencies)) : ?>
-<div class="card">
-<div class="card-body">
-	<h2><?= __('Competencies developing') ?></h2>
-	<?php foreach ($user->competencies as $competencies) : ?>
-	<div>
-		<?= $this->Html->link($competencies->name, ['controller' => 'Competencies', 'action' => 'view', $competencies->id]) ?>
-	</div>
-	<?php endforeach; ?>
-</div>
-</div>
-<?php endif; ?>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+<script>
+var options = {
+    valueNames: [ 'name' ]
+};
+
+var hackerList = new List('activitylist', options);
+</script>

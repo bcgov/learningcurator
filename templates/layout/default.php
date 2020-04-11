@@ -32,7 +32,7 @@ img {
 
 <link rel="stylesheet" href="/css/bootstrap-multiselect.css" type="text/css"/>
 </head>
-<body class="bg-light">
+<body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="70">
 
 <nav class="navbar navbar-expand-lg mb-3" style="background: #FFF">
 	
@@ -142,37 +142,6 @@ img {
 </div>
 </div>
 
-<script>
 
-$(function () {
-
-	$('#activities-ids').multiselect({
-            enableFiltering: true,
-            filterBehavior: 'both'
-        });
-
-	$('[data-toggle="tooltip"]').tooltip();
-
-	$('.likingit').on('click',function(e){
-		var url = $(this).attr('href');
-		$(this).children('.lcount').html('Liked!');
-		e.preventDefault();
-		$.ajax({
-			type: "GET",
-			url: url,
-			data: '',
-			success: function(data)
-			{
-			},
-			statusCode: 
-			{
-				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
-				}
-			}
-		});
-	});
-});
-</script>
 </body>
 </html>

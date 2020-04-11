@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 Use Cake\ORM\TableRegistry;
+use Cake\Utility\Text;
 
 /**
  * Pathways Controller
@@ -91,16 +92,22 @@ class PathwaysController extends AppController
 	// IDs into the array that we just created
 	foreach($pathway->users as $pu) {
 		array_push($usersonthispathway,$pu->id);
+    }
+
+    $stepsalongtheway = array();
+    foreach($pathway->steps as $step) {
+		array_push($stepsalongtheway,array('slug' => Text::slug(strtolower($step->name)), 'name' => $step->name));
 	}
 
 
     if(!empty($user)) {
-		$this->set(compact('pathway', 'usersonthispathway', 'useractivitylist'));
+		$this->set(compact('pathway', 'usersonthispathway','stepsalongtheway', 'useractivitylist'));
 	} else {
-		$this->set(compact('pathway', 'usersonthispathway'));
+		$this->set(compact('pathway', 'usersonthispathway','stepsalongtheway'));
 	}
 
     }
+
 
     /**
      * Add method

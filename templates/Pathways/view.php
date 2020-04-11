@@ -14,6 +14,21 @@ if(!empty($active)) {
 	$role = $active->role_id;
 	$uid = $active->id;
 }
+// #TODO remove this hack and do this properly where we're 
+// adding a new slug entity to the steps table so that 
+// we don't have to process the title strings at all.
+function slugify($string) {
+	$slug = \Transliterator::createFromRules(
+		':: Any-Latin;'
+		. ':: NFD;'
+		. ':: [:Nonspacing Mark:] Remove;'
+		. ':: NFC;'
+		. ':: [:Punctuation:] Remove;'
+		. ':: Lower();'
+		. '[:Separator:] > \'-\''
+	)->transliterate( $string );
+	return $slug;
+}
 ?>
 <style>
 @media (min-width: 34em) {
@@ -55,9 +70,16 @@ if(!empty($active)) {
     position: sticky;
 	top: 0;
 	align-self: flex-start; 
+	text-transform: uppercase;
 	z-index: 1000;
 }
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+	background-color: #F1F1F1;
+	color: #333;
+}
 </style>
+
+
 <div class="row">
 <div class="col-md-8">
 <div class="card mb-3">
@@ -127,7 +149,22 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 
 </div>
 </div>
+
+
+
+
+
+
+<nav id="stepnav" class="stickthat nav nav-pills mb-3 p-3" style="background: #FFF">
+<?php foreach($stepsalongtheway as $steplink): ?>
+	<a class="nav-link " href="#pathway-<?= $steplink['slug'] ?>"><?= $steplink['name'] ?></a> 
+<?php endforeach ?>
+</nav> <!-- /nav -->
+
+
+
 <?php if (!empty($pathway->steps)) : ?>
+
 <div class="row">
 
 <div class="col-lg-4 col-md-3 col-6 order-md-last stickthat">
@@ -168,33 +205,9 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 <div class="col-lg-8 col-md-9">
 
 
-
-<?php 
-$totalActivities = 0;
-$totalTime = 0;
-$claimedcount = 0;
-$readclaim = 0;
-$watchclaim = 0;
-$listenclaim = 0;
-$participateclaim = 0;
-$readtimetotal = 0;
-$watchtimetotal = 0;
-$listentimetotal = 0;
-$participatetimetotal = 0;
-
-
-$readtotal = array();
-$watchtotal = array();
-$listentotal = array();
-$participatetotal = array();
-?>
 <?php foreach ($pathway->steps as $steps) : ?>
-<?php
 
-
-?>
-
-<div class="card ">
+<div id="pathway-<?php echo slugify($steps->name) ?>" class="card ">
 <div class="card-body">
 
 <?php if($role == 2 || $role == 5): ?>
@@ -204,34 +217,13 @@ $participatetotal = array();
 </div> <!-- /.btn-group -->
 <?php endif ?>
 
-
-
-
-
 <?php 
 
 $stepTime = 0;
-$stepActivityCount = 0;
-$readtime = 0;
-$watchtime = 0;
-$listentime = 0;
-$participatetime = 0;
-
 $defunctacts = array();
 $requiredacts = array();
 $tertiaryacts = array();
 
-$readcount = array();
-$watchcount = array();
-$listencount = array();
-$participatecount = array();
-
-$readcolor = '255,255,255';
-$watchcolor = '255,255,255';
-$listencolor = '255,255,255';
-$participatecolor = '255,255,255';
-
-$act = array();
 foreach ($steps->activities as $activity) {
 	// If this is 'defunct' then we pull it out of the list 
 	if($activity->status_id == 2) {
@@ -341,7 +333,7 @@ foreach ($steps->activities as $activity) {
 
 	<?php elseif($tag->name == 'YouTube'): ?>
 	
-	<div class="mb-3 p-3 bg-white">
+	<div class="my-3 p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border-radius: 3px;">
 		<iframe width="100%" 
 			height="315" 
 			src="https://www.youtube.com/embed/<?= h($activity->hyperlink) ?>/" 
@@ -610,19 +602,30 @@ foreach ($steps->activities as $activity) {
 </div>
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
 	crossorigin="anonymous"></script>
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
 	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
 	crossorigin="anonymous"></script>
+
 <script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="/js/jquery.scrollTo.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+
 <script>
 
 $(document).ready(function(){
 
 	loadStatus();
+
+	$('#stepnav .nav-link').on('click', function(event) {
+		event.preventDefault();
+        $.scrollTo(event.target.hash, 250, {offset:-60,});
+	});
 
 	$('.claim').on('submit', function(e){
 		
@@ -638,6 +641,30 @@ $(document).ready(function(){
 			{
 				
 				loadStatus();
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
+
+
+
+	$('[data-toggle="tooltip"]').tooltip();
+
+	$('.likingit').on('click',function(e){
+		var url = $(this).attr('href');
+		$(this).children('.lcount').html('Liked!');
+		e.preventDefault();
+		$.ajax({
+			type: "GET",
+			url: url,
+			data: '',
+			success: function(data)
+			{
 			},
 			statusCode: 
 			{
