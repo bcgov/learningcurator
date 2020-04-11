@@ -74,7 +74,8 @@ function slugify($string) {
 	z-index: 1000;
 }
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-	background-color: #F1F1F1;
+	background-color: transparent;
+	font-weight: bold;
 	color: #333;
 }
 </style>
@@ -154,12 +155,14 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 
 
 
-
+<?php if(count($stepsalongtheway) > 1): ?>
 <nav id="stepnav" class="stickthat nav nav-pills mb-3 p-3" style="background: #FFF">
 <?php foreach($stepsalongtheway as $steplink): ?>
 	<a class="nav-link " href="#pathway-<?= $steplink['slug'] ?>"><?= $steplink['name'] ?></a> 
 <?php endforeach ?>
 </nav> <!-- /nav -->
+<?php endif ?>
+
 
 
 

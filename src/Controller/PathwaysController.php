@@ -94,6 +94,13 @@ class PathwaysController extends AppController
 		array_push($usersonthispathway,$pu->id);
     }
 
+    // In order to implement the scrollspy step navigation we zip through
+    // and compile a list of the steps and convert them to slugs. Now we
+    // can run through the steps and link to them outside of the main 
+    // loop #TODO in the template we're hacking this by having a separate
+    // slugify function because we don't yet store the slug when we save
+    // the step. We need to add a new entity to the steps table (also the
+    // pathways table) to do this. Fairly high priority really.
     $stepsalongtheway = array();
     foreach($pathway->steps as $step) {
 		array_push($stepsalongtheway,array('slug' => Text::slug(strtolower($step->name)), 'name' => $step->name));
