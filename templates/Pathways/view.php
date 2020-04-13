@@ -65,6 +65,10 @@ function slugify($string) {
 	text-align: centre;
 	width: 140px;
 }
+
+#stepnav, .card {
+	box-shadow: 0 0 20px rgba(0,0,0,.05);
+}
 .stickthat {
     position: -webkit-sticky; /* for Safari */
     position: sticky;
@@ -72,6 +76,9 @@ function slugify($string) {
 	align-self: flex-start; 
 	text-transform: uppercase;
 	z-index: 1000;
+}
+.rings {
+	top: 86px;
 }
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
 	background-color: transparent;
@@ -170,7 +177,7 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 
 <div class="row">
 
-<div class="col-lg-4 col-md-3 col-6 order-md-last stickthat">
+<div class="col-lg-4 col-md-3 col-6 order-md-last stickthat rings">
 <?php if(!empty($uid)): ?>
 <?php if(in_array($uid,$usersonthispathway)): ?>
 <div class="card">

@@ -4,7 +4,13 @@
  * @var \App\Model\Entity\Step $step
  */
 ?>
-
+<style>
+label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+}
+</style>
 <?= $this->Form->create($step) ?>
 <?= $this->Form->hidden('image_path', ['class' => 'form-control']) ?>
 <?= $this->Form->hidden('featured', ['class' => 'form-control']) ?>
@@ -32,3 +38,11 @@
 	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
 	crossorigin="anonymous"></script>
 <script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
+<script>
+$(function () {
+	$('#activities-ids').multiselect({
+            enableFiltering: true,
+            filterBehavior: 'both'
+    });
+});
+</script>
