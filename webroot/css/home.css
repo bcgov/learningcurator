@@ -7,6 +7,7 @@ a {
     color: #0279ba;
     text-decoration: none; 
 }
+
 a:hover {
     /*border-bottom-color: #0279ba;*/
     color: #005b8b; 
@@ -15,30 +16,13 @@ a:hover strong {
     color: inherit; 
 }
 
+img {
+	height: auto;
+	max-width: 100%;
+}
 .hours {
     background: rgba(255,255,255,1);
     color: #222;
     margin-bottom: 0.75em;
     padding: 7px 0 5px 0;
 }
-
-.badge {
-    display: inline-block;
-    padding: .25em .4em;
-    font-size: 75%;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: .25rem;
-    transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
-    padding: 7px 10px;
-    margin-bottom: 0.75em;
-}
-
-
-
-
-
-
