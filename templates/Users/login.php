@@ -4,7 +4,7 @@
 
 <div class="card">
 <div class="card-body">
-    <?= $this->Flash->render() ?>
+   
     <?= $this->Form->create() ?>
         <?= $this->Form->control('idir', ['required' => true, 'class' => 'form-control']) ?>
         <?= $this->Form->control('password', ['required' => true, 'class' => 'form-control']) ?>

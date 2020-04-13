@@ -113,6 +113,15 @@ function slugify($string) {
 </div>
 </div>
 
+
+<div class="mb-2">
+	<span class="badge badge-dark readtotal"></span>  
+	<span class="badge badge-dark watchtotal"></span>  
+	<span class="badge badge-dark listentotal"></span>  
+	<span class="badge badge-dark participatetotal"></span>  
+</div>
+
+
 <?php if($role == 2 || $role == 5): ?>
 <a class="" 
 	data-toggle="collapse" 
@@ -145,12 +154,9 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 </div>
 </div>
 <?php endif ?>
-<div class="mb-2">
-	<span class="badge badge-dark readtotal"></span>  
-	<span class="badge badge-dark watchtotal"></span>  
-	<span class="badge badge-dark listentotal"></span>  
-	<span class="badge badge-dark participatetotal"></span>  
-</div>
+
+
+
 </div>
 </div>
 
@@ -270,11 +276,6 @@ foreach ($steps->activities as $activity) {
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'delete', 'class' => '']]) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
-	<?= $this->Form->button(__('Remove'),['class'=>'btn btn-sm btn-light']) ?>
-	<?= $this->Form->end() ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle', 'class' => '']]) ?>
 	<?php if($activity->_joinData->required == 0): ?>
 	<?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 1]) ?>
@@ -440,11 +441,6 @@ foreach ($steps->activities as $activity) {
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'delete', 'class' => '']]) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
-	<?= $this->Form->button(__('Remove'),['class'=>'btn btn-sm btn-light']) ?>
-	<?= $this->Form->end() ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle', 'class' => '']]) ?>
 	<?php if($activity->_joinData->required == 0): ?>
 	<?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 1]) ?>
