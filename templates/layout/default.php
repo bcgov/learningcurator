@@ -14,6 +14,13 @@
 	crossorigin="anonymous">
 -->
 <style>
+canvas {
+	height: auto;
+	max-width: 100%;
+}
+.card {
+	box-shadow: 0 0 20px rgba(0,0,0,.05);
+}
 a { text-decoration: none; }
 img {
 	height: auto;

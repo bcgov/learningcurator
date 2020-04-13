@@ -38,6 +38,7 @@ function slugify($string) {
         column-count:2;
     }
 }
+
 .hours {
 	background: rgba(255,255,255,1);
 	color: #222;
@@ -66,7 +67,7 @@ function slugify($string) {
 	width: 140px;
 }
 
-#stepnav, .card {
+#stepnav {
 	box-shadow: 0 0 20px rgba(0,0,0,.05);
 }
 .stickthat {
@@ -85,9 +86,31 @@ function slugify($string) {
 	font-weight: bold;
 	color: #333;
 }
+#emitter {
+  visibility: hidden;
+  background-color: #222;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  top: 40%;
+  left: 0%;
+}
+.dot-container {
+  position:absolute;
+  left:0;
+  top:0;
+  overflow:visible;
+  z-index:5000;
+  pointer-events:none;
+}
+.dot {
+  position: absolute;
+  pointer-events: none; /*performance optimization*/
+}
 </style>
 
-
+<div id="emitter"></div>
 <div class="row">
 <div class="col-md-8">
 <div class="card mb-3">
@@ -428,7 +451,7 @@ foreach ($steps->activities as $activity) {
 
 
 
-
+<?php if(count($tertiaryacts) > 0): ?>
 <p>The following activities are supplemental and not required to complete this pathway.</p>
 
 
@@ -541,7 +564,7 @@ foreach ($steps->activities as $activity) {
 
 <?php endforeach ?>
 </div>
-
+<?php endif ?>
 
 <?php if(!empty($defunctacts)): ?>
 	<div>
@@ -617,12 +640,13 @@ foreach ($steps->activities as $activity) {
 	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
 	crossorigin="anonymous"></script>
 
-<script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
+
 <script type="text/javascript" src="/js/jquery.scrollTo.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 
 <script>
+
 
 $(document).ready(function(){
 
@@ -732,6 +756,7 @@ function loadStatus() {
 
 
 }
+
 
 
 
