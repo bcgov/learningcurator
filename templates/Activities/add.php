@@ -25,7 +25,7 @@
                     echo $this->Form->control('hyperlink', ['class' => 'form-control']);
                     echo $this->Form->control('description', ['class' => 'form-control']);
                     echo $this->Form->control('file_path', ['class' => 'form-control']);
-                    echo $this->Form->control('tags._ids', ['options' => $tags, 'class' => 'form-control']);
+                    echo $this->Form->control('tag_string', ['type' => 'text', 'class' => 'form-control']);
                     echo $this->Form->control('licensing', ['class' => 'form-control']);
                     echo $this->Form->control('moderator_notes', ['class' => 'form-control']);
                     echo $this->Form->control('isbn', ['class' => 'form-control']);

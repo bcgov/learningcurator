@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\Event\EventInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+
 
 /**
  * Activities Model
@@ -195,4 +197,51 @@ class ActivitiesTable extends Table
 
         return $rules;
     }
+
+    public function beforeSave(EventInterface $event, $entity, $options)
+    {
+        if ($entity->tag_string) {
+            $entity->tags = $this->_buildTags($entity->tag_string);
+        }
+        return;
+    }
+    
+    protected function _buildTags($tagString)
+    {
+        // Trim tags
+        $newTags = array_map('trim', explode(',', $tagString));
+        
+        // Remove all empty tags
+        $newTags = array_filter($newTags);
+        // Reduce duplicated tags
+        $newTags = array_unique($newTags);
+        
+        $out = [];
+        $query = $this->Tags->find()
+            ->where(['Tags.name IN' => $newTags]);
+            
+        // Remove existing tags from the list of new tags.
+        foreach ($query->extract('name') as $existing) {
+            
+            $index = array_search($existing, $newTags);
+            if ($index !== false) {
+                unset($newTags[$index]);
+            }
+        }
+
+        // Add existing tags.
+        foreach ($query as $tag) {
+            $out[] = $tag;
+        }
+        // Add new tags.
+        foreach ($newTags as $tag) {
+            // this ish don work :()
+            $out[] = $this->Tags->newEntity(['name' => $tag, 'createby_id' => 1, 'modifiedby_id' => 1]);
+            
+
+        }
+        
+        return $out;
+    }
+
 }
