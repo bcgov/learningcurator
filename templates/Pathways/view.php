@@ -280,22 +280,18 @@ foreach ($steps->activities as $activity) {
 ?>
 
 <h1 class="text-uppercase">
-	<div class="float-right">
-	<span class="badge badge-light">
-	<i class="fas fa-clock"></i>
-	<?= $stepTime ?> hours</span></div>
 	<!--<?= h($steps->id) ?>.--> <?= h($steps->name) ?>
 </h1>
-<div class="alert alert-light"><?= h($steps->description) ?></div>
+<div class="my-3 py-3"><?= h($steps->description) ?></div>
 
 <?php foreach($requiredacts as $activity): ?>
 
 <div class="card mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 <div class="card-body">
-	<div class="required" data-toggle="tooltip" data-placement="bottom" title="This activity is required to complete the step">
+	<!-- <div class="required" data-toggle="tooltip" data-placement="bottom" title="This activity is required to complete the step">
 		<i class="fas fa-check-double"></i>
 		Required
-	</div>	
+	</div>	-->
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
@@ -320,9 +316,9 @@ foreach ($steps->activities as $activity) {
 
 	<?php endif; // role check ?>
 
-	<div class="hours" data-toggle="tooltip" data-placement="bottom" title="This activity should take approximately <?= $activity->hours ?> hours to complete">
+	<div class="hours float-right" data-toggle="tooltip" data-placement="bottom" title="This activity should take approximately <?= $activity->hours ?> hours to complete">
 		<i class="fas fa-clock"></i>
-		<?= $activity->hours ?> hours
+		<?= $activity->hours ?>
 	</div>
 
 	<?php foreach($activity->tags as $tag): ?>
@@ -452,7 +448,7 @@ foreach ($steps->activities as $activity) {
 
 
 <?php if(count($tertiaryacts) > 0): ?>
-<p>The following activities are supplemental and not required to complete this pathway.</p>
+<p>The following activities are supplemental learning opportunities.</p>
 
 
 <div class="card-columns">
@@ -484,9 +480,9 @@ foreach ($steps->activities as $activity) {
 
 
 	<?php endif ?>
-	<div class="hours" data-toggle="tooltip" data-placement="bottom" title="This activity should take approximately <?= $activity->hours ?> hours to complete">
+	<div class="hours float-right" data-toggle="tooltip" data-placement="bottom" title="This activity should take approximately <?= $activity->hours ?> hours to complete">
 		<i class="fas fa-clock"></i>
-		<?= $activity->hours ?> hours
+		<?= $activity->hours ?>
 	</div>
 
 	<?php foreach($activity->tags as $tag): ?>
