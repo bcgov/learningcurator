@@ -105,8 +105,8 @@ if(!empty($active)) {
 		<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 			<i class="fas fa-exclamation-triangle"></i>
 		</a>	
-		<a href="/activities/like/<?= $activity->id ?>" style="color:#333;" class="btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-<?= h($activity->recommended) ?> <i class="fas fa-thumbs-up"></i>
+		<a href="/activities/like/<?= $activity->id ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 		</a>
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>
@@ -197,3 +197,43 @@ if(!empty($active)) {
 
 </div>
 </div>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+	crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
+	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
+	crossorigin="anonymous"></script>
+
+<script>
+
+
+$(document).ready(function(){
+
+	$('[data-toggle="tooltip"]').tooltip();
+
+	$('.likingit').on('click',function(e){
+		var url = $(this).attr('href');
+		$(this).tooltip('dispose').children('.lcount').html('Liked!');
+		e.preventDefault();
+		$.ajax({
+			type: "GET",
+			url: url,
+			data: '',
+			success: function(data)
+			{
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
+});
+
+</script>

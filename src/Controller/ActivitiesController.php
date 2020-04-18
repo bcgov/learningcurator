@@ -113,10 +113,10 @@ class ActivitiesController extends AppController
     public function add()
     {
 
-	$user = $this->request->getAttribute('authentication')->getIdentity();
+	    $user = $this->request->getAttribute('authentication')->getIdentity();
         $activity = $this->Activities->newEmptyEntity();
         $this->Authorization->authorize($activity);
-	if ($this->request->is('post')) {
+	    if ($this->request->is('post')) {
 
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             $activity->createdby_id = $user->id;
@@ -157,7 +157,6 @@ class ActivitiesController extends AppController
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             if ($this->Activities->save($activity)) {
                 $this->Flash->success(__('The activity has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The activity could not be saved. Please, try again.'));

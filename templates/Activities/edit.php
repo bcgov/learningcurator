@@ -54,7 +54,7 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
     <div class="col-md-4">
     <div class="card mb-3">
     <div class="card-body">
-    <?php echo $this->Form->control('tags._ids', ['class' => 'form-control', 'options' => $tags]); ?>
+    <?php echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text']); ?>
     <?php echo $this->Form->control('users._ids', ['class' => 'form-control', 'options' => $users]); ?>
     <?php echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); ?>
     <?= $this->Form->button(__('Save Activity'), ['class' => 'btn btn-block btn-success my-3']) ?>
