@@ -62,12 +62,9 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
         if (Configure::read('debug')) {
             $this->addPlugin('DebugKit');
         }
-
         // Load more plugins here
         $this->addPlugin('Authentication');
-	$this->addPlugin('Authorization');
-
-
+	    $this->addPlugin('Authorization');
     }
 
     /**
@@ -97,9 +94,9 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
             ->add(new RoutingMiddleware($this))
             ->add(new \Authentication\Middleware\AuthenticationMiddleware($this->configAuth()));
 	
-	$middlewareQueue->add(new AuthorizationMiddleware($this));
+	    $middlewareQueue->add(new AuthorizationMiddleware($this));
         
-	return $middlewareQueue;
+	    return $middlewareQueue;
     }
 
     /**
@@ -122,41 +119,35 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
         // Load more plugins here
     }
 
-protected function configAuth(): \Authentication\AuthenticationService
-{
-    $authenticationService = new \Authentication\AuthenticationService([
-        'unauthenticatedRedirect' => '/users/login',
-        'queryParam' => 'redirect',
-    ]);
+    protected function configAuth(): \Authentication\AuthenticationService
+    {
+        $authenticationService = new \Authentication\AuthenticationService();
+        // $authenticationService->setConfig([
+        //     'unauthenticatedRedirect' => '/users/autoadd',
+        //     'queryParam' => 'redirect',
+        // ]);
 
-    // Load identifiers, ensure we check email and password fields
-    $authenticationService->loadIdentifier('Authentication.Password', [
-        'fields' => [
-            'username' => 'idir',
-            'password' => 'password',
-        ]
-    ]);
+        //$authenticationService->loadAuthenticator('Authentication.Session');
 
-    // Load the authenticators, you want session first
-    $authenticationService->loadAuthenticator('Authentication.Session');
-    // Configure form data check to pick email and password
-    $authenticationService->loadAuthenticator('Authentication.Form', [
-        'fields' => [
-            'username' => 'idir',
-            'password' => 'password',
-        ],
-        'loginUrl' => '/users/login',
-    ]);
+        $authenticationService->loadAuthenticator('Authentication.Token', [
+            'queryParam' => 'idir',
+            'header' => 'Authorization'
+        ]);
 
-    return $authenticationService;
-}
+         $authenticationService->loadIdentifier('Authentication.Token', [
+            'tokenField' => 'idir'
+            ]
+        );
 
-public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
-{
-    $resolver = new OrmResolver();
+        return $authenticationService;
+    }
 
-    return new AuthorizationService($resolver);
-}
+    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
+    {
+        $resolver = new OrmResolver();
+
+        return new AuthorizationService($resolver);
+    }
 
 
 }

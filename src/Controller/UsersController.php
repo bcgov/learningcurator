@@ -48,6 +48,40 @@ class UsersController extends AppController
         $this->set('user', $user);
     }
 
+
+    /**
+     * User auto add method
+     * This is the main controller that we redirect to when we detect a user who is
+     * not logged in, and doesn't already have an account.
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, throws error on fail
+     */
+    public function autoadd()
+    {
+        $this->Authorization->skipAuthorization();
+        $user = $this->Users->newEmptyEntity();
+        $user->createdby_id = 1;
+        $user->modifiedby_id = 1;
+        $user->ministry_id = 1;
+        $user->role_id = 1;
+        $user->name = 'Martin';
+        $user->idir = 'martinking';
+        $user->email = 'martinking@gov.bc.ca';
+        $user->password = 'martinking';
+    
+        $user = $this->Users->patchEntity($user, $user);
+        if ($this->Users->save($user)) {
+            print 'Ya good.';
+            //$this->Flash->success(__('The user has been saved.'));
+            //return $this->redirect(['action' => 'home']);
+        }
+        print 'Ya bad.';
+        //$this->Flash->error(__('The user could not be saved. Please, try again.'));
+
+    }
+
+
+
     /**
      * Add method
      *
@@ -125,47 +159,69 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
+    /**
+     * Login method
+     *
+     * @param 
+     * @return \Cake\Http\Response|null Redirects to user home page.
+     * @throws 
+     */
+    public function login() 
+    {
 
-public function login() 
-{
+        $this->Authorization->skipAuthorization();
+        $this->request->allowMethod(['get', 'post']);
+        $result = $this->Authentication->getResult();
+        // regardless of POST or GET, redirect if user is logged in
+        if ($result->isValid()) {
+            // redirect to /pages/home after login success
+            $redirect = $this->request->getQuery('redirect', [
+                'controller' => 'Users',
+                'action' => 'home',
+            ]);
 
-    $this->Authorization->skipAuthorization();
-    $this->request->allowMethod(['get', 'post']);
-    $result = $this->Authentication->getResult();
-    // regardless of POST or GET, redirect if user is logged in
-    if ($result->isValid()) {
-        // redirect to /pages/home after login success
-        $redirect = $this->request->getQuery('redirect', [
-            'controller' => 'Users',
-            'action' => 'home',
-        ]);
-
-        return $this->redirect($redirect);
+            return $this->redirect($redirect);
+        }
+        // display error if user submitted and authentication failed
+        if ($this->request->is('post') && !$result->isValid()) {
+            $this->Flash->error(__('Invalid username'));
+        }
     }
-    // display error if user submitted and authentication failed
-    if ($this->request->is('post') && !$result->isValid()) {
-        $this->Flash->error(__('Invalid username or password'));
-    }
-}
 
-public function logout()
-{
+    /**
+     * Logout method
+     *
+     * @param 
+     * @return \Cake\Http\Response|null Redirects to login page.
+     * @throws 
+     */
+    public function logout()
+    {
 
-    $this->Authorization->skipAuthorization();
-    $result = $this->Authentication->getResult();
-    // regardless of POST or GET, redirect if user is logged in
-    if ($result->isValid()) {
-        $this->Authentication->logout();
-        return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        $this->Authorization->skipAuthorization();
+        $result = $this->Authentication->getResult();
+        // regardless of POST or GET, redirect if user is logged in
+        if ($result->isValid()) {
+            $this->Authentication->logout();
+            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
     }
-}
-public function beforeFilter(\Cake\Event\EventInterface $event)
-{
-    parent::beforeFilter($event);
-    // configure the login action to don't require authentication, preventing
-    // the infinite redirect loop issue
-    $this->Authentication->addUnauthenticatedActions(['login']);
-}
+
+    /**
+     * beforeFilter method
+     *
+     * @param string|null \Cake\Event\EventInterface $event.
+     * @return 
+     * @throws 
+     */
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        // configure the login action to don't require authentication, preventing
+        // the infinite redirect loop issue
+        $this->Authentication->addUnauthenticatedActions(['login']);
+    }
+
    /**
      * Home method
      *
