@@ -58,10 +58,11 @@ class UsersController extends AppController
 
     /**
      * User auto-add method.
+     * 
      * This is the controller that we redirect to when we detect a user who
      * doesn't already have an account; in other words, they've gone through the
      * SiteMinder authentication already, there's a valid REMOTE_USER environment
-     * variable set, but it doesn't match anything in the system yet. All we do 
+     * variable set, but it doesn't match a user in the system. All we do 
      * is create a new user with the IDIR field set to the REMOTE_USER and then
      * redirect to the users/home page.
      * #TODO this should have a LDAP/GAL lookup to grab the user's name and email 
