@@ -51,9 +51,9 @@ function slugify($string) {
 .required,
 .hours {
 	border-radius: 5px;
+	padding: 5px 10px;
 	text-align: center;
 	text-transform: uppercase;
-	width: 130px;
 }
 .activity-badge {
 	border-radius: 50%;
@@ -316,10 +316,13 @@ foreach ($steps->activities as $activity) {
 
 	<?php endif; // role check ?>
 
+	<!-- This whole field is being deprecated in favor of an estimated time field, which will just be a string
+	we loose the ability calculate total time per step, but gain the ability to give a more realistic estimate
+	range.
 	<div class="hours float-right" data-toggle="tooltip" data-placement="bottom" title="This activity should take approximately <?= $activity->hours ?> hours to complete">
 		<i class="fas fa-clock"></i>
 		<?= $activity->hours ?>
-	</div>
+	</div> -->
 
 	<?php foreach($activity->tags as $tag): ?>
 	<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
@@ -411,10 +414,10 @@ foreach ($steps->activities as $activity) {
 
 
 
-
+		<!-- Hiding this until we can get a proper reporting system in place.
 		<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 			<i class="fas fa-exclamation-triangle"></i>
-		</a>	
+		</a>	-->
 		<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 		</a>
@@ -448,11 +451,11 @@ foreach ($steps->activities as $activity) {
 
 
 <?php if(count($tertiaryacts) > 0): ?>
-<p>The following activities are supplemental learning opportunities.</p>
+<!--<p>The following activities are supplemental learning opportunities.</p>-->
 
 <?php foreach($tertiaryacts as $activity): ?>
 	
-<div class="card mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
+<div class="card mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 <div class="card-body">
 	
 	<?php if($role == 2 || $role == 5): ?>
@@ -478,10 +481,13 @@ foreach ($steps->activities as $activity) {
 
 
 	<?php endif ?>
+	<!-- This whole field is being deprecated in favor of an estimated time field, which will just be a string
+	we loose the ability calculate total time per step, but gain the ability to give a more realistic estimate
+	range.
 	<div class="hours float-right" data-toggle="tooltip" data-placement="bottom" title="This activity should take approximately <?= $activity->hours ?> hours to complete">
 		<i class="fas fa-clock"></i>
 		<?= $activity->hours ?>
-	</div>
+	</div> -->
 
 	<?php foreach($activity->tags as $tag): ?>
 	<a href="#" class="badge badge-light"><?= $tag->name ?></a>
@@ -531,11 +537,10 @@ foreach ($steps->activities as $activity) {
 
 
 
-
-
-	<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
-		<i class="fas fa-exclamation-triangle"></i>
-	</a>	
+		<!-- Hiding this until we can get a proper reporting system in place.
+		<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
+			<i class="fas fa-exclamation-triangle"></i>
+		</a>	-->	
 	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 	</a>

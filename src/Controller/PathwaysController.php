@@ -196,7 +196,7 @@ class PathwaysController extends AppController
 
 
     /**
-     * Process and return a status for this activity 
+     * Process and return a status for this pathway for the logged in user 
      *
      * @param string|null $id Pathway id.
      * @return \Cake\Http\Response|null
@@ -310,12 +310,12 @@ class PathwaysController extends AppController
                         array_push($defunctacts,$activity);
                     } else {
                         // if it's required
-                        if($activity->_joinData->required == 1) {
-                            array_push($requiredacts,$activity);
-                        // Otherwise it's teriary
-                        } else {
-                            array_push($tertiaryacts,$activity);
-                        }
+                        //if($activity->_joinData->required == 1) {
+                            //array_push($requiredacts,$activity);
+                        // Otherwise it's supplmentary
+                        //} else {
+                            //array_push($tertiaryacts,$activity);
+                        //}
                         //
                         // we want to count each type on a per step basis
                         // as well as adding to the total
