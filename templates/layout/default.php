@@ -32,9 +32,13 @@ canvas {
 <nav class="navbar navbar-expand-lg mb-3" style="background: #FFF">
 	
 	<a class="navbar-brand text-uppercase" href="/" style="margin: 0 0 0 20px">
+	<?php if(!empty($atypes)): ?>
 	<?php foreach($atypes as $type): ?>
 		<span class="fas fa-dot-circle" style="color: rgba(<?= $type->color ?>,1); font-size: 280%; margin: 0 0 0 -20px;"></span>
 	<?php endforeach ?>
+	<?php else: ?>
+		Learning Agent
+	<?php endif ?>
 	</a>
 	<?php if(!empty($active)): ?>
 	<ul class="navbar-nav mr-auto">
