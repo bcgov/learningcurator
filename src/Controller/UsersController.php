@@ -91,11 +91,8 @@ class UsersController extends AppController
         } else {
             echo 'Something went wrong when creating your account. Please contact learningagent@gov.bc.ca for assistance.';
         }
-        
 
     }
-
-
 
     /**
      * Add method
