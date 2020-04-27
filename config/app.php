@@ -57,6 +57,7 @@ return [
         'webroot' => 'webroot',
         'wwwRoot' => WWW_ROOT,
         //'baseUrl' => env('SCRIPT_NAME'),
+        'useridir' => env('REMOTE_USER'),
         'fullBaseUrl' => false,
         'imageBaseUrl' => 'img/',
         'cssBaseUrl' => 'css/',

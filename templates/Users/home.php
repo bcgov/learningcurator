@@ -5,13 +5,7 @@
 */
 ?>
 
-<div class="btn-group float-right">
-<?= $this->Html->link(__('Logout'), ['action' => 'logout', $user->id], ['class' => 'btn btn-dark btn-sm']) ?>
-<?php //$this->Html->link(__('Edit User'), ['action' => 'edit', $user->id], ['class' => 'btn btn-dark btn-sm']) ?>
-<?php //$this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'btn btn-dark btn-sm']) ?>
-</div>
 <h1><?= h($user->name) ?></h1>
-
 <div class="row">
 <div class="col-md-6">
 <?php if (!empty($user->pathways)) : ?>
@@ -62,7 +56,8 @@
 	</div>
 	</div>
 	<?php endforeach; ?>
-
+<?php else: ?>
+<h1><?= _('You\'re not following any pathways yet.') ?></h1>
 <?php endif; ?>
 
 </div></div>
@@ -122,9 +117,20 @@ Sort:
 
 </div>
 </div>
-
+<?php else: ?>
+<h1><?= _('You\'re not claimed any activities yet.') ?></h1>
 <?php endif; ?>
 
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+	crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
+	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
+	crossorigin="anonymous"></script>
+	
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>

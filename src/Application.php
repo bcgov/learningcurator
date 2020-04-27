@@ -62,12 +62,9 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
         if (Configure::read('debug')) {
             $this->addPlugin('DebugKit');
         }
-
         // Load more plugins here
         $this->addPlugin('Authentication');
-	$this->addPlugin('Authorization');
-
-
+	    $this->addPlugin('Authorization');
     }
 
     /**
@@ -97,9 +94,9 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
             ->add(new RoutingMiddleware($this))
             ->add(new \Authentication\Middleware\AuthenticationMiddleware($this->configAuth()));
 	
-	$middlewareQueue->add(new AuthorizationMiddleware($this));
+	    $middlewareQueue->add(new AuthorizationMiddleware($this));
         
-	return $middlewareQueue;
+	    return $middlewareQueue;
     }
 
     /**
@@ -122,41 +119,33 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
         // Load more plugins here
     }
 
-protected function configAuth(): \Authentication\AuthenticationService
-{
-    $authenticationService = new \Authentication\AuthenticationService([
-        'unauthenticatedRedirect' => '/users/login',
-        'queryParam' => 'redirect',
-    ]);
+    protected function configAuth(): \Authentication\AuthenticationService
+    {
+        $authenticationService = new \Authentication\AuthenticationService();
+        
+        $authenticationService->setConfig([
+            'unauthenticatedRedirect' => '/users/autoadd',
+            'queryParam' => 'redirect',
+        ]);
+        // The Idir authenticator is currently just a stripped down version 
+        // of the token authenticator, and is in the 
+        // vendor\cakephp\authentication\src\Authenticator and 
+        // vendor\cakephp\authentication\src\Identified
+        // directories that are outside of version control at the moment
+        // #TODO figure out where to put these custom authenticator files
+        // so that they're part of the repo!
+        $authenticationService->loadAuthenticator('Authentication.Idir');
+        $authenticationService->loadIdentifier('Authentication.Idir');
 
-    // Load identifiers, ensure we check email and password fields
-    $authenticationService->loadIdentifier('Authentication.Password', [
-        'fields' => [
-            'username' => 'idir',
-            'password' => 'password',
-        ]
-    ]);
+        return $authenticationService;
+    }
 
-    // Load the authenticators, you want session first
-    $authenticationService->loadAuthenticator('Authentication.Session');
-    // Configure form data check to pick email and password
-    $authenticationService->loadAuthenticator('Authentication.Form', [
-        'fields' => [
-            'username' => 'idir',
-            'password' => 'password',
-        ],
-        'loginUrl' => '/users/login',
-    ]);
+    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
+    {
+        $resolver = new OrmResolver();
 
-    return $authenticationService;
-}
-
-public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
-{
-    $resolver = new OrmResolver();
-
-    return new AuthorizationService($resolver);
-}
+        return new AuthorizationService($resolver);
+    }
 
 
 }

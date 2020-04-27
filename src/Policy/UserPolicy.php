@@ -117,6 +117,11 @@ class UserPolicy
         //return $user->getIdentifier('role_id') === 5;
         return $user->role_id === 5;
     }
+    protected function isCurator(IdentityInterface $user, User $resource)
+    {
+        //return $user->getIdentifier('role_id') === 5;
+        return $user->role_id === 2;
+    }
 
 
 
