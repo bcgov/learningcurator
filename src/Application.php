@@ -122,18 +122,15 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
     protected function configAuth(): \Authentication\AuthenticationService
     {
         $authenticationService = new \Authentication\AuthenticationService();
-        // $authenticationService->setConfig([
-        //     'unauthenticatedRedirect' => '/users/autoadd',
-        //     'queryParam' => 'redirect',
-        // ]);
-
-        //$authenticationService->loadAuthenticator('Authentication.Session');
-
-        $authenticationService->loadAuthenticator('Authentication.Token', [
-            'queryParam' => 'idir',
-            'header' => 'Authorization'
+        $authenticationService->setConfig([
+            'unauthenticatedRedirect' => '/users/autoadd',
+            'queryParam' => 'redirect',
         ]);
 
+        $authenticationService->loadAuthenticator('Authentication.Token', [
+            'queryParam' => 'idir'
+        ]);
+        
          $authenticationService->loadIdentifier('Authentication.Token', [
             'tokenField' => 'idir'
             ]

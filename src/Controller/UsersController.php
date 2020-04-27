@@ -12,6 +12,13 @@ namespace App\Controller;
  */
 class UsersController extends AppController
 {
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        // Configure the login action to not require authentication, preventing
+        // the infinite redirect loop issue
+        $this->Authentication->addUnauthenticatedActions(['autoadd']);
+    }
     /**
      * Index method
      *
@@ -50,33 +57,40 @@ class UsersController extends AppController
 
 
     /**
-     * User auto add method
-     * This is the main controller that we redirect to when we detect a user who is
-     * not logged in, and doesn't already have an account.
+     * User auto-add method.
+     * This is the controller that we redirect to when we detect a user who
+     * doesn't already have an account; in other words, they've gone through the
+     * SiteMinder authentication already, there's a valid REMOTE_USER environment
+     * variable set, but it doesn't match anything in the system yet. All we do 
+     * is create a new user with the IDIR field set to the REMOTE_USER and then
+     * redirect to the users/home page.
+     * #TODO this should have a LDAP/GAL lookup to grab the user's name and email 
+     * address at a minimum; lookup ministry as well? or perhaps, if that's 
+     * problematic, we could use the existing login form, with the IDIR as a 
+     * hidden field
+     * #TODO remove password field? for now it's just hard-coded as the same thing
+     * for every user lol
      *
      * @return \Cake\Http\Response|null Redirects on successful add, throws error on fail
      */
     public function autoadd()
     {
+        $this->request->allowMethod(['get']);
         $this->Authorization->skipAuthorization();
         $user = $this->Users->newEmptyEntity();
-        $user->createdby_id = 1;
-        $user->modifiedby_id = 1;
+        $user->name = 'Learner';
+        $user->idir = env('REMOTE_USER');
         $user->ministry_id = 1;
         $user->role_id = 1;
-        $user->name = 'Martin';
-        $user->idir = 'martinking';
-        $user->email = 'martinking@gov.bc.ca';
-        $user->password = 'martinking';
-    
-        $user = $this->Users->patchEntity($user, $user);
+        $user->email = 'learner@gov.bc.ca';
+        $user->password = 'learning';
+
         if ($this->Users->save($user)) {
-            print 'Ya good.';
-            //$this->Flash->success(__('The user has been saved.'));
-            //return $this->redirect(['action' => 'home']);
+            return $this->redirect(['action' => 'home']);
+        } else {
+            $this->Flash->error(__('Something went wrong when creating your account. Please contact learningagent@gov.bc.ca for assistance.'));
         }
-        print 'Ya bad.';
-        //$this->Flash->error(__('The user could not be saved. Please, try again.'));
+        
 
     }
 
@@ -205,21 +219,6 @@ class UsersController extends AppController
             $this->Authentication->logout();
             return $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
-    }
-
-    /**
-     * beforeFilter method
-     *
-     * @param string|null \Cake\Event\EventInterface $event.
-     * @return 
-     * @throws 
-     */
-    public function beforeFilter(\Cake\Event\EventInterface $event)
-    {
-        parent::beforeFilter($event);
-        // configure the login action to don't require authentication, preventing
-        // the infinite redirect loop issue
-        $this->Authentication->addUnauthenticatedActions(['login']);
     }
 
    /**
