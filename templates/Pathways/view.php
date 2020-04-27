@@ -450,11 +450,9 @@ foreach ($steps->activities as $activity) {
 <?php if(count($tertiaryacts) > 0): ?>
 <p>The following activities are supplemental learning opportunities.</p>
 
-
-<div class="card-columns">
 <?php foreach($tertiaryacts as $activity): ?>
 	
-<div class="card" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
+<div class="card mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 <div class="card-body">
 	
 	<?php if($role == 2 || $role == 5): ?>
@@ -559,7 +557,8 @@ foreach ($steps->activities as $activity) {
 </div>
 
 <?php endforeach ?>
-</div>
+
+
 <?php endif ?>
 
 <?php if(!empty($defunctacts)): ?>

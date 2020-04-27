@@ -123,16 +123,16 @@ class ActivitiesStepsController extends AppController
      */
     public function requiredToggle()
     {
-    $u = $this->request->getAttribute('authentication')->getIdentity();
-    $activitiesSteps = $this->ActivitiesSteps->newEmptyEntity();
-    $this->Authorization->authorize($activitiesSteps);
-	if($this->request->getData()['required'] == 1) {
-		$activitiesSteps->required = 1;
-	} else {
-		$activitiesSteps->required = 0;
-	}
-	$activitiesSteps->step_id = $this->request->getData()['step_id'];
-	$activitiesSteps->activity_id = $this->request->getData()['activity_id'];
+        $u = $this->request->getAttribute('authentication')->getIdentity();
+        $activitiesSteps = $this->ActivitiesSteps->newEmptyEntity();
+        $this->Authorization->authorize($activitiesSteps);
+        if($this->request->getData()['required'] == 1) {
+            $activitiesSteps->required = 1;
+        } else {
+            $activitiesSteps->required = 0;
+        }
+        $activitiesSteps->step_id = $this->request->getData()['step_id'];
+        $activitiesSteps->activity_id = $this->request->getData()['activity_id'];
         if ($this->request->is('post')) {
             if ($this->ActivitiesSteps->save($activitiesSteps)) {
                 $this->Flash->success(__('That activity is now required. Good job!'));
