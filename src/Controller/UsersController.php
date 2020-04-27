@@ -76,20 +76,20 @@ class UsersController extends AppController
      */
     public function autoadd()
     {
-        $this->request->allowMethod(['get']);
         $this->Authorization->skipAuthorization();
         $user = $this->Users->newEmptyEntity();
-        $user->name = 'Learner';
-        $user->idir = env('REMOTE_USER');
+        $idir = env('REMOTE_USER');
+        $user->name = $idir;
+        $user->idir = $idir;
         $user->ministry_id = 1;
         $user->role_id = 1;
-        $user->email = 'learner@gov.bc.ca';
+        $user->email = $idir . '@gov.bc.ca';
         $user->password = 'learning';
 
         if ($this->Users->save($user)) {
             return $this->redirect(['action' => 'home']);
         } else {
-            $this->Flash->error(__('Something went wrong when creating your account. Please contact learningagent@gov.bc.ca for assistance.'));
+            echo 'Something went wrong when creating your account. Please contact learningagent@gov.bc.ca for assistance.';
         }
         
 

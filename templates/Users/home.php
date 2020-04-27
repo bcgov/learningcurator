@@ -5,13 +5,7 @@
 */
 ?>
 
-<div class="btn-group float-right">
-<?= $this->Html->link(__('Logout'), ['action' => 'logout', $user->id], ['class' => 'btn btn-dark btn-sm']) ?>
-<?php //$this->Html->link(__('Edit User'), ['action' => 'edit', $user->id], ['class' => 'btn btn-dark btn-sm']) ?>
-<?php //$this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'btn btn-dark btn-sm']) ?>
-</div>
 <h1><?= h($user->name) ?></h1>
-
 <div class="row">
 <div class="col-md-6">
 <?php if (!empty($user->pathways)) : ?>
@@ -62,7 +56,8 @@
 	</div>
 	</div>
 	<?php endforeach; ?>
-
+<?php else: ?>
+<?= _('You\'re not following any pathways yet.') ?>
 <?php endif; ?>
 
 </div></div>
@@ -122,7 +117,8 @@ Sort:
 
 </div>
 </div>
-
+<?php else: ?>
+<?= _('You\'re not claimed any activities yet.') ?>
 <?php endif; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>

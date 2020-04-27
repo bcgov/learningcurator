@@ -122,19 +122,20 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
     protected function configAuth(): \Authentication\AuthenticationService
     {
         $authenticationService = new \Authentication\AuthenticationService();
+        
         $authenticationService->setConfig([
             'unauthenticatedRedirect' => '/users/autoadd',
             'queryParam' => 'redirect',
         ]);
-
-        $authenticationService->loadAuthenticator('Authentication.Token', [
-            'queryParam' => 'idir'
-        ]);
-        
-         $authenticationService->loadIdentifier('Authentication.Token', [
-            'tokenField' => 'idir'
-            ]
-        );
+        // The Idir authenticator is currently just a stripped down version 
+        // of the token authenticator, and is in the 
+        // vendor\cakephp\authentication\src\Authenticator and 
+        // vendor\cakephp\authentication\src\Identified
+        // directories that are outside of version control at the moment
+        // #TODO figure out where to put these custom authenticator files
+        // so that they're part of the repo!
+        $authenticationService->loadAuthenticator('Authentication.Idir');
+        $authenticationService->loadIdentifier('Authentication.Idir');
 
         return $authenticationService;
     }
