@@ -73,7 +73,23 @@ class ActivitiesStepPolicy
             return false;
         }
     }
-
+    /**
+     * Check if $user can sort an activity on a step
+     *
+     * @param Authorization\IdentityInterface $user The user.
+     * @param App\Model\Entity\ActivitiesStep $ActivitiesStep
+     * @return bool
+     */
+    public function canSort(IdentityInterface $user, ActivitiesStep $ActivitiesStep)
+    {
+        if($this->isAdmin($user, $ActivitiesStep)) {
+            return true;
+        } elseif($this->isCurator($user,$ActivitiesStep)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     protected function isAdmin(IdentityInterface $user, ActivitiesStep $ActivitiesStep)
     {
         return $user->role_id === 5;
