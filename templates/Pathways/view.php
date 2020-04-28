@@ -3,16 +3,12 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pathway $pathway
  */
-
 $this->loadHelper('Authentication.Identity');
-//if ($this->Identity->isLoggedIn()) {
-//	$name = $this->Identity->get('role_id');
-//}
 $uid = 0;
 $role = 0;
-if(!empty($active)) {
-	$role = $active->role_id;
-	$uid = $active->id;
+if ($this->Identity->isLoggedIn()) {
+	$role = $this->Identity->get('role_id');
+	$uid = $this->Identity->get('id');
 }
 // #TODO remove this hack and do this properly where we're 
 // adding a new slug entity to the steps table so that 
@@ -31,61 +27,45 @@ function slugify($string) {
 }
 ?>
 <style>
-@media (min-width: 34em) {
+/* Start desktop-specific code for this page.
+Arbitrarily set to 45em based on sample code from ...somewhere. 
+This seems to work out, but #TODO investigate optimizing this
+*/
+@media (min-width: 45em) {
     .card-columns {
         -webkit-column-count:2;
         -moz-column-count:2;
         column-count:2;
     }
-}
+	.stickyrings {
+		align-self: flex-start; 
+		position: -webkit-sticky;
+		position: sticky;
+		text-transform: uppercase;
+		top: 86px;
+		z-index: 1000;
+	}
+} /* end desktop-specific code */
 
-.hours {
-	background: rgba(255,255,255,1);
-	color: #222;
-}
-.required {
-	background: rgba(0,0,0,1);
-	color: #FFF;
-	float: right;
-}
-.required,
-.hours {
-	border-radius: 5px;
-	padding: 5px 10px;
-	text-align: center;
-	text-transform: uppercase;
-}
-.activity-badge {
-	border-radius: 50%;
-	float: left;
-	font-size: 18px;
-	height: 140px;
-	line-height: 1;
-	margin: 5px;
-	padding-top: 30px;
-	text-align: centre;
-	width: 140px;
-}
-
-#stepnav {
-	box-shadow: 0 0 20px rgba(0,0,0,.05);
-}
-.stickthat {
-    position: -webkit-sticky; /* for Safari */
-    position: sticky;
-	top: 0;
+.stickynav {
 	align-self: flex-start; 
+	position: -webkit-sticky; /* for Safari */
+	position: sticky;
+	top: 0;
 	text-transform: uppercase;
 	z-index: 1000;
 }
-.rings {
-	top: 86px;
+#stepnav {
+	box-shadow: 0 0 20px rgba(0,0,0,.05);
 }
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-	background-color: transparent;
-	font-weight: bold;
+	background-color: #F1F1F1;
 	color: #333;
 }
+/* the follow is only here to potentially support the 
+confetti celebration upon path completion which may or
+may not be actually inplemented. #TODO remove this if 
+not used */
 #emitter {
   visibility: hidden;
   background-color: #222;
@@ -108,6 +88,8 @@ function slugify($string) {
   position: absolute;
   pointer-events: none; /*performance optimization*/
 }
+/* end of confetti celebration CSS */
+
 </style>
 
 <div id="emitter"></div>
@@ -192,7 +174,7 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 
 
 <?php if(count($stepsalongtheway) > 1): ?>
-<nav id="stepnav" class="stickthat nav nav-pills mb-3 p-3" style="background: #FFF">
+<nav id="stepnav" class="stickynav nav nav-pills mb-3 p-3" style="background: #FFF">
 <?php foreach($stepsalongtheway as $steplink): ?>
 	<a class="nav-link " href="#pathway-<?= $steplink['slug'] ?>"><?= $steplink['name'] ?></a> 
 <?php endforeach ?>
@@ -205,21 +187,17 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 <?php if (!empty($pathway->steps)) : ?>
 
 <div class="row">
-
-<div class="col-lg-4 col-md-3 col-6 order-md-last stickthat rings">
+<div class="col-lg-4 col-md-3 col-6 order-md-last stickyrings">
 <?php if(!empty($uid)): ?>
 <?php if(in_array($uid,$usersonthispathway)): ?>
 <div class="card">
 <div class="card-body">
-	
 	<div class="mb-3 following"></div>
 	<canvas id="myChart" width="250" height="250"></canvas>
-
-
 </div>
 </div>
 <?php else: ?>
-	<div class="card">
+<div class="card">
 <div class="card-body">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'add']]) ?>
 <?php
@@ -239,10 +217,8 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 
 <?php endif ?>
 
-
 </div>
 <div class="col-lg-8 col-md-9">
-
 
 <?php foreach ($pathway->steps as $steps) : ?>
 
@@ -278,11 +254,11 @@ foreach ($steps->activities as $activity) {
 		//}
 		array_push($acts,$activity);
 		$tmp = array();
-		// Loop through the whole classes and add start dates to the temp array
+		// Loop through the whole list, add steporder to tmp array
 		foreach($acts as $line) {
 			$tmp[] = $line->_joinData->steporder;
 		}
-		// Use the temp array to sort all the classes by start date
+		// Use the tmp array to sort acts list
 		array_multisort($tmp, SORT_DESC, $acts);
 	}
 }
@@ -297,11 +273,7 @@ foreach ($steps->activities as $activity) {
 
 <div class="card mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 <div class="card-body">
-	<!-- <div class="required" data-toggle="tooltip" data-placement="bottom" title="This activity is required to complete the step">
-		<i class="fas fa-check-double"></i>
-		Required
-	</div>	-->
-	
+
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
@@ -438,7 +410,12 @@ foreach ($steps->activities as $activity) {
 
 
 
-
+<?php if(!empty($activity->_joinData->required)): ?>
+	<div class="required float-right" data-toggle="tooltip" data-placement="bottom" title="This activity is required to complete the step">
+		<i class="fas fa-check-double"></i>
+		Required
+	</div>
+	<?php endif ?>
 
 
 		<!-- Hiding this until we can get a proper reporting system in place.

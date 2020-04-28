@@ -1,45 +1,25 @@
 <div class="row justify-content-md-center">
-
-
-<div class="col-md-6">
-
-
-<h1>Leadership Pathways</h1>
-<div class="card mb-2">
+<div class="col-md-8">
+<div class="card">
 <div class="card-body">
-<h2>
-<a href="/pathways/view/1">Personal Development</a></h2>
-<div class="mb-3">
-Achieve humility &amp; self-awareness. Receive and use feedback.</div>
+<h1>The Learning Agent</h1>
+<div class="my-3" style="font-size: 200%">
+<?php foreach($atypes as $type): ?>
+		<span class="fas fa-dot-circle" style="color: rgba(<?= $type->color ?>,1);"></span>
+		<?= $type->name ?>
+<?php endforeach ?>
 </div>
-</div>
-<div class="card mb-2">
-<div class="card-body">
-<h2>
-<a href="/pathways/view/2">Functions of Government</a></h2>
-<div class="mb-3">
-Can explain what the relationship is between understanding your ministry’s core functions &amp; leadership development.</div>
-</div>
-</div>
-<div class="card mb-2">
-<div class="card-body">
-<h2>
-<a href="/pathways/view/3">Role Advancement</a></h2>
-<div class="mb-3">
-Identify 3 key contacts to reach out to for. Describe the benefits of mentoring and identify potential candidates to mentor you. Access resources about mentoring. Apply networking best practices and establish new contacts/relationships.</div>
-</div>
-</div>
-<div class="card mb-2">
-<div class="card-body">
-<h2>
-<a href="/pathways/view/4">Leading Others</a></h2>
-<div class="mb-3">
-Understanding the elements of an effective communications/coaching approach that addresses… (include the three types here). Have career conversations with your direct reports.</div>
+<p>Expertly chosen activities structured into pathways that you can follow while measuring your progress along the way.</p> 
+<a href="/categories/view/1" class="btn btn-lg btn-dark btn-block">Leadership Pathways</a>
+<a href="/users/home" class="btn btn-lg btn-light btn-block">Your home page</a>
+<a href="/pages/faq" class="btn btn-lg btn-light btn-block">Frequently Asked</a>
+
 </div>
 </div>
 </div>
+
 </div>
-</div>
+
 
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>

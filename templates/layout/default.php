@@ -60,15 +60,10 @@ canvas {
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 	<ul class="navbar-nav mr-auto">
 
-		<?php if(!empty($active)): ?>
-	<!--	<li class="nav-item">
-			<a class="nav-link" href="/users/home">Hello, <?= $active->name ?></a>
-		</li> -->
-		<?php endif ?>
-	<!--	<li class="nav-item">
-			<a class="nav-link" href="/">About</a>
+		<li class="nav-item">
+			<a class="nav-link" href="/pages/faq">FAQ</a>
 		</li>
-	-->
+	
 
 		<?php if(!empty($active)): ?>
 		<?php if($active->role_id == 5): ?>

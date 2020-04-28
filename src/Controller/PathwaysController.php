@@ -77,7 +77,15 @@ class PathwaysController extends AppController
         }
 
         $pathway = $this->Pathways->get($id, [
-            'contain' => ['Categories', 'Ministries', 'Competencies', 'Steps', 'Steps.Activities', 'Steps.Activities.ActivityTypes', 'Steps.Activities.Users', 'Steps.Activities.Tags', 'Users'],
+            'contain' => ['Categories', 
+                            'Ministries', 
+                            'Competencies', 
+                            'Steps', 
+                            'Steps.Activities', 
+                            'Steps.Activities.ActivityTypes', 
+                            'Steps.Activities.Users', 
+                            'Steps.Activities.Tags', 
+                            'Users'],
         ]);
     //
 	// we want to be able to tell if the current user is already on this

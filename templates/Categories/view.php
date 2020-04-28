@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Category $category
  */
 ?>
-<h1><?= h($category->name) ?></h1>
+<h1><?= h($category->name) ?> Pathways</h1>
 <div class="text">
 <?= $this->Text->autoParagraph(h($category->description)); ?>
 </div>
@@ -25,21 +25,4 @@
 <?php endforeach; ?>
 <?php endif; ?>
 </div>
-<!--
-<div class="col-md-6">
-<div class="card">
-<div class="card-header">
-<h3 class="card-title">Activities</h3>
 </div>
-<?php if (!empty($category->activities)) : ?>
-<ul class="list-group list-group-flush">
-<?php foreach ($category->activities as $activities) : ?>
-<li class="list-group-item">
-<?= $this->Html->link($activities->name, ['controller' => 'Actions', 'action' => 'view', $activities->id]) ?>
-</li>
-<?php endforeach; ?>
-</ul>
-<?php endif; ?>
-</div>
-</div>
--->
