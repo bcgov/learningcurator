@@ -252,7 +252,7 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 <?php if($role == 2 || $role == 5): ?>
 <div class="btn-group float-right">
 <?= $this->Html->link(__('Edit Step'), ['controller' => 'Steps', 'action' => 'edit', $steps->id], ['class' => 'btn btn-light btn-sm']) ?>
-<?= $this->Form->postLink(__('Delete Step'), ['controller' => 'Steps', 'action' => 'delete', $steps->id], ['confirm' => __('Are you sure you want to delete # {0}?', $steps->id), 'class' => 'btn btn-light btn-sm']) ?>
+<?php //$this->Form->postLink(__('Delete Step'), ['controller' => 'Steps', 'action' => 'delete', $steps->id], ['confirm' => __('Are you sure you want to delete # {0}?', $steps->id), 'class' => 'btn btn-light btn-sm']) ?>
 </div> <!-- /.btn-group -->
 <?php endif ?>
 
