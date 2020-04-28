@@ -19,6 +19,7 @@ class CategoriesController extends AppController
      */
     public function index()
     {
+        $this->Authorization->skipAuthorization();
         $categories = $this->paginate($this->Categories);
 
         $this->set(compact('categories'));
@@ -33,7 +34,7 @@ class CategoriesController extends AppController
      */
     public function view($id = null)
     {
-	$this->Authorization->skipAuthorization();
+	    $this->Authorization->skipAuthorization();
         $category = $this->Categories->get($id, [
             'contain' => ['Activities', 'Pathways'],
         ]);
@@ -49,6 +50,7 @@ class CategoriesController extends AppController
     public function add()
     {
         $category = $this->Categories->newEmptyEntity();
+        $this->Authorization->authorize($category);
         if ($this->request->is('post')) {
             $category = $this->Categories->patchEntity($category, $this->request->getData());
             if ($this->Categories->save($category)) {

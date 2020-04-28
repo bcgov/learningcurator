@@ -6,6 +6,8 @@
 
 <title><?= $this->fetch('title') ?></title>
 <link rel="stylesheet" href="/bootstrap-theme/dist/css/bootstrap-theme.min.css">
+<!--<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">-->
+
 <link href="/css/home.css" rel="stylesheet"> 
 <link href="/fontawesome/css/all.css" rel="stylesheet"> 
 <style>
@@ -29,7 +31,7 @@ canvas {
 </head>
 <body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="70">
 
-<nav class="navbar navbar-expand-lg mb-3" style="background: #FFF">
+<nav class="navbar navbar-expand-lg mb-3">
 	
 	<a class="navbar-brand text-uppercase" href="/" style="margin: 0 0 0 20px">
 	<?php if(!empty($atypes)): ?>

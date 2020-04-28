@@ -46,7 +46,11 @@ This seems to work out, but #TODO investigate optimizing this
 		z-index: 1000;
 	}
 } /* end desktop-specific code */
-
+.following {
+	font-size: 20px;
+	font-weight: 200;
+	text-align: center;
+}
 .stickynav {
 	align-self: flex-start; 
 	position: -webkit-sticky; /* for Safari */
@@ -56,6 +60,7 @@ This seems to work out, but #TODO investigate optimizing this
 	z-index: 1000;
 }
 #stepnav {
+	
 	box-shadow: 0 0 20px rgba(0,0,0,.05);
 }
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -413,7 +418,6 @@ foreach ($steps->activities as $activity) {
 <?php if(!empty($activity->_joinData->required)): ?>
 	<div class="required float-right" data-toggle="tooltip" data-placement="bottom" title="This activity is required to complete the step">
 		<i class="fas fa-check-double"></i>
-		Required
 	</div>
 	<?php endif ?>
 

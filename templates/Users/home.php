@@ -90,7 +90,7 @@ Sort:
 -->
 <div class="list"> 
 	<?php foreach ($user->activities as $activity) : ?>
-	<div class="" >
+	<div class="py-2">
 		<?php if($activity->status_id == 2): ?>
 		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
 		<?php endif ?>

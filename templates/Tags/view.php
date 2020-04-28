@@ -13,15 +13,15 @@
 <div>
 <?= $this->Text->autoParagraph(h($tag->description)); ?>
 </div>
-
+</div>
+<ul class="list-group list-group-flush">
 <?php if (!empty($tag->activities)) : ?>
 <?php foreach ($tag->activities as $activities) : ?>
-
-<div>
-<?= $this->Html->link($activities->name, ['controller' => 'Activities', 'action' => 'view', $activities->id]) ?>
-</div>
-
+    <li class="list-group-item">
+    <?= $this->Html->link($activities->name, ['controller' => 'Activities', 'action' => 'view', $activities->id]) ?>
+    </li>
 <?php endforeach; ?>
+</ul>
 <?php endif; ?>
 </div>
 </div>
