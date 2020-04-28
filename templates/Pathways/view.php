@@ -112,7 +112,7 @@ function slugify($string) {
 
 <div id="emitter"></div>
 <div class="row">
-<div class="col-md-8">
+<div class="col-md-12">
 <div class="card mb-3">
 <div class="card-body">
 <?php if($role == 2 || $role == 5): ?>
