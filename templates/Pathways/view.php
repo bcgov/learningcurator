@@ -46,6 +46,7 @@ This seems to work out, but #TODO investigate optimizing this
 		z-index: 1000;
 	}
 } /* end desktop-specific code */
+
 .following {
 	font-size: 20px;
 	font-weight: 200;
@@ -53,20 +54,23 @@ This seems to work out, but #TODO investigate optimizing this
 }
 .stickynav {
 	align-self: flex-start; 
-	position: -webkit-sticky; /* for Safari */
+	position: -webkit-sticky;
 	position: sticky;
 	top: 0;
 	text-transform: uppercase;
 	z-index: 1000;
 }
 #stepnav {
-	
 	box-shadow: 0 0 20px rgba(0,0,0,.05);
 }
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
 	background-color: #F1F1F1;
 	color: #333;
 }
+</style>
+
+
+<style>
 /* the follow is only here to potentially support the 
 confetti celebration upon path completion which may or
 may not be actually inplemented. #TODO remove this if 
@@ -94,10 +98,9 @@ not used */
   pointer-events: none; /*performance optimization*/
 }
 /* end of confetti celebration CSS */
-
 </style>
+<div id="emitter"></div> <!-- confetti placeholder -->
 
-<div id="emitter"></div>
 <div class="row">
 <div class="col-md-12">
 <div class="card mb-3">
@@ -122,15 +125,13 @@ not used */
 	</div> <!-- /.objectives -->
 </div>
 </div>
-
-
+<!-- totals below updated via JS -->
 <div class="mb-2">
 	<span class="badge badge-dark readtotal"></span>  
 	<span class="badge badge-dark watchtotal"></span>  
 	<span class="badge badge-dark listentotal"></span>  
 	<span class="badge badge-dark participatetotal"></span>  
 </div>
-
 
 <?php if($role == 2 || $role == 5): ?>
 <a class="" 
@@ -164,18 +165,10 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 </div>
 </div>
 <?php endif ?>
-
-
-
 </div>
-</div>
-
-
-</div>
-</div>
-
-
-
+</div> <!-- /.card -->
+</div> <!-- /.col-12 -->
+</div> <!-- /.row -->
 
 
 <?php if(count($stepsalongtheway) > 1): ?>
@@ -185,9 +178,6 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 <?php endforeach ?>
 </nav> <!-- /nav -->
 <?php endif ?>
-
-
-
 
 <?php if (!empty($pathway->steps)) : ?>
 
@@ -308,16 +298,7 @@ foreach ($steps->activities as $activity) {
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->button(__('Down'),['class'=>'btn btn-sm btn-light']) ?>
 	<?= $this->Form->end() ?>
-
 	</div>
-	<?php if($activity->status_id == 2): ?>
-	<span class="badge badge-danger">DEFUNCT</span>
-	<?php endif ?>
-	<?php if($activity->moderation_flag == 1): ?>
-	<span class="badge badge-warning">INVESTIGATE</span>
-	<?php endif ?>
-
-
 	<?php endif; // role check ?>
 
 	<!-- This whole field is being deprecated in favor of an estimated time field, which will just be a string
@@ -332,7 +313,6 @@ foreach ($steps->activities as $activity) {
 	<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
 	<?php endforeach ?>
 
-
 	<h1 class="my-3">
 		<?= $activity->name ?>
 		<?php if($role == 2 || $role == 5): ?>
@@ -343,19 +323,11 @@ foreach ($steps->activities as $activity) {
 		<?= $activity->description ?>
 	</div>
 
-
-
-
-
-
-
-
 	<?php if(!empty($activity->tags)): ?>
 	<?php foreach($activity->tags as $tag): ?>
 
 	<?php if($tag->name == 'Learning System Course'): ?>
 
-	
 	<a target="_blank" 
 		data-toggle="tooltip" data-placement="bottom" title="Enrol in this course in the Learning System"
 		href="https://learning.gov.bc.ca/psc/CHIPSPLM_6/EMPLOYEE/ELM/c/LM_OD_EMPLOYEE_FL.LM_FND_LRN_FL.GBL?Page=LM_FND_LRN_RSLT_FL&Action=U&KWRD=<?php echo urlencode($activity->name) ?>" 
@@ -380,140 +352,121 @@ foreach ($steps->activities as $activity) {
 		</iframe>
 	</div>
 
+	<?php endif; // logic check for formatting differently based on tag ?>	
+
+	<?php endforeach; // tags loop ?>
+
+	<?php else: // if there aren't any tags at all, default ?>
 
 
-	<?php endif ?>	
+	<a target="_blank" 
+		data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
+		href="<?= $activity->hyperlink ?>" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
+		class="btn btn-block my-3 text-uppercase btn-lg">
 
-	<?php endforeach ?>
+			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
 
+			<?= $activity->activity_type->name ?>
 
+	</a>
 
+	<?php endif; // are there tags? ?>	
 
+	<?php if(!empty($activity->_joinData->required)): ?>
 
-	<?php else: ?>
-
-
-<a target="_blank" 
-	data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
-	href="<?= $activity->hyperlink ?>" 
-	style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
-	class="btn btn-block my-3 text-uppercase btn-lg">
-
-		<i class="fas <?= $activity->activity_type->image_path ?>"></i>
-
-		<?= $activity->activity_type->name ?>
-
-</a>
-
-
-<?php endif ?>	
-
-
-
-
-
-
-
-
-<?php if(!empty($activity->_joinData->required)): ?>
 	<div class="required float-right" data-toggle="tooltip" data-placement="bottom" title="This activity is required to complete the step">
 		<i class="fas fa-check-double"></i>
 	</div>
+	
 	<?php endif ?>
 
 
-		<!-- Hiding this until we can get a proper reporting system in place.
-		<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
-			<i class="fas fa-exclamation-triangle"></i>
-		</a>	-->
-		<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
-		</a>
+	<!-- Hiding this until we can get a proper reporting system in place.
+	<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
+		<i class="fas fa-exclamation-triangle"></i>
+	</a>	-->
+
+	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
+	</a>
+	
 	<?php if(!empty($uid)): ?>
-	<?php if(!in_array($activity->id,$useractivitylist)): ?>
+	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
-	<?php else: ?>
+	<?php else: // they have claimed it, so show that ?>
 
 	<div class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
 
-	<?php endif ?>
-	<?php endif ?>
+	<?php endif; // claimed or not ?>
+	<?php endif; // logged in ?>
+
+	</div>
+	</div>
+
+	<?php endforeach; // end of activities loop for this step ?>
 
 
-
-
-</div>
-</div>
-
-<?php endforeach ?>
-
-
-
-
-
-
-<?php if(!empty($defunctacts)): ?>
+	<?php if(!empty($defunctacts)): // show any defunct activities behind a button ?>
 	<div>
-  <a class="btn btn-light" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    Defunct activities
-  </a>
-</div>
-<div class="collapse" id="collapseExample">
-  <ul class="list-group">
-  <?php foreach($defunctacts as $activity): ?>
-<li class="list-group-item"><a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a></li>
-<?php endforeach ?>
-  </ul>
-</div>
-
-
-<?php endif ?>
+		<a class="btn btn-light" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+			Defunct activities
+		</a>
+	</div>
+	<div class="collapse" id="collapseExample">
+		<ul class="list-group">
+		<?php foreach($defunctacts as $activity): ?>
+			<li class="list-group-item"><a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a></li>
+		<?php endforeach ?>
+		</ul>
+	</div>
+	<?php endif ?>
 
 
 
 
-</div> <!-- /.card-body -->
-</div> <!-- /.card -->
+	</div> <!-- /.card-body -->
+	</div> <!-- /.card -->
 
-<div class="text-center">
-<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-	<style>
-		.line-arrow-down1{
-			animation: line-arrow-down1-fly 3s infinite ease-in-out;
-		}
-		@keyframes line-arrow-down1-fly{
-			0% { transform: translate3d(0, -200px, 0);}
-			30% {transform: translate3d(0, 0, 0);}
-			40% {transform: translate3d(0, -4px, 0);}
-			50% {transform: translate3d(0, 0, 0);}
-			70% {transform: translate3d(0, -4px, 0);}
-			100% {transform: translate3d(0, 240px, 0);}
-		}
-	</style>
-	<path class="line-arrow-down1" 
-			d="M48.9919 5L48.9919 95M48.9919 95L85 59.1525M48.9919 95L13.75 59.1525" 
-			stroke="#000" 
-			stroke-width="2px" 
-			stroke-linecap="round" 
-			style="animation-duration: 3s;"></path>
-</svg>
-</div>
+	<div class="text-center">
+	<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<style>
+			.line-arrow-down1{
+				animation: line-arrow-down1-fly 3s infinite ease-in-out;
+			}
+			@keyframes line-arrow-down1-fly{
+				0% { transform: translate3d(0, -200px, 0);}
+				30% {transform: translate3d(0, 0, 0);}
+				40% {transform: translate3d(0, -4px, 0);}
+				50% {transform: translate3d(0, 0, 0);}
+				70% {transform: translate3d(0, -4px, 0);}
+				100% {transform: translate3d(0, 240px, 0);}
+			}
+		</style>
+		<path class="line-arrow-down1" 
+				d="M48.9919 5L48.9919 95M48.9919 95L85 59.1525M48.9919 95L13.75 59.1525" 
+				stroke="#000" 
+				stroke-width="2px" 
+				stroke-linecap="round" 
+				style="animation-duration: 3s;"></path>
+	</svg>
+	</div>
+	<?php endforeach; // end of step loop ?>
 
-<?php endforeach; ?>
-<div class="card mb-3">
-<div class="card-body">
-<h1>The End</h1>
+	<div class="card mb-3">
+	<div class="card-body">
+		<h1>The End</h1>
+		<?= $this->Text->autoParagraph(h($pathway->objective)); ?>
+	</div>
+	</div>
 
-	<?= $this->Text->autoParagraph(h($pathway->objective)); ?>
-</div>
-</div>
-</div> <!-- /.col-md-12 -->
-<?php endif; ?>
-
-
+</div> <!-- /.col-md -->
+<?php else: ?>
+<div>There don't appear to be any steps assigned to this pathway yet.</div>
+<?php endif; // are there any steps at all? ?>
 
 </div>
 </div>
@@ -536,9 +489,9 @@ foreach ($steps->activities as $activity) {
 
 <script>
 
-
 $(document).ready(function(){
 
+	// load up the activity rings
 	loadStatus();
 
 	$('#stepnav .nav-link').on('click', function(event) {
@@ -569,8 +522,6 @@ $(document).ready(function(){
 			}
 		});
 	});
-
-
 
 	$('[data-toggle="tooltip"]').tooltip();
 
@@ -642,13 +593,6 @@ function loadStatus() {
 		}
 	});
 
-
-
 }
 
-
-
-
 </script>
-
-
