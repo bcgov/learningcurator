@@ -32,11 +32,13 @@ Arbitrarily set to 45em based on sample code from ...somewhere.
 This seems to work out, but #TODO investigate optimizing this
 */
 @media (min-width: 45em) {
+	/* probably can be removed as probably not using columns any more */
     .card-columns {
         -webkit-column-count:2;
         -moz-column-count:2;
         column-count:2;
     }
+	
 	.stickyrings {
 		align-self: flex-start; 
 		position: -webkit-sticky;
