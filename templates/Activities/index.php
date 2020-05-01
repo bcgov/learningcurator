@@ -6,14 +6,7 @@
 ?>
 <?= $this->Html->link(__('New Activity'), ['activity' => 'add'], ['class' => 'btn btn-dark']) ?>
 
- <div class="alert alert-light">
-	Import from ELM
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities', 'activity' => 'elmupload'], 
-					'type' => 'file']) ?>
-	<?= $this->Form->file('file_path') ?>
-	<input type="submit" class="btn btn-dark" value="Upload">
-	<?= $this->Form->end() ?>
-</div>
+ 
  <div class="alert alert-light">
 	Standard Import
 	<?= $this->Form->create($activities, ['activity' => 'activities/activity-import-upload', 'type' => 'file']) ?>
