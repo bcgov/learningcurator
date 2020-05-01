@@ -68,7 +68,7 @@ canvas {
 	
 
 		<?php if(!empty($active)): ?>
-		<?php if($active->role_id == 5): ?>
+		<?php if($active->role_id == 5 || $active->role_id == 2): ?>
 		<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
 			role="button" 
