@@ -111,7 +111,9 @@ class PathwaysController extends AppController
     // pathways table) to do this. Fairly high priority really.
     $stepsalongtheway = array();
     foreach($pathway->steps as $step) {
-		array_push($stepsalongtheway,array('slug' => Text::slug(strtolower($step->name)), 'name' => $step->name));
+        array_push($stepsalongtheway,array('slug' => Text::slug(strtolower($step->name)), 
+                                            'name' => $step->name, 
+                                            'objective' => $step->description));
 	}
 
 

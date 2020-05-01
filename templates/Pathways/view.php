@@ -176,7 +176,12 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 <?php if(count($stepsalongtheway) > 1): ?>
 <nav id="stepnav" class="stickynav nav nav-pills mb-3 p-3" style="background: #FFF">
 <?php foreach($stepsalongtheway as $steplink): ?>
-	<a class="nav-link " href="#pathway-<?= $steplink['slug'] ?>"><?= $steplink['name'] ?></a> 
+	<a class="nav-link " 
+		href="#pathway-<?= $steplink['slug'] ?>"
+		title="<?= $steplink['objective'] ?>"
+		data-toggle="tooltip" data-placement="bottom">
+			<?= $steplink['name'] ?>
+	</a> 
 <?php endforeach ?>
 </nav> <!-- /nav -->
 <?php endif ?>
@@ -498,6 +503,7 @@ $(document).ready(function(){
 
 	$('#stepnav .nav-link').on('click', function(event) {
 		event.preventDefault();
+		$(this).tooltip('hide');
         $.scrollTo(event.target.hash, 250, {offset:-60,});
 	});
 
