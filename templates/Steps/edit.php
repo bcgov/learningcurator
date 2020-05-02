@@ -42,7 +42,8 @@ label {
 $(function () {
 	$('#activities-ids').multiselect({
             enableFiltering: true,
-            filterBehavior: 'both'
+            filterBehavior: 'both',
+            buttonWidth: '100%'
     });
 });
 </script>

@@ -5,15 +5,17 @@
  */
 ?>
 <?= $this->Html->link(__('New Pathway'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-<h1><?= __('Pathways') ?></h1>
+<h1><?= __('All Pathways') ?></h1>
 <div class="card">
-<div class="card-body">
+
+<ul class="list-group list-group-flush">
 <?php foreach ($pathways as $pathway): ?>
-<div>
+<li class="list-group-item">
+	<?= $this->Html->link($pathway->category->name, ['controller' => 'categories', 'action' => 'view', $pathway->category->id]) ?> - 
 	<?= $this->Html->link($pathway->name, ['action' => 'view', $pathway->id]) ?>
-</div>
+</li>
 <?php endforeach; ?>
-</div>
+</ul>
 </div>
 <div class="paginator">
 <ul class="pagination">

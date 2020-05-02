@@ -90,23 +90,20 @@ Sort:
 -->
 <div class="list"> 
 	<?php foreach ($user->activities as $activity) : ?>
-	<div class="my-3 p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border: 0">
+	<div class="py-2">
 		<?php if($activity->status_id == 2): ?>
 		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
-		<div><strong><?= h($activity->name) ?></strong></div>
-		<?php else: ?>
-		<h3 class="name"><?= h($activity->name) ?></h3>
 		<?php endif ?>
-		<div><?= h($activity->description) ?></div>
-	<a target="_blank" 
-		href="<?= $activity->hyperlink ?>" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
-		class="btn btn-block my-2 text-uppercase btn-lg">
+		
+		<a target="_blank" 
+			href="<?= $activity->hyperlink ?>" 
+			style="color: rgba(<?= $activity->activity_type->color ?>,1); font-weight: bold;" 
+			class="">
 
-			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
-			
-			<?= $activity->activity_type->name ?>
-	</a>
+				<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+				
+				<span class="name"><?= h($activity->name) ?></span>
+		</a>
 
 	</div>
 	<?php endforeach; ?>

@@ -77,7 +77,15 @@ class PathwaysController extends AppController
         }
 
         $pathway = $this->Pathways->get($id, [
-            'contain' => ['Categories', 'Ministries', 'Competencies', 'Steps', 'Steps.Activities', 'Steps.Activities.ActivityTypes', 'Steps.Activities.Users', 'Steps.Activities.Tags', 'Users'],
+            'contain' => ['Categories', 
+                            'Ministries', 
+                            'Competencies', 
+                            'Steps', 
+                            'Steps.Activities', 
+                            'Steps.Activities.ActivityTypes', 
+                            'Steps.Activities.Users', 
+                            'Steps.Activities.Tags', 
+                            'Users'],
         ]);
     //
 	// we want to be able to tell if the current user is already on this
@@ -103,7 +111,9 @@ class PathwaysController extends AppController
     // pathways table) to do this. Fairly high priority really.
     $stepsalongtheway = array();
     foreach($pathway->steps as $step) {
-		array_push($stepsalongtheway,array('slug' => Text::slug(strtolower($step->name)), 'name' => $step->name));
+        array_push($stepsalongtheway,array('slug' => Text::slug(strtolower($step->name)), 
+                                            'name' => $step->name, 
+                                            'objective' => $step->description));
 	}
 
 
@@ -196,7 +206,7 @@ class PathwaysController extends AppController
 
 
     /**
-     * Process and return a status for this activity 
+     * Process and return a status for this pathway for the logged in user 
      *
      * @param string|null $id Pathway id.
      * @return \Cake\Http\Response|null
@@ -310,12 +320,12 @@ class PathwaysController extends AppController
                         array_push($defunctacts,$activity);
                     } else {
                         // if it's required
-                        if($activity->_joinData->required == 1) {
-                            array_push($requiredacts,$activity);
-                        // Otherwise it's teriary
-                        } else {
-                            array_push($tertiaryacts,$activity);
-                        }
+                        //if($activity->_joinData->required == 1) {
+                            //array_push($requiredacts,$activity);
+                        // Otherwise it's supplmentary
+                        //} else {
+                            //array_push($tertiaryacts,$activity);
+                        //}
                         //
                         // we want to count each type on a per step basis
                         // as well as adding to the total

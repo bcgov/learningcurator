@@ -6,6 +6,8 @@
 
 <title><?= $this->fetch('title') ?></title>
 <link rel="stylesheet" href="/bootstrap-theme/dist/css/bootstrap-theme.min.css">
+<!--<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">-->
+
 <link href="/css/home.css" rel="stylesheet"> 
 <link href="/fontawesome/css/all.css" rel="stylesheet"> 
 <style>
@@ -29,12 +31,16 @@ canvas {
 </head>
 <body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="70">
 
-<nav class="navbar navbar-expand-lg mb-3" style="background: #FFF">
+<nav class="navbar navbar-expand-lg mb-3">
 	
 	<a class="navbar-brand text-uppercase" href="/" style="margin: 0 0 0 20px">
+	<?php if(!empty($atypes)): ?>
 	<?php foreach($atypes as $type): ?>
 		<span class="fas fa-dot-circle" style="color: rgba(<?= $type->color ?>,1); font-size: 280%; margin: 0 0 0 -20px;"></span>
 	<?php endforeach ?>
+	<?php else: ?>
+		Learning Agent
+	<?php endif ?>
 	</a>
 	<?php if(!empty($active)): ?>
 	<ul class="navbar-nav mr-auto">
@@ -56,18 +62,13 @@ canvas {
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 	<ul class="navbar-nav mr-auto">
 
-		<?php if(!empty($active)): ?>
-	<!--	<li class="nav-item">
-			<a class="nav-link" href="/users/home">Hello, <?= $active->name ?></a>
-		</li> -->
-		<?php endif ?>
-	<!--	<li class="nav-item">
-			<a class="nav-link" href="/">About</a>
+		<li class="nav-item">
+			<a class="nav-link" href="/pages/faq">FAQ</a>
 		</li>
-	-->
+	
 
 		<?php if(!empty($active)): ?>
-		<?php if($active->role_id == 5): ?>
+		<?php if($active->role_id == 5 || $active->role_id == 2): ?>
 		<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
 			role="button" 

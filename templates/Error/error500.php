@@ -1,3 +1,12 @@
+<div class="row justify-content-md-center">
+<div class="col-md-6">
+<div class="card">
+<div class="card-body">
+<h1>Something bad has happened</h1>
+<p>I'm really sorry, but it seems as though you're either attempting to access and area you
+don't have permission to, or something else is going on. Either way, I apologize for the
+situation. Please contact learning.agent@gov.bc.ca and tell me all about your troubles.</p>
+
 <?php
 /**
  * @var \App\View\AppView $this
@@ -5,10 +14,10 @@
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 
-$this->layout = 'error';
+//$this->layout = 'error';
 
 if (Configure::read('debug')) :
-    $this->layout = 'dev_error';
+    //$this->layout = 'dev_error';
 
     $this->assign('title', $message);
     $this->assign('templateName', 'error500.php');
@@ -40,3 +49,7 @@ endif;
     <strong><?= __d('cake', 'Error') ?>: </strong>
     <?= h($message) ?>
 </p>
+</div>
+</div>
+</div>
+</div>

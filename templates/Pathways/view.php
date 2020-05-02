@@ -3,16 +3,12 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pathway $pathway
  */
-
 $this->loadHelper('Authentication.Identity');
-//if ($this->Identity->isLoggedIn()) {
-//	$name = $this->Identity->get('role_id');
-//}
 $uid = 0;
 $role = 0;
-if(!empty($active)) {
-	$role = $active->role_id;
-	$uid = $active->id;
+if ($this->Identity->isLoggedIn()) {
+	$role = $this->Identity->get('role_id');
+	$uid = $this->Identity->get('id');
 }
 // #TODO remove this hack and do this properly where we're 
 // adding a new slug entity to the steps table so that 
@@ -31,61 +27,56 @@ function slugify($string) {
 }
 ?>
 <style>
-@media (min-width: 34em) {
+/* Start desktop-specific code for this page.
+Arbitrarily set to 45em based on sample code from ...somewhere. 
+This seems to work out, but #TODO investigate optimizing this
+*/
+@media (min-width: 45em) {
+	/* probably can be removed as probably not using columns any more */
     .card-columns {
         -webkit-column-count:2;
         -moz-column-count:2;
         column-count:2;
     }
-}
+	
+	.stickyrings {
+		align-self: flex-start; 
+		position: -webkit-sticky;
+		position: sticky;
+		text-transform: uppercase;
+		top: 86px;
+		z-index: 1000;
+	}
+} /* end desktop-specific code */
 
-.hours {
-	background: rgba(255,255,255,1);
-	color: #222;
-}
-.required {
-	background: rgba(0,0,0,1);
-	color: #FFF;
-	float: right;
-}
-.required,
-.hours {
-	border-radius: 5px;
+.following {
+	font-size: 20px;
+	font-weight: 200;
 	text-align: center;
-	text-transform: uppercase;
-	width: 130px;
 }
-.activity-badge {
-	border-radius: 50%;
-	float: left;
-	font-size: 18px;
-	height: 140px;
-	line-height: 1;
-	margin: 5px;
-	padding-top: 30px;
-	text-align: centre;
-	width: 140px;
-}
-
-#stepnav {
-	box-shadow: 0 0 20px rgba(0,0,0,.05);
-}
-.stickthat {
-    position: -webkit-sticky; /* for Safari */
-    position: sticky;
-	top: 0;
+.stickynav {
 	align-self: flex-start; 
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
 	text-transform: uppercase;
 	z-index: 1000;
 }
-.rings {
-	top: 86px;
+#stepnav {
+	box-shadow: 0 0 20px rgba(0,0,0,.05);
 }
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-	background-color: transparent;
-	font-weight: bold;
+	background-color: #F1F1F1;
 	color: #333;
 }
+</style>
+
+
+<style>
+/* the follow is only here to potentially support the 
+confetti celebration upon path completion which may or
+may not be actually inplemented. #TODO remove this if 
+not used */
 #emitter {
   visibility: hidden;
   background-color: #222;
@@ -108,11 +99,12 @@ function slugify($string) {
   position: absolute;
   pointer-events: none; /*performance optimization*/
 }
+/* end of confetti celebration CSS */
 </style>
+<div id="emitter"></div> <!-- confetti placeholder -->
 
-<div id="emitter"></div>
 <div class="row">
-<div class="col-md-8">
+<div class="col-md-12">
 <div class="card mb-3">
 <div class="card-body">
 <?php if($role == 2 || $role == 5): ?>
@@ -135,15 +127,13 @@ function slugify($string) {
 	</div> <!-- /.objectives -->
 </div>
 </div>
-
-
+<!-- totals below updated via JS -->
 <div class="mb-2">
 	<span class="badge badge-dark readtotal"></span>  
 	<span class="badge badge-dark watchtotal"></span>  
 	<span class="badge badge-dark listentotal"></span>  
 	<span class="badge badge-dark participatetotal"></span>  
 </div>
-
 
 <?php if($role == 2 || $role == 5): ?>
 <a class="" 
@@ -177,49 +167,39 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 </div>
 </div>
 <?php endif ?>
-
-
-
 </div>
-</div>
-
-
-</div>
-</div>
-
-
-
+</div> <!-- /.card -->
+</div> <!-- /.col-12 -->
+</div> <!-- /.row -->
 
 
 <?php if(count($stepsalongtheway) > 1): ?>
-<nav id="stepnav" class="stickthat nav nav-pills mb-3 p-3" style="background: #FFF">
+<nav id="stepnav" class="stickynav nav nav-pills mb-3 p-3" style="background: #FFF">
 <?php foreach($stepsalongtheway as $steplink): ?>
-	<a class="nav-link " href="#pathway-<?= $steplink['slug'] ?>"><?= $steplink['name'] ?></a> 
+	<a class="nav-link " 
+		href="#pathway-<?= $steplink['slug'] ?>"
+		title="<?= $steplink['objective'] ?>"
+		data-toggle="tooltip" data-placement="bottom">
+			<?= $steplink['name'] ?>
+	</a> 
 <?php endforeach ?>
 </nav> <!-- /nav -->
 <?php endif ?>
 
-
-
-
 <?php if (!empty($pathway->steps)) : ?>
 
 <div class="row">
-
-<div class="col-lg-4 col-md-3 col-6 order-md-last stickthat rings">
+<div class="col-lg-4 col-md-3 col-6 order-md-last stickyrings">
 <?php if(!empty($uid)): ?>
 <?php if(in_array($uid,$usersonthispathway)): ?>
 <div class="card">
 <div class="card-body">
-	
 	<div class="mb-3 following"></div>
 	<canvas id="myChart" width="250" height="250"></canvas>
-
-
 </div>
 </div>
 <?php else: ?>
-	<div class="card">
+<div class="card">
 <div class="card-body">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'add']]) ?>
 <?php
@@ -239,10 +219,8 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 
 <?php endif ?>
 
-
 </div>
 <div class="col-lg-8 col-md-9">
-
 
 <?php foreach ($pathway->steps as $steps) : ?>
 
@@ -252,7 +230,7 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 <?php if($role == 2 || $role == 5): ?>
 <div class="btn-group float-right">
 <?= $this->Html->link(__('Edit Step'), ['controller' => 'Steps', 'action' => 'edit', $steps->id], ['class' => 'btn btn-light btn-sm']) ?>
-<?= $this->Form->postLink(__('Delete Step'), ['controller' => 'Steps', 'action' => 'delete', $steps->id], ['confirm' => __('Are you sure you want to delete # {0}?', $steps->id), 'class' => 'btn btn-light btn-sm']) ?>
+<?php //$this->Form->postLink(__('Delete Step'), ['controller' => 'Steps', 'action' => 'delete', $steps->id], ['confirm' => __('Are you sure you want to delete # {0}?', $steps->id), 'class' => 'btn btn-light btn-sm']) ?>
 </div> <!-- /.btn-group -->
 <?php endif ?>
 
@@ -262,6 +240,7 @@ $stepTime = 0;
 $defunctacts = array();
 $requiredacts = array();
 $tertiaryacts = array();
+$acts = array();
 
 foreach ($steps->activities as $activity) {
 	// If this is 'defunct' then we pull it out of the list 
@@ -269,12 +248,20 @@ foreach ($steps->activities as $activity) {
 		array_push($defunctacts,$activity);
 	} else {
 		// if it's required
-		if($activity->_joinData->required == 1) {
-			array_push($requiredacts,$activity);
+		//if($activity->_joinData->required == 1) {
+		//	array_push($requiredacts,$activity);
 		// Otherwise it's teriary
-		} else {
-			array_push($tertiaryacts,$activity);
+		//} else {
+		//	array_push($tertiaryacts,$activity);
+		//}
+		array_push($acts,$activity);
+		$tmp = array();
+		// Loop through the whole list, add steporder to tmp array
+		foreach($acts as $line) {
+			$tmp[] = $line->_joinData->steporder;
 		}
+		// Use the tmp array to sort acts list
+		array_multisort($tmp, SORT_DESC, $acts);
 	}
 }
 ?>
@@ -284,14 +271,11 @@ foreach ($steps->activities as $activity) {
 </h1>
 <div class="my-3 py-3"><?= h($steps->description) ?></div>
 
-<?php foreach($requiredacts as $activity): ?>
+<?php foreach($acts as $activity): ?>
 
 <div class="card mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 <div class="card-body">
-	<!-- <div class="required" data-toggle="tooltip" data-placement="bottom" title="This activity is required to complete the step">
-		<i class="fas fa-check-double"></i>
-		Required
-	</div>	-->
+
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
@@ -305,26 +289,36 @@ foreach ($steps->activities as $activity) {
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light']) ?>
 	<?= $this->Form->end() ?>
+
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort', 'class' => '']]) ?>
+	<?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $activity->_joinData->steporder]) ?>
+	<?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'up']) ?>
+	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
+	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+	<?= $this->Form->button(__('Up'),['class'=>'btn btn-sm btn-light']) ?>
+	<?= $this->Form->end() ?>
+
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort', 'class' => '']]) ?>
+	<?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $activity->_joinData->steporder]) ?>
+	<?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'down']) ?>
+	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
+	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+	<?= $this->Form->button(__('Down'),['class'=>'btn btn-sm btn-light']) ?>
+	<?= $this->Form->end() ?>
 	</div>
-	<?php if($activity->status_id == 2): ?>
-	<span class="badge badge-danger">DEFUNCT</span>
-	<?php endif ?>
-	<?php if($activity->moderation_flag == 1): ?>
-	<span class="badge badge-warning">INVESTIGATE</span>
-	<?php endif ?>
-
-
 	<?php endif; // role check ?>
 
+	<!-- This whole field is being deprecated in favor of an estimated time field, which will just be a string
+	we loose the ability calculate total time per step, but gain the ability to give a more realistic estimate
+	range.
 	<div class="hours float-right" data-toggle="tooltip" data-placement="bottom" title="This activity should take approximately <?= $activity->hours ?> hours to complete">
 		<i class="fas fa-clock"></i>
 		<?= $activity->hours ?>
-	</div>
+	</div> -->
 
 	<?php foreach($activity->tags as $tag): ?>
 	<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
 	<?php endforeach ?>
-
 
 	<h1 class="my-3">
 		<?= $activity->name ?>
@@ -336,19 +330,11 @@ foreach ($steps->activities as $activity) {
 		<?= $activity->description ?>
 	</div>
 
-
-
-
-
-
-
-
 	<?php if(!empty($activity->tags)): ?>
 	<?php foreach($activity->tags as $tag): ?>
 
 	<?php if($tag->name == 'Learning System Course'): ?>
 
-	
 	<a target="_blank" 
 		data-toggle="tooltip" data-placement="bottom" title="Enrol in this course in the Learning System"
 		href="https://learning.gov.bc.ca/psc/CHIPSPLM_6/EMPLOYEE/ELM/c/LM_OD_EMPLOYEE_FL.LM_FND_LRN_FL.GBL?Page=LM_FND_LRN_RSLT_FL&Action=U&KWRD=<?php echo urlencode($activity->name) ?>" 
@@ -373,141 +359,11 @@ foreach ($steps->activities as $activity) {
 		</iframe>
 	</div>
 
+	<?php endif; // logic check for formatting differently based on tag ?>	
 
+	<?php endforeach; // tags loop ?>
 
-	<?php endif ?>	
-
-	<?php endforeach ?>
-
-
-
-
-
-	<?php else: ?>
-
-
-<a target="_blank" 
-	data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
-	href="<?= $activity->hyperlink ?>" 
-	style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
-	class="btn btn-block my-3 text-uppercase btn-lg">
-
-		<i class="fas <?= $activity->activity_type->image_path ?>"></i>
-
-		<?= $activity->activity_type->name ?>
-
-</a>
-
-
-<?php endif ?>	
-
-
-
-
-
-
-
-
-
-
-
-
-		<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
-			<i class="fas fa-exclamation-triangle"></i>
-		</a>	
-		<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
-		</a>
-	<?php if(!empty($uid)): ?>
-	<?php if(!in_array($activity->id,$useractivitylist)): ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
-	<?= $this->Form->end() ?>
-	<?php else: ?>
-
-	<div class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
-
-	<?php endif ?>
-	<?php endif ?>
-
-
-
-
-</div>
-</div>
-
-<?php endforeach ?>
-
-
-
-
-
-
-
-
-
-<?php if(count($tertiaryacts) > 0): ?>
-<p>The following activities are supplemental learning opportunities.</p>
-
-
-<div class="card-columns">
-<?php foreach($tertiaryacts as $activity): ?>
-	
-<div class="card" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
-<div class="card-body">
-	
-	<?php if($role == 2 || $role == 5): ?>
-	<div class="btn-group float-right">
-	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle', 'class' => '']]) ?>
-	<?php if($activity->_joinData->required == 0): ?>
-	<?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 1]) ?>
-	<?php else: ?>
-	<?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 0]) ?>
-	<?php endif ?>
-	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light']) ?>
-	<?= $this->Form->end() ?>
-	</div>
-	<?php if($activity->status_id == 2): ?>
-	<span class="badge badge-danger">DEFUNCT</span>
-	<?php endif ?>
-	<?php if($activity->moderation_flag == 1): ?>
-	<span class="badge badge-warning">INVESTIGATE</span>
-	<?php endif ?>
-
-
-	<?php endif ?>
-	<div class="hours float-right" data-toggle="tooltip" data-placement="bottom" title="This activity should take approximately <?= $activity->hours ?> hours to complete">
-		<i class="fas fa-clock"></i>
-		<?= $activity->hours ?>
-	</div>
-
-	<?php foreach($activity->tags as $tag): ?>
-	<a href="#" class="badge badge-light"><?= $tag->name ?></a>
-	<?php endforeach ?>
-
-
-	<h2 class="my-3">
-		<?= $activity->name ?>
-		<?php if($role == 2 || $role == 5): ?>
-		<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>
-		<?php endif ?>
-	</h2>
-	<div class="p-3" style="background: rgba(255,255,255,.3);">
-		<?= $activity->description ?>
-	</div>
-
-
-
-
-
-
-
-
-
+	<?php else: // if there aren't any tags at all, default ?>
 
 
 	<a target="_blank" 
@@ -519,108 +375,105 @@ foreach ($steps->activities as $activity) {
 			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
 
 			<?= $activity->activity_type->name ?>
+
 	</a>
 
+	<?php endif; // are there tags? ?>	
+
+	<?php if(!empty($activity->_joinData->required)): ?>
+
+	<div class="required float-right" data-toggle="tooltip" data-placement="bottom" title="This activity is required to complete the step">
+		<i class="fas fa-check-double"></i>
+	</div>
+	
+	<?php endif ?>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+	<!-- Hiding this until we can get a proper reporting system in place.
 	<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 		<i class="fas fa-exclamation-triangle"></i>
-	</a>	
+	</a>	-->
+
 	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 	</a>
+	
 	<?php if(!empty($uid)): ?>
-	<?php if(!in_array($activity->id,$useractivitylist)): ?>
+	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
-	<?php else: ?>
+	<?php else: // they have claimed it, so show that ?>
 
 	<div class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
 
-	<?php endif ?>
-	<?php endif ?>
+	<?php endif; // claimed or not ?>
+	<?php endif; // logged in ?>
+
+	</div>
+	</div>
+
+	<?php endforeach; // end of activities loop for this step ?>
 
 
-</div>
-</div>
-
-<?php endforeach ?>
-</div>
-<?php endif ?>
-
-<?php if(!empty($defunctacts)): ?>
+	<?php if(!empty($defunctacts)): // show any defunct activities behind a button ?>
 	<div>
-  <a class="btn btn-light" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    Defunct activities
-  </a>
-</div>
-<div class="collapse" id="collapseExample">
-  <ul class="list-group">
-  <?php foreach($defunctacts as $activity): ?>
-<li class="list-group-item"><a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a></li>
-<?php endforeach ?>
-  </ul>
-</div>
-
-
-<?php endif ?>
+		<a class="btn btn-light" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+			Defunct activities
+		</a>
+	</div>
+	<div class="collapse" id="collapseExample">
+		<ul class="list-group">
+		<?php foreach($defunctacts as $activity): ?>
+			<li class="list-group-item"><a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a></li>
+		<?php endforeach ?>
+		</ul>
+	</div>
+	<?php endif ?>
 
 
 
 
-</div> <!-- /.card-body -->
-</div> <!-- /.card -->
+	</div> <!-- /.card-body -->
+	</div> <!-- /.card -->
 
-<div class="text-center">
-<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-	<style>
-		.line-arrow-down1{
-			animation: line-arrow-down1-fly 3s infinite ease-in-out;
-		}
-		@keyframes line-arrow-down1-fly{
-			0% { transform: translate3d(0, -200px, 0);}
-			30% {transform: translate3d(0, 0, 0);}
-			40% {transform: translate3d(0, -4px, 0);}
-			50% {transform: translate3d(0, 0, 0);}
-			70% {transform: translate3d(0, -4px, 0);}
-			100% {transform: translate3d(0, 240px, 0);}
-		}
-	</style>
-	<path class="line-arrow-down1" 
-			d="M48.9919 5L48.9919 95M48.9919 95L85 59.1525M48.9919 95L13.75 59.1525" 
-			stroke="#000" 
-			stroke-width="2px" 
-			stroke-linecap="round" 
-			style="animation-duration: 3s;"></path>
-</svg>
-</div>
+	<div class="text-center">
+	<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<style>
+			.line-arrow-down1{
+				animation: line-arrow-down1-fly 3s infinite ease-in-out;
+			}
+			@keyframes line-arrow-down1-fly{
+				0% { transform: translate3d(0, -200px, 0);}
+				30% {transform: translate3d(0, 0, 0);}
+				40% {transform: translate3d(0, -4px, 0);}
+				50% {transform: translate3d(0, 0, 0);}
+				70% {transform: translate3d(0, -4px, 0);}
+				100% {transform: translate3d(0, 240px, 0);}
+			}
+		</style>
+		<path class="line-arrow-down1" 
+				d="M48.9919 5L48.9919 95M48.9919 95L85 59.1525M48.9919 95L13.75 59.1525" 
+				stroke="#000" 
+				stroke-width="2px" 
+				stroke-linecap="round" 
+				style="animation-duration: 3s;"></path>
+	</svg>
+	</div>
+	<?php endforeach; // end of step loop ?>
 
-<?php endforeach; ?>
-<div class="card mb-3">
-<div class="card-body">
-<h1>The End</h1>
+	<div class="card mb-3">
+	<div class="card-body">
+		<h1>The End</h1>
+		<?= $this->Text->autoParagraph(h($pathway->objective)); ?>
+	</div>
+	</div>
 
-	<?= $this->Text->autoParagraph(h($pathway->objective)); ?>
-</div>
-</div>
-</div> <!-- /.col-md-12 -->
-<?php endif; ?>
-
-
+</div> <!-- /.col-md -->
+<?php else: ?>
+<div>There don't appear to be any steps assigned to this pathway yet.</div>
+<?php endif; // are there any steps at all? ?>
 
 </div>
 </div>
@@ -643,13 +496,14 @@ foreach ($steps->activities as $activity) {
 
 <script>
 
-
 $(document).ready(function(){
 
+	// load up the activity rings
 	loadStatus();
 
 	$('#stepnav .nav-link').on('click', function(event) {
 		event.preventDefault();
+		$(this).tooltip('hide');
         $.scrollTo(event.target.hash, 250, {offset:-60,});
 	});
 
@@ -676,8 +530,6 @@ $(document).ready(function(){
 			}
 		});
 	});
-
-
 
 	$('[data-toggle="tooltip"]').tooltip();
 
@@ -749,13 +601,6 @@ function loadStatus() {
 		}
 	});
 
-
-
 }
 
-
-
-
 </script>
-
-

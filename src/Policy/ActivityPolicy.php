@@ -62,6 +62,8 @@ class ActivityPolicy
     {
         if($this->isAdmin($user, $activity)) {
             return true;
+        } elseif($this->isCurator($user,$activity)) {
+            return true;
         } else {
             return false;
         }

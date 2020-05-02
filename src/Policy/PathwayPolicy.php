@@ -20,7 +20,13 @@ class PathwayPolicy
      */
     public function canAdd(IdentityInterface $user, Pathway $pathway)
     {
-        return true;
+        if($this->isAdmin($user, $pathway)) {
+            return true;
+        } elseif($this->isCurator($user,$pathway)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

@@ -273,6 +273,10 @@ public function like ($id = null)
         // make a copy of it if it does (better yet give it a unique
         // file name on upload and pass it in here)
         // #TODO Use a constant for the file path
+        //
+        // "Pathway","Step","2-Activity Type","Name","4-Hyperlink",
+        // "Description","6-Required","Competencies","8-Time","Tags","10-Licensing","ISBN","Curator"
+        //
         if (($handle = fopen("/home/allankh/learningagent/webroot/files/standard-import.csv", "r")) !== FALSE) {
             // pop the headers off so we're starting with actual data
             fgetcsv($handle);
@@ -310,7 +314,7 @@ public function like ($id = null)
                 $activity->createdby_id = utf8_encode($data[12]);
                 $activity->approvedby_id =  utf8_encode($data[12]);
                 // #TODO change this to minutes instead of hours
-                $activity->hours = utf8_encode($data[8]);
+                $activity->hours = 0; //utf8_encode($data[8]);
                 // Is it required?
                 $reqd = 0;
                 if($data[6] == 'y') $reqd = 1;
