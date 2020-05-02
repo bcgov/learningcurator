@@ -52,8 +52,10 @@ class ActivitiesStepsController extends AppController
     public function add()
     {
         $activitiesStep = $this->ActivitiesSteps->newEmptyEntity();
+        $activitiesStep->step_id = $this->request->getData()['step_id'];
+        $activitiesStep->activity_id = $this->request->getData()['activity_id'];
         if ($this->request->is('post')) {
-            $activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
+            //$activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
             if ($this->ActivitiesSteps->save($activitiesStep)) {
                 $this->Flash->success(__('The activities step has been saved.'));
 

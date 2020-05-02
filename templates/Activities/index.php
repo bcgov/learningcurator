@@ -4,17 +4,9 @@
 * @var \App\Model\Entity\Action[]|\Cake\Collection\CollectionInterface $activitys
 */
 ?>
-<?= $this->Html->link(__('New Activity'), ['activity' => 'add'], ['class' => 'btn btn-dark']) ?>
+<?= $this->Html->link(__('New Activity'), ['activity' => 'add'], ['class' => 'btn btn-dark float-right']) ?>
 
-
- <div class="alert alert-light">
-	Standard Import
-	<?= $this->Form->create($activities, ['activity' => 'activities/activity-import-upload', 'type' => 'file']) ?>
-	<?= $this->Form->file('standardimportfile') ?>
-	<input type="submit" class="btn btn-dark" value="Import">
-	<?= $this->Form->end() ?>
-</div> 
-<h3><?= __('Activities') ?></h3>
+<h1><?= __('Latest Activities') ?></h1>
 
 <h4><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></h4>
 <ul class="pagination">
@@ -25,9 +17,20 @@
 <?= $this->Paginator->last(__('last') . ' >>') ?>
 </ul>
 <?php foreach ($activities as $activity): ?>
-<div>
-<?= $activity->activity_type->name ?> | 
+
+<div class="p-3 mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)">
+<div><?= $activity->created ?> <?= $activity->createdby_id ?></div>
+
+<h3>
+<i class="fas <?= $activity->activity_type->image_path ?>"></i>
 <?= $this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
+</h3>
+<div><?= $activity->description ?></div>
+<?php foreach($activity->steps as $step): ?>
+<?php foreach($step->pathways as $path): ?>
+<?= $path->name ?> - <?= $step->name ?>
+<?php endforeach ?>
+<?php endforeach ?>
 
   <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#assignment<?= $activity->id ?>" aria-expanded="false" aria-controls="assignment<?= $activity->id ?>">
     Paths
@@ -35,21 +38,21 @@
 
 <div class="collapse" id="assignment<?= $activity->id ?>">
 <?php foreach($allpathways as $pathway): ?>
-<?php $stepslist = [] ?>
-<?php foreach($pathway->steps as $s): ?>
-<?php $ss = array($s->id => $s->name) ?>
-<?php array_push($stepslist, $ss) ?>
-<?php endforeach ?>
-<?php //print_r($stepslist) ?>
 <?= $pathway->name ?>
 <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#steps<?= $pathway->id ?>" aria-expanded="false" aria-controls="steps<?= $pathway->id ?>">
     Steps
   </button>
 <div class="collapse" id="steps<?= $pathway->id ?>">
 <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
-<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id ]) ?>
+<?php //$this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id ]) ?>
 <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-<?= $this->Form->control('step_id',['type' => 'radio', 'options' => $stepslist]) ?>
+<?php //$this->Form->control('step_id',['type' => 'radio', 'options' => $stepslist]) ?>
+<?php foreach($pathway->steps as $step): ?>
+<label for="step_id_<?= $step->id ?>">
+<input id="step_id_<?= $step->id ?>" type="radio" name="step_id" value="<?= $step->id ?>">
+<?= $step->name ?>
+</label>
+<?php endforeach ?>
 <?= $this->Form->button(__('Assign'),['class'=>'btn btn-sm btn-light']) ?>
 <?= $this->Form->end() ?>
 </div>
