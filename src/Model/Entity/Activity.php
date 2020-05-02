@@ -23,7 +23,7 @@ use Cake\Collection\Collection;
  * @property int|null $moderation_flag
  * @property string|null $file_path
  * @property string|null $image_path
- * @property int|null $hours
+ * @property string|null $hours
  * @property int|null $recommended
  * @property int|null $ministry_id
  * @property int|null $category_id
@@ -86,7 +86,8 @@ class Activity extends Entity
         'competencies' => true,
         'steps' => true,
         'tags' => true,
-        'tag_string' => true
+        'tag_string' => true,
+        'estimated_time' => true
     ];
 
     protected function _getTagString()
