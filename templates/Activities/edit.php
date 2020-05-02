@@ -5,6 +5,7 @@
  */
 $this->loadHelper('Authentication.Identity');
 ?>
+<?= $this->Flash->render() ?>
 <?= $this->Form->create($activity) ?>
 <?php 
 // echo $this->Form->control('ministry_id', ['class' => 'form-control', 'options' => $ministries, 'empty' => true]);
@@ -25,16 +26,16 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
             <?php echo $this->Form->control('status_id', ['class' => 'form-control', 'options' => $statuses, 'empty' => true]); ?>
         </div>
         <div class="col-md-4">
-            <?php echo $this->Form->control('hours', ['class' => 'form-control']); ?>
+            <?php echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
         </div>
-        <div class="col-md-4">
-            <?php echo $this->Form->control('featured', ['class' => 'form-control']); ?>
+        <div class="col-md-4 pt-3">
+            <?php echo $this->Form->control('featured', ['type' => 'checkbox', 'class' => 'form-control']); ?>
         </div>
-        <div class="col-md-4">
-            <?php echo $this->Form->control('moderation_flag', ['class' => 'form-control']); ?>
+        <div class="col-md-4 pt-3">
+            <?php echo $this->Form->control('moderation_flag', ['type' => 'checkbox', 'class' => 'form-control']); ?>
         </div>
-        <div class="col-md-4">
-            <?php echo $this->Form->control('recommended', ['class' => 'form-control']); ?>
+        <div class="col-md-4 pt-3">
+            <?php echo $this->Form->control('recommended', ['type' => 'checkbox', 'class' => 'form-control']); ?>
         </div>
     </div>
     </div>
@@ -63,3 +64,13 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
     </div>
 </div>
 <?= $this->Form->end() ?>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+	crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
+	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
+	crossorigin="anonymous"></script>

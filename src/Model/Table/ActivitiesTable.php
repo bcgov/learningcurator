@@ -174,7 +174,12 @@ class ActivitiesTable extends Table
         $validator
             ->integer('recommended')
             ->allowEmptyString('recommended');
-
+        
+        $validator
+            ->scalar('estimated_time')
+            ->maxLength('estimated_time', 255)
+            ->allowEmptyFile('estimated_time');
+            
         return $validator;
     }
 
