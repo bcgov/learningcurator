@@ -23,12 +23,16 @@ class ActivitiesController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
+
+        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
+        $pathways = $allpaths->find('all')->contain(['steps']);
+        $allpathways = $pathways->toList();
         $this->paginate = [
             'contain' => ['Statuses', 'Ministries', 'Categories', 'ActivityTypes'],
         ];
         $activities = $this->paginate($this->Activities);
 
-        $this->set(compact('activities'));
+        $this->set(compact('activities','allpathways'));
     }
 
     /**
