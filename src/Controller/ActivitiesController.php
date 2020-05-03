@@ -23,12 +23,20 @@ class ActivitiesController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
+
+        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
+        $pathways = $allpaths->find('all')->contain(['steps']);
+        $allpathways = $pathways->toList();
+
         $this->paginate = [
-            'contain' => ['Statuses', 'Ministries', 'Categories', 'ActivityTypes'],
+            'contain' => ['Statuses', 'Ministries', 'Categories', 'ActivityTypes','Steps.Pathways'],
+            'order' => [
+                'Activities.id' => 'desc'
+            ]
         ];
         $activities = $this->paginate($this->Activities);
 
-        $this->set(compact('activities'));
+        $this->set(compact('activities','allpathways'));
     }
 
     /**
@@ -69,10 +77,22 @@ class ActivitiesController extends AppController
             }
         }
         $activity = $this->Activities->get($id, [
-            'contain' => ['Statuses', 'Ministries', 'Categories', 'ActivityTypes', 'Users', 'Competencies', 'Steps', 'Steps.Pathways', 'Tags'],
+            'contain' => ['Statuses', 
+                            'Ministries', 
+                            'Categories', 
+                            'ActivityTypes', 
+                            'Users', 
+                            'Competencies', 
+                            'Steps', 
+                            'Steps.Pathways', 
+                            'Tags'],
         ]);
 
-        $this->set(compact('activity', 'useractivitylist'));
+        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
+        $pathways = $allpaths->find('all')->contain(['steps']);
+        $allpathways = $pathways->toList();
+
+        $this->set(compact('activity', 'useractivitylist','allpathways'));
     }
 
 
@@ -150,7 +170,7 @@ class ActivitiesController extends AppController
     public function edit($id = null)
     {
         $activity = $this->Activities->get($id, [
-            'contain' => ['Users', 'Competencies', 'Steps', 'Tags'],
+            'contain' => ['Users', 'Competencies', 'Steps', 'Steps.Pathways', 'Tags'],
         ]);
         $this->Authorization->authorize($activity);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -167,7 +187,7 @@ class ActivitiesController extends AppController
         $activityTypes = $this->Activities->ActivityTypes->find('list', ['limit' => 200]);
         $users = $this->Activities->Users->find('list', ['limit' => 200]);
         $competencies = $this->Activities->Competencies->find('list', ['limit' => 200]);
-        $steps = $this->Activities->Steps->find('list', ['limit' => 200]);
+        $steps = $this->Activities->Steps->find('list', ['limit' => 200])->contain(['pathways']);
         $tags = $this->Activities->Tags->find('list', ['limit' => 200]);
         $this->set(compact('activity', 'statuses', 'ministries', 'categories', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
     }

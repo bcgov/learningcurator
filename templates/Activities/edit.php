@@ -5,6 +5,7 @@
  */
 $this->loadHelper('Authentication.Identity');
 ?>
+
 <?= $this->Flash->render() ?>
 <?= $this->Form->create($activity) ?>
 <?php 
@@ -15,6 +16,16 @@ echo $this->Form->hidden('createdby_id', ['value' => $activity->createdby_id, 'c
 echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'),'class' => 'form-control']);
 ?>
 <div class="row justify-content-md-center">
+<div class="col-md-3">
+<div class="card mb-3">
+    <div class="card-body">
+    <h2>Pathways</h2>
+    <?php foreach($activity->steps as $s): ?>
+<a href="/pathways/view/<?= $s->pathways[0]['id'] ?>#pathways-<?= $s->name ?>"><?= $s->pathways[0]['name'] ?></a>
+<?php endforeach ?>
+    </div>
+    </div>
+    </div>
 <div class="col-md-6">
     <div class="card mb-3">
     <div class="card-body">
@@ -52,7 +63,7 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
     </div>
     </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
     <div class="card mb-3">
     <div class="card-body">
     <?php echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text']); ?>

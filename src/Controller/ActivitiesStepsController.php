@@ -52,12 +52,16 @@ class ActivitiesStepsController extends AppController
     public function add()
     {
         $activitiesStep = $this->ActivitiesSteps->newEmptyEntity();
+        $this->Authorization->authorize($activitiesStep);
+        $activitiesStep->step_id = $this->request->getData()['step_id'];
+        $pathid = $this->request->getData()['pathway_id'];
+        $activitiesStep->activity_id = $this->request->getData()['activity_id'];
         if ($this->request->is('post')) {
-            $activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
+            //$activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
             if ($this->ActivitiesSteps->save($activitiesStep)) {
-                $this->Flash->success(__('The activities step has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                //$this->Flash->success(__('The activities step has been saved.'));
+                $go = '/pathways/view/' . $pathid;
+                return $this->redirect($go);
             }
             $this->Flash->error(__('The activities step could not be saved. Please, try again.'));
         }

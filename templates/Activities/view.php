@@ -4,14 +4,11 @@
  * @var \App\Model\Entity\Activity $activity
  */
 $this->loadHelper('Authentication.Identity');
-if ($this->Identity->isLoggedIn()) {
-	$name = $this->Identity->get('role_id');
-}
 $uid = 0;
 $role = 0;
-if(!empty($active)) {
-	$role = $active->role_id;
-	$uid = $active->id;
+if ($this->Identity->isLoggedIn()) {
+	$role = $this->Identity->get('role_id');
+	$uid = $this->Identity->get('id');
 }
 ?>
 <style>
@@ -53,7 +50,7 @@ if(!empty($active)) {
 
 </style>
 <div class="row justify-content-md-center">
-<div class="col-md-6">
+<div class="col-md-9">
 <div class="card" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 <div class="card-body">
 
@@ -122,12 +119,55 @@ if(!empty($active)) {
 
 
 
+<?php if($role == 2 || $role == 5): ?>
+<div class="my-3 p-3" style="background-color: rgba(255,255,255,.3)">
+<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#assignment<?= $activity->id ?>" aria-expanded="false" aria-controls="assignment<?= $activity->id ?>">
+    Path Assigment
+  </button>
+
+  <?php endif ?>
+
+<?php foreach($activity->steps as $step): ?>
+<?php foreach($step->pathways as $path): ?>
+<span class="badge badge-light"><a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
+<?php endforeach ?>
+<?php endforeach ?>
+
+
+
+<div class="collapse" id="assignment<?= $activity->id ?>">
+<?php foreach($allpathways as $pathway): ?>
+<div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
+<?php if($role == 2 || $role == 5): ?>
+<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#steps<?= $pathway->id ?>" aria-expanded="false" aria-controls="steps<?= $pathway->id ?>">
+    Steps
+  </button>
+
+<?= $pathway->name ?>
+
+<div class="collapse p-3" id="steps<?= $pathway->id ?>">
+<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
+<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id ]) ?>
+<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+<?php foreach($pathway->steps as $step): ?>
+<label style="display: inline-block; margin: 0 10px 0 5px;">
+<input id="step_id_<?= $step->id ?>" type="radio" name="step_id" value="<?= $step->id ?>">
+<?= $step->name ?>
+</label>
+<?php endforeach ?>
+<?= $this->Form->button(__('Assign'),['class'=>'btn btn-sm btn-light']) ?>
+<?= $this->Form->end() ?>
+</div>
+</div>
+<?php endif ?>
+<?php endforeach ?>
+</div>
+</div>
 
 
 
 
 
-<hr>
 
 
 
@@ -181,21 +221,8 @@ if(!empty($active)) {
 </div>
 
 </div>
-<div class="col-md-3">
-<div class="card">
-<div class="card-body">
-<h4><?= __('Related Pathways') ?></h4>
-<?php if (!empty($activity->steps)) : ?>
-<?php foreach ($activity->steps as $steps) : ?>
-<div>
-   <?= $this->Html->link($steps->pathways[0]['name'], ['controller' => 'Pathways', 'action' => 'view', $steps->pathways[0]['id']]) ?>
-</div>
-<?php endforeach; ?>
-<?php endif; ?>
-</div>
-</div>
 
-</div>
+
 </div>
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>

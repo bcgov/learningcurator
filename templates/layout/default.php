@@ -63,6 +63,9 @@ canvas {
 	<ul class="navbar-nav mr-auto">
 
 		<li class="nav-item">
+			<a class="nav-link" href="/activities">Latest</a>
+		</li>
+		<li class="nav-item">
 			<a class="nav-link" href="/pages/faq">FAQ</a>
 		</li>
 	
