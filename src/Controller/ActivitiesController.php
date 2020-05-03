@@ -77,10 +77,22 @@ class ActivitiesController extends AppController
             }
         }
         $activity = $this->Activities->get($id, [
-            'contain' => ['Statuses', 'Ministries', 'Categories', 'ActivityTypes', 'Users', 'Competencies', 'Steps', 'Steps.Pathways', 'Tags'],
+            'contain' => ['Statuses', 
+                            'Ministries', 
+                            'Categories', 
+                            'ActivityTypes', 
+                            'Users', 
+                            'Competencies', 
+                            'Steps', 
+                            'Steps.Pathways', 
+                            'Tags'],
         ]);
 
-        $this->set(compact('activity', 'useractivitylist'));
+        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
+        $pathways = $allpaths->find('all')->contain(['steps']);
+        $allpathways = $pathways->toList();
+
+        $this->set(compact('activity', 'useractivitylist','allpathways'));
     }
 
 
