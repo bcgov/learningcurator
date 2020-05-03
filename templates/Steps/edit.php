@@ -11,6 +11,8 @@ label {
     font-weight: bold;
 }
 </style>
+<pre><?php //print_r($step); exit; ?></pre>
+<h1><a href="/pathways/view/<?= $step->pathway_id ?>"><?= $step->name ?></a></h1>
 <?= $this->Form->create($step) ?>
 <?= $this->Form->hidden('image_path', ['class' => 'form-control']) ?>
 <?= $this->Form->hidden('featured', ['class' => 'form-control']) ?>
@@ -24,7 +26,15 @@ label {
         <?= $this->Form->button(__('Save Step'),['class' => 'btn btn-success btn-block my-3']) ?>
     </div>
     <div class="col-md-4">
-        <?= $this->Form->control('activities._ids', ['options' => $activities]) ?>
+        <?php  //$this->Form->control('activities._ids', ['options' => $activities]) ?>
+        <?php foreach($step->activities as $a): ?>
+            <a href="/activities/view/<?= $a->id ?>"><?= $a->name ?></a><br>
+        <?php endforeach ?>
+        <form method="get" id="actfind" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
+		    <input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
+		    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+	    </form>
+        <div id="results"></div>
     </div>
 </div>
 
@@ -40,10 +50,30 @@ label {
 <script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
 <script>
 $(function () {
-	$('#activities-ids').multiselect({
-            enableFiltering: true,
-            filterBehavior: 'both',
-            buttonWidth: '100%'
+	// $('#activities-ids').multiselect({
+    //         enableFiltering: true,
+    //         filterBehavior: 'both',
+    //         buttonWidth: '100%'
+    // });
+    $('#actfind').on('submit', function(e){
+        e.preventDefault();
+        $('#results').html('Hooyeah');
+        // $.ajax({
+		// 	type: "GET",
+		// 	url: url,
+		// 	data: '',
+		// 	success: function(data)
+		// 	{
+        //         $('#results').html(data);
+		// 	},
+		// 	statusCode: 
+		// 	{
+		// 		403: function() {
+		// 			form.after('<div class="alert alert-warning">You must be logged in.</div>');
+		// 		}
+		// 	}
+		// });
     });
+
 });
 </script>

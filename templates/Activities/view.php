@@ -103,7 +103,7 @@ if ($this->Identity->isLoggedIn()) {
 			<i class="fas fa-exclamation-triangle"></i>
 		</a>	
 		<a href="/activities/like/<?= $activity->id ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
+		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 		</a>
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): ?>

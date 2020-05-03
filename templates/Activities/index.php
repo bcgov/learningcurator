@@ -112,6 +112,16 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 </div>
 </div>
+<div class="col-md-3">
+<div class="card">
+<h3 class="m-3">Latest Pathways</h3>
+<ul class="list-group list-group-flush">
+<?php foreach($allpathways as $path): ?>
+	<li class="list-group-item"><a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?></a></li>
+<?php endforeach ?>
+</ul>
+</div>
+</div>
 </div>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 

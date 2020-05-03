@@ -322,9 +322,7 @@ foreach ($steps->activities as $activity) {
 
 	<h1 class="my-3">
 		<?= $activity->name ?>
-		<?php if($role == 2 || $role == 5): ?>
 		<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>
-		<?php endif ?>
 	</h1>
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
 		<?= $activity->description ?>

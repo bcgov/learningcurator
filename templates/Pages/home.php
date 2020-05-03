@@ -10,11 +10,9 @@
 <?php endforeach ?>
 </div>
 <p>Expertly chosen activities structured into pathways that you can follow while measuring your progress along the way.</p> 
-<h1>We've got learning pathways in the following areas:</h1>
+<h2>We've got learning pathways in the following areas:</h2>
 <div class="py-3"><a href="/categories/view/1" class="btn btn-lg btn-light">Leadership</a></div>
 
-<a href="/users/home" class="btn btn-link">Your home page</a>
-<a href="/pages/faq" class="btn btn-link">Frequently Asked</a>
 
 </div>
 </div>
