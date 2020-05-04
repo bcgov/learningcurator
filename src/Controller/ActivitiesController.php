@@ -124,7 +124,30 @@ class ActivitiesController extends AppController
         $this->set(compact('activities','allpathways'));
     }
 
+    /**
+     * Find method for activities; intended for use as an auto-complete
+     *  search function for adding activities to steps
+     *
+     * @param string|null $search search pararmeters to lookup activities.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function stepfind()
+    {
+        $this->Authorization->skipAuthorization();
+        $search = $this->request->getQuery('q');
+        $stepid = $this->request->getQuery('step_id');
+        
+        $activities = $this->Activities->find()->contain('Steps.Pathways')->where(function ($exp, $query) use($search) {
+            return $exp->like('name', '%'.$search.'%');
+        })->order(['name' => 'ASC']);
 
+        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
+        $pathways = $allpaths->find('all')->contain(['steps']);
+        $allpathways = $pathways->toList();
+
+        $this->set(compact('activities','allpathways','stepid'));
+    }
 
 
 
@@ -338,8 +361,9 @@ public function like ($id = null)
                 $activity->modifiedby_id = utf8_encode($data[12]);
                 $activity->createdby_id = utf8_encode($data[12]);
                 $activity->approvedby_id =  utf8_encode($data[12]);
-                // #TODO change this to minutes instead of hours
-                $activity->hours = 0; //utf8_encode($data[8]);
+                
+                $activity->hours = 0;
+                $activity->estimated_time = utf8_encode($data[8]);
                 // Is it required?
                 $reqd = 0;
                 if($data[6] == 'y') $reqd = 1;

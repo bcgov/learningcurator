@@ -27,7 +27,7 @@ canvas {
 }
 </style>
 
-<link rel="stylesheet" href="/css/bootstrap-multiselect.css" type="text/css"/>
+<!-- <link rel="stylesheet" href="/css/bootstrap-multiselect.css" type="text/css"/> -->
 </head>
 <body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="70">
 
@@ -71,7 +71,7 @@ canvas {
 	
 
 		<?php if(!empty($active)): ?>
-		<?php if($active->role_id == 5 || $active->role_id == 2): ?>
+		<?php if($active->role_id == 5): ?>
 		<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
 			role="button" 
