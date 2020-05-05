@@ -28,7 +28,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="card mb-3">
 <div class="card-body">
 
-<?= $this->Html->link(__('New Activity'), ['activity' => 'add'], ['class' => 'btn btn-dark float-right']) ?>
+<?= $this->Html->link(__('New Activity'), ['action' => 'add', 'class' => 'btn btn-dark float-right']) ?>
 
 <h1><?= __('Latest Activities') ?></h1>
 

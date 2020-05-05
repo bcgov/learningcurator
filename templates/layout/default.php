@@ -100,15 +100,16 @@ canvas {
 				Add
 		</a>
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-			<a class="dropdown-item" href="/activity-types/add">Add a Type</a>
-			<a class="dropdown-item" href="/activities/add">Add an Activity</a>
 			<a class="dropdown-item" href="/pathways/add">Add a Pathway</a>
+			<a class="dropdown-item" href="/activities/add">Add an Activity</a>
+			<a class="dropdown-item" href="/activity-types/add">Add a Type</a>
+			<a class="dropdown-item" href="/tags/add">Add a Tag</a>
 		<!--	<a class="dropdown-item" href="/users/add">Add a User</a>
 			<a class="dropdown-item" href="/competencies/add">Add a Competency</a>
 			<a class="dropdown-item" href="/ministries/add">Add a Ministry</a>
 			<a class="dropdown-item" href="/categories/add">Add a Category</a>
 			<a class="dropdown-item" href="/statuses/add">Add a Status</a>-->
-			<a class="dropdown-item" href="/tags/add">Add a Tag</a>
+			
 		</div>
 		</li>
 		<?php endif ?>

@@ -16,14 +16,7 @@ echo $this->Form->hidden('createdby_id', ['value' => $activity->createdby_id, 'c
 echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'),'class' => 'form-control']);
 ?>
 <div class="row justify-content-md-center">
-<div class="col-md-3">
-<div class="card mb-3">
-    <div class="card-body">
-    <h2>Pathways</h2>
 
-    </div>
-    </div>
-    </div>
 <div class="col-md-6">
     <div class="card mb-3">
     <div class="card-body">
