@@ -31,21 +31,17 @@ canvas {
 </head>
 <body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="70">
 
-<nav class="navbar navbar-expand-lg mb-3">
+<nav class="navbar navbar-expand-lg mb-3" style="background-color: #FFF;">
 	
-	<a class="navbar-brand text-uppercase" href="/" style="margin: 0 0 0 20px">
-	<?php if(!empty($atypes)): ?>
-	<?php foreach($atypes as $type): ?>
-		<span class="fas fa-dot-circle" style="color: rgba(<?= $type->color ?>,1); font-size: 280%; margin: 0 0 0 -20px;"></span>
-	<?php endforeach ?>
-	<?php else: ?>
-		Learning Agent
-	<?php endif ?>
+	<a class="navbar-brand" href="/" style="margin: 0 0 0 20px">
+	<img alt="" height="50" src="/img/curator-rings-logo.png" width="50">
+		Learning Curator
+	
 	</a>
 	<?php if(!empty($active)): ?>
 	<ul class="navbar-nav mr-auto">
 		<li class="nav-item">
-			<a class="nav-link" href="/users/home">Hello, <?= $active->name ?></a>
+			<a class="nav-link" href="/users/home">Your Profile</a>
 		</li>
 	</ul>
 	<?php endif ?>

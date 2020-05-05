@@ -5,7 +5,7 @@
 <h1>The Learning Agent</h1>
 <div class="my-3" style="font-size: 200%">
 <?php foreach($atypes as $type): ?>
-		<span class="fas fa-dot-circle" style="color: rgba(<?= $type->color ?>,1);"></span>
+		<span class="fas <?= $type->image_path ?>" style="color: rgba(<?= $type->color ?>,1);"></span>
 		<?= $type->name ?>
 <?php endforeach ?>
 </div>
