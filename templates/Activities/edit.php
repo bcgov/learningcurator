@@ -46,7 +46,7 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
             <?php echo $this->Form->control('moderation_flag', ['type' => 'checkbox', 'class' => 'form-control']); ?>
         </div>
         <div class="col-md-4 pt-3">
-            <?php echo $this->Form->control('recommended', ['type' => 'checkbox', 'class' => 'form-control']); ?>
+            <?php echo $this->Form->control('recommended', ['type' => 'text', 'class' => 'form-control']); ?>
         </div>
     </div>
     </div>
