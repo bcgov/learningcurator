@@ -325,7 +325,7 @@ public function like ($id = null)
         // "Pathway","Step","2-Activity Type","Name","4-Hyperlink",
         // "Description","6-Required","Competencies","8-Time","Tags","10-Licensing","ISBN","Curator"
         //
-        if (($handle = fopen("/home/allankh/learningagent/webroot/files/standard-import.csv", "r")) !== FALSE) {
+        if (($handle = fopen("/home/allankh/learning-agent/webroot/files/standard-import.csv", "r")) !== FALSE) {
             // pop the headers off so we're starting with actual data
             fgetcsv($handle);
            

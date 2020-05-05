@@ -49,14 +49,15 @@ class StatusesController extends AppController
     public function add()
     {
         $status = $this->Statuses->newEmptyEntity();
+        $this->Authorization->authorize($status);
         if ($this->request->is('post')) {
             $status = $this->Statuses->patchEntity($status, $this->request->getData());
             if ($this->Statuses->save($status)) {
-                $this->Flash->success(__('The status has been saved.'));
+                //$this->Flash->success(__('The status has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The status could not be saved. Please, try again.'));
+            //$this->Flash->error(__('The status could not be saved. Please, try again.'));
         }
         $this->set(compact('status'));
     }
