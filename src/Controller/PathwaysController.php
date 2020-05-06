@@ -30,11 +30,10 @@ class PathwaysController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
-        $this->paginate = [
-            'contain' => ['Categories', 'Ministries'],
-        ];
-        $pathways = $this->paginate($this->Pathways);
 
+        $paths = TableRegistry::getTableLocator()->get('Pathways');
+        $pathways = $paths->find('all')->contain('Categories')->where(['status_id' => 3]);
+        //$this->paginate($pathways);
         $this->set(compact('pathways'));
     }
 

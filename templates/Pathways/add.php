@@ -21,6 +21,7 @@ $this->loadHelper('Authentication.Identity');
                     echo $this->Form->control('name');
                     echo $this->Form->control('description');
                     echo $this->Form->control('objective');
+                    echo $this->Form->hidden('status_id',['value' => 3]);
                     //echo $this->Form->control('color');
                     //echo $this->Form->control('file_path');
                     //echo $this->Form->control('image_path');

@@ -11,19 +11,10 @@
 <ul class="list-group list-group-flush">
 <?php foreach ($pathways as $pathway): ?>
 <li class="list-group-item">
-	<?= $this->Html->link($pathway->category->name, ['controller' => 'categories', 'action' => 'view', $pathway->category->id]) ?> - 
-	<?= $this->Html->link($pathway->name, ['action' => 'view', $pathway->id]) ?>
+	<h2><?= $this->Html->link($pathway->name, ['action' => 'view', $pathway->id]) ?></h2>
+	<?= $this->Html->link($pathway->category->name, ['controller' => 'categories', 'action' => 'view', $pathway->category->id],['class' => 'badge badge-light']) ?>
 </li>
 <?php endforeach; ?>
 </ul>
 </div>
-<div class="paginator">
-<ul class="pagination">
-<?= $this->Paginator->first('<< ' . __('first')) ?>
-<?= $this->Paginator->prev('< ' . __('previous')) ?>
-<?= $this->Paginator->numbers() ?>
-<?= $this->Paginator->next(__('next') . ' >') ?>
-<?= $this->Paginator->last(__('last') . ' >>') ?>
-</ul>
-<p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-</div>
+

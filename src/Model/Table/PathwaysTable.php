@@ -52,6 +52,9 @@ class PathwaysTable extends Table
         $this->belongsTo('Ministries', [
             'foreignKey' => 'ministry_id',
         ]);
+        $this->belongsTo('Statuses', [
+            'foreignKey' => 'status_id',
+        ]);
         $this->belongsToMany('Competencies', [
             'foreignKey' => 'pathway_id',
             'targetForeignKey' => 'competency_id',
@@ -124,6 +127,11 @@ class PathwaysTable extends Table
             ->integer('modifiedby')
             ->requirePresence('modifiedby', 'create')
             ->notEmptyString('modifiedby');
+        
+        $validator
+            ->integer('status_id')
+            ->requirePresence('status_id', 'create')
+            ->notEmptyString('status_id');
 
         return $validator;
     }
