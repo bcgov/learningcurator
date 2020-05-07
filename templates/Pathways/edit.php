@@ -19,9 +19,11 @@
     <div class="column-responsive column-80">
         <div class="pathways form content">
             <?= $this->Form->create($pathway) ?>
+
             <fieldset>
                 <legend><?= __('Edit Pathway') ?></legend>
                 <?php
+                    echo $this->Form->control('status_id', ['options' => $statuses]);
                     echo $this->Form->control('name');
                     echo $this->Form->control('color');
                     echo $this->Form->control('description');

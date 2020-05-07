@@ -11,16 +11,16 @@ $this->loadHelper('Authentication.Identity');
     <div class="card-body">
             <?= $this->Form->create($pathway) ?>
             <?php 
-            echo $this->Form->hidden('createdby', ['value' => $this->Identity->get('id'), 'class' => 'form-control']);
-            echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id'),'class' => 'form-control']); 
+            echo $this->Form->hidden('createdby', ['value' => $this->Identity->get('id')]);
+            echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]); 
             ?>
             <fieldset>
                 <legend><?= __('Add Pathway') ?></legend>
                 <?php
-                    echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true]);
-                    echo $this->Form->control('name');
-                    echo $this->Form->control('description');
-                    echo $this->Form->control('objective');
+                    echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true,'class'=>'form-control']);
+                    echo $this->Form->control('name',['class' => 'form-control']);
+                    echo $this->Form->control('description',['class' => 'form-control']);
+                    echo $this->Form->control('objective',['class' => 'form-control']);
                     echo $this->Form->hidden('status_id',['value' => 3]);
                     //echo $this->Form->control('color');
                     //echo $this->Form->control('file_path');
@@ -33,7 +33,7 @@ $this->loadHelper('Authentication.Identity');
                     //echo $this->Form->control('users._ids', ['options' => $users]);
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->button(__('Submit'),['class' => 'btn btn-block btn-success mt-3']) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>

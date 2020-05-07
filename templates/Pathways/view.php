@@ -105,8 +105,12 @@ not used */
 
 <div class="row">
 <div class="col-md-12">
+<?php if($pathway->status_id == 1): ?>
+<span class="badge badge-warning" title="Edit to set to publish">DRAFT</span>
+<?php endif ?>
 <div class="card mb-3">
 <div class="card-body">
+
 <?php if($role == 2 || $role == 5): ?>
 <div class="btn-group float-right">
 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $pathway->id], ['class' => 'btn btn-light']) ?>
@@ -127,6 +131,7 @@ not used */
 	</div> <!-- /.objectives -->
 </div>
 </div>
+<div class="float-right" style="font-size: 12px">Published <?= h(date('D M jS \'y',strtotime($pathway->created))) ?></div>
 <!-- totals below updated via JS -->
 <div class="mb-2">
 	<span class="badge badge-dark readtotal"></span>  
@@ -234,6 +239,7 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 </div> <!-- /.btn-group -->
 <?php endif ?>
 
+
 <?php 
 
 $stepTime = 0;
@@ -242,7 +248,20 @@ $requiredacts = array();
 $tertiaryacts = array();
 $acts = array();
 
+$readstepcount = 0;
+$watchstepcount = 0;
+$listenstepcount = 0;
+$participatestepcount = 0;
+$readcolor = '';
+$watchcolor = '';
+$listencolor = '';
+$participatecolor = '';
+
+$totalacts = count($steps->activities);
+$stepclaimcount = 0;
+
 foreach ($steps->activities as $activity) {
+	//print_r($activity);
 	// If this is 'defunct' then we pull it out of the list 
 	if($activity->status_id == 2) {
 		array_push($defunctacts,$activity);
@@ -255,6 +274,22 @@ foreach ($steps->activities as $activity) {
 		//	array_push($tertiaryacts,$activity);
 		//}
 		array_push($acts,$activity);
+		if($activity->activity_types_id == 1) {
+			$watchstepcount++;
+			$watchcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 2) {
+			$readstepcount++;
+			$readcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 3) {
+			$listenstepcount++;
+			$listencolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 4) {
+			$participatestepcount++;
+			$participatecolor = $activity->activity_type->color;
+		}
+		if(in_array($activity->id,$useractivitylist)) {
+			$stepclaimcount++;
+		}
 		$tmp = array();
 		// Loop through the whole list, add steporder to tmp array
 		foreach($acts as $line) {
@@ -264,11 +299,21 @@ foreach ($steps->activities as $activity) {
 		array_multisort($tmp, SORT_DESC, $acts);
 	}
 }
+
 ?>
+<?php if($stepclaimcount == $totalacts): ?>
+<div class="stepcompleted" id="step<?= $steps->id ?>complete"><span class="badge badge-dark">STEP COMPLETED</span>
+<?php endif ?>
 
 <h1 class="text-uppercase">
 	<!--<?= h($steps->id) ?>.--> <?= h($steps->name) ?>
 </h1>
+<div class="mb-2">
+	<span class="badge badge-dark" style="background-color: rgba(<?= $readcolor ?>,1)"><?= $readstepcount ?> to read</span>  
+	<span class="badge badge-dark" style="background-color: rgba(<?= $watchcolor ?>,1)"><?= $watchstepcount ?> to watch</span>  
+	<span class="badge badge-dark" style="background-color: rgba(<?= $listencolor ?>,1)"><?= $listenstepcount ?> to listen to</span>  
+	<span class="badge badge-dark" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
+</div>
 <div class="my-3 py-3"><?= h($steps->description) ?></div>
 
 <?php foreach($acts as $activity): ?>
@@ -308,14 +353,6 @@ foreach ($steps->activities as $activity) {
 	</div>
 	<?php endif; // role check ?>
 
-	<!-- This whole field is being deprecated in favor of an estimated time field, which will just be a string
-	we loose the ability calculate total time per step, but gain the ability to give a more realistic estimate
-	range.
-	<div class="hours float-right" data-toggle="tooltip" data-placement="bottom" title="This activity should take approximately <?= $activity->hours ?> hours to complete">
-		<i class="fas fa-clock"></i>
-		<?= $activity->hours ?>
-	</div> -->
-
 	<?php foreach($activity->tags as $tag): ?>
 	<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
 	<?php endforeach ?>
@@ -327,7 +364,10 @@ foreach ($steps->activities as $activity) {
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
 		<?= $activity->description ?>
 	</div>
-
+	<div class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+		<i class="fas fa-clock"></i>
+		<?= $activity->estimated_time ?>
+	</div> 
 	<?php if(!empty($activity->tags)): ?>
 	<?php foreach($activity->tags as $tag): ?>
 
@@ -381,7 +421,11 @@ foreach ($steps->activities as $activity) {
 	<?php if(!empty($activity->_joinData->required)): ?>
 
 	<div class="required float-right" data-toggle="tooltip" data-placement="bottom" title="This activity is required to complete the step">
-		<i class="fas fa-check-double"></i>
+		<i class="fas fa-check-double"></i> Required
+	</div>
+	<?php else: ?>
+	<div class="required float-right" data-toggle="tooltip" data-placement="bottom" title="This activity is supplemtary to completing this step">
+		<i class="fas fa-check"></i> Supplementary
 	</div>
 	
 	<?php endif ?>

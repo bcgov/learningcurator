@@ -12,6 +12,7 @@
 <div class="col-md-6">
 <?php if (!empty($category->pathways)) : ?>
 <?php foreach ($category->pathways as $pathways) : ?>
+<?php if($pathways->status_id == 2): // is published? ?>
 <div class="card mb-2">
 <div class="card-body">
 <h2>
@@ -22,6 +23,7 @@
 </div>
 </div>
 </div>
+<?php endif; // is published ?>
 <?php endforeach; ?>
 <?php endif; ?>
 </div>

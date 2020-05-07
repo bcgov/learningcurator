@@ -32,7 +32,7 @@ class PathwaysController extends AppController
         $this->Authorization->skipAuthorization();
 
         $paths = TableRegistry::getTableLocator()->get('Pathways');
-        $pathways = $paths->find('all')->contain('Categories')->where(['status_id' => 3]);
+        $pathways = $paths->find('all')->contain('Categories')->where(['status_id' => 2]);
         //$this->paginate($pathways);
         $this->set(compact('pathways'));
     }
@@ -152,6 +152,34 @@ class PathwaysController extends AppController
     }
 
     /**
+     * Publish pathway method
+     *
+     * @param string|null $id Pathway id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function publish($id = null)
+    {
+        $pathway = $this->Pathways->get($id, [
+            'contain' => ['Competencies', 'Steps', 'Users'],
+        ]);
+
+        $this->Authorization->authorize($pathway);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $this->request->getData()['status_id'] = 2;
+            $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
+            if ($this->Pathways->save($pathway)) {
+                $this->Flash->success(__('The pathway has been saved.'));
+                $pathback = '/pathways/view/' . $id;
+                return $this->redirect($pathback);
+            }
+            $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
+        }
+
+    }
+
+
+    /**
      * Edit method
      *
      * @param string|null $id Pathway id.
@@ -177,9 +205,10 @@ class PathwaysController extends AppController
         $categories = $this->Pathways->Categories->find('list', ['limit' => 200]);
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
+        $statuses = $this->Pathways->Statuses->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'categories', 'ministries', 'competencies', 'steps', 'users'));
+        $this->set(compact('pathway', 'categories', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
     }
 
     /**

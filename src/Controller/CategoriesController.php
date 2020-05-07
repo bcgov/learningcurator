@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+Use Cake\ORM\TableRegistry;
+
 /**
  * Categories Controller
  *
@@ -38,6 +40,9 @@ class CategoriesController extends AppController
         $category = $this->Categories->get($id, [
             'contain' => ['Activities', 'Pathways'],
         ]);
+        
+        // $cats = TableRegistry::getTableLocator()->get('Categories');
+        // $category = $cats->find('all')->contain('Activities', 'Pathways')->where(['status_id' => 3]);
 
         $this->set('category', $category);
     }
