@@ -148,6 +148,7 @@ class PathwaysTable extends Table
         $rules->add($rules->isUnique(['name']));
         $rules->add($rules->existsIn(['category_id'], 'Categories'));
         $rules->add($rules->existsIn(['ministry_id'], 'Ministries'));
+        $rules->add($rules->existsIn(['status_id'], 'Statuses'));
 
         return $rules;
     }

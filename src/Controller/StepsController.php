@@ -53,8 +53,8 @@ class StepsController extends AppController
             $step = $this->Steps->patchEntity($step, $this->request->getData());
             if ($this->Steps->save($step)) {
                 $this->Flash->success(__('The step has been saved.'));
-
-                return $this->redirect($this->referer());
+                $go = '/steps/edit/' . $step->id;
+                return $this->redirect($go);
             }
             $this->Flash->error(__('The step could not be saved. Please, try again.'));
         }

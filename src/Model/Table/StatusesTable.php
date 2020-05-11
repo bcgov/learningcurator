@@ -49,6 +49,9 @@ class StatusesTable extends Table
         $this->hasMany('PathwaysUsers', [
             'foreignKey' => 'status_id',
         ]);
+        $this->hasMany('Pathways', [
+            'foreignKey' => 'status_id',
+        ]);
     }
 
     /**

@@ -11,6 +11,7 @@
 <ul class="list-group list-group-flush">
 <?php foreach ($pathways as $pathway): ?>
 <li class="list-group-item">
+	<span class="badge badge-light"><?= $pathway->status->name ?></span>
 	<h2><?= $this->Html->link($pathway->name, ['action' => 'view', $pathway->id]) ?></h2>
 	<?= $this->Html->link($pathway->category->name, ['controller' => 'categories', 'action' => 'view', $pathway->category->id],['class' => 'badge badge-light']) ?>
 </li>

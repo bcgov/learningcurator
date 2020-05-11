@@ -324,7 +324,8 @@ foreach ($steps->activities as $activity) {
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle', 'class' => '']]) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $activity->_joinData->id, 'class' => '']]) ?>
+	<?= $this->Form->hidden('id',['type' => 'hidden', 'value' => $activity->_joinData->id]) ?>
 	<?php if($activity->_joinData->required == 0): ?>
 	<?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 1]) ?>
 	<?php else: ?>
@@ -335,17 +336,19 @@ foreach ($steps->activities as $activity) {
 	<?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light']) ?>
 	<?= $this->Form->end() ?>
 
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort', 'class' => '']]) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $activity->_joinData->id, 'class' => '']]) ?>
 	<?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $activity->_joinData->steporder]) ?>
 	<?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'up']) ?>
+	<?= $this->Form->control('id',['type' => 'hidden', 'value' => $activity->_joinData->id]) ?>
 	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->button(__('Up'),['class'=>'btn btn-sm btn-light']) ?>
 	<?= $this->Form->end() ?>
 
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort', 'class' => '']]) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $activity->_joinData->id, 'class' => '']]) ?>
 	<?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $activity->_joinData->steporder]) ?>
 	<?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'down']) ?>
+	<?= $this->Form->control('id',['type' => 'hidden', 'value' => $activity->_joinData->id]) ?>
 	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->button(__('Down'),['class'=>'btn btn-sm btn-light']) ?>
@@ -354,7 +357,7 @@ foreach ($steps->activities as $activity) {
 	<?php endif; // role check ?>
 
 	<?php foreach($activity->tags as $tag): ?>
-	<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
+	<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
 	<?php endforeach ?>
 
 	<h1 class="my-3">

@@ -22,7 +22,17 @@ class UserPolicy
     {
         return $this->isAdmin($user, $resource);
     }
-
+     /**
+     * Check if $user can access main user index
+     *
+     * @param Authorization\IdentityInterface $user The user.
+     * @param App\Model\Entity\User $resource
+     * @return bool
+     */
+    public function canList(IdentityInterface $user, User $resource)
+    {
+        return $this->isAdmin($user, $resource);
+    }
 
     /**
      * Check if $user can create User

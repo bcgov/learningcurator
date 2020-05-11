@@ -32,10 +32,62 @@ label {
     <div class="col-md-4">
     <div class="card">
         <h2 class="m-3">Existing Activities</h2>
-        <ul class="list-group list-group-flush">
-        <?php  //$this->Form->control('activities._ids', ['options' => $activities]) ?>
+        <ul class="list-group list-group-flush" id="existingacts">
+        <?php  //$this->Form->control('activities._ids', ['options' => $activities]) 
+        $tmp = array();
+        // Loop through the whole list, add steporder to tmp array
+        foreach($step->activities as $line) {
+            $tmp[] = $line->_joinData->steporder;
+        }
+        // Use the tmp array to sort acts list
+        array_multisort($tmp, SORT_DESC, $step->activities);
+        ?>
+        
         <?php foreach($step->activities as $a): ?>
-            <li class="list-group-item"><a href="/activities/view/<?= $a->id ?>"><?= $a->name ?></a></li>
+            <li class="list-group-item" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
+                <div class="row">
+                <div class="col-9">
+                    <?php if($a->_joinData->required) echo '<span class="badge badge-success">Required</span>' ?> 
+                    <a href="/activities/view/<?= $a->id ?>"><?= $a->name ?></a> 
+                </div>
+                <div class="col-3">
+                <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id, 'class' => 'form-inline']]) ?>
+                <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
+                <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'up']) ?>
+                <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
+                <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
+                <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
+                <?= $this->Form->button(__('Up'),['class'=>'btn btn-sm btn-light']) ?>
+                <?= $this->Form->end() ?>
+
+                <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id, 'class' => 'form-inline']]) ?>
+                <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
+                <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'down']) ?>
+                <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
+                <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
+                <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
+                <?= $this->Form->button(__('Down'),['class'=>'btn btn-sm btn-light']) ?>
+                <?= $this->Form->end() ?>
+
+                <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $a->_joinData->id, 'class' => '']]) ?>
+                <?= $this->Form->hidden('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
+                <?php if($a->_joinData->required == 0): ?>
+                <?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 1]) ?>
+                <?php else: ?>
+                <?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 0]) ?>
+                <?php endif ?>
+                <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
+                <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
+                <?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light']) ?>
+                <?= $this->Form->end() ?>
+
+                <?= $this->Form->create(null,['action' => '/activities-steps/delete/' . $a->_joinData->id, 'class' => 'form-inline']) ?>
+                <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
+                <?= $this->Form->button(__('x'),['class' => 'btn btn-sm btn-light']) ?>
+                <?= $this->Form->end() ?>
+                </div>
+                </div>
+            </li>
         <?php endforeach ?>
         </ul>
     </div>
@@ -64,14 +116,37 @@ label {
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
 	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
 	crossorigin="anonymous"></script>
-<!-- <script type="text/javascript" src="/js/bootstrap-multiselect.js"></script> -->
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
 <script>
 $(function () {
-	// $('#activities-ids').multiselect({
-    //         enableFiltering: true,
-    //         filterBehavior: 'both',
-    //         buttonWidth: '100%'
-    // });
+    $('#existingacts').sortable({
+        onEnd: function (/**Event*/evt) {
+            var itemEl = evt.item.id;
+            var sid = evt.item.dataset.stepid;
+            var foo = itemEl.split('-');
+            var formd = {id: sid, activity_id: foo[1], step_id: <?= $step->id ?>, direction: 'down'};
+            var u = '/activities-steps/sort/' + sid;
+            //console.log(sid);
+            $.ajax({
+                type: "POST",
+                url: u,
+                data: formd,
+                success: function(d)
+                {
+                    console.log(d);
+                },
+                statusCode: 
+                {
+                    403: function() {
+                        console.log('it don work');
+                    }
+                }
+		    });
+	    },
+    });
+
     $('#actfind').on('submit', function(e){
 
         e.preventDefault();

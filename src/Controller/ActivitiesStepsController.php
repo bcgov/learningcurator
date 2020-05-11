@@ -110,18 +110,15 @@ class ActivitiesStepsController extends AppController
      */
     public function delete($id = null)
     {
+        $this->Authorization->skipAuthorization();
         $this->request->allowMethod(['post', 'delete']);
         $activitiesStep = $this->ActivitiesSteps->get($id);
 
-	    //$activitiesSteps->activity_id = $this->request->getData()['activity_id'];
-        
         if ($this->ActivitiesSteps->delete($activitiesStep)) {
-            $this->Flash->success(__('The activities step has been deleted.'));
-        } else {
-            $this->Flash->error(__('The activities step could not be deleted. Please, try again.'));
+            echo 'Good good';
+            
         }
-
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer());
     }
 
 
@@ -130,25 +127,25 @@ class ActivitiesStepsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function requiredToggle()
+    public function requiredToggle($id = null)
     {
-        $u = $this->request->getAttribute('authentication')->getIdentity();
-        $activitiesSteps = $this->ActivitiesSteps->newEmptyEntity();
-        $this->Authorization->authorize($activitiesSteps);
-        if($this->request->getData()['required'] == 1) {
-            $activitiesSteps->required = 1;
-        } else {
-            $activitiesSteps->required = 0;
-        }
-        $activitiesSteps->step_id = $this->request->getData()['step_id'];
-        $activitiesSteps->activity_id = $this->request->getData()['activity_id'];
-        if ($this->request->is('post')) {
-            if ($this->ActivitiesSteps->save($activitiesSteps)) {
-                $this->Flash->success(__('That activity is now required. Good job!'));
-                return $this->redirect($this->referer());
+        $activitiesStep = $this->ActivitiesSteps->get($id, [
+            'contain' => [],
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
+            $this->Authorization->authorize($activitiesStep);
+            if ($this->ActivitiesSteps->save($activitiesStep)) {
+                $this->Flash->success(__('The activities step has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The users action could not be saved. Please, try again.'));
+            $this->Flash->error(__('The activities step could not be saved. Please, try again.'));
         }
+        $activities = $this->ActivitiesSteps->Activities->find('list', ['limit' => 200]);
+        $steps = $this->ActivitiesSteps->Steps->find('list', ['limit' => 200]);
+        $this->set(compact('activitiesStep', 'activities', 'steps'));
+        
     }
 
     /**
@@ -156,11 +153,12 @@ class ActivitiesStepsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function sort()
+    public function sort($id = null)
     {
-        $u = $this->request->getAttribute('authentication')->getIdentity();
-        $activitiesSteps = $this->ActivitiesSteps->newEmptyEntity();
-        $this->Authorization->authorize($activitiesSteps);
+        //$u = $this->request->getAttribute('authentication')->getIdentity();
+        //$activitiesSteps = $this->ActivitiesSteps->newEmptyEntity();
+        $activitiesStep = $this->ActivitiesSteps->get($id);
+        $this->Authorization->authorize($activitiesStep);
         
         $order = $this->request->getData()['sortorder'];
         
@@ -169,17 +167,15 @@ class ActivitiesStepsController extends AppController
         } else {
             $neworder = $order - 2;
         }
-        $activitiesSteps->steporder = $neworder;
-
-        $activitiesSteps->step_id = $this->request->getData()['step_id'];
-        $activitiesSteps->activity_id = $this->request->getData()['activity_id'];
+        $activitiesStep->steporder = $neworder;
+        //$activitiesSteps->activity_id = $this->request->getData()['activity_id'];
         
         if ($this->request->is('post')) {
-            if ($this->ActivitiesSteps->save($activitiesSteps)) {
-                $this->Flash->success(__('That activity is now in a different order. Good job!'));
+            if ($this->ActivitiesSteps->save($activitiesStep)) {
+                //$this->Flash->success(__('That activity is now in a different order. Good job!'));
                 return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The users action could not be saved. Please, try again.'));
+            //$this->Flash->error(__('The users action could not be saved. Please, try again.'));
         }
     }
 

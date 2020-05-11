@@ -19,6 +19,7 @@ class PathwaysStepsController extends AppController
      */
     public function index()
     {
+        $this->Authorization->skipAuthorization();
         $this->paginate = [
             'contain' => ['Steps', 'Pathways'],
         ];
@@ -98,10 +99,16 @@ class PathwaysStepsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete()
     {
         $this->request->allowMethod(['post', 'delete']);
-        $pathwaysStep = $this->PathwaysSteps->get($id);
+        
+        //$pathwaysStep = $this->PathwaysSteps->get($id);
+        $pathid = $this->request->getData()['pathway_id'];
+        $stepid = $this->request->getData()['step_id'];
+        $pathwaysStep = $this->PathwaysSteps->find()->where(['pathway_id' => $pathid])->where(['step_id' => $stepid]);
+        
+
         if ($this->PathwaysSteps->delete($pathwaysStep)) {
             $this->Flash->success(__('The pathways step has been deleted.'));
         } else {

@@ -30,9 +30,16 @@ class PathwaysController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
-
+        $user = $this->request->getAttribute('authentication')->getIdentity();
         $paths = TableRegistry::getTableLocator()->get('Pathways');
-        $pathways = $paths->find('all')->contain('Categories')->where(['status_id' => 2]);
+        // If the person is a curator or an admin, then return all of the pathways,
+        // regardless of their statuses. Regular users should only ever see 
+        // 'published' pathways.
+        if($user->role_id == 2 || $user->role_id == 5) {
+            $pathways = $paths->find('all')->contain(['Categories','Statuses']);
+        } else {
+            $pathways = $paths->find('all')->contain(['Categories','Statuses'])->where(['status_id' => 2]);
+        }
         //$this->paginate($pathways);
         $this->set(compact('pathways'));
     }
@@ -137,11 +144,11 @@ class PathwaysController extends AppController
         if ($this->request->is('post')) {
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
             if ($this->Pathways->save($pathway)) {
-                $this->Flash->success(__('The pathway has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                //$this->Flash->success(__('The pathway has been saved.'));
+                $go = '/pathways/view/' . $pathway->id;
+                return $this->redirect($go);
             }
-            $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
+            //$this->Flash->error(__('The pathway could not be saved. Please, try again.'));
         }
         $categories = $this->Pathways->Categories->find('list', ['limit' => 200]);
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);

@@ -25,7 +25,7 @@ class ActivitiesController extends AppController
         $this->Authorization->skipAuthorization();
 
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
-        $pathways = $allpaths->find('all')->contain(['steps'])->where(['status_id' => 3]);
+        $pathways = $allpaths->find('all')->contain(['steps'])->where(['status_id' => 2]);
         $allpathways = $pathways->toList();
 
         $this->paginate = [
@@ -221,31 +221,31 @@ class ActivitiesController extends AppController
     }
 
 
-/**
-* Like an activity
-*
-* @return \Cake\Http\Response|null Redirects to courses index.
-* @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-*
-*/
-public function like ($id = null)
-{
-    $activity = $this->Activities->get($id);
-    $this->Authorization->authorize($activity);
-    $newlike = $activity->recommended;
-    $newlike++;
-    $this->request->getData()['recommended'] = $newlike;
-    $activity->recommended = $newlike;
-    if ($this->request->is(['get'])) {
-        $activity = $this->Activities->patchEntity($activity, $this->request->getData());
-        if ($this->Activities->save($activity)) {
-            echo 'Liked!';
-            //return $this->redirect($this->referer());
-        } else {
-            //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
+    /**
+    * Like an activity
+    *
+    * @return \Cake\Http\Response|null Redirects to courses index.
+    * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+    *
+    */
+    public function like ($id = null)
+    {
+        $activity = $this->Activities->get($id);
+        $this->Authorization->authorize($activity);
+        $newlike = $activity->recommended;
+        $newlike++;
+        $this->request->getData()['recommended'] = $newlike;
+        $activity->recommended = $newlike;
+        if ($this->request->is(['get'])) {
+            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+            if ($this->Activities->save($activity)) {
+                echo 'Liked!';
+                //return $this->redirect($this->referer());
+            } else {
+                //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
+            }
         }
     }
-}
 
 
 
