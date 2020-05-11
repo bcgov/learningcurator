@@ -29,7 +29,7 @@ canvas {
 
 <!-- <link rel="stylesheet" href="/css/bootstrap-multiselect.css" type="text/css"/> -->
 </head>
-<body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="70">
+<body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="110">
 
 <nav class="navbar navbar-expand-lg mb-3" style="background-color: #FFF;">
 	

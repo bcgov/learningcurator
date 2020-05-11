@@ -522,22 +522,21 @@ if($stepclaimcount == $totalacts) {
 
 $(document).ready(function(){
 
+	// load up the activity rings
+	loadStatus();
+
 	$('.steplink').each(function(e){
 		let actualstep = $(this).attr('href');
 		if($(actualstep).hasClass('completed')) {
-			let checkmark = '<i class="fas fa-check-square" data-toggle="tooltip" data-placement="bottom" title="You\'ve completed this step!"></i>';
+			let checkmark = '<i class="fas fa-check-square"></i>';
 			$(this).prepend(checkmark);
-			console.log(actualstep);
 		}
 	});
-
-	// load up the activity rings
-	loadStatus();
 
 	$('#stepnav .nav-link').on('click', function(event) {
 		event.preventDefault();
 		$(this).tooltip('hide');
-        $.scrollTo(event.target.hash, 250, {offset:-60,});
+        $.scrollTo(event.target.hash, 250, {offset:-105,});
 	});
 
 	$('.claim').on('submit', function(e){
@@ -580,7 +579,8 @@ $(document).ready(function(){
 			statusCode: 
 			{
 				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+					let alert = 'You must be logged in.</div>';
+					console.log(alert);
 				}
 			}
 		});
