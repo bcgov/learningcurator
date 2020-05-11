@@ -181,14 +181,14 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 <?php if(count($stepsalongtheway) > 1): ?>
 <nav id="stepnav" class="stickynav nav nav-pills mb-3 p-3" style="background: #FFF">
 <?php foreach($stepsalongtheway as $steplink): ?>
-	<a class="nav-link " 
+	<a class="nav-link steplink" 
 		href="#pathway-<?= $steplink['slug'] ?>"
 		title="<?= $steplink['objective'] ?>"
 		data-toggle="tooltip" data-placement="bottom">
 			<?= $steplink['name'] ?>
 	</a> 
 <?php endforeach ?>
-</nav> <!-- /nav -->
+</nav> <!-- /stepnav -->
 <?php endif ?>
 
 <?php if (!empty($pathway->steps)) : ?>
@@ -229,7 +229,7 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 
 <?php foreach ($pathway->steps as $steps) : ?>
 
-<div id="pathway-<?php echo slugify($steps->name) ?>" class="card ">
+<div class="card ">
 <div class="card-body">
 
 <?php if($role == 2 || $role == 5): ?>
@@ -301,11 +301,18 @@ foreach ($steps->activities as $activity) {
 }
 
 ?>
-<?php if($stepclaimcount == $totalacts): ?>
-<div class="stepcompleted" id="step<?= $steps->id ?>complete"><span class="badge badge-dark">STEP COMPLETED</span></div>
-<?php endif ?>
 
-<h1 class="text-uppercase">
+<?php
+$completeclass = 'notcompleted'; 
+if($stepclaimcount == $totalacts) {
+	$completeclass = 'completed';
+}
+?>
+<h1 id="pathway-<?php echo slugify($steps->name) ?>" class="<?= $completeclass ?>">
+	
+	<?php if($stepclaimcount == $totalacts): ?>
+	<i class="fas fa-check-square" data-toggle="tooltip" data-placement="bottom" title="You've completed this step!"></i>
+	<?php endif ?>
 	<!--<?= h($steps->id) ?>.--> <?= h($steps->name) ?>
 </h1>
 <div class="mb-2">
@@ -324,35 +331,7 @@ foreach ($steps->activities as $activity) {
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $activity->_joinData->id, 'class' => '']]) ?>
-	<?= $this->Form->hidden('id',['type' => 'hidden', 'value' => $activity->_joinData->id]) ?>
-	<?php if($activity->_joinData->required == 0): ?>
-	<?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 1]) ?>
-	<?php else: ?>
-	<?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 0]) ?>
-	<?php endif ?>
-	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light']) ?>
-	<?= $this->Form->end() ?>
-
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $activity->_joinData->id, 'class' => '']]) ?>
-	<?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $activity->_joinData->steporder]) ?>
-	<?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'up']) ?>
-	<?= $this->Form->control('id',['type' => 'hidden', 'value' => $activity->_joinData->id]) ?>
-	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Up'),['class'=>'btn btn-sm btn-light']) ?>
-	<?= $this->Form->end() ?>
-
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $activity->_joinData->id, 'class' => '']]) ?>
-	<?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $activity->_joinData->steporder]) ?>
-	<?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'down']) ?>
-	<?= $this->Form->control('id',['type' => 'hidden', 'value' => $activity->_joinData->id]) ?>
-	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Down'),['class'=>'btn btn-sm btn-light']) ?>
-	<?= $this->Form->end() ?>
+	
 	</div>
 	<?php endif; // role check ?>
 
@@ -542,6 +521,15 @@ foreach ($steps->activities as $activity) {
 <script>
 
 $(document).ready(function(){
+
+	$('.steplink').each(function(e){
+		let actualstep = $(this).attr('href');
+		if($(actualstep).hasClass('completed')) {
+			let checkmark = '<i class="fas fa-check-square" data-toggle="tooltip" data-placement="bottom" title="You\'ve completed this step!"></i>';
+			$(this).prepend(checkmark);
+			console.log(actualstep);
+		}
+	});
 
 	// load up the activity rings
 	loadStatus();

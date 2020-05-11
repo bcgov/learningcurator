@@ -1,5 +1,5 @@
 <div class="row justify-content-md-center">
-<div class="col-md-6">
+<div class="col-md-8">
 <div class="card">
 <div class="card-body">
 <h1>Learning Curator</h1>
