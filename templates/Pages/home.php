@@ -1,12 +1,14 @@
 <div class="row justify-content-md-center">
-<div class="col-md-8">
+<div class="col-md-6">
 <div class="card">
 <div class="card-body">
 <h1>Learning Curator</h1>
-<div class="my-3" style="font-size: 200%">
+<div class="my-3" style="font-size: 180%">
 <?php foreach($atypes as $type): ?>
+	<div class="">
 		<span class="fas <?= $type->image_path ?>" style="color: rgba(<?= $type->color ?>,1);"></span>
 		<?= $type->name ?>
+	</div>
 <?php endforeach ?>
 </div>
 <h2>A curation space for informal learning resources.</h2>
