@@ -226,23 +226,7 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 
 </div>
 <div class="col-lg-8 col-md-9">
-<?php 
 
-$stepTime = 0;
-$defunctacts = array();
-$requiredacts = array();
-$tertiaryacts = array();
-$acts = array();
-
-$readstepcount = 0;
-$watchstepcount = 0;
-$listenstepcount = 0;
-$participatestepcount = 0;
-$readcolor = '';
-$watchcolor = '';
-$listencolor = '';
-$participatecolor = '';
-?>
 <?php foreach ($pathway->steps as $steps) : ?>
 
 <div id="pathway-<?php echo slugify($steps->name) ?>" class="card ">
@@ -318,7 +302,7 @@ foreach ($steps->activities as $activity) {
 
 ?>
 <?php if($stepclaimcount == $totalacts): ?>
-<div class="stepcompleted" id="step<?= $steps->id ?>complete"><span class="badge badge-dark">STEP COMPLETED</span>
+<div class="stepcompleted" id="step<?= $steps->id ?>complete"><span class="badge badge-dark">STEP COMPLETED</span></div>
 <?php endif ?>
 
 <h1 class="text-uppercase">
@@ -340,6 +324,35 @@ foreach ($steps->activities as $activity) {
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $activity->_joinData->id, 'class' => '']]) ?>
+	<?= $this->Form->hidden('id',['type' => 'hidden', 'value' => $activity->_joinData->id]) ?>
+	<?php if($activity->_joinData->required == 0): ?>
+	<?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 1]) ?>
+	<?php else: ?>
+	<?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 0]) ?>
+	<?php endif ?>
+	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
+	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+	<?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light']) ?>
+	<?= $this->Form->end() ?>
+
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $activity->_joinData->id, 'class' => '']]) ?>
+	<?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $activity->_joinData->steporder]) ?>
+	<?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'up']) ?>
+	<?= $this->Form->control('id',['type' => 'hidden', 'value' => $activity->_joinData->id]) ?>
+	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
+	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+	<?= $this->Form->button(__('Up'),['class'=>'btn btn-sm btn-light']) ?>
+	<?= $this->Form->end() ?>
+
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $activity->_joinData->id, 'class' => '']]) ?>
+	<?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $activity->_joinData->steporder]) ?>
+	<?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'down']) ?>
+	<?= $this->Form->control('id',['type' => 'hidden', 'value' => $activity->_joinData->id]) ?>
+	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
+	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+	<?= $this->Form->button(__('Down'),['class'=>'btn btn-sm btn-light']) ?>
+	<?= $this->Form->end() ?>
 	</div>
 	<?php endif; // role check ?>
 
@@ -466,7 +479,6 @@ foreach ($steps->activities as $activity) {
 
 
 
-
 	</div> <!-- /.card-body -->
 	</div> <!-- /.card -->
 
@@ -493,6 +505,7 @@ foreach ($steps->activities as $activity) {
 				style="animation-duration: 3s;"></path>
 	</svg>
 	</div>
+
 	<?php endforeach; // end of step loop ?>
 
 	<div class="card mb-3">
