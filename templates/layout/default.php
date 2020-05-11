@@ -38,25 +38,23 @@ canvas {
 		Learning Curator
 	
 	</a>
-	<?php if(!empty($active)): ?>
-	<ul class="navbar-nav mr-auto">
-		<li class="nav-item">
-			<a class="nav-link" href="/users/home">Your Profile</a>
-		</li>
-	</ul>
-	<?php endif ?>
-	<button class="navbar-toggler" 
+
+	<button class="navbar-toggler " 
 		type="button" 
 		data-toggle="collapse" 
 		data-target="#navbarSupportedContent" 
 		aria-controls="navbarSupportedContent" 
 		aria-expanded="false" 
 		aria-label="Toggle navigation">
-	<span class="navbar-toggler-icon"></span>
+		<i class="fas fa-bars"></i>
 	</button>
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 	<ul class="navbar-nav mr-auto">
+
+		<li class="nav-item">
+			<a class="nav-link" href="/users/home">Your Profile</a>
+		</li>
 
 		<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
