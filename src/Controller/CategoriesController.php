@@ -38,7 +38,7 @@ class CategoriesController extends AppController
     {
 	    $this->Authorization->skipAuthorization();
         $category = $this->Categories->get($id, [
-            'contain' => ['Activities', 'Pathways'],
+            'contain' => ['Activities', 'Pathways','Pathways.Statuses'],
         ]);
         
         // $cats = TableRegistry::getTableLocator()->get('Categories');
