@@ -263,9 +263,9 @@ $stepclaimcount = 0;
 foreach ($steps->activities as $activity) {
 	//print_r($activity);
 	// If this is 'defunct' then we pull it out of the list 
-	if($activity->status_id == 2) {
+	if($activity->status_id == 3) {
 		array_push($defunctacts,$activity);
-	} else {
+	} elseif($activity->status_id == 2) {
 		// if it's required
 		//if($activity->_joinData->required == 1) {
 		//	array_push($requiredacts,$activity);

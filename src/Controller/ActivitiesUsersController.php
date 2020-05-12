@@ -54,11 +54,11 @@ class ActivitiesUsersController extends AppController
         if ($this->request->is('post')) {
             $activitiesUser = $this->ActivitiesUsers->patchEntity($activitiesUser, $this->request->getData());
             if ($this->ActivitiesUsers->save($activitiesUser)) {
-                $this->Flash->success(__('The activities user has been saved.'));
+                //$this->Flash->success(__('The activities user has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The activities user could not be saved. Please, try again.'));
+            //$this->Flash->error(__('The activities user could not be saved. Please, try again.'));
         }
         $activities = $this->ActivitiesUsers->Activities->find('list', ['limit' => 200]);
         $users = $this->ActivitiesUsers->Users->find('list', ['limit' => 200]);
@@ -80,11 +80,11 @@ class ActivitiesUsersController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activitiesUser = $this->ActivitiesUsers->patchEntity($activitiesUser, $this->request->getData());
             if ($this->ActivitiesUsers->save($activitiesUser)) {
-                $this->Flash->success(__('The activities user has been saved.'));
+                //$this->Flash->success(__('The activities user has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The activities user could not be saved. Please, try again.'));
+            //$this->Flash->error(__('The activities user could not be saved. Please, try again.'));
         }
         $activities = $this->ActivitiesUsers->Activities->find('list', ['limit' => 200]);
         $users = $this->ActivitiesUsers->Users->find('list', ['limit' => 200]);
@@ -103,9 +103,9 @@ class ActivitiesUsersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $activitiesUser = $this->ActivitiesUsers->get($id);
         if ($this->ActivitiesUsers->delete($activitiesUser)) {
-            $this->Flash->success(__('The activities user has been deleted.'));
+            //$this->Flash->success(__('The activities user has been deleted.'));
         } else {
-            $this->Flash->error(__('The activities user could not be deleted. Please, try again.'));
+            //$this->Flash->error(__('The activities user could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -119,17 +119,18 @@ class ActivitiesUsersController extends AppController
      */
     public function claim()
     {
+        // #TODO write a proper policy for this, don't skip it
         $this->Authorization->skipAuthorization();
-	$now = date('Y-m-d H:i:s');
-	$user = $this->request->getAttribute('authentication')->getIdentity();
-	$activitiesUsers = $this->ActivitiesUsers->newEmptyEntity();
-	$activitiesUsers->user_id = $user->id;
-	$activitiesUsers->activity_id = $this->request->getData()['activity_id'];
-	$activitiesUsers->started = $now;
+        $now = date('Y-m-d H:i:s');
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $activitiesUsers = $this->ActivitiesUsers->newEmptyEntity();
+        $activitiesUsers->user_id = $user->id;
+        $activitiesUsers->activity_id = $this->request->getData()['activity_id'];
+        $activitiesUsers->started = $now;
 
         if ($this->request->is('post')) {
             if ($this->ActivitiesUsers->save($activitiesUsers)) {
-                $this->Flash->success(__('You have claimed that activity!'));
+                //$this->Flash->success(__('You have claimed that activity!'));
                 return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The users action could not be saved. Please, try again.'));
