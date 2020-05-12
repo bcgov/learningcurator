@@ -351,7 +351,7 @@ class PathwaysController extends AppController
 
                 foreach ($steps->activities as $activity):
                     // If this is 'defunct' then we pull it out of the list 
-                    if($activity->status_id == 2) {
+                    if($activity->status_id == 3) {
                         array_push($defunctacts,$activity);
                     } else {
                         // if it's required
