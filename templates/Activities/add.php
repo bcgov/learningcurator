@@ -18,28 +18,7 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
 <div class="row justify-content-md-center">
 
 <div class="col-md-6">
-    <div class="card mb-3">
-    <div class="card-body">
-    <div class="row">
-        <div class="col-md-4">
-            <?php echo $this->Form->control('activity_types_id', ['class' => 'form-control', 'options' => $activityTypes]); ?>
-        </div>
-        <div class="col-md-4">
-            <?php echo $this->Form->control('status_id', ['class' => 'form-control', 'options' => $statuses, 'empty' => true]); ?>
-        </div>
-        <div class="col-md-4">
-            <?php echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
-        </div>
-        <div class="col-md-4 pt-3">
-            <?php echo $this->Form->control('featured', ['type' => 'checkbox', 'class' => 'form-control']); ?>
-        </div>
-        <div class="col-md-4 pt-3">
-            <?php echo $this->Form->control('moderation_flag', ['type' => 'checkbox', 'class' => 'form-control']); ?>
-        </div>
 
-    </div>
-    </div>
-    </div>
     <div class="card mb-3">
     <div class="card-body">
     <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
@@ -55,7 +34,10 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
     <div class="col-md-3">
     <div class="card mb-3">
     <div class="card-body">
-    <?php echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text']); ?>
+    <?php echo $this->Form->control('activity_types_id', ['class' => 'form-control', 'options' => $activityTypes]); ?>
+    <?php echo $this->Form->control('status_id', ['class' => 'form-control', 'options' => $statuses, 'empty' => true]); ?>
+    <?php echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
+    <?php echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text', 'label' => 'Tags']); ?>
     <?php echo $this->Form->control('users._ids', ['class' => 'form-control', 'options' => $users]); ?>
     <?php echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); ?>
     <?= $this->Form->button(__('Save Activity'), ['class' => 'btn btn-block btn-success my-3']) ?>

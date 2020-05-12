@@ -65,7 +65,9 @@ if ($this->Identity->isLoggedIn()) {
 <?php endif ?>
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
+<?php if($path->status_id == 2): ?>
 <span class="badge badge-light"><a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
+<?php endif ?>
 <?php endforeach ?>
 <?php endforeach ?>
 
@@ -77,7 +79,10 @@ if ($this->Identity->isLoggedIn()) {
 <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#steps<?= $pathway->id ?>" aria-expanded="false" aria-controls="steps<?= $pathway->id ?>">
     Steps
   </button>
-<?= $pathway->name ?>
+  <?php if($pathway->status_id != 2): ?>
+  <span class="badge badge-light"><?= $pathway->status->name ?></span> 
+  <?php endif ?>
+  <a href="/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
 
 <div class="collapse p-3" id="steps<?= $pathway->id ?>">
 <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
@@ -117,7 +122,18 @@ if ($this->Identity->isLoggedIn()) {
 <h3 class="m-3">Latest Pathways</h3>
 <ul class="list-group list-group-flush">
 <?php foreach($allpathways as $path): ?>
-	<li class="list-group-item"><a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?></a></li>
+<?php if($path->status_id != 2): ?>
+<?php if($role == 2 || $role == 5): ?>
+	<li class="list-group-item">
+		<span class="badge badge-warning"><?= $path->status->name ?></span>
+		<a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?></a>
+	</li>
+<?php endif ?>
+<?php else: ?>
+	<li class="list-group-item">
+		<a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?></a>
+	</li>
+<?php endif ?>
 <?php endforeach ?>
 </ul>
 </div>
