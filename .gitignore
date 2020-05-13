@@ -44,5 +44,3 @@ nbproject/*
 
 /webroot/bootstrap-theme/*
 /webroot/fontawesome/*
-/db/agent.db
-/db/curator.db
