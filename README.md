@@ -15,17 +15,25 @@ Follow pathways and complete the activities; get a certificate of completion.
 
 ## Requirements
 
-CakePHP 4.02 
-MySQL database
+CakePHP 4.03
+SQLite database
 
 ## Installation
 
+* Clone the repository
+* cd into learning-agent folder
+* run composer install
+* cp config/app_local.example.php to app_local.php
+* cp db/agent.db db/production.db
+* edit app_local.php to point to production.db
+* if server is setup right to point the webroot folder, you should be good to go
+
 ## Project Status
 
-Under active development; not yet alpha.
+Under active development; approaching beta.
 
 ## Goals/Roadmap
-* Integration with peoplesoft learning record
+* Ministry-exclusive pathways
 
 ## Getting Help or Reporting an Issue
 
