@@ -27,12 +27,13 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-9">
 <div class="card mb-3">
 <div class="card-body">
-
+<?php if($role == 2 || $role == 5): ?>
 <?= $this->Html->link(__('New Activity'), ['action' => 'add', 'class' => 'btn btn-dark float-right']) ?>
-
+<?php endif ?>
 <h1><?= __('Latest Activities') ?></h1>
 
 <h4><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></h4>
+<nav aria-label="Acitivity page navigation">
 <ul class="pagination">
 <?= $this->Paginator->first('<< ' . __('first')) ?>
 <?= $this->Paginator->prev('< ' . __('previous')) ?>
@@ -40,6 +41,8 @@ if ($this->Identity->isLoggedIn()) {
 <?= $this->Paginator->next(__('next') . ' >') ?>
 <?= $this->Paginator->last(__('last') . ' >>') ?>
 </ul>
+<p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
+</nav>
 <?php foreach ($activities as $activity): ?>
 
 <div class="p-3 mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)">
@@ -104,7 +107,9 @@ if ($this->Identity->isLoggedIn()) {
 
 </div>
 <?php endforeach; ?>
-<div class="paginator">
+
+
+<nav aria-label="Acitivity page navigation">
 <ul class="pagination">
 <?= $this->Paginator->first('<< ' . __('first')) ?>
 <?= $this->Paginator->prev('< ' . __('previous')) ?>
@@ -113,8 +118,9 @@ if ($this->Identity->isLoggedIn()) {
 <?= $this->Paginator->last(__('last') . ' >>') ?>
 </ul>
 <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-</div>
-</div>
+</nav>
+
+
 </div>
 </div>
 <div class="col-md-3">
