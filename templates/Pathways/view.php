@@ -303,23 +303,36 @@ foreach ($steps->activities as $activity) {
 ?>
 
 <?php
+$stepacts = count($acts);
 $completeclass = 'notcompleted'; 
 if($stepclaimcount == $totalacts) {
 	$completeclass = 'completed';
 }
+
+if($stepclaimcount > 0) {
+	$stepfoo = $stepacts . '=' . $stepclaimcount;
+	$steppercent = ceil(($stepclaimcount * 100) / $stepacts);
+} else {
+	$steppercent = 0;
+}
 ?>
 <h1 id="pathway-<?php echo slugify($steps->name) ?>" class="<?= $completeclass ?>">
-	
 	<?php if($stepclaimcount == $totalacts): ?>
 	<i class="fas fa-check-square" data-toggle="tooltip" data-placement="bottom" title="You've completed this step!"></i>
 	<?php endif ?>
 	<!--<?= h($steps->id) ?>.--> <?= h($steps->name) ?>
 </h1>
-<div class="mb-2">
+
+<div class="">
 	<span class="badge badge-dark" style="background-color: rgba(<?= $readcolor ?>,1)"><?= $readstepcount ?> to read</span>  
 	<span class="badge badge-dark" style="background-color: rgba(<?= $watchcolor ?>,1)"><?= $watchstepcount ?> to watch</span>  
 	<span class="badge badge-dark" style="background-color: rgba(<?= $listencolor ?>,1)"><?= $listenstepcount ?> to listen to</span>  
 	<span class="badge badge-dark" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
+</div>
+<div class="progress progress-bar-striped">
+  <div class="progress-bar bg-dark" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+  	<?= $steppercent ?>% completed
+  </div>
 </div>
 <div class="my-3 py-3"><?= h($steps->description) ?></div>
 
