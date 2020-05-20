@@ -44,4 +44,4 @@ nbproject/*
 
 /webroot/bootstrap-theme/*
 /webroot/fontawesome/*
-/db/*
+/db/agent.db

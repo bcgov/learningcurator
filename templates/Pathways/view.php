@@ -105,8 +105,12 @@ not used */
 
 <div class="row">
 <div class="col-md-12">
+<?php if($pathway->status_id == 1): ?>
+<span class="badge badge-warning" title="Edit to set to publish">DRAFT</span>
+<?php endif ?>
 <div class="card mb-3">
 <div class="card-body">
+
 <?php if($role == 2 || $role == 5): ?>
 <div class="btn-group float-right">
 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $pathway->id], ['class' => 'btn btn-light']) ?>
@@ -127,6 +131,7 @@ not used */
 	</div> <!-- /.objectives -->
 </div>
 </div>
+<div class="float-right" style="font-size: 12px">Published <?= h(date('D M jS \'y',strtotime($pathway->created))) ?></div>
 <!-- totals below updated via JS -->
 <div class="mb-2">
 	<span class="badge badge-dark readtotal"></span>  
@@ -176,14 +181,14 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 <?php if(count($stepsalongtheway) > 1): ?>
 <nav id="stepnav" class="stickynav nav nav-pills mb-3 p-3" style="background: #FFF">
 <?php foreach($stepsalongtheway as $steplink): ?>
-	<a class="nav-link " 
+	<a class="nav-link steplink" 
 		href="#pathway-<?= $steplink['slug'] ?>"
 		title="<?= $steplink['objective'] ?>"
 		data-toggle="tooltip" data-placement="bottom">
 			<?= $steplink['name'] ?>
 	</a> 
 <?php endforeach ?>
-</nav> <!-- /nav -->
+</nav> <!-- /stepnav -->
 <?php endif ?>
 
 <?php if (!empty($pathway->steps)) : ?>
@@ -224,7 +229,7 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 
 <?php foreach ($pathway->steps as $steps) : ?>
 
-<div id="pathway-<?php echo slugify($steps->name) ?>" class="card ">
+<div class="card ">
 <div class="card-body">
 
 <?php if($role == 2 || $role == 5): ?>
@@ -234,6 +239,7 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 </div> <!-- /.btn-group -->
 <?php endif ?>
 
+
 <?php 
 
 $stepTime = 0;
@@ -242,11 +248,24 @@ $requiredacts = array();
 $tertiaryacts = array();
 $acts = array();
 
+$readstepcount = 0;
+$watchstepcount = 0;
+$listenstepcount = 0;
+$participatestepcount = 0;
+$readcolor = '';
+$watchcolor = '';
+$listencolor = '';
+$participatecolor = '';
+
+$totalacts = count($steps->activities);
+$stepclaimcount = 0;
+
 foreach ($steps->activities as $activity) {
+	//print_r($activity);
 	// If this is 'defunct' then we pull it out of the list 
-	if($activity->status_id == 2) {
+	if($activity->status_id == 3) {
 		array_push($defunctacts,$activity);
-	} else {
+	} elseif($activity->status_id == 2) {
 		// if it's required
 		//if($activity->_joinData->required == 1) {
 		//	array_push($requiredacts,$activity);
@@ -255,6 +274,22 @@ foreach ($steps->activities as $activity) {
 		//	array_push($tertiaryacts,$activity);
 		//}
 		array_push($acts,$activity);
+		if($activity->activity_types_id == 1) {
+			$watchstepcount++;
+			$watchcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 2) {
+			$readstepcount++;
+			$readcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 3) {
+			$listenstepcount++;
+			$listencolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 4) {
+			$participatestepcount++;
+			$participatecolor = $activity->activity_type->color;
+		}
+		if(in_array($activity->id,$useractivitylist)) {
+			$stepclaimcount++;
+		}
 		$tmp = array();
 		// Loop through the whole list, add steporder to tmp array
 		foreach($acts as $line) {
@@ -264,12 +299,41 @@ foreach ($steps->activities as $activity) {
 		array_multisort($tmp, SORT_DESC, $acts);
 	}
 }
+
 ?>
 
-<h1 class="text-uppercase">
+<?php
+$stepacts = count($acts);
+$completeclass = 'notcompleted'; 
+if($stepclaimcount == $totalacts) {
+	$completeclass = 'completed';
+}
+
+if($stepclaimcount > 0) {
+	$steppercent = ceil(($stepclaimcount * 100) / $stepacts);
+} else {
+	$steppercent = 0;
+}
+?>
+<h1 id="pathway-<?php echo slugify($steps->name) ?>" class="<?= $completeclass ?>">
+	<?php if($stepclaimcount == $totalacts): ?>
+	<i class="fas fa-check-square" data-toggle="tooltip" data-placement="bottom" title="You've completed this step!"></i>
+	<?php endif ?>
 	<!--<?= h($steps->id) ?>.--> <?= h($steps->name) ?>
 </h1>
-<div class="my-3 py-3"><?= h($steps->description) ?></div>
+<div class="my-3" style="font-size: 140%;"><?= h($steps->description) ?></div>
+<div class="mt-3">
+	<span class="badge badge-dark" style="background-color: rgba(<?= $readcolor ?>,1)"><?= $readstepcount ?> to read</span>  
+	<span class="badge badge-dark" style="background-color: rgba(<?= $watchcolor ?>,1)"><?= $watchstepcount ?> to watch</span>  
+	<span class="badge badge-dark" style="background-color: rgba(<?= $listencolor ?>,1)"><?= $listenstepcount ?> to listen to</span>  
+	<span class="badge badge-dark" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
+</div>
+<div class="progress progress-bar-striped mb-3" style="height: 26px;">
+  <div class="progress-bar bg-dark" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+  	<?= $steppercent ?>% completed
+  </div>
+</div>
+
 
 <?php foreach($acts as $activity): ?>
 
@@ -279,45 +343,12 @@ foreach ($steps->activities as $activity) {
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle', 'class' => '']]) ?>
-	<?php if($activity->_joinData->required == 0): ?>
-	<?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 1]) ?>
-	<?php else: ?>
-	<?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 0]) ?>
-	<?php endif ?>
-	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light']) ?>
-	<?= $this->Form->end() ?>
-
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort', 'class' => '']]) ?>
-	<?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $activity->_joinData->steporder]) ?>
-	<?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'up']) ?>
-	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Up'),['class'=>'btn btn-sm btn-light']) ?>
-	<?= $this->Form->end() ?>
-
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort', 'class' => '']]) ?>
-	<?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $activity->_joinData->steporder]) ?>
-	<?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'down']) ?>
-	<?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $steps->id]) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Down'),['class'=>'btn btn-sm btn-light']) ?>
-	<?= $this->Form->end() ?>
+	
 	</div>
 	<?php endif; // role check ?>
 
-	<!-- This whole field is being deprecated in favor of an estimated time field, which will just be a string
-	we loose the ability calculate total time per step, but gain the ability to give a more realistic estimate
-	range.
-	<div class="hours float-right" data-toggle="tooltip" data-placement="bottom" title="This activity should take approximately <?= $activity->hours ?> hours to complete">
-		<i class="fas fa-clock"></i>
-		<?= $activity->hours ?>
-	</div> -->
-
 	<?php foreach($activity->tags as $tag): ?>
-	<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
+	<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
 	<?php endforeach ?>
 
 	<h1 class="my-3">
@@ -327,7 +358,10 @@ foreach ($steps->activities as $activity) {
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
 		<?= $activity->description ?>
 	</div>
-
+	<div class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+		<i class="fas fa-clock"></i>
+		<?= $activity->estimated_time ?>
+	</div> 
 	<?php if(!empty($activity->tags)): ?>
 	<?php foreach($activity->tags as $tag): ?>
 
@@ -381,7 +415,11 @@ foreach ($steps->activities as $activity) {
 	<?php if(!empty($activity->_joinData->required)): ?>
 
 	<div class="required float-right" data-toggle="tooltip" data-placement="bottom" title="This activity is required to complete the step">
-		<i class="fas fa-check-double"></i>
+		<i class="fas fa-check-double"></i> Required
+	</div>
+	<?php else: ?>
+	<div class="required float-right" data-toggle="tooltip" data-placement="bottom" title="This activity is supplemtary to completing this step">
+		<i class="fas fa-check"></i> Supplementary
 	</div>
 	
 	<?php endif ?>
@@ -432,7 +470,6 @@ foreach ($steps->activities as $activity) {
 
 
 
-
 	</div> <!-- /.card-body -->
 	</div> <!-- /.card -->
 
@@ -459,6 +496,7 @@ foreach ($steps->activities as $activity) {
 				style="animation-duration: 3s;"></path>
 	</svg>
 	</div>
+
 	<?php endforeach; // end of step loop ?>
 
 	<div class="card mb-3">
@@ -499,10 +537,18 @@ $(document).ready(function(){
 	// load up the activity rings
 	loadStatus();
 
+	$('.steplink').each(function(e){
+		let actualstep = $(this).attr('href');
+		if($(actualstep).hasClass('completed')) {
+			let checkmark = '<i class="fas fa-check-square"></i>';
+			$(this).prepend(checkmark);
+		}
+	});
+
 	$('#stepnav .nav-link').on('click', function(event) {
 		event.preventDefault();
 		$(this).tooltip('hide');
-        $.scrollTo(event.target.hash, 250, {offset:-60,});
+        $.scrollTo(event.target.hash, 250, {offset:-105,});
 	});
 
 	$('.claim').on('submit', function(e){
@@ -545,7 +591,8 @@ $(document).ready(function(){
 			statusCode: 
 			{
 				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+					let alert = 'You must be logged in.</div>';
+					console.log(alert);
 				}
 			}
 		});

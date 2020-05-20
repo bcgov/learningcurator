@@ -41,9 +41,10 @@ if ($this->Identity->isLoggedIn()) {
 .required,
 .hours {
 	border-radius: 5px;
+	display: inline-block;
+	padding: 0 10px;
 	text-align: center;
 	text-transform: uppercase;
-	width: 130px;
 }
 
 </style>
@@ -64,7 +65,7 @@ if ($this->Identity->isLoggedIn()) {
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
 
 	</div>
-	<?php if($activity->status_id == 2): ?>
+	<?php if($activity->status_id == 3): ?>
 	<span class="badge badge-danger">DEFUNCT</span>
 	<?php endif ?>
 	<?php if($activity->moderation_flag == 1): ?>
@@ -74,10 +75,6 @@ if ($this->Identity->isLoggedIn()) {
 
 	<?php endif; // role check ?>
 
-	<div class="hours" >
-		<i class="fas fa-clock"></i>
-		<?= $activity->hours ?> hours
-	</div>
 
 	<?php foreach($activity->tags as $tag): ?>
 	<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
@@ -90,7 +87,14 @@ if ($this->Identity->isLoggedIn()) {
 		<a class="badge badge-light" href="/activities/view/<?= $activity->id ?>">#</a>
 		<?php endif ?>
 	</h1>
-	<div class=""><?= $activity->description ?></div>
+	<div class="p-3" style="background: rgba(255,255,255,.3);">
+		<?= $activity->description ?>
+	</div>
+	<div class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+		<i class="fas fa-clock"></i>
+		<?= $activity->estimated_time ?>
+	</div> 
+
 	<a target="_blank" 
 		href="<?= $activity->hyperlink ?>" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
@@ -129,7 +133,9 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
+<?php if($path->status_id == 2): ?>
 <span class="badge badge-light"><a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
+<?php endif ?>
 <?php endforeach ?>
 <?php endforeach ?>
 
@@ -143,7 +149,7 @@ if ($this->Identity->isLoggedIn()) {
     Steps
   </button>
 
-<?= $pathway->name ?>
+<a href="/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
 
 <div class="collapse p-3" id="steps<?= $pathway->id ?>">
 <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>

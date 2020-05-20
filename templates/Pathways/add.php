@@ -3,38 +3,39 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pathway $pathway
  */
+$this->loadHelper('Authentication.Identity');
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('List Pathways'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
-    <div class="column-responsive column-80">
-        <div class="pathways form content">
+<div class="row justify-content-md-center">
+<div class="col-md-6">
+<div class="card mb-3">
+    <div class="card-body">
             <?= $this->Form->create($pathway) ?>
+            <?php 
+            echo $this->Form->hidden('createdby', ['value' => $this->Identity->get('id')]);
+            echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]); 
+            ?>
             <fieldset>
                 <legend><?= __('Add Pathway') ?></legend>
                 <?php
-                    echo $this->Form->control('name');
-                    echo $this->Form->control('color');
-                    echo $this->Form->control('description');
-                    echo $this->Form->control('objective');
-                    echo $this->Form->control('file_path');
-                    echo $this->Form->control('image_path');
-                    echo $this->Form->control('featured');
-                    echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true]);
-                    echo $this->Form->control('ministry_id', ['options' => $ministries, 'empty' => true]);
-                    echo $this->Form->control('createdby');
-                    echo $this->Form->control('modifiedby');
-                    echo $this->Form->control('competencies._ids', ['options' => $competencies]);
-                    echo $this->Form->control('steps._ids', ['options' => $steps]);
-                    echo $this->Form->control('users._ids', ['options' => $users]);
+                    echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true,'class'=>'form-control']);
+                    echo $this->Form->control('name',['class' => 'form-control']);
+                    echo $this->Form->control('description',['class' => 'form-control']);
+                    echo $this->Form->control('objective',['class' => 'form-control']);
+                    echo $this->Form->hidden('status_id',['value' => 1]);
+                    //echo $this->Form->control('color');
+                    //echo $this->Form->control('file_path');
+                    //echo $this->Form->control('image_path');
+                    //echo $this->Form->control('featured');
+                    
+                    //echo $this->Form->control('ministry_id', ['options' => $ministries, 'empty' => true]);
+                    //echo $this->Form->control('competencies._ids', ['options' => $competencies]);
+                    //echo $this->Form->control('steps._ids', ['options' => $steps]);
+                    //echo $this->Form->control('users._ids', ['options' => $users]);
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->button(__('Submit'),['class' => 'btn btn-block btn-success mt-3']) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>
+</div>
 </div>

@@ -27,12 +27,13 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-9">
 <div class="card mb-3">
 <div class="card-body">
-
-<?= $this->Html->link(__('New Activity'), ['activity' => 'add'], ['class' => 'btn btn-dark float-right']) ?>
-
+<?php if($role == 2 || $role == 5): ?>
+<?= $this->Html->link(__('New Activity'), ['action' => 'add', 'class' => 'btn btn-dark float-right']) ?>
+<?php endif ?>
 <h1><?= __('Latest Activities') ?></h1>
 
 <h4><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></h4>
+<nav aria-label="Acitivity page navigation">
 <ul class="pagination">
 <?= $this->Paginator->first('<< ' . __('first')) ?>
 <?= $this->Paginator->prev('< ' . __('previous')) ?>
@@ -40,6 +41,7 @@ if ($this->Identity->isLoggedIn()) {
 <?= $this->Paginator->next(__('next') . ' >') ?>
 <?= $this->Paginator->last(__('last') . ' >>') ?>
 </ul>
+</nav>
 <?php foreach ($activities as $activity): ?>
 
 <div class="p-3 mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)">
@@ -65,7 +67,9 @@ if ($this->Identity->isLoggedIn()) {
 <?php endif ?>
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
+<?php if($path->status_id == 2): ?>
 <span class="badge badge-light"><a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
+<?php endif ?>
 <?php endforeach ?>
 <?php endforeach ?>
 
@@ -77,7 +81,10 @@ if ($this->Identity->isLoggedIn()) {
 <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#steps<?= $pathway->id ?>" aria-expanded="false" aria-controls="steps<?= $pathway->id ?>">
     Steps
   </button>
-<?= $pathway->name ?>
+  <?php if($pathway->status_id != 2): ?>
+  <span class="badge badge-light"><?= $pathway->status->name ?></span> 
+  <?php endif ?>
+  <a href="/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
 
 <div class="collapse p-3" id="steps<?= $pathway->id ?>">
 <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
@@ -99,7 +106,9 @@ if ($this->Identity->isLoggedIn()) {
 
 </div>
 <?php endforeach; ?>
-<div class="paginator">
+
+
+<nav aria-label="Acitivity page navigation">
 <ul class="pagination">
 <?= $this->Paginator->first('<< ' . __('first')) ?>
 <?= $this->Paginator->prev('< ' . __('previous')) ?>
@@ -108,8 +117,9 @@ if ($this->Identity->isLoggedIn()) {
 <?= $this->Paginator->last(__('last') . ' >>') ?>
 </ul>
 <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-</div>
-</div>
+</nav>
+
+
 </div>
 </div>
 <div class="col-md-3">
@@ -117,7 +127,18 @@ if ($this->Identity->isLoggedIn()) {
 <h3 class="m-3">Latest Pathways</h3>
 <ul class="list-group list-group-flush">
 <?php foreach($allpathways as $path): ?>
-	<li class="list-group-item"><a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?></a></li>
+<?php if($path->status_id != 2): ?>
+<?php if($role == 2 || $role == 5): ?>
+	<li class="list-group-item">
+		<span class="badge badge-warning"><?= $path->status->name ?></span>
+		<a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?></a>
+	</li>
+<?php endif ?>
+<?php else: ?>
+	<li class="list-group-item">
+		<a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?></a>
+	</li>
+<?php endif ?>
 <?php endforeach ?>
 </ul>
 </div>

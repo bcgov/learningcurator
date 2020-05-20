@@ -39,6 +39,19 @@ class UsersController extends AppController
     }
 
     /**
+     * List method
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function list()
+    {
+        $this->Authorization->skipAuthorization();
+        $users = $this->paginate($this->Users);
+
+
+        $this->set(compact('users'));
+    }
+    /**
      * View method
      *
      * @param string|null $id User id.

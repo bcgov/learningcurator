@@ -25,7 +25,7 @@ class ActivitiesController extends AppController
         $this->Authorization->skipAuthorization();
 
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
-        $pathways = $allpaths->find('all')->contain(['steps']);
+        $pathways = $allpaths->find('all')->contain(['Steps','Statuses']); //->where(['status_id' => 2]);
         $allpathways = $pathways->toList();
 
         $this->paginate = [
@@ -171,11 +171,11 @@ class ActivitiesController extends AppController
             $activity->modifiedby_id = $user->id;
 
             if ($this->Activities->save($activity)) {
-                $this->Flash->success(__('The activity has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                //$this->Flash->success(__('The activity has been saved.'));
+                $go = '/activities/view/' . $activity->id;
+                return $this->redirect($go);
             }
-            $this->Flash->error(__('The activity could not be saved. Please, try again.'));
+            //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
         }
         $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
         $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
@@ -204,10 +204,10 @@ class ActivitiesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             if ($this->Activities->save($activity)) {
-                $this->Flash->success(__('The activity has been saved.'));
+                //$this->Flash->success(__('The activity has been saved.'));
                 return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The activity could not be saved. Please, try again.'));
+            //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
         }
         $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
         $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
@@ -221,31 +221,31 @@ class ActivitiesController extends AppController
     }
 
 
-/**
-* Like an activity
-*
-* @return \Cake\Http\Response|null Redirects to courses index.
-* @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-*
-*/
-public function like ($id = null)
-{
-    $activity = $this->Activities->get($id);
-    $this->Authorization->authorize($activity);
-    $newlike = $activity->recommended;
-    $newlike++;
-    $this->request->getData()['recommended'] = $newlike;
-    $activity->recommended = $newlike;
-    if ($this->request->is(['get'])) {
-        $activity = $this->Activities->patchEntity($activity, $this->request->getData());
-        if ($this->Activities->save($activity)) {
-            echo 'Liked!';
-            //return $this->redirect($this->referer());
-        } else {
-            $this->Flash->error(__('The activity could not be saved. Please, try again.'));
+    /**
+    * Like an activity
+    *
+    * @return \Cake\Http\Response|null Redirects to courses index.
+    * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+    *
+    */
+    public function like ($id = null)
+    {
+        $activity = $this->Activities->get($id);
+        $this->Authorization->authorize($activity);
+        $newlike = $activity->recommended;
+        $newlike++;
+        $this->request->getData()['recommended'] = $newlike;
+        $activity->recommended = $newlike;
+        if ($this->request->is(['get'])) {
+            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+            if ($this->Activities->save($activity)) {
+                echo 'Liked!';
+                //return $this->redirect($this->referer());
+            } else {
+                //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
+            }
         }
     }
-}
 
 
 
@@ -262,9 +262,9 @@ public function like ($id = null)
         $activity = $this->Activities->get($id);
         $this->Authorization->authorize($activity);
         if ($this->Activities->delete($activity)) {
-            $this->Flash->success(__('The activity has been deleted.'));
+            //$this->Flash->success(__('The activity has been deleted.'));
         } else {
-            $this->Flash->error(__('The activity could not be deleted. Please, try again.'));
+            //$this->Flash->error(__('The activity could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -325,7 +325,7 @@ public function like ($id = null)
         // "Pathway","Step","2-Activity Type","Name","4-Hyperlink",
         // "Description","6-Required","Competencies","8-Time","Tags","10-Licensing","ISBN","Curator"
         //
-        if (($handle = fopen("/home/allankh/learningagent/webroot/files/standard-import.csv", "r")) !== FALSE) {
+        if (($handle = fopen("/home/allankh/learning-agent/webroot/files/standard-import.csv", "r")) !== FALSE) {
             // pop the headers off so we're starting with actual data
             fgetcsv($handle);
            

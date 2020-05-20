@@ -22,6 +22,7 @@ use Cake\ORM\Entity;
  * @property int $createdby
  * @property \Cake\I18n\FrozenTime $modified
  * @property int $modifiedby
+ * @property int|null $status_id
  *
  * @property \App\Model\Entity\Category $category
  * @property \App\Model\Entity\Ministry $ministry
@@ -59,5 +60,6 @@ class Pathway extends Entity
         'competencies' => true,
         'steps' => true,
         'users' => true,
+        'status_id' => true,
     ];
 }

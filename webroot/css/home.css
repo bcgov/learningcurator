@@ -7,14 +7,10 @@ a {
     color: #0279ba;
     text-decoration: none; 
 }
-
 a:hover {
-    /*border-bottom-color: #0279ba;*/
     color: #005b8b; 
 }
-a:hover strong {
-    color: inherit; 
-}
+
 
 img {
 	height: auto;

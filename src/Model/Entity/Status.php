@@ -35,5 +35,6 @@ class Status extends Entity
         'createdby' => true,
         'activities' => true,
         'pathways_users' => true,
+        'pathways' => true,
     ];
 }

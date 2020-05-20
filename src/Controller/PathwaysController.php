@@ -30,11 +30,17 @@ class PathwaysController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
-        $this->paginate = [
-            'contain' => ['Categories', 'Ministries'],
-        ];
-        $pathways = $this->paginate($this->Pathways);
-
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $paths = TableRegistry::getTableLocator()->get('Pathways');
+        // If the person is a curator or an admin, then return all of the pathways,
+        // regardless of their statuses. Regular users should only ever see 
+        // 'published' pathways.
+        if($user->role_id == 2 || $user->role_id == 5) {
+            $pathways = $paths->find('all')->contain(['Categories','Statuses']);
+        } else {
+            $pathways = $paths->find('all')->contain(['Categories','Statuses'])->where(['status_id' => 2]);
+        }
+        //$this->paginate($pathways);
         $this->set(compact('pathways'));
     }
 
@@ -138,11 +144,11 @@ class PathwaysController extends AppController
         if ($this->request->is('post')) {
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
             if ($this->Pathways->save($pathway)) {
-                $this->Flash->success(__('The pathway has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                //$this->Flash->success(__('The pathway has been saved.'));
+                $go = '/pathways/view/' . $pathway->id;
+                return $this->redirect($go);
             }
-            $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
+            //$this->Flash->error(__('The pathway could not be saved. Please, try again.'));
         }
         $categories = $this->Pathways->Categories->find('list', ['limit' => 200]);
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
@@ -151,6 +157,34 @@ class PathwaysController extends AppController
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
         $this->set(compact('pathway', 'categories', 'ministries', 'competencies', 'steps', 'users'));
     }
+
+    /**
+     * Publish pathway method
+     *
+     * @param string|null $id Pathway id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function publish($id = null)
+    {
+        $pathway = $this->Pathways->get($id, [
+            'contain' => ['Competencies', 'Steps', 'Users'],
+        ]);
+
+        $this->Authorization->authorize($pathway);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $this->request->getData()['status_id'] = 2;
+            $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
+            if ($this->Pathways->save($pathway)) {
+                $this->Flash->success(__('The pathway has been saved.'));
+                $pathback = '/pathways/view/' . $id;
+                return $this->redirect($pathback);
+            }
+            $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
+        }
+
+    }
+
 
     /**
      * Edit method
@@ -178,9 +212,10 @@ class PathwaysController extends AppController
         $categories = $this->Pathways->Categories->find('list', ['limit' => 200]);
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
+        $statuses = $this->Pathways->Statuses->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'categories', 'ministries', 'competencies', 'steps', 'users'));
+        $this->set(compact('pathway', 'categories', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
     }
 
     /**
@@ -316,7 +351,7 @@ class PathwaysController extends AppController
 
                 foreach ($steps->activities as $activity):
                     // If this is 'defunct' then we pull it out of the list 
-                    if($activity->status_id == 2) {
+                    if($activity->status_id == 3) {
                         array_push($defunctacts,$activity);
                     } else {
                         // if it's required

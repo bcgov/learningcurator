@@ -132,14 +132,9 @@ canvas {
 	</form>
 	</div>
 </nav>
-<div class="container" style="padding-bottom: 100px;">
-<div class="row justify-content-md-center">
-<div class="col">
-<?php //$this->Flash->render() ?>
+
 <?= $this->fetch('content') ?>
-</div>
-</div>
-</div>
+
 <div class="container-fluid mt-3 bg-white" style="padding-top: 60px;">
 <div class="row mt-3">
 <div class="col-md-5 mt-3">

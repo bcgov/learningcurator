@@ -37,7 +37,7 @@ class ActivitiesStepsTable extends Table
 
         $this->setTable('activities_steps');
         $this->setDisplayField('activity_id');
-        $this->setPrimaryKey(['activity_id', 'step_id']);
+        $this->setPrimaryKey(['id']);
 
         $this->belongsTo('Activities', [
             'foreignKey' => 'activity_id',
