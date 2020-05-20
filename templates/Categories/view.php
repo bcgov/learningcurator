@@ -11,11 +11,15 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
+<div class="row justify-content-md-center">
+<div class="col-md-6">
 <h1><?= h($category->name) ?> Pathways</h1>
 <div class="text">
 <?= $this->Text->autoParagraph(h($category->description)); ?>
 </div>
-<div class="row">
+</div>
+</div>
+<div class="row justify-content-md-center">
 <div class="col-md-6">
 <?php if (!empty($category->pathways)) : ?>
 <?php foreach ($category->pathways as $pathway) : ?>

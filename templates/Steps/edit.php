@@ -51,6 +51,7 @@ label {
                     <a href="/activities/view/<?= $a->id ?>"><?= $a->name ?></a> 
                 </div>
                 <div class="col-3">
+                <!--
                 <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id, 'class' => 'form-inline']]) ?>
                 <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
                 <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'up']) ?>
@@ -68,7 +69,7 @@ label {
                 <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
                 <?= $this->Form->button(__('Down'),['class'=>'btn btn-sm btn-light']) ?>
                 <?= $this->Form->end() ?>
-
+-->
                 <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $a->_joinData->id, 'class' => '']]) ?>
                 <?= $this->Form->hidden('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
                 <?php if($a->_joinData->required == 0): ?>
@@ -78,7 +79,7 @@ label {
                 <?php endif ?>
                 <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
                 <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
-                <?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light']) ?>
+                <?= $this->Form->button(__('r'),['class'=>'btn btn-sm btn-light float-left']) ?>
                 <?= $this->Form->end() ?>
 
                 <?= $this->Form->create(null,['action' => '/activities-steps/delete/' . $a->_joinData->id, 'class' => 'form-inline']) ?>
@@ -126,7 +127,7 @@ $(function () {
             var itemEl = evt.item.id;
             var sid = evt.item.dataset.stepid;
             var foo = itemEl.split('-');
-            var formd = {id: sid, activity_id: foo[1], step_id: <?= $step->id ?>, direction: 'down'};
+            var formd = {id: sid, activity_id: foo[1], step_id: <?= $step->id ?>, direction: 'down', sortorder: 0};
             var u = '/activities-steps/sort/' + sid;
             //console.log(sid);
             $.ajax({
@@ -140,7 +141,7 @@ $(function () {
                 statusCode: 
                 {
                     403: function() {
-                        console.log('it don work');
+                        console.log(formd);
                     }
                 }
 		    });

@@ -310,7 +310,6 @@ if($stepclaimcount == $totalacts) {
 }
 
 if($stepclaimcount > 0) {
-	$stepfoo = $stepacts . '=' . $stepclaimcount;
 	$steppercent = ceil(($stepclaimcount * 100) / $stepacts);
 } else {
 	$steppercent = 0;
@@ -322,19 +321,19 @@ if($stepclaimcount > 0) {
 	<?php endif ?>
 	<!--<?= h($steps->id) ?>.--> <?= h($steps->name) ?>
 </h1>
-
-<div class="">
+<div class="my-3" style="font-size: 140%;"><?= h($steps->description) ?></div>
+<div class="mt-3">
 	<span class="badge badge-dark" style="background-color: rgba(<?= $readcolor ?>,1)"><?= $readstepcount ?> to read</span>  
 	<span class="badge badge-dark" style="background-color: rgba(<?= $watchcolor ?>,1)"><?= $watchstepcount ?> to watch</span>  
 	<span class="badge badge-dark" style="background-color: rgba(<?= $listencolor ?>,1)"><?= $listenstepcount ?> to listen to</span>  
 	<span class="badge badge-dark" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
 </div>
-<div class="progress progress-bar-striped">
+<div class="progress progress-bar-striped mb-3" style="height: 26px;">
   <div class="progress-bar bg-dark" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
   	<?= $steppercent ?>% completed
   </div>
 </div>
-<div class="my-3 py-3"><?= h($steps->description) ?></div>
+
 
 <?php foreach($acts as $activity): ?>
 
