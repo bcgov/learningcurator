@@ -57,14 +57,14 @@ canvas {
 		</li>
 
 		<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
+		<a class="nav-link dropdown-toggle" href="#" id="pathwaysDropdown" 
 			role="button" 
 			data-toggle="dropdown" 
 			aria-haspopup="true" 
 			aria-expanded="false">
 				Pathways
 		</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		<div class="dropdown-menu" aria-labelledby="pathwaysDropdown">
 			<a class="dropdown-item" href="/categories/view/1">Leadership</a>
 		</div>
 		</li>
@@ -79,14 +79,14 @@ canvas {
 		<?php if(!empty($active)): ?>
 		<?php if($active->role_id == 5): ?>
 		<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
+		<a class="nav-link dropdown-toggle" href="#" id="adminDropdown" 
 			role="button" 
 			data-toggle="dropdown" 
 			aria-haspopup="true" 
 			aria-expanded="false">
 				View
 		</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		<div class="dropdown-menu" aria-labelledby="adminDropdown">
 			<a class="dropdown-item" href="/pathways">All Pathways</a>
 			<a class="dropdown-item" href="/activity-types">Activity Types</a>
 			<a class="dropdown-item" href="/activities">All Activities</a>
@@ -102,14 +102,14 @@ canvas {
 		<?php endif ?>
 		<?php if($active->role_id == 5 || $active->role_id == 2): ?>
                 <li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
+		<a class="nav-link dropdown-toggle" href="#" id="adminAddDropdown" 
 			role="button" 
 			data-toggle="dropdown" 
 			aria-haspopup="true" 
 			aria-expanded="false">
 				Add
 		</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		<div class="dropdown-menu" aria-labelledby="adminAddDropdown">
 			<a class="dropdown-item" href="/pathways/add">Add a Pathway</a>
 			<a class="dropdown-item" href="/activities/add">Add an Activity</a>
 			<!--<a class="dropdown-item" href="/activity-types/add">Add a Type</a>-->
