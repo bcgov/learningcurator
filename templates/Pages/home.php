@@ -3,13 +3,14 @@
 .sectiontext {
 	font-size: 130%;
 	margin: 100px 0;
+	padding: 0 20px;
 }
 </style>
 <div class="row justify-content-md-center mb-3">
 <div class="col-md-6">
 <div class="jumbotron">
 <h1>Learning Curator</h1>
-<h2>A curation space for informal learning resources.</h2>
+<h2>A curation space for informal learning resources</h2>
 <!--<div class="my-3" style="font-size: 180%">
 <?php foreach($atypes as $type): ?>
 	<div class="">
@@ -35,7 +36,7 @@
 
 </div>
 <div class="col-md-2 text-center">
-	<i class="fas fa-book" style="font-size: 300%"></i>
+	<i class="fas fa-bezier-curve" style="font-size: 300%"></i>
 </div>
 </div>
 
@@ -48,7 +49,7 @@
 
 </div>
 <div class="col-md-2 text-center">
-	<i class="fas fa-book" style="font-size: 300%"></i>
+	<i class="fas fa-photo-video" style="font-size: 300%"></i>
 </div>
 </div>
 
@@ -62,7 +63,7 @@
 
 </div>
 <div class="col-md-2 text-center">
-	<i class="fas fa-book" style="font-size: 300%"></i>
+	<i class="fas fa-shoe-prints" style="font-size: 300%"></i>
 </div>
 </div>
 
@@ -79,7 +80,7 @@
 
 </div>
 <div class="col-md-2 text-center">
-	<i class="fas fa-book" style="font-size: 300%"></i>
+	<i class="fas fa-plug" style="font-size: 300%"></i>
 </div>
 </div>
 

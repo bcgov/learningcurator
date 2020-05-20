@@ -1,20 +1,4 @@
 
-a {
-    -moz-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-    -webkit-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-    -ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-    transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-    color: #0279ba;
-    text-decoration: none; 
-}
-
-a:hover {
-    /*border-bottom-color: #0279ba;*/
-    color: #005b8b; 
-}
-a:hover strong {
-    color: inherit; 
-}
 
 img {
 	height: auto;

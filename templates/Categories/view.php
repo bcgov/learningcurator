@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Category $category
  */
+$this->layout = 'nowrap';
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
@@ -11,22 +12,39 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<div class="row justify-content-md-center">
-<div class="col-md-6">
+<style>
+.sectiontext {
+	font-size: 130%;
+	margin: 100px 0;
+	padding: 0 20px;
+}
+</style>
+<div class="row justify-content-md-center align-items-center">
+<div class="col-md-4">
+<div class="sectiontext">
 <h1><?= h($category->name) ?> Pathways</h1>
 <div class="text">
 <?= $this->Text->autoParagraph(h($category->description)); ?>
 </div>
 </div>
 </div>
-<div class="row justify-content-md-center">
-<div class="col-md-6">
+</div>
+
+
 <?php if (!empty($category->pathways)) : ?>
 <?php foreach ($category->pathways as $pathway) : ?>
+<?php 
 
-<div class="card mb-2">
-<div class="card-body">
-
+if($count%2>0) {
+	$altcolor = '';
+} else {
+	$altcolor = 'bg-white';
+}
+$count++;
+?>
+<div class="row justify-content-md-center align-items-center <?= $altcolor ?>">
+<div class="col-md-4">
+<div class="sectiontext">
 <?php if($pathway->status_id != 2): // is not published? ?>
 <?php if($role == 2 || $role == 5): // is curator or admin ?>
 <span class="badge badge-warning"><?= $pathway->status->name ?></span>
@@ -48,11 +66,11 @@ if ($this->Identity->isLoggedIn()) {
 
 </div>
 </div>
+</div>
 
 <?php endforeach; ?>
 <?php endif; ?>
-</div>
-</div>
+
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 
