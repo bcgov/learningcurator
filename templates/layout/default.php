@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <?= $this->Html->charset() ?>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -130,6 +130,7 @@ canvas {
 		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
 		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
 	</form>
+	</div>
 </nav>
 <div class="container" style="padding-bottom: 100px;">
 <div class="row justify-content-md-center">
