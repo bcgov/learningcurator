@@ -34,7 +34,6 @@ if ($this->Identity->isLoggedIn()) {
 <?php if (!empty($category->pathways)) : ?>
 <?php foreach ($category->pathways as $pathway) : ?>
 <?php 
-
 if($count%2>0) {
 	$altcolor = '';
 } else {
