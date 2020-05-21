@@ -92,7 +92,7 @@ class ActivitiesStepsController extends AppController
             if ($this->ActivitiesSteps->save($activitiesStep)) {
                 $this->Flash->success(__('The activities step has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The activities step could not be saved. Please, try again.'));
         }
@@ -138,7 +138,7 @@ class ActivitiesStepsController extends AppController
             if ($this->ActivitiesSteps->save($activitiesStep)) {
                 $this->Flash->success(__('The activities step has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The activities step could not be saved. Please, try again.'));
         }
