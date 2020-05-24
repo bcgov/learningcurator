@@ -15,7 +15,7 @@ if ($this->Identity->isLoggedIn()) {
 <style>
 .sectiontext {
 	font-size: 130%;
-	margin: 100px 0;
+	margin: 50px 0;
 	padding: 0 20px;
 }
 </style>
