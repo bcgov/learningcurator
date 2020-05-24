@@ -47,6 +47,7 @@ class UsersController extends AppController
     {
         $this->Authorization->skipAuthorization();
         $users = $this->paginate($this->Users);
+        //$this->Authorization->authorize($users);
 
 
         $this->set(compact('users'));

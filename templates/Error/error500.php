@@ -2,7 +2,7 @@
 <div class="col-md-6">
 <div class="card">
 <div class="card-body">
-<h1>Something bad has happened</h1>
+<h1>OH NOES!</h1>
 <p>I'm really sorry, but it seems as though you're either attempting to access and area you
 don't have permission to, or something else is going on. Either way, I apologize for the
 situation. Please contact learning.agent@gov.bc.ca and tell me all about your troubles.</p>
