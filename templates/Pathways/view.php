@@ -134,10 +134,10 @@ not used */
 <div class="float-right" style="font-size: 12px">Published <?= h(date('D M jS \'y',strtotime($pathway->created))) ?></div>
 <!-- totals below updated via JS -->
 <div class="mb-2">
-	<span class="badge badge-dark readtotal"></span>  
-	<span class="badge badge-dark watchtotal"></span>  
-	<span class="badge badge-dark listentotal"></span>  
-	<span class="badge badge-dark participatetotal"></span>  
+	<span class="badge badge-light readtotal"></span>  
+	<span class="badge badge-light watchtotal"></span>  
+	<span class="badge badge-light listentotal"></span>  
+	<span class="badge badge-light participatetotal"></span>  
 </div>
 
 <?php if($role == 2 || $role == 5): ?>
@@ -317,19 +317,19 @@ if($stepclaimcount > 0) {
 ?>
 <h1 id="pathway-<?php echo slugify($steps->name) ?>" class="<?= $completeclass ?>">
 	<?php if($stepclaimcount == $totalacts): ?>
-	<i class="fas fa-check-square" data-toggle="tooltip" data-placement="bottom" title="You've completed this step!"></i>
+	<i class="fas fa-check-square" style="color: green" data-toggle="tooltip" data-placement="bottom" title="You've completed this step!"></i>
 	<?php endif ?>
 	<!--<?= h($steps->id) ?>.--> <?= h($steps->name) ?>
 </h1>
 <div class="my-3" style="font-size: 140%;"><?= h($steps->description) ?></div>
 <div class="mt-3">
-	<span class="badge badge-dark" style="background-color: rgba(<?= $readcolor ?>,1)"><?= $readstepcount ?> to read</span>  
-	<span class="badge badge-dark" style="background-color: rgba(<?= $watchcolor ?>,1)"><?= $watchstepcount ?> to watch</span>  
-	<span class="badge badge-dark" style="background-color: rgba(<?= $listencolor ?>,1)"><?= $listenstepcount ?> to listen to</span>  
-	<span class="badge badge-dark" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
+	<span class="badge badge-light" style="background-color: rgba(<?= $readcolor ?>,1)"><?= $readstepcount ?> to read</span>  
+	<span class="badge badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)"><?= $watchstepcount ?> to watch</span>  
+	<span class="badge badge-light" style="background-color: rgba(<?= $listencolor ?>,1)"><?= $listenstepcount ?> to listen to</span>  
+	<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
 </div>
 <div class="progress progress-bar-striped mb-3" style="height: 26px;">
-  <div class="progress-bar bg-dark" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
   	<?= $steppercent ?>% completed
   </div>
 </div>
@@ -540,7 +540,7 @@ $(document).ready(function(){
 	$('.steplink').each(function(e){
 		let actualstep = $(this).attr('href');
 		if($(actualstep).hasClass('completed')) {
-			let checkmark = '<i class="fas fa-check-square"></i>';
+			let checkmark = '<i class="fas fa-check-square" style="color: green"></i>';
 			$(this).prepend(checkmark);
 		}
 	});

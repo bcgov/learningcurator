@@ -90,14 +90,13 @@ Sort:
 -->
 <div class="list"> 
 	<?php foreach ($user->activities as $activity) : ?>
-	<div class="py-2">
+	<div class="m-3 p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 		<?php if($activity->status_id == 3): ?>
 		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
 		<?php endif ?>
 		
 		<a target="_blank" 
-			href="<?= $activity->hyperlink ?>" 
-			style="color: rgba(<?= $activity->activity_type->color ?>,1); font-weight: bold;" 
+			href="<?= $activity->hyperlink ?>"  
 			class="">
 
 				<i class="fas <?= $activity->activity_type->image_path ?>"></i>
