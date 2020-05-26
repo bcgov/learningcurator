@@ -1,4 +1,4 @@
-# Learning Agent
+# Learning Curator
 
 Curated content from disparate sources, organized into various learning pathways; these pathways are made up of steps, which have objectives; each step has various activities categorized by Read, Watch, Listen, and Participate. A step might include two in-person courses, an eLearning course, two books, three videos, and a podcast.
 
@@ -23,9 +23,11 @@ SQLite database
 * Clone the repository
 * cd into learning-agent folder
 * run composer install
+* mkdir db && chmod 777 db
+* "somehow" obtain the starter database (ask Allan) and copy it into db #TODO figure this out!
+* chmod 777 db/curator.db
 * cp config/app_local.example.php to app_local.php
-* cp db/agent.db db/production.db
-* edit app_local.php to point to production.db
+* edit config/app_local.php to point to curator.db
 * if server is setup right to point the webroot folder, you should be good to go
 
 ## Project Status
