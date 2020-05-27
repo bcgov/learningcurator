@@ -23,9 +23,9 @@
 <h3>Explore Learning Pathways in the following areas:</h3>
 
 <div>
-	<a href="/categories/view/1" class="btn btn-lg btn-dark">Leading Others</a>
-	<a href="/categories/view/2" class="btn btn-lg btn-dark">Leading Self</a>
-	<a href="/categories/view/3" class="btn btn-lg btn-dark">Leading Organizations</a>
+	<a href="/categories/view/1" class="btn btn-lg btn-success">Leading Others</a>
+	<a href="/categories/view/2" class="btn btn-lg btn-success">Leading Self</a>
+	<a href="/categories/view/3" class="btn btn-lg btn-success">Leading Organizations</a>
 	
 </div>
 
