@@ -36,6 +36,7 @@ class StepsController extends AppController
         $step = $this->Steps->get($id, [
             'contain' => ['Activities', 'Pathways'],
         ]);
+        $this->Authorization->authorize($step);
 
         $this->set('step', $step);
     }

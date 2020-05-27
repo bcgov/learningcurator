@@ -182,7 +182,7 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 
 <?php foreach ($pathway->steps as $step) : ?>
 <div class="card card-body mb-3">
-<h2><?= $step->name ?></h2>
+<h2><a href="/steps/view/<?= $step->id ?>"><?= $step->name ?></a></h2>
 <div><?= $step->description ?></div>
 </div>
 <?php endforeach ?>

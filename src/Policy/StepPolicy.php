@@ -74,6 +74,7 @@ class StepPolicy
      */
     public function canView(IdentityInterface $user, Step $step)
     {
+        return true;
     }
 
 
