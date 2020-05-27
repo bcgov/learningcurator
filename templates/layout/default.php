@@ -65,8 +65,8 @@ canvas {
 				Pathways
 		</a>
 		<div class="dropdown-menu" aria-labelledby="pathwaysDropdown">
-			<a class="dropdown-item" href="/categories/view/1">Leading Others</a>
-			<a class="dropdown-item" href="/categories/view/2">Leading Self</a>
+			<a class="dropdown-item" href="/categories/view/1">Leading Self</a>
+			<a class="dropdown-item" href="/categories/view/2">Leading Others</a>
 			<a class="dropdown-item" href="/categories/view/3">Leading Organizations</a>
 		</div>
 		</li>
