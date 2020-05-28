@@ -91,8 +91,8 @@ not used */
 </style>
 
 
-<div class="row justify-content-md-center">
-<div class="col-md-4">
+<div class="row">
+<div class="col-md-3">
 	<?php if($pathway->status_id == 1): ?>
 	<span class="badge badge-warning" title="Edit to set to publish">DRAFT</span>
 	<?php endif ?>
@@ -178,7 +178,7 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 </div>
 <?php if (!empty($pathway->steps)) : ?>
 
-<div class="col-lg-4 col-md-4">
+<div class="col-lg-3 col-md-3">
 
 <?php foreach ($pathway->steps as $step) : ?>
 <div class="card card-body mb-3">

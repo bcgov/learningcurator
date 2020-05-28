@@ -61,7 +61,7 @@
 
 <div class="row justify-content-md-center bg-white align-items-center">
 
-<div class="col-md-8">
+<div class="col-md-7">
 
 <div class="sectiontext">
 	
@@ -93,7 +93,6 @@
 	you select what, and when, and how much to engage with the learning here. If you want to dip into a few 
 	resources and sample what’s on offer, that’s fine. If you want to keep track of your progress through a 
 	learning pathway, that’s fine too! You’re in control. </div>
-
 </div>
 </div>
 
@@ -109,7 +108,14 @@
 
 <div class="col-md-5">
 
-<div class="sectiontext">Begin by selecting a pathway that appeals to your needs. The next time you visit the resource, you will be taken to your profile page, where the Learning Agent keeps track of which pathways you’re on, and which learning you’ve begun.</div>
+<div class="sectiontext">
+	Begin by selecting a pathway that appeals to your needs. 
+	The next time you visit the resource, you will be taken to your profile page, 
+	where the Learning Agent keeps track of which pathways you’re on, and which learning you’ve begun.
+	<div class="m-3 p-3" style="background-color: rgba(255,255,255,.5)">
+	<a class="btn btn-lg btn-success" href="/users/home">Check out your Profile</a>
+	</div>
+</div>
 
 </div>
 <div class="col-md-2 text-center">
