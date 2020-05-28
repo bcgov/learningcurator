@@ -31,7 +31,7 @@ canvas {
 </head>
 <body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="110">
 
-<nav class="navbar navbar-expand-lg mb-3" style="background-color: #FFF;">
+<nav class="navbar navbar-expand-lg" style="background-color: #FFF;">
 	
 	<a class="navbar-brand" href="/" style="margin: 0 0 0 20px">
 	<img alt="" height="50" src="/img/curator-rings-logo.png" width="50">
@@ -103,7 +103,7 @@ canvas {
 		</li>
 		<?php endif ?>
 		<?php if($active->role_id == 5 || $active->role_id == 2): ?>
-                <li class="nav-item dropdown">
+        <li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="adminAddDropdown" 
 			role="button" 
 			data-toggle="dropdown" 

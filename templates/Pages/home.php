@@ -6,34 +6,47 @@
 	padding: 0 20px;
 }
 </style>
-<div class="row justify-content-md-center mb-3">
+<div class="row justify-content-md-center" id="colorful">
 <div class="col-md-6">
-<div class="jumbotron">
+
 <h1>Learning Curator</h1>
 <h2>A curation space for informal learning resources</h2>
-<!--<div class="my-3" style="font-size: 180%">
-<?php foreach($atypes as $type): ?>
-	<div class="">
-		<span class="fas <?= $type->image_path ?>" style="color: rgba(<?= $type->color ?>,1);"></span>
-		<?= $type->name ?>
-	</div>
-<?php endforeach ?>
-</div>-->
-
 <h3>Explore Learning Pathways in the following areas:</h3>
 
 <div>
-	<a href="/categories/view/1" class="btn btn-lg btn-success">Leading Self</a>
-	<a href="/categories/view/2" class="btn btn-lg btn-success">Leading Others</a>
-	<a href="/categories/view/3" class="btn btn-lg btn-success">Leading Organizations</a>
+	<a href="/categories/view/1" class="btn btn-lg btn-light">Leading Self</a>
+	<a href="/categories/view/2" class="btn btn-lg btn-light">Leading Others</a>
+	<a href="/categories/view/3" class="btn btn-lg btn-light">Leading Organizations</a>
 	
 </div>
 
-</div>
+
 </div>
 </div>
 
 <div class="row justify-content-md-center bg-white align-items-center">
+
+<div class="col-md-4">
+
+<div class="sectiontext">
+<div class="my-3 row" style="font-size: 180%">
+<?php foreach($atypes as $type): ?>
+	<div class="col-md-6">
+		<span class="fas <?= $type->image_path ?>" style="color: rgba(<?= $type->color ?>,1);"></span>
+		<?= $type->name ?>
+	</div>
+<?php endforeach ?>
+</div>
+
+</div>
+
+</div>
+<div class="col-md-2 text-center">
+	
+</div>
+</div>
+
+<div class="row justify-content-md-center align-items-center">
 
 <div class="col-md-4">
 
@@ -46,11 +59,32 @@
 </div>
 
 
-<div class="row justify-content-md-center align-items-center">
+<div class="row justify-content-md-center bg-white align-items-center">
 
 <div class="col-md-4">
 
-<div class="sectiontext">Learning curation offers a dynamic approach to supporting your performance. As a self-directed experience, you select what, and when, and how much to engage with the learning here. If you want to dip into a few resources and sample what’s on offer, that’s fine. If you want to keep track of your progress through a learning pathway, that’s fine too! You’re in control. </div>
+<div class="sectiontext">
+	Learning curation offers a dynamic approach to supporting your performance. As a self-directed experience, 
+	you select what, and when, and how much to engage with the learning here. If you want to dip into a few 
+	resources and sample what’s on offer, that’s fine. If you want to keep track of your progress through a 
+	learning pathway, that’s fine too! You’re in control. 
+
+<div class="row mt-3">
+<div class="col-md-4">
+	<h3>Dip</h3>
+	<p>Just dip your toe in the pool to see if there's anything you can inspire you.</p>
+</div>
+<div class="col-md-4">
+	<h3>Deeper</h3>
+	<p>Go a bit deeper and look into following a pathway and tracking your progress.</p>
+</div>
+<div class="col-md-4">
+	<h3>Dive</h3>
+	<p>Go all in and set a MyPerformance goal to complete your pathways. Claim away!</p>
+</div>
+</div>
+
+</div>
 
 </div>
 <div class="col-md-2 text-center">
@@ -60,7 +94,7 @@
 
 
 
-<div class="row justify-content-md-center align-items-center bg-white">
+<div class="row justify-content-md-center align-items-center">
 
 <div class="col-md-4">
 
@@ -74,20 +108,6 @@
 
 
 
-
-
-
-<div class="row justify-content-md-center align-items-center">
-
-<div class="col-md-4">
-
-<div class="sectiontext">The Learning Agent does not offer credit for courses. While some pathways include recommendations to take Learning Centre courses, you will be directed to register for those through the Learning Centre as usual.  </div>
-
-</div>
-<div class="col-md-2 text-center">
-	<i class="fas fa-plug" style="font-size: 300%"></i>
-</div>
-</div>
 
 
 
