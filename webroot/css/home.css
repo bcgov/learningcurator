@@ -34,7 +34,11 @@ img {
 .pad-lg {
     padding: 150px;
 }
-
+.sectiontext {
+	font-size: 130%;
+	margin: 100px 0;
+	padding: 0 20px;
+}
 canvas {
 	height: auto;
 	max-width: 100%;

@@ -1,11 +1,5 @@
 <?php $this->layout = 'nowrap'; ?>
-<style>
-.sectiontext {
-	font-size: 130%;
-	margin: 100px 0;
-	padding: 0 20px;
-}
-</style>
+
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-9">
 <div class="pad-lg">
