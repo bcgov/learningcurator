@@ -64,10 +64,11 @@
 <div class="col-md-4">
 
 <div class="sectiontext">
-	Learning curation offers a dynamic approach to supporting your performance. As a self-directed experience, 
+	
+	<div class="mb-3">Learning curation offers a dynamic approach to supporting your performance. As a self-directed experience, 
 	you select what, and when, and how much to engage with the learning here. If you want to dip into a few 
 	resources and sample what’s on offer, that’s fine. If you want to keep track of your progress through a 
-	learning pathway, that’s fine too! You’re in control. 
+	learning pathway, that’s fine too! You’re in control. </div>
 
 <div class="row mt-3">
 <div class="col-md-4">

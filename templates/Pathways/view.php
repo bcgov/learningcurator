@@ -212,7 +212,7 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
     echo $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]);
     echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-lg btn-dark mb-0']) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-lg btn-light mb-0']) ?>
 <br><small><a href="#">What does this mean?</a></small>
 <?= $this->Form->end() ?>
 </div>
@@ -329,7 +329,7 @@ if($stepclaimcount > 0) {
 	<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
 </div>
 <div class="progress progress-bar-striped mb-3" style="height: 26px;">
-  <div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,1); width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,1); color: #333; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
   	<?= $steppercent ?>% completed
   </div>
 </div>
@@ -370,7 +370,7 @@ if($stepclaimcount > 0) {
 	<a target="_blank" 
 		data-toggle="tooltip" data-placement="bottom" title="Enrol in this course in the Learning System"
 		href="https://learning.gov.bc.ca/psc/CHIPSPLM_6/EMPLOYEE/ELM/c/LM_OD_EMPLOYEE_FL.LM_FND_LRN_FL.GBL?Page=LM_FND_LRN_RSLT_FL&Action=U&KWRD=<?php echo urlencode($activity->name) ?>" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #222; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
 
 			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
@@ -401,7 +401,7 @@ if($stepclaimcount > 0) {
 	<a target="_blank" 
 		data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
 		href="<?= $activity->hyperlink ?>" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #222; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
 
 			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
