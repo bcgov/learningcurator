@@ -5,7 +5,7 @@
 */
 ?>
 
-<h1><?= h($user->name) ?></h1>
+<!--<h1><?= h($user->name) ?></h1>-->
 <div class="row">
 <div class="col-md-6">
 <?php if (!empty($user->pathways)) : ?>
