@@ -19,10 +19,11 @@ if ($this->Identity->isLoggedIn()) {
 	padding: 0 20px;
 }
 </style>
-<div class="row justify-content-md-center align-items-center">
+<div class="row justify-content-md-center align-items-center"  id="colorful">
 <div class="col-md-4">
 <div class="sectiontext">
-<h1><?= h($category->name) ?> Pathways</h1>
+<div>Learning Pathways</div>
+<h1><?= h($category->name) ?></h1>
 <div class="text">
 <?= $this->Text->autoParagraph(h($category->description)); ?>
 </div>

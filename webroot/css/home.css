@@ -23,5 +23,14 @@ img {
 #colorful {
     background: rgb(193,129,183);
     background: radial-gradient(circle, rgba(255,218,96,1) 0%, rgba(244,105,115,1) 33%, rgba(249,145,180,1) 63%, rgba(193,129,183,1) 100%);
-    padding: 150px 0;
+    
+}
+.pad-sm {
+    padding: 50px;
+}
+.pad-md {
+    padding: 100px;
+}
+.pad-lg {
+    padding: 150px;
 }

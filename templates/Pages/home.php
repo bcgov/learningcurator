@@ -7,8 +7,8 @@
 }
 </style>
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-6">
-
+<div class="col-md-9">
+<div class="pad-lg">
 <h1>Learning Curator</h1>
 <h2>A curation space for informal learning resources</h2>
 <h3>Explore Learning Pathways in the following areas:</h3>
@@ -19,17 +19,17 @@
 	<a href="/categories/view/3" class="btn btn-lg btn-light">Leading Organizations</a>
 	
 </div>
-
+</div>
 
 </div>
 </div>
 
 <div class="row justify-content-md-center bg-white align-items-center">
 
-<div class="col-md-4">
+<div class="col-md-10 col-lg-5">
 
 <div class="sectiontext">
-<div class="my-3 row" style="font-size: 180%">
+<div class="my-3 row justify-content-md-center" style="font-size: 180%">
 <?php foreach($atypes as $type): ?>
 	<div class="col-md-6">
 		<span class="fas <?= $type->image_path ?>" style="color: rgba(<?= $type->color ?>,1);"></span>
@@ -48,7 +48,7 @@
 
 <div class="row justify-content-md-center align-items-center">
 
-<div class="col-md-4">
+<div class="col-md-5">
 
 <div class="sectiontext">Just as a museum selects artifacts to display on a theme, BCPS specialist curators have chosen resources that meet a standard of quality to help you on your path to specific leadership development goals.</div>
 
@@ -61,7 +61,7 @@
 
 <div class="row justify-content-md-center bg-white align-items-center">
 
-<div class="col-md-6">
+<div class="col-md-8">
 
 <div class="sectiontext">
 	
@@ -107,7 +107,7 @@
 
 <div class="row justify-content-md-center align-items-center">
 
-<div class="col-md-4">
+<div class="col-md-5">
 
 <div class="sectiontext">Begin by selecting a pathway that appeals to your needs. The next time you visit the resource, you will be taken to your profile page, where the Learning Agent keeps track of which pathways you’re on, and which learning you’ve begun.</div>
 
