@@ -61,36 +61,46 @@
 
 <div class="row justify-content-md-center bg-white align-items-center">
 
-<div class="col-md-4">
+<div class="col-md-6">
 
 <div class="sectiontext">
 	
 
 <div class="row mb-3">
 <div class="col-md-4">
-	<h3>Dip</h3>
+	
+	<h3>
+	<i class="fas fa-thermometer-quarter" style="font-size: 300%"></i>
+	Dip</h3>
 	<p>Just dip your toe in the pool to see if there's anything that can inspire you.</p>
 </div>
 <div class="col-md-4">
-	<h3>Deeper</h3>
+	
+	<h3>
+	<i class="fas fa-thermometer-half" style="font-size: 300%"></i>
+	Deeper</h3>
 	<p>Go a bit deeper and look into following a pathway and tracking your progress.</p>
 </div>
 <div class="col-md-4">
-	<h3>Dive</h3>
-	<p>Go all in and set a MyPerformance goal to complete your pathways. Claim away!</p>
+	
+	<h3>
+	<i class="fas fa-thermometer-full" style="font-size: 300%"></i>
+	Dive</h3>
+	<p>Go all in and set a MyPerformance goal to complete your pathways.</p>
 </div>
-</div>
-<div class="mb-3">Learning curation offers a dynamic approach to supporting your performance. As a self-directed experience, 
+<div class="col-md-8 pt-3">
+<div class="my-3">Learning curation offers a dynamic approach to supporting your performance. As a self-directed experience, 
 	you select what, and when, and how much to engage with the learning here. If you want to dip into a few 
 	resources and sample what’s on offer, that’s fine. If you want to keep track of your progress through a 
 	learning pathway, that’s fine too! You’re in control. </div>
 
 </div>
+</div>
 
 </div>
-<div class="col-md-2 text-center">
-	<i class="fas fa-photo-video" style="font-size: 300%"></i>
+
 </div>
+
 </div>
 
 
