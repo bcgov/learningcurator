@@ -6,28 +6,11 @@
 
 <title><?= $this->fetch('title') ?></title>
 <link rel="stylesheet" href="/bootstrap-theme/dist/css/bootstrap-theme.min.css">
-<!--<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">-->
 
 <link href="/css/home.css" rel="stylesheet"> 
 <link href="/fontawesome/css/all.css" rel="stylesheet"> 
-<style>
-canvas {
-	height: auto;
-	max-width: 100%;
-}
-.card {
-	box-shadow: 0 0 20px rgba(0,0,0,.05);
-}
 
-.upro,
-.upro:hover,
-.upro:active { color: #FFF } 
-.card {
-	border: 0;
-}
-</style>
 
-<!-- <link rel="stylesheet" href="/css/bootstrap-multiselect.css" type="text/css"/> -->
 </head>
 <body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="110">
 
@@ -36,7 +19,6 @@ canvas {
 	<a class="navbar-brand" href="/" style="margin: 0 0 0 20px">
 	<img alt="" height="50" src="/img/curator-rings-logo.png" width="50">
 		Learning Curator
-	
 	</a>
 
 	<button class="navbar-toggler " 

@@ -34,3 +34,18 @@ img {
 .pad-lg {
     padding: 150px;
 }
+
+canvas {
+	height: auto;
+	max-width: 100%;
+}
+.card {
+	box-shadow: 0 0 20px rgba(0,0,0,.05);
+}
+
+.upro,
+.upro:hover,
+.upro:active { color: #FFF } 
+.card {
+	border: 0;
+}
