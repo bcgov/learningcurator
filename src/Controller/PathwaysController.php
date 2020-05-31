@@ -81,7 +81,6 @@ class PathwaysController extends AppController
                 array_push($useractivitylist, $uact['activity_id']);
             }
         }
-
         $pathway = $this->Pathways->get($id, [
             'contain' => ['Categories', 
                             'Ministries', 
@@ -462,7 +461,7 @@ class PathwaysController extends AppController
                     array($participatepercent,$participatepercentleft,$participatecolor)
             );
             
-            $status = 'In progress ' . $overallp . '%';
+            $status = 'Overall progress: ' . $overallp . '%';
             if($overallp == 100) {
                 $status = 'Completed!';
                 // #TODO check against current pathways_users status in db and 

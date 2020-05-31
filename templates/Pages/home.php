@@ -1,5 +1,5 @@
 <?php $this->layout = 'nowrap'; ?>
-
+<div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-9">
 <div class="pad-lg">
@@ -107,18 +107,18 @@
 	The next time you visit the resource, you will be taken to your profile page, 
 	where the Learning Agent keeps track of which pathways you’re on, and which learning you’ve begun.
 	<div class="m-3 p-3" style="background-color: rgba(255,255,255,.5)">
-	<a class="btn btn-lg btn-success" href="/users/home">Check out your Profile</a>
+	<a class="btn btn-lg btn-light" href="/users/home">Check out your Profile</a>
 	</div>
 </div>
 
 </div>
 <div class="col-md-2 text-center">
-	<i class="fas fa-shoe-prints" style="font-size: 300%"></i>
+	<img src="/img/curator-rings-logo.png" alt="Logo">
 </div>
 </div>
 
 
-
+</div>
 
 
 

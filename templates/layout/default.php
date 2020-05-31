@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title><?= $this->fetch('title') ?></title>
-<link rel="stylesheet" href="/bootstrap-theme/dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+<!--<link rel="stylesheet" href="/bootstrap-theme/dist/css/bootstrap-theme.min.css">-->
 <!--<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">-->
 
 <link href="/css/home.css" rel="stylesheet"> 
@@ -27,7 +29,6 @@ canvas {
 }
 </style>
 
-<!-- <link rel="stylesheet" href="/css/bootstrap-multiselect.css" type="text/css"/> -->
 </head>
 <body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="110">
 

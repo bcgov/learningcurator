@@ -25,14 +25,18 @@ img {
     background: radial-gradient(circle, rgba(255,218,96,1) 0%, rgba(244,105,115,1) 33%, rgba(249,145,180,1) 63%, rgba(193,129,183,1) 100%);
     
 }
+#colorful a {
+    color: #555;
+    text-decoration: underline;
+}
 .pad-sm {
-    padding: 50px;
+    padding: 30px;
 }
 .pad-md {
-    padding: 100px;
+    padding: 40px;
 }
 .pad-lg {
-    padding: 150px;
+    padding: 50px;
 }
 .sectiontext {
 	font-size: 130%;
@@ -43,9 +47,6 @@ canvas {
 	height: auto;
 	max-width: 100%;
 }
-.card {
-	box-shadow: 0 0 20px rgba(0,0,0,.05);
-}
 
 .upro,
 .upro:hover,
@@ -53,3 +54,34 @@ canvas {
 .card {
 	border: 0;
 }
+
+.breadcrumb {
+    background-color: rgba(255,255,255,.5);
+}
+
+@media (min-width: 45em) {
+    .pad-sm {
+        padding: 50px;
+    }
+    .pad-md {
+        padding: 100px;
+    }
+    .pad-lg {
+        padding: 150px;
+    }
+	/* probably can be removed as probably not using columns any more */
+    .card-columns {
+        -webkit-column-count:2;
+        -moz-column-count:2;
+        column-count:2;
+    }
+	
+	.stickyrings {
+		align-self: flex-start; 
+		position: -webkit-sticky;
+		position: sticky;
+		text-transform: uppercase;
+		top: 86px;
+		z-index: 1000;
+	}
+} /* end desktop-specific code */

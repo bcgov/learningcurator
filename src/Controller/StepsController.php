@@ -35,7 +35,13 @@ class StepsController extends AppController
     public function view($id = null)
     {
         $step = $this->Steps->get($id, [
-            'contain' => ['Activities', 'Activities.ActivityTypes', 'Activities.Tags', 'Pathways', 'Pathways.Steps'],
+            'contain' => ['Activities', 
+                            'Activities.ActivityTypes', 
+                            'Activities.Tags', 
+                            'Pathways', 
+                            'Pathways.Steps',
+                            'Pathways.Categories', 
+                            'Pathways.Users'],
         ]);
         $this->Authorization->authorize($step);
         $user = $this->request->getAttribute('authentication')->getIdentity();
@@ -54,8 +60,22 @@ class StepsController extends AppController
         foreach($useractivities as $uact) {
             array_push($useractivitylist, $uact['activity_id']);
         }
+        //
+        // we want to be able to tell if the current user is already on this
+        // pathway or not, so we take the same approach as above, parsing all
+        // the users into a single array so that we can perform a simple
+        // in_array($thisuser,$usersonthispathway) check and show the "take
+        // this Pathway" button or "you're on this Pathway" text
+        //
+        // Create the initially empty array that we also pass into the template
+        $usersonthispathway = array();
+        // Loop through the users that are on this pathway and parse just the 
+        // IDs into the array that we just created
+        foreach($step->pathways[0]->users as $pu) {
+            array_push($usersonthispathway,$pu->id);
+        }
 
-        $this->set(compact('step','useractivitylist'));
+        $this->set(compact('step','useractivitylist','usersonthispathway'));
     }
 
     /**
