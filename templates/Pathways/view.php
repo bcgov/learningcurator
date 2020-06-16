@@ -31,7 +31,7 @@ This seems to work out, but #TODO investigate optimizing this
 		align-self: flex-start; 
 		position: -webkit-sticky;
 		position: sticky;
-		text-transform: uppercase;
+		
 		top: 86px;
 		z-index: 1000;
 	}
@@ -59,11 +59,18 @@ This seems to work out, but #TODO investigate optimizing this
 </style>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-6">
+<div class="col-md-4">
 <div class="p-3">
 	<?php if($pathway->status_id == 1): ?>
 	<span class="badge badge-warning" title="Edit to set to publish">DRAFT</span>
 	<?php endif ?>
+
+	<nav aria-label="breadcrumb">
+	<ol class="breadcrumb mt-3">
+		<li class="breadcrumb-item"><?= $pathway->has('category') ? $this->Html->link($pathway->category->name, ['controller' => 'Categories', 'action' => 'view', $pathway->category->id]) : '' ?></li>
+		<li class="breadcrumb-item" aria-current="page"><?= h($pathway->name) ?> </li>
+	</ol>
+	</nav> 
 
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
@@ -71,22 +78,53 @@ This seems to work out, but #TODO investigate optimizing this
 	<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'btn btn-light']) ?>
 	</div>
 	<?php endif ?>
-	<div><?= $pathway->has('category') ? $this->Html->link($pathway->category->name, ['controller' => 'Categories', 'action' => 'view', $pathway->category->id]) : '' ?> pathway</div>
 	<h1><?= h($pathway->name) ?></h1>
-	<div class="moretoshow" id="objectives">
-	<?= $this->Text->autoParagraph(h($pathway->objective)); ?>
-	</div> <!-- /.objective -->
+
 	<!-- totals below updated via JS -->
 
 	<div class="p-3" style="background-color: rgba(255,255,255,.5)">
-	<?= $this->Text->autoParagraph(h($pathway->description)); ?> 
+	<?= $this->Text->autoParagraph(h($pathway->objective)); ?> 
 	<div class="mb-2">
 	<span class="badge badge-light readtotal"></span>  
 	<span class="badge badge-light watchtotal"></span>  
 	<span class="badge badge-light listentotal"></span>  
 	<span class="badge badge-light participatetotal"></span>  
+	</div>
+	<?php if($role == 2 || $role == 5): ?>
+
+	<a class="" 
+		data-toggle="collapse" 
+		href="#addstepform" 
+		role="button" 
+		aria-expanded="false" 
+		aria-controls="addstepform">
+			<span>+</span> Add a step
+	</a>
+	<div class="collapse" id="addstepform">
+	<div class="card my-3">
+	<div class="card-body">
+	<?= $this->Form->create(null, ['url' => [
+			'controller' => 'Steps',
+			'action' => 'add'
+	]]) ?>
+	<fieldset>
+	<legend class=""><?= __('Add Step') ?></legend>
+	<?php
+	echo $this->Form->control('name',['class'=>'form-control']);
+	echo $this->Form->control('description',['class' => 'form-control', 'type' => 'textarea']);
+	echo $this->Form->hidden('createdby', ['value' => $uid]);
+	echo $this->Form->hidden('modifiedby', ['value' => $uid]);
+	echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
+	?>
+	</fieldset>
+	<?= $this->Form->button(__('Add Step'), ['class'=>'btn btn-block btn-primary']) ?>
+	<?= $this->Form->end() ?>
+	</div>
+	</div>
+	</div>
+
+	<?php endif ?>
 </div>
-		</div>
 </div>
 </div>
 </div>
@@ -94,73 +132,140 @@ This seems to work out, but #TODO investigate optimizing this
 <div class="container">
 <div class="row justify-content-md-center">
 <div class="col-md-3">
+
 <?php if(in_array($uid,$usersonthispathway)): ?>
 
 	
-	<div class="w-100 mt-3 text-center">
-	<div class="mb-3 following"></div>
+	<div class="card card-body mt-3 text-center stickyrings">
+	<div>Overall Progress: %<span class="mb-3 following"></span></div>
 	<canvas id="myChart" width="250" height="250"></canvas>
 	</div>
 	
 <?php else: ?>
-
+<div class="card card-body my-3 stickyrings">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'add']]) ?>
 <?php
     echo $this->Form->control('user_id',['type' => 'hidden', 'value' => $uid]);
     echo $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]);
     echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-lg btn-dark mb-0']) ?>
-<br><small><a href="#">What does this mean?</a></small>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
+
 <?= $this->Form->end() ?>
 
+<div class="text-sm">When you select to follow a pathway, this pathway will show as a journey you are on and may be 
+accessed from your profile page. Think of it as “bookmarking” learning you want to come back to and track your progress on.</div>
+</div>
 <?php endif ?>
 
 <!--<div class="" style="font-size: 12px">Published <?= h(date('D M jS \'y',strtotime($pathway->created))) ?></div>-->
 
-
-<?php if($role == 2 || $role == 5): ?>
-<a class="" 
-	data-toggle="collapse" 
-	href="#addstepform" 
-	role="button" 
-	aria-expanded="false" 
-	aria-controls="addstepform">
-		<span>+</span> Add a step
-</a>
-<div class="collapse" id="addstepform">
-<div class="card my-3">
-<div class="card-body">
-<?= $this->Form->create(null, ['url' => [
-        'controller' => 'Steps',
-        'action' => 'add'
-]]) ?>
-<fieldset>
-<legend class=""><?= __('Add Step') ?></legend>
-<?php
-echo $this->Form->control('name',['class'=>'form-control']);
-echo $this->Form->control('description',['class' => 'form-control', 'type' => 'textarea']);
-echo $this->Form->hidden('createdby', ['value' => $uid]);
-echo $this->Form->hidden('modifiedby', ['value' => $uid]);
-echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
-?>
-</fieldset>
-<?= $this->Form->button(__('Add Step'), ['class'=>'btn btn-block btn-primary']) ?>
-<?= $this->Form->end() ?>
-</div>
-</div>
-</div>
-<?php endif ?>
 
 </div>
 <?php if (!empty($pathway->steps)) : ?>
 
 <div class="col-md-6">
 
-<?php foreach ($pathway->steps as $step) : ?>
+<?php foreach ($pathway->steps as $steps) : ?>
+
+<?php 
+
+$stepTime = 0;
+$defunctacts = array();
+$requiredacts = array();
+$tertiaryacts = array();
+$acts = array();
+
+$readstepcount = 0;
+$watchstepcount = 0;
+$listenstepcount = 0;
+$participatestepcount = 0;
+$readcolor = '';
+$watchcolor = '';
+$listencolor = '';
+$participatecolor = '';
+
+$totalacts = count($steps->activities);
+$stepclaimcount = 0;
+
+foreach ($steps->activities as $activity) {
+	//print_r($activity);
+	// If this is 'defunct' then we pull it out of the list 
+	if($activity->status_id == 3) {
+		array_push($defunctacts,$activity);
+	} elseif($activity->status_id == 2) {
+		// if it's required
+		//if($activity->_joinData->required == 1) {
+		//	array_push($requiredacts,$activity);
+		// Otherwise it's teriary
+		//} else {
+		//	array_push($tertiaryacts,$activity);
+		//}
+		array_push($acts,$activity);
+		if($activity->activity_types_id == 1) {
+			$watchstepcount++;
+			$watchcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 2) {
+			$readstepcount++;
+			$readcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 3) {
+			$listenstepcount++;
+			$listencolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 4) {
+			$participatestepcount++;
+			$participatecolor = $activity->activity_type->color;
+		}
+		if(in_array($activity->id,$useractivitylist)) {
+			$stepclaimcount++;
+		}
+		$tmp = array();
+		// Loop through the whole list, add steporder to tmp array
+		foreach($acts as $line) {
+			$tmp[] = $line->_joinData->steporder;
+		}
+		// Use the tmp array to sort acts list
+		array_multisort($tmp, SORT_DESC, $acts);
+	}
+}
+
+?>
+
+<?php
+$stepacts = count($acts);
+$completeclass = 'notcompleted'; 
+if($stepclaimcount == $totalacts) {
+	$completeclass = 'completed';
+}
+
+if($stepclaimcount > 0) {
+	$steppercent = ceil(($stepclaimcount * 100) / $stepacts);
+} else {
+	$steppercent = 0;
+}
+?>
+
 <div class="card card-body my-3">
-	<h2><a href="/steps/view/<?= $step->id ?>"><?= $step->name ?></a></h2>
-	<div><?= $step->description ?></div>
+	<h2>
+		<a href="/learning-curator/steps/view/<?= $steps->id ?>">
+			<?= h($steps->name) ?> 
+			
+		</a>
+	</h2>
+	
+	<div style="font-size; 130%"><?= h($steps->description) ?></div>
+	
+	<div class="my-3">
+		<span class="badge badge-light" style="background-color: rgba(<?= $readcolor ?>,1)"><?= $readstepcount ?> to read</span>  
+		<span class="badge badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)"><?= $watchstepcount ?> to watch</span>  
+		<span class="badge badge-light" style="background-color: rgba(<?= $listencolor ?>,1)"><?= $listenstepcount ?> to listen to</span>  
+		<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
+	</div>
+	<div class="progress progress-bar-striped mb-3" style="height: 26px;">
+	  <div class="progress-bar" role="progressbar" style="background-color: #000; color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+		<?= $steppercent ?>% completed
+	  </div>
+	</div>
+	<a href="/learning-curator/steps/view/<?= $steps->id ?>" class="btn btn-block btn-light">View this step <i class="fas fa-angle-double-right"></i></a>
 </div>
 <?php endforeach ?>
 
@@ -184,7 +289,7 @@ echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
 	crossorigin="anonymous"></script>
 
 
-<script type="text/javascript" src="/js/jquery.scrollTo.min.js"></script>
+<script type="text/javascript" src="/learning-curator/js/jquery.scrollTo.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 
@@ -210,7 +315,7 @@ $(document).ready(function(){
 		var url = form.attr('action');
 		$.ajax({
 			type: "POST",
-			url: '/activities-users/claim',
+			url: '/learning-curator/activities-users/claim',
 			data: form.serialize(),
 			success: function(data)
 			{
@@ -259,7 +364,7 @@ function loadStatus() {
 	var form = $(this);
 	$.ajax({
 		type: "GET",
-		url: '/pathways/status/<?= $pathway->id ?>',
+		url: '/learning-curator/pathways/status/<?= $pathway->id ?>',
 		data: '',
 		success: function(data)
 		{

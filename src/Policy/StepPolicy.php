@@ -77,6 +77,18 @@ class StepPolicy
         return true;
     }
 
+    /**
+     * Check if $user can get status of Step
+     *
+     * @param Authorization\IdentityInterface $user The user.
+     * @param App\Model\Entity\Step $step
+     * @return bool
+     */
+    public function canStatus(IdentityInterface $user, Step $step)
+    {
+        return true;
+    }
+
 
     protected function isCurator(IdentityInterface $user, Step $step)
     {

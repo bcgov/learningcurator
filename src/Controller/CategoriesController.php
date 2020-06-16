@@ -37,14 +37,15 @@ class CategoriesController extends AppController
     public function view($id = null)
     {
 	    $this->Authorization->skipAuthorization();
-        $category = $this->Categories->get($id, [
+        $categories = $this->Categories->find('all');
+		$category = $this->Categories->get($id, [
             'contain' => ['Activities', 'Pathways','Pathways.Statuses'],
         ]);
         
         // $cats = TableRegistry::getTableLocator()->get('Categories');
         // $category = $cats->find('all')->contain('Activities', 'Pathways')->where(['status_id' => 3]);
 
-        $this->set('category', $category);
+        $this->set(compact('categories','category'));
     }
 
     /**

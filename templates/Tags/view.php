@@ -18,7 +18,7 @@
 <?php if (!empty($tag->activities)) : ?>
 <?php foreach ($tag->activities as $activities) : ?>
     <li class="list-group-item">
-    <?= $this->Html->link($activities->name, ['controller' => 'Activities', 'action' => 'view', $activities->id]) ?>
+		<?= $this->Html->link($activities->name, ['controller' => 'Activities', 'action' => 'view', $activities->id]) ?>
     </li>
 <?php endforeach; ?>
 </ul>

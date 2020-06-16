@@ -35,8 +35,10 @@ class ActivitiesController extends AppController
             ]
         ];
         $activities = $this->paginate($this->Activities);
+		$cats = TableRegistry::getTableLocator()->get('Categories');
+        $allcats = $cats->find('all');
 
-        $this->set(compact('activities','allpathways'));
+        $this->set(compact('activities','allpathways','allcats'));
     }
 
     /**

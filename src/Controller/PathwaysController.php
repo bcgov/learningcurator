@@ -454,6 +454,7 @@ class PathwaysController extends AppController
                 $participatepercentleft = 100;
             }
 
+
             $percentages = array(
                     array($readpercent,$readpercentleft,$readcolor),
                     array($watchpercent,$watchpercentleft,$watchcolor),
@@ -461,7 +462,7 @@ class PathwaysController extends AppController
                     array($participatepercent,$participatepercentleft,$participatecolor)
             );
             
-            $status = 'Overall progress: ' . $overallp . '%';
+            $status = $overallp;
             if($overallp == 100) {
                 $status = 'Completed!';
                 // #TODO check against current pathways_users status in db and 
@@ -476,7 +477,9 @@ class PathwaysController extends AppController
                 $chartjs .= '},';
             }
             $chartjs = rtrim($chartjs, ',');
-            $chartjs .= ']}';
+			$chartjs .= '],"labels": ["Completed %","In progress %"]';
+        
+            $chartjs .= '}';
             
             if(!empty($user)) {
 

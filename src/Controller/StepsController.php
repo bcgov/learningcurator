@@ -149,4 +149,110 @@ class StepsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    /**
+     * Status method
+     *
+     * @param string|null $id Step id.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function status($id = null)
+    {
+		$this->viewBuilder()->setLayout('ajax');
+        $step = $this->Steps->get($id, [
+            'contain' => ['Activities'],
+        ]);
+        $this->Authorization->authorize($step);
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        // We need create an empty array first. If nothing gets added to
+        // it, so be it
+        $useractivitylist = array();
+        // Get access to the appropriate table
+        $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
+        // Select based on currently logged in person
+        $useacts = $au->find()->where(['user_id = ' => $user->id]);
+        // convert the results into a simple array so that we can
+        // use in_array in the template
+        $useractivities = $useacts->toList();
+        // Loop through the resources and add just the ID to the 
+        // array that we will pass into the template
+        foreach($useractivities as $uact) {
+            array_push($useractivitylist, $uact['activity_id']);
+        }
+		
+		$stepTime = 0;
+		$defunctacts = array();
+		$requiredacts = array();
+		$tertiaryacts = array();
+		$acts = array();
+
+		$readstepcount = 0;
+		$watchstepcount = 0;
+		$listenstepcount = 0;
+		$participatestepcount = 0;
+		$readcolor = '';
+		$watchcolor = '';
+		$listencolor = '';
+		$participatecolor = '';
+
+		$totalacts = count($steps->activities);
+		$stepclaimcount = 0;
+
+		foreach ($step->activities as $activity) {
+			//print_r($activity);
+			// If this is 'defunct' then we pull it out of the list 
+			if($activity->status_id == 3) {
+				array_push($defunctacts,$activity);
+			} elseif($activity->status_id == 2) {
+				// if it's required
+				//if($activity->_joinData->required == 1) {
+				//	array_push($requiredacts,$activity);
+				// Otherwise it's teriary
+				//} else {
+				//	array_push($tertiaryacts,$activity);
+				//}
+				array_push($acts,$activity);
+				if($activity->activity_types_id == 1) {
+					$watchstepcount++;
+					$watchcolor = $activity->activity_type->color;
+				} elseif($activity->activity_types_id == 2) {
+					$readstepcount++;
+					$readcolor = $activity->activity_type->color;
+				} elseif($activity->activity_types_id == 3) {
+					$listenstepcount++;
+					$listencolor = $activity->activity_type->color;
+				} elseif($activity->activity_types_id == 4) {
+					$participatestepcount++;
+					$participatecolor = $activity->activity_type->color;
+				}
+				if(in_array($activity->id,$useractivitylist)) {
+					$stepclaimcount++;
+				}
+				$tmp = array();
+				// Loop through the whole list, add steporder to tmp array
+				foreach($acts as $line) {
+					$tmp[] = $line->_joinData->steporder;
+				}
+				// Use the tmp array to sort acts list
+				array_multisort($tmp, SORT_DESC, $acts);
+			}
+		}
+
+		$stepacts = count($acts);
+		$completeclass = 'notcompleted'; 
+		if($stepclaimcount == $totalacts) {
+			$completeclass = 'completed';
+		}
+
+		if($stepclaimcount > 0) {
+			$steppercent = ceil(($stepclaimcount * 100) / $stepacts);
+		} else {
+			$steppercent = 0;
+		}		
+		
+
+        $this->set(compact('step','steppercent','stepacts'));
+    }
+	
 }

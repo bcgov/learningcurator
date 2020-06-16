@@ -11,6 +11,76 @@ if ($this->Identity->isLoggedIn()) {
 	$role = $this->Identity->get('role_id');
 	$uid = $this->Identity->get('id');
 }
+
+$stepTime = 0;
+$defunctacts = array();
+$requiredacts = array();
+$tertiaryacts = array();
+$acts = array();
+
+$readstepcount = 0;
+$watchstepcount = 0;
+$listenstepcount = 0;
+$participatestepcount = 0;
+$readcolor = '';
+$watchcolor = '';
+$listencolor = '';
+$participatecolor = '';
+
+$totalacts = count($steps->activities);
+$stepclaimcount = 0;
+
+foreach ($step->activities as $activity) {
+	//print_r($activity);
+	// If this is 'defunct' then we pull it out of the list 
+	if($activity->status_id == 3) {
+		array_push($defunctacts,$activity);
+	} elseif($activity->status_id == 2) {
+		// if it's required
+		//if($activity->_joinData->required == 1) {
+		//	array_push($requiredacts,$activity);
+		// Otherwise it's teriary
+		//} else {
+		//	array_push($tertiaryacts,$activity);
+		//}
+		array_push($acts,$activity);
+		if($activity->activity_types_id == 1) {
+			$watchstepcount++;
+			$watchcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 2) {
+			$readstepcount++;
+			$readcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 3) {
+			$listenstepcount++;
+			$listencolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 4) {
+			$participatestepcount++;
+			$participatecolor = $activity->activity_type->color;
+		}
+		if(in_array($activity->id,$useractivitylist)) {
+			$stepclaimcount++;
+		}
+		$tmp = array();
+		// Loop through the whole list, add steporder to tmp array
+		foreach($acts as $line) {
+			$tmp[] = $line->_joinData->steporder;
+		}
+		// Use the tmp array to sort acts list
+		array_multisort($tmp, SORT_DESC, $acts);
+	}
+}
+
+$stepacts = count($acts);
+$completeclass = 'notcompleted'; 
+if($stepclaimcount == $totalacts) {
+	$completeclass = 'completed';
+}
+
+if($stepclaimcount > 0) {
+	$steppercent = ceil(($stepclaimcount * 100) / $stepacts);
+} else {
+	$steppercent = 0;
+}
 ?>
 <style>
 .active {
@@ -20,53 +90,81 @@ if ($this->Identity->isLoggedIn()) {
 	color: #000;
 }
 .dotactive {
+	background: #000;
+	border-radius: 50%;
 	color: #FFF;
-	font-size: 140%;
+	display: inline-block;
+	font-size: 135%;
+	height: 35px;
+	text-align: center;
+	width: 35px;
 }
 </style>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-6">
+<div class="col-md-7 col-lg-5">
 <?php if (!empty($step->pathways)) : ?>
+<?php if($role == 2 || $role == 5): ?>
+<div class="btn-group float-right mt-3 ml-3">
+<?= $this->Html->link(__('Edit Step'), ['controller' => 'Steps', 'action' => 'edit', $step->id], ['class' => 'btn btn-light btn-sm']) ?>
+</div> <!-- /.btn-group -->
+<?php endif ?>
 
 <?php foreach ($step->pathways as $pathways) : ?>
 <?php $totalsteps = count($pathways->steps) ?>
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb mt-3">
-  	<li class="breadcrumb-item"><?= $pathways->has('category') ? $this->Html->link($pathways->category->name, ['controller' => 'Categories', 'action' => 'view', $pathways->category->id]) : '' ?> pathway</li>
-    <li class="breadcrumb-item" aria-current="page"><?= h($pathways->name) ?> </li>
-	<li class="breadcrumb-item"><a href="/pathways/view/<?= $pathways->id ?>">All Steps</a></li>
+  	<li class="breadcrumb-item"><?= $pathways->has('category') ? $this->Html->link($pathways->category->name, ['controller' => 'Categories', 'action' => 'view', $pathways->category->id]) : '' ?></li>
+	<li class="breadcrumb-item"><a href="/learning-curator/pathways/view/<?= $pathways->id ?>"><?= h($pathways->name) ?></a></li>
+	<!--<li class="breadcrumb-item" aria-current="page"><?= h($pathways->steps[0]->name) ?> </li>-->
   </ol>
 </nav> 
 
-
+<!--<div class="float-right"><a href="/learning-curator/pathways/path/<?= $pathways->id ?>"><i class="fas fa-scroll"></i></a></div>-->
 <h1>
 	<?= h($pathways->name) ?>
 	<?php //$this->Html->link(h($pathways->name), ['controller' => 'Pathways', 'action' => 'path', $pathways->id]) ?>
 </h1>
-<?= $this->Text->autoParagraph(h($pathways->objective)); ?>
-<div>
+
+<!--<?= $this->Text->autoParagraph(h($pathways->objective)); ?>-->
+
 <?php foreach($pathways->steps as $s): ?>
 <?php $c = ''; ?>
 <?php $n = next($pathways->steps) ?>
 <?php if($s->id == $step->id): ?>
-<div class="row <?= $c ?>">
-	<div class="col">
-		<?php if(!empty($laststep)): ?>
-		<a href="/steps/view/<?= $laststep ?>" style="color: #000; font-size: 250%;"><i class="fas fa-arrow-circle-left"></i></a>
-		<?php endif ?>
-	</div>
-	<div class="col-md-9" style="background-color: rgba(255,255,255,.5)">
+<div class="row mx-0">
+
+	<div class="col" style="background-color: rgba(255,255,255,.5); border-radius: .25rem;">
 		<h2 class="mt-2"><?= $s->name ?> <small>of <?= $totalsteps ?></small></h2>	
-		<?= $this->Text->autoParagraph(h($s->description)); ?>
+		<div class=""><em>Goal:</em> <?= h($s->description); ?></div>
+		<div class="my-3">
+			<span class="badge badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
+				<?= $readstepcount ?> to read
+			</span>  
+			<span class="badge badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
+				<?= $watchstepcount ?> to watch
+			</span>  
+			<span class="badge badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
+				<?= $listenstepcount ?> to listen to
+			</span>  
+			<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
+				<?= $participatestepcount ?> to participate in
+			</span>  
+		</div>
 	</div>
-	<div class="col text-right">
-		<?php if(!empty($n->id)): ?>
-		<a href="/steps/view/<?= $n->id ?>" style="color: #000; font-size: 250%;"><i class="fas fa-arrow-circle-right"></i></a>
+	<div class="col-3">
+		<?php if(!empty($laststep)): ?>
+		<a href="/learning-curator/steps/view/<?= $laststep ?>" style="color: #000; font-size: 250%;"><i class="fas fa-arrow-circle-left"></i></a>
 		<?php endif ?>
+
+		<?php if(!empty($n->id)): ?>
+		<a href="/learning-curator/steps/view/<?= $n->id ?>" style="color: #000; font-size: 250%; float: right;"><i class="fas fa-arrow-circle-right"></i></a>
+		<?php endif ?>
+		
 	</div>
 </div>
+
 <?php endif ?>
 <?php 
 $laststep = $s->id;
@@ -74,11 +172,17 @@ $lastname = $s->name;
 $lastobj = $s->description;
 ?>
 <?php endforeach ?>
-<div class="text-center my-3">
+<div class="my-3">
+<?php $count = 1 ?>
 <?php foreach($pathways->steps as $s): ?>
 	<?php $c = 'dot' ?>
 	<?php if($s->id == $step->id) $c = 'dotactive' ?>
-	<a href="/steps/view/<?= $s->id ?>"><i class="far fa-dot-circle <?= $c ?>" title="<?= $s->name ?>"></i></a>
+	<a href="/learning-curator/steps/view/<?= $s->id ?>">
+
+		<span class="<?= $c ?>"><?= $count ?></span>
+
+	</a>
+<?php $count++ ?>
 <?php endforeach ?>
 </div>
 </div>
@@ -91,43 +195,32 @@ $lastobj = $s->description;
 </div>
 </div>
 </div>
-<div class="container">
+
+<div class="container-fluid stickyprogress">
 <div class="row">
-<div class="col-6 col-md-3 col-lg-2">
-
-
-
-<?php if(in_array($uid,$usersonthispathway)): ?>
-
-	
-<div class="w-100 mt-3 text-center">
-<div class="mb-3 following"></div>
-<canvas id="myChart" width="250" height="250"></canvas>
+<div class="col p-0">
+	<div class="progress mb-3" style="border-radius: 0; height: 16px;">
+	  <div class="progress-bar" role="progressbar" style="background-color: #000; color: #FFF;" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+		<?= $steppercent ?>%
+	  </div>
+	</div>
 </div>
-
-<?php else: ?>
-
-<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'add']]) ?>
-<?php
-echo $this->Form->control('user_id',['type' => 'hidden', 'value' => $uid]);
-echo $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]);
-echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
-?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-lg btn-light mb-0']) ?>
-
-<?= $this->Form->end() ?>
-
-<?php endif ?>
-
-
 </div>
+</div>
+<div class="container-fluid">
+<div class="row">
+
+
 <div class="col-md-9">
 <?php if (!empty($step->activities)) : ?>
+
 <div class="card-columns">
 <?php foreach ($step->activities as $activity) : ?>
-	<div class="card my-3">
-<div class="p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
-<div class="">
+<?php $claimborder = 'border: 0'; ?>
+<?php if(in_array($activity->id,$useractivitylist)): // if the user has claimed this, outline the box ?>
+<?php $claimborder = 'box-shadow: 0 0 10px rgba(0,0,0,.4)'; ?>
+<?php endif ?>
+<div class="card card-body my-3 activity" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); <?= $claimborder ?>">
 
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
@@ -136,13 +229,13 @@ echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 	<?php endif; // role check ?>
 
 	<?php foreach($activity->tags as $tag): ?>
-	<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
+	<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
 	<?php endforeach ?>
 
-	<h2 class="my-3">
+	<h3 class="my-3">
 		<?= $activity->name ?>
-		<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>
-	</h2>
+		<a class="btn btn-sm btn-light" href="/learning-curator/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>
+	</h3>
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
 		<?= $activity->description ?>
 	</div>
@@ -156,6 +249,7 @@ echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 	<?php if($tag->name == 'Learning System Course'): ?>
 
 	<a target="_blank" 
+		rel="noopener" 
 		data-toggle="tooltip" data-placement="bottom" title="Enrol in this course in the Learning System"
 		href="https://learning.gov.bc.ca/psc/CHIPSPLM_6/EMPLOYEE/ELM/c/LM_OD_EMPLOYEE_FL.LM_FND_LRN_FL.GBL?Page=LM_FND_LRN_RSLT_FL&Action=U&KWRD=<?php echo urlencode($activity->name) ?>" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
@@ -172,7 +266,7 @@ echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 	<div class="my-3 p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border-radius: 3px;">
 		<iframe width="100%" 
 			height="315" 
-			src="https://www.youtube.com/embed/<?= h($activity->hyperlink) ?>/" 
+			src="https://www.youtube-nocookie.com/embed/<?= h($activity->hyperlink) ?>/" 
 			frameborder="0" 
 			allow="" 
 			allowfullscreen>
@@ -187,6 +281,7 @@ echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 
 
 	<a target="_blank" 
+		rel="noopener" 
 		data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
 		href="<?= $activity->hyperlink ?>" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
@@ -201,7 +296,7 @@ echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 	<?php endif; // are there tags? ?>	
 
 	<?php if(!empty($activity->_joinData->required)): ?>
-
+	
 	<div class="required float-right" data-toggle="tooltip" data-placement="bottom" title="This activity is required to complete the step">
 		<i class="fas fa-check-double"></i> Required
 	</div>
@@ -218,7 +313,7 @@ echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 		<i class="fas fa-exclamation-triangle"></i>
 	</a>	-->
 
-	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+	<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 	</a>
 	
@@ -230,14 +325,13 @@ echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 	<?= $this->Form->end() ?>
 	<?php else: // they have claimed it, so show that ?>
 
-	<div class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
+	<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
 
 	<?php endif; // claimed or not ?>
 	<?php endif; // logged in ?>
 
 	</div>
-	</div>
-	</div>
+
 	<?php endforeach; // end of activities loop for this step ?>
 </div> <!-- /.card-coumns -->
 
@@ -247,8 +341,29 @@ echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 
 
 <?php endif; ?>
-
 </div>
+<div class="col-12 col-md-3 col-lg-2">
+<?php if(in_array($uid,$usersonthispathway)): ?>
+<div class="card card-body mt-3 text-center stickyrings">
+<div class="mb-3 following"></div>
+<canvas id="myChart" width="250" height="250"></canvas>
+</div>
+
+<?php else: ?>
+<div class="card card-body mt-3 text-center stickyrings">
+<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'add']]) ?>
+<?php
+echo $this->Form->control('user_id',['type' => 'hidden', 'value' => $uid]);
+echo $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathways->id]);
+echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
+?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
+<?= $this->Form->end() ?>
+</div>
+<?php endif ?>
+</div>
+
+
 </div>
 
 </div>
@@ -266,7 +381,7 @@ echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 	crossorigin="anonymous"></script>
 
 
-<script type="text/javascript" src="/js/jquery.scrollTo.min.js"></script>
+<script type="text/javascript" src="/learning-curator/js/jquery.scrollTo.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 
@@ -277,29 +392,19 @@ $(document).ready(function(){
 	// load up the activity rings
 	loadStatus();
 
-	$('.steplink').each(function(e){
-		let actualstep = $(this).attr('href');
-		if($(actualstep).hasClass('completed')) {
-			let checkmark = '<i class="fas fa-check-square" style="color: rgba(88,174,36,1);"></i>';
-			$(this).prepend(checkmark);
-		}
-	});
-
-	$('#stepnav .nav-link').on('click', function(event) {
-		event.preventDefault();
-		$(this).tooltip('hide');
-        $.scrollTo(event.target.hash, 250, {offset:-105,});
-	});
-
+console.log('ready');
 	$('.claim').on('submit', function(e){
 		
 		e.preventDefault();
 		var form = $(this);
-		form.children('button').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
+		form.children('button').removeClass('btn-light').addClass('btn-dark').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
+		
+		$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
+
 		var url = form.attr('action');
 		$.ajax({
 			type: "POST",
-			url: '/activities-users/claim',
+			url: '/learning-curator/activities-users/claim',
 			data: form.serialize(),
 			success: function(data)
 			{
@@ -344,17 +449,15 @@ $(document).ready(function(){
 //
 function loadStatus() {
 
-	var form = $(this);
 	$.ajax({
 		type: "GET",
-		url: '/pathways/status/<?= $step->pathways[0]->id ?>',
+		url: '/learning-curator/pathways/status/<?= $step->pathways[0]->id ?>',
 		data: '',
 		success: function(data)
 		{
-			form.find('btn').val('Claimed!');
 			var pathstatus = JSON.parse(data);
 
-			$('.following').html(pathstatus.status);
+			$('.following').html('Overall Progress: %' + pathstatus.status);
 
 			//console.log(pathstatus.typecolors);
 			$('.readtotal').html(pathstatus.typecounts.readtotal + ' to read')
@@ -366,6 +469,8 @@ function loadStatus() {
 			$('.participatetotal').html(pathstatus.typecounts.participatetotal + ' to participate in')
 							.css('backgroundColor','rgba(' + pathstatus.typecolors.participatecolor + ',1)');
 
+			//$('.progress-bar').attr('width',pathstatus.status);
+			
 			var ctx = document.getElementById('myChart').getContext('2d');
 			var myDoughnutChart = new Chart(ctx, {
 				type: 'doughnut',
@@ -380,7 +485,28 @@ function loadStatus() {
 		statusCode: 
 		{
 			403: function() {
-				form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				console.log('You must be logged in.');
+			}
+		}
+	});
+
+	$.ajax({
+		type: "GET",
+		url: '/learning-curator/steps/status/<?= $step->id ?>',
+		data: '',
+		success: function(data)
+		{
+			var stepstatus = JSON.parse(data);
+
+			console.log(stepstatus.steppercent);
+			
+			$('.progress-bar').width(stepstatus.steppercent+'%').html(stepstatus.steppercent+'% completed');
+			
+		},
+		statusCode: 
+		{
+			403: function() {
+				console.log('You must be logged in.');
 			}
 		}
 	});

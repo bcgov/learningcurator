@@ -7,22 +7,21 @@ $this->layout = 'nowrap';
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
+
 if ($this->Identity->isLoggedIn()) {
 	$role = $this->Identity->get('role_id');
 	$uid = $this->Identity->get('id');
 }
 ?>
-<style>
-.sectiontext {
-	font-size: 130%;
-	margin: 50px 0;
-	padding: 0 20px;
-}
-</style>
+
+<div class="container-fluid">
 <div class="row justify-content-md-center align-items-center"  id="colorful">
 <div class="col-md-4">
-<div class="sectiontext">
+<div class="pad-sm">
 <div>Learning Pathways</div>
+<?php if($role == 2 || $role == 5): // is curator or admin ?>
+<div class="float-right"><?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id],['class' => 'btn btn-light']) ?></div>
+<?php endif; // is curator or admin ?>
 <h1><?= h($category->name) ?></h1>
 <div class="text">
 <?= $this->Text->autoParagraph(h($category->description)); ?>
@@ -30,26 +29,20 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 </div>
 </div>
+</div>
 
+<div class="container-fluid">
+<div class="row justify-content-md-center align-items-center">
+<div class="col-md-4 pt-3">
 
 <?php if (!empty($category->pathways)) : ?>
 <?php foreach ($category->pathways as $pathway) : ?>
-<?php 
-if($count%2>0) {
-	$altcolor = '';
-} else {
-	$altcolor = 'bg-white';
-}
-$count++;
-?>
-<div class="row justify-content-md-center align-items-center <?= $altcolor ?>">
-<div class="col-md-4">
-<div class="sectiontext">
+<div class="card card-body mb-2">
 <?php if($pathway->status_id != 2): // is not published? ?>
 <?php if($role == 2 || $role == 5): // is curator or admin ?>
 <span class="badge badge-warning"><?= $pathway->status->name ?></span>
 <h2>
-<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->id]) ?>
+	<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->id]) ?>
 </h2>
 <div class="mb-3">
 <?= h($pathway->objective) ?>
@@ -60,17 +53,40 @@ $count++;
 <?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->id]) ?>
 </h2>
 <div class="mb-3">
-<?= h($pathway->objective) ?>
+<?= h($pathway->description) ?>
 </div>
 <?php endif; // is not published ?>
-
-</div>
-</div>
 </div>
 
 <?php endforeach; ?>
 <?php endif; ?>
 
+
+</div>
+</div>
+</div>
+
+<div class="container-fluid">
+<div class="row justify-content-md-center align-items-center">
+<div class="col-md-12">
+
+
+<h3 class="mt-3">Other Categories</h2>
+<div class="card-columns">
+<?php foreach ($categories as $cat) : ?>
+<?php if($cat->id == $category->id) continue ?>
+<div class="card card-body">
+<h4>
+	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
+</h4>
+<div><?= h($cat->description) ?></div>
+</div>
+<?php endforeach; ?>
+</div>
+
+</div>
+</div>
+</div>
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 

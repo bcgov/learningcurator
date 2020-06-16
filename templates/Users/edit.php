@@ -4,38 +4,28 @@
  * @var \App\Model\Entity\User $user
  */
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $user->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'side-nav-item']
-            ) ?>
-            <?= $this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
-    <div class="column-responsive column-80">
-        <div class="users form content">
-            <?= $this->Form->create($user) ?>
-            <fieldset>
-                <legend><?= __('Edit User') ?></legend>
-                <?php
-                    echo $this->Form->control('name');
-                    echo $this->Form->control('idir');
-                    echo $this->Form->control('ministry_id', ['options' => $ministries]);
-                    echo $this->Form->control('role_id', ['options' => $roles]);
-                    echo $this->Form->control('image_path');
-                    echo $this->Form->control('email');
-                    echo $this->Form->control('password');
-                    echo $this->Form->control('activities._ids', ['options' => $activities]);
-                    echo $this->Form->control('competencies._ids', ['options' => $competencies]);
-                    echo $this->Form->control('pathways._ids', ['options' => $pathways]);
-                ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
-        </div>
-    </div>
+
+<div class="row justify-content-md-center">
+<div class="col-md-4">
+<div class="card card-body">
+	<?= $this->Form->create($user) ?>
+	<fieldset>
+		<legend><?= __('Edit User') ?></legend>
+		<?php
+			echo $this->Form->control('name',['class'=>'form-control']);
+			echo $this->Form->control('idir',['class'=>'form-control']);
+			echo $this->Form->control('ministry_id', ['options' => $ministries, 'class'=>'form-control']);
+			echo $this->Form->control('role_id', ['options' => $roles, 'class'=>'form-control']);
+			//echo $this->Form->control('image_path');
+			echo $this->Form->control('email',['class'=>'form-control']);
+			echo $this->Form->control('password',['class'=>'form-control']);
+			echo $this->Form->control('activities._ids', ['options' => $activities, 'class'=>'form-control']);
+			echo $this->Form->control('competencies._ids', ['options' => $competencies, 'class'=>'form-control']);
+			echo $this->Form->control('pathways._ids', ['options' => $pathways, 'class'=>'form-control']);
+		?>
+	</fieldset>
+	<?= $this->Form->button(__('Submit'),['class'=>'btn btn-success mt-3']) ?>
+	<?= $this->Form->end() ?>
+</div>
+</div>
 </div>

@@ -5,12 +5,12 @@
 <div class="pad-lg">
 <h1>Learning Curator</h1>
 <h2>A curation space for informal learning resources</h2>
-<h3>Explore Learning Pathways in the following areas:</h3>
+<h3>Just the best educational resources, brought to you by a team of experts in different topic areas:</h3>
 
 <div>
-	<a href="/categories/view/1" class="btn btn-lg btn-light">Leading Self</a>
-	<a href="/categories/view/2" class="btn btn-lg btn-light">Leading Others</a>
-	<a href="/categories/view/3" class="btn btn-lg btn-light">Leading Organizations</a>
+	<a href="/learning-curator/categories/view/1" class="btn btn-lg btn-light">Leading Self</a>
+	<a href="/learning-curator/categories/view/2" class="btn btn-lg btn-light">Leading Others</a>
+	<a href="/learning-curator/categories/view/3" class="btn btn-lg btn-light">Leading Organizations</a>
 	
 </div>
 </div>
@@ -105,15 +105,15 @@
 <div class="sectiontext">
 	Begin by selecting a pathway that appeals to your needs. 
 	The next time you visit the resource, you will be taken to your profile page, 
-	where the Learning Agent keeps track of which pathways you’re on, and which learning you’ve begun.
+	where the Learning Curator keeps track of which pathways you’re on, and which learning you’ve begun.
 	<div class="m-3 p-3" style="background-color: rgba(255,255,255,.5)">
-	<a class="btn btn-lg btn-light" href="/users/home">Check out your Profile</a>
+	<a class="btn btn-lg btn-light" href="/learning-curator/users/home">Check out your Profile</a>
 	</div>
 </div>
 
 </div>
 <div class="col-md-2 text-center">
-	<img src="/img/curator-rings-logo.png" alt="Logo">
+	<img src="/learning-curator/img/curator-rings-logo-ongrey.png" alt="Logo">
 </div>
 </div>
 

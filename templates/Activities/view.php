@@ -72,7 +72,7 @@ if ($this->Identity->isLoggedIn()) {
 
 
 	<?php foreach($activity->tags as $tag): ?>
-	<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
+	<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
 	<?php endforeach ?>
 
 
@@ -98,7 +98,7 @@ if ($this->Identity->isLoggedIn()) {
 		<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 			<i class="fas fa-exclamation-triangle"></i>
 		</a>	
-		<a href="/activities/like/<?= $activity->id ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+		<a href="/learning-curator/activities/like/<?= $activity->id ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 		</a>
 	<?php if(!empty($uid)): ?>
@@ -130,7 +130,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach($step->pathways as $path): ?>
 <?php if($path->status_id == 2): ?>
 <div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
-	<div><a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?> - <?= $step->name ?></a></div>
+	<div><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></div>
 	<div><?= $path->description ?></div>
 </div>
 <?php endif ?>
@@ -151,7 +151,7 @@ if ($this->Identity->isLoggedIn()) {
     Steps
   </button>
 
-<a href="/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
+<a href="/learning-curator/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
 
 <div class="collapse p-3" id="steps<?= $pathway->id ?>">
 <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>

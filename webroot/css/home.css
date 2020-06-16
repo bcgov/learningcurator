@@ -17,7 +17,7 @@ img {
 	max-width: 100%;
 }
 .btn-success {
-    background-color: rgba(88,174,36) !important;
+    background-color: rgba(88,174,36,1) !important;
     border: 0;
 }
 #colorful {
@@ -27,21 +27,23 @@ img {
 }
 #colorful a {
     color: #555;
+}
+#colorful .breadcrumb a {
     text-decoration: underline;
 }
 .pad-sm {
-    padding: 30px;
+    padding: 30px 0;
 }
 .pad-md {
-    padding: 40px;
+    padding: 40px 0;
 }
 .pad-lg {
-    padding: 50px;
+    padding: 50px 0;
 }
 .sectiontext {
 	font-size: 130%;
 	margin: 100px 0;
-	padding: 0 20px;
+	padding: 0;
 }
 canvas {
 	height: auto;
@@ -61,7 +63,7 @@ canvas {
 
 @media (min-width: 45em) {
     .pad-sm {
-        padding: 50px;
+        padding: 50px 0;
     }
     .pad-md {
         padding: 100px;
@@ -69,19 +71,22 @@ canvas {
     .pad-lg {
         padding: 150px;
     }
-	/* probably can be removed as probably not using columns any more */
-    .card-columns {
-        -webkit-column-count:2;
-        -moz-column-count:2;
-        column-count:2;
-    }
+
 	
 	.stickyrings {
 		align-self: flex-start; 
 		position: -webkit-sticky;
 		position: sticky;
-		text-transform: uppercase;
+		
 		top: 86px;
-		z-index: 1000;
+		z-index: 200;
+	}
+	.stickyprogress {
+		align-self: flex-start; 
+		position: -webkit-sticky;
+		position: sticky;
+		
+		top: 0;
+		z-index: 300;
 	}
 } /* end desktop-specific code */
