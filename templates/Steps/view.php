@@ -83,22 +83,14 @@ if($stepclaimcount > 0) {
 }
 ?>
 <style>
-.active {
-    background-color: #FFF;
+.dotactive {
+	color: #000;
+    font-size: 140%;
 }
 .dot {
 	color: #000;
 }
-.dotactive {
-	background: #000;
-	border-radius: 50%;
-	color: #FFF;
-	display: inline-block;
-	font-size: 135%;
-	height: 35px;
-	text-align: center;
-	width: 35px;
-}
+
 </style>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
@@ -178,8 +170,8 @@ $lastobj = $s->description;
 	<?php $c = 'dot' ?>
 	<?php if($s->id == $step->id) $c = 'dotactive' ?>
 	<a href="/learning-curator/steps/view/<?= $s->id ?>">
-
-		<span class="<?= $c ?>"><?= $count ?></span>
+		<i class="fas fa-dot-circle <?= $c ?>" title="Step <?= $count ?>"></i>
+		
 
 	</a>
 <?php $count++ ?>
@@ -300,7 +292,9 @@ $lastobj = $s->description;
 	<div class="required float-right" data-toggle="tooltip" data-placement="bottom" title="This activity is required to complete the step">
 		<i class="fas fa-check-double"></i> Required
 	</div>
+	
 	<?php else: ?>
+	
 	<div class="required float-right" data-toggle="tooltip" data-placement="bottom" title="This activity is supplemtary to completing this step">
 		<i class="fas fa-check"></i> Supplementary
 	</div>

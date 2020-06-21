@@ -6,7 +6,6 @@
 $this->loadHelper('Authentication.Identity');
 ?>
 
-<?= $this->Flash->render() ?>
 <?= $this->Form->create($activity) ?>
 <?php 
 // echo $this->Form->control('ministry_id', ['class' => 'form-control', 'options' => $ministries, 'empty' => true]);
@@ -21,7 +20,7 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
     <div class="card-body">
     <h2>Pathways</h2>
     <?php foreach($activity->steps as $s): ?>
-<a href="/pathways/view/<?= $s->pathways[0]['id'] ?>#pathways-<?= $s->name ?>"><?= $s->pathways[0]['name'] ?></a>
+<a href="/learning-curator/steps/view/<?= $s->id ?>"><?= $s->pathways[0]['name'] ?> - <?= $s->name ?></a>
 <?php endforeach ?>
     </div>
     </div>
