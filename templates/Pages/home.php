@@ -13,21 +13,35 @@
 	<a href="/learning-curator/categories/view/3" class="btn btn-lg btn-light">Leading Organizations</a>
 	
 </div>
-</div>
+
 
 </div>
+
+<div class="text-center">
+<a href="#activitytypes">
+<i class="fas fa-chevron-circle-down" style="font-size: 300%; margin: 0 0 30px 0;"></i>
+</a>
+</div>
+</div>
 </div>
 
-<div class="row justify-content-md-center bg-white align-items-center">
+<div class="row justify-content-md-center bg-white align-items-center" id="activitytypes">
 
 <div class="col-md-10 col-lg-5">
 
 <div class="sectiontext">
-<div class="my-3 row justify-content-md-center" style="font-size: 180%">
+<div class="my-3 row justify-content-md-center">
 <?php foreach($atypes as $type): ?>
 	<div class="col-md-6">
-		<span class="fas <?= $type->image_path ?>" style="color: rgba(<?= $type->color ?>,1);"></span>
-		<?= $type->name ?>
+	<div class="mb-3">
+		<a href="/activity-types/view/<?= $type->id ?>" class="activity-icon" style="background-color: rgba(<?= $type->color ?>,1)">
+			<i class="fas <?= $type->image_path ?>"></i>
+			<?= h($type->name) ?>
+		</a>
+		<div class="mb-3">
+		<?= $type->description ?>
+		</div>
+	</div>
 	</div>
 <?php endforeach ?>
 </div>

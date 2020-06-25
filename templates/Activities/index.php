@@ -13,15 +13,7 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 <style>
-.activity-icon {
-	border-radius: 50%;
-	color: #FFF;
-	display: inline-block;
-	height: 50px;
-	padding-top: 12px;
-	text-align: center;
-	width: 50px;	
-}
+
 .pagination {
 	background-color; rgba(255,255,255,.5);
 }
