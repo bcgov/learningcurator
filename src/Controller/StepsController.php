@@ -191,12 +191,9 @@ class StepsController extends AppController
 		$watchstepcount = 0;
 		$listenstepcount = 0;
 		$participatestepcount = 0;
-		$readcolor = '';
-		$watchcolor = '';
-		$listencolor = '';
-		$participatecolor = '';
 
-		$totalacts = count($steps->activities);
+
+		$totalacts = count($step->activities);
 		$stepclaimcount = 0;
 
 		foreach ($step->activities as $activity) {
@@ -214,17 +211,14 @@ class StepsController extends AppController
 				//}
 				array_push($acts,$activity);
 				if($activity->activity_types_id == 1) {
-					$watchstepcount++;
-					$watchcolor = $activity->activity_type->color;
+                    $watchstepcount++;
 				} elseif($activity->activity_types_id == 2) {
 					$readstepcount++;
-					$readcolor = $activity->activity_type->color;
 				} elseif($activity->activity_types_id == 3) {
-					$listenstepcount++;
-					$listencolor = $activity->activity_type->color;
+                    $listenstepcount++;
 				} elseif($activity->activity_types_id == 4) {
-					$participatestepcount++;
-					$participatecolor = $activity->activity_type->color;
+                    $participatestepcount++;
+
 				}
 				if(in_array($activity->id,$useractivitylist)) {
 					$stepclaimcount++;

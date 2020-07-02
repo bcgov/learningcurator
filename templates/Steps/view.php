@@ -27,7 +27,7 @@ $watchcolor = '';
 $listencolor = '';
 $participatecolor = '';
 
-$totalacts = count($steps->activities);
+$totalacts = count($step->activities);
 $stepclaimcount = 0;
 
 foreach ($step->activities as $activity) {
