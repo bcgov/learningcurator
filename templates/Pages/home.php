@@ -19,7 +19,7 @@
 
 <div class="text-center">
 <a href="#activitytypes">
-<i class="fas fa-chevron-circle-down" style="font-size: 300%; margin: 0 0 30px 0;"></i>
+<i class="fas fa-chevron-circle-down" style="color: #000; font-size: 300%; margin: 0 0 30px 0;"></i>
 </a>
 </div>
 </div>
@@ -33,11 +33,16 @@
 <div class="my-3 row justify-content-md-center">
 <?php foreach($atypes as $type): ?>
 	<div class="col-md-6">
+	<div class="m-3 p-3">
 	<div class="mb-3">
-		<a href="/activity-types/view/<?= $type->id ?>" class="activity-icon" style="background-color: rgba(<?= $type->color ?>,1)">
-			<i class="fas <?= $type->image_path ?>"></i>
+		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="activity-icon" style="background-color: rgba(<?= $type->color ?>,1)">
+			<i class="activity-icon fas <?= $type->image_path ?>"></i>
+			
+		</a>
+		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="" style="color: #333; font-size: 180%">
 			<?= h($type->name) ?>
 		</a>
+	</div>
 		<div class="mb-3">
 		<?= $type->description ?>
 		</div>

@@ -20,9 +20,9 @@ class ActivityTypePolicy
      */
     public function canCreate(IdentityInterface $user, ActivityType $activityType)
     {
-        if($this->isAdmin($user, $resource)) {
+        if($this->isAdmin($user, $activityType)) {
             return true;
-        } elseif($this->isCurator($user,$resource)) {
+        } elseif($this->isCurator($user,$activityType)) {
             return true;
         }
     }
@@ -36,9 +36,9 @@ class ActivityTypePolicy
      */
     public function canEdit(IdentityInterface $user, ActivityType $activityType)
     {
-        if($this->isAdmin($user, $resource)) {
+        if($this->isAdmin($user, $activityType)) {
             return true;
-        } elseif($this->isCurator($user,$resource)) {
+        } elseif($this->isCurator($user,$activityType)) {
             return true;
         }
     }
@@ -52,9 +52,9 @@ class ActivityTypePolicy
      */
     public function canDelete(IdentityInterface $user, ActivityType $activityType)
     {
-        if($this->isAdmin($user, $resource)) {
+        if($this->isAdmin($user, $activityType)) {
             return true;
-        } elseif($this->isCurator($user,$resource)) {
+        } elseif($this->isCurator($user,$activityType)) {
             return false;
         }
     }

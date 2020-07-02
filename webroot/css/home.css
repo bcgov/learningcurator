@@ -64,10 +64,11 @@ canvas {
 	border-radius: 50%;
 	color: #000;
 	display: inline-block;
-	height: 50px;
-	padding-top: 12px;
+	font-size: 150%;
+	height: 100px;
+	padding-top: 13px;
 	text-align: center;
-	width: 50px;	
+	width: 100px;
 }
 
 @media (min-width: 45em) {
