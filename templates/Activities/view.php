@@ -52,40 +52,32 @@ if ($this->Identity->isLoggedIn()) {
 </style>
 <div class="row justify-content-md-center">
 <div class="col-md-9">
-<div class="card" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
-<div class="card-body">
 
 
-
-
+<div class="p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 
 
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
-
 	</div>
+
 	<?php if($activity->status_id == 3): ?>
 	<span class="badge badge-danger">DEFUNCT</span>
 	<?php endif ?>
 	<?php if($activity->moderation_flag == 1): ?>
 	<span class="badge badge-warning">INVESTIGATE</span>
 	<?php endif ?>
-
-
 	<?php endif; // role check ?>
 
 
 	<?php foreach($activity->tags as $tag): ?>
-	<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
+	<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
 	<?php endforeach ?>
 
 
 	<h1 class="my-1">
 		<?= $activity->name ?>
-		<?php if($role == 2 || $role == 5): ?>
-		<a class="badge badge-light" href="/activities/view/<?= $activity->id ?>">#</a>
-		<?php endif ?>
 	</h1>
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
 		<?= $activity->description ?>
@@ -106,7 +98,7 @@ if ($this->Identity->isLoggedIn()) {
 		<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 			<i class="fas fa-exclamation-triangle"></i>
 		</a>	
-		<a href="/activities/like/<?= $activity->id ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+		<a href="/learning-curator/activities/like/<?= $activity->id ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 		</a>
 	<?php if(!empty($uid)): ?>
@@ -120,36 +112,46 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endif ?>
 	<?php endif ?>
 
+	<div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
 
+<div><?= h($activity->hyperlink) ?></div>
+<!--
+<div><?= __('Isbn') ?></div>
+<div><?= h($activity->isbn) ?></div>
+-->
+<div><?= __('Licensing') ?></div>
 
+<?= $this->Text->autoParagraph(h($activity->licensing)); ?>
 
-<?php if($role == 2 || $role == 5): ?>
-<div class="my-3 p-3" style="background-color: rgba(255,255,255,.3)">
-<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#assignment<?= $activity->id ?>" aria-expanded="false" aria-controls="assignment<?= $activity->id ?>">
-    Path Assigment
-  </button>
+</div>
 
-  <?php endif ?>
-
+<h3>This activity is a part of the following pathways</h3>
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
 <?php if($path->status_id == 2): ?>
-<span class="badge badge-light"><a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
+<div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
+	<div><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></div>
+	<div><?= $path->description ?></div>
+</div>
 <?php endif ?>
 <?php endforeach ?>
 <?php endforeach ?>
 
 
-
+<?php if($role == 2 || $role == 5): ?>
+	
+<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#assignment<?= $activity->id ?>" aria-expanded="false" aria-controls="assignment<?= $activity->id ?>">
+    Path Assigment
+  </button>
+  
 <div class="collapse" id="assignment<?= $activity->id ?>">
 <?php foreach($allpathways as $pathway): ?>
 <div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
-<?php if($role == 2 || $role == 5): ?>
 <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#steps<?= $pathway->id ?>" aria-expanded="false" aria-controls="steps<?= $pathway->id ?>">
     Steps
   </button>
 
-<a href="/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
+<a href="/learning-curator/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
 
 <div class="collapse p-3" id="steps<?= $pathway->id ?>">
 <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
@@ -165,40 +167,15 @@ if ($this->Identity->isLoggedIn()) {
 <?= $this->Form->end() ?>
 </div>
 </div>
-<?php endif ?>
+
 <?php endforeach ?>
-</div>
-</div>
+</div> <!-- .collapse -->
 
-
-
-
-
-
-
-
-
-<div class="card">
-<div class="card-body">
-
-<div><?= h($activity->hyperlink) ?></div>
-<div><?= __('Isbn') ?></div>
-<div><?= h($activity->isbn) ?></div>
-<div class="text">
-<strong><?= __('Licensing') ?></strong>
-<blockquote>
-<?= $this->Text->autoParagraph(h($activity->licensing)); ?>
-</blockquote>
-</div>
-
-<?php if($role == 2 || $role == 5): ?>
-<div class="text">
-<strong><?= __('Moderator Notes') ?></strong>
+<h4><?= __('Moderator Notes') ?></h4>
 <blockquote>
 <?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
 </blockquote>
-</div>
-<div class="related">
+
 <h4><?= __('Related Users') ?></h4>
 <?php if (!empty($activity->users)) : ?>
 <?php foreach ($activity->users as $users) : ?>
@@ -207,8 +184,8 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php endforeach; ?>
 <?php endif; ?>
-</div>
-<div class="related">
+
+
 <h4><?= __('Related Competencies') ?></h4>
 <?php if (!empty($activity->competencies)) : ?>
 <?php foreach ($activity->competencies as $competencies) : ?>
@@ -217,18 +194,11 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php endforeach; ?>
 <?php endif; ?>
-</div>
+
 
 <?php endif; ?>
 </div>
 </div>
-</div>
-
-</div>
-
-</div>
-
-
 </div>
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>

@@ -12,7 +12,7 @@ label {
 }
 </style>
 <pre><?php //print_r($step); exit; ?></pre>
-<h1><a href="/pathways/view/<?= $step->pathways[0]->id ?>"><?= $step->name ?></a></h1>
+<h1><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $step->name ?></a></h1>
 
 
 <div class="row">
@@ -27,6 +27,19 @@ label {
         <?= $this->Form->control('description', ['class' => 'form-control']) ?>
         <?= $this->Form->button(__('Save Step'),['class' => 'btn btn-success btn-block my-3']) ?>
         <?= $this->Form->end() ?>
+    </div>
+    </div>
+	<div class="col-md-4">
+    <div class="card card-body">
+        <h2>Add Activity</h2>
+        <form method="get" id="actfind" action="/learning-curator/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
+		    <input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
+            <input type="hidden" name="step_id" value="<?= $step->id ?>">
+		    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+	    </form>
+        
+        <ul class="list-group list-group-flush" id="results">
+        </ul>
     </div>
     </div>
     <div class="col-md-4">
@@ -48,7 +61,7 @@ label {
                 <div class="row">
                 <div class="col-9">
                     <?php if($a->_joinData->required) echo '<span class="badge badge-success">Required</span>' ?> 
-                    <a href="/activities/view/<?= $a->id ?>"><?= $a->name ?></a> 
+                    <a href="/learning-curator/activities/view/<?= $a->id ?>"><?= $a->name ?></a> 
                 </div>
                 <div class="col-3">
                 <!--
@@ -82,7 +95,7 @@ label {
                 <?= $this->Form->button(__('r'),['class'=>'btn btn-sm btn-light float-left']) ?>
                 <?= $this->Form->end() ?>
 
-                <?= $this->Form->create(null,['action' => '/activities-steps/delete/' . $a->_joinData->id, 'class' => 'form-inline']) ?>
+                <?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $a->_joinData->id, 'class' => 'form-inline']) ?>
                 <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
                 <?= $this->Form->button(__('x'),['class' => 'btn btn-sm btn-light']) ?>
                 <?= $this->Form->end() ?>
@@ -93,19 +106,7 @@ label {
         </ul>
     </div>
     </div>
-    <div class="col-md-4">
-    <div class="card card-body">
-        <h2>Add Activity</h2>
-        <form method="get" id="actfind" action="/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
-		    <input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
-            <input type="hidden" name="step_id" value="<?= $step->id ?>">
-		    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-	    </form>
-        </div>
-        <ul class="list-group list-group-flush" id="results">
-        </ul>
-    </div>
-    </div>
+    
 </div>
 
 
@@ -128,7 +129,7 @@ $(function () {
             var sid = evt.item.dataset.stepid;
             var foo = itemEl.split('-');
             var formd = {id: sid, activity_id: foo[1], step_id: <?= $step->id ?>, direction: 'down', sortorder: 0};
-            var u = '/activities-steps/sort/' + sid;
+            var u = '/learning-curator/activities-steps/sort/' + sid;
             //console.log(sid);
             $.ajax({
                 type: "POST",

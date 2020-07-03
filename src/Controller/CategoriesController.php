@@ -37,14 +37,15 @@ class CategoriesController extends AppController
     public function view($id = null)
     {
 	    $this->Authorization->skipAuthorization();
-        $category = $this->Categories->get($id, [
-            'contain' => ['Activities', 'Pathways','Pathways.Statuses'],
+        $categories = $this->Categories->find('all');
+		$category = $this->Categories->get($id, [
+            'contain' => ['Activities', 'Pathways','Pathways.Statuses','Topics','Topics.Pathways'],
         ]);
         
         // $cats = TableRegistry::getTableLocator()->get('Categories');
         // $category = $cats->find('all')->contain('Activities', 'Pathways')->where(['status_id' => 3]);
 
-        $this->set('category', $category);
+        $this->set(compact('categories','category'));
     }
 
     /**
@@ -80,6 +81,7 @@ class CategoriesController extends AppController
         $category = $this->Categories->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($category);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $category = $this->Categories->patchEntity($category, $this->request->getData());
             if ($this->Categories->save($category)) {
@@ -103,6 +105,7 @@ class CategoriesController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $category = $this->Categories->get($id);
+        $this->Authorization->authorize($category);
         if ($this->Categories->delete($category)) {
             $this->Flash->success(__('The category has been deleted.'));
         } else {

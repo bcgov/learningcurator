@@ -81,7 +81,6 @@ class PathwaysController extends AppController
                 array_push($useractivitylist, $uact['activity_id']);
             }
         }
-
         $pathway = $this->Pathways->get($id, [
             'contain' => ['Categories', 
                             'Ministries', 
@@ -196,7 +195,7 @@ class PathwaysController extends AppController
     public function edit($id = null)
     {
         $pathway = $this->Pathways->get($id, [
-            'contain' => ['Competencies', 'Steps', 'Users'],
+            'contain' => ['Competencies', 'Steps', 'Users', 'Topics'],
         ]);
 
         $this->Authorization->authorize($pathway);
@@ -210,12 +209,13 @@ class PathwaysController extends AppController
             $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
         }
         $categories = $this->Pathways->Categories->find('list', ['limit' => 200]);
+        $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $statuses = $this->Pathways->Statuses->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'categories', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
+        $this->set(compact('pathway', 'categories', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
     }
 
     /**
@@ -455,6 +455,7 @@ class PathwaysController extends AppController
                 $participatepercentleft = 100;
             }
 
+
             $percentages = array(
                     array($readpercent,$readpercentleft,$readcolor),
                     array($watchpercent,$watchpercentleft,$watchcolor),
@@ -462,7 +463,7 @@ class PathwaysController extends AppController
                     array($participatepercent,$participatepercentleft,$participatecolor)
             );
             
-            $status = 'In progress ' . $overallp . '%';
+            $status = $overallp;
             if($overallp == 100) {
                 $status = 'Completed!';
                 // #TODO check against current pathways_users status in db and 
@@ -477,7 +478,9 @@ class PathwaysController extends AppController
                 $chartjs .= '},';
             }
             $chartjs = rtrim($chartjs, ',');
-            $chartjs .= ']}';
+			$chartjs .= '],"labels": ["Completed %","In progress %"]';
+        
+            $chartjs .= '}';
             
             if(!empty($user)) {
 
@@ -497,6 +500,101 @@ class PathwaysController extends AppController
 
 
     } // end of method
+
+
+
+
+
+
+
+        /**
+     * View method
+     *
+     * @param string|null $id Pathway id.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function path ($id = null)
+    {
+        $this->Authorization->skipAuthorization();
+        // As we loop through the activities for the steps on this pathway, we 
+        // need to be able to check to see if the current user has "claimed" 
+        // that activity. Here we get the current user id and use it to select 
+        // all of the claimed activities assigned to them, and then process out 
+        // just the activity IDs into a simple array. Then, in the template 
+        // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
+        //
+        // First let's check to see if this person is logged in or not.
+        //
+	    $user = $this->request->getAttribute('authentication')->getIdentity();
+        if(!empty($user)) {
+            // We need create an empty array first. If nothing gets added to
+            // it, so be it
+            $useractivitylist = array();
+            // Get access to the apprprioate table
+            $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
+            // Select based on currently logged in person
+            $useacts = $au->find()->where(['user_id = ' => $user->id]);
+            // convert the results into a simple array so that we can
+            // use in_array in the template
+            $useractivities = $useacts->toList();
+            // Loop through the resources and add just the ID to the 
+            // array that we will pass into the template
+            foreach($useractivities as $uact) {
+                array_push($useractivitylist, $uact['activity_id']);
+            }
+        }
+
+        $pathway = $this->Pathways->get($id, [
+            'contain' => ['Categories', 
+                            'Ministries', 
+                            'Competencies', 
+                            'Steps', 
+                            'Steps.Activities', 
+                            'Steps.Activities.ActivityTypes', 
+                            'Steps.Activities.Users', 
+                            'Steps.Activities.Tags', 
+                            'Users'],
+        ]);
+    //
+	// we want to be able to tell if the current user is already on this
+	// pathway or not, so we take the same approach as above, parsing all
+	// the users into a single array so that we can perform a simple
+	// in_array($thisuser,$usersonthispathway) check and show the "take
+	// this Pathway" button or "you're on this Pathway" text
+	//
+	// Create the initially empty array that we also pass into the template
+	$usersonthispathway = array();
+	// Loop through the users that are on this pathway and parse just the 
+	// IDs into the array that we just created
+	foreach($pathway->users as $pu) {
+		array_push($usersonthispathway,$pu->id);
+    }
+
+    // In order to implement the scrollspy step navigation we zip through
+    // and compile a list of the steps and convert them to slugs. Now we
+    // can run through the steps and link to them outside of the main 
+    // loop #TODO in the template we're hacking this by having a separate
+    // slugify function because we don't yet store the slug when we save
+    // the step. We need to add a new entity to the steps table (also the
+    // pathways table) to do this. Fairly high priority really.
+    $stepsalongtheway = array();
+    foreach($pathway->steps as $step) {
+        array_push($stepsalongtheway,array('slug' => Text::slug(strtolower($step->name)), 
+                                            'name' => $step->name, 
+                                            'objective' => $step->description));
+	}
+
+
+    if(!empty($user)) {
+		$this->set(compact('pathway', 'usersonthispathway','stepsalongtheway', 'useractivitylist'));
+	} else {
+		$this->set(compact('pathway', 'usersonthispathway','stepsalongtheway'));
+	}
+
+    }
+
+
 
 
 

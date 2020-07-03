@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+Use Cake\ORM\TableRegistry;
+
+
 /**
  * Users Controller
  *
@@ -46,7 +49,8 @@ class UsersController extends AppController
     public function list()
     {
         $this->Authorization->skipAuthorization();
-        $users = $this->paginate($this->Users);
+        $users = $this->paginate($this->Users, ['order' => ['Users.id' => 'desc']]);
+        //$this->Authorization->authorize($users);
 
 
         $this->set(compact('users'));
@@ -63,6 +67,7 @@ class UsersController extends AppController
         $user = $this->Users->get($id, [
             'contain' => ['Ministries', 'Roles', 'Activities', 'Competencies', 'Pathways'],
         ]);
+		//$categories = $this->Categories->find('all');
         $this->Authorization->authorize($user);
 
         $this->set('user', $user);
@@ -92,6 +97,7 @@ class UsersController extends AppController
         $this->Authorization->skipAuthorization();
         $user = $this->Users->newEmptyEntity();
         $idir = env('REMOTE_USER');
+		$idir = strtolower(str_replace('IDIR\\','',$idir));
         $user->name = $idir;
         $user->idir = $idir;
         $user->ministry_id = 1;
@@ -102,7 +108,8 @@ class UsersController extends AppController
         if ($this->Users->save($user)) {
             return $this->redirect(['action' => 'home']);
         } else {
-            echo 'Something went wrong when creating your account. Please contact learningagent@gov.bc.ca for assistance.';
+            //return $user;
+			echo 'Something went wrong when creating your account. Please contact learningagent@gov.bc.ca for assistance.';
         }
 
     }
@@ -252,7 +259,12 @@ class UsersController extends AppController
                             'Ministries'],
         ]);
         $this->Authorization->authorize($user);
-        $this->set('user', $user);
+		
+		$cats = TableRegistry::getTableLocator()->get('Categories');
+        $allcats = $cats->find('all');
+		
+		
+        $this->set(compact('allcats','user'));
     }
 
 }

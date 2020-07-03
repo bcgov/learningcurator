@@ -65,6 +65,11 @@ class PathwaysTable extends Table
             'targetForeignKey' => 'step_id',
             'joinTable' => 'pathways_steps',
         ]);
+        $this->belongsToMany('Topics', [
+            'foreignKey' => 'pathway_id',
+            'targetForeignKey' => 'topic_id',
+            'joinTable' => 'pathways_topics',
+        ]);
         $this->belongsToMany('Users', [
             'foreignKey' => 'pathway_id',
             'targetForeignKey' => 'user_id',

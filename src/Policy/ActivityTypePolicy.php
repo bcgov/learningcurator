@@ -20,6 +20,11 @@ class ActivityTypePolicy
      */
     public function canCreate(IdentityInterface $user, ActivityType $activityType)
     {
+        if($this->isAdmin($user, $activityType)) {
+            return true;
+        } elseif($this->isCurator($user,$activityType)) {
+            return true;
+        }
     }
 
     /**
@@ -31,7 +36,11 @@ class ActivityTypePolicy
      */
     public function canEdit(IdentityInterface $user, ActivityType $activityType)
     {
-	return true;
+        if($this->isAdmin($user, $activityType)) {
+            return true;
+        } elseif($this->isCurator($user,$activityType)) {
+            return true;
+        }
     }
 
     /**
@@ -43,6 +52,11 @@ class ActivityTypePolicy
      */
     public function canDelete(IdentityInterface $user, ActivityType $activityType)
     {
+        if($this->isAdmin($user, $activityType)) {
+            return true;
+        } elseif($this->isCurator($user,$activityType)) {
+            return false;
+        }
     }
 
     /**
@@ -54,6 +68,19 @@ class ActivityTypePolicy
      */
     public function canView(IdentityInterface $user, ActivityType $activityType)
     {
-return true;
+        return true;
+    }
+
+    protected function isLearner(IdentityInterface $user, ActivityType $activityType)
+    {
+        return $resource->id === $user->getIdentifier();
+    }
+    protected function isAdmin(IdentityInterface $user, ActivityType $activityType)
+    {
+        return $user->role_id === 5;
+    }
+    protected function isCurator(IdentityInterface $user, ActivityType $activityType)
+    {
+        return $user->role_id === 2;
     }
 }

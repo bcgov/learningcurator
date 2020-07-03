@@ -59,6 +59,7 @@ class Pathway extends Entity
         'ministry' => true,
         'competencies' => true,
         'steps' => true,
+        'topics' => true,
         'users' => true,
         'status_id' => true,
     ];

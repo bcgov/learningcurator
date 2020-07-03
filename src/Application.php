@@ -124,7 +124,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
         $authenticationService = new \Authentication\AuthenticationService();
         
         $authenticationService->setConfig([
-            'unauthenticatedRedirect' => '/users/autoadd',
+            'unauthenticatedRedirect' => '/learning-curator/users/autoadd',
             'queryParam' => 'redirect',
         ]);
         // The Idir authenticator is currently just a stripped down version 

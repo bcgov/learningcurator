@@ -16,3 +16,87 @@ img {
 	height: auto;
 	max-width: 100%;
 }
+.btn-success {
+    background-color: rgba(88,174,36,1) !important;
+    border: 0;
+}
+#colorful {
+    background: rgb(193,129,183);
+    background: radial-gradient(circle, rgba(255,218,96,1) 0%, rgba(244,105,115,1) 33%, rgba(249,145,180,1) 63%, rgba(193,129,183,1) 100%);
+    
+}
+#colorful a {
+    color: #555;
+}
+#colorful .breadcrumb a {
+    text-decoration: underline;
+}
+.pad-sm {
+    padding: 30px 0;
+}
+.pad-md {
+    padding: 40px 0;
+}
+.pad-lg {
+    padding: 50px 0;
+}
+.sectiontext {
+	font-size: 130%;
+	margin: 100px 0;
+	padding: 0;
+}
+canvas {
+	height: auto;
+	max-width: 100%;
+}
+
+.upro,
+.upro:hover,
+.upro:active { color: #FFF } 
+.card {
+	border: 0;
+}
+
+.breadcrumb {
+    background-color: rgba(255,255,255,.5);
+}
+.activity-icon {
+	border-radius: 50%;
+	color: #000;
+	display: inline-block;
+	font-size: 150%;
+	height: 100px;
+	padding-top: 13px;
+	text-align: center;
+	width: 100px;
+}
+
+@media (min-width: 45em) {
+    .pad-sm {
+        padding: 50px 0;
+    }
+    .pad-md {
+        padding: 100px;
+    }
+    .pad-lg {
+        padding: 150px;
+    }
+
+	
+	.stickyrings {
+		align-self: flex-start; 
+		position: -webkit-sticky;
+		position: sticky;
+		
+		top: 86px;
+		z-index: 200;
+	}
+	.stickyprogress {
+		align-self: flex-start; 
+		position: -webkit-sticky;
+		position: sticky;
+		
+		top: 0;
+		z-index: 300;
+	}
+} /* end desktop-specific code */

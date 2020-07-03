@@ -3,6 +3,7 @@
 * @var \App\View\AppView $this
 * @var \App\Model\Entity\Action[]|\Cake\Collection\CollectionInterface $activitys
 */
+$this->layout = 'nowrap';
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
@@ -11,40 +12,35 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-
 <style>
-.activity-icon {
-	border-radius: 50%;
-	color: #FFF;
-	display: inline-block;
-	height: 50px;
-	padding-top: 12px;
-	text-align: center;
-	width: 50px;
+
+.pagination {
+	background-color; rgba(255,255,255,.5);
+}
+.page-item.active .page-link {
+	background-color: #000;
+	color; #FFF;
 }
 </style>
+<div class="container-fluid">
+<div class="row justify-content-md-center" id="colorful">
+<div class="col-md-8">
+<div class="pad-sm">
+<h1><?= __('The Latest') ?></h1>
+<p><?= __('The most recently published topics, pathways, and activities.') ?></p>
+</div>
+</div>
+</div>
+</div>
+<div class="container-fluid">
 <div class="row justify-content-md-center">
-<div class="col-md-9">
-<div class="card mb-3">
-<div class="card-body">
-<?php if($role == 2 || $role == 5): ?>
-<?= $this->Html->link(__('New Activity'), ['action' => 'add', 'class' => 'btn btn-dark float-right']) ?>
-<?php endif ?>
-<h1><?= __('Latest Activities') ?></h1>
-
-<h4><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></h4>
-<nav aria-label="Acitivity page navigation">
-<ul class="pagination">
-<?= $this->Paginator->first('<< ' . __('first')) ?>
-<?= $this->Paginator->prev('< ' . __('previous')) ?>
-<?= $this->Paginator->numbers() ?>
-<?= $this->Paginator->next(__('next') . ' >') ?>
-<?= $this->Paginator->last(__('last') . ' >>') ?>
-</ul>
-</nav>
+<div class="col-md-4">
+<h2 class="mt-3">Latest Activities</h2>
+<div><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></div>
+<div class="">
 <?php foreach ($activities as $activity): ?>
 
-<div class="p-3 mb-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)">
+<div class="card card-body mb-2"> <!-- style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)" -->
 
 <h3>
 	<div class="activity-icon" style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
@@ -52,7 +48,7 @@ if ($this->Identity->isLoggedIn()) {
 	</div>
 	<?= $this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
 </h3>
-<div class="alert alert-light">
+<div class="">
 	<?= $activity->description ?>
 	<div class="mt-2"><span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i></div>
 	<div class="mt-2" style="font-size: 12px">Added on <?= $activity->created ?></div>
@@ -68,7 +64,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
 <?php if($path->status_id == 2): ?>
-<span class="badge badge-light"><a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
+<span class="badge badge-light"><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
 <?php endif ?>
 <?php endforeach ?>
 <?php endforeach ?>
@@ -84,7 +80,7 @@ if ($this->Identity->isLoggedIn()) {
   <?php if($pathway->status_id != 2): ?>
   <span class="badge badge-light"><?= $pathway->status->name ?></span> 
   <?php endif ?>
-  <a href="/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
+  <a href="/learning-curator/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
 
 <div class="collapse p-3" id="steps<?= $pathway->id ?>">
 <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
@@ -106,41 +102,50 @@ if ($this->Identity->isLoggedIn()) {
 
 </div>
 <?php endforeach; ?>
+</div> <!-- /.card-columns -->
 
-
-<nav aria-label="Acitivity page navigation">
-<ul class="pagination">
-<?= $this->Paginator->first('<< ' . __('first')) ?>
-<?= $this->Paginator->prev('< ' . __('previous')) ?>
-<?= $this->Paginator->numbers() ?>
-<?= $this->Paginator->next(__('next') . ' >') ?>
-<?= $this->Paginator->last(__('last') . ' >>') ?>
-</ul>
-<p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-</nav>
 
 
 </div>
-</div>
-<div class="col-md-3">
-<div class="card">
-<h3 class="m-3">Latest Pathways</h3>
-<ul class="list-group list-group-flush">
+
+
+<div class="col-md-4">
+
+<h2 class="mt-3">Latest Pathways</h2>
+<div>
 <?php foreach($allpathways as $path): ?>
 <?php if($path->status_id != 2): ?>
 <?php if($role == 2 || $role == 5): ?>
-	<li class="list-group-item">
+	<div class="card card-body mb-2">
 		<span class="badge badge-warning"><?= $path->status->name ?></span>
-		<a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?></a>
-	</li>
+		<h3><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?></a></h3>
+		<?= $path->objective ?>
+	</div>
 <?php endif ?>
 <?php else: ?>
-	<li class="list-group-item">
-		<a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?></a>
-	</li>
+	<div class="card card-body mb-2">
+		
+		<h3><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?></a></h3>
+		<?= $path->objective ?>
+	</div>
 <?php endif ?>
 <?php endforeach ?>
-</ul>
+</div>
+</div>
+
+<div class="col-md-4">
+<h2 class="mt-3">Latest Topics</h2>
+<?php foreach ($allcats as $cat) : ?>
+<div class="card card-body mb-2">
+<h3>
+	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
+</h3>
+<div><?= h($cat->description) ?></div>
+</div>
+<?php endforeach; ?>
+</div>
+
+
 </div>
 </div>
 </div>

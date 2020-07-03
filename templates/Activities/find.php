@@ -37,7 +37,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
-<span class="badge badge-light"><a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
+<span class="badge badge-light"><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
 <?php endforeach ?>
 <?php endforeach ?>
 
