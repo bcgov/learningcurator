@@ -4,11 +4,11 @@
 <div class="col-md-9">
 <div class="pad-lg">
 <h1>Learning Curator</h1>
-<h2>The best educational resources brought to you by expert teams on different topic areas:</h2>
+<h2>The best educational resources organized by expert teams on different topic areas:</h2>
 
 <div class="row">
 <div class="col-md-4">
-<div class="p-3" style="background-color: rgba(255,255,255,.3)">
+<div class="p-3 rounded-lg mb-3" style="background-color: rgba(255,255,255,.3)">
 	<h3><a href="/learning-curator/categories/view/1" class="">Leadership</a></h3>
 	<div>These pathways focus on building a solid personal foundation—whether 
 	your interest is in developing your skills where you are right now or to 
@@ -16,7 +16,7 @@
 </div>
 </div>
 <div class="col-md-4">
-<div class="p-3" style="background-color: rgba(255,255,255,.3)">
+<div class="p-3 rounded-lg mb-3" style="background-color: rgba(255,255,255,.3)">
 	<h3><a href="/learning-curator/categories/view/2" class="">Role Specific</a></h3>
 	<div>These pathways focus on building a solid personal foundation—whether 
 	your interest is in developing your skills where you are right now or to 
@@ -24,7 +24,7 @@
 </div>
 </div>
 <div class="col-md-4">
-<div class="p-3" style="background-color: rgba(255,255,255,.3)">
+<div class="p-3 rounded-lg mb-3" style="background-color: rgba(255,255,255,.3)">
 	<h3><a href="/learning-curator/categories/view/3" class="">Technology</a></h3>
 	<div>These pathways focus on building a solid personal foundation—whether 
 	your interest is in developing your skills where you are right now or to 
@@ -46,15 +46,17 @@
 
 <div class="row justify-content-md-center bg-white align-items-center" id="activitytypes">
 
-<div class="col-md-10 col-lg-5">
+<div class="col-md-12 col-lg-12">
 
 <div class="sectiontext">
 <div class="my-3 row justify-content-md-center">
+<?php $count = 0 ?>
 <?php foreach($atypes as $type): ?>
+<?php $count++ ?>
 	<div class="col-md-6">
-	<div class="m-3 p-3">
+	<div class="m-3 p-3<?php if($count % 2 > 0) echo ' text-right' ?>">
 	<div class="mb-3">
-		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="activity-icon" style="background-color: rgba(<?= $type->color ?>,1)">
+		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="activity-icon<?php if($count % 2 > 0) echo ' float-right' ?>" style="background-color: rgba(<?= $type->color ?>,1)">
 			<i class="activity-icon fas <?= $type->image_path ?>"></i>
 			
 		</a>
@@ -62,7 +64,7 @@
 			<?= h($type->name) ?>
 		</a>
 	</div>
-		<div class="mb-3">
+		<div class="mb-3" style="clear:both">
 		<?= $type->description ?>
 		</div>
 	</div>
