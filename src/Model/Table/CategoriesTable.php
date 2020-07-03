@@ -49,6 +49,11 @@ class CategoriesTable extends Table
         $this->hasMany('Pathways', [
             'foreignKey' => 'category_id',
         ]);
+        $this->belongsToMany('Topics', [
+            'foreignKey' => 'category_id',
+            'targetForeignKey' => 'topic_id',
+            'joinTable' => 'categories_topics',
+        ]);
     }
 
     /**

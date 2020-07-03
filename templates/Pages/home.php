@@ -4,14 +4,33 @@
 <div class="col-md-9">
 <div class="pad-lg">
 <h1>Learning Curator</h1>
-<h2>A curation space for informal learning resources</h2>
-<h3>Just the best educational resources, brought to you by a team of experts in different topic areas:</h3>
+<h2>The best educational resources brought to you by expert teams on different topic areas:</h2>
 
-<div>
-	<a href="/learning-curator/categories/view/1" class="btn btn-lg btn-light">Leading Self</a>
-	<a href="/learning-curator/categories/view/2" class="btn btn-lg btn-light">Leading Others</a>
-	<a href="/learning-curator/categories/view/3" class="btn btn-lg btn-light">Leading Organizations</a>
-	
+<div class="row">
+<div class="col-md-4">
+<div class="p-3" style="background-color: rgba(255,255,255,.3)">
+	<h3><a href="/learning-curator/categories/view/1" class="">Leadership</a></h3>
+	<div>These pathways focus on building a solid personal foundation—whether 
+	your interest is in developing your skills where you are right now or to 
+	develop for future roles.</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="p-3" style="background-color: rgba(255,255,255,.3)">
+	<h3><a href="/learning-curator/categories/view/2" class="">Role Specific</a></h3>
+	<div>These pathways focus on building a solid personal foundation—whether 
+	your interest is in developing your skills where you are right now or to 
+	develop for future roles.</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="p-3" style="background-color: rgba(255,255,255,.3)">
+	<h3><a href="/learning-curator/categories/view/3" class="">Technology</a></h3>
+	<div>These pathways focus on building a solid personal foundation—whether 
+	your interest is in developing your skills where you are right now or to 
+	develop for future roles.</div>
+	</div>
+</div>	
 </div>
 
 

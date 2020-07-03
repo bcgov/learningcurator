@@ -58,9 +58,9 @@
 				Pathways
 		</a>
 		<div class="dropdown-menu" aria-labelledby="pathwaysDropdown">
-			<a class="dropdown-item" href="/learning-curator/categories/view/1">Leading Self</a>
-			<a class="dropdown-item" href="/learning-curator/categories/view/2">Leading Others</a>
-			<a class="dropdown-item" href="/learning-curator/categories/view/3">Leading Organizations</a>
+			<a class="dropdown-item" href="/learning-curator/categories/view/1">Leadership</a>
+			<a class="dropdown-item" href="/learning-curator/categories/view/2">Role Specific</a>
+			<a class="dropdown-item" href="/learning-curator/categories/view/3">Technology</a>
 		</div>
 		</li>
 		<li class="nav-item">

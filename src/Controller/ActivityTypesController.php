@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+Use Cake\ORM\TableRegistry;
 
 /**
  * ActivityTypes Controller
@@ -37,9 +38,13 @@ class ActivityTypesController extends AppController
         $activityType = $this->ActivityTypes->get($id, [
             'contain' => [],
         ]);
+        $acts = TableRegistry::getTableLocator()->get('Activities');
+        // Select based on currently logged in person
+        $activities = $acts->find()->where(['activity_types_id = ' => $id]);
+
         $this->Authorization->authorize($activityType);
 
-        $this->set('activityType', $activityType);
+        $this->set(compact('activityType','activities'));
     }
 
     /**

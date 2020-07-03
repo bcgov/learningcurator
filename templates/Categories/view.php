@@ -32,12 +32,18 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 
 <div class="container-fluid">
-<div class="row justify-content-md-center align-items-center">
+<div class="row justify-content-md-center">
+
+
+<?php if (!empty($category->topics)) : ?>
+<?php foreach ($category->topics as $topic) : ?>
 <div class="col-md-4 pt-3">
 
-<?php if (!empty($category->pathways)) : ?>
-<?php foreach ($category->pathways as $pathway) : ?>
-<div class="card card-body mb-2">
+<h2><?= $topic->name ?></h2>
+<div><?= $topic->description ?></div>
+<?php foreach ($topic->pathways as $pathway) : ?>
+
+<div class="card card-body mb-3">
 <?php if($pathway->status_id != 2): // is not published? ?>
 <?php if($role == 2 || $role == 5): // is curator or admin ?>
 <span class="badge badge-warning"><?= $pathway->status->name ?></span>
@@ -49,20 +55,25 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php endif; // is curator or admin ?>
 <?php else: ?>
-<h2>
+<h3>
 <?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->id]) ?>
-</h2>
+</h3>
 <div class="mb-3">
 <?= h($pathway->description) ?>
 </div>
 <?php endif; // is not published ?>
-</div>
-
-<?php endforeach; ?>
-<?php endif; ?>
-
 
 </div>
+<?php endforeach ?>
+</div>
+
+<?php endforeach ?>
+
+<?php endif; // topics ?>
+
+
+
+
 </div>
 </div>
 
