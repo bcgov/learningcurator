@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Activity $activity
  */
+$this->layout = 'nowrap';
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
@@ -11,52 +12,12 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<style>
-.bigicon {
-    border-radius: 50%;
-    color: #FFF;
-    float: right;
-    font-size: 36px;
-    height: 100px;
-    padding: 20px 0 0 5px;
-    text-align: center;
-    width: 100px;
-}
-@media (min-width: 34em) {
-    .card-columns {
-        -webkit-column-count:2;
-        -moz-column-count:2;
-        column-count:2;
-    }
-}
-.hours {
-	background: rgba(255,255,255,1);
-	color: #222;
-}
-.required {
-	background: rgba(0,0,0,1);
-	color: #FFF;
-	float: right;
-}
-.required,
-.hours {
-	border-radius: 5px;
-	display: inline-block;
-	padding: 0 10px;
-	text-align: center;
-	text-transform: uppercase;
-}
+<div class="container-fluid">
+<div class="row justify-content-md-center"
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border:0">
 
-</style>
-
-</style>
-<div class="row justify-content-md-center">
-<div class="col-md-9">
-
-
-<div class="p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
-
-
+<div class="col-md-8">
+<div class="pad-lg">
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
@@ -71,17 +32,25 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endif; // role check ?>
 
 
-	<?php foreach($activity->tags as $tag): ?>
-	<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
-	<?php endforeach ?>
-
-
 	<h1 class="my-1">
 		<?= $activity->name ?>
 	</h1>
-	<div class="p-3" style="background: rgba(255,255,255,.3);">
+	<div class="p-3 rounded-lg" style="background: rgba(255,255,255,.3);">
 		<?= $activity->description ?>
 	</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row justify-content-md-center">
+
+<div class="col-md-6">
+<div class="bg-white rounded-lg my-3 p-3">
+
+<?php foreach($activity->tags as $tag): ?>
+	<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
+	<?php endforeach ?>
 	<div class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 		<i class="fas fa-clock"></i>
 		<?= $activity->estimated_time ?>
@@ -89,8 +58,8 @@ if ($this->Identity->isLoggedIn()) {
 
 	<a target="_blank" 
 		href="<?= $activity->hyperlink ?>" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
-		class="btn btn-block my-2 text-uppercase btn-lg">
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); font-weight: bold;" 
+		class="btn btn-block my-3 text-uppercase btn-lg">
 
 			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
 			<?= $activity->activity_type->name ?>
@@ -123,80 +92,77 @@ if ($this->Identity->isLoggedIn()) {
 
 <?= $this->Text->autoParagraph(h($activity->licensing)); ?>
 
-</div>
+<?php if($role == 2 || $role == 5): ?>
+	
+	<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#assignment<?= $activity->id ?>" aria-expanded="false" aria-controls="assignment<?= $activity->id ?>">
+		Path Assigment
+	  </button>
+	  
+	<div class="collapse" id="assignment<?= $activity->id ?>">
+	<?php foreach($allpathways as $pathway): ?>
+	<div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
+	<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#steps<?= $pathway->id ?>" aria-expanded="false" aria-controls="steps<?= $pathway->id ?>">
+		Steps
+	  </button>
+	
+	<a href="/learning-curator/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
+	
+	<div class="collapse p-3" id="steps<?= $pathway->id ?>">
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
+	<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id ]) ?>
+	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+	<?php foreach($pathway->steps as $step): ?>
+	<label style="display: inline-block; margin: 0 10px 0 5px;">
+	<input id="step_id_<?= $step->id ?>" type="radio" name="step_id" value="<?= $step->id ?>">
+	<?= $step->name ?>
+	</label>
+	<?php endforeach ?>
+	<?= $this->Form->button(__('Assign'),['class'=>'btn btn-sm btn-light']) ?>
+	<?= $this->Form->end() ?>
+	</div>
+	</div>
+	
+	<?php endforeach ?>
+	</div> <!-- .collapse -->
+	
+	<h4><?= __('Moderator Notes') ?></h4>
+	<blockquote>
+	<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
+	</blockquote>
+	
+	<h4><?= __('Related Users') ?></h4>
+	<?php if (!empty($activity->users)) : ?>
+	<?php foreach ($activity->users as $users) : ?>
+	<div>
+		<?= $this->Html->link($users->name, ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
+	</div>
+	<?php endforeach; ?>
+	<?php endif; ?>
+	
+	
+	
+	
+	<?php endif; ?>
 
-<h3>This activity is a part of the following pathways</h3>
+</div>
+</div>
+</div>
+<div class="col-md-6">
+
+<h3 class="mt-3">Pathways</h3>
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
 <?php if($path->status_id == 2): ?>
-<div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
-	<div><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></div>
-	<div><?= $path->description ?></div>
+<div class="my-1 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
+	<h4><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
+	<div><?= $step->description ?></div>
 </div>
 <?php endif ?>
 <?php endforeach ?>
 <?php endforeach ?>
 
 
-<?php if($role == 2 || $role == 5): ?>
-	
-<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#assignment<?= $activity->id ?>" aria-expanded="false" aria-controls="assignment<?= $activity->id ?>">
-    Path Assigment
-  </button>
-  
-<div class="collapse" id="assignment<?= $activity->id ?>">
-<?php foreach($allpathways as $pathway): ?>
-<div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
-<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#steps<?= $pathway->id ?>" aria-expanded="false" aria-controls="steps<?= $pathway->id ?>">
-    Steps
-  </button>
-
-<a href="/learning-curator/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
-
-<div class="collapse p-3" id="steps<?= $pathway->id ?>">
-<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
-<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id ]) ?>
-<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-<?php foreach($pathway->steps as $step): ?>
-<label style="display: inline-block; margin: 0 10px 0 5px;">
-<input id="step_id_<?= $step->id ?>" type="radio" name="step_id" value="<?= $step->id ?>">
-<?= $step->name ?>
-</label>
-<?php endforeach ?>
-<?= $this->Form->button(__('Assign'),['class'=>'btn btn-sm btn-light']) ?>
-<?= $this->Form->end() ?>
 </div>
-</div>
-
-<?php endforeach ?>
-</div> <!-- .collapse -->
-
-<h4><?= __('Moderator Notes') ?></h4>
-<blockquote>
-<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
-</blockquote>
-
-<h4><?= __('Related Users') ?></h4>
-<?php if (!empty($activity->users)) : ?>
-<?php foreach ($activity->users as $users) : ?>
-<div>
-    <?= $this->Html->link($users->name, ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
-</div>
-<?php endforeach; ?>
-<?php endif; ?>
-
-
-<h4><?= __('Related Competencies') ?></h4>
-<?php if (!empty($activity->competencies)) : ?>
-<?php foreach ($activity->competencies as $competencies) : ?>
-<div>
-<?= $this->Html->link($compentencies->name, ['controller' => 'Competencies', 'action' => 'view', $competencies->id]) ?>
-</div>
-<?php endforeach; ?>
-<?php endif; ?>
-
-
-<?php endif; ?>
 </div>
 </div>
 </div>

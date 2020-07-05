@@ -195,23 +195,16 @@ $lastobj = $s->description;
 <div class="col-md-5">
 <?php if (!empty($step->activities)) : ?>
 
-<div class="">
 <?php foreach ($requiredacts as $activity) : ?>
 <?php $claimborder = 'border: 0'; ?>
 <?php if(in_array($activity->id,$useractivitylist)): // if the user has claimed this, outline the box ?>
 <?php $claimborder = ''; //'box-shadow: 0 0 10px rgba(0,0,0,.4)'; ?>
 <?php endif ?>
-<div class="card card-body mb-3 activity" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); <?= $claimborder ?>">
+<div class="p-3 mb-3 rounded-lg activity" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); <?= $claimborder ?>">
 
-	<?php if($role == 2 || $role == 5): ?>
-	<div class="">
-	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
-	</div>
-	<?php endif; // role check ?>
 
-	<?php foreach($activity->tags as $tag): ?>
-	<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
-	<?php endforeach ?>
+
 
 	<h3 class="my-3">
 		<?= $activity->name ?>
@@ -220,7 +213,10 @@ $lastobj = $s->description;
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
 		<?= $activity->description ?>
 	</div>
-	<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+	<?php foreach($activity->tags as $tag): ?>
+	<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class=""><?= $tag->name ?></a> 
+	<?php endforeach ?>
+	<span class="" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 		<i class="fas fa-clock"></i>
 		<?= $activity->estimated_time ?>
 	</span> 
@@ -276,33 +272,23 @@ $lastobj = $s->description;
 
 	<?php endif; // are there tags? ?>	
 
-	<?php if(!empty($activity->_joinData->required)): ?>
-	
-	<div class="required float-right" data-toggle="tooltip" data-placement="bottom" title="This activity is required to complete the step">
-		<i class="fas fa-check-double"></i> Required
-	</div>
-	
-	<?php else: ?>
-	
-	<div class="required float-right" data-toggle="tooltip" data-placement="bottom" title="This activity is supplemtary to completing this step">
-		<i class="fas fa-check"></i> Supplementary
-	</div>
-	
-	<?php endif ?>
-
 
 	<!-- Hiding this until we can get a proper reporting system in place.
 	<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 		<i class="fas fa-exclamation-triangle"></i>
 	</a>	-->
 
-	<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+	<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
+		<i class="fas fa-bookmark"></i> Bookmark
+	</a>
+
+	<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 	</a>
 	
 	<?php if(!empty($uid)): ?>
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim float-left mr-1']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
@@ -316,44 +302,36 @@ $lastobj = $s->description;
 	</div>
 
 	<?php endforeach; // end of activities loop for this step ?>
-</div> <!-- /.card-coumns -->
-
-	
-
-
-
 
 <?php endif; ?>
 </div>
 
 <div class="col-md-4">
-<div class="card card-body">
-<h3>Supplementary Resources</h3>
-<?php foreach ($tertiaryacts as $activity) : ?>
-<div class="card card-body">
-	<a target="_blank" 
-		rel="noopener" 
-		data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
-		href="<?= $activity->hyperlink ?>" 
-		class="">
-
-			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
-
-			<?= $activity->name ?>
-
-	</a><br>
-			<?= $activity->description ?>
+	<h3>Supplementary Resources</h3>
+	<?php foreach ($tertiaryacts as $activity): ?>
+	<div class="card card-body mb-3">
+		<h5>
+			<a href="/learning-curator/activities/view/<?= $activity->id ?>">
+				<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+				<?= $activity->name ?>
+			</a>
+		</h5>
+		<?= $activity->description ?>
+		<div>
+			<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
+				<i class="fas fa-bookmark"></i> Bookmark
+			</a>
+		</div>
 	</div>
-<?php endforeach; // end of activities loop for this step ?>
+	<?php endforeach; // end of activities loop for this step ?>
 </div>
-</div>
+
 <div class="col-12 col-md-3 col-lg-3">
 <?php if(in_array($uid,$usersonthispathway)): ?>
 <div class="card card-body mb-3 text-center stickyrings">
 <div class="mb-3 following"></div>
 <canvas id="myChart" width="250" height="250"></canvas>
 </div>
-
 <?php else: ?>
 <div class="card card-body mt-3 text-center stickyrings">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'add']]) ?>
@@ -367,14 +345,12 @@ echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 </div>
 <?php endif ?>
 </div>
-
-
 </div>
-
 </div>
 </div>
 </div>
 </div>
+
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
@@ -397,7 +373,6 @@ $(document).ready(function(){
 	// load up the activity rings
 	loadStatus();
 
-console.log('ready');
 	$('.claim').on('submit', function(e){
 		
 		e.preventDefault();

@@ -7,18 +7,18 @@
 
 <title>Learning Curator <?= $this->fetch('title') ?></title>
 
+<!--
 <link rel="stylesheet" href="/learning-curator/bootstrap-theme/dist/css/bootstrap-theme.min.css">
 
-<!--Wanna go from getting a 60 on peformance in Lighthouse to a 97? 
+Wanna go from getting a 60 on peformance in Lighthouse to a 97? 
 	Stop serving the Gov Bootstrap theme and call in Bootstrap via its CDN:
 
-
+-->
 	
 	<link rel="stylesheet" 
 			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
 			integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
 			crossorigin="anonymous">
--->
 
 
 <link href="/learning-curator/css/home.css" rel="stylesheet"> 

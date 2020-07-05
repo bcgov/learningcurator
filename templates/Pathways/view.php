@@ -195,29 +195,30 @@ foreach ($steps->activities as $activity) {
 		array_push($defunctacts,$activity);
 	} elseif($activity->status_id == 2) {
 		// if it's required
-		//if($activity->_joinData->required == 1) {
-		//	array_push($requiredacts,$activity);
+		if($activity->_joinData->required == 1) {
+			array_push($requiredacts,$activity);
+			if($activity->activity_types_id == 1) {
+				$watchstepcount++;
+				$watchcolor = $activity->activity_type->color;
+			} elseif($activity->activity_types_id == 2) {
+				$readstepcount++;
+				$readcolor = $activity->activity_type->color;
+			} elseif($activity->activity_types_id == 3) {
+				$listenstepcount++;
+				$listencolor = $activity->activity_type->color;
+			} elseif($activity->activity_types_id == 4) {
+				$participatestepcount++;
+				$participatecolor = $activity->activity_type->color;
+			}
+			if(in_array($activity->id,$useractivitylist)) {
+				$stepclaimcount++;
+			}
 		// Otherwise it's teriary
-		//} else {
-		//	array_push($tertiaryacts,$activity);
-		//}
+		} else {
+			array_push($tertiaryacts,$activity);
+		}
 		array_push($acts,$activity);
-		if($activity->activity_types_id == 1) {
-			$watchstepcount++;
-			$watchcolor = $activity->activity_type->color;
-		} elseif($activity->activity_types_id == 2) {
-			$readstepcount++;
-			$readcolor = $activity->activity_type->color;
-		} elseif($activity->activity_types_id == 3) {
-			$listenstepcount++;
-			$listencolor = $activity->activity_type->color;
-		} elseif($activity->activity_types_id == 4) {
-			$participatestepcount++;
-			$participatecolor = $activity->activity_type->color;
-		}
-		if(in_array($activity->id,$useractivitylist)) {
-			$stepclaimcount++;
-		}
+
 		$tmp = array();
 		// Loop through the whole list, add steporder to tmp array
 		foreach($acts as $line) {

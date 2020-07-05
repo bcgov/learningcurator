@@ -40,7 +40,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-4 pt-3">
 
 <h2><?= $topic->name ?></h2>
-<div><?= $topic->description ?></div>
+<div class="p-3"><?= $topic->description ?></div>
 <?php foreach ($topic->pathways as $pathway) : ?>
 
 <div class="card card-body mb-3">
