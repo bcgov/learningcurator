@@ -1,7 +1,7 @@
 <?php $this->layout = 'nowrap'; ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-9">
+<div class="col-md-12">
 <div class="pad-lg">
 <h1>Learning Curator</h1>
 <h2>The best educational resources organized by expert teams on different topic areas:</h2>
@@ -44,9 +44,9 @@
 </div>
 </div>
 
-<div class="row justify-content-md-center bg-white align-items-center" id="activitytypes">
+<div class="row justify-content-md-center bg-white" id="activitytypes">
 
-<div class="col-md-12 col-lg-12">
+<div class="col-md-8 col-lg-8">
 
 <div class="sectiontext">
 <div class="my-3 row justify-content-md-center">
@@ -54,9 +54,9 @@
 <?php foreach($atypes as $type): ?>
 <?php $count++ ?>
 	<div class="col-md-6">
-	<div class="m-3 p-3<?php if($count % 2 > 0) echo ' text-right' ?>">
+	<div class="m-3 p-3">
 	<div class="mb-3">
-		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="activity-icon<?php if($count % 2 > 0) echo ' float-right' ?>" style="background-color: rgba(<?= $type->color ?>,1)">
+		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="activity-icon" style="background-color: rgba(<?= $type->color ?>,1)">
 			<i class="activity-icon fas <?= $type->image_path ?>"></i>
 			
 		</a>
@@ -80,7 +80,7 @@
 </div>
 </div>
 
-<div class="row justify-content-md-center align-items-center">
+<div class="row justify-content-md-center align-items-center" style="background-color: rgba(249,145,80,1)">
 
 <div class="col-md-5">
 
@@ -93,9 +93,9 @@
 </div>
 
 
-<div class="row justify-content-md-center bg-white align-items-center">
+<div class="row justify-content-md-center align-items-center" style="background-color: rgba(244,105,115,1)">
 
-<div class="col-md-7">
+<div class="col-md-10">
 
 <div class="sectiontext">
 	
@@ -107,6 +107,10 @@
 	<i class="fas fa-thermometer-quarter" style="font-size: 300%"></i>
 	Dip</h3>
 	<p>Just dip your toe in the pool to see if there's anything that can inspire you.</p>
+	<form method="get" action="/learning-curator/activities/find" class="form-inline my-2 my-lg-0 mr-3">
+		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
+		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+	</form>
 </div>
 <div class="col-md-4">
 	
@@ -114,6 +118,7 @@
 	<i class="fas fa-thermometer-half" style="font-size: 300%"></i>
 	Deeper</h3>
 	<p>Go a bit deeper and look into following a pathway and tracking your progress.</p>
+
 </div>
 <div class="col-md-4">
 	
@@ -122,12 +127,7 @@
 	Dive</h3>
 	<p>Go all in and set a MyPerformance goal to complete your pathways.</p>
 </div>
-<div class="col-md-8 pt-3">
-<div class="my-3">Learning curation offers a dynamic approach to supporting your performance. As a self-directed experience, 
-	you select what, and when, and how much to engage with the learning here. If you want to dip into a few 
-	resources and sample what’s on offer, that’s fine. If you want to keep track of your progress through a 
-	learning pathway, that’s fine too! You’re in control. </div>
-</div>
+
 </div>
 
 </div>

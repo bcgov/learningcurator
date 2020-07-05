@@ -42,7 +42,7 @@ img {
 }
 .sectiontext {
 	font-size: 130%;
-	margin: 100px 0;
+	margin: 80px 0;
 	padding: 0;
 }
 canvas {
@@ -76,10 +76,10 @@ canvas {
         padding: 50px 0;
     }
     .pad-md {
-        padding: 100px;
+        padding: 60px;
     }
     .pad-lg {
-        padding: 150px;
+        padding: 80px;
     }
 
 	
