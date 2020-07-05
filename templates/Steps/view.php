@@ -199,7 +199,7 @@ $lastobj = $s->description;
 <?php foreach ($requiredacts as $activity) : ?>
 <?php $claimborder = 'border: 0'; ?>
 <?php if(in_array($activity->id,$useractivitylist)): // if the user has claimed this, outline the box ?>
-<?php $claimborder = 'box-shadow: 0 0 10px rgba(0,0,0,.4)'; ?>
+<?php $claimborder = ''; //'box-shadow: 0 0 10px rgba(0,0,0,.4)'; ?>
 <?php endif ?>
 <div class="card card-body mb-3 activity" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); <?= $claimborder ?>">
 

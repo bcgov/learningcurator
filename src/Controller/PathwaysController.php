@@ -355,53 +355,54 @@ class PathwaysController extends AppController
                         array_push($defunctacts,$activity);
                     } else {
                         // if it's required
-                        //if($activity->_joinData->required == 1) {
-                            //array_push($requiredacts,$activity);
+                        if($activity->_joinData->required == 1) {
+                            array_push($requiredacts,$activity);
+                            //
+                            // we want to count each type on a per step basis
+                            // as well as adding to the total
+                            //
+                            if($activity->activity_type->name == 'Read') {
+                                $readcolor = $activity->activity_type->color;
+                                $readicon = $activity->activity_type->image_path;
+                                $readcount++;
+                                $readtotal++;
+                                if(in_array($activity->id,$useractivitylist)) {
+                                    $readclaim++;
+                                }
+                            } elseif($activity->activity_type->name == 'Watch') {
+                                $watchcolor = $activity->activity_type->color;
+                                $watchicon = $activity->activity_type->image_path;
+                                $watchcount++;
+                                $watchtotal++;
+                                if(in_array($activity->id,$useractivitylist)) {
+                                    $watchclaim++;
+                                }
+                            } elseif($activity->activity_type->name == 'Listen') {
+                                $listencolor = $activity->activity_type->color;
+                                $listenicon = $activity->activity_type->image_path;
+                                $listencount++;
+                                $listentotal++;
+                                if(in_array($activity->id,$useractivitylist)) {
+                                    $listenclaim++;
+                                }
+                            } elseif($activity->activity_type->name == 'Participate') {
+                                $participatecolor = $activity->activity_type->color;
+                                $participateicon = $activity->activity_type->image_path;
+                                $participatecount++;
+                                $participatetotal++;
+                                if(in_array($activity->id,$useractivitylist)) {
+                                    $participateclaim++;
+                                }
+                            }
+                            $totalActivities++;
+                            $stepTime = $stepTime + $activity->hours;
+                            $totalTime = $totalTime + $activity->hours;
+                            $stepActivityCount++;
                         // Otherwise it's supplmentary
-                        //} else {
-                            //array_push($tertiaryacts,$activity);
-                        //}
-                        //
-                        // we want to count each type on a per step basis
-                        // as well as adding to the total
-                        //
-                        if($activity->activity_type->name == 'Read') {
-                            $readcolor = $activity->activity_type->color;
-                            $readicon = $activity->activity_type->image_path;
-                            $readcount++;
-                            $readtotal++;
-                            if(in_array($activity->id,$useractivitylist)) {
-                                $readclaim++;
-                            }
-                        } elseif($activity->activity_type->name == 'Watch') {
-                            $watchcolor = $activity->activity_type->color;
-                            $watchicon = $activity->activity_type->image_path;
-                            $watchcount++;
-                            $watchtotal++;
-                            if(in_array($activity->id,$useractivitylist)) {
-                                $watchclaim++;
-                            }
-                        } elseif($activity->activity_type->name == 'Listen') {
-                            $listencolor = $activity->activity_type->color;
-                            $listenicon = $activity->activity_type->image_path;
-                            $listencount++;
-                            $listentotal++;
-                            if(in_array($activity->id,$useractivitylist)) {
-                                $listenclaim++;
-                            }
-                        } elseif($activity->activity_type->name == 'Participate') {
-                            $participatecolor = $activity->activity_type->color;
-                            $participateicon = $activity->activity_type->image_path;
-                            $participatecount++;
-                            $participatetotal++;
-                            if(in_array($activity->id,$useractivitylist)) {
-                                $participateclaim++;
-                            }
+                        } else {
+                            array_push($tertiaryacts,$activity);
                         }
-                        $totalActivities++;
-                        $stepTime = $stepTime + $activity->hours;
-                        $totalTime = $totalTime + $activity->hours;
-                        $stepActivityCount++;
+
                     }
                 endforeach; // activities
             endforeach; // steps
