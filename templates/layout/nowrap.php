@@ -133,7 +133,7 @@
 <?= $this->fetch('content') ?>
 
 
-<div class="container-fluid mt-3 bg-white" style="padding-top: 60px;">
+<div class="container-fluid bg-white" style="padding-top: 60px;">
 <div class="row mt-3">
 <div class="col-md-5 mt-3">
 <div class="alert alert-light">

@@ -44,27 +44,24 @@
 </div>
 </div>
 
-<div class="row justify-content-md-center bg-white" id="activitytypes">
 
-<div class="col-md-8 col-lg-8">
 
-<div class="sectiontext">
-<div class="my-3 row justify-content-md-center">
+<div class="row justify-content-md-center">
 <?php $count = 0 ?>
 <?php foreach($atypes as $type): ?>
 <?php $count++ ?>
-	<div class="col-md-6">
+	<div class="col-md-6" style="background-color: rgba(<?= $type->color ?>,.2)">
 	<div class="m-3 p-3">
 	<div class="mb-3">
 		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="activity-icon" style="background-color: rgba(<?= $type->color ?>,1)">
 			<i class="activity-icon fas <?= $type->image_path ?>"></i>
 			
 		</a>
-		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="" style="color: #333; font-size: 180%">
+		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="" style="color: #333; font-size: 230%">
 			<?= h($type->name) ?>
 		</a>
 	</div>
-		<div class="mb-3" style="clear:both">
+		<div class="mb-3" style="font-size: 120%;">
 		<?= $type->description ?>
 		</div>
 	</div>
@@ -72,45 +69,27 @@
 <?php endforeach ?>
 </div>
 
-</div>
-
-</div>
-<div class="col-md-2 text-center">
-	
-</div>
-</div>
-
-<div class="row justify-content-md-center align-items-center" style="background-color: rgba(249,145,80,1)">
-
-<div class="col-md-5">
-
-<div class="sectiontext">Just as a museum selects artifacts to display on a theme, BCPS specialist curators have chosen resources that meet a standard of quality to help you on your path to specific leadership development goals.</div>
-
-</div>
-<div class="col-md-2 text-center">
-	<i class="fas fa-bezier-curve" style="font-size: 300%"></i>
-</div>
-</div>
 
 
-<div class="row justify-content-md-center align-items-center" style="background-color: rgba(244,105,115,1)">
+
+
+<div class="row justify-content-md-center bg-white align-items-center">
 
 <div class="col-md-10">
 
 <div class="sectiontext">
 	
 
-<div class="row mb-3">
+<div class="row">
 <div class="col-md-4">
 	
 	<h3>
 	<i class="fas fa-thermometer-quarter" style="font-size: 300%"></i>
 	Dip</h3>
 	<p>Just dip your toe in the pool to see if there's anything that can inspire you.</p>
-	<form method="get" action="/learning-curator/activities/find" class="form-inline my-2 my-lg-0 mr-3">
-		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
-		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-	</form>
+	
+	<a class="btn btn-lg btn-light btn-block" href="/learning-curator/users/home">The Latest Stuff</a>
+	
 </div>
 <div class="col-md-4">
 	
@@ -118,6 +97,9 @@
 	<i class="fas fa-thermometer-half" style="font-size: 300%"></i>
 	Deeper</h3>
 	<p>Go a bit deeper and look into following a pathway and tracking your progress.</p>
+	
+	<a class="btn btn-lg btn-light btn-block" href="/learning-curator/users/home">Check out your Profile</a>
+	
 
 </div>
 <div class="col-md-4">
@@ -126,36 +108,17 @@
 	<i class="fas fa-thermometer-full" style="font-size: 300%"></i>
 	Dive</h3>
 	<p>Go all in and set a MyPerformance goal to complete your pathways.</p>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<div class="row justify-content-md-center align-items-center">
-
-<div class="col-md-5">
-
-<div class="sectiontext">
-	Begin by selecting a pathway that appeals to your needs. 
-	The next time you visit the resource, you will be taken to your profile page, 
-	where the Learning Curator keeps track of which pathways you’re on, and which learning you’ve begun.
-	<div class="m-3 p-3" style="background-color: rgba(255,255,255,.5)">
-	<a class="btn btn-lg btn-light" href="/learning-curator/users/home">Check out your Profile</a>
-	</div>
-</div>
-
-</div>
-<div class="col-md-2 text-center">
-	<img src="/learning-curator/img/curator-rings-logo-ongrey.png" alt="Logo">
+	<a class="btn btn-lg btn-light btn-block" href="/learning-curator/users/home">Read More</a>
 </div>
 </div>
+
+
+</div>
+</div>
+</div>
+
+
+
 
 
 </div>
