@@ -37,12 +37,12 @@ foreach ($step->activities as $activity) {
 		array_push($defunctacts,$activity);
 	} elseif($activity->status_id == 2) {
 		// if it's required
-		//if($activity->_joinData->required == 1) {
-		//	array_push($requiredacts,$activity);
+		if($activity->_joinData->required == 1) {
+			array_push($requiredacts,$activity);
 		// Otherwise it's teriary
-		//} else {
-		//	array_push($tertiaryacts,$activity);
-		//}
+		} else {
+			array_push($tertiaryacts,$activity);
+		}
 		array_push($acts,$activity);
 		if($activity->activity_types_id == 1) {
 			$watchstepcount++;
@@ -94,7 +94,7 @@ if($stepclaimcount > 0) {
 </style>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-7 col-lg-5">
+<div class="col-md-8">
 <?php if (!empty($step->pathways)) : ?>
 <?php if($role == 2 || $role == 5): ?>
 <div class="btn-group float-right mt-3 ml-3">
@@ -145,7 +145,7 @@ if($stepclaimcount > 0) {
 			</span>  
 		</div>
 	</div>
-	<div class="col-3">
+	<div class="col-2">
 		<?php if(!empty($laststep)): ?>
 		<a href="/learning-curator/steps/view/<?= $laststep ?>" style="color: #000; font-size: 250%;"><i class="fas fa-arrow-circle-left"></i></a>
 		<?php endif ?>
@@ -188,34 +188,23 @@ $lastobj = $s->description;
 </div>
 </div>
 
-<div class="container-fluid stickyprogress">
-<div class="row">
-<div class="col p-0">
-	<div class="progress mb-3" style="border-radius: 0; height: 16px;">
-	  <div class="progress-bar" role="progressbar" style="background-color: #000; color: #FFF;" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
-		<?= $steppercent ?>%
-	  </div>
-	</div>
-</div>
-</div>
-</div>
+
 <div class="container-fluid">
-<div class="row">
+<div class="row mt-3">
 
-
-<div class="col-md-9">
+<div class="col-md-5">
 <?php if (!empty($step->activities)) : ?>
 
-<div class="card-columns">
-<?php foreach ($step->activities as $activity) : ?>
+<div class="">
+<?php foreach ($requiredacts as $activity) : ?>
 <?php $claimborder = 'border: 0'; ?>
 <?php if(in_array($activity->id,$useractivitylist)): // if the user has claimed this, outline the box ?>
 <?php $claimborder = 'box-shadow: 0 0 10px rgba(0,0,0,.4)'; ?>
 <?php endif ?>
-<div class="card card-body my-3 activity" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); <?= $claimborder ?>">
+<div class="card card-body mb-3 activity" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); <?= $claimborder ?>">
 
 	<?php if($role == 2 || $role == 5): ?>
-	<div class="btn-group float-right">
+	<div class="">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
 	</div>
 	<?php endif; // role check ?>
@@ -231,10 +220,10 @@ $lastobj = $s->description;
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
 		<?= $activity->description ?>
 	</div>
-	<div class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+	<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 		<i class="fas fa-clock"></i>
 		<?= $activity->estimated_time ?>
-	</div> 
+	</span> 
 	<?php if(!empty($activity->tags)): ?>
 	<?php foreach($activity->tags as $tag): ?>
 
@@ -307,7 +296,7 @@ $lastobj = $s->description;
 		<i class="fas fa-exclamation-triangle"></i>
 	</a>	-->
 
-	<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+	<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 	</a>
 	
@@ -336,9 +325,30 @@ $lastobj = $s->description;
 
 <?php endif; ?>
 </div>
-<div class="col-12 col-md-3 col-lg-2">
+
+<div class="col-md-4">
+<div class="card card-body">
+<h3>Supplementary Resources</h3>
+<?php foreach ($tertiaryacts as $activity) : ?>
+<div class="">
+	<a target="_blank" 
+		rel="noopener" 
+		data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
+		href="<?= $activity->hyperlink ?>" 
+		class="">
+
+			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+
+			<?= $activity->name ?>
+
+	</a>
+	</div>
+<?php endforeach; // end of activities loop for this step ?>
+</div>
+</div>
+<div class="col-12 col-md-3 col-lg-3">
 <?php if(in_array($uid,$usersonthispathway)): ?>
-<div class="card card-body mt-3 text-center stickyrings">
+<div class="card card-body mb-3 text-center stickyrings">
 <div class="mb-3 following"></div>
 <canvas id="myChart" width="250" height="250"></canvas>
 </div>
@@ -484,26 +494,26 @@ function loadStatus() {
 		}
 	});
 
-	$.ajax({
-		type: "GET",
-		url: '/learning-curator/steps/status/<?= $step->id ?>',
-		data: '',
-		success: function(data)
-		{
-			var stepstatus = JSON.parse(data);
+	// $.ajax({
+	// 	type: "GET",
+	// 	url: '/learning-curator/steps/status/<?= $step->id ?>',
+	// 	data: '',
+	// 	success: function(data)
+	// 	{
+	// 		var stepstatus = JSON.parse(data);
 
-			console.log(stepstatus.steppercent);
+	// 		console.log(stepstatus.steppercent);
 			
-			$('.progress-bar').width(stepstatus.steppercent+'%').html(stepstatus.steppercent+'% completed');
+	// 		$('.progress-bar').width(stepstatus.steppercent+'%').html(stepstatus.steppercent+'% completed');
 			
-		},
-		statusCode: 
-		{
-			403: function() {
-				console.log('You must be logged in.');
-			}
-		}
-	});
+	// 	},
+	// 	statusCode: 
+	// 	{
+	// 		403: function() {
+	// 			console.log('You must be logged in.');
+	// 		}
+	// 	}
+	// });
 
 }
 

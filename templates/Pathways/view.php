@@ -59,7 +59,7 @@ This seems to work out, but #TODO investigate optimizing this
 </style>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-4">
+<div class="col-md-6">
 <div class="p-3">
 	<?php if($pathway->status_id == 1): ?>
 	<span class="badge badge-warning" title="Edit to set to publish">DRAFT</span>
