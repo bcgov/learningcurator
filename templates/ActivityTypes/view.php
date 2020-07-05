@@ -7,7 +7,7 @@ $this->layout = 'nowrap';
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" style="background-color: rgba(<?= h($activityType->color) ?>,1)">
-<div class="col-md-8">
+<div class="col-md-7">
 
 <h1 class="mt-3">
     <span class="fas <?= h($activityType->image_path) ?>"></span>
@@ -25,7 +25,7 @@ $this->layout = 'nowrap';
 <div class="row justify-content-md-center">
 <div class="col-md-8">
 <?php foreach($activities as $activity): ?>
-    <div class="my-3"><?= $this->Html->link(h($activity->name), ['controller' => 'Activities', 'action' => 'view', $activity->id]) ?></div>
+    <div class="card card-body my-3"><?= $this->Html->link(h($activity->name), ['controller' => 'Activities', 'action' => 'view', $activity->id]) ?></div>
 <?php endforeach ?>
 
 </div>

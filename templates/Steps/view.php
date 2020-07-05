@@ -215,7 +215,7 @@ $lastobj = $s->description;
 
 	<h3 class="my-3">
 		<?= $activity->name ?>
-		<a class="btn btn-sm btn-light" href="/learning-curator/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>
+		<!--<a class="btn btn-sm btn-light" href="/learning-curator/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
 	</h3>
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
 		<?= $activity->description ?>
@@ -330,7 +330,7 @@ $lastobj = $s->description;
 <div class="card card-body">
 <h3>Supplementary Resources</h3>
 <?php foreach ($tertiaryacts as $activity) : ?>
-<div class="">
+<div class="card card-body">
 	<a target="_blank" 
 		rel="noopener" 
 		data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
@@ -341,7 +341,8 @@ $lastobj = $s->description;
 
 			<?= $activity->name ?>
 
-	</a>
+	</a><br>
+			<?= $activity->description ?>
 	</div>
 <?php endforeach; // end of activities loop for this step ?>
 </div>
