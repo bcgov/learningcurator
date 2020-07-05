@@ -46,7 +46,7 @@
 
 
 
-<div class="row justify-content-md-center">
+<div class="row justify-content-md-center bg-white">
 <?php $count = 0 ?>
 <?php foreach($atypes as $type): ?>
 <?php $count++ ?>
