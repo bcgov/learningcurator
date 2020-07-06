@@ -43,7 +43,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="p-3"><?= $topic->description ?></div>
 <?php foreach ($topic->pathways as $pathway) : ?>
 
-<div class="card card-body mb-3">
+<div class="card card-body mb-3 linear">
 <?php if($pathway->status_id != 2): // is not published? ?>
 <?php if($role == 2 || $role == 5): // is curator or admin ?>
 <span class="badge badge-warning"><?= $pathway->status->name ?></span>

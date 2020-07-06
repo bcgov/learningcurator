@@ -277,10 +277,14 @@ $lastobj = $s->description;
 	<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 		<i class="fas fa-exclamation-triangle"></i>
 	</a>	-->
+	<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
 	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add']]) ?>
 		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
 		<?= $this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
 		<?= $this->Form->end() ?>
+	<?php else: ?>
+		Bookmarked
+	<?php endif ?>
 		<!--
 	<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 		<i class="fas fa-bookmark"></i> Bookmark

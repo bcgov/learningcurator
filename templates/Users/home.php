@@ -124,9 +124,12 @@ $this->layout = 'nowrap';
 </div>
 
 <div class="col-md-6">
-
+<h2><?= __('Bookmarked Activities') ?></h2>
+<?php foreach($bookmarks as $bookmark): ?>
+<div class="p-3 bg-white mb-2"><?= $this->Html->link(h($bookmark->activity->name), ['controller' => 'Activities','action' => 'view', $bookmark->activity->id]) ?></div>
+<?php endforeach ?>
 <?php if (!empty($user->activities)) : ?>
-<h2><?= __('Your Activities') ?></h2>
+<h2><?= __('Claimed Activities') ?></h2>
 
 <div id="activitylist">
 <input type="text" name="activityfilter" id="activityfilter" placeholder="Filter" class="search form-control mb-3">

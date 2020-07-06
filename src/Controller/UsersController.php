@@ -262,9 +262,12 @@ class UsersController extends AppController
 		
 		$cats = TableRegistry::getTableLocator()->get('Categories');
         $allcats = $cats->find('all');
+
+        $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
+        $bookmarks = $books->find('all')->where(['user_id' => $u->id])->contain('Activities');
 		
 		
-        $this->set(compact('allcats','user'));
+        $this->set(compact('allcats','user','bookmarks'));
     }
 
 }
