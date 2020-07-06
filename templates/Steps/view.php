@@ -239,11 +239,14 @@ $lastobj = $s->description;
 	</a>
 
 	<?php elseif($tag->name == 'YouTube'): ?>
-	
+	<?php 
+		preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $match);
+		$youtube_id = $match[1];
+		?>
 	<div class="my-3 p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border-radius: 3px;">
 		<iframe width="100%" 
 			height="315" 
-			src="https://www.youtube-nocookie.com/embed/<?= h($activity->hyperlink) ?>/" 
+			src="https://www.youtube-nocookie.com/embed/<?= $youtube_id ?>/" 
 			frameborder="0" 
 			allow="" 
 			allowfullscreen>
@@ -326,10 +329,14 @@ $lastobj = $s->description;
 		</h5>
 		<?= $activity->description ?>
 		<div>
+		<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
 		<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add']]) ?>
-		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
-		<?= $this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
-		<?= $this->Form->end() ?>
+			<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
+			<?= $this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
+			<?= $this->Form->end() ?>
+		<?php else: ?>
+			Bookmarked
+		<?php endif ?>
 
 			<!--<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 				<i class="fas fa-bookmark"></i> Bookmark

@@ -48,22 +48,51 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-6">
 <div class="bg-white rounded-lg my-3 p-3">
 
-<?php foreach($activity->tags as $tag): ?>
-	<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
+
+	<?php foreach($activity->tags as $tag): ?>
+	<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class=""><?= $tag->name ?></a> 
 	<?php endforeach ?>
-	<div class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+	<span class="" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 		<i class="fas fa-clock"></i>
 		<?= $activity->estimated_time ?>
-	</div> 
+	</span> 
+	<?php if(!empty($activity->tags)): ?>
+	<?php foreach($activity->tags as $tag): ?>
+
+	<?php if($tag->name == 'Learning System Course'): ?>
 
 	<a target="_blank" 
-		href="<?= $activity->hyperlink ?>" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); font-weight: bold;" 
+		rel="noopener" 
+		data-toggle="tooltip" data-placement="bottom" title="Enrol in this course in the Learning System"
+		href="https://learning.gov.bc.ca/psc/CHIPSPLM_6/EMPLOYEE/ELM/c/LM_OD_EMPLOYEE_FL.LM_FND_LRN_FL.GBL?Page=LM_FND_LRN_RSLT_FL&Action=U&KWRD=<?php echo urlencode($activity->name) ?>" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
 
 			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+
 			<?= $activity->activity_type->name ?>
+
 	</a>
+
+	<?php elseif($tag->name == 'YouTube'): ?>
+	<?php 
+		preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $match);
+		$youtube_id = $match[1];
+		?>
+	<div class="my-3 p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border-radius: 3px;">
+		<iframe width="100%" 
+			height="315" 
+			src="https://www.youtube-nocookie.com/embed/<?= $youtube_id ?>/" 
+			frameborder="0" 
+			allow="" 
+			allowfullscreen>
+		</iframe>
+	</div>
+
+	<?php endif; // logic check for formatting differently based on tag ?>	
+
+	<?php endforeach; // tags loop ?>
+	<?php endif; ?>
 		<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 			<i class="fas fa-exclamation-triangle"></i>
 		</a>	

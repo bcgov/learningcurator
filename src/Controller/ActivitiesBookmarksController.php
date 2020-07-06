@@ -63,7 +63,7 @@ class ActivitiesBookmarksController extends AppController
             if ($this->ActivitiesBookmarks->save($activitiesBookmark)) {
                 $this->Flash->success(__('The activities bookmark has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The activities bookmark could not be saved. Please, try again.'));
         }
