@@ -6,9 +6,9 @@
 <h1>Learning Curator</h1>
 <h2>The best educational resources organized by expert teams on different topic areas:</h2>
 
-<div class="row">
+<div class="row mt-3">
 <div class="col-md-4">
-<div class="p-3 rounded-lg mb-3" style="background-color: rgba(255,255,255,.3)">
+<div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
 	<h3><a href="/learning-curator/categories/view/1" class="">Leadership</a></h3>
 	<div>These pathways focus on building a solid personal foundation—whether 
 	your interest is in developing your skills where you are right now or to 
@@ -16,7 +16,7 @@
 </div>
 </div>
 <div class="col-md-4">
-<div class="p-3 rounded-lg mb-3" style="background-color: rgba(255,255,255,.3)">
+<div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
 	<h3><a href="/learning-curator/categories/view/2" class="">Role Specific</a></h3>
 	<div>These pathways focus on building a solid personal foundation—whether 
 	your interest is in developing your skills where you are right now or to 
@@ -24,7 +24,7 @@
 </div>
 </div>
 <div class="col-md-4">
-<div class="p-3 rounded-lg mb-3" style="background-color: rgba(255,255,255,.3)">
+<div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
 	<h3><a href="/learning-curator/categories/view/3" class="">Technology</a></h3>
 	<div>These pathways focus on building a solid personal foundation—whether 
 	your interest is in developing your skills where you are right now or to 
@@ -73,7 +73,7 @@
 
 
 
-<div class="row justify-content-md-center bg-white align-items-center">
+<div class="row justify-content-md-center bg-white align-items-center" id="linear">
 
 <div class="col-md-10">
 
@@ -88,7 +88,7 @@
 	Dip</h3>
 	<p>Just dip your toe in the pool to see if there's anything that can inspire you.</p>
 	
-	<a class="btn btn-lg btn-light btn-block" href="/learning-curator/users/home">The Latest Stuff</a>
+	<a class="btn btn-lg btn-dark btn-block" href="/learning-curator/activities">The Latest Stuff</a>
 	
 </div>
 <div class="col-md-4">
@@ -98,7 +98,7 @@
 	Deeper</h3>
 	<p>Go a bit deeper and look into following a pathway and tracking your progress.</p>
 	
-	<a class="btn btn-lg btn-light btn-block" href="/learning-curator/users/home">Check out your Profile</a>
+	<a class="btn btn-lg btn-dark btn-block" href="/learning-curator/users/home">Check out your Profile</a>
 	
 
 </div>
@@ -108,7 +108,7 @@
 	<i class="fas fa-thermometer-full" style="font-size: 300%"></i>
 	Dive</h3>
 	<p>Go all in and set a MyPerformance goal to complete your pathways.</p>
-	<a class="btn btn-lg btn-light btn-block" href="/learning-curator/users/home">Read More</a>
+	<a class="btn btn-lg btn-dark btn-block" href="/learning-curator/users/home">Read More</a>
 </div>
 </div>
 

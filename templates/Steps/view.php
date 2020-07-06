@@ -305,7 +305,7 @@ $lastobj = $s->description;
 
 <?php endif; ?>
 </div>
-
+<?php if(count($tertiaryacts) > 0): ?>
 <div class="col-md-4">
 	<h3>Supplementary Resources</h3>
 	<?php foreach ($tertiaryacts as $activity): ?>
@@ -325,8 +325,8 @@ $lastobj = $s->description;
 	</div>
 	<?php endforeach; // end of activities loop for this step ?>
 </div>
-
-<div class="col-12 col-md-3 col-lg-3">
+<?php endif ?>
+<div class="col-12 col-md-2 col-lg-2">
 <?php if(in_array($uid,$usersonthispathway)): ?>
 <div class="card card-body mb-3 text-center stickyrings">
 <div class="mb-3 following"></div>
