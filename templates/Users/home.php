@@ -134,24 +134,7 @@ $this->layout = 'nowrap';
 <div id="activitylist">
 <input type="text" name="activityfilter" id="activityfilter" placeholder="Filter" class="search form-control mb-3">
 
-<?php 
-// #TODO push this code into the controller
-$ts = [];
-foreach ($user->activities as $activity) {
-	$a = $activity->activity_type->name . '|' . $activity->activity_type->color;
-	array_push($ts,$a);
-}
-$unique = array_keys(array_flip($ts)); 
-?>
-<!--
-<div class="mb-1">
-Sort: 
-<?php foreach($unique as $type): ?>
-<?php $t = explode('|',$type) ?>
-	<a class="sort badge badge-dark" data-sort="name" style="background-color: rgba(<?= $t[1] ?>,1)"><?= $t[0] ?></a>
-<?php endforeach ?>
-</div>
--->
+
 <div class="list"> 
 	<?php foreach ($user->activities as $activity) : ?>
 	<div class="card card-body mb-2">

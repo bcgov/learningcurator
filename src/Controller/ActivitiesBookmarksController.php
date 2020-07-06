@@ -61,14 +61,14 @@ class ActivitiesBookmarksController extends AppController
         if ($this->request->is('post')) {
             $activitiesBookmark = $this->ActivitiesBookmarks->patchEntity($activitiesBookmark, $this->request->getData());
             if ($this->ActivitiesBookmarks->save($activitiesBookmark)) {
-                $this->Flash->success(__('The activities bookmark has been saved.'));
+                //$this->Flash->success(__('The activities bookmark has been saved.'));
 
                 return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The activities bookmark could not be saved. Please, try again.'));
+            echo __('The activities bookmark could not be saved. Please, try again.');
         }
-        $activities = $this->ActivitiesBookmarks->Activities->find('list', ['limit' => 200]);
-        $users = $this->ActivitiesBookmarks->Users->find('list', ['limit' => 200]);
+        //$activities = $this->ActivitiesBookmarks->Activities->find('list', ['limit' => 200]);
+        //$users = $this->ActivitiesBookmarks->Users->find('list', ['limit' => 200]);
         $this->set(compact('activitiesBookmark', 'activities', 'users'));
     }
 

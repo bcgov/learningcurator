@@ -281,12 +281,13 @@ $lastobj = $s->description;
 		<i class="fas fa-exclamation-triangle"></i>
 	</a>	-->
 	<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
-	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add']]) ?>
+	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark']) ?>
 		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
-		<?= $this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
+		<button class="btn btn-light"><i class="fas fa-bookmark"></i> Bookmark</button>
+		<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
 		<?= $this->Form->end() ?>
 	<?php else: ?>
-		Bookmarked
+		<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
 	<?php endif ?>
 		<!--
 	<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
@@ -330,13 +331,14 @@ $lastobj = $s->description;
 		<?= $activity->description ?>
 		<div>
 		<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
-		<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add']]) ?>
-			<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
-			<?= $this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
-			<?= $this->Form->end() ?>
-		<?php else: ?>
-			Bookmarked
-		<?php endif ?>
+	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark']) ?>
+		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
+		<button class="btn btn-light"><i class="fas fa-bookmark"></i> Bookmark</button>
+		<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
+		<?= $this->Form->end() ?>
+	<?php else: ?>
+		<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
+	<?php endif ?>
 
 			<!--<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 				<i class="fas fa-bookmark"></i> Bookmark
@@ -394,6 +396,31 @@ $(document).ready(function(){
 	// load up the activity rings
 	loadStatus();
 
+	$('.bookmark').on('submit', function(e){
+		
+		e.preventDefault();
+		var form = $(this);
+		form.children('button').removeClass('btn-light').addClass('btn-dark').html('<span class="fas fa-bookmark"></span> Bookmarked!').tooltip('dispose').attr('title','Good job!');
+		
+		//$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
+
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/learning-curator/activities-bookmarks/add',
+			data: form.serialize(),
+			success: function(data)
+			{
+				//loadStatus();
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
 	$('.claim').on('submit', function(e){
 		
 		e.preventDefault();
