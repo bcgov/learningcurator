@@ -277,10 +277,14 @@ $lastobj = $s->description;
 	<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 		<i class="fas fa-exclamation-triangle"></i>
 	</a>	-->
-
+	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add']]) ?>
+		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
+		<?= $this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
+		<?= $this->Form->end() ?>
+		<!--
 	<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 		<i class="fas fa-bookmark"></i> Bookmark
-	</a>
+	</a>-->
 
 	<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
@@ -318,9 +322,15 @@ $lastobj = $s->description;
 		</h5>
 		<?= $activity->description ?>
 		<div>
-			<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
+		<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add']]) ?>
+		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
+		<?= $this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
+		<?= $this->Form->end() ?>
+
+			<!--<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 				<i class="fas fa-bookmark"></i> Bookmark
-			</a>
+			</a>-->
+
 		</div>
 	</div>
 	<?php endforeach; // end of activities loop for this step ?>

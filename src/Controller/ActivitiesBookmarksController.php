@@ -19,6 +19,7 @@ class ActivitiesBookmarksController extends AppController
      */
     public function index()
     {
+        $this->Authorization->skipAuthorization();
         $this->paginate = [
             'contain' => ['Activities', 'Users'],
         ];
@@ -26,6 +27,7 @@ class ActivitiesBookmarksController extends AppController
 
         $this->set(compact('activitiesBookmarks'));
     }
+
 
     /**
      * View method
@@ -50,7 +52,12 @@ class ActivitiesBookmarksController extends AppController
      */
     public function add()
     {
+        //print_r($this->request->getData()); exit;
+        $user = $this->request->getAttribute('authentication')->getIdentity();
         $activitiesBookmark = $this->ActivitiesBookmarks->newEmptyEntity();
+        $activitiesBookmark->user_id = $user->id;
+        $activitiesBookmark->activity_id = $this->request->getData()['activity_id'];
+        $this->Authorization->authorize($activitiesBookmark);
         if ($this->request->is('post')) {
             $activitiesBookmark = $this->ActivitiesBookmarks->patchEntity($activitiesBookmark, $this->request->getData());
             if ($this->ActivitiesBookmarks->save($activitiesBookmark)) {

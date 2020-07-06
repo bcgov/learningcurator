@@ -98,6 +98,11 @@ class ActivitiesTable extends Table
             'targetForeignKey' => 'user_id',
             'joinTable' => 'activities_users',
         ]);
+        $this->belongsToMany('Users', [
+            'foreignKey' => 'activity_id',
+            'targetForeignKey' => 'user_id',
+            'joinTable' => 'activities_bookmarks',
+        ]);
     }
 
     /**
