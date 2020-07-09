@@ -53,8 +53,8 @@
 	<div class="col-md-6" style="background-color: rgba(<?= $type->color ?>,.2)">
 	<div class="m-3 p-3">
 	<div class="mb-3">
-		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="activity-icon" style="background-color: rgba(<?= $type->color ?>,1)">
-			<i class="activity-icon fas <?= $type->image_path ?>"></i>
+		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $type->color ?>,1)">
+			<i class="activity-icon activity-icon-lg fas <?= $type->image_path ?>"></i>
 			
 		</a>
 		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="" style="color: #333; font-size: 230%">

@@ -153,16 +153,12 @@ $this->layout = 'nowrap';
 		<div class="row align-items-center">
 
 		<div class="col-2 text-center">
-			<a target="_blank" 
-				href="<?= $activity->hyperlink ?>"  
-				style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000;"
-				class="p-2 rounded-lg" 
-				title="<?= $activity->activity_type->name ?> <?= h($activity->name) ?>">
-
-					<i class="fas <?= $activity->activity_type->image_path ?>"></i>
-					
-					
-			</a>
+		<a href="/learning-curator/activity-types/view/<?= $activity->activity_type->id ?>" 
+			class="activity-icon activity-icon-md" 
+			style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
+				<i class="activity-icon activity-icon-md fas <?= $activity->activity_type->image_path ?>"></i>
+			
+		</a>
 		</div>
 		<div class="col">
 		<span class="name"><?= $this->Html->link(h($activity->name), ['controller' => 'Activities', 'action' => 'view', $activity->id]) ?></span>
