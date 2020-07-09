@@ -136,7 +136,7 @@ Wanna go from getting a 60 on peformance in Lighthouse to a 97?
 <div class="container-fluid bg-white" style="padding-top: 60px;">
 <div class="row mt-3">
 <div class="col-md-5 mt-3">
-<div class="alert alert-light">
+<div class="p-3">
 	<div><img src="/learning-curator/img/BCID_BCPSA_rgb_pos.jpg" width="400" alt="BC Public Service Agency logo"></div>
 	<p>Your personal information is collected by the BC Public Service Agency in accordance with 
 		section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes 

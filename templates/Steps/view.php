@@ -98,7 +98,8 @@ if($stepclaimcount > 0) {
 <?php if (!empty($step->pathways)) : ?>
 <?php if($role == 2 || $role == 5): ?>
 <div class="btn-group float-right mt-3 ml-3">
-<?= $this->Html->link(__('Edit Step'), ['controller' => 'Steps', 'action' => 'edit', $step->id], ['class' => 'btn btn-light btn-sm']) ?>
+<?= $this->Html->link(__('Edit'), ['controller' => 'Steps', 'action' => 'edit', $step->id], ['class' => 'btn btn-light btn-sm']) ?>
+<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $step->id],['class' => 'btn btn-light btn-sm', 'confirm' => __('Are you sure you want to delete # {0}?', $step->name)]) ?>
 </div> <!-- /.btn-group -->
 <?php endif ?>
 

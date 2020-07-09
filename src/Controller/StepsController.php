@@ -146,8 +146,8 @@ class StepsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $this->Authorization->authorize($step);
         $step = $this->Steps->get($id);
+        $this->Authorization->authorize($step);
         if ($this->Steps->delete($step)) {
             //$this->Flash->success(__('The step has been deleted.'));
         } else {
