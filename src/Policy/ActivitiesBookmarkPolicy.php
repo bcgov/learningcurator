@@ -43,6 +43,15 @@ class ActivitiesBookmarkPolicy
      */
     public function canDelete(IdentityInterface $user, ActivitiesBookmark $activitiesBookmark)
     {
+        if($this->isAdmin($user, $activitiesBookmark)) {
+            return true;
+        } elseif($this->isCurator($user,$activitiesBookmark)) {
+            return true;
+        } elseif($this->isLearner($user,$activitiesBookmark)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -55,4 +64,18 @@ class ActivitiesBookmarkPolicy
     public function canView(IdentityInterface $user, ActivitiesBookmark $activitiesBookmark)
     {
     }
+    protected function isLearner(IdentityInterface $user, ActivitiesBookmark $activitiesBookmark)
+    {
+        return $activitiesBookmark->user_id === $user->getIdentifier();
+    }
+    protected function isCurator(IdentityInterface $user, ActivitiesBookmark $activitiesBookmark)
+    {
+        return $user->role_id === 2;
+    }
+
+    protected function isAdmin(IdentityInterface $user, ActivitiesBookmark $activitiesBookmark)
+    {
+        return $user->role_id === 5;
+    }
+
 }

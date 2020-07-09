@@ -50,9 +50,9 @@ $this->layout = 'nowrap';
 </div>
 </div>
 </div>
-<div class="container mt-3">
+<div class="container-fluid mt-3">
 <div class="row">
-<div class="col-md-6 mb-3">
+<div class="col-md-4 mb-3">
 
 <?php if (!empty($user->pathways)) : ?>
 	<h2><?= __('Your Pathways') ?></h2>
@@ -123,11 +123,20 @@ $this->layout = 'nowrap';
 
 </div>
 
-<div class="col-md-6">
-<h2><?= __('Bookmarked Activities') ?></h2>
+<div class="col-md-4">
+<h2><?= __('Bookmarks') ?></h2>
 <?php foreach($bookmarks as $bookmark): ?>
-<div class="p-3 bg-white mb-2"><?= $this->Html->link(h($bookmark->activity->name), ['controller' => 'Activities','action' => 'view', $bookmark->activity->id]) ?></div>
+
+<div class="p-3 bg-white mb-2">
+	<?= $this->Html->link($bookmark->activity->name, ['controller' => 'Activities','action' => 'view', $bookmark->activity->id]) ?>
+	<?= $this->Form->postLink(__('x'), ['controller' => 'ActivitiesBookmarks','action' => 'delete/'. $bookmark->id], ['confirm' => __('Are you sure you want to delete # {0}?', $bookmark->activity_id)]) ?>
+</div>
 <?php endforeach ?>
+</div>
+
+
+
+<div class="col-md-4">
 <?php if (!empty($user->activities)) : ?>
 <h2><?= __('Claimed Activities') ?></h2>
 
@@ -141,17 +150,17 @@ $this->layout = 'nowrap';
 		<?php if($activity->status_id == 3): ?>
 		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
 		<?php endif ?>
-		<div class="row">
+		<div class="row align-items-center">
 
-		<div class="col-4 text-right">
+		<div class="col-2 text-center">
 			<a target="_blank" 
 				href="<?= $activity->hyperlink ?>"  
-				style="background-color: rgba(<?= $activity->activity_type->color ?>,1);"
-				class="btn btn-sm" 
+				style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000;"
+				class="p-2 rounded-lg" 
 				title="<?= $activity->activity_type->name ?> <?= h($activity->name) ?>">
 
 					<i class="fas <?= $activity->activity_type->image_path ?>"></i>
-					<?= $activity->activity_type->name ?>
+					
 					
 			</a>
 		</div>

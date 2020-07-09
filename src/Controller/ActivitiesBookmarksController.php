@@ -41,6 +41,7 @@ class ActivitiesBookmarksController extends AppController
         $activitiesBookmark = $this->ActivitiesBookmarks->get($id, [
             'contain' => ['Activities', 'Users'],
         ]);
+        $this->Authorization->authorize($activitiesBookmark);
 
         $this->set('activitiesBookmark', $activitiesBookmark);
     }
@@ -109,12 +110,13 @@ class ActivitiesBookmarksController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $activitiesBookmark = $this->ActivitiesBookmarks->get($id);
+        $this->Authorization->authorize($activitiesBookmark);
         if ($this->ActivitiesBookmarks->delete($activitiesBookmark)) {
-            $this->Flash->success(__('The activities bookmark has been deleted.'));
+            //$this->Flash->success(__('The activities bookmark has been deleted.'));
         } else {
-            $this->Flash->error(__('The activities bookmark could not be deleted. Please, try again.'));
+            //$this->Flash->error(__('The activities bookmark could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer());
     }
 }

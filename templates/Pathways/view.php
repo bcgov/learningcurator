@@ -129,14 +129,14 @@ This seems to work out, but #TODO investigate optimizing this
 </div>
 </div>
 </div>
-<div class="container">
+<div class="container-fluid bg-white">
 <div class="row justify-content-md-center">
 <div class="col-md-3">
 
 <?php if(in_array($uid,$usersonthispathway)): ?>
 
 	
-	<div class="card card-body mt-3 text-center stickyrings">
+	<div class="card card-body mt-3 text-center stickyrings linear">
 	<div>Overall Progress: %<span class="mb-3 following"></span></div>
 	<canvas id="myChart" width="250" height="250"></canvas>
 	</div>
@@ -232,7 +232,7 @@ foreach ($steps->activities as $activity) {
 ?>
 
 <?php
-$stepacts = count($acts);
+$stepacts = count($requiredacts);
 $completeclass = 'notcompleted'; 
 if($stepclaimcount == $totalacts) {
 	$completeclass = 'completed';
@@ -245,11 +245,10 @@ if($stepclaimcount > 0) {
 }
 ?>
 
-<div class="card card-body my-3">
+<div class="card card-body my-3 linear">
 	<h2>
 		<a href="/learning-curator/steps/view/<?= $steps->id ?>">
 			<?= h($steps->name) ?> 
-			
 		</a>
 	</h2>
 	
@@ -261,12 +260,12 @@ if($stepclaimcount > 0) {
 		<span class="badge badge-light" style="background-color: rgba(<?= $listencolor ?>,1)"><?= $listenstepcount ?> to listen to</span>  
 		<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
 	</div>
-	<div class="progress progress-bar-striped mb-3" style="height: 26px;">
-	  <div class="progress-bar" role="progressbar" style="background-color: #000; color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+	<div class="progress progress-bar-striped mb-3 linear" style="height: 26px;">
+	  <div class="progress-bar" role="progressbar" style="background-color: #FFF; color: #000; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
 		<?= $steppercent ?>% completed
 	  </div>
 	</div>
-	<a href="/learning-curator/steps/view/<?= $steps->id ?>" class="btn btn-block btn-light">View this step <i class="fas fa-angle-double-right"></i></a>
+	<a href="/learning-curator/steps/view/<?= $steps->id ?>" class="btn btn-block btn-dark">View this step <i class="fas fa-angle-double-right"></i></a>
 </div>
 <?php endforeach ?>
 

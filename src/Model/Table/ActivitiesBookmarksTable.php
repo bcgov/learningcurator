@@ -37,7 +37,7 @@ class ActivitiesBookmarksTable extends Table
 
         $this->setTable('activities_bookmarks');
         $this->setDisplayField('activity_id');
-        $this->setPrimaryKey(['activity_id', 'user_id']);
+        $this->setPrimaryKey(['id']);
 
         $this->belongsTo('Activities', [
             'foreignKey' => 'activity_id',

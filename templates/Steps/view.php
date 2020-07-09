@@ -204,7 +204,16 @@ $lastobj = $s->description;
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); <?= $claimborder ?>">
 
 
+	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
+	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+	<?= $this->Form->end() ?>
+	<?php else: // they have claimed it, so show that ?>
 
+	<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
+
+	<?php endif; // claimed or not ?>
 
 	<h3 class="my-3">
 		<?= $activity->name ?>
@@ -280,8 +289,11 @@ $lastobj = $s->description;
 	<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 		<i class="fas fa-exclamation-triangle"></i>
 	</a>	-->
+	<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
+	</a>
 	<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
-	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark']) ?>
+	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark form-inline']) ?>
 		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
 		<button class="btn btn-light"><i class="fas fa-bookmark"></i> Bookmark</button>
 		<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
@@ -294,22 +306,8 @@ $lastobj = $s->description;
 		<i class="fas fa-bookmark"></i> Bookmark
 	</a>-->
 
-	<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
-	</a>
-	
-	<?php if(!empty($uid)): ?>
-	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim float-left mr-1']) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
-	<?= $this->Form->end() ?>
-	<?php else: // they have claimed it, so show that ?>
 
-	<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
 
-	<?php endif; // claimed or not ?>
-	<?php endif; // logged in ?>
 
 	</div>
 
@@ -318,27 +316,32 @@ $lastobj = $s->description;
 <?php endif; ?>
 </div>
 <?php if(count($tertiaryacts) > 0): ?>
-<div class="col-md-4">
+<div class="col-md-4 order-md-first">
 	<h3>Supplementary Resources</h3>
 	<?php foreach ($tertiaryacts as $activity): ?>
 	<div class="card card-body mb-3">
 		<h5>
-			<a href="/learning-curator/activities/view/<?= $activity->id ?>">
+			<a href="/learning-curator/activities/view/<?= $activity->id ?>" class="p-2 rounded-lg mr-2 mb-2 text-center" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000;">
 				<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+			</a>
+			<a href="/learning-curator/activities/view/<?= $activity->id ?>">
 				<?= $activity->name ?>
 			</a>
 		</h5>
 		<?= $activity->description ?>
 		<div>
+		<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
+		</a>
 		<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
-	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark']) ?>
-		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
-		<button class="btn btn-light"><i class="fas fa-bookmark"></i> Bookmark</button>
-		<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
-		<?= $this->Form->end() ?>
-	<?php else: ?>
-		<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
-	<?php endif ?>
+			<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark']) ?>
+			<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
+			<button class="btn btn-light"><i class="fas fa-bookmark"></i> Bookmark</button>
+			<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
+			<?= $this->Form->end() ?>
+		<?php else: ?>
+			<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
+		<?php endif ?>
 
 			<!--<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 				<i class="fas fa-bookmark"></i> Bookmark
