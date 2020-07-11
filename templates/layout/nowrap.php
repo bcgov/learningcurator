@@ -26,7 +26,18 @@ Wanna go from getting a 60 on peformance in Lighthouse to a 97?
 
 </head>
 <body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="110">
-
+<?php 
+if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
+&& strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/7.0;')!== false): ?>
+<div class="alert alert-warning mb-0 fade show">
+	You appear to be using Internet Explorer as your browser. 
+	To see the intended user experience, please access this site using 
+	<em><a href="/learning-curator/pages/anybrowser">any modern browser</a></em>.
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<?php endif ?>
 <nav class="navbar navbar-expand-lg" style="background-color: #FFF;">
 	
 	<a class="navbar-brand" href="/learning-curator/" style="margin: 0 0 0 20px">

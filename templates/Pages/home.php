@@ -55,7 +55,6 @@
 	<div class="mb-3">
 		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $type->color ?>,1)">
 			<i class="activity-icon activity-icon-lg fas <?= $type->image_path ?>"></i>
-			
 		</a>
 		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="" style="color: #333; font-size: 230%">
 			<?= h($type->name) ?>

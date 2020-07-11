@@ -221,15 +221,18 @@ $lastobj = $s->description;
 		<!--<a class="btn btn-sm btn-light" href="/learning-curator/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
 	</h3>
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
+		<div class="mb-3">
+		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+			<i class="fas fa-clock"></i>
+			<?= $activity->estimated_time ?>
+		</span> 
+		<?php foreach($activity->tags as $tag): ?>
+		<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
+		<?php endforeach ?>
+		</div>
 		<?= $activity->description ?>
 	</div>
-	<?php foreach($activity->tags as $tag): ?>
-	<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class=""><?= $tag->name ?></a> 
-	<?php endforeach ?>
-	<span class="" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
-		<i class="fas fa-clock"></i>
-		<?= $activity->estimated_time ?>
-	</span> 
+	
 	<?php if(!empty($activity->tags)): ?>
 	<?php foreach($activity->tags as $tag): ?>
 

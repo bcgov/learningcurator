@@ -14,9 +14,9 @@ if ($this->Identity->isLoggedIn()) {
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center"
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border:0">
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 
-<div class="col-md-8">
+<div class="col-md-12 col-lg-6">
 <div class="pad-lg">
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
@@ -30,35 +30,41 @@ if ($this->Identity->isLoggedIn()) {
 	<span class="badge badge-warning">INVESTIGATE</span>
 	<?php endif ?>
 	<?php endif; // role check ?>
-
+		<div class="row align-items-center">
+		<div class="col-3">
+	<div class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
+		<i class="activity-icon activity-icon-lg fas <?= $activity->activity_type->image_path ?>"></i>
+	</div>
+	</div>
+	<div class="col">
+	<?php if(!in_array($activity->id,$useractivitylist)): ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => '']) ?>
+	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it counts towards your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+	<?= $this->Form->end() ?>
+	<?php else: ?>
+	<div class="btn btn-dark">CLAIMED <i class="fas fa-check-circle"></i></div>
+	<?php endif ?>
+	</div>
+	</div>
 
 	<h1 class="my-1">
 		<?= $activity->name ?>
 	</h1>
 	<div class="p-3 rounded-lg" style="background: rgba(255,255,255,.3);">
+		<div class="mb-2">
+			<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+				<i class="fas fa-clock"></i>
+				<?= $activity->estimated_time ?>
+			</span>
+			<?php foreach($activity->tags as $tag): ?>
+			<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
+			<?php endforeach ?>
+		</div>
 		<?= $activity->description ?>
 	</div>
-</div>
-</div>
-</div>
-</div>
-<div class="container">
-<div class="row justify-content-md-center">
-
-<div class="col-md-6">
-<div class="bg-white rounded-lg my-3 p-3">
-
-
-	<?php foreach($activity->tags as $tag): ?>
-	<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class=""><?= $tag->name ?></a> 
-	<?php endforeach ?>
-	<span class="" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
-		<i class="fas fa-clock"></i>
-		<?= $activity->estimated_time ?>
-	</span> 
 	<?php if(!empty($activity->tags)): ?>
 	<?php foreach($activity->tags as $tag): ?>
-
 	<?php if($tag->name == 'Learning System Course'): ?>
 
 	<a target="_blank" 
@@ -88,27 +94,49 @@ if ($this->Identity->isLoggedIn()) {
 			allowfullscreen>
 		</iframe>
 	</div>
-
+	
 	<?php endif; // logic check for formatting differently based on tag ?>	
 
 	<?php endforeach; // tags loop ?>
+
+	<?php else: // there are no tags ?>
+		<div class="my-3 p-3" style="font-size: 130%">
+			<?= $activity->activity_type->name ?>: 
+			<a href="<?= h($activity->hyperlink) ?>" tagret="_blank" rel="noopener">
+				<?= h($activity->hyperlink) ?>
+			</a>
+		</div>
 	<?php endif; ?>
+
+	<div class="my-3">
 		<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 			<i class="fas fa-exclamation-triangle"></i>
 		</a>	
 		<a href="/learning-curator/activities/like/<?= $activity->id ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
+			<i class="fas fa-thumbs-up"></i> <span class="lcount"><?= h($activity->recommended) ?> likes</span>
 		</a>
-	<?php if(!empty($uid)): ?>
-	<?php if(!in_array($activity->id,$useractivitylist)): ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => '']) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
-	<?= $this->Form->end() ?>
+
+		<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
+	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark form-inline']) ?>
+		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
+		<button class="btn btn-light"><i class="fas fa-bookmark"></i> Bookmark</button>
+		<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
+		<?= $this->Form->end() ?>
 	<?php else: ?>
-	<div class="btn btn-light">CLAIMED <i class="fas fa-check-circle"></i></div>
+		<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
 	<?php endif ?>
-	<?php endif ?>
+		</div>
+
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row justify-content-md-center">
+
+<div class="col-md-6">
+<div class="bg-white rounded-lg my-3 p-3">
+	
 
 	<div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
 
