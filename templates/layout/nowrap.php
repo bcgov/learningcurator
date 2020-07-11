@@ -25,7 +25,7 @@ Wanna go from getting a 60 on peformance in Lighthouse to a 97?
 <link href="/learning-curator/fontawesome/css/all.css" rel="stylesheet"> 
 
 </head>
-<body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="110">
+<body class="" data-spy="scroll" data-target="#stepnav" data-offset="110">
 <?php 
 if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 && strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/7.0;')!== false): ?>

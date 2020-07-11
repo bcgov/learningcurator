@@ -23,7 +23,7 @@
 <link href="/learning-curator/fontawesome/css/all.css" rel="stylesheet"> 
 
 </head>
-<body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="110">
+<body class="" data-spy="scroll" data-target="#stepnav" data-offset="110">
 <?php if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0') !== false && 
 strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/7.0;')!== false): ?>
 <div class="alert alert-warning mb-0 fade show">
