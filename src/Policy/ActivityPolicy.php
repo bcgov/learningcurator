@@ -12,6 +12,20 @@ use Authorization\IdentityInterface;
 class ActivityPolicy
 {
     /**
+     * Check if $user can suggest an Activity
+     *
+     * @param Authorization\IdentityInterface $user The user.
+     * @param App\Model\Entity\Activity $activity
+     * @return bool
+     */
+    public function canSuggest(IdentityInterface $user, Activity $activity)
+    {
+
+            return true;
+
+
+    }
+    /**
      * Check if $user can create Activity
      *
      * @param Authorization\IdentityInterface $user The user.

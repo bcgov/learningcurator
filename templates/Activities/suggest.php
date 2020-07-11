@@ -11,9 +11,7 @@ $this->loadHelper('Authentication.Identity');
 <?php 
 // echo $this->Form->control('ministry_id', ['class' => 'form-control', 'options' => $ministries, 'empty' => true]);
 // echo $this->Form->control('category_id', ['class' => 'form-control', 'options' => $categories, 'empty' => true]);
-// echo $this->Form->control('approvedby_id', ['class' => 'form-control']);
-echo $this->Form->hidden('createdby_id', ['value' => $activity->createdby_id, 'class' => 'form-control']);
-echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'),'class' => 'form-control']);
+
 ?>
 <div class="row justify-content-md-center">
 <div class="col-md-6">
@@ -24,9 +22,9 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
     <?php echo $this->Form->control('description', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
     <?php //echo $this->Form->control('steps._ids', ['class' => 'form-control', 'options' => $steps]); ?>
-    <?php echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
-    <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
-    <?php echo $this->Form->control('isbn', ['class' => 'form-control']); ?>
+    <?php //echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
+    <?php //echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
+    <?php //echo $this->Form->control('isbn', ['class' => 'form-control']); ?>
     </div>
     </div>
     </div>
@@ -34,11 +32,11 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
     <div class="card mb-3">
     <div class="card-body">
     <?php echo $this->Form->control('activity_types_id', ['class' => 'form-control', 'options' => $activityTypes]); ?>
-    <?php echo $this->Form->control('status_id', ['class' => 'form-control', 'options' => $statuses, 'empty' => true]); ?>
-    <?php echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
-    <?php echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text', 'label' => 'Tags']); ?>
-    <?php echo $this->Form->control('users._ids', ['class' => 'form-control', 'options' => $users]); ?>
-    <?php echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); ?>
+    <?php //echo $this->Form->control('status_id', ['class' => 'form-control', 'options' => $statuses, 'empty' => true]); ?>
+    <?php //echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
+    <?php //echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text', 'label' => 'Tags']); ?>
+    <?php //echo $this->Form->control('users._ids', ['class' => 'form-control', 'options' => $users]); ?>
+    <?php //echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); ?>
     <?= $this->Form->button(__('Save Activity'), ['class' => 'btn btn-block btn-success my-3']) ?>
     </div>
     </div>

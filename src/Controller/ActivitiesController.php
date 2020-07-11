@@ -199,6 +199,41 @@ class ActivitiesController extends AppController
     }
 
     /**
+     * Suggest method for regular users to suggest activities
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function suggest()
+    {
+
+	    $user = $this->request->getAttribute('authentication')->getIdentity();
+        $activity = $this->Activities->newEmptyEntity();
+        $this->Authorization->authorize($activity);
+	    if ($this->request->is('post')) {
+
+            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+            $activity->createdby_id = $user->id;
+            $activity->modifiedby_id = $user->id;
+
+            if ($this->Activities->save($activity)) {
+                //$this->Flash->success(__('The activity has been saved.'));
+                $go = '/activities/view/' . $activity->id;
+                return $this->redirect($go);
+            }
+            //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
+        }
+        $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
+        $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
+        $categories = $this->Activities->Categories->find('list', ['limit' => 200]);
+        $activityTypes = $this->Activities->ActivityTypes->find('list', ['limit' => 200]);
+        $users = $this->Activities->Users->find('list', ['limit' => 200]);
+        $competencies = $this->Activities->Competencies->find('list', ['limit' => 200]);
+        $steps = $this->Activities->Steps->find('list', ['limit' => 200]);
+        $tags = $this->Activities->Tags->find('list', ['limit' => 200]);
+        $this->set(compact('activity', 'statuses', 'ministries', 'categories', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
+    }
+
+    /**
      * Edit method
      *
      * @param string|null $id Activity id.
