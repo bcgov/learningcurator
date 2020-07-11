@@ -24,9 +24,8 @@
 
 </head>
 <body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="110">
-<?php 
-if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
-&& strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/7.0;')!== false): ?>
+<?php if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0') !== false && 
+strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/7.0;')!== false): ?>
 <div class="alert alert-warning mb-0 fade show">
 	You appear to be using Internet Explorer as your browser. 
 	To see the intended user experience, please access this site using 
