@@ -18,7 +18,7 @@ class ActivityPolicy
      * @param App\Model\Entity\Activity $activity
      * @return bool
      */
-    public function canSuggest(IdentityInterface $user, Activity $activity)
+    public function canContribute(IdentityInterface $user, Activity $activity)
     {
 
             return true;

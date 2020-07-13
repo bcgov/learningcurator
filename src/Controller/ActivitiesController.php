@@ -37,8 +37,44 @@ class ActivitiesController extends AppController
         $activities = $this->paginate($this->Activities);
 		$cats = TableRegistry::getTableLocator()->get('Categories');
         $allcats = $cats->find('all');
+        
+        // As we loop through the activities for the steps on this pathway, we 
+        // need to be able to check to see if the current user has "claimed" 
+        // that activity. Here we get the current user id and use it to select 
+        // all of the claimed activities assigned to them, and then process out 
+        // just the activity IDs into a simple array. Then, in the template 
+        // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
+        //
+        // First let's check to see if this person is logged in or not.
+        //
+	    $user = $this->request->getAttribute('authentication')->getIdentity();
+        if(!empty($user)) {
+            // We need create two empty arrays first. If nothing gets added to
+            // them, so be it
+            $useractivitylist = array();
+            $userbooklist = array();
+            // Get access to the apprprioate tables
+            $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
+            $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
+            // Select based on currently logged in person
+            $useacts = $au->find()->where(['user_id = ' => $user->id]);
+            $userbooks = $books->find()->where(['user_id = ' => $user->id]);
+            // convert the results into a simple array so that we can
+            // use in_array in the template
+            $useractivities = $useacts->toList();
+            $userbookmarks = $userbooks->toList();
+            // Loop through the resources and add just the ID to the 
+            // array that we will pass into the template
+            foreach($useractivities as $uact) {
+                array_push($useractivitylist, $uact['activity_id']);
+            }
+            foreach($userbookmarks as $b) {
+                array_push($userbooklist, $b['activity_id']);
+            }
 
-        $this->set(compact('activities','allpathways','allcats'));
+        }
+
+        $this->set(compact('activities','allpathways','allcats','userbooklist','useractivitylist'));
     }
 
     /**
@@ -203,7 +239,7 @@ class ActivitiesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function suggest()
+    public function contribute()
     {
 
 	    $user = $this->request->getAttribute('authentication')->getIdentity();
@@ -214,6 +250,8 @@ class ActivitiesController extends AppController
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             $activity->createdby_id = $user->id;
             $activity->modifiedby_id = $user->id;
+            $activity->licensing = '';
+            $activity->moderator_notes = '';
 
             if ($this->Activities->save($activity)) {
                 //$this->Flash->success(__('The activity has been saved.'));

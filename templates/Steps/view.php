@@ -320,19 +320,27 @@ $lastobj = $s->description;
 <?php endif; ?>
 </div>
 <?php if(count($tertiaryacts) > 0): ?>
-<div class="col-md-4 order-md-first">
+<div class="col-md-4">
 	<h3>Supplementary Resources</h3>
 	<?php foreach ($tertiaryacts as $activity): ?>
 	<div class="card card-body mb-3">
-		<h5>
-			<a href="/learning-curator/activities/view/<?= $activity->id ?>" class="p-2 rounded-lg mr-2 mb-2 text-center" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000;">
-				<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+		<div class="row align-items-center">
+		<div class="col-12 col-md-3 col-lg-2">
+			<a href="/learning-curator/activities/view/<?= $activity->id ?>" class="activity-icon activity-icon-md" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000;">
+				<i class="activity-icon activity-icon-md fas <?= $activity->activity_type->image_path ?>"></i>
 			</a>
+		</div>
+		<div class="col">
+			<h5>
 			<a href="/learning-curator/activities/view/<?= $activity->id ?>">
 				<?= $activity->name ?>
 			</a>
-		</h5>
+			</h5>
+		</div>
+		</div>
+		<div class="p-3">
 		<?= $activity->description ?>
+		</div>
 		<div>
 		<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
@@ -356,7 +364,7 @@ $lastobj = $s->description;
 	<?php endforeach; // end of activities loop for this step ?>
 </div>
 <?php endif ?>
-<div class="col-12 col-md-2 col-lg-2">
+<div class="col-12 col-md-3 col-lg-3">
 <?php if(in_array($uid,$usersonthispathway)): ?>
 <div class="card card-body mb-3 text-center stickyrings">
 <div class="mb-3 following"></div>

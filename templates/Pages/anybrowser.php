@@ -1,8 +1,16 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Step $step
+ */
+$this->layout = 'nowrap';
+
+?>
+<div class="container-fluid linear">
 <div class="row justify-content-md-center">
 <div class="col-md-8">
 
 <div class="card">
-<div class="card-body">
 
 <?php 
 if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
@@ -51,9 +59,9 @@ when using this browser on work computers)</li>
 </ul>
 </div>
 </div>
+
+
 </div>
-
-
 </div>
 
 

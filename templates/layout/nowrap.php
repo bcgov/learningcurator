@@ -82,7 +82,9 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 		<li class="nav-item">
 			<a class="nav-link" href="/learning-curator/pages/faq">FAQ</a>
 		</li>
-	
+		<li class="nav-item">
+			<a class="nav-link" href="/learning-curator/activities/contribute">Contribute</a>
+		</li>	
 		<?php if(!empty($active)): ?>
 		<?php if($active->role_id == 5): ?>
 		<li class="nav-item dropdown">

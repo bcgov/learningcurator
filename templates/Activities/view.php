@@ -182,11 +182,12 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endforeach ?>
 	</div> <!-- .collapse -->
 	
+	<?php if (!empty($activity->moderator_notes)) : ?>
 	<h4><?= __('Moderator Notes') ?></h4>
 	<blockquote>
 	<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
 	</blockquote>
-	
+	<?php endif ?>
 	<h4><?= __('Related Users') ?></h4>
 	<?php if (!empty($activity->users)) : ?>
 	<?php foreach ($activity->users as $users) : ?>
@@ -238,6 +239,57 @@ if ($this->Identity->isLoggedIn()) {
 
 
 $(document).ready(function(){
+
+	$('.bookmark').on('submit', function(e){
+		
+		e.preventDefault();
+		var form = $(this);
+		form.children('button').removeClass('btn-light').addClass('btn-dark').html('<span class="fas fa-bookmark"></span> Bookmarked!').tooltip('dispose').attr('title','Good job!');
+		
+		//$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
+
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/learning-curator/activities-bookmarks/add',
+			data: form.serialize(),
+			success: function(data)
+			{
+				//loadStatus();
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
+	$('.claim').on('submit', function(e){
+		
+		e.preventDefault();
+		var form = $(this);
+		form.children('button').removeClass('btn-light').addClass('btn-dark').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
+		
+		$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
+
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/learning-curator/activities-users/claim',
+			data: form.serialize(),
+			success: function(data)
+			{
+				loadStatus();
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
 
 	$('[data-toggle="tooltip"]').tooltip();
 
