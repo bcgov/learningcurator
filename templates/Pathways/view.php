@@ -129,14 +129,14 @@ This seems to work out, but #TODO investigate optimizing this
 </div>
 </div>
 </div>
-<div class="container-fluid bg-white">
+<div class="container-fluid linear">
 <div class="row justify-content-md-center">
 <div class="col-md-3">
 
 <?php if(in_array($uid,$usersonthispathway)): ?>
 
 	
-	<div class="card card-body mt-3 text-center stickyrings linear">
+	<div class="card card-body mt-3 text-center stickyrings">
 	<div>Overall Progress: %<span class="mb-3 following"></span></div>
 	<canvas id="myChart" width="250" height="250"></canvas>
 	</div>
@@ -245,7 +245,7 @@ if($stepclaimcount > 0) {
 }
 ?>
 
-<div class="card card-body my-3 linear">
+<div class="p-3 my-3 bg-white rounded-lg">
 	<h2>
 		<a href="/learning-curator/steps/view/<?= $steps->id ?>">
 			<?= h($steps->name) ?> 
@@ -260,8 +260,8 @@ if($stepclaimcount > 0) {
 		<span class="badge badge-light" style="background-color: rgba(<?= $listencolor ?>,1)"><?= $listenstepcount ?> to listen to</span>  
 		<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
 	</div>
-	<div class="progress progress-bar-striped mb-3 linear" style="height: 26px;">
-	  <div class="progress-bar" role="progressbar" style="background-color: #FFF; color: #000; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+	<div class="progress progress-bar-striped mb-3" style="background-color: #000; height: 26px;">
+	  <div class="progress-bar" role="progressbar" style="background-color: #333; color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
 		<?= $steppercent ?>% completed
 	  </div>
 	</div>

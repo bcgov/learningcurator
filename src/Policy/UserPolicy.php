@@ -104,16 +104,37 @@ class UserPolicy
     }
 
     /**
-     * Check if $user can view home
+     * Check if $user can view pathways
      *
      * @param Authorization\IdentityInterface $user The user.
      * @param App\Model\Entity\User $resource
      * @return bool
      */
-    public function canHome(IdentityInterface $user, User $resource)
+    public function canPathways(IdentityInterface $user, User $resource)
     {
         return $this->isLearner($user, $resource);
-	//return false;
+    }
+    /**
+     * Check if $user can view bookmarks
+     *
+     * @param Authorization\IdentityInterface $user The user.
+     * @param App\Model\Entity\User $resource
+     * @return bool
+     */
+    public function canBookmarks(IdentityInterface $user, User $resource)
+    {
+        return $this->isLearner($user, $resource);
+    }
+    /**
+     * Check if $user can view claimed activities
+     *
+     * @param Authorization\IdentityInterface $user The user.
+     * @param App\Model\Entity\User $resource
+     * @return bool
+     */
+    public function canClaimed(IdentityInterface $user, User $resource)
+    {
+        return $this->isLearner($user, $resource);
     }
 
     protected function isLearner(IdentityInterface $user, User $resource)

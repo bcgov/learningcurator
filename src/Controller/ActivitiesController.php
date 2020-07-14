@@ -27,14 +27,24 @@ class ActivitiesController extends AppController
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
         $pathways = $allpaths->find('all')->contain(['Steps','Statuses']); //->where(['status_id' => 2]);
         $allpathways = $pathways->toList();
-
+       
         $this->paginate = [
             'contain' => ['Statuses', 'Ministries', 'Categories', 'ActivityTypes','Steps.Pathways'],
             'order' => [
                 'Activities.id' => 'desc'
             ]
         ];
-        $activities = $this->paginate($this->Activities);
+        $activities = $this->Activities
+                            ->find('all')
+                            ->contain(['Statuses', 
+                                        'Ministries', 
+                                        'Categories', 
+                                        'ActivityTypes',
+                                        'Steps.Pathways'])
+                            ->where(['Activities.status_id' => 2])
+                            ->order(['Activities.created' => 'DESC'])
+                            ->limit(10);
+        
 		$cats = TableRegistry::getTableLocator()->get('Categories');
         $allcats = $cats->find('all');
         
@@ -250,6 +260,7 @@ class ActivitiesController extends AppController
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             $activity->createdby_id = $user->id;
             $activity->modifiedby_id = $user->id;
+            $activity->status_id = 5;
             $activity->licensing = '';
             $activity->moderator_notes = '';
 

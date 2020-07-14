@@ -50,18 +50,34 @@ $this->layout = 'nowrap';
 </div>
 </div>
 </div>
-<div class="container-fluid mt-3">
-<div class="row">
-<div class="col-md-4 mb-3">
+<div class="container-fluid pt-3 linear">
+<div class="row justify-content-md-center">
+
+<div class="col-md-8 col-lg-6">
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Pathways</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/learning-curator/users/bookmarks">Bookmarks</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/learning-curator/users/claimed">Claimed</a>
+  </li>
+</ul>
+</div>
+
+<div class="w-100"></div>
+<div class="col-md-8 col-lg-6">
 
 <?php if (!empty($user->pathways)) : ?>
 	<h2><?= __('Your Pathways') ?></h2>
 	<?php foreach ($user->pathways as $pathways) : ?>
-	<div class="card card-body mb-2">
+	<div class="p-3 mb-2 bg-white rounded-lg">
 	<div class="row">
-	<div class="col-3">
+	<div class="col-3 ">
 	
-		<canvas id="chart<?= $pathways->id ?>" width="400" height="400"></canvas>
+		<canvas class="bg-white rounded-lg" id="chart<?= $pathways->id ?>" width="400" height="400"></canvas>
 		<script>
 			var request<?= $pathways->id ?> = new XMLHttpRequest();
 
@@ -111,7 +127,7 @@ $this->layout = 'nowrap';
 <h2><?= _('You\'re not following any pathways yet.') ?></h2>
 <p><?= _('Pathways are organized into topics. Here some topics for you to explore:') ?></p>
 <?php foreach ($allcats as $cat) : ?>
-<div class="card card-body mb-2">
+<div class="p-3 mb-2 bg-white rounded-lg">
 <h3>
 	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
 </h3>
@@ -123,66 +139,6 @@ $this->layout = 'nowrap';
 
 </div>
 
-<div class="col-md-4">
-<h2><?= __('Bookmarks') ?></h2>
-<?php foreach($bookmarks as $bookmark): ?>
-
-<div class="p-3 bg-white mb-2">
-	<?= $this->Html->link($bookmark->activity->name, ['controller' => 'Activities','action' => 'view', $bookmark->activity->id]) ?>
-	<?= $this->Form->postLink(__('x'), ['controller' => 'ActivitiesBookmarks','action' => 'delete/'. $bookmark->id], ['confirm' => __('Are you sure you want to delete # {0}?', $bookmark->activity_id)]) ?>
-</div>
-<?php endforeach ?>
-</div>
-
-
-
-<div class="col-md-4">
-<?php if (!empty($user->activities)) : ?>
-<h2><?= __('Claimed Activities') ?></h2>
-
-<div id="activitylist">
-<input type="text" name="activityfilter" id="activityfilter" placeholder="Filter" class="search form-control mb-3">
-
-
-<div class="list"> 
-	<?php foreach ($user->activities as $activity) : ?>
-	<div class="card card-body mb-2">
-		<?php if($activity->status_id == 3): ?>
-		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
-		<?php endif ?>
-		<div class="row align-items-center">
-
-		<div class="col-2 text-center">
-		<a href="/learning-curator/activity-types/view/<?= $activity->activity_type->id ?>" 
-			class="activity-icon activity-icon-md" 
-			style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
-				<i class="activity-icon activity-icon-md fas <?= $activity->activity_type->image_path ?>"></i>
-			
-		</a>
-		</div>
-		<div class="col">
-		<span class="name"><?= $this->Html->link(h($activity->name), ['controller' => 'Activities', 'action' => 'view', $activity->id]) ?></span>
-	
-		</div>
-		</div>
-	</div>
-	<?php endforeach; ?>
-</div> <!-- /.list -->
-</div> <!-- /#activitylist -->
-
-
-
-<?php else: ?>
-<h2><?= _('You\'ve not claimed any activities yet.') ?></h2>
-<p>As you claim activities, they will appear here, along with any pathways you might be following.</p>
-<div class="card card-body mt-3">
-	<p>If you're looking for something specific, try searching for it!</p>
-	<form method="get" action="/learning-curator/activities/find" class="form-inline my-2 my-lg-0">
-		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
-		<button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
-	</form>
-</div>
-<?php endif; ?>
 
 
 </div>

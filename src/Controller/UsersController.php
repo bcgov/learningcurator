@@ -106,7 +106,7 @@ class UsersController extends AppController
         $user->password = 'learning';
 
         if ($this->Users->save($user)) {
-            return $this->redirect(['action' => 'home']);
+            return $this->redirect(['action' => 'pathways']);
         } else {
             //return $user;
 			echo 'Something went wrong when creating your account. Please contact learningagent@gov.bc.ca for assistance.';
@@ -240,13 +240,13 @@ class UsersController extends AppController
     }
 
    /**
-     * Home method
+     * User pathways method
      *
      * @param string|null $id User id.
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function home()
+    public function pathways()
     {
 
 	    $u = $this->request->getAttribute('authentication')->getIdentity();
@@ -260,14 +260,64 @@ class UsersController extends AppController
         ]);
         $this->Authorization->authorize($user);
 		
-		$cats = TableRegistry::getTableLocator()->get('Categories');
-        $allcats = $cats->find('all');
+
+		
+		
+        $this->set(compact('user'));
+    }
+  /**
+     * User bookmarks method
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function bookmarks()
+    {
+
+	    $u = $this->request->getAttribute('authentication')->getIdentity();
+        
 
         $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
-        $bookmarks = $books->find('all')->where(['user_id' => $u->id])->contain('Activities');
-		
-		
-        $this->set(compact('allcats','user','bookmarks'));
+        $bookmarks = $books->find('all')
+                            ->where(['user_id' => $u->id])
+                            ->contain(['Activities','Activities.ActivityTypes']);
+
+        $user = $this->Users->get($u->id, [
+            'contain' => ['Pathways', 
+                            'Pathways.Categories', 
+                            'Activities', 
+                            'Activities.ActivityTypes',
+                            'Competencies',
+                            'Ministries'],
+        ]);
+        $this->Authorization->authorize($user);
+        
+        $this->set(compact('user','bookmarks'));
+    }
+  /**
+     * User claimed activities method
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function claimed()
+    {
+
+	    $u = $this->request->getAttribute('authentication')->getIdentity();
+        $user = $this->Users->get($u->id, [
+            'contain' => ['Pathways', 
+                            'Pathways.Categories', 
+                            'Activities', 
+                            'Activities.ActivityTypes',
+                            'Competencies',
+                            'Ministries'],
+        ]);
+        $this->Authorization->authorize($user);
+
+				
+        $this->set(compact('user'));
     }
 
 }

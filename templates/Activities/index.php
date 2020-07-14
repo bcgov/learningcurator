@@ -32,15 +32,15 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 </div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid linear">
 <div class="row justify-content-md-center">
-<div class="col-md-4">
+<div class="col-md-5">
 <h2 class="mt-3">Latest Activities</h2>
-<div><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></div>
+
 <div class="">
 <?php foreach ($activities as $activity): ?>
 
-<div class="card card-body mb-2"> <!-- style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)" -->
+<div class="p-3 rounded-lg mb-2 bg-white"> <!-- style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)" -->
 <div class="activity-icon activity-icon-md" style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
 		<i class="activity-icon activity-icon-md fas <?= $activity->activity_type->image_path ?>"></i>
 	</div>
@@ -125,14 +125,14 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach($allpathways as $path): ?>
 <?php if($path->status_id != 2): ?>
 <?php if($role == 2 || $role == 5): ?>
-	<div class="card card-body mb-2">
+	<div class="p-3 mb-2 bg-white rounded-lg">
 		<span class="badge badge-warning"><?= $path->status->name ?></span>
 		<h3><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?></a></h3>
 		<?= $path->objective ?>
 	</div>
 <?php endif ?>
 <?php else: ?>
-	<div class="card card-body mb-2">
+	<div class="p-3 mb-2 bg-white rounded-lg">
 		
 		<h3><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?></a></h3>
 		<?= $path->objective ?>
@@ -142,10 +142,10 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
 <h2 class="mt-3">Latest Topics</h2>
 <?php foreach ($allcats as $cat) : ?>
-<div class="card card-body mb-2">
+<div class="p-3 mb-2 bg-white rounded-lg">
 <h3>
 	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
 </h3>

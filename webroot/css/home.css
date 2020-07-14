@@ -58,7 +58,10 @@ canvas {
 	height: auto;
 	max-width: 100%;
 }
-
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+	background-color: #FFF;
+	color: #000;
+}
 .upro,
 .upro:hover,
 .upro:active { color: #FFF } 

@@ -127,7 +127,6 @@ if($stepclaimcount > 0) {
 <?php $n = next($pathways->steps) ?>
 <?php if($s->id == $step->id): ?>
 <div class="row mx-0">
-
 	<div class="col" style="background-color: rgba(255,255,255,.5); border-radius: .25rem;">
 		<h2 class="mt-2"><?= $s->name ?> <small>of <?= $totalsteps ?></small></h2>	
 		<div class=""><em>Goal:</em> <?= h($s->description); ?></div>
@@ -190,16 +189,16 @@ $lastobj = $s->description;
 </div>
 
 
-<div class="container-fluid">
-<div class="row mt-3">
+<div class="container-fluid linear pt-3">
+<div class="row justify-content-md-center">
 
-<div class="col-md-5">
+<div class="col-md-6 col-lg-6">
 <?php if (!empty($step->activities)) : ?>
 
 <?php foreach ($requiredacts as $activity) : ?>
-<?php $claimborder = 'border: 0'; ?>
+<?php $claimborder = 'border: 1px solid rgba(' . $activity->activity_type->color . ',1)'; ?>
 <?php if(in_array($activity->id,$useractivitylist)): // if the user has claimed this, outline the box ?>
-<?php $claimborder = ''; //'box-shadow: 0 0 10px rgba(0,0,0,.4)'; ?>
+<?php $claimborder = 'border: 1px solid rgba(' . $activity->activity_type->color . ',1)'; ?>
 <?php endif ?>
 <div class="p-3 mb-3 rounded-lg activity" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); <?= $claimborder ?>">
@@ -318,14 +317,14 @@ $lastobj = $s->description;
 	<?php endforeach; // end of activities loop for this step ?>
 
 <?php endif; ?>
-</div>
+
 <?php if(count($tertiaryacts) > 0): ?>
-<div class="col-md-4">
-	<h3>Supplementary Resources</h3>
+
+	<h3 style="color:#666">Supplementary Resources</h3>
 	<?php foreach ($tertiaryacts as $activity): ?>
-	<div class="card card-body mb-3">
+	<div class="p-3 my-3 bg-white rounded-lg">
 		<div class="row align-items-center">
-		<div class="col-12 col-md-3 col-lg-2">
+		<div class="col-12 col-md-2 col-lg-2">
 			<a href="/learning-curator/activities/view/<?= $activity->id ?>" class="activity-icon activity-icon-md" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000;">
 				<i class="activity-icon activity-icon-md fas <?= $activity->activity_type->image_path ?>"></i>
 			</a>
@@ -362,11 +361,13 @@ $lastobj = $s->description;
 		</div>
 	</div>
 	<?php endforeach; // end of activities loop for this step ?>
-</div>
+
+
 <?php endif ?>
-<div class="col-12 col-md-3 col-lg-3">
+</div>
+<div class="col-2 col-md-3 col-lg-2">
 <?php if(in_array($uid,$usersonthispathway)): ?>
-<div class="card card-body mb-3 text-center stickyrings">
+<div class="p-3 bg-white mb-3 text-center stickyrings">
 <div class="mb-3 following"></div>
 <canvas id="myChart" width="250" height="250"></canvas>
 </div>
