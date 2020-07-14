@@ -39,24 +39,25 @@ foreach ($step->activities as $activity) {
 		// if it's required
 		if($activity->_joinData->required == 1) {
 			array_push($requiredacts,$activity);
+			if($activity->activity_types_id == 1) {
+				$watchstepcount++;
+				$watchcolor = $activity->activity_type->color;
+			} elseif($activity->activity_types_id == 2) {
+				$readstepcount++;
+				$readcolor = $activity->activity_type->color;
+			} elseif($activity->activity_types_id == 3) {
+				$listenstepcount++;
+				$listencolor = $activity->activity_type->color;
+			} elseif($activity->activity_types_id == 4) {
+				$participatestepcount++;
+				$participatecolor = $activity->activity_type->color;
+			}
 		// Otherwise it's teriary
 		} else {
 			array_push($tertiaryacts,$activity);
 		}
 		array_push($acts,$activity);
-		if($activity->activity_types_id == 1) {
-			$watchstepcount++;
-			$watchcolor = $activity->activity_type->color;
-		} elseif($activity->activity_types_id == 2) {
-			$readstepcount++;
-			$readcolor = $activity->activity_type->color;
-		} elseif($activity->activity_types_id == 3) {
-			$listenstepcount++;
-			$listencolor = $activity->activity_type->color;
-		} elseif($activity->activity_types_id == 4) {
-			$participatestepcount++;
-			$participatecolor = $activity->activity_type->color;
-		}
+
 		if(in_array($activity->id,$useractivitylist)) {
 			$stepclaimcount++;
 		}
@@ -70,7 +71,7 @@ foreach ($step->activities as $activity) {
 	}
 }
 
-$stepacts = count($acts);
+$stepacts = count($requiredacts);
 $completeclass = 'notcompleted'; 
 if($stepclaimcount == $totalacts) {
 	$completeclass = 'completed';
@@ -128,7 +129,12 @@ if($stepclaimcount > 0) {
 <?php if($s->id == $step->id): ?>
 <div class="row mx-0">
 	<div class="col" style="background-color: rgba(255,255,255,.5); border-radius: .25rem;">
-		<h2 class="mt-2"><?= $s->name ?> <small>of <?= $totalsteps ?></small></h2>	
+		<h2 class="mt-2">
+			<?= $s->name ?> <small>of <?= $totalsteps ?></small>
+			<?php if($steppercent == 100): ?>
+				<i class="fas fas fa-check-circle"></i>
+			<?php endif ?>
+		</h2>	
 		<div class=""><em>Goal:</em> <?= h($s->description); ?></div>
 		<div class="my-3">
 			<span class="badge badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
@@ -207,7 +213,7 @@ $lastobj = $s->description;
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
 	<?php else: // they have claimed it, so show that ?>
 
@@ -443,7 +449,7 @@ $(document).ready(function(){
 		var form = $(this);
 		form.children('button').removeClass('btn-light').addClass('btn-dark').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
 		
-		$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
+		//$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
 
 		var url = form.attr('action');
 		$.ajax({
@@ -513,7 +519,7 @@ function loadStatus() {
 			$('.participatetotal').html(pathstatus.typecounts.participatetotal + ' to participate in')
 							.css('backgroundColor','rgba(' + pathstatus.typecolors.participatecolor + ',1)');
 
-			//$('.progress-bar').attr('width',pathstatus.status);
+			
 			
 			var ctx = document.getElementById('myChart').getContext('2d');
 			var myDoughnutChart = new Chart(ctx, {
@@ -534,26 +540,28 @@ function loadStatus() {
 		}
 	});
 
-	// $.ajax({
-	// 	type: "GET",
-	// 	url: '/learning-curator/steps/status/<?= $step->id ?>',
-	// 	data: '',
-	// 	success: function(data)
-	// 	{
-	// 		var stepstatus = JSON.parse(data);
+	$.ajax({
+		type: "GET",
+		url: '/learning-curator/steps/status/<?= $step->id ?>',
+		data: '',
+		success: function(data)
+		{
+			var stepstatus = JSON.parse(data);
 
-	// 		console.log(stepstatus.steppercent);
+			console.log(stepstatus.steppercent);
+			if(stepstatus.steppercent == 100) {
+				$('.finish').removeClass('hide').addClass('show');
+			}
+			//$('.progress-bar').width(stepstatus.steppercent+'%').html(stepstatus.steppercent+'% completed');
 			
-	// 		$('.progress-bar').width(stepstatus.steppercent+'%').html(stepstatus.steppercent+'% completed');
-			
-	// 	},
-	// 	statusCode: 
-	// 	{
-	// 		403: function() {
-	// 			console.log('You must be logged in.');
-	// 		}
-	// 	}
-	// });
+		},
+		statusCode: 
+		{
+			403: function() {
+				console.log('You must be logged in.');
+			}
+		}
+	});
 
 }
 

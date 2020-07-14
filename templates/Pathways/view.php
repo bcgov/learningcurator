@@ -260,8 +260,12 @@ if($stepclaimcount > 0) {
 		<span class="badge badge-light" style="background-color: rgba(<?= $listencolor ?>,1)"><?= $listenstepcount ?> to listen to</span>  
 		<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
 	</div>
-	<div class="progress progress-bar-striped mb-3" style="background-color: #000; height: 26px;">
-	  <div class="progress-bar" role="progressbar" style="background-color: #333; color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+	<div class="progress progress-bar-striped mb-3" style="background-color: #F1F1F1; height: 26px;">
+	<?php if($steppercent == 100): ?>
+	  <div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,1); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+	<?php else: ?>
+		<div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,1); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+	<?php endif ?>
 		<?= $steppercent ?>% completed
 	  </div>
 	</div>
