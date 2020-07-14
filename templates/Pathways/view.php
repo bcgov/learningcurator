@@ -247,8 +247,10 @@ if($stepclaimcount > 0) {
 
 <div class="p-3 my-3 bg-white rounded-lg">
 	<h2>
+
 		<a href="/learning-curator/steps/view/<?= $steps->id ?>">
 			<?= h($steps->name) ?> 
+			<i class="fas fa-arrow-circle-right"></i>
 		</a>
 	</h2>
 	
@@ -269,7 +271,7 @@ if($stepclaimcount > 0) {
 		<?= $steppercent ?>% completed
 	  </div>
 	</div>
-	<a href="/learning-curator/steps/view/<?= $steps->id ?>" class="btn btn-block btn-dark">View this step <i class="fas fa-angle-double-right"></i></a>
+	
 </div>
 <?php endforeach ?>
 
