@@ -27,18 +27,64 @@ class ActivitiesController extends AppController
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
         $pathways = $allpaths->find('all')->contain(['Steps','Statuses']); //->where(['status_id' => 2]);
         $allpathways = $pathways->toList();
-
+       
         $this->paginate = [
             'contain' => ['Statuses', 'Ministries', 'Categories', 'ActivityTypes','Steps.Pathways'],
             'order' => [
                 'Activities.id' => 'desc'
             ]
         ];
-        $activities = $this->paginate($this->Activities);
+        $activities = $this->Activities
+                            ->find('all')
+                            ->contain(['Statuses', 
+                                        'Ministries', 
+                                        'Categories', 
+                                        'ActivityTypes',
+                                        'Steps.Pathways'])
+                            ->where(['Activities.status_id' => 2])
+                            ->order(['Activities.created' => 'DESC'])
+                            ->limit(10);
+        
 		$cats = TableRegistry::getTableLocator()->get('Categories');
         $allcats = $cats->find('all');
+        
+        // As we loop through the activities for the steps on this pathway, we 
+        // need to be able to check to see if the current user has "claimed" 
+        // that activity. Here we get the current user id and use it to select 
+        // all of the claimed activities assigned to them, and then process out 
+        // just the activity IDs into a simple array. Then, in the template 
+        // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
+        //
+        // First let's check to see if this person is logged in or not.
+        //
+	    $user = $this->request->getAttribute('authentication')->getIdentity();
+        if(!empty($user)) {
+            // We need create two empty arrays first. If nothing gets added to
+            // them, so be it
+            $useractivitylist = array();
+            $userbooklist = array();
+            // Get access to the apprprioate tables
+            $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
+            $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
+            // Select based on currently logged in person
+            $useacts = $au->find()->where(['user_id = ' => $user->id]);
+            $userbooks = $books->find()->where(['user_id = ' => $user->id]);
+            // convert the results into a simple array so that we can
+            // use in_array in the template
+            $useractivities = $useacts->toList();
+            $userbookmarks = $userbooks->toList();
+            // Loop through the resources and add just the ID to the 
+            // array that we will pass into the template
+            foreach($useractivities as $uact) {
+                array_push($useractivitylist, $uact['activity_id']);
+            }
+            foreach($userbookmarks as $b) {
+                array_push($userbooklist, $b['activity_id']);
+            }
 
-        $this->set(compact('activities','allpathways','allcats'));
+        }
+
+        $this->set(compact('activities','allpathways','allcats','userbooklist','useractivitylist'));
     }
 
     /**
@@ -62,21 +108,29 @@ class ActivitiesController extends AppController
         //
 	    $user = $this->request->getAttribute('authentication')->getIdentity();
         if(!empty($user)) {
-            // We need create an empty array first. If nothing gets added to
-            // it, so be it
+            // We need create two empty arrays first. If nothing gets added to
+            // them, so be it
             $useractivitylist = array();
-            // Get access to the apprprioate table
+            $userbooklist = array();
+            // Get access to the apprprioate tables
             $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
+            $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
             // Select based on currently logged in person
             $useacts = $au->find()->where(['user_id = ' => $user->id]);
+            $userbooks = $books->find()->where(['user_id = ' => $user->id]);
             // convert the results into a simple array so that we can
             // use in_array in the template
             $useractivities = $useacts->toList();
+            $userbookmarks = $userbooks->toList();
             // Loop through the resources and add just the ID to the 
             // array that we will pass into the template
             foreach($useractivities as $uact) {
                 array_push($useractivitylist, $uact['activity_id']);
             }
+            foreach($userbookmarks as $b) {
+                array_push($userbooklist, $b['activity_id']);
+            }
+
         }
         $activity = $this->Activities->get($id, [
             'contain' => ['Statuses', 
@@ -94,7 +148,7 @@ class ActivitiesController extends AppController
         $pathways = $allpaths->find('all')->contain(['steps']);
         $allpathways = $pathways->toList();
 
-        $this->set(compact('activity', 'useractivitylist','allpathways'));
+        $this->set(compact('activity', 'useractivitylist','allpathways','userbooklist'));
     }
 
 
@@ -171,6 +225,44 @@ class ActivitiesController extends AppController
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             $activity->createdby_id = $user->id;
             $activity->modifiedby_id = $user->id;
+
+            if ($this->Activities->save($activity)) {
+                //$this->Flash->success(__('The activity has been saved.'));
+                $go = '/activities/view/' . $activity->id;
+                return $this->redirect($go);
+            }
+            //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
+        }
+        $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
+        $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
+        $categories = $this->Activities->Categories->find('list', ['limit' => 200]);
+        $activityTypes = $this->Activities->ActivityTypes->find('list', ['limit' => 200]);
+        $users = $this->Activities->Users->find('list', ['limit' => 200]);
+        $competencies = $this->Activities->Competencies->find('list', ['limit' => 200]);
+        $steps = $this->Activities->Steps->find('list', ['limit' => 200]);
+        $tags = $this->Activities->Tags->find('list', ['limit' => 200]);
+        $this->set(compact('activity', 'statuses', 'ministries', 'categories', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
+    }
+
+    /**
+     * Suggest method for regular users to suggest activities
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function contribute()
+    {
+
+	    $user = $this->request->getAttribute('authentication')->getIdentity();
+        $activity = $this->Activities->newEmptyEntity();
+        $this->Authorization->authorize($activity);
+	    if ($this->request->is('post')) {
+
+            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+            $activity->createdby_id = $user->id;
+            $activity->modifiedby_id = $user->id;
+            $activity->status_id = 5;
+            $activity->licensing = '';
+            $activity->moderator_notes = '';
 
             if ($this->Activities->save($activity)) {
                 //$this->Flash->success(__('The activity has been saved.'));

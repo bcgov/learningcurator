@@ -23,8 +23,18 @@
 <link href="/learning-curator/fontawesome/css/all.css" rel="stylesheet"> 
 
 </head>
-<body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="110">
-
+<body class="" data-spy="scroll" data-target="#stepnav" data-offset="110">
+<?php if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0') !== false && 
+strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/7.0;')!== false): ?>
+<div class="alert alert-warning mb-0 fade show">
+	You appear to be using Internet Explorer as your browser. 
+	To see the intended user experience, please access this site using 
+	<em><a href="/learning-curator/pages/anybrowser">any modern browser</a></em>.
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<?php endif ?>
 <nav class="navbar navbar-expand-lg" style="background-color: #FFF;">
 	
 	<a class="navbar-brand" href="/learning-curator/" style="margin: 0 0 0 20px">
@@ -46,7 +56,7 @@
 	<ul class="navbar-nav mr-auto">
 
 		<li class="nav-item">
-			<a class="nav-link" href="/learning-curator/users/home">Your Profile</a>
+			<a class="nav-link" href="/learning-curator/users/pathways">Your Profile</a>
 		</li>
 
 		<li class="nav-item dropdown">
@@ -69,7 +79,9 @@
 		<li class="nav-item">
 			<a class="nav-link" href="/learning-curator/pages/faq">FAQ</a>
 		</li>
-	
+		<li class="nav-item">
+			<a class="nav-link" href="/learning-curator/activities/contribute">Contribute</a>
+		</li>
 		<?php if(!empty($active)): ?>
 		<?php if($active->role_id == 5): ?>
 		<li class="nav-item dropdown">

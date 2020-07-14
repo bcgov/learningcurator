@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Activity $activity
  */
+$this->layout = 'nowrap';
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
@@ -11,52 +12,12 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<style>
-.bigicon {
-    border-radius: 50%;
-    color: #FFF;
-    float: right;
-    font-size: 36px;
-    height: 100px;
-    padding: 20px 0 0 5px;
-    text-align: center;
-    width: 100px;
-}
-@media (min-width: 34em) {
-    .card-columns {
-        -webkit-column-count:2;
-        -moz-column-count:2;
-        column-count:2;
-    }
-}
-.hours {
-	background: rgba(255,255,255,1);
-	color: #222;
-}
-.required {
-	background: rgba(0,0,0,1);
-	color: #FFF;
-	float: right;
-}
-.required,
-.hours {
-	border-radius: 5px;
-	display: inline-block;
-	padding: 0 10px;
-	text-align: center;
-	text-transform: uppercase;
-}
+<div class="container-fluid">
+<div class="row justify-content-md-center"
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 
-</style>
-
-</style>
-<div class="row justify-content-md-center">
-<div class="col-md-9">
-
-
-<div class="p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
-
-
+<div class="col-md-12 col-lg-6">
+<div class="pad-lg">
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
@@ -69,48 +30,113 @@ if ($this->Identity->isLoggedIn()) {
 	<span class="badge badge-warning">INVESTIGATE</span>
 	<?php endif ?>
 	<?php endif; // role check ?>
-
-
-	<?php foreach($activity->tags as $tag): ?>
-	<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
-	<?php endforeach ?>
-
+		<div class="row align-items-center">
+		<div class="col-3">
+	<div class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
+		<i class="activity-icon activity-icon-lg fas <?= $activity->activity_type->image_path ?>"></i>
+	</div>
+	</div>
+	<div class="col">
+	<?php if(!in_array($activity->id,$useractivitylist)): ?>
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => '']) ?>
+	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it counts towards your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+	<?= $this->Form->end() ?>
+	<?php else: ?>
+	<div class="btn btn-dark">CLAIMED <i class="fas fa-check-circle"></i></div>
+	<?php endif ?>
+	</div>
+	</div>
 
 	<h1 class="my-1">
 		<?= $activity->name ?>
 	</h1>
-	<div class="p-3" style="background: rgba(255,255,255,.3);">
+	<div class="p-3 rounded-lg" style="background: rgba(255,255,255,.3);">
+		<div class="mb-2">
+			<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+				<i class="fas fa-clock"></i>
+				<?= $activity->estimated_time ?>
+			</span>
+			<?php foreach($activity->tags as $tag): ?>
+			<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
+			<?php endforeach ?>
+		</div>
 		<?= $activity->description ?>
 	</div>
-	<div class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
-		<i class="fas fa-clock"></i>
-		<?= $activity->estimated_time ?>
-	</div> 
+	<?php if(!empty($activity->tags)): ?>
+	<?php foreach($activity->tags as $tag): ?>
+	<?php if($tag->name == 'Learning System Course'): ?>
 
 	<a target="_blank" 
-		href="<?= $activity->hyperlink ?>" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #FFF; font-weight: bold;" 
-		class="btn btn-block my-2 text-uppercase btn-lg">
+		rel="noopener" 
+		data-toggle="tooltip" data-placement="bottom" title="Enrol in this course in the Learning System"
+		href="https://learning.gov.bc.ca/psc/CHIPSPLM_6/EMPLOYEE/ELM/c/LM_OD_EMPLOYEE_FL.LM_FND_LRN_FL.GBL?Page=LM_FND_LRN_RSLT_FL&Action=U&KWRD=<?php echo urlencode($activity->name) ?>" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
+		class="btn btn-block my-3 text-uppercase btn-lg">
 
 			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+
 			<?= $activity->activity_type->name ?>
+
 	</a>
+
+	<?php elseif($tag->name == 'YouTube'): ?>
+	<?php 
+		preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $match);
+		$youtube_id = $match[1];
+		?>
+	<div class="my-3 p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border-radius: 3px;">
+		<iframe width="100%" 
+			height="315" 
+			src="https://www.youtube-nocookie.com/embed/<?= $youtube_id ?>/" 
+			frameborder="0" 
+			allow="" 
+			allowfullscreen>
+		</iframe>
+	</div>
+	
+	<?php endif; // logic check for formatting differently based on tag ?>	
+
+	<?php endforeach; // tags loop ?>
+
+	<?php else: // there are no tags ?>
+		<div class="my-3 p-3" style="font-size: 130%">
+			<?= $activity->activity_type->name ?>: 
+			<a href="<?= h($activity->hyperlink) ?>" tagret="_blank" rel="noopener">
+				<?= h($activity->hyperlink) ?>
+			</a>
+		</div>
+	<?php endif; ?>
+
+	<div class="my-3">
 		<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
 			<i class="fas fa-exclamation-triangle"></i>
 		</a>	
 		<a href="/learning-curator/activities/like/<?= $activity->id ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
+			<i class="fas fa-thumbs-up"></i> <span class="lcount"><?= h($activity->recommended) ?> likes</span>
 		</a>
-	<?php if(!empty($uid)): ?>
-	<?php if(!in_array($activity->id,$useractivitylist)): ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => '']) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it shows up on your profile', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
-	<?= $this->Form->end() ?>
+
+		<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
+	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark form-inline']) ?>
+		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
+		<button class="btn btn-light"><i class="fas fa-bookmark"></i> Bookmark</button>
+		<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
+		<?= $this->Form->end() ?>
 	<?php else: ?>
-	<div class="btn btn-light">CLAIMED <i class="fas fa-check-circle"></i></div>
+		<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
 	<?php endif ?>
-	<?php endif ?>
+		</div>
+
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row justify-content-md-center">
+
+<div class="col-md-6">
+<div class="bg-white rounded-lg my-3 p-3">
+	
 
 	<div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
 
@@ -123,80 +149,78 @@ if ($this->Identity->isLoggedIn()) {
 
 <?= $this->Text->autoParagraph(h($activity->licensing)); ?>
 
-</div>
+<?php if($role == 2 || $role == 5): ?>
+	
+	<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#assignment<?= $activity->id ?>" aria-expanded="false" aria-controls="assignment<?= $activity->id ?>">
+		Path Assigment
+	  </button>
+	  
+	<div class="collapse" id="assignment<?= $activity->id ?>">
+	<?php foreach($allpathways as $pathway): ?>
+	<div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
+	<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#steps<?= $pathway->id ?>" aria-expanded="false" aria-controls="steps<?= $pathway->id ?>">
+		Steps
+	  </button>
+	
+	<a href="/learning-curator/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
+	
+	<div class="collapse p-3" id="steps<?= $pathway->id ?>">
+	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
+	<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id ]) ?>
+	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
+	<?php foreach($pathway->steps as $step): ?>
+	<label style="display: inline-block; margin: 0 10px 0 5px;">
+	<input id="step_id_<?= $step->id ?>" type="radio" name="step_id" value="<?= $step->id ?>">
+	<?= $step->name ?>
+	</label>
+	<?php endforeach ?>
+	<?= $this->Form->button(__('Assign'),['class'=>'btn btn-sm btn-light']) ?>
+	<?= $this->Form->end() ?>
+	</div>
+	</div>
+	
+	<?php endforeach ?>
+	</div> <!-- .collapse -->
+	
+	<?php if (!empty($activity->moderator_notes)) : ?>
+	<h4><?= __('Moderator Notes') ?></h4>
+	<blockquote>
+	<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
+	</blockquote>
+	<?php endif ?>
+	<h4><?= __('Related Users') ?></h4>
+	<?php if (!empty($activity->users)) : ?>
+	<?php foreach ($activity->users as $users) : ?>
+	<div>
+		<?= $this->Html->link($users->name, ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
+	</div>
+	<?php endforeach; ?>
+	<?php endif; ?>
+	
+	
+	
+	
+	<?php endif; ?>
 
-<h3>This activity is a part of the following pathways</h3>
+</div>
+</div>
+</div>
+<div class="col-md-6">
+
+<h3 class="mt-3">Pathways</h3>
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
 <?php if($path->status_id == 2): ?>
-<div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
-	<div><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></div>
-	<div><?= $path->description ?></div>
+<div class="my-1 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
+	<h4><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
+	<div><?= $step->description ?></div>
 </div>
 <?php endif ?>
 <?php endforeach ?>
 <?php endforeach ?>
 
 
-<?php if($role == 2 || $role == 5): ?>
-	
-<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#assignment<?= $activity->id ?>" aria-expanded="false" aria-controls="assignment<?= $activity->id ?>">
-    Path Assigment
-  </button>
-  
-<div class="collapse" id="assignment<?= $activity->id ?>">
-<?php foreach($allpathways as $pathway): ?>
-<div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
-<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#steps<?= $pathway->id ?>" aria-expanded="false" aria-controls="steps<?= $pathway->id ?>">
-    Steps
-  </button>
-
-<a href="/learning-curator/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
-
-<div class="collapse p-3" id="steps<?= $pathway->id ?>">
-<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
-<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id ]) ?>
-<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-<?php foreach($pathway->steps as $step): ?>
-<label style="display: inline-block; margin: 0 10px 0 5px;">
-<input id="step_id_<?= $step->id ?>" type="radio" name="step_id" value="<?= $step->id ?>">
-<?= $step->name ?>
-</label>
-<?php endforeach ?>
-<?= $this->Form->button(__('Assign'),['class'=>'btn btn-sm btn-light']) ?>
-<?= $this->Form->end() ?>
 </div>
-</div>
-
-<?php endforeach ?>
-</div> <!-- .collapse -->
-
-<h4><?= __('Moderator Notes') ?></h4>
-<blockquote>
-<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
-</blockquote>
-
-<h4><?= __('Related Users') ?></h4>
-<?php if (!empty($activity->users)) : ?>
-<?php foreach ($activity->users as $users) : ?>
-<div>
-    <?= $this->Html->link($users->name, ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
-</div>
-<?php endforeach; ?>
-<?php endif; ?>
-
-
-<h4><?= __('Related Competencies') ?></h4>
-<?php if (!empty($activity->competencies)) : ?>
-<?php foreach ($activity->competencies as $competencies) : ?>
-<div>
-<?= $this->Html->link($compentencies->name, ['controller' => 'Competencies', 'action' => 'view', $competencies->id]) ?>
-</div>
-<?php endforeach; ?>
-<?php endif; ?>
-
-
-<?php endif; ?>
 </div>
 </div>
 </div>
@@ -215,6 +239,57 @@ if ($this->Identity->isLoggedIn()) {
 
 
 $(document).ready(function(){
+
+	$('.bookmark').on('submit', function(e){
+		
+		e.preventDefault();
+		var form = $(this);
+		form.children('button').removeClass('btn-light').addClass('btn-dark').html('<span class="fas fa-bookmark"></span> Bookmarked!').tooltip('dispose').attr('title','Good job!');
+		
+		//$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
+
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/learning-curator/activities-bookmarks/add',
+			data: form.serialize(),
+			success: function(data)
+			{
+				//loadStatus();
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
+	$('.claim').on('submit', function(e){
+		
+		e.preventDefault();
+		var form = $(this);
+		form.children('button').removeClass('btn-light').addClass('btn-dark').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
+		
+		$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
+
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/learning-curator/activities-users/claim',
+			data: form.serialize(),
+			success: function(data)
+			{
+				loadStatus();
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
 
 	$('[data-toggle="tooltip"]').tooltip();
 

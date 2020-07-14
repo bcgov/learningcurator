@@ -129,7 +129,7 @@ This seems to work out, but #TODO investigate optimizing this
 </div>
 </div>
 </div>
-<div class="container">
+<div class="container-fluid linear">
 <div class="row justify-content-md-center">
 <div class="col-md-3">
 
@@ -195,29 +195,30 @@ foreach ($steps->activities as $activity) {
 		array_push($defunctacts,$activity);
 	} elseif($activity->status_id == 2) {
 		// if it's required
-		//if($activity->_joinData->required == 1) {
-		//	array_push($requiredacts,$activity);
+		if($activity->_joinData->required == 1) {
+			array_push($requiredacts,$activity);
+			if($activity->activity_types_id == 1) {
+				$watchstepcount++;
+				$watchcolor = $activity->activity_type->color;
+			} elseif($activity->activity_types_id == 2) {
+				$readstepcount++;
+				$readcolor = $activity->activity_type->color;
+			} elseif($activity->activity_types_id == 3) {
+				$listenstepcount++;
+				$listencolor = $activity->activity_type->color;
+			} elseif($activity->activity_types_id == 4) {
+				$participatestepcount++;
+				$participatecolor = $activity->activity_type->color;
+			}
+			if(in_array($activity->id,$useractivitylist)) {
+				$stepclaimcount++;
+			}
 		// Otherwise it's teriary
-		//} else {
-		//	array_push($tertiaryacts,$activity);
-		//}
+		} else {
+			array_push($tertiaryacts,$activity);
+		}
 		array_push($acts,$activity);
-		if($activity->activity_types_id == 1) {
-			$watchstepcount++;
-			$watchcolor = $activity->activity_type->color;
-		} elseif($activity->activity_types_id == 2) {
-			$readstepcount++;
-			$readcolor = $activity->activity_type->color;
-		} elseif($activity->activity_types_id == 3) {
-			$listenstepcount++;
-			$listencolor = $activity->activity_type->color;
-		} elseif($activity->activity_types_id == 4) {
-			$participatestepcount++;
-			$participatecolor = $activity->activity_type->color;
-		}
-		if(in_array($activity->id,$useractivitylist)) {
-			$stepclaimcount++;
-		}
+
 		$tmp = array();
 		// Loop through the whole list, add steporder to tmp array
 		foreach($acts as $line) {
@@ -231,7 +232,7 @@ foreach ($steps->activities as $activity) {
 ?>
 
 <?php
-$stepacts = count($acts);
+$stepacts = count($requiredacts);
 $completeclass = 'notcompleted'; 
 if($stepclaimcount == $totalacts) {
 	$completeclass = 'completed';
@@ -244,11 +245,10 @@ if($stepclaimcount > 0) {
 }
 ?>
 
-<div class="card card-body my-3">
+<div class="p-3 my-3 bg-white rounded-lg">
 	<h2>
 		<a href="/learning-curator/steps/view/<?= $steps->id ?>">
 			<?= h($steps->name) ?> 
-			
 		</a>
 	</h2>
 	
@@ -260,12 +260,16 @@ if($stepclaimcount > 0) {
 		<span class="badge badge-light" style="background-color: rgba(<?= $listencolor ?>,1)"><?= $listenstepcount ?> to listen to</span>  
 		<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
 	</div>
-	<div class="progress progress-bar-striped mb-3" style="height: 26px;">
-	  <div class="progress-bar" role="progressbar" style="background-color: #000; color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+	<div class="progress progress-bar-striped mb-3" style="background-color: #F1F1F1; height: 26px;">
+	<?php if($steppercent == 100): ?>
+	  <div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,1); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+	<?php else: ?>
+		<div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,1); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+	<?php endif ?>
 		<?= $steppercent ?>% completed
 	  </div>
 	</div>
-	<a href="/learning-curator/steps/view/<?= $steps->id ?>" class="btn btn-block btn-light">View this step <i class="fas fa-angle-double-right"></i></a>
+	<a href="/learning-curator/steps/view/<?= $steps->id ?>" class="btn btn-block btn-dark">View this step <i class="fas fa-angle-double-right"></i></a>
 </div>
 <?php endforeach ?>
 

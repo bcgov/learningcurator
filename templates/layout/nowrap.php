@@ -7,26 +7,37 @@
 
 <title>Learning Curator <?= $this->fetch('title') ?></title>
 
+<!--
 <link rel="stylesheet" href="/learning-curator/bootstrap-theme/dist/css/bootstrap-theme.min.css">
 
-<!--Wanna go from getting a 60 on peformance in Lighthouse to a 97? 
+Wanna go from getting a 60 on peformance in Lighthouse to a 97? 
 	Stop serving the Gov Bootstrap theme and call in Bootstrap via its CDN:
 
-
+-->
 	
 	<link rel="stylesheet" 
 			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
 			integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
 			crossorigin="anonymous">
--->
 
 
 <link href="/learning-curator/css/home.css" rel="stylesheet"> 
 <link href="/learning-curator/fontawesome/css/all.css" rel="stylesheet"> 
 
 </head>
-<body class="bg-light" data-spy="scroll" data-target="#stepnav" data-offset="110">
-
+<body class="" data-spy="scroll" data-target="#stepnav" data-offset="110">
+<?php 
+if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
+&& strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/7.0;')!== false): ?>
+<div class="alert alert-warning mb-0 fade show">
+	You appear to be using Internet Explorer as your browser. 
+	To see the intended user experience, please access this site using 
+	<em><a href="/learning-curator/pages/anybrowser">any modern browser</a></em>.
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<?php endif ?>
 <nav class="navbar navbar-expand-lg" style="background-color: #FFF;">
 	
 	<a class="navbar-brand" href="/learning-curator/" style="margin: 0 0 0 20px">
@@ -48,7 +59,7 @@
 	<ul class="navbar-nav mr-auto">
 
 		<li class="nav-item">
-			<a class="nav-link" href="/learning-curator/users/home">Your Profile</a>
+			<a class="nav-link" href="/learning-curator/users/pathways">Your Profile</a>
 		</li>
 
 		<li class="nav-item dropdown">
@@ -71,7 +82,9 @@
 		<li class="nav-item">
 			<a class="nav-link" href="/learning-curator/pages/faq">FAQ</a>
 		</li>
-	
+		<li class="nav-item">
+			<a class="nav-link" href="/learning-curator/activities/contribute">Contribute</a>
+		</li>	
 		<?php if(!empty($active)): ?>
 		<?php if($active->role_id == 5): ?>
 		<li class="nav-item dropdown">
@@ -136,7 +149,7 @@
 <div class="container-fluid bg-white" style="padding-top: 60px;">
 <div class="row mt-3">
 <div class="col-md-5 mt-3">
-<div class="alert alert-light">
+<div class="p-3">
 	<div><img src="/learning-curator/img/BCID_BCPSA_rgb_pos.jpg" width="400" alt="BC Public Service Agency logo"></div>
 	<p>Your personal information is collected by the BC Public Service Agency in accordance with 
 		section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes 

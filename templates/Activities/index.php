@@ -32,25 +32,34 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 </div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid linear">
 <div class="row justify-content-md-center">
-<div class="col-md-4">
+<div class="col-md-5">
 <h2 class="mt-3">Latest Activities</h2>
-<div><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></div>
+
 <div class="">
 <?php foreach ($activities as $activity): ?>
 
-<div class="card card-body mb-2"> <!-- style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)" -->
-
-<h3>
-	<div class="activity-icon" style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
-		<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+<div class="p-3 rounded-lg mb-2 bg-white"> <!-- style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)" -->
+<div class="activity-icon activity-icon-md" style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
+		<i class="activity-icon activity-icon-md fas <?= $activity->activity_type->image_path ?>"></i>
 	</div>
+<h3>
+
 	<?= $this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
 </h3>
 <div class="">
 	<?= $activity->description ?>
 	<div class="mt-2"><span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i></div>
+	<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
+	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark form-inline']) ?>
+		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
+		<button class="btn btn-light"><i class="fas fa-bookmark"></i> Bookmark</button>
+		<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
+		<?= $this->Form->end() ?>
+	<?php else: ?>
+		<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
+	<?php endif ?>
 	<div class="mt-2" style="font-size: 12px">Added on <?= $activity->created ?></div>
 
 </div>
@@ -116,14 +125,14 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach($allpathways as $path): ?>
 <?php if($path->status_id != 2): ?>
 <?php if($role == 2 || $role == 5): ?>
-	<div class="card card-body mb-2">
+	<div class="p-3 mb-2 bg-white rounded-lg">
 		<span class="badge badge-warning"><?= $path->status->name ?></span>
 		<h3><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?></a></h3>
 		<?= $path->objective ?>
 	</div>
 <?php endif ?>
 <?php else: ?>
-	<div class="card card-body mb-2">
+	<div class="p-3 mb-2 bg-white rounded-lg">
 		
 		<h3><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?></a></h3>
 		<?= $path->objective ?>
@@ -133,10 +142,10 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
 <h2 class="mt-3">Latest Topics</h2>
 <?php foreach ($allcats as $cat) : ?>
-<div class="card card-body mb-2">
+<div class="p-3 mb-2 bg-white rounded-lg">
 <h3>
 	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
 </h3>
@@ -158,3 +167,86 @@ if ($this->Identity->isLoggedIn()) {
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
 	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
 	crossorigin="anonymous"></script>
+
+	<script>
+
+$(document).ready(function(){
+
+
+	$('.bookmark').on('submit', function(e){
+		
+		e.preventDefault();
+		var form = $(this);
+		form.children('button').removeClass('btn-light').addClass('btn-dark').html('<span class="fas fa-bookmark"></span> Bookmarked!').tooltip('dispose').attr('title','Good job!');
+		
+		//$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
+
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/learning-curator/activities-bookmarks/add',
+			data: form.serialize(),
+			success: function(data)
+			{
+				//loadStatus();
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
+	$('.claim').on('submit', function(e){
+		
+		e.preventDefault();
+		var form = $(this);
+		form.children('button').removeClass('btn-light').addClass('btn-dark').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
+		
+		$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
+
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/learning-curator/activities-users/claim',
+			data: form.serialize(),
+			success: function(data)
+			{
+				loadStatus();
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
+
+	$('[data-toggle="tooltip"]').tooltip();
+
+	$('.likingit').on('click',function(e){
+		var url = $(this).attr('href');
+		$(this).children('.lcount').html('Liked!');
+		e.preventDefault();
+		$.ajax({
+			type: "GET",
+			url: url,
+			data: '',
+			success: function(data)
+			{
+			},
+			statusCode: 
+			{
+				403: function() {
+					let alert = 'You must be logged in.</div>';
+					console.log(alert);
+				}
+			}
+		});
+	});
+
+});
+
+</script>
