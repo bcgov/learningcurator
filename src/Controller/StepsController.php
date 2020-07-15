@@ -210,37 +210,37 @@ class StepsController extends AppController
 				array_push($defunctacts,$activity);
 			} elseif($activity->status_id == 2) {
 				// if it's required
-				//if($activity->_joinData->required == 1) {
-				//	array_push($requiredacts,$activity);
-				// Otherwise it's teriary
-				//} else {
-				//	array_push($tertiaryacts,$activity);
-				//}
-				array_push($acts,$activity);
-				if($activity->activity_types_id == 1) {
-                    $watchstepcount++;
-				} elseif($activity->activity_types_id == 2) {
-					$readstepcount++;
-				} elseif($activity->activity_types_id == 3) {
-                    $listenstepcount++;
-				} elseif($activity->activity_types_id == 4) {
-                    $participatestepcount++;
+				if($activity->_joinData->required == 1) {
+                    array_push($requiredacts,$activity);
+                    if($activity->activity_types_id == 1) {
+                        $watchstepcount++;
+                    } elseif($activity->activity_types_id == 2) {
+                        $readstepcount++;
+                    } elseif($activity->activity_types_id == 3) {
+                        $listenstepcount++;
+                    } elseif($activity->activity_types_id == 4) {
+                        $participatestepcount++;
+                    }
+                    if(in_array($activity->id,$useractivitylist)) {
+                        $stepclaimcount++;
+                    }
+				//Otherwise it's supplemental
+				} else {
+					array_push($tertiaryacts,$activity);
+				}
+				
 
-				}
-				if(in_array($activity->id,$useractivitylist)) {
-					$stepclaimcount++;
-				}
 				$tmp = array();
 				// Loop through the whole list, add steporder to tmp array
-				foreach($acts as $line) {
+				foreach($requiredacts as $line) {
 					$tmp[] = $line->_joinData->steporder;
 				}
 				// Use the tmp array to sort acts list
-				array_multisort($tmp, SORT_DESC, $acts);
+				array_multisort($tmp, SORT_DESC, $requiredacts);
 			}
 		}
 
-		$stepacts = count($acts);
+		$stepacts = count($requiredacts);
 		$completeclass = 'notcompleted'; 
 		if($stepclaimcount == $totalacts) {
 			$completeclass = 'completed';
