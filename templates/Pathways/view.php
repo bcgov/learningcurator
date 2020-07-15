@@ -131,7 +131,7 @@ This seems to work out, but #TODO investigate optimizing this
 </div>
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
-<div class="col-md-3">
+<div class="col-6 col-md-3 col-lg-2">
 
 <?php if(in_array($uid,$usersonthispathway)): ?>
 
@@ -164,7 +164,7 @@ accessed from your profile page. Think of it as “bookmarking” learning you w
 </div>
 <?php if (!empty($pathway->steps)) : ?>
 
-<div class="col-md-6">
+<div class="col-md-6 col-lg-4">
 
 <?php foreach ($pathway->steps as $steps) : ?>
 
@@ -263,11 +263,7 @@ if($stepclaimcount > 0) {
 		<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
 	</div>
 	<div class="progress progress-bar-striped mb-3" style="background-color: #F1F1F1; height: 26px;">
-	<?php if($steppercent == 100): ?>
 	  <div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,1); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
-	<?php else: ?>
-		<div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,1); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
-	<?php endif ?>
 		<?= $steppercent ?>% completed
 	  </div>
 	</div>
