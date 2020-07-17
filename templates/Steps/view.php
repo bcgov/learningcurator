@@ -15,13 +15,17 @@ if ($this->Identity->isLoggedIn()) {
 $stepTime = 0;
 $defunctacts = array();
 $requiredacts = array();
-$tertiaryacts = array();
+$supplementalacts = array();
 $acts = array();
 
 $readstepcount = 0;
 $watchstepcount = 0;
 $listenstepcount = 0;
 $participatestepcount = 0;
+$allreadstepcount = 0;
+$allwatchstepcount = 0;
+$alllistenstepcount = 0;
+$allparticipatestepcount = 0;
 $readcolor = '';
 $watchcolor = '';
 $listencolor = '';
@@ -41,22 +45,35 @@ foreach ($step->activities as $activity) {
 			array_push($requiredacts,$activity);
 			if($activity->activity_types_id == 1) {
 				$watchstepcount++;
-				$watchcolor = $activity->activity_type->color;
 			} elseif($activity->activity_types_id == 2) {
 				$readstepcount++;
-				$readcolor = $activity->activity_type->color;
+				
 			} elseif($activity->activity_types_id == 3) {
 				$listenstepcount++;
-				$listencolor = $activity->activity_type->color;
+				
 			} elseif($activity->activity_types_id == 4) {
 				$participatestepcount++;
-				$participatecolor = $activity->activity_type->color;
+				
 			}
 		// Otherwise it's teriary
 		} else {
-			array_push($tertiaryacts,$activity);
+			array_push($supplementalacts,$activity);
 		}
 		array_push($acts,$activity);
+
+		if($activity->activity_types_id == 1) {
+			$allwatchstepcount++;
+			$watchcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 2) {
+			$allreadstepcount++;
+			$readcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 3) {
+			$alllistenstepcount++;
+			$listencolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 4) {
+			$allparticipatestepcount++;
+			$participatecolor = $activity->activity_type->color;
+		}
 
 		if(in_array($activity->id,$useractivitylist)) {
 			$stepclaimcount++;
@@ -70,8 +87,8 @@ foreach ($step->activities as $activity) {
 		array_multisort($tmp, SORT_DESC, $acts);
 	}
 }
-
 $stepacts = count($requiredacts);
+$supplmentalcount = count ($supplementalacts);
 $completeclass = 'notcompleted'; 
 if($stepclaimcount == $totalacts) {
 	$completeclass = 'completed';
@@ -137,18 +154,22 @@ if($stepclaimcount > 0) {
 		</h2>	
 		<div class=""><em>Goal:</em> <?= h($s->description); ?></div>
 		<div class="my-3">
-			<span class="badge badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
-				<?= $readstepcount ?> to read
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
+				<?= $allreadstepcount ?> to read
 			</span>  
-			<span class="badge badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
-				<?= $watchstepcount ?> to watch
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
+				<?= $allwatchstepcount ?> to watch
 			</span>  
-			<span class="badge badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
-				<?= $listenstepcount ?> to listen to
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
+				<?= $alllistenstepcount ?> to listen to
 			</span>  
-			<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
-				<?= $participatestepcount ?> to participate in
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
+				<?= $allparticipatestepcount ?> to participate in
 			</span>  
+
+			<span class="badge badge-pill badge-light"><?= $totalacts ?> total</span> 
+			<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
+			<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
 		</div>
 	</div>
 	<div class="col-2">
@@ -177,8 +198,6 @@ $lastobj = $s->description;
 	<?php if($s->id == $step->id) $c = 'dotactive' ?>
 	<a href="/learning-curator/steps/view/<?= $s->id ?>">
 		<i class="fas fa-dot-circle <?= $c ?>" title="Step <?= $count ?>"></i>
-		
-
 	</a>
 <?php $count++ ?>
 <?php endforeach ?>
@@ -228,7 +247,7 @@ $lastobj = $s->description;
 	<?php endif; // claimed or not ?>
 
 	<h3 class="my-3">
-		<?= $activity->name ?>
+		<a href="/learning-curator/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
 		<!--<a class="btn btn-sm btn-light" href="/learning-curator/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
 	</h3>
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
@@ -330,10 +349,10 @@ $lastobj = $s->description;
 
 <?php endif; ?>
 
-<?php if(count($tertiaryacts) > 0): ?>
+<?php if(count($supplementalacts) > 0): ?>
 
 	<h3 style="color:#666">Supplementary Resources</h3>
-	<?php foreach ($tertiaryacts as $activity): ?>
+	<?php foreach ($supplementalacts as $activity): ?>
 	<div class="p-3 my-3 bg-white rounded-lg">
 		<div class="row align-items-center">
 		<div class="col-12 col-md-2 col-lg-2">
