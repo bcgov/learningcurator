@@ -39,7 +39,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach ($category->topics as $topic) : ?>
 <div class="col-md-4 pt-3">
 
-<h2><?= $topic->name ?></h2>
+<h2><i class="fas fa-sitemap"></i> <?= $topic->name ?></h2>
 <div class="p-3"><?= $topic->description ?></div>
 <?php foreach ($topic->pathways as $pathway) : ?>
 
