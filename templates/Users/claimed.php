@@ -68,7 +68,7 @@ $this->layout = 'nowrap';
 <div class="w-100"></div>
 <div class="col-md-8 col-lg-6">
 <?php if (!empty($user->activities)) : ?>
-<h2><i class="fas fa-check"></i><?= __('Claimed Activities') ?></h2>
+<h2><i class="fas fa-check"></i> <?= __('Claimed Activities') ?></h2>
 
 <div id="activitylist">
 <input type="text" name="activityfilter" id="activityfilter" placeholder="Filter" class="search form-control mb-3">
