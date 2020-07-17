@@ -227,12 +227,10 @@ $lastobj = $s->description;
 <?php if (!empty($step->activities)) : ?>
 
 <?php foreach ($requiredacts as $activity) : ?>
-<?php $claimborder = 'border: 1px solid rgba(' . $activity->activity_type->color . ',1)'; ?>
-<?php if(in_array($activity->id,$useractivitylist)): // if the user has claimed this, outline the box ?>
-<?php $claimborder = 'border: 1px solid rgba(' . $activity->activity_type->color . ',1)'; ?>
-<?php endif ?>
+
+<div class="bg-white rounded-lg">
 <div class="p-3 mb-3 rounded-lg activity" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); <?= $claimborder ?>">
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
 
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
@@ -344,6 +342,7 @@ $lastobj = $s->description;
 
 
 	</div>
+	</div> <!-- whitebg -->
 
 	<?php endforeach; // end of activities loop for this step ?>
 
