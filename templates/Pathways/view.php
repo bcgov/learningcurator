@@ -12,7 +12,7 @@ if ($this->Identity->isLoggedIn()) {
 	$role = $this->Identity->get('role_id');
 	$uid = $this->Identity->get('id');
 }
-
+$totalusers = count($usersonthispathway);
 ?>
 <style>
 /* Start desktop-specific code for this page.
@@ -131,6 +131,30 @@ This seems to work out, but #TODO investigate optimizing this
 </div>
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
+<?php if($role == 2 || $role == 5): ?>
+<div class="col-md-2 col-lg-2 order-last">
+<div class="bg-white rounded-lg p-3 my-3">
+<a class="btn btn-dark" 
+	data-toggle="collapse" 
+	href="#followerlist" 
+	role="button" 
+	aria-expanded="false" 
+	aria-controls="collapseExample">
+		<span class="badge badge-pill badge-light"><?= $totalusers ?></span> 
+		people are following this path
+</a>
+<div class="collapse" id="followerlist">
+<ul class="list-group list-group-flush">
+<?php foreach($followers as $follower): ?>
+<li class="list-group-item">
+	<a href="/learning-curator/users/view/<?= $follower[0] ?>"><?= $follower[1] ?></a>
+</li>
+<?php endforeach ?>
+</ul>
+</div>
+</div>
+</div>
+<?php endif ?>
 <div class="col-6 col-md-3 col-lg-2">
 
 <?php if(in_array($uid,$usersonthispathway)): ?>
@@ -263,7 +287,7 @@ if($stepclaimcount > 0) {
 		<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
 	</div>
 	<div class="progress progress-bar-striped mb-3" style="background-color: #F1F1F1; height: 26px;">
-	  <div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,1); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+	  <div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,.8); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
 		<?= $steppercent ?>% completed
 	  </div>
 	</div>

@@ -100,11 +100,13 @@ class PathwaysController extends AppController
 	// this Pathway" button or "you're on this Pathway" text
 	//
 	// Create the initially empty array that we also pass into the template
-	$usersonthispathway = array();
+    $usersonthispathway = array();
+    $followers = array();
 	// Loop through the users that are on this pathway and parse just the 
 	// IDs into the array that we just created
 	foreach($pathway->users as $pu) {
-		array_push($usersonthispathway,$pu->id);
+        array_push($usersonthispathway,$pu->id);
+        array_push($followers,[$pu->id,$pu->name]);
     }
 
     // In order to implement the scrollspy step navigation we zip through
@@ -122,11 +124,9 @@ class PathwaysController extends AppController
 	}
 
 
-    if(!empty($user)) {
-		$this->set(compact('pathway', 'usersonthispathway','stepsalongtheway', 'useractivitylist'));
-	} else {
-		$this->set(compact('pathway', 'usersonthispathway','stepsalongtheway'));
-	}
+
+	$this->set(compact('pathway', 'usersonthispathway','stepsalongtheway', 'useractivitylist','followers'));
+
 
     }
 
