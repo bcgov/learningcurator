@@ -132,8 +132,12 @@ class StepsController extends AppController
             //$this->Flash->error(__('The step could not be saved. Please, try again.'));
         }
         $activities = $this->Steps->Activities->find('list', ['limit' => 200]);
+        
+        $types = TableRegistry::getTableLocator()->get('ActivityTypes');
+        $atypes = $types->find('all');
+
         $pathways = $this->Steps->Pathways->find('list', ['limit' => 200]);
-        $this->set(compact('step', 'activities', 'pathways'));
+        $this->set(compact('step', 'activities', 'pathways', 'atypes'));
     }
 
     /**

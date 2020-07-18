@@ -17,7 +17,7 @@ img {
 	max-width: 100%;
 }
 .btn-success {
-    background-color: rgba(88,174,36,.5) !important;
+    background-color: rgba(88,174,36,1) !important;
     border: 0;
 }
 #colorful {

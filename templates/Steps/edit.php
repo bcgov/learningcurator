@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Step $step
  */
+$this->loadHelper('Authentication.Identity');
 ?>
 <style>
 label {
@@ -11,106 +12,150 @@ label {
     font-weight: bold;
 }
 </style>
-<pre><?php //print_r($step); exit; ?></pre>
-<h1><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $step->name ?></a></h1>
-
-
-<div class="row">
-    <div class="col-md-4">
-    <div class="card card-body">
-        <?= $this->Form->create($step) ?>
-        <?= $this->Form->hidden('image_path', ['class' => 'form-control']) ?>
-        <?= $this->Form->hidden('featured', ['class' => 'form-control']) ?>
-        <?= $this->Form->hidden('modifiedby') ?>
-        <?= $this->Form->hidden('pathway_id', ['value' => $step->pathway_id]) ?>
-        <?= $this->Form->control('name', ['class' => 'form-control']) ?>
-        <?= $this->Form->control('description', ['class' => 'form-control']) ?>
-        <?= $this->Form->button(__('Save Step'),['class' => 'btn btn-success btn-block my-3']) ?>
-        <?= $this->Form->end() ?>
+<div class="container-fluid">
+<div class="row justify-content-md-center" id="colorful">
+<div class="col-md-12">
+<div class="pad-md">
+    <h1><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $step->name ?></a></h1>
+</div>
+</div>
+</div>
+</div>
+<div class="container-fluid linear">
+<div class="row justify-content-md-center pt-3">
+<div class="col-md-4">
+<h2>Step Details</h2>
+<div class="my-3 p-3 rounded-lg bg-white">
+    <?= $this->Form->create($step) ?>
+    <?= $this->Form->hidden('image_path', ['class' => 'form-control']) ?>
+    <?= $this->Form->hidden('featured', ['class' => 'form-control']) ?>
+    <?= $this->Form->hidden('modifiedby') ?>
+    <?= $this->Form->hidden('pathway_id', ['value' => $step->pathway_id]) ?>
+    <?= $this->Form->control('name', ['class' => 'form-control']) ?>
+    <?= $this->Form->control('description', ['class' => 'form-control']) ?>
+    <?= $this->Form->button(__('Save Step'),['class' => 'btn btn-success btn-block my-3']) ?>
+    <?= $this->Form->end() ?>
     </div>
-    </div>
-	<div class="col-md-4">
-    <div class="card card-body">
-        <h2>Add Activity</h2>
-        <form method="get" id="actfind" action="/learning-curator/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
-		    <input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
-            <input type="hidden" name="step_id" value="<?= $step->id ?>">
-		    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-	    </form>
-        
-        <ul class="list-group list-group-flush" id="results">
-        </ul>
-    </div>
-    </div>
-    <div class="col-md-4">
-    <div class="card">
-        <h2 class="m-3">Existing Activities</h2>
-        <ul class="list-group list-group-flush" id="existingacts">
-        <?php  //$this->Form->control('activities._ids', ['options' => $activities]) 
-        $tmp = array();
-        // Loop through the whole list, add steporder to tmp array
-        foreach($step->activities as $line) {
-            $tmp[] = $line->_joinData->steporder;
-        }
-        // Use the tmp array to sort acts list
-        array_multisort($tmp, SORT_DESC, $step->activities);
-        ?>
-        
-        <?php foreach($step->activities as $a): ?>
-            <li class="list-group-item" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
-                <div class="row">
-                <div class="col-9">
-                    <?php if($a->_joinData->required) echo '<span class="badge badge-success">Required</span>' ?> 
-                    <a href="/learning-curator/activities/view/<?= $a->id ?>"><?= $a->name ?></a> 
-                </div>
-                <div class="col-3">
-                <!--
-                <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id, 'class' => 'form-inline']]) ?>
-                <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
-                <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'up']) ?>
-                <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
-                <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
-                <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
-                <?= $this->Form->button(__('Up'),['class'=>'btn btn-sm btn-light']) ?>
-                <?= $this->Form->end() ?>
-
-                <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id, 'class' => 'form-inline']]) ?>
-                <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
-                <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'down']) ?>
-                <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
-                <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
-                <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
-                <?= $this->Form->button(__('Down'),['class'=>'btn btn-sm btn-light']) ?>
-                <?= $this->Form->end() ?>
--->
-                <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $a->_joinData->id, 'class' => '']]) ?>
-                <?= $this->Form->hidden('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
-                <?php if($a->_joinData->required == 0): ?>
-                <?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 1]) ?>
-                <?php else: ?>
-                <?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 0]) ?>
-                <?php endif ?>
-                <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
-                <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
-                <?= $this->Form->button(__('r'),['class'=>'btn btn-sm btn-light float-left']) ?>
-                <?= $this->Form->end() ?>
-
-                <?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $a->_joinData->id, 'class' => 'form-inline']) ?>
-                <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
-                <?= $this->Form->button(__('x'),['class' => 'btn btn-sm btn-light']) ?>
-                <?= $this->Form->end() ?>
-                </div>
-                </div>
-            </li>
-        <?php endforeach ?>
-        </ul>
-    </div>
-    </div>
-    
 </div>
 
+<div class="col-md-4">
+    
+    <h2>Add Existing Activity</h2>
+    <div class="my-3 p-3 rounded-lg bg-white">
+    <form method="get" id="actfind" action="/learning-curator/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
+        <input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
+        <input type="hidden" name="step_id" value="<?= $step->id ?>">
+        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    
+    <ul class="list-group list-group-flush" id="results">
+    </ul>
+    </div>
+    <div class="my-3 p-3 rounded-lg bg-white">
+    <h2 class="my-3">Existing Activities</h2>
+    <ul class="list-group list-group-flush" id="existingacts">
+    <?php  //$this->Form->control('activities._ids', ['options' => $activities]) 
+    $tmp = array();
+    // Loop through the whole list, add steporder to tmp array
+    foreach($step->activities as $line) {
+        $tmp[] = $line->_joinData->steporder;
+    }
+    // Use the tmp array to sort acts list
+    array_multisort($tmp, SORT_DESC, $step->activities);
+    ?>
+    
+    <?php foreach($step->activities as $a): ?>
+        <li class="list-group-item" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
+            <div class="row">
+            <div class="col-9">
+                <?php if($a->_joinData->required) echo '<span class="badge badge-success">Required</span>' ?> 
+                <a href="/learning-curator/activities/view/<?= $a->id ?>"><?= $a->name ?></a> 
+            </div>
+            <div class="col-3">
+            <!--
+            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id, 'class' => 'form-inline']]) ?>
+            <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
+            <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'up']) ?>
+            <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
+            <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
+            <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
+            <?= $this->Form->button(__('Up'),['class'=>'btn btn-sm btn-light']) ?>
+            <?= $this->Form->end() ?>
+
+            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id, 'class' => 'form-inline']]) ?>
+            <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
+            <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'down']) ?>
+            <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
+            <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
+            <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
+            <?= $this->Form->button(__('Down'),['class'=>'btn btn-sm btn-light']) ?>
+            <?= $this->Form->end() ?>
+            -->
 
 
+            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $a->_joinData->id, 'class' => '']]) ?>
+            <?= $this->Form->hidden('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
+            <?php if($a->_joinData->required == 0): ?>
+            <?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 1]) ?>
+            <?php else: ?>
+            <?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 0]) ?>
+            <?php endif ?>
+
+
+            <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
+            <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
+            <?= $this->Form->button(__('r'),['class'=>'btn btn-sm btn-light float-left']) ?>
+            <?= $this->Form->end() ?>
+
+            <?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $a->_joinData->id, 'class' => 'form-inline']) ?>
+            <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
+            <?= $this->Form->button(__('x'),['class' => 'btn btn-sm btn-light']) ?>
+            <?= $this->Form->end() ?>
+            </div>
+            </div>
+        </li>
+    <?php endforeach ?>
+    </ul>
+    </div>
+</div>
+<div class="col-md-4">
+
+    <h2>Add New Activity</h2>
+    <div class="my-3 p-3 rounded-lg bg-white">
+    <?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'addtostep']]) ?>
+    <?php 
+    echo $this->Form->hidden('createdby_id', ['value' => $this->Identity->get('id'), 'class' => 'form-control']);
+    echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'),'class' => 'form-control']);
+    ?>
+    <?php echo $this->Form->hidden('step_id', ['value' => $step->id]); ?>
+    <?php echo $this->Form->hidden('activity_types_id', ['value' => '1']); ?>
+    <label>Activity Type
+    <select name="activity_types_id" id="activity_types_id" class="form-control">
+        <option value="1">Watch</option>
+        <option value="2">Read</option>
+        <option value="3">Listen</option>
+        <option value="4">Participate</option>
+    </select>
+    </label>
+    <?php //echo $this->Form->control('activity_type_id', ['class' => 'form-control', 'options' => $atypes]); ?>
+    <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
+    <?php echo $this->Form->control('description', ['class' => 'form-control']); ?>
+    <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
+    <?php echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
+    <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
+    <?php //echo $this->Form->control('isbn', ['class' => 'form-control']); ?>
+    
+    <?php //echo $this->Form->control('status_id', ['class' => 'form-control', 'options' => $statuses, 'empty' => true]); ?>
+    <?php echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
+    <?php //echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text', 'label' => 'Tags']); ?>
+    <?php //echo $this->Form->control('users._ids', ['class' => 'form-control', 'options' => $users]); ?>
+    <?php //echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); ?>
+    <?= $this->Form->button(__('Save Activity'), ['class' => 'btn btn-block btn-success my-3']) ?>
+    <?= $this->Form->end() ?>
+    </div>
+</div>
+</div>
+</div>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 

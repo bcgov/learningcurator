@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 Use Cake\ORM\TableRegistry;
-
+use Cake\ORM\Locator\LocatorAwareTrait;
 
 /**
  * Activities Controller
@@ -242,6 +242,43 @@ class ActivitiesController extends AppController
         $steps = $this->Activities->Steps->find('list', ['limit' => 200]);
         $tags = $this->Activities->Tags->find('list', ['limit' => 200]);
         $this->set(compact('activity', 'statuses', 'ministries', 'categories', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
+    }
+    /**
+     * Add-to-step method
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function addtostep()
+    {
+
+	    $user = $this->request->getAttribute('authentication')->getIdentity();
+        $activity = $this->Activities->newEmptyEntity();
+        $this->Authorization->authorize($activity);
+
+	    if ($this->request->is('post')) {
+
+            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+            $activity->createdby_id = $user->id;
+            $activity->modifiedby_id = $user->id;
+            $activity->status_id = 2;
+
+            if ($this->Activities->save($activity)) {
+
+                $asteptable = TableRegistry::getTableLocator()->get('ActivitiesSteps');
+                $activitiesStep = $asteptable->newEmptyEntity();
+                $activitiesStep->step_id = $this->request->getData()['step_id'];
+                $activitiesStep->activity_id = $activity->id;
+                    
+                if (!$asteptable->save($activitiesStep)) {
+                    echo 'Cannot add to step! Contact an admin. Sorry :)';
+                    echo '' . $activity->id;
+                    exit;
+                }
+                return $this->redirect($this->referer());
+            }
+            echo __('The activity could not be saved. Please, try again.');
+        }
+    
     }
 
     /**
