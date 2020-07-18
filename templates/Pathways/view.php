@@ -134,13 +134,13 @@ This seems to work out, but #TODO investigate optimizing this
 <?php if($role == 2 || $role == 5): ?>
 <div class="col-md-2 col-lg-2 order-last">
 <div class="bg-white rounded-lg p-3 my-3">
-<a class="btn btn-dark" 
+<a class="" 
 	data-toggle="collapse" 
 	href="#followerlist" 
 	role="button" 
 	aria-expanded="false" 
 	aria-controls="collapseExample">
-		<span class="badge badge-pill badge-light"><?= $totalusers ?></span> 
+		<span class="badge badge-pill badge-dark"><?= $totalusers ?></span> 
 		people are following this path
 </a>
 <div class="collapse" id="followerlist">
