@@ -15,11 +15,12 @@ Wanna go from getting a 60 on peformance in Lighthouse to a 97?
 
 -->
 	
-	<link rel="stylesheet" 
-			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
-			integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
-			crossorigin="anonymous">
-
+<link rel="stylesheet" 
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
+		crossorigin="anonymous">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css">
 
 <link href="/learning-curator/css/home.css" rel="stylesheet"> 
 <link href="/learning-curator/fontawesome/css/all.css" rel="stylesheet"> 
@@ -41,7 +42,7 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 <nav class="navbar navbar-expand-lg" >
 	
 	<a class="navbar-brand" href="/learning-curator/" style="margin: 0 0 0 20px">
-	<img alt="" height="50" src="/learning-curator/img/curator-rings-logo.svg" width="50">
+	<img class="animate__animated animate__rotateIn" alt="Logo" height="50" src="/learning-curator/img/curator-rings-logo.svg" width="50">
 		Learning Curator
 	</a>
 
