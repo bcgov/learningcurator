@@ -122,16 +122,18 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 				Add
 		</a>
 		<div class="dropdown-menu" aria-labelledby="adminAddDropdown">
+			<a class="dropdown-item" href="/learning-curator/categories/add">Add a Category</a>
+			<a class="dropdown-item" href="/learning-curator/topics/add">Add a Topic</a>
 			<a class="dropdown-item" href="/learning-curator/pathways/add">Add a Pathway</a>
 			<a class="dropdown-item" href="/learning-curator/activities/add">Add an Activity</a>
-			<!--<a class="dropdown-item" href="/activity-types/add">Add a Type</a>-->
 			<a class="dropdown-item" href="/learning-curator/tags/add">Add a Tag</a>
-			<!--<a class="dropdown-item" href="/users/add">Add a User</a>
-			<a class="dropdown-item" href="/competencies/add">Add a Competency</a>
-			<a class="dropdown-item" href="/ministries/add">Add a Ministry</a>
-			<a class="dropdown-item" href="/categories/add">Add a Category</a>
-			<a class="dropdown-item" href="/statuses/add">Add a Status</a>-->
-			
+			<?php if($active->role_id == 5): ?>
+			<a class="dropdown-item" href="/learning-curator/activity-types/add">Add a Type</a>
+			<a class="dropdown-item" href="/learning-curator/users/add">Add a User</a>
+			<a class="dropdown-item" href="/learning-curator/competencies/add">Add a Competency</a>
+			<a class="dropdown-item" href="/learning-curator/ministries/add">Add a Ministry</a>
+			<a class="dropdown-item" href="/learning-curator/statuses/add">Add a Status</a>
+			<?php endif ?>
 		</div>
 		</li>
 		<?php endif ?>
