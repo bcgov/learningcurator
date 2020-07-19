@@ -176,9 +176,16 @@ This seems to work out, but #TODO investigate optimizing this
 <?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
 
 <?= $this->Form->end() ?>
+<div class="py-3">
 
-<div class="text-sm">When you select to follow a pathway, this pathway will show as a journey you are on and may be 
-accessed from your profile page. Think of it as “bookmarking” learning you want to come back to and track your progress on.</div>
+<div>Following a pathway is a committment to moving 
+through each step and claiming each required activity as you complete it.
+Fill your activity rings and get a certificate!
+</div>
+<!--When you select to follow a pathway, this pathway will show as a journey you are on and may be 
+accessed from your profile page. Think of it as “bookmarking” learning you want to come back to and track your progress on.-->
+
+</div>
 </div>
 <?php endif ?>
 
