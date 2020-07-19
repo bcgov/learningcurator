@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Step $step
  */
+$this->layout = 'nowrap';
 $this->loadHelper('Authentication.Identity');
 ?>
 <style>
@@ -47,24 +48,37 @@ label {
         <input type="hidden" name="step_id" value="<?= $step->id ?>">
         <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
     </form>
-    
     <ul class="list-group list-group-flush" id="results">
     </ul>
     </div>
     <div class="my-3 p-3 rounded-lg bg-white">
-    <h2 class="my-3">Existing Activities</h2>
-    <ul class="list-group list-group-flush" id="existingacts">
+    <h3>Required Activities</h3>
+    <ul class="list-group list-group-flush" id="requiredactivities">
     <?php  //$this->Form->control('activities._ids', ['options' => $activities]) 
-    $tmp = array();
+    $reqtmp = array();
+    $supptmp = array();
+    $requiredacts = array();
+    $supplementalacts = array();
     // Loop through the whole list, add steporder to tmp array
     foreach($step->activities as $line) {
-        $tmp[] = $line->_joinData->steporder;
+        if($line->_joinData->required == 1) {
+            array_push($requiredacts,$line);
+        } else {
+            array_push($supplementalacts,$line);
+        }
+    }
+    foreach($requiredacts as $line) {
+        $reqtmp[] = $line->_joinData->steporder;
+    }
+    foreach($supplementalacts as $line) {
+        $supptmp[] = $line->_joinData->steporder;
     }
     // Use the tmp array to sort acts list
-    array_multisort($tmp, SORT_DESC, $step->activities);
+    array_multisort($reqtmp, SORT_DESC, $requiredacts);
+    array_multisort($supptmp, SORT_DESC, $supplementalacts);
     ?>
     
-    <?php foreach($step->activities as $a): ?>
+    <?php foreach($requiredacts as $a): ?>
         <li class="list-group-item" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
             <div class="row">
             <div class="col-9">
@@ -116,6 +130,39 @@ label {
         </li>
     <?php endforeach ?>
     </ul>
+
+    <h3>Supplmental Activities</h3>
+    <ul class="list-group list-group-flush" id="supplementalacts">
+    <?php foreach($supplementalacts as $supp): ?>
+        <li class="list-group-item" id="exac-<?= $supp->id ?>" data-stepid="<?= $supp->_joinData->id ?>">
+            <div class="row">
+            <div class="col-9">
+                <?php if($supp->_joinData->required) echo '<span class="badge badge-success">Required</span>' ?> 
+                <a href="/learning-curator/activities/view/<?= $supp->id ?>"><?= $supp->name ?></a> 
+            </div>
+            <div class="col-3">
+            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $supp->_joinData->id, 'class' => '']]) ?>
+            <?= $this->Form->hidden('id',['type' => 'hidden', 'value' => $supp->_joinData->id]) ?>
+            <?php if($supp->_joinData->required == 0): ?>
+            <?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 1]) ?>
+            <?php else: ?>
+            <?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 0]) ?>
+            <?php endif ?>
+            <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
+            <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $supp->id]) ?>
+            <?= $this->Form->button(__('r'),['class'=>'btn btn-sm btn-light float-left']) ?>
+            <?= $this->Form->end() ?>
+
+            <?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $supp->_joinData->id, 'class' => 'form-inline']) ?>
+            <?= $this->Form->hidden('id', ['value' => $supp->_joinData->id]) ?>
+            <?= $this->Form->button(__('x'),['class' => 'btn btn-sm btn-light']) ?>
+            <?= $this->Form->end() ?>
+            </div>
+            </div>
+        </li>
+    <?php endforeach ?>
+    </ul>
+
     </div>
 </div>
 <div class="col-md-4">
@@ -168,7 +215,7 @@ label {
 <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
 <script>
 $(function () {
-    $('#existingacts').sortable({
+    $('#requiredactivities').sortable({
         onEnd: function (/**Event*/evt) {
             var itemEl = evt.item.id;
             var sid = evt.item.dataset.stepid;

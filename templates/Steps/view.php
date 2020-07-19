@@ -80,15 +80,16 @@ foreach ($step->activities as $activity) {
 		}
 		$tmp = array();
 		// Loop through the whole list, add steporder to tmp array
-		foreach($acts as $line) {
+		foreach($requiredacts as $line) {
 			$tmp[] = $line->_joinData->steporder;
 		}
 		// Use the tmp array to sort acts list
-		array_multisort($tmp, SORT_DESC, $acts);
+		array_multisort($tmp, SORT_DESC, $requiredacts);
+		//array_multisort($tmp, SORT_DESC, $supplementalacts);
 	}
 }
 $stepacts = count($requiredacts);
-$supplmentalcount = count ($supplementalacts);
+$supplmentalcount = count($supplementalacts);
 $completeclass = 'notcompleted'; 
 if($stepclaimcount == $totalacts) {
 	$completeclass = 'completed';
@@ -147,12 +148,13 @@ if($stepclaimcount > 0) {
 <div class="row mx-0">
 	<div class="col" style="background-color: rgba(255,255,255,.5); border-radius: .25rem;">
 		<h2 class="mt-2">
-			<?= $s->name ?> <small>of <?= $totalsteps ?></small>
+			<?= $s->name ?> 
 			<?php if($steppercent == 100): ?>
 				<i class="fas fas fa-check-circle"></i>
 			<?php endif ?>
+			<small><span class="badge badge-dark"><?= $totalsteps ?></span> total steps</small>
 		</h2>	
-		<div class=""><em>Goal:</em> <?= h($s->description); ?></div>
+		<div class="" style="font-size: 130%;"><em>Goal:</em> <?= h($s->description); ?></div>
 		<div class="my-3">
 			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
 				<?= $allreadstepcount ?> to read

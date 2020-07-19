@@ -73,9 +73,9 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 				Topics
 		</a>
 		<div class="dropdown-menu" aria-labelledby="pathwaysDropdown">
-		<a class="dropdown-item" href="/learning-curator/categories/view/1">Leadership</a>
+			<a class="dropdown-item" href="/learning-curator/categories/view/1">Leadership</a>
+			<a class="dropdown-item" href="/learning-curator/categories/view/3">Diversity &amp; Inclusion</a>
 			<a class="dropdown-item" href="/learning-curator/categories/view/2">Role Specific</a>
-			<a class="dropdown-item" href="/learning-curator/categories/view/3">Technology</a>
 		</div>
 		</li>
 		<li class="nav-item">
@@ -145,8 +145,14 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 	</div> <!-- /endof .collapse navbar-collapse -->
 </nav>
 
-<?= $this->fetch('content') ?>
+<div class="container" style="padding-top: 60px;">
+<div class="row">
+<div class="col">
 
+<?= $this->fetch('content') ?>
+</div>
+</div>
+</div>
 
 <div class="container-fluid bg-white" style="padding-top: 60px;">
 <div class="row mt-3">

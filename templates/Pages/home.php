@@ -17,7 +17,7 @@
 </div>
 <div class="col-md-4">
 <div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
-	<h3><a href="/learning-curator/categories/view/2" class="">Role Specific</a></h3>
+	<h3><a href="/learning-curator/categories/view/3" class="">Diversity &amp; Inclusion</a></h3>
 	<div>These pathways focus on building a solid personal foundation—whether 
 	your interest is in developing your skills where you are right now or to 
 	develop for future roles.</div>
@@ -25,7 +25,7 @@
 </div>
 <div class="col-md-4">
 <div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
-	<h3><a href="/learning-curator/categories/view/3" class="">Technology</a></h3>
+	<h3><a href="/learning-curator/categories/view/2" class="">Role Specifc</a></h3>
 	<div>These pathways focus on building a solid personal foundation—whether 
 	your interest is in developing your skills where you are right now or to 
 	develop for future roles.</div>
