@@ -19,6 +19,7 @@ class TopicsController extends AppController
      */
     public function index()
     {
+        $this->Authorization->skipAuthorization();
         $this->paginate = [
             'contain' => ['Users'],
         ];
@@ -79,6 +80,7 @@ class TopicsController extends AppController
         $topic = $this->Topics->get($id, [
             'contain' => ['Categories'],
         ]);
+        $this->Authorization->authorize($topic);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $topic = $this->Topics->patchEntity($topic, $this->request->getData());
             if ($this->Topics->save($topic)) {
@@ -104,6 +106,7 @@ class TopicsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $topic = $this->Topics->get($id);
+        $this->Authorization->authorize($topic);
         if ($this->Topics->delete($topic)) {
             $this->Flash->success(__('The topic has been deleted.'));
         } else {

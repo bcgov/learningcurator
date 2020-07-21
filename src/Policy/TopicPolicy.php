@@ -20,7 +20,13 @@ class TopicPolicy
      */
     public function canAdd(IdentityInterface $user, Topic $topic)
     {
-        return true;
+        if($this->isAdmin($user, $topic)) {
+            return true;
+        } elseif($this->isCurator($user,$topic)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -30,8 +36,15 @@ class TopicPolicy
      * @param App\Model\Entity\Topic $topic
      * @return bool
      */
-    public function canUpdate(IdentityInterface $user, Topic $topic)
+    public function canEdit(IdentityInterface $user, Topic $topic)
     {
+        if($this->isAdmin($user, $topic)) {
+            return true;
+        } elseif($this->isCurator($user,$topic)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -43,6 +56,13 @@ class TopicPolicy
      */
     public function canDelete(IdentityInterface $user, Topic $topic)
     {
+        if($this->isAdmin($user, $topic)) {
+            return true;
+        } elseif($this->isCurator($user,$topic)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -55,5 +75,16 @@ class TopicPolicy
     public function canView(IdentityInterface $user, Topic $topic)
     {
         return true;
+    }
+
+    
+    protected function isCurator(IdentityInterface $user, Topic $topic)
+    {
+        return $user->role_id === 2;
+    }
+
+    protected function isAdmin(IdentityInterface $user, Topic $topic)
+    {
+        return $user->role_id === 5;
     }
 }
