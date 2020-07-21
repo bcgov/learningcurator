@@ -260,10 +260,11 @@ class UsersController extends AppController
         ]);
         $this->Authorization->authorize($user);
 		
-
+        $cats = TableRegistry::getTableLocator()->get('Categories');
+        $allcats = $cats->find('all');
 		
 		
-        $this->set(compact('user'));
+        $this->set(compact('user','allcats'));
     }
   /**
      * User bookmarks method
