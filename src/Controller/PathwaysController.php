@@ -154,7 +154,8 @@ class PathwaysController extends AppController
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'categories', 'ministries', 'competencies', 'steps', 'users'));
+        $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
+        $this->set(compact('pathway', 'categories', 'ministries', 'competencies', 'steps', 'users','topics'));
     }
 
     /**
