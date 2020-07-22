@@ -21,9 +21,12 @@ img {
     border: 0;
 }
 #colorful {
-    background: rgb(193,129,183);
+    /*background: rgb(193,129,183);
     background: radial-gradient(circle, rgba(255,218,96,1) 0%, rgba(244,105,115,1) 33%, rgba(249,145,180,1) 63%, rgba(193,129,183,1) 100%);
-    
+	*/
+	background: url('../img/curator-rings-background.svg') no-repeat bottom center;
+	background-size: 50rem;
+	background-position: -25rem 0;
 }
 #colorful a {
     color: #000;
@@ -92,6 +95,13 @@ canvas {
 }
 
 @media (min-width: 45em) {
+
+	#colorful {
+		
+		background-size: 90rem;
+		background-position: -3rem -35rem;
+	}
+
     .pad-sm {
         padding: 50px 0;
     }

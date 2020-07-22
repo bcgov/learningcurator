@@ -15,13 +15,17 @@ if ($this->Identity->isLoggedIn()) {
 $stepTime = 0;
 $defunctacts = array();
 $requiredacts = array();
-$tertiaryacts = array();
+$supplementalacts = array();
 $acts = array();
 
 $readstepcount = 0;
 $watchstepcount = 0;
 $listenstepcount = 0;
 $participatestepcount = 0;
+$allreadstepcount = 0;
+$allwatchstepcount = 0;
+$alllistenstepcount = 0;
+$allparticipatestepcount = 0;
 $readcolor = '';
 $watchcolor = '';
 $listencolor = '';
@@ -41,37 +45,51 @@ foreach ($step->activities as $activity) {
 			array_push($requiredacts,$activity);
 			if($activity->activity_types_id == 1) {
 				$watchstepcount++;
-				$watchcolor = $activity->activity_type->color;
 			} elseif($activity->activity_types_id == 2) {
 				$readstepcount++;
-				$readcolor = $activity->activity_type->color;
+				
 			} elseif($activity->activity_types_id == 3) {
 				$listenstepcount++;
-				$listencolor = $activity->activity_type->color;
+				
 			} elseif($activity->activity_types_id == 4) {
 				$participatestepcount++;
-				$participatecolor = $activity->activity_type->color;
+				
 			}
 		// Otherwise it's teriary
 		} else {
-			array_push($tertiaryacts,$activity);
+			array_push($supplementalacts,$activity);
 		}
 		array_push($acts,$activity);
+
+		if($activity->activity_types_id == 1) {
+			$allwatchstepcount++;
+			$watchcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 2) {
+			$allreadstepcount++;
+			$readcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 3) {
+			$alllistenstepcount++;
+			$listencolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 4) {
+			$allparticipatestepcount++;
+			$participatecolor = $activity->activity_type->color;
+		}
 
 		if(in_array($activity->id,$useractivitylist)) {
 			$stepclaimcount++;
 		}
 		$tmp = array();
 		// Loop through the whole list, add steporder to tmp array
-		foreach($acts as $line) {
+		foreach($requiredacts as $line) {
 			$tmp[] = $line->_joinData->steporder;
 		}
 		// Use the tmp array to sort acts list
-		array_multisort($tmp, SORT_DESC, $acts);
+		array_multisort($tmp, SORT_DESC, $requiredacts);
+		//array_multisort($tmp, SORT_DESC, $supplementalacts);
 	}
 }
-
 $stepacts = count($requiredacts);
+$supplmentalcount = count($supplementalacts);
 $completeclass = 'notcompleted'; 
 if($stepclaimcount == $totalacts) {
 	$completeclass = 'completed';
@@ -130,25 +148,30 @@ if($stepclaimcount > 0) {
 <div class="row mx-0">
 	<div class="col" style="background-color: rgba(255,255,255,.5); border-radius: .25rem;">
 		<h2 class="mt-2">
-			<?= $s->name ?> <small>of <?= $totalsteps ?></small>
+			<?= $s->name ?> 
 			<?php if($steppercent == 100): ?>
 				<i class="fas fas fa-check-circle"></i>
 			<?php endif ?>
+			<small><span class="badge badge-dark"><?= $totalsteps ?></span> total steps</small>
 		</h2>	
-		<div class=""><em>Goal:</em> <?= h($s->description); ?></div>
+		<div class="" style="font-size: 130%;"><em>Goal:</em> <?= h($s->description); ?></div>
 		<div class="my-3">
-			<span class="badge badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
-				<?= $readstepcount ?> to read
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
+				<?= $allreadstepcount ?> to read
 			</span>  
-			<span class="badge badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
-				<?= $watchstepcount ?> to watch
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
+				<?= $allwatchstepcount ?> to watch
 			</span>  
-			<span class="badge badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
-				<?= $listenstepcount ?> to listen to
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
+				<?= $alllistenstepcount ?> to listen to
 			</span>  
-			<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
-				<?= $participatestepcount ?> to participate in
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
+				<?= $allparticipatestepcount ?> to participate in
 			</span>  
+
+			<span class="badge badge-pill badge-light"><?= $totalacts ?> total</span> 
+			<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
+			<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
 		</div>
 	</div>
 	<div class="col-2">
@@ -177,8 +200,6 @@ $lastobj = $s->description;
 	<?php if($s->id == $step->id) $c = 'dotactive' ?>
 	<a href="/learning-curator/steps/view/<?= $s->id ?>">
 		<i class="fas fa-dot-circle <?= $c ?>" title="Step <?= $count ?>"></i>
-		
-
 	</a>
 <?php $count++ ?>
 <?php endforeach ?>
@@ -190,10 +211,16 @@ $lastobj = $s->description;
 <?php endif; ?>
 
 
+
 </div>
 </div>
 </div>
 
+<div class="progress progress-bar-striped stickyprogress" style="background-color: #F1F1F1; border-radius: 0; height: 13px;">
+		<div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,1); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+		This step is <?= $steppercent ?>% done
+	  </div>
+</div>
 
 <div class="container-fluid linear pt-3">
 <div class="row justify-content-md-center">
@@ -202,12 +229,10 @@ $lastobj = $s->description;
 <?php if (!empty($step->activities)) : ?>
 
 <?php foreach ($requiredacts as $activity) : ?>
-<?php $claimborder = 'border: 1px solid rgba(' . $activity->activity_type->color . ',1)'; ?>
-<?php if(in_array($activity->id,$useractivitylist)): // if the user has claimed this, outline the box ?>
-<?php $claimborder = 'border: 1px solid rgba(' . $activity->activity_type->color . ',1)'; ?>
-<?php endif ?>
+
+<div class="bg-white rounded-lg">
 <div class="p-3 mb-3 rounded-lg activity" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); <?= $claimborder ?>">
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
 
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
@@ -222,7 +247,7 @@ $lastobj = $s->description;
 	<?php endif; // claimed or not ?>
 
 	<h3 class="my-3">
-		<?= $activity->name ?>
+		<a href="/learning-curator/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
 		<!--<a class="btn btn-sm btn-light" href="/learning-curator/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
 	</h3>
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
@@ -319,15 +344,16 @@ $lastobj = $s->description;
 
 
 	</div>
+	</div> <!-- whitebg -->
 
 	<?php endforeach; // end of activities loop for this step ?>
 
 <?php endif; ?>
 
-<?php if(count($tertiaryacts) > 0): ?>
+<?php if(count($supplementalacts) > 0): ?>
 
 	<h3 style="color:#666">Supplementary Resources</h3>
-	<?php foreach ($tertiaryacts as $activity): ?>
+	<?php foreach ($supplementalacts as $activity): ?>
 	<div class="p-3 my-3 bg-white rounded-lg">
 		<div class="row align-items-center">
 		<div class="col-12 col-md-2 col-lg-2">
@@ -371,7 +397,7 @@ $lastobj = $s->description;
 
 <?php endif ?>
 </div>
-<div class="col-2 col-md-3 col-lg-2">
+<div class="col-8 col-md-3 col-lg-2">
 <?php if(in_array($uid,$usersonthispathway)): ?>
 <div class="p-3 bg-white mb-3 text-center stickyrings">
 <div class="mb-3 following"></div>
@@ -552,7 +578,7 @@ function loadStatus() {
 			if(stepstatus.steppercent == 100) {
 				$('.finish').removeClass('hide').addClass('show');
 			}
-			//$('.progress-bar').width(stepstatus.steppercent+'%').html(stepstatus.steppercent+'% completed');
+			$('.progress-bar').width(stepstatus.steppercent+'%').html(stepstatus.steppercent+'% completed');
 			
 		},
 		statusCode: 

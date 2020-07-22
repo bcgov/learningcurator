@@ -71,7 +71,7 @@ $this->layout = 'nowrap';
 <div class="col-md-8 col-lg-6">
 
 <?php if (!empty($user->pathways)) : ?>
-	<h2><?= __('Your Pathways') ?></h2>
+	<h2><i class="fas fa-sitemap"></i> <?= __('Your Pathways') ?></h2>
 	<?php foreach ($user->pathways as $pathways) : ?>
 	<div class="p-3 mb-2 bg-white rounded-lg">
 	<div class="row">

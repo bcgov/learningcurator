@@ -35,7 +35,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
 <div class="col-md-5">
-<h2 class="mt-3">Latest Activities</h2>
+<h2 class="mt-3"><i class="fas fa-check"></i> Latest Activities</h2>
 
 <div class="">
 <?php foreach ($activities as $activity): ?>
@@ -120,7 +120,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <div class="col-md-4">
 
-<h2 class="mt-3">Latest Pathways</h2>
+<h2 class="mt-3"><i class="fas fa-sitemap"></i> Latest Pathways</h2>
 <div>
 <?php foreach($allpathways as $path): ?>
 <?php if($path->status_id != 2): ?>

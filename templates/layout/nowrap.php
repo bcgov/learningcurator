@@ -15,14 +15,40 @@ Wanna go from getting a 60 on peformance in Lighthouse to a 97?
 
 -->
 	
-	<link rel="stylesheet" 
-			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
-			integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
-			crossorigin="anonymous">
-
+<link rel="stylesheet" 
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
+		crossorigin="anonymous">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css">
 
 <link href="/learning-curator/css/home.css" rel="stylesheet"> 
 <link href="/learning-curator/fontawesome/css/all.css" rel="stylesheet"> 
+
+
+<!-- ****** faviconit.com favicons ****** -->
+<link rel="shortcut icon" href="/learning-curator/favicon/favicon.ico">
+<link rel="icon" sizes="16x16 32x32 64x64" href="/learning-curator/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="196x196" href="/learning-curator/favicon/favicon-192.png">
+<link rel="icon" type="image/png" sizes="160x160" href="/learning-curator/favicon/favicon-160.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/learning-curator/favicon/favicon-96.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/learning-curator/favicon/favicon-64.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/learning-curator/favicon/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/learning-curator/favicon/favicon-16.png">
+<link rel="apple-touch-icon" href="/learning-curator/favicon/favicon-57.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/learning-curator/favicon/favicon-114.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/learning-curator/favicon/favicon-72.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/learning-curator/favicon/favicon-144.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/learning-curator/favicon/favicon-60.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/learning-curator/favicon/favicon-120.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/learning-curator/favicon/favicon-76.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/learning-curator/favicon/favicon-152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/learning-curator/favicon/favicon-180.png">
+<meta name="msapplication-TileColor" content="#FFFFFF">
+<meta name="msapplication-TileImage" content="/learning-curator/favicon/favicon-144.png">
+<meta name="msapplication-config" content="/learning-curator/browserconfig.xml">
+<!-- ****** faviconit.com favicons ****** -->
+
 
 </head>
 <body class="" data-spy="scroll" data-target="#stepnav" data-offset="110">
@@ -38,10 +64,10 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 	</button>
 </div>
 <?php endif ?>
-<nav class="navbar navbar-expand-lg" style="background-color: #FFF;">
+<nav class="navbar navbar-expand-lg" >
 	
 	<a class="navbar-brand" href="/learning-curator/" style="margin: 0 0 0 20px">
-	<img alt="" height="50" src="/learning-curator/img/curator-rings-logo.png" width="50">
+	<img class="animate__animated animate__rotateIn" alt="Logo" height="50" src="/learning-curator/img/curator-rings-logo.svg" width="50">
 		Learning Curator
 	</a>
 
@@ -59,21 +85,23 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 	<ul class="navbar-nav mr-auto">
 
 		<li class="nav-item">
-			<a class="nav-link" href="/learning-curator/users/pathways">Your Profile</a>
+			<a class="nav-link" href="/learning-curator/users/pathways">Pathways</a>
 		</li>
-
+		<li class="nav-item">
+			<a class="nav-link" href="/learning-curator/users/bookmarks">Bookmarks</a>
+		</li>
 		<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="pathwaysDropdown" 
 			role="button" 
 			data-toggle="dropdown" 
 			aria-haspopup="true" 
 			aria-expanded="false">
-				Pathways
+				Topics
 		</a>
 		<div class="dropdown-menu" aria-labelledby="pathwaysDropdown">
-		<a class="dropdown-item" href="/learning-curator/categories/view/1">Leadership</a>
+			<a class="dropdown-item" href="/learning-curator/categories/view/1">Leadership</a>
+			<a class="dropdown-item" href="/learning-curator/categories/view/3">Diversity &amp; Inclusion</a>
 			<a class="dropdown-item" href="/learning-curator/categories/view/2">Role Specific</a>
-			<a class="dropdown-item" href="/learning-curator/categories/view/3">Technology</a>
 		</div>
 		</li>
 		<li class="nav-item">
@@ -119,16 +147,18 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 				Add
 		</a>
 		<div class="dropdown-menu" aria-labelledby="adminAddDropdown">
+			<a class="dropdown-item" href="/learning-curator/categories/add">Add a Category</a>
+			<a class="dropdown-item" href="/learning-curator/topics/add">Add a Topic</a>
 			<a class="dropdown-item" href="/learning-curator/pathways/add">Add a Pathway</a>
 			<a class="dropdown-item" href="/learning-curator/activities/add">Add an Activity</a>
-			<!--<a class="dropdown-item" href="/activity-types/add">Add a Type</a>-->
 			<a class="dropdown-item" href="/learning-curator/tags/add">Add a Tag</a>
-			<!--<a class="dropdown-item" href="/users/add">Add a User</a>
-			<a class="dropdown-item" href="/competencies/add">Add a Competency</a>
-			<a class="dropdown-item" href="/ministries/add">Add a Ministry</a>
-			<a class="dropdown-item" href="/categories/add">Add a Category</a>
-			<a class="dropdown-item" href="/statuses/add">Add a Status</a>-->
-			
+			<?php if($active->role_id == 5): ?>
+			<a class="dropdown-item" href="/learning-curator/activity-types/add">Add a Type</a>
+			<a class="dropdown-item" href="/learning-curator/users/add">Add a User</a>
+			<a class="dropdown-item" href="/learning-curator/competencies/add">Add a Competency</a>
+			<a class="dropdown-item" href="/learning-curator/ministries/add">Add a Ministry</a>
+			<a class="dropdown-item" href="/learning-curator/statuses/add">Add a Status</a>
+			<?php endif ?>
 		</div>
 		</li>
 		<?php endif ?>

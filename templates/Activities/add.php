@@ -6,7 +6,6 @@
 $this->loadHelper('Authentication.Identity');
 ?>
 
-<?= $this->Flash->render() ?>
 <?= $this->Form->create($activity) ?>
 <?php 
 // echo $this->Form->control('ministry_id', ['class' => 'form-control', 'options' => $ministries, 'empty' => true]);

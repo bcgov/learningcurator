@@ -32,20 +32,10 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endif; // role check ?>
 		<div class="row align-items-center">
 		<div class="col-3">
-	<div class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
-		<i class="activity-icon activity-icon-lg fas <?= $activity->activity_type->image_path ?>"></i>
-	</div>
-	</div>
-	<div class="col">
-	<?php if(!in_array($activity->id,$useractivitylist)): ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => '']) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'You\'ve completed it, now claim it so it counts towards your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
-	<?= $this->Form->end() ?>
-	<?php else: ?>
-	<div class="btn btn-dark">CLAIMED <i class="fas fa-check-circle"></i></div>
-	<?php endif ?>
-	</div>
+		<div class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
+			<i class="activity-icon activity-icon-lg fas <?= $activity->activity_type->image_path ?>"></i>
+		</div>
+		</div>
 	</div>
 
 	<h1 class="my-1">
@@ -210,11 +200,21 @@ if ($this->Identity->isLoggedIn()) {
 <h3 class="mt-3">Pathways</h3>
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
+
 <?php if($path->status_id == 2): ?>
 <div class="my-1 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
 	<h4><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
 </div>
+<?php else: ?>
+<?php if($role == 2 || $role == 5): ?>
+<div class="my-1 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
+<span class="badge badge-warning">DRAFT</span>
+	<h4><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
+	<div><?= $step->description ?></div>
+</div>
+
+<?php endif ?>
 <?php endif ?>
 <?php endforeach ?>
 <?php endforeach ?>

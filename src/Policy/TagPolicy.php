@@ -36,7 +36,7 @@ class TagPolicy
      * @param App\Model\Entity\Tag $tag
      * @return bool
      */
-    public function canUpdate(IdentityInterface $user, Tag $tag)
+    public function canEdit(IdentityInterface $user, Tag $tag)
     {
         if($this->isAdmin($user, $tag)) {
             return true;
