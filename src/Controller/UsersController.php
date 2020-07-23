@@ -63,7 +63,13 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['Ministries', 'Roles', 'Activities', 'Competencies', 'Pathways'],
+            'contain' => ['Ministries', 
+                            'Roles', 
+                            'Activities', 
+                            'Competencies', 
+                            'Pathways',
+                            'Reports',
+                            'Reports.Activities'],
         ]);
 		//$categories = $this->Categories->find('all');
         $this->Authorization->authorize($user);
@@ -338,7 +344,7 @@ class UsersController extends AppController
                             'Competencies',
                             'Ministries',
                             'Reports',
-                            'Reports.Users'],
+                            'Reports.Activities'],
         ]);
         $this->Authorization->authorize($user);
 
