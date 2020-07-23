@@ -318,5 +318,32 @@ class UsersController extends AppController
 				
         $this->set(compact('user'));
     }
+    
+    /**
+     * User reported activities method
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function reports()
+    {
+
+	    $u = $this->request->getAttribute('authentication')->getIdentity();
+        $user = $this->Users->get($u->id, [
+            'contain' => ['Pathways', 
+                            'Pathways.Categories', 
+                            'Activities', 
+                            'Activities.ActivityTypes',
+                            'Competencies',
+                            'Ministries',
+                            'Reports',
+                            'Reports.Users'],
+        ]);
+        $this->Authorization->authorize($user);
+
+				
+        $this->set(compact('user'));
+    }
 
 }

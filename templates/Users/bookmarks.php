@@ -63,6 +63,9 @@ $this->layout = 'nowrap';
   <li class="nav-item">
     <a class="nav-link" href="/learning-curator/users/claimed">Claimed</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/learning-curator/users/reports">Reports</a>
+  </li>
 </ul>
 </div>
 <div class="w-100"></div>

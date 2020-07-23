@@ -61,62 +61,36 @@ $this->layout = 'nowrap';
     <a class="nav-link" href="/learning-curator/users/bookmarks">Bookmarks</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="/learning-curator/users/claimed">Claimed</a>
+    <a class="nav-link" href="/learning-curator/users/claimed">Claimed</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/reports">Reports</a>
+    <a class="nav-link active" href="/learning-curator/users/reports">Reports</a>
   </li>
 </ul>
 </div>
 <div class="w-100"></div>
 <div class="col-md-8 col-lg-6">
-<?php if (!empty($user->activities)) : ?>
-<h2><i class="fas fa-check"></i> <?= __('Claimed Activities') ?></h2>
-
-<div id="activitylist">
-<input type="text" name="activityfilter" id="activityfilter" placeholder="Filter" class="search form-control mb-3">
 
 
-<div class="list"> 
-	<?php foreach ($user->activities as $activity) : ?>
-	<div class="p-3 mb-2 bg-white rounded-lg">
-		<?php if($activity->status_id == 3): ?>
-		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
-		<?php endif ?>
-		<div class="row align-items-center">
+<h2 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h2>
 
-		<div class="col-2 text-center">
-		<a href="/learning-curator/activity-types/view/<?= $activity->activity_type->id ?>" 
-			class="activity-icon activity-icon-md" 
-			style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
-				<i class="activity-icon activity-icon-md fas <?= $activity->activity_type->image_path ?>"></i>
-			
-		</a>
-		</div>
-		<div class="col">
-		<strong>
-		<span class="name"><?= $this->Html->link(h($activity->name), ['controller' => 'Activities', 'action' => 'view', $activity->id]) ?></span>
-		</strong>
-		</div>
-		</div>
-	</div>
-	<?php endforeach; ?>
-</div> <!-- /.list -->
-</div> <!-- /#activitylist -->
+<?php if(!empty($user->reports)): ?>
 
-
-
+<?php foreach($user->reports as $report): ?>
+<div class="my-3 p-3 bg-white rounded-lg">
+<div><a href="/learning-curator/users/view/<?= $report->user->id ?>"><?= $report->user->name ?></a> says:</div>
+<div><?= $report->issue ?></div>
+<div class="mt-2" style="font-size: 12px">Added on <?= $report->created ?></div>
+<?php if(empty($report->response)): ?>
+<div class="my-2 alert alert-warning">No reply yet</div>
 <?php else: ?>
-<h2><?= _('You\'ve not claimed any activities yet.') ?></h2>
-<p>As you claim activities, they will appear here, along with any pathways you might be following.</p>
-<div class="card card-body mt-3">
-	<p>If you're looking for something specific, try searching for it!</p>
-	<form method="get" action="/learning-curator/activities/find" class="form-inline my-2 my-lg-0">
-		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
-		<button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
-	</form>
+<?= $report->response ?>
+<?php endif ?>
 </div>
-<?php endif; ?>
+<?php endforeach ?>
+<?php endif ?>
+
+
 
 
 </div>

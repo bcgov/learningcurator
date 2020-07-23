@@ -74,6 +74,7 @@ class UsersTable extends Table
             'targetForeignKey' => 'pathway_id',
             'joinTable' => 'pathways_users',
         ]);
+        $this->hasMany('Reports');
     }
 
     /**

@@ -30,11 +30,18 @@ if ($this->Identity->isLoggedIn()) {
 	<span class="badge badge-warning">INVESTIGATE</span>
 	<?php endif ?>
 	<?php endif; // role check ?>
+	
 		<div class="row align-items-center">
 		<div class="col-3">
 		<div class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
 			<i class="activity-icon activity-icon-lg fas <?= $activity->activity_type->image_path ?>"></i>
 		</div>
+		</div>
+		<div class="col">
+		<?php if(in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
+		<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
+		<?php endif ?>
+	
 		</div>
 	</div>
 	<h1 class="my-1">
@@ -91,7 +98,7 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endforeach; // tags loop ?>
 
 	<?php else: // there are no tags ?>
-		<div class="my-3 p-3" style="font-size: 130%">
+		<div class="my-3 p-3 text-truncate" style="font-size: 130%">
 			<?= $activity->activity_type->name ?>: 
 			<a href="<?= h($activity->hyperlink) ?>" target="_blank" rel="noopener">
 				<?= h($activity->hyperlink) ?>
@@ -124,8 +131,8 @@ if ($this->Identity->isLoggedIn()) {
             </fieldset>
             <input type="submit" class="btn btn-dark" value="Submit Report">
             <?= $this->Form->end() ?>
-			</div>
-			</div>
+		</div>
+		</div>
 		<a href="/learning-curator/activities/like/<?= $activity->id ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 			<i class="fas fa-thumbs-up"></i> <span class="lcount"><?= h($activity->recommended) ?> likes</span>
 		</a>
@@ -187,7 +194,6 @@ if ($this->Identity->isLoggedIn()) {
 <h3 class="mt-3"><i class="fas fa-sitemap"></i> Pathways</h3>
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
-
 <?php if($path->status_id == 2): ?>
 <div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
 	<h4><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
@@ -200,21 +206,14 @@ if ($this->Identity->isLoggedIn()) {
 	<h4><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
 </div>
-
 <?php endif ?>
 <?php endif ?>
 <?php endforeach ?>
 <?php endforeach ?>
 </div>
+
 <?php if (!empty($activity->users)) : ?>
 <div class="col-md-4">
-<!--
-<div><?= h($activity->hyperlink) ?></div>
-<div><?= __('Isbn') ?></div>
-<div><?= h($activity->isbn) ?></div>
-<div><?= __('Licensing') ?></div>
-<?= $this->Text->autoParagraph(h($activity->licensing)); ?>
--->
 <h3 class="mt-3"><?= __('Related Users') ?></h3>
 <?php foreach ($activity->users as $users) : ?>
 <div class="my-3 p-3 bg-white rounded-lg">
@@ -229,12 +228,12 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($role == 2 || $role == 5): ?>
 <?php if(!empty($activity->reports)): ?>
 <div class="col-md-4">
-<h3 class="mt-3">Reports</h3>
+<h3 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h3>
 <?php foreach($activity->reports as $report): ?>
 <div class="my-3 p-3 bg-white rounded-lg">
 <div><a href="/learning-curator/users/view/<?= $report->user->id ?>"><?= $report->user->name ?></a> says:</div>
 <div><?= $report->issue ?></div>
-<div class="mt-2" style="font-size: 12px">Added on <?= $activity->created ?></div>
+<div class="mt-2" style="font-size: 12px">Added on <?= $report->created ?></div>
 </div>
 <?php endforeach ?>
 <?php endif ?>
