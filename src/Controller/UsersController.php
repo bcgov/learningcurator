@@ -68,7 +68,7 @@ class UsersController extends AppController
                             'Activities', 
                             'Competencies', 
                             'Pathways',
-                            'Reports',
+                            'Reports' => ['sort' => ['Reports.id' => 'desc']],
                             'Reports.Activities'],
         ]);
 		//$categories = $this->Categories->find('all');
@@ -343,8 +343,9 @@ class UsersController extends AppController
                             'Activities.ActivityTypes',
                             'Competencies',
                             'Ministries',
-                            'Reports',
+                            'Reports' => ['sort' => ['Reports.id' => 'desc']],
                             'Reports.Activities'],
+            
         ]);
         $this->Authorization->authorize($user);
 

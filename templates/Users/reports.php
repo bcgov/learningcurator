@@ -77,6 +77,7 @@ $this->layout = 'nowrap';
 <h2 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h2>
 <?php foreach($user->reports as $report): ?>
 <div class="my-3 p-3 bg-white rounded-lg">
+<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-dark']) ?>
 <div class="mt-2">On <?= $report->created ?> you reported:</div>
 <h4><a href="/learning-curator/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></h4>
 <div class="p-3 bg-light"><?= $report->issue ?></div>

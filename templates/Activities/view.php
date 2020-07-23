@@ -119,7 +119,7 @@ if ($this->Identity->isLoggedIn()) {
 		</a>	
 		<div class="collapse" id="newreport">
 		<div class="my-3 p-3 bg-white rounded-lg">
-		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add']]) ?>
+		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add'],'class'=>'reportform']) ?>
             <fieldset>
                 <legend><?= __('Report this activity') ?></legend>
 				<p>Is there something wrong with this activity? Tell us about it!</p>
@@ -238,8 +238,8 @@ if ($this->Identity->isLoggedIn()) {
 <div class="my-2 alert alert-warning">No reply yet</div>
 <?php else: ?>
 <div class="mt-3">
-Curator repsonse:
-<div class="my-2 alert alert-success"><?= $report->response ?></div>
+	<a href="/learning-curator/users/view/<?= $report->curator_id ?>">Curator</a> repsonse:
+	<div class="my-2 alert alert-success"><?= $report->response ?></div>
 </div>
 <?php endif ?>
 <a href="#curatorresponse<?= $report->id ?>" 
@@ -253,6 +253,7 @@ Curator repsonse:
 		Respond
 </a>	
 <div class="collapse" id="curatorresponse<?= $report->id ?>">
+<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-dark']) ?>
 <?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'edit', $report->id]]) ?>
 <fieldset>
 <legend><?= __('Respond') ?></legend>
@@ -345,6 +346,30 @@ $(document).ready(function(){
 			success: function(data)
 			{
 				loadStatus();
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
+
+	$('.reportform').on('submit', function(e){
+		
+		e.preventDefault();
+		var form = $(this);
+		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/learning-curator/users/reports">View all your reports</a>.').remove();
+		
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/learning-curator/reports/add',
+			data: form.serialize(),
+			success: function(data)
+			{
+				
 			},
 			statusCode: 
 			{
