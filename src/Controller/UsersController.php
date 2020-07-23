@@ -48,11 +48,9 @@ class UsersController extends AppController
      */
     public function list()
     {
-        $this->Authorization->skipAuthorization();
+        //$this->Authorization->skipAuthorization();
         $users = $this->paginate($this->Users, ['order' => ['Users.id' => 'desc']]);
-        //$this->Authorization->authorize($users);
-
-
+        $this->Authorization->can($users);
         $this->set(compact('users'));
     }
     /**
@@ -65,7 +63,13 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['Ministries', 'Roles', 'Activities', 'Competencies', 'Pathways'],
+            'contain' => ['Ministries', 
+                            'Roles', 
+                            'Activities', 
+                            'Competencies', 
+                            'Pathways',
+                            'Reports' => ['sort' => ['Reports.id' => 'desc']],
+                            'Reports.Activities'],
         ]);
 		//$categories = $this->Categories->find('all');
         $this->Authorization->authorize($user);
@@ -106,10 +110,10 @@ class UsersController extends AppController
         $user->password = 'learning';
 
         if ($this->Users->save($user)) {
-            return $this->redirect(['action' => 'pathways']);
+            return $this->redirect('/learning-curator/');
         } else {
             //return $user;
-			echo 'Something went wrong when creating your account. Please contact learningagent@gov.bc.ca for assistance.';
+			echo 'Something went wrong when creating your account. Please contact learning.curator@gov.bc.ca for assistance.';
         }
 
     }
@@ -314,6 +318,34 @@ class UsersController extends AppController
                             'Activities.ActivityTypes',
                             'Competencies',
                             'Ministries'],
+        ]);
+        $this->Authorization->authorize($user);
+
+				
+        $this->set(compact('user'));
+    }
+    
+    /**
+     * User reported activities method
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function reports()
+    {
+
+	    $u = $this->request->getAttribute('authentication')->getIdentity();
+        $user = $this->Users->get($u->id, [
+            'contain' => ['Pathways', 
+                            'Pathways.Categories', 
+                            'Activities', 
+                            'Activities.ActivityTypes',
+                            'Competencies',
+                            'Ministries',
+                            'Reports' => ['sort' => ['Reports.id' => 'desc']],
+                            'Reports.Activities'],
+            
         ]);
         $this->Authorization->authorize($user);
 

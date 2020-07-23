@@ -93,6 +93,8 @@ class ActivitiesTable extends Table
             'targetForeignKey' => 'tag_id',
             'joinTable' => 'activities_tags',
         ]);
+        $this->hasMany('Reports');
+            
         $this->belongsToMany('Users', [
             'foreignKey' => 'activity_id',
             'targetForeignKey' => 'user_id',

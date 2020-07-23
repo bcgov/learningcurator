@@ -27,20 +27,26 @@
 </div>
 </div>
 <?php endif; ?>
-<?php if (!empty($user->actions)) : ?>
-<div class="col-md-4">
-<div class="card">
-<div class="card-body">
-	<h2><?= __('Actions Taken') ?></h2>
-	<?php foreach ($user->actions as $actions) : ?>
-	<div>
-		<?= $this->Html->link($actions->name, ['controller' => 'Actions', 'action' => 'view', $actions->id]) ?>
-	</div>
-	<?php endforeach; ?>
+
+<?php if(!empty($user->reports)): ?>
+<div class="col-md-6">
+<h2 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h2>
+<?php foreach($user->reports as $report): ?>
+<div class="my-3 p-3 bg-white rounded-lg">
+<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-dark']) ?>
+<h4><a href="/learning-curator/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></h4>
+<div><?= $report->issue ?></div>
+<div class="mt-2" style="font-size: 12px">Added on <?= $report->created ?></div>
+<?php if(empty($report->response)): ?>
+<div class="my-2 alert alert-warning">No reply yet</div>
+<?php else: ?>
+<div class="my-2 alert alert-success"><?= $report->response ?></div>
+<?php endif ?>
 </div>
+<?php endforeach ?>
 </div>
-</div>
-<?php endif; ?>
+<?php endif ?>
+
 <?php if (!empty($user->competencies)) : ?>
 <div class="col-md-4">
 <div class="card">

@@ -126,6 +126,19 @@ class UserPolicy
         return $this->isLearner($user, $resource);
     }
     /**
+     * Check if $user can view own reports
+     *
+     * @param Authorization\IdentityInterface $user The user.
+     * @param App\Model\Entity\User $resource
+     * @return bool
+     */
+    public function canReports(IdentityInterface $user, User $resource)
+    {
+        return $this->isLearner($user, $resource);
+    }
+
+    
+    /**
      * Check if $user can view claimed activities
      *
      * @param Authorization\IdentityInterface $user The user.

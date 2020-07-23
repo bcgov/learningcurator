@@ -30,14 +30,20 @@ if ($this->Identity->isLoggedIn()) {
 	<span class="badge badge-warning">INVESTIGATE</span>
 	<?php endif ?>
 	<?php endif; // role check ?>
+	
 		<div class="row align-items-center">
 		<div class="col-3">
 		<div class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
 			<i class="activity-icon activity-icon-lg fas <?= $activity->activity_type->image_path ?>"></i>
 		</div>
 		</div>
+		<div class="col">
+		<?php if(in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
+		<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
+		<?php endif ?>
+	
+		</div>
 	</div>
-
 	<h1 class="my-1">
 		<?= $activity->name ?>
 	</h1>
@@ -59,7 +65,9 @@ if ($this->Identity->isLoggedIn()) {
 
 	<a target="_blank" 
 		rel="noopener" 
-		data-toggle="tooltip" data-placement="bottom" title="Enrol in this course in the Learning System"
+		data-toggle="tooltip" 
+		data-placement="bottom" 
+		title="Enrol in this course in the Learning System"
 		href="https://learning.gov.bc.ca/psc/CHIPSPLM_6/EMPLOYEE/ELM/c/LM_OD_EMPLOYEE_FL.LM_FND_LRN_FL.GBL?Page=LM_FND_LRN_RSLT_FL&Action=U&KWRD=<?php echo urlencode($activity->name) ?>" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
@@ -90,18 +98,41 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endforeach; // tags loop ?>
 
 	<?php else: // there are no tags ?>
-		<div class="my-3 p-3" style="font-size: 130%">
+		<div class="my-3 p-3 text-truncate" style="font-size: 130%">
 			<?= $activity->activity_type->name ?>: 
-			<a href="<?= h($activity->hyperlink) ?>" tagret="_blank" rel="noopener">
+			<a href="<?= h($activity->hyperlink) ?>" target="_blank" rel="noopener">
 				<?= h($activity->hyperlink) ?>
 			</a>
 		</div>
 	<?php endif; ?>
 
 	<div class="my-3">
-		<a href="#" style="color:#333;" class="btn btn-light float-right" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
-			<i class="fas fa-exclamation-triangle"></i>
+		<a href="#newreport" 
+			style="color:#333;" 
+			class="btn btn-light float-right" 
+			data-toggle="collapse" 
+			title="Report this activity for some reason" 
+			data-target="#newreport" 
+			aria-expanded="false" 
+			aria-controls="newreport">
+				<i class="fas fa-exclamation-triangle"></i> Report
 		</a>	
+		<div class="collapse" id="newreport">
+		<div class="my-3 p-3 bg-white rounded-lg">
+		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add'],'class'=>'reportform']) ?>
+            <fieldset>
+                <legend><?= __('Report this activity') ?></legend>
+				<p>Is there something wrong with this activity? Tell us about it!</p>
+                <?php
+                    echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
+                    echo $this->Form->hidden('user_id', ['value' => $uid]);
+                    echo $this->Form->textarea('issue',['class' => 'form-control', 'placeholder' => 'Type here ...']);
+                ?>
+            </fieldset>
+            <input type="submit" class="btn btn-dark" value="Submit Report">
+            <?= $this->Form->end() ?>
+		</div>
+		</div>
 		<a href="/learning-curator/activities/like/<?= $activity->id ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 			<i class="fas fa-thumbs-up"></i> <span class="lcount"><?= h($activity->recommended) ?> likes</span>
 		</a>
@@ -117,32 +148,11 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endif ?>
 		</div>
 
-</div>
-</div>
-</div>
-</div>
-<div class="container">
-<div class="row justify-content-md-center">
-
-<div class="col-md-6">
-<div class="bg-white rounded-lg my-3 p-3">
-	
-
-	<div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
-
-<div><?= h($activity->hyperlink) ?></div>
-<!--
-<div><?= __('Isbn') ?></div>
-<div><?= h($activity->isbn) ?></div>
--->
-<div><?= __('Licensing') ?></div>
-
-<?= $this->Text->autoParagraph(h($activity->licensing)); ?>
-
+		
 <?php if($role == 2 || $role == 5): ?>
 	
 	<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#assignment<?= $activity->id ?>" aria-expanded="false" aria-controls="assignment<?= $activity->id ?>">
-		Path Assigment
+	<i class="fas fa-sitemap"></i> Path Assigment
 	  </button>
 	  
 	<div class="collapse" id="assignment<?= $activity->id ?>">
@@ -171,56 +181,111 @@ if ($this->Identity->isLoggedIn()) {
 	
 	<?php endforeach ?>
 	</div> <!-- .collapse -->
-	
-	<?php if (!empty($activity->moderator_notes)) : ?>
-	<h4><?= __('Moderator Notes') ?></h4>
-	<blockquote>
-	<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
-	</blockquote>
 	<?php endif ?>
-	<h4><?= __('Related Users') ?></h4>
-	<?php if (!empty($activity->users)) : ?>
-	<?php foreach ($activity->users as $users) : ?>
-	<div>
-		<?= $this->Html->link($users->name, ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
-	</div>
-	<?php endforeach; ?>
-	<?php endif; ?>
-	
-	
-	
-	
-	<?php endif; ?>
 
 </div>
 </div>
 </div>
-<div class="col-md-6">
+</div>
+<div class="container-fluid linear">
+<div class="row justify-content-md-center">
+<div class="col-md-4">
 
-<h3 class="mt-3">Pathways</h3>
+<h3 class="mt-3"><i class="fas fa-sitemap"></i> Pathways</h3>
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
-
 <?php if($path->status_id == 2): ?>
-<div class="my-1 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
+<div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
 	<h4><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
 </div>
 <?php else: ?>
 <?php if($role == 2 || $role == 5): ?>
-<div class="my-1 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
+<div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
 <span class="badge badge-warning">DRAFT</span>
 	<h4><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
 </div>
+<?php endif ?>
+<?php endif ?>
+<?php endforeach ?>
+<?php endforeach ?>
+</div>
 
+<?php if (!empty($activity->users)) : ?>
+<div class="col-md-4">
+<h3 class="mt-3"><?= __('Related Users') ?></h3>
+<?php foreach ($activity->users as $users) : ?>
+<div class="my-3 p-3 bg-white rounded-lg">
+<?= $this->Html->link($users->name, ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
+</div>
+<?php endforeach; ?>
+</div>
+<?php endif; ?>
+
+
+
+<?php if($role == 2 || $role == 5): ?>
+<?php if(!empty($activity->reports)): ?>
+<div class="col-md-4">
+<h3 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h3>
+<?php foreach($activity->reports as $report): ?>
+<div class="my-3 p-3 bg-white rounded-lg">
+<div><a href="/learning-curator/users/view/<?= $report->user->id ?>"><?= $report->user->name ?></a> says:</div>
+<div><?= $report->issue ?></div>
+<div class="mt-2" style="font-size: 12px">Added on <?= $report->created ?></div>
+<?php if(empty($report->response)): ?>
+<div class="my-2 alert alert-warning">No reply yet</div>
+<?php else: ?>
+<div class="mt-3">
+	<a href="/learning-curator/users/view/<?= $report->curator_id ?>">Curator</a> repsonse:
+	<div class="my-2 alert alert-success"><?= $report->response ?></div>
+</div>
+<?php endif ?>
+<a href="#curatorresponse<?= $report->id ?>" 
+	style="color:#333;" 
+	class="btn btn-light" 
+	data-toggle="collapse" 
+	title="Respond to this report" 
+	data-target="#curatorresponse<?= $report->id ?>" 
+	aria-expanded="false" 
+	aria-controls="curatorresponse<?= $report->id ?>">
+		Respond
+</a>	
+<div class="collapse" id="curatorresponse<?= $report->id ?>">
+<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-dark']) ?>
+<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'edit', $report->id]]) ?>
+<fieldset>
+<legend><?= __('Respond') ?></legend>
+<?php
+echo $this->Form->hidden('id', ['value' => $report->id]);
+echo $this->Form->hidden('curator_id', ['value' => $uid]);
+echo $this->Form->textarea('response',['class' => 'form-control', 'placeholder' => 'Type here ...']);
+?>
+</fieldset>
+<input type="submit" class="btn btn-dark" value="Submit Response">
+<?= $this->Form->end() ?>
+</div> <!-- curatorresponse -->
+
+</div>
+<?php endforeach ?>
 <?php endif ?>
 <?php endif ?>
-<?php endforeach ?>
-<?php endforeach ?>
+<?php if($role == 2 || $role == 5): ?>
+<?php if (!empty($activity->moderator_notes)) : ?>
+<h4><?= __('Moderator Notes') ?></h4>
+<blockquote>
+<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
+</blockquote>
+<?php endif ?>
+</div>
+<?php endif; ?>
+
 
 
 </div>
+</div>
+
 </div>
 </div>
 </div>
@@ -281,6 +346,30 @@ $(document).ready(function(){
 			success: function(data)
 			{
 				loadStatus();
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
+
+	$('.reportform').on('submit', function(e){
+		
+		e.preventDefault();
+		var form = $(this);
+		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/learning-curator/users/reports">View all your reports</a>.').remove();
+		
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/learning-curator/reports/add',
+			data: form.serialize(),
+			success: function(data)
+			{
+				
 			},
 			statusCode: 
 			{

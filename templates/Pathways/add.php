@@ -18,6 +18,7 @@ $this->loadHelper('Authentication.Identity');
                 <legend><?= __('Add Pathway') ?></legend>
                 <?php
                     echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true,'class'=>'form-control']);
+                    echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true,'class'=>'form-control']);
                     echo $this->Form->control('name',['class' => 'form-control']);
                     echo $this->Form->control('description',['class' => 'form-control']);
                     echo $this->Form->control('objective',['class' => 'form-control']);
