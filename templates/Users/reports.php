@@ -77,13 +77,16 @@ $this->layout = 'nowrap';
 <h2 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h2>
 <?php foreach($user->reports as $report): ?>
 <div class="my-3 p-3 bg-white rounded-lg">
+<div class="mt-2">On <?= $report->created ?> you reported:</div>
 <h4><a href="/learning-curator/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></h4>
-<div><?= $report->issue ?></div>
-<div class="mt-2" style="font-size: 12px">Added on <?= $report->created ?></div>
+<div class="p-3 bg-light"><?= $report->issue ?></div>
 <?php if(empty($report->response)): ?>
 <div class="my-2 alert alert-warning">No reply yet</div>
 <?php else: ?>
+<div class="mt-3">
+Curator repsonse:
 <div class="my-2 alert alert-success"><?= $report->response ?></div>
+</div>
 <?php endif ?>
 </div>
 <?php endforeach ?>

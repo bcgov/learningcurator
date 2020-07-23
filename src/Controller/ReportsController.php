@@ -90,7 +90,7 @@ class ReportsController extends AppController
             if ($this->Reports->save($report)) {
                 $this->Flash->success(__('The report has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The report could not be saved. Please, try again.'));
         }

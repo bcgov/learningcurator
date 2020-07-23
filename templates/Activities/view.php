@@ -234,6 +234,38 @@ if ($this->Identity->isLoggedIn()) {
 <div><a href="/learning-curator/users/view/<?= $report->user->id ?>"><?= $report->user->name ?></a> says:</div>
 <div><?= $report->issue ?></div>
 <div class="mt-2" style="font-size: 12px">Added on <?= $report->created ?></div>
+<?php if(empty($report->response)): ?>
+<div class="my-2 alert alert-warning">No reply yet</div>
+<?php else: ?>
+<div class="mt-3">
+Curator repsonse:
+<div class="my-2 alert alert-success"><?= $report->response ?></div>
+</div>
+<?php endif ?>
+<a href="#curatorresponse<?= $report->id ?>" 
+	style="color:#333;" 
+	class="btn btn-light" 
+	data-toggle="collapse" 
+	title="Respond to this report" 
+	data-target="#curatorresponse<?= $report->id ?>" 
+	aria-expanded="false" 
+	aria-controls="curatorresponse<?= $report->id ?>">
+		Respond
+</a>	
+<div class="collapse" id="curatorresponse<?= $report->id ?>">
+<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'edit', $report->id]]) ?>
+<fieldset>
+<legend><?= __('Respond') ?></legend>
+<?php
+echo $this->Form->hidden('id', ['value' => $report->id]);
+echo $this->Form->hidden('curator_id', ['value' => $uid]);
+echo $this->Form->textarea('response',['class' => 'form-control', 'placeholder' => 'Type here ...']);
+?>
+</fieldset>
+<input type="submit" class="btn btn-dark" value="Submit Response">
+<?= $this->Form->end() ?>
+</div> <!-- curatorresponse -->
+
 </div>
 <?php endforeach ?>
 <?php endif ?>

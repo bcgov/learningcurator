@@ -49,7 +49,7 @@ class ReportPolicy
      * @param App\Model\Entity\Report $report
      * @return bool
      */
-    public function canUpdate(IdentityInterface $user, Report $report)
+    public function canEdit(IdentityInterface $user, Report $report)
     {
         if($this->isAdmin($user, $report)) {
             return true;
