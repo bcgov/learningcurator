@@ -58,7 +58,9 @@ if ($this->Identity->isLoggedIn()) {
 
 	<a target="_blank" 
 		rel="noopener" 
-		data-toggle="tooltip" data-placement="bottom" title="Enrol in this course in the Learning System"
+		data-toggle="tooltip" 
+		data-placement="bottom" 
+		title="Enrol in this course in the Learning System"
 		href="https://learning.gov.bc.ca/psc/CHIPSPLM_6/EMPLOYEE/ELM/c/LM_OD_EMPLOYEE_FL.LM_FND_LRN_FL.GBL?Page=LM_FND_LRN_RSLT_FL&Action=U&KWRD=<?php echo urlencode($activity->name) ?>" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
