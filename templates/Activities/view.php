@@ -115,13 +115,14 @@ if ($this->Identity->isLoggedIn()) {
 		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add']]) ?>
             <fieldset>
                 <legend><?= __('Report this activity') ?></legend>
+				<p>Is there something wrong with this activity? Tell us about it!</p>
                 <?php
                     echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
                     echo $this->Form->hidden('user_id', ['value' => $uid]);
-                    echo $this->Form->textarea('issue',['class' => 'form-control']);
+                    echo $this->Form->textarea('issue',['class' => 'form-control', 'placeholder' => 'Type here ...']);
                 ?>
             </fieldset>
-            <input type="submit" class="btn btn-light" value="Submit Report">
+            <input type="submit" class="btn btn-dark" value="Submit Report">
             <?= $this->Form->end() ?>
 			</div>
 			</div>
