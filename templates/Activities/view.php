@@ -93,7 +93,7 @@ if ($this->Identity->isLoggedIn()) {
 	<?php else: // there are no tags ?>
 		<div class="my-3 p-3" style="font-size: 130%">
 			<?= $activity->activity_type->name ?>: 
-			<a href="<?= h($activity->hyperlink) ?>" tagret="_blank" rel="noopener">
+			<a href="<?= h($activity->hyperlink) ?>" target="_blank" rel="noopener">
 				<?= h($activity->hyperlink) ?>
 			</a>
 		</div>
@@ -183,7 +183,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="row justify-content-md-center">
 <div class="col-md-4">
 
-<h3 class="mt-3">Pathways</h3>
+<h3 class="mt-3"><i class="fas fa-sitemap"></i> Pathways</h3>
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
 
@@ -207,6 +207,13 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php if (!empty($activity->users)) : ?>
 <div class="col-md-4">
+<!--
+<div><?= h($activity->hyperlink) ?></div>
+<div><?= __('Isbn') ?></div>
+<div><?= h($activity->isbn) ?></div>
+<div><?= __('Licensing') ?></div>
+<?= $this->Text->autoParagraph(h($activity->licensing)); ?>
+-->
 <h3 class="mt-3"><?= __('Related Users') ?></h3>
 <?php foreach ($activity->users as $users) : ?>
 <div class="my-3 p-3 bg-white rounded-lg">
@@ -215,16 +222,12 @@ if ($this->Identity->isLoggedIn()) {
 <?php endforeach; ?>
 </div>
 <?php endif; ?>
-<div class="col-md-4">
-<!--
-<div><?= h($activity->hyperlink) ?></div>
-<div><?= __('Isbn') ?></div>
-<div><?= h($activity->isbn) ?></div>
-<div><?= __('Licensing') ?></div>
-<?= $this->Text->autoParagraph(h($activity->licensing)); ?>
--->
+
+
+
 <?php if($role == 2 || $role == 5): ?>
 <?php if(!empty($activity->reports)): ?>
+<div class="col-md-4">
 <h3 class="mt-3">Reports</h3>
 <?php foreach($activity->reports as $report): ?>
 <div class="my-3 p-3 bg-white rounded-lg">
@@ -242,8 +245,9 @@ if ($this->Identity->isLoggedIn()) {
 <?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
 </blockquote>
 <?php endif ?>
-<?php endif; ?>
 </div>
+<?php endif; ?>
+
 
 
 </div>

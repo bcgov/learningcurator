@@ -38,13 +38,8 @@ class ReportPolicy
      */
     public function canAdd(IdentityInterface $user, Report $report)
     {
-        if($this->isAdmin($user, $report)) {
-            return true;
-        } elseif($this->isCurator($user,$report)) {
-            return true;
-        } else {
-            return false;
-        }
+        // Anyone can report an activity
+        return true;
     }
 
     /**
