@@ -118,7 +118,7 @@ canvas {
 		position: -webkit-sticky;
 		position: sticky;
 		
-		top: 86px;
+		top: 110px;
 		z-index: 200;
 	}
 	.stickyprogress {
@@ -126,7 +126,7 @@ canvas {
 		position: -webkit-sticky;
 		position: sticky;
 		
-		top: 0;
+		top: 76px;
 		z-index: 300;
 	}
 } /* end desktop-specific code */
