@@ -59,7 +59,7 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 	</button>
 </div>
 <?php endif ?>
-<nav class="navbar navbar-expand-lg" style="background-color: #FFF;">
+<nav class="navbar navbar-expand-lg sticky-top bg-white">
 	
 	<a class="navbar-brand" href="/learning-curator/" style="margin: 0 0 0 20px">
 	<img alt="" height="50" src="/learning-curator/img/curator-rings-logo.png" width="50">
