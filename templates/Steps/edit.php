@@ -18,6 +18,7 @@ label {
 <div class="col-md-12">
 <div class="pad-md">
     <h1><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $step->name ?></a></h1>
+    <div><a href="/learning-curator/steps/view/<?= $step->id ?>" class="btn btn-light btn-sm">View Step</a></div>
 </div>
 </div>
 </div>
@@ -53,7 +54,7 @@ label {
     </div>
     <div class="my-3 p-3 rounded-lg bg-white">
     <h3>Required Activities</h3>
-    <ul class="list-group list-group-flush" id="requiredactivities">
+    <ul class="list-group list-group-flush mb-3" id="requiredactivities">
     <?php  //$this->Form->control('activities._ids', ['options' => $activities]) 
     $reqtmp = array();
     $supptmp = array();
@@ -79,33 +80,33 @@ label {
     ?>
     
     <?php foreach($requiredacts as $a): ?>
-        <li class="list-group-item" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
+        
+        <li class="list-group-item" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>" style="background-color: rgba(<?= $a->activity_type->color ?>,.2); border: 0;">
             <div class="row">
-            <div class="col-9">
-                <?php if($a->_joinData->required) echo '<span class="badge badge-success">Required</span>' ?> 
-                <a href="/learning-curator/activities/view/<?= $a->id ?>"><?= $a->name ?></a> 
-            </div>
-            <div class="col-3">
-            <!--
-            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id, 'class' => 'form-inline']]) ?>
+            <div class="col-1">
+            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => 'form-inline']) ?>
             <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
             <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'up']) ?>
             <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
             <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
-            <?= $this->Form->button(__('Up'),['class'=>'btn btn-sm btn-light']) ?>
+            <button class="btn btn-light"><i class="fas fa-chevron-circle-up"></i></button>
             <?= $this->Form->end() ?>
 
-            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id, 'class' => 'form-inline']]) ?>
+            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => 'form-inline']) ?>
             <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
             <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'down']) ?>
             <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
             <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
-            <?= $this->Form->button(__('Down'),['class'=>'btn btn-sm btn-light']) ?>
+            <button class="btn btn-light"><i class="fas fa-chevron-circle-down"></i></button>
             <?= $this->Form->end() ?>
-            -->
-
+            </div>
+            <div class="col-8">
+                <div><?= $a->activity_type->name ?></div>
+                <div class="actname"><a href="/learning-curator/activities/view/<?= $a->id ?>"><?= $a->name ?></a> </div>
+            </div>
+            <div class="col-3">
 
             <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $a->_joinData->id, 'class' => '']]) ?>
             <?= $this->Form->hidden('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
@@ -114,16 +115,14 @@ label {
             <?php else: ?>
             <?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 0]) ?>
             <?php endif ?>
-
-
             <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
-            <?= $this->Form->button(__('r'),['class'=>'btn btn-sm btn-light float-left']) ?>
+            <?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light float-left']) ?>
             <?= $this->Form->end() ?>
 
             <?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $a->_joinData->id, 'class' => 'form-inline']) ?>
             <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
-            <?= $this->Form->button(__('x'),['class' => 'btn btn-sm btn-light']) ?>
+            <?= $this->Form->button(__('Delete'),['class' => 'btn btn-sm btn-light']) ?>
             <?= $this->Form->end() ?>
             </div>
             </div>
@@ -131,7 +130,7 @@ label {
     <?php endforeach ?>
     </ul>
 
-    <h3>Supplmental Activities</h3>
+    <h3 class="mt-3">Supplmental Activities</h3>
     <ul class="list-group list-group-flush" id="supplementalacts">
     <?php foreach($supplementalacts as $supp): ?>
         <li class="list-group-item" id="exac-<?= $supp->id ?>" data-stepid="<?= $supp->_joinData->id ?>">
@@ -157,6 +156,7 @@ label {
             <?= $this->Form->hidden('id', ['value' => $supp->_joinData->id]) ?>
             <?= $this->Form->button(__('x'),['class' => 'btn btn-sm btn-light']) ?>
             <?= $this->Form->end() ?>
+            
             </div>
             </div>
         </li>
@@ -173,9 +173,9 @@ label {
     <?php 
     echo $this->Form->hidden('createdby_id', ['value' => $this->Identity->get('id'), 'class' => 'form-control']);
     echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'),'class' => 'form-control']);
+    echo $this->Form->hidden('step_id', ['value' => $step->id]);
+    //echo $this->Form->hidden('activity_types_id', ['value' => '1']); 
     ?>
-    <?php echo $this->Form->hidden('step_id', ['value' => $step->id]); ?>
-    <?php echo $this->Form->hidden('activity_types_id', ['value' => '1']); ?>
     <label>Activity Type
     <select name="activity_types_id" id="activity_types_id" class="form-control">
         <option value="1">Watch</option>
@@ -210,7 +210,10 @@ label {
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
 	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
 	crossorigin="anonymous"></script>
-
+<!--
+    At some point if this could be made to work, drag-n-drop is a better experience
+    for users; currently cakephp returns a 403 unauthorized upon firing this and I
+    don't know why. 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
 <script>
@@ -220,7 +223,8 @@ $(function () {
             var itemEl = evt.item.id;
             var sid = evt.item.dataset.stepid;
             var foo = itemEl.split('-');
-            var formd = {id: sid, activity_id: foo[1], step_id: <?= $step->id ?>, direction: 'down', sortorder: 0};
+            var formd = {id: sid, activity_id: foo[1], step_id: "<?= $step->id ?>", direction: "down", sortorder: 0};
+            //var formd = 'id='+sid+'&activity_id='+foo[1]+'&step_id=<?= $step->id ?>&direction=down&sortorder=0';
             var u = '/learning-curator/activities-steps/sort/' + sid;
             //console.log(sid);
             $.ajax({
@@ -240,7 +244,10 @@ $(function () {
 		    });
 	    },
     });
-
+});
+</script>-->
+<script>
+$(function () {
     $('#actfind').on('submit', function(e){
 
         e.preventDefault();

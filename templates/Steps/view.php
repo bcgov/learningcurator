@@ -152,7 +152,7 @@ if($stepclaimcount > 0) {
 			<?php if($steppercent == 100): ?>
 				<i class="fas fas fa-check-circle"></i>
 			<?php endif ?>
-			<small><span class="badge badge-dark"><?= $totalsteps ?></span> total steps</small>
+			<!--<small><span class="badge badge-dark"><?= $totalsteps ?></span> total steps</small>-->
 		</h2>	
 		<div class="" style="font-size: 130%;"><em>Goal:</em> <?= h($s->description); ?></div>
 		<div class="my-3">
@@ -216,7 +216,7 @@ $lastobj = $s->description;
 </div>
 </div>
 
-<div class="progress progress-bar-striped stickyprogress" style="background-color: #F1F1F1; border-radius: 0; height: 13px;">
+<div class="progress progress-bar-striped stickyprogress" style="background-color: #F1F1F1; border-radius: 0; height: 18px;">
 		<div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,1); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
 		This step is <?= $steppercent ?>% done
 	  </div>
@@ -421,7 +421,7 @@ $lastobj = $s->description;
 </div>
 <div class="col-8 col-md-3 col-lg-2">
 <?php if(in_array($uid,$usersonthispathway)): ?>
-<div class="p-3 bg-white mb-3 text-center stickyrings">
+<div class="p-3 bg-white mb-3 text-center stickyrings rounded-lg">
 <div class="mb-3 following"></div>
 <canvas id="myChart" width="250" height="250"></canvas>
 </div>
@@ -600,7 +600,7 @@ function loadStatus() {
 			if(stepstatus.steppercent == 100) {
 				$('.finish').removeClass('hide').addClass('show');
 			}
-			$('.progress-bar').width(stepstatus.steppercent+'%').html(stepstatus.steppercent+'% completed');
+			$('.progress-bar').width(stepstatus.steppercent+'%').html('This step is ' + stepstatus.steppercent + '% completed');
 			
 		},
 		statusCode: 

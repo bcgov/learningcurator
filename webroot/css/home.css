@@ -93,6 +93,10 @@ canvas {
 	padding-top: 13px;
 	width: 100px;
 }
+.actname {
+	font-size: 1.1em;
+	font-weight: bold;
+}
 
 @media (min-width: 45em) {
 
@@ -118,7 +122,7 @@ canvas {
 		position: -webkit-sticky;
 		position: sticky;
 		
-		top: 86px;
+		top: 110px;
 		z-index: 200;
 	}
 	.stickyprogress {
@@ -126,7 +130,7 @@ canvas {
 		position: -webkit-sticky;
 		position: sticky;
 		
-		top: 0;
+		top: 76px;
 		z-index: 300;
 	}
 } /* end desktop-specific code */
