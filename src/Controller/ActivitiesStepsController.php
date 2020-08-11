@@ -170,13 +170,13 @@ class ActivitiesStepsController extends AppController
         $activitiesStep->steporder = $neworder;
         //$activitiesSteps->activity_id = $this->request->getData()['activity_id'];
         
-        if ($this->request->is('post')) {
+        //if ($this->request->is('post')) {
             if ($this->ActivitiesSteps->save($activitiesStep)) {
                 //$this->Flash->success(__('That activity is now in a different order. Good job!'));
                 return $this->redirect($this->referer());
             }
             //$this->Flash->error(__('The users action could not be saved. Please, try again.'));
-        }
+        //}
     }
 
 
