@@ -18,6 +18,7 @@ label {
 <div class="col-md-12">
 <div class="pad-md">
     <h1><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $step->name ?></a></h1>
+    <div><a href="/learning-curator/steps/view/<?= $step->id ?>" class="btn btn-light btn-sm">View Step</a></div>
 </div>
 </div>
 </div>
@@ -53,7 +54,7 @@ label {
     </div>
     <div class="my-3 p-3 rounded-lg bg-white">
     <h3>Required Activities</h3>
-    <ul class="list-group list-group-flush" id="requiredactivities">
+    <ul class="list-group list-group-flush mb-3" id="requiredactivities">
     <?php  //$this->Form->control('activities._ids', ['options' => $activities]) 
     $reqtmp = array();
     $supptmp = array();
@@ -79,7 +80,8 @@ label {
     ?>
     
     <?php foreach($requiredacts as $a): ?>
-        <li class="list-group-item" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
+        
+        <li class="list-group-item" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>" style="background-color: rgba(<?= $a->activity_type->color ?>,.2); border: 0;">
             <div class="row">
             <div class="col-1">
             <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => 'form-inline']) ?>
@@ -89,7 +91,6 @@ label {
             <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
             <button class="btn btn-light"><i class="fas fa-chevron-circle-up"></i></button>
-            <?php //$this->Form->button(__('Up'),['class'=>'btn btn-sm btn-light']) ?>
             <?= $this->Form->end() ?>
 
             <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => 'form-inline']) ?>
@@ -99,18 +100,13 @@ label {
             <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
             <button class="btn btn-light"><i class="fas fa-chevron-circle-down"></i></button>
-            <?php //$this->Form->button(__('Down'),['class'=>'btn btn-sm btn-light']) ?>
             <?= $this->Form->end() ?>
             </div>
             <div class="col-8">
-                <?php //if($a->_joinData->required) echo '<span class="badge badge-success">Required</span>' ?> 
-                <a href="/learning-curator/activities/view/<?= $a->id ?>"><?= $a->name ?></a> 
+                <div><?= $a->activity_type->name ?></div>
+                <div class="actname"><a href="/learning-curator/activities/view/<?= $a->id ?>"><?= $a->name ?></a> </div>
             </div>
             <div class="col-3">
-            
-
-            
-
 
             <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $a->_joinData->id, 'class' => '']]) ?>
             <?= $this->Form->hidden('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
@@ -119,8 +115,6 @@ label {
             <?php else: ?>
             <?= $this->Form->hidden('required',['type' => 'hidden', 'value' => 0]) ?>
             <?php endif ?>
-
-
             <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
             <?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light float-left']) ?>
@@ -136,7 +130,7 @@ label {
     <?php endforeach ?>
     </ul>
 
-    <h3>Supplmental Activities</h3>
+    <h3 class="mt-3">Supplmental Activities</h3>
     <ul class="list-group list-group-flush" id="supplementalacts">
     <?php foreach($supplementalacts as $supp): ?>
         <li class="list-group-item" id="exac-<?= $supp->id ?>" data-stepid="<?= $supp->_joinData->id ?>">

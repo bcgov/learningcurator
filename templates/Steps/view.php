@@ -152,7 +152,7 @@ if($stepclaimcount > 0) {
 			<?php if($steppercent == 100): ?>
 				<i class="fas fas fa-check-circle"></i>
 			<?php endif ?>
-			<small><span class="badge badge-dark"><?= $totalsteps ?></span> total steps</small>
+			<!--<small><span class="badge badge-dark"><?= $totalsteps ?></span> total steps</small>-->
 		</h2>	
 		<div class="" style="font-size: 130%;"><em>Goal:</em> <?= h($s->description); ?></div>
 		<div class="my-3">

@@ -93,6 +93,10 @@ canvas {
 	padding-top: 13px;
 	width: 100px;
 }
+.actname {
+	font-size: 1.1em;
+	font-weight: bold;
+}
 
 @media (min-width: 45em) {
 
