@@ -331,7 +331,7 @@ $lastobj = $s->description;
 		</a>	
 		<div class="collapse" id="newreport<?= $activity->id ?>">
 		<div class="my-3 p-3 bg-white rounded-lg">
-		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add']]) ?>
+		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add'],'class'=>'reportform']) ?>
             <fieldset>
                 <legend><?= __('Report this activity') ?></legend>
 				<p>Is there something wrong with this activity? Tell us about it!</p>
@@ -411,7 +411,7 @@ $lastobj = $s->description;
 		</a>	
 		<div class="collapse" id="newreport<?= $activity->id ?>">
 		<div class="my-3 p-3 bg-white rounded-lg">
-		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add']]) ?>
+		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add'],'class'=>'reportform']) ?>
             <fieldset>
                 <legend><?= __('Report this activity') ?></legend>
 				<p>Is there something wrong with this activity? Tell us about it!</p>
@@ -565,6 +565,29 @@ $(document).ready(function(){
 				403: function() {
 					let alert = 'You must be logged in.</div>';
 					console.log(alert);
+				}
+			}
+		});
+	});
+	$('.reportform').on('submit', function(e){
+		
+		e.preventDefault();
+		var form = $(this);
+		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/learning-curator/users/reports">View all your reports</a>.').remove();
+		
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/learning-curator/reports/add',
+			data: form.serialize(),
+			success: function(data)
+			{
+				
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
 				}
 			}
 		});
