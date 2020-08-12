@@ -374,25 +374,29 @@ $lastobj = $s->description;
 
 <?php if(count($supplementalacts) > 0): ?>
 
-	<h3 style="color:#666">Supplementary Resources</h3>
+	<h3>Supplementary Resources</h3>
 	<?php foreach ($supplementalacts as $activity): ?>
 	<div class="p-3 my-3 bg-white rounded-lg">
-		<div class="row align-items-center">
-		<div class="col-12 col-md-2 col-lg-2">
-			<a href="/learning-curator/activities/view/<?= $activity->id ?>" class="activity-icon activity-icon-md" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000;">
-				<i class="activity-icon activity-icon-md fas <?= $activity->activity_type->image_path ?>"></i>
-			</a>
-		</div>
-		<div class="col">
-			<h5>
+		<h4>
 			<a href="/learning-curator/activities/view/<?= $activity->id ?>">
 				<?= $activity->name ?>
 			</a>
-			</h5>
-		</div>
-		</div>
-		<div class="p-3">
-		<?= $activity->description ?>
+		</h4>
+		<div class="">
+			<?= $activity->description ?>
+			
+			<a target="_blank" 
+				rel="noopener" 
+				data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
+				href="<?= $activity->hyperlink ?>" 
+				style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
+				class="btn btn-block my-3 text-uppercase btn-lg">
+
+					<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+
+					<?= $activity->activity_type->name ?>
+
+			</a>
 		</div>
 		<div>
 		<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">

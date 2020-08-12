@@ -338,7 +338,8 @@ class ActivitiesController extends AppController
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             if ($this->Activities->save($activity)) {
                 //$this->Flash->success(__('The activity has been saved.'));
-                return $this->redirect($this->referer());
+                $go = '/activities/view/' . $id;
+                return $this->redirect($go);
             }
             //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
         }
