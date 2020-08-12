@@ -260,7 +260,9 @@ $lastobj = $s->description;
 		<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
 		<?php endforeach ?>
 		</div>
+
 		<?= $activity->description ?>
+
 	</div>
 	
 	<?php if(!empty($activity->tags)): ?>
@@ -375,7 +377,9 @@ $lastobj = $s->description;
 <?php if(count($supplementalacts) > 0): ?>
 
 	<h3>Supplementary Resources</h3>
+	<div class="row">
 	<?php foreach ($supplementalacts as $activity): ?>
+	<div class="col-6">
 	<div class="p-3 my-3 bg-white rounded-lg">
 		<h4>
 			<a href="/learning-curator/activities/view/<?= $activity->id ?>">
@@ -444,8 +448,9 @@ $lastobj = $s->description;
 
 		</div>
 	</div>
+	</div>
 	<?php endforeach; // end of activities loop for this step ?>
-
+</div>
 
 <?php endif ?>
 </div>

@@ -91,6 +91,14 @@ Curator repsonse:
 <?php endif ?>
 </div>
 <?php endforeach ?>
+<?php else: ?>
+
+<div class="p-3 mb-3 bg-white rounded-lg">
+	<h2>You have no reports yet</h2>
+	<p>If you have issues with an activity, use its "Report" button.</p> 
+
+</div>
+
 <?php endif ?>
 
 
