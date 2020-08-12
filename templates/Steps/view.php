@@ -319,17 +319,17 @@ $lastobj = $s->description;
 	<?php endif; // are there tags? ?>	
 
 
-	<a href="#newreport" 
+	<a href="#newreport<?= $activity->id ?>" 
 			style="color:#333;" 
 			class="btn btn-light float-right" 
 			data-toggle="collapse" 
 			title="Report this activity for some reason" 
-			data-target="#newreport" 
+			data-target="#newreport<?= $activity->id ?>" 
 			aria-expanded="false" 
-			aria-controls="newreport">
+			aria-controls="newreport<?= $activity->id ?>">
 				<i class="fas fa-exclamation-triangle"></i> Report
 		</a>	
-		<div class="collapse" id="newreport">
+		<div class="collapse" id="newreport<?= $activity->id ?>">
 		<div class="my-3 p-3 bg-white rounded-lg">
 		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add']]) ?>
             <fieldset>
@@ -399,6 +399,32 @@ $lastobj = $s->description;
 			</a>
 		</div>
 		<div>
+		<a href="#newreport<?= $activity->id ?>" 
+			style="color:#333;" 
+			class="btn btn-light float-right" 
+			data-toggle="collapse" 
+			title="Report this activity for some reason" 
+			data-target="#newreport<?= $activity->id ?>" 
+			aria-expanded="false" 
+			aria-controls="newreport<?= $activity->id ?>">
+				<i class="fas fa-exclamation-triangle"></i> Report
+		</a>	
+		<div class="collapse" id="newreport<?= $activity->id ?>">
+		<div class="my-3 p-3 bg-white rounded-lg">
+		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add']]) ?>
+            <fieldset>
+                <legend><?= __('Report this activity') ?></legend>
+				<p>Is there something wrong with this activity? Tell us about it!</p>
+                <?php
+                    echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
+                    echo $this->Form->hidden('user_id', ['value' => $uid]);
+                    echo $this->Form->textarea('issue',['class' => 'form-control', 'placeholder' => 'Type here ...']);
+                ?>
+            </fieldset>
+            <input type="submit" class="btn btn-dark" value="Submit Report">
+            <?= $this->Form->end() ?>
+		</div>
+		</div>
 		<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 		</a>
