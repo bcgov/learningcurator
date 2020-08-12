@@ -71,37 +71,34 @@ $this->layout = 'nowrap';
 <div class="w-100"></div>
 <div class="col-md-8 col-lg-6">
 
-
-
-<?php if(!empty($user->reports)): ?>
-<h2 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h2>
-<?php foreach($user->reports as $report): ?>
-<div class="my-3 p-3 bg-white rounded-lg">
-<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-dark']) ?>
-<div class="mt-2">On <?= $report->created ?> you reported:</div>
-<h4><a href="/learning-curator/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></h4>
-<div class="p-3 bg-light"><?= $report->issue ?></div>
-<?php if(empty($report->response)): ?>
-<div class="my-2 alert alert-warning">No reply yet</div>
-<?php else: ?>
-<div class="mt-3">
-Curator repsonse:
-<div class="my-2 alert alert-success"><?= $report->response ?></div>
-</div>
-<?php endif ?>
-</div>
-<?php endforeach ?>
-<?php else: ?>
-
-<div class="p-3 mb-3 bg-white rounded-lg">
-	<h2>You have no reports yet</h2>
-	<p>If you have issues with an activity, use its "Report" button.</p> 
-
-</div>
-
-<?php endif ?>
-
-
+	<?php if(!empty($user->reports)): ?>
+	<h2 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h2>
+	<?php foreach($user->reports as $report): ?>
+		<div class="my-3 p-3 bg-white rounded-lg">
+			<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-dark']) ?>
+			<div class="mt-2">On <?= $report->created ?> you reported:</div>
+			<h4>
+				<a href="/learning-curator/activities/view/<?= $report->activity->id ?>">
+					<?= $report->activity->name ?>
+				</a>
+			</h4>
+			<div class="p-3 bg-light"><?= $report->issue ?></div>
+			<?php if(empty($report->response)): ?>
+			<div class="my-2 alert alert-warning">No reply yet</div>
+			<?php else: ?>
+			<div class="mt-3">
+			Curator repsonse:
+			<div class="my-2 alert alert-success"><?= $report->response ?></div>
+		</div>
+		<?php endif ?>
+		</div>
+	<?php endforeach ?>
+	<?php else: ?>
+	<div class="p-3 mb-3 bg-white rounded-lg">
+		<h2>You have no reports yet</h2>
+		<p>If you have issues with an activity, use its "Report" button.</p> 
+	</div>
+	<?php endif ?>
 
 
 </div>
