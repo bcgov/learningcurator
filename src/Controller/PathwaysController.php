@@ -130,6 +130,29 @@ class PathwaysController extends AppController
 
     }
 
+    /**
+     * API method returns a JSON object that contains the current 
+     * pathways steps and activities breakdown. You should be able to 
+     * recreate a complete pathway from this one call.
+     *
+     * @param string|null $id Pathway id.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function api($id = null)
+    {
+        $this->Authorization->skipAuthorization();
+        $pathway = $this->Pathways->get($id, [
+            'contain' => ['Categories', 
+                            'Ministries', 
+                            'Competencies', 
+                            'Steps', 
+                            'Steps.Activities', 
+                            'Steps.Activities.ActivityTypes', 
+                            'Steps.Activities.Tags'],
+        ]);
+	    $this->set(compact('pathway'));
+    }
 
     /**
      * Add method
