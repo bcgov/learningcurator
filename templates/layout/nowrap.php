@@ -83,12 +83,20 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 	<ul class="navbar-nav mr-auto">
-
-		<li class="nav-item">
-			<a class="nav-link" href="/learning-curator/users/pathways">Your Profile</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" href="/learning-curator/users/bookmarks">Bookmarks</a>
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="pathwaysDropdown" 
+			role="button" 
+			data-toggle="dropdown" 
+			aria-haspopup="true" 
+			aria-expanded="false">
+				Your Profile
+		</a>
+		<div class="dropdown-menu" aria-labelledby="pathwaysDropdown">
+			<a class="dropdown-item" href="/learning-curator/users/pathways">Pathways</a>
+			<a class="dropdown-item" href="/learning-curator/users/bookmarks">Bookmarks</a>
+			<a class="dropdown-item" href="/learning-curator/users/claimed">Claimed</a>
+			<a class="dropdown-item" href="/learning-curator/users/reports">Reports</a>
+		</div>
 		</li>
 		<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="pathwaysDropdown" 
@@ -96,7 +104,7 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 			data-toggle="dropdown" 
 			aria-haspopup="true" 
 			aria-expanded="false">
-				Topics
+				All Topics
 		</a>
 		<div class="dropdown-menu" aria-labelledby="pathwaysDropdown">
 			<a class="dropdown-item" href="/learning-curator/categories/view/1">Leadership</a>
