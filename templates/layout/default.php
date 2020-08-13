@@ -80,7 +80,7 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 	<ul class="navbar-nav mr-auto">
 
 		<li class="nav-item">
-			<a class="nav-link" href="/learning-curator/users/pathways">Pathways</a>
+			<a class="nav-link" href="/learning-curator/users/pathways">Your Profile</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" href="/learning-curator/users/bookmarks">Bookmarks</a>

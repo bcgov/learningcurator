@@ -80,23 +80,20 @@ $this->layout = 'nowrap';
 <?php if(!empty($bookmarks)): ?>
 <?php foreach($bookmarks as $bookmark): ?>
 <div class="p-3 mb-2 bg-white rounded-lg">
-	<div class="row align-items-center">
-		<div class="col-2 text-center">
+
 		<a href="/learning-curator/activity-types/view/<?= $bookmark->activity->activity_type->id ?>" 
 			class="activity-icon activity-icon-md" 
 			style="background-color: rgba(<?= $bookmark->activity->activity_type->color ?>,1)">
 				<i class="activity-icon activity-icon-md fas <?= $bookmark->activity->activity_type->image_path ?>"></i>
 		</a>
-		</div>
-		<div class="col">
-			<strong>
+	
+			<div>
 				<span class="name">
 				<?= $this->Html->link($bookmark->activity->name, ['controller' => 'Activities','action' => 'view', $bookmark->activity->id]) ?>
 				</span>
 				<?= $this->Form->postLink(__('x'), ['controller' => 'ActivitiesBookmarks','action' => 'delete/'. $bookmark->id], ['confirm' => __('Are you sure you want to delete # {0}?', $bookmark->activity_id)]) ?>
-			</strong>
-		</div>
-	</div>	
+			</div>
+
 </div>
 <?php endforeach ?>
 

@@ -83,22 +83,18 @@ $this->layout = 'nowrap';
 		<?php if($activity->status_id == 3): ?>
 		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
 		<?php endif ?>
-		<div class="row align-items-center">
 
-		<div class="col-2 text-center">
 		<a href="/learning-curator/activity-types/view/<?= $activity->activity_type->id ?>" 
 			class="activity-icon activity-icon-md" 
 			style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
 				<i class="activity-icon activity-icon-md fas <?= $activity->activity_type->image_path ?>"></i>
 			
 		</a>
-		</div>
-		<div class="col">
-		<strong>
+
+		<div>
 		<span class="name"><?= $this->Html->link(h($activity->name), ['controller' => 'Activities', 'action' => 'view', $activity->id]) ?></span>
-		</strong>
 		</div>
-		</div>
+
 	</div>
 	<?php endforeach; ?>
 </div> <!-- /.list -->
