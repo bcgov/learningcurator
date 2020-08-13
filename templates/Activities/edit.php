@@ -16,7 +16,6 @@ echo $this->Form->hidden('createdby_id', ['value' => $activity->createdby_id, 'c
 echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'),'class' => 'form-control']);
 ?>
 <div class="container-fluid">
-
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-12">
 <div class="pad-lg">

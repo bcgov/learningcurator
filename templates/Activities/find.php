@@ -1,4 +1,5 @@
 <?php
+$this->layout = 'nowrap';
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
@@ -7,41 +8,43 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
+<div class="container-fluid">
+<div class="row justify-content-md-center" id="colorful">
+<div class="col-12">
+<div class="pad-lg">
+<h1>Searching for <?= $search ?></h1>
+</div>
+</div>
+</div>
+</div>
+<div class="container-fluid pt-3 linear">
+<div class="row justify-content-md-center">
+<div class="col-md-7">
 <?php foreach($activities as $activity): ?>
 
-
-    <div class="card my-3">
-<div class="card-body">
-
-
-<div class="p-3 mb-3">
+<div class="p-3 my-3 bg-white rounded-lg">
 
 <h3>
-
-	<?= $this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
+	<a href="/learning-curator/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
+	<?php //$this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
 </h3>
-<div class="alert alert-light">
+<div class="py-3 ">
 	<?= $activity->description ?>
-	<div class="mt-2"><span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i></div>
+	<div class="mt-2"><i class="fas fa-thumbs-up"></i> <span class="lcount"><?= h($activity->recommended) ?></span> likes </div>
 	<div class="mt-2" style="font-size: 12px">Added on <?= $activity->created ?></div>
 
 </div>
-
 
 <?php if($role == 2 || $role == 5): ?>
 <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#assignment<?= $activity->id ?>" aria-expanded="false" aria-controls="assignment<?= $activity->id ?>">
     Path Assigment
   </button>
 <?php endif ?>
-
-
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
 <span class="badge badge-light"><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
 <?php endforeach ?>
 <?php endforeach ?>
-
-
 <?php if($role == 2 || $role == 5): ?>
 <div class="collapse" id="assignment<?= $activity->id ?>">
 <?php foreach($allpathways as $pathway): ?>
@@ -50,7 +53,6 @@ if ($this->Identity->isLoggedIn()) {
     Steps
   </button>
 <?= $pathway->name ?>
-
 <div class="collapse p-3" id="steps<?= $pathway->id ?>">
 <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id ]) ?>
@@ -68,12 +70,9 @@ if ($this->Identity->isLoggedIn()) {
 <?php endforeach ?>
 </div>
 <?php endif ?>
-
-</div>
-</div>
 </div>
 <?php endforeach; ?>
-
+</div>
 </div>
 </div>
 
