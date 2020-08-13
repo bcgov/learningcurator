@@ -243,7 +243,7 @@ $lastobj = $s->description;
 	<?php else: // they have claimed it, so show that ?>
 
 	<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
-
+	<?= $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesSteps','action' => 'delete/'. $activity->id], ['class' => 'btn btn-sm btn-dark', 'confirm' => __('Really delete?')]) ?>
 	<?php endif; // claimed or not ?>
 
 	<h3 class="my-3">

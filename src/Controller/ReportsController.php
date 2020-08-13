@@ -18,18 +18,14 @@ class ReportsController extends AppController
      *
      * @return \Cake\Http\Response|null
      */
-    public function list()
+    public function listit()
     {
         
         $reports = $this->Reports->find('all');
-
+        $this->Authorization->authorize($reports);
         $user = $this->request->getAttribute('identity');
-        if ($user->can('list', $reports)) {
+        $this->set(compact('reports'));   
 
-            $this->set(compact('reports'));   
-        }
-        
-        
     }
 
     /**

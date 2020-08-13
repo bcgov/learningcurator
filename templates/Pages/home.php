@@ -10,29 +10,31 @@
 <div class="col-md-4">
 <div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
 	<h3><a href="/learning-curator/categories/view/1" class="">Leadership</a></h3>
-	<div>These pathways focus on building a solid personal foundation—whether 
-	your interest is in developing your skills where you are right now or to 
-	develop for future roles.</div>
+	<div>Building your leadership skills is something you can do in whatever role you're 
+	in now, as well as something you may look towards for future roles. As BCPS 
+	leaders, we aim to develop our core leadership competencies, as well as role-specific ones 
+	that apply to certain positions. Wherever you are today, you'll find useful learning here for 
+	developing your leadership skills.</div>
 </div>
 </div>
 <div class="col-md-4">
 <div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
 	<h3><a href="/learning-curator/categories/view/3" class="">Diversity &amp; Inclusion</a></h3>
-	<div>These pathways focus on building a solid personal foundation—whether 
-	your interest is in developing your skills where you are right now or to 
-	develop for future roles.</div>
+	<div>Every individual needs to know their role in creating a diverse and inclusive workplace 
+	in the BCPS. Learn the definitions and the value of diversity and inclusion. 
+	Deepen your understanding and learn how to be an ally with a little engagement or a deeper dive 
+	in the resources within this topic—your choice.</div>
 </div>
 </div>
 <div class="col-md-4">
 <div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
-	<h3><a href="/learning-curator/categories/view/2" class="">Role Specifc</a></h3>
-	<div>These pathways focus on building a solid personal foundation—whether 
-	your interest is in developing your skills where you are right now or to 
-	develop for future roles.</div>
-	</div>
+	<h3 style="color: #666">Role Specific <small><em>coming soon</em></small></h3>
+	<div>The learning in this topic if all in the context of a specific role and what it takes 
+	to perform in that role. Managers and Supervisors may use role-specific pathways for 
+	onboarding and development of their employees.</div>
 </div>	
 </div>
-
+</div>
 
 </div>
 
@@ -98,7 +100,7 @@
 	Deeper</h3>
 	<p>Go a bit deeper and look into following a pathway and tracking your progress.</p>
 	
-	<a class="btn btn-lg btn-dark btn-block" href="/learning-curator/users/home">Check out your Profile</a>
+	<a class="btn btn-lg btn-dark btn-block" href="/learning-curator/users/pathways">Check out your Profile</a>
 	
 
 </div>

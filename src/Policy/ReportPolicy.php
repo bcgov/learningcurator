@@ -11,23 +11,6 @@ use Authorization\IdentityInterface;
  */
 class ReportPolicy
 {
-    /**
-     * Check if $user can view a list of all Reports
-     *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Report $report
-     * @return bool
-     */
-    public function canIndex(IdentityInterface $user, Report $report)
-    {
-        if($this->isAdmin($user, $report)) {
-            return true;
-        } elseif($this->isCurator($user,$report)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     /**
      * Check if $user can create Report
@@ -94,6 +77,19 @@ class ReportPolicy
         } else {
             return false;
         }
+    }
+    /**
+     * Check if $user can view a list of all Reports
+     *
+     * @param Authorization\IdentityInterface $user The user.
+     * @param App\Model\Entity\Report $report
+     * @return bool
+     */
+    public function canListit(IdentityInterface $user, Report $report)
+    {
+        
+            return true;
+       
     }
 
     protected function isCurator(IdentityInterface $user, Report $report)

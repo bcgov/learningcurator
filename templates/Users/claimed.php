@@ -80,6 +80,7 @@ $this->layout = 'nowrap';
 <div class="list"> 
 	<?php foreach ($user->activities as $activity) : ?>
 	<div class="p-3 mb-2 bg-white rounded-lg">
+
 		<?php if($activity->status_id == 3): ?>
 		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
 		<?php endif ?>
@@ -90,9 +91,18 @@ $this->layout = 'nowrap';
 				<i class="activity-icon activity-icon-md fas <?= $activity->activity_type->image_path ?>"></i>
 			
 		</a>
-
-		<div>
+		<h4>
 		<span class="name"><?= $this->Html->link(h($activity->name), ['controller' => 'Activities', 'action' => 'view', $activity->id]) ?></span>
+		</h4>
+
+		<div class="p-3 bg-light rounded-lg">
+		From: 
+		<?php foreach ($activity->steps as $step) : ?>
+		<?php foreach ($step->pathways as $path) : ?>
+		<a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?></a>
+		<?php endforeach; ?>
+		 - <a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $step->name ?></a>
+		<?php endforeach; ?>
 		</div>
 
 	</div>

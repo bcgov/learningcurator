@@ -316,6 +316,8 @@ class UsersController extends AppController
                             'Pathways.Categories', 
                             'Activities', 
                             'Activities.ActivityTypes',
+                            'Activities.Steps',
+                            'Activities.Steps.Pathways',
                             'Competencies',
                             'Ministries'],
         ]);
