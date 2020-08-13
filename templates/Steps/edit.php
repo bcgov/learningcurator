@@ -34,7 +34,8 @@ label {
     <?= $this->Form->hidden('modifiedby') ?>
     <?= $this->Form->hidden('pathway_id', ['value' => $step->pathway_id]) ?>
     <?= $this->Form->control('name', ['class' => 'form-control']) ?>
-    <?= $this->Form->control('description', ['class' => 'form-control']) ?>
+    <?= $this->Form->control('description', ['class' => 'form-control summernote']) ?>
+    <?= $this->Form->control('objective', ['class' => 'form-control summernote']) ?>
     <?= $this->Form->button(__('Save Step'),['class' => 'btn btn-success btn-block my-3']) ?>
     <?= $this->Form->end() ?>
     </div>
@@ -186,7 +187,7 @@ label {
     </label>
     <?php //echo $this->Form->control('activity_type_id', ['class' => 'form-control', 'options' => $atypes]); ?>
     <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
-    <?php echo $this->Form->control('description', ['class' => 'form-control']); ?>
+    <?php echo $this->Form->control('description', ['class' => 'form-control summernote']); ?>
     <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
@@ -273,5 +274,40 @@ $(function () {
 		});
     });
 
+});
+</script>
+
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="/learning-curator/js/summernote-cleaner.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('.summernote').summernote({
+        toolbar:[
+            ['style',['style']],
+            ['font',['bold','italic','underline','clear']],
+            ['para',['ul','ol','paragraph']],
+            ['table',['table']],
+            ['insert',['media','link','hr']],
+            ['cleaner',['cleaner']], // The Button
+            ['help',['help']]
+        ],
+        cleaner:{
+            action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+            newline: '<br>', // Summernote's default is to use '<p><br></p>'
+            notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
+            icon: '<i class="fas fa-broom"></i>',
+            keepHtml: false, // Remove all Html formats
+            keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'], // If keepHtml is true, remove all tags except these
+            keepClasses: false, // Remove Classes
+            badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], // Remove full tags with contents
+            badAttributes: ['style', 'start'], // Remove attributes from remaining tags
+            limitChars: false, // 0/false|# 0/false disables option
+            limitDisplay: 'both', // text|html|both
+            limitStop: false // true/false
+        }
+    });
 });
 </script>

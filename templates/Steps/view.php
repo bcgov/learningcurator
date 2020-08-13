@@ -154,7 +154,7 @@ if($stepclaimcount > 0) {
 			<?php endif ?>
 			<!--<small><span class="badge badge-dark"><?= $totalsteps ?></span> total steps</small>-->
 		</h2>	
-		<div class="" style="font-size: 130%;"><em>Goal:</em> <?= h($s->description); ?></div>
+		<div class="" style="font-size: 130%;"><?= $s->description; ?></div>
 		<div class="my-3">
 			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
 				<?= $allreadstepcount ?> to read
