@@ -174,12 +174,12 @@ class ActivitiesController extends AppController
         $activities = $this->Activities->find()->contain('Steps.Pathways','ActivityTypes')->where(function ($exp, $query) use($search) {
             return $exp->like('name', '%'.$search.'%');
         })->order(['name' => 'ASC']);
-
+        $numresults = $activities->count();
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
         $pathways = $allpaths->find('all')->contain(['steps']);
         $allpathways = $pathways->toList();
         
-        $this->set(compact('activities','allpathways','search'));
+        $this->set(compact('activities','allpathways','search', 'numresults'));
     }
 
     /**
