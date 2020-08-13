@@ -44,5 +44,6 @@ nbproject/*
 
 /webroot/bootstrap-theme/*
 /webroot/fontawesome/*
+/webroot/js/summernote/*
 /db/*
 webroot/bootstrap-theme
