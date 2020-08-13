@@ -20,6 +20,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="pad-lg">
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
+	<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $activity->id], ['confirm' => __('Really delete?'), 'class' => 'btn btn-sm btn-light']) ?>
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
 	</div>
 

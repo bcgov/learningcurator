@@ -260,7 +260,9 @@ $lastobj = $s->description;
 		<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
 		<?php endforeach ?>
 		</div>
+
 		<?= $activity->description ?>
+
 	</div>
 	
 	<?php if(!empty($activity->tags)): ?>
@@ -319,19 +321,19 @@ $lastobj = $s->description;
 	<?php endif; // are there tags? ?>	
 
 
-	<a href="#newreport" 
+	<a href="#newreport<?= $activity->id ?>" 
 			style="color:#333;" 
 			class="btn btn-light float-right" 
 			data-toggle="collapse" 
 			title="Report this activity for some reason" 
-			data-target="#newreport" 
+			data-target="#newreport<?= $activity->id ?>" 
 			aria-expanded="false" 
-			aria-controls="newreport">
+			aria-controls="newreport<?= $activity->id ?>">
 				<i class="fas fa-exclamation-triangle"></i> Report
 		</a>	
-		<div class="collapse" id="newreport">
+		<div class="collapse" id="newreport<?= $activity->id ?>">
 		<div class="my-3 p-3 bg-white rounded-lg">
-		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add']]) ?>
+		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add'],'class'=>'reportform']) ?>
             <fieldset>
                 <legend><?= __('Report this activity') ?></legend>
 				<p>Is there something wrong with this activity? Tell us about it!</p>
@@ -374,27 +376,59 @@ $lastobj = $s->description;
 
 <?php if(count($supplementalacts) > 0): ?>
 
-	<h3 style="color:#666">Supplementary Resources</h3>
+	<h3>Supplementary Resources</h3>
+	<div class="row">
 	<?php foreach ($supplementalacts as $activity): ?>
+	<div class="col-6">
 	<div class="p-3 my-3 bg-white rounded-lg">
-		<div class="row align-items-center">
-		<div class="col-12 col-md-2 col-lg-2">
-			<a href="/learning-curator/activities/view/<?= $activity->id ?>" class="activity-icon activity-icon-md" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000;">
-				<i class="activity-icon activity-icon-md fas <?= $activity->activity_type->image_path ?>"></i>
-			</a>
-		</div>
-		<div class="col">
-			<h5>
+		<h4>
 			<a href="/learning-curator/activities/view/<?= $activity->id ?>">
 				<?= $activity->name ?>
 			</a>
-			</h5>
-		</div>
-		</div>
-		<div class="p-3">
-		<?= $activity->description ?>
+		</h4>
+		<div class="">
+			<?= $activity->description ?>
+			
+			<a target="_blank" 
+				rel="noopener" 
+				data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
+				href="<?= $activity->hyperlink ?>" 
+				style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
+				class="btn btn-block my-3 text-uppercase btn-lg">
+
+					<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+
+					<?= $activity->activity_type->name ?>
+
+			</a>
 		</div>
 		<div>
+		<a href="#newreport<?= $activity->id ?>" 
+			style="color:#333;" 
+			class="btn btn-light float-right" 
+			data-toggle="collapse" 
+			title="Report this activity for some reason" 
+			data-target="#newreport<?= $activity->id ?>" 
+			aria-expanded="false" 
+			aria-controls="newreport<?= $activity->id ?>">
+				<i class="fas fa-exclamation-triangle"></i> Report
+		</a>	
+		<div class="collapse" id="newreport<?= $activity->id ?>">
+		<div class="my-3 p-3 bg-white rounded-lg">
+		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add'],'class'=>'reportform']) ?>
+            <fieldset>
+                <legend><?= __('Report this activity') ?></legend>
+				<p>Is there something wrong with this activity? Tell us about it!</p>
+                <?php
+                    echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
+                    echo $this->Form->hidden('user_id', ['value' => $uid]);
+                    echo $this->Form->textarea('issue',['class' => 'form-control', 'placeholder' => 'Type here ...']);
+                ?>
+            </fieldset>
+            <input type="submit" class="btn btn-dark" value="Submit Report">
+            <?= $this->Form->end() ?>
+		</div>
+		</div>
 		<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 		</a>
@@ -414,8 +448,9 @@ $lastobj = $s->description;
 
 		</div>
 	</div>
+	</div>
 	<?php endforeach; // end of activities loop for this step ?>
-
+</div>
 
 <?php endif ?>
 </div>
@@ -535,6 +570,29 @@ $(document).ready(function(){
 				403: function() {
 					let alert = 'You must be logged in.</div>';
 					console.log(alert);
+				}
+			}
+		});
+	});
+	$('.reportform').on('submit', function(e){
+		
+		e.preventDefault();
+		var form = $(this);
+		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/learning-curator/users/reports">View all your reports</a>.').remove();
+		
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/learning-curator/reports/add',
+			data: form.serialize(),
+			success: function(data)
+			{
+				
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
 				}
 			}
 		});

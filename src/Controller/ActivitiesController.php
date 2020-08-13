@@ -171,15 +171,15 @@ class ActivitiesController extends AppController
     {
         $this->Authorization->skipAuthorization();
 	    $search = $this->request->getQuery('q');
-        $activities = $this->Activities->find()->contain('Steps.Pathways')->where(function ($exp, $query) use($search) {
+        $activities = $this->Activities->find()->contain('Steps.Pathways','ActivityTypes')->where(function ($exp, $query) use($search) {
             return $exp->like('name', '%'.$search.'%');
         })->order(['name' => 'ASC']);
-
+        $numresults = $activities->count();
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
         $pathways = $allpaths->find('all')->contain(['steps']);
         $allpathways = $pathways->toList();
-
-        $this->set(compact('activities','allpathways'));
+        
+        $this->set(compact('activities','allpathways','search', 'numresults'));
     }
 
     /**
@@ -338,7 +338,8 @@ class ActivitiesController extends AppController
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             if ($this->Activities->save($activity)) {
                 //$this->Flash->success(__('The activity has been saved.'));
-                return $this->redirect($this->referer());
+                $go = '/activities/view/' . $id;
+                return $this->redirect($go);
             }
             //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
         }

@@ -287,7 +287,7 @@ class UsersController extends AppController
         $bookmarks = $books->find('all')
                             ->where(['user_id' => $u->id])
                             ->contain(['Activities','Activities.ActivityTypes']);
-
+        
         $user = $this->Users->get($u->id, [
             'contain' => ['Pathways', 
                             'Pathways.Categories', 

@@ -1,4 +1,5 @@
 <?php
+$this->layout = 'nowrap';
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
@@ -7,73 +8,76 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<?php foreach($activities as $activity): ?>
-
-
-    <div class="card my-3">
-<div class="card-body">
-
-
-<div class="p-3 mb-3">
-
-<h3>
-
-	<?= $this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
-</h3>
-<div class="alert alert-light">
-	<?= $activity->description ?>
-	<div class="mt-2"><span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i></div>
-	<div class="mt-2" style="font-size: 12px">Added on <?= $activity->created ?></div>
-
+<div class="container-fluid">
+<div class="row justify-content-md-center" id="colorful">
+<div class="col-12">
+<div class="pad-lg">
+<h1>Searching for &quot;<?= $search ?>&quot;</h1>
+<div>Found <span class="badge badge-dark"><?= $numresults ?></span> activities</div>
+<div class="py-3">
+	<form method="get" action="/learning-curator/activities/find" class="form-inline">
+		<input class="form-control mr-sm-2" type="search" placeholder="Search again" aria-label="Search" name="q">
+		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+	</form>
 </div>
-
-
-<?php if($role == 2 || $role == 5): ?>
-<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#assignment<?= $activity->id ?>" aria-expanded="false" aria-controls="assignment<?= $activity->id ?>">
-    Path Assigment
-  </button>
-<?php endif ?>
-
-
+</div>
+</div>
+</div>
+</div>
+<div class="container-fluid pt-3 linear">
+<div class="row justify-content-md-center">
+<div class="col-md-7">
+<?php foreach($activities as $activity): ?>
+<?php
+// I _cannot_ make my query contain the activity_types
+// so I'm creating this manual mapping for the time 
+// being #TODO 
+//1 -Watch	193,129,183	fa-video	Edit
+//2 - Read	249,145,80	fa-book-reader	Edit
+//3 - Listen	244,105,115	fa-headphones	Edit
+//4 - Participate	255,218,96	fa-users
+$bgcolor = '';
+$acticon = '';
+if($activity->activity_types_id == 1) {
+	$bgcolor = '193,129,183';
+	$acticon = 'fa-video';
+} elseif($activity->activity_types_id == 2) {
+	$bgcolor = '249,145,80';
+	$acticon = 'fa-book-reader';
+} elseif($activity->activity_types_id == 3) {
+	$bgcolor = '244,105,115';
+	$acticon = 'fa-headphones';
+} elseif($activity->activity_types_id == 4) {
+	$bgcolor = '255,218,96';
+	$acticon = 'fa-users';
+}
+?>
+<div class="rounded-lg bg-white">
+<div class="p-3 my-3 rounded-lg" style="background-color: rgba(<?= $bgcolor ?>,.2)">
+<div class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $bgcolor ?>,1)">
+			<i class="activity-icon activity-icon-lg fas <?= $acticon ?>"></i>
+	</div>
+<h3>
+	<a href="/learning-curator/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
+	<?php //$this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
+</h3>
+<div class="py-3 ">
+	<?= $activity->description ?>
+</div>
+<?php if(!empty($activity->steps)): ?>
+<div class="p-3 mb-3 bg-white rounded-lg">This activity is on the following pathways:
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
 <span class="badge badge-light"><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
 <?php endforeach ?>
 <?php endforeach ?>
-
-
-<?php if($role == 2 || $role == 5): ?>
-<div class="collapse" id="assignment<?= $activity->id ?>">
-<?php foreach($allpathways as $pathway): ?>
-<div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
-<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#steps<?= $pathway->id ?>" aria-expanded="false" aria-controls="steps<?= $pathway->id ?>">
-    Steps
-  </button>
-<?= $pathway->name ?>
-
-<div class="collapse p-3" id="steps<?= $pathway->id ?>">
-<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
-<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id ]) ?>
-<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-<?php foreach($pathway->steps as $step): ?>
-<label style="display: inline-block; margin: 0 10px 0 5px;">
-<input id="step_id_<?= $step->id ?>" type="radio" name="step_id" value="<?= $step->id ?>">
-<?= $step->name ?>
-</label>
-<?php endforeach ?>
-<?= $this->Form->button(__('Assign'),['class'=>'btn btn-sm btn-light']) ?>
-<?= $this->Form->end() ?>
-</div>
-</div>
-<?php endforeach ?>
 </div>
 <?php endif ?>
 
 </div>
 </div>
-</div>
 <?php endforeach; ?>
-
+</div>
 </div>
 </div>
 
