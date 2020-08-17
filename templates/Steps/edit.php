@@ -25,7 +25,7 @@ label {
 </div>
 <div class="container-fluid linear">
 <div class="row justify-content-md-center pt-3">
-<div class="col-md-4">
+<div class="col-md-3">
 <h2>Step Details</h2>
 <div class="my-3 p-3 rounded-lg bg-white">
     <?= $this->Form->create($step) ?>
@@ -41,7 +41,7 @@ label {
     </div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-5">
     
     <h2>Add Existing Activity</h2>
     <div class="my-3 p-3 rounded-lg bg-white">
@@ -85,7 +85,7 @@ label {
         <li class="list-group-item" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>" style="background-color: rgba(<?= $a->activity_type->color ?>,.2); border: 0;">
             <div class="row">
             <div class="col-1">
-            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => 'form-inline']) ?>
+            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => '']) ?>
             <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
             <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'up']) ?>
             <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
@@ -94,7 +94,7 @@ label {
             <button class="btn btn-light"><i class="fas fa-chevron-circle-up"></i></button>
             <?= $this->Form->end() ?>
 
-            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => 'form-inline']) ?>
+            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => '']) ?>
             <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
             <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'down']) ?>
             <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
@@ -103,11 +103,11 @@ label {
             <button class="btn btn-light"><i class="fas fa-chevron-circle-down"></i></button>
             <?= $this->Form->end() ?>
             </div>
-            <div class="col-8">
+            <div class="col-9">
                 <div><?= $a->activity_type->name ?></div>
                 <div class="actname"><a href="/learning-curator/activities/view/<?= $a->id ?>"><?= $a->name ?></a> </div>
             </div>
-            <div class="col-3">
+            <div class="col-2">
 
             <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $a->_joinData->id, 'class' => '']]) ?>
             <?= $this->Form->hidden('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
@@ -120,8 +120,8 @@ label {
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
             <?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light float-left']) ?>
             <?= $this->Form->end() ?>
-
-            <?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $a->_joinData->id, 'class' => 'form-inline']) ?>
+<br>
+            <?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $a->_joinData->id, 'class' => '']) ?>
             <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
             <?= $this->Form->button(__('Delete'),['class' => 'btn btn-sm btn-light']) ?>
             <?= $this->Form->end() ?>
@@ -291,8 +291,7 @@ $(document).ready(function() {
             ['para',['ul','ol','paragraph']],
             ['table',['table']],
             ['insert',['media','link','hr']],
-            ['cleaner',['cleaner']], // The Button
-            ['help',['help']]
+            ['cleaner',['cleaner']]
         ],
         cleaner:{
             action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.

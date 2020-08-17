@@ -180,7 +180,7 @@ if($stepclaimcount > 0) {
 		<?php endif ?>
 
 		<?php if(!empty($n->id)): ?>
-		<a href="/learning-curator/steps/view/<?= $n->id ?>" style="color: #000; font-size: 250%; float: right;"><i class="fas fa-arrow-circle-right"></i></a>
+		<a href="/learning-curator/steps/view/<?= $n->id ?>" class="nextstep" style="color: #000; font-size: 250%; float: right;"><i class="fas fa-arrow-circle-right"></i></a>
 		<?php endif ?>
 		
 	</div>
@@ -212,8 +212,7 @@ $lastobj = $s->description;
 
 
 
-</div>
-</div>
+
 </div>
 
 <div class="progress progress-bar-striped stickyprogress" style="background-color: #F1F1F1; border-radius: 0; height: 18px;">
@@ -243,7 +242,7 @@ $lastobj = $s->description;
 	<?php else: // they have claimed it, so show that ?>
 
 	<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
-	<?= $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesSteps','action' => 'delete/'. $activity->id], ['class' => 'btn btn-sm btn-dark', 'confirm' => __('Really delete?')]) ?>
+	<?php //$this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesSteps','action' => 'delete/'. $activity->id], ['class' => 'btn btn-sm btn-dark', 'confirm' => __('Really delete?')]) ?>
 	<?php endif; // claimed or not ?>
 
 	<h3 class="my-3">
@@ -474,10 +473,9 @@ echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 <?php endif ?>
 </div>
 </div>
-</div>
-</div>
-</div>
-</div>
+
+
+
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 
@@ -596,6 +594,20 @@ $(document).ready(function(){
 				}
 			}
 		});
+	});
+	$(window).keydown(function(e) {
+		switch (e.keyCode) {
+			case 37: // left arrow key
+				e.preventDefault(); // avoid browser scrolling due to pressed key
+				
+			case 38: // up arrow key
+			return;
+			case 39: // right arrow key
+				e.preventDefault();
+				$('.nextstep').click();
+			case 40: // up arrow key
+			return;
+		}
 	});
 
 });
