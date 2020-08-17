@@ -237,7 +237,7 @@ $lastobj = $s->description;
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-dark', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
 	<?php else: // they have claimed it, so show that ?>
 
@@ -378,7 +378,7 @@ $lastobj = $s->description;
 	<h3>Supplementary Resources</h3>
 	<div class="row">
 	<?php foreach ($supplementalacts as $activity): ?>
-	<div class="col-6">
+	<div class="col-md-12 col-lg-12">
 	<div class="p-3 my-3 bg-white rounded-lg">
 		<h4>
 			<a href="/learning-curator/activities/view/<?= $activity->id ?>">
@@ -473,7 +473,7 @@ echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 <?php endif ?>
 </div>
 </div>
-
+</div>
 
 
 
