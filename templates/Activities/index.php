@@ -129,6 +129,7 @@ if ($this->Identity->isLoggedIn()) {
 		<span class="badge badge-warning"><?= $path->status->name ?></span>
 		<h3><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?></a></h3>
 		<?= $path->objective ?>
+		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
 	</div>
 <?php endif ?>
 <?php else: ?>
@@ -136,20 +137,29 @@ if ($this->Identity->isLoggedIn()) {
 		
 		<h3><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?></a></h3>
 		<?= $path->objective ?>
+		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
 	</div>
 <?php endif ?>
+
 <?php endforeach ?>
 </div>
 </div>
 
 <div class="col-md-3">
-<h2 class="mt-3">Latest Topics</h2>
+<h2 class="mt-3">Latest Categories</h2>
 <?php foreach ($allcats as $cat) : ?>
 <div class="p-3 mb-2 bg-white rounded-lg">
 <h3>
 	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
 </h3>
 <div><?= h($cat->description) ?></div>
+<div class="bg-light p-3 my-3">
+<div class="mb-2"><strong>View pathways on the following topics:</strong></div>
+<?php foreach($cat->topics as $topic): ?>
+<span class=""><?= $topic->name ?></span>
+<?php endforeach ?>
+</div>
+<div><span class="badge badge-light">Added: <?= h($cat->created) ?></span></div>
 </div>
 <?php endforeach; ?>
 </div>
