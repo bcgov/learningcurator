@@ -25,7 +25,7 @@ class ActivitiesController extends AppController
         $this->Authorization->skipAuthorization();
 
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
-        $pathways = $allpaths->find('all')->contain(['Steps','Statuses']); //->where(['status_id' => 2]);
+        $pathways = $allpaths->find('all')->contain(['Steps','Statuses'])->order(['Pathways.created' => 'desc']); //->where(['status_id' => 2]);
         $allpathways = $pathways->toList();
        
         $this->paginate = [
@@ -46,7 +46,7 @@ class ActivitiesController extends AppController
                             ->limit(10);
         
 		$cats = TableRegistry::getTableLocator()->get('Categories');
-        $allcats = $cats->find('all')->contain(['Topics']);
+        $allcats = $cats->find('all')->contain(['Topics'])->order(['Categories.created' => 'desc']);
         
         // As we loop through the activities for the steps on this pathway, we 
         // need to be able to check to see if the current user has "claimed" 
