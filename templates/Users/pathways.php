@@ -115,6 +115,8 @@ $this->layout = 'nowrap';
 		</script>
 	</div>
 	<div class="col">
+	
+<?= $this->Form->postLink(__('Unfollow'), ['controller' => 'PathwaysUsers','action' => 'delete/'. $pathways->_joinData->id], ['class' => 'btn btn-dark float-right', 'confirm' => __('Really unfollow?')]) ?>
 		<div>
 			<?= $pathways->has('category') ? $this->Html->link($pathways->category->name, ['controller' => 'Categories', 'action' => 'view', $pathways->category->id]) : '' ?>
 		</div>

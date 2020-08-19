@@ -52,10 +52,11 @@ class PathwaysUsersController extends AppController
     {
         $pathwaysUser = $this->PathwaysUsers->newEmptyEntity();
         $this->Authorization->authorize($pathwaysUser);
-	$user = $this->request->getAttribute('authentication')->getIdentity();
-	$pathwaysUser->user_id = $user->id;
-	$pid = $this->request->getData()['pathway_id'];
-	$pathwaysUser->pathway_id = $pid;
+
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $pathwaysUser->user_id = $user->id;
+        $pid = $this->request->getData()['pathway_id'];
+        $pathwaysUser->pathway_id = $pid;
 
         if ($this->request->is('post')) {
             //$pathwaysUser = $this->PathwaysUsers->patchEntity($pathwaysUser, $this->request->getData());
@@ -87,11 +88,11 @@ class PathwaysUsersController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pathwaysUser = $this->PathwaysUsers->patchEntity($pathwaysUser, $this->request->getData());
             if ($this->PathwaysUsers->save($pathwaysUser)) {
-                $this->Flash->success(__('The pathways user has been saved.'));
+                //$this->Flash->success(__('The pathways user has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The pathways user could not be saved. Please, try again.'));
+            //$this->Flash->error(__('The pathways user could not be saved. Please, try again.'));
         }
         $users = $this->PathwaysUsers->Users->find('list', ['limit' => 200]);
         $pathways = $this->PathwaysUsers->Pathways->find('list', ['limit' => 200]);
@@ -110,12 +111,14 @@ class PathwaysUsersController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $pathwaysUser = $this->PathwaysUsers->get($id);
+        // #TODO write a proper policy for this, don't skip it
+        $this->Authorization->skipAuthorization();
         if ($this->PathwaysUsers->delete($pathwaysUser)) {
-            $this->Flash->success(__('The pathways user has been deleted.'));
+            //$this->Flash->success(__('The pathways user has been deleted.'));
         } else {
-            $this->Flash->error(__('The pathways user could not be deleted. Please, try again.'));
+            //$this->Flash->error(__('The pathways user could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer());
     }
 }

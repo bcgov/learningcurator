@@ -98,22 +98,27 @@ class ActivitiesUsersController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($uid = null, $aid = null)
+    public function delete($id = null)
     {
-        //$this->request->allowMethod(['post', 'delete']);
-        //$activitiesUser = $this->ActivitiesUsers->get($id);
-        $activitiesUser = $this->ActivitiesUsers->find()->where(['user_id'=>$uid])->where(['activity_id'=>$aid]);
-        // $foo = $activitiesUser->toArray();
-        // echo '<pre>';print_r($foo); exit;
+        $this->request->allowMethod(['post', 'delete']);
+        // #TODO write a proper policy for this, don't skip it
+        $this->Authorization->skipAuthorization();
+        $activitiesUser = $this->ActivitiesUsers->get($id);
+       //$user = $this->request->getAttribute('authentication')->getIdentity();
+       // $activitiesUser = $this->ActivitiesUsers->find('all')->where(['user_id'=>$user->id])->where(['activity_id'=>$aid]);
+        //$activitiesUser = $this->ActivitiesUsers->get($user->id,$aid);
+         //$foo = $activitiesUser->toArray();
+         //echo '<pre>';print_r($foo); exit;
         // foreach($activitiesUser as $u) { echo $u; }
         // exit;
         if ($this->ActivitiesUsers->delete($activitiesUser)) {
             //$this->Flash->success(__('The activities user has been deleted.'));
+
         } else {
             //$this->Flash->error(__('The activities user could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer());
     }
     /**
      * User action claim method. Users need to be able to identify which

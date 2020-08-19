@@ -36,8 +36,8 @@ class ActivitiesUsersTable extends Table
         parent::initialize($config);
 
         $this->setTable('activities_users');
-        $this->setDisplayField('user_id');
-        $this->setPrimaryKey(['user_id', 'activity_id']);
+        
+        $this->setPrimaryKey(['id']);
 
         $this->belongsTo('Activities', [
             'foreignKey' => 'activity_id',

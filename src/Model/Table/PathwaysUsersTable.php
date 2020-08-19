@@ -37,8 +37,8 @@ class PathwaysUsersTable extends Table
         parent::initialize($config);
 
         $this->setTable('pathways_users');
-        $this->setDisplayField('user_id');
-        $this->setPrimaryKey(['user_id', 'pathway_id']);
+        
+        $this->setPrimaryKey(['id']);
 
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',

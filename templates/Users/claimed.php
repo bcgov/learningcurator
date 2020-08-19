@@ -72,15 +72,16 @@ $this->layout = 'nowrap';
 <div class="col-md-8 col-lg-6">
 <?php if (!empty($user->activities)) : ?>
 <h2><i class="fas fa-check"></i> <?= __('Claimed Activities') ?></h2>
-
+<p>As you claim activities, they will appear here.</p>
 <div id="activitylist">
 <input type="text" name="activityfilter" id="activityfilter" placeholder="Filter" class="search form-control mb-3">
 
 
 <div class="list"> 
 	<?php foreach ($user->activities as $activity) : ?>
+	
 	<div class="p-3 mb-2 bg-white rounded-lg">
-
+	<?= $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-sm btn-dark float-right', 'confirm' => __('Really delete?')]) ?>
 		<?php if($activity->status_id == 3): ?>
 		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
 		<?php endif ?>
@@ -104,7 +105,7 @@ $this->layout = 'nowrap';
 		 - <a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $step->name ?></a>
 		<?php endforeach; ?>
 		</div>
-
+		
 	</div>
 	<?php endforeach; ?>
 </div> <!-- /.list -->
@@ -115,15 +116,16 @@ $this->layout = 'nowrap';
 <?php else: ?>
 <h2><?= _('You\'ve not claimed any activities yet.') ?></h2>
 <p>As you claim activities, they will appear here, along with any pathways you might be following.</p>
-<div class="card card-body mt-3">
+
+<?php endif; ?>
+
+<div class="card card-body my-3">
 	<p>If you're looking for something specific, try searching for it!</p>
 	<form method="get" action="/learning-curator/activities/find" class="form-inline my-2 my-lg-0">
 		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
 		<button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
 	</form>
 </div>
-<?php endif; ?>
-
 
 </div>
 </div>

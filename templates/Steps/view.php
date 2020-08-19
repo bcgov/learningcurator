@@ -233,7 +233,6 @@ $lastobj = $s->description;
 <div class="p-3 mb-3 rounded-lg activity" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
-
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
@@ -242,7 +241,7 @@ $lastobj = $s->description;
 	<?php else: // they have claimed it, so show that ?>
 
 	<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
-	<?php //$this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesSteps','action' => 'delete/'. $activity->id], ['class' => 'btn btn-sm btn-dark', 'confirm' => __('Really delete?')]) ?>
+	<?php //$this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-dark', 'confirm' => __('Really delete?')]) ?>
 	<?php endif; // claimed or not ?>
 
 	<h3 class="my-3">
