@@ -44,13 +44,13 @@ img {
     color: #FFF;
 }
 .pad-sm {
-    padding: 30px 0;
+	padding: 2rem;
 }
 .pad-md {
-    padding: 40px 0;
+	padding: 3rem;
 }
 .pad-lg {
-    padding: 50px 0;
+	padding: 4rem;
 }
 .sectiontext {
 	font-size: 130%;
@@ -107,13 +107,13 @@ canvas {
 	}
 
     .pad-sm {
-        padding: 50px 0;
+        padding: 2rem;
     }
     .pad-md {
-        padding: 60px;
+        padding: 3rem;
     }
     .pad-lg {
-        padding: 80px;
+        padding: 4rem;
     }
 
 	
