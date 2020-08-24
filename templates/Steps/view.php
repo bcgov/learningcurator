@@ -35,6 +35,7 @@ $totalacts = count($step->activities);
 $stepclaimcount = 0;
 
 foreach ($step->activities as $activity) {
+	$stepname = '';
 	//print_r($activity);
 	// If this is 'defunct' then we pull it out of the list 
 	if($activity->status_id == 3) {
@@ -88,6 +89,9 @@ foreach ($step->activities as $activity) {
 		//array_multisort($tmp, SORT_DESC, $supplementalacts);
 	}
 }
+
+$pagetitle = $step->name . ' - ' . $step->pathways[0]->name;
+$this->assign('title', h($pagetitle));
 $stepacts = count($requiredacts);
 $supplmentalcount = count($supplementalacts);
 $completeclass = 'notcompleted'; 
@@ -143,8 +147,10 @@ if($stepclaimcount > 0) {
 
 <?php foreach($pathways->steps as $s): ?>
 <?php $c = ''; ?>
+<?php $pagetitle = ''; ?>
 <?php $n = next($pathways->steps) ?>
 <?php if($s->id == $step->id): ?>
+
 <div class="row mx-0">
 	<div class="col" style="background-color: rgba(255,255,255,.5); border-radius: .25rem;">
 		<h2 class="mt-2">

@@ -13,6 +13,7 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 $totalusers = count($usersonthispathway);
+$this->assign('title', h($pathway->name));
 ?>
 <style>
 /* Start desktop-specific code for this page.
