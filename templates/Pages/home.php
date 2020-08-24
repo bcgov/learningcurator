@@ -39,14 +39,18 @@
 </div> <!-- /.pad-lg -->
 
 <div class="text-center">
-	<a href="#dipdivedeeper">
+	<a href="#activitytypes">
 		<i class="animate__animated animate__tada fas fa-chevron-circle-down" 
 			style="color: #000; font-size: 300%; margin: 0 0 30px 0;"></i>
 	</a>
 </div>
-
 </div> <!-- /.col-12 -->
 </div> <!-- /.row -->
+
+
+
+
+
 
 
 <div class="row justify-content-md-center bg-white align-items-center linear" id="dipdivedeeper">
@@ -99,7 +103,7 @@
 		Go a bit deeper
 	</h3>
 	
-	<div class="row mt-3">
+	<div class="row mt-3 align-items-stretch">
 	<div class="col-md-4">
 	<div class="pad-sm bg-white rounded-lg mb-2">
 		<h4>Your Profile</h4>
@@ -175,6 +179,15 @@
 </div> <!-- /.pad-lg -->
 </div> <!-- /.col -->
 </div> <!-- /.row -->
+
+
+
+
+</div>
+</div>
+
+
+
 
 
 <div class="row justify-content-md-center bg-white" id="activitytypes">
