@@ -182,14 +182,6 @@
 
 
 
-
-</div>
-</div>
-
-
-
-
-
 <div class="row justify-content-md-center bg-white" id="activitytypes">
 <?php $count = 0 ?>
 <?php foreach($atypes as $type): ?>

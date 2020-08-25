@@ -45,7 +45,8 @@ class PathwaysController extends AppController
     }
 
     /**
-     * View method
+     * Standard, tightly-couple view method that will be deprecated or refactored in favor
+     * of the static-site export with independent datastore used for user info (e.g. claims)
      *
      * @param string|null $id Pathway id.
      * @return \Cake\Http\Response|null
@@ -127,6 +128,37 @@ class PathwaysController extends AppController
 
 
     }
+
+
+    /**
+     * Make exports a pathway index page to pathway-name.html
+     *
+     * @param string|null $id Pathway id.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function make($id = null)
+    {
+        $this->Authorization->skipAuthorization();
+        //$this->layout = false;
+        /*$pathway = $this->Pathways->get($id, [
+            'contain' => ['Categories', 
+                            'Ministries', 
+                            'Competencies', 
+                            'Steps', 
+                            'Steps.Activities', 
+                            'Steps.Activities.ActivityTypes', 
+                            'Steps.Activities.Tags'],
+        ]);
+
+
+        $this->set(compact('pathway'));*/
+        exec("wget --mirror --convert-links --adjust-extension --page-requisites --no-parent http://localhost:8080/learning-curator/");
+
+
+    }
+
+    
 
     /**
      * API method returns a JSON object that contains the current 
