@@ -163,7 +163,7 @@ if ($this->Identity->isLoggedIn()) {
 		Steps
 	  </button>
 	
-	<a href="/learning-curator/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
+	<a href="/learning-curator/pathways/view/<?= $pathway->id ?>" target="_blank" rel="noopener"><?= $pathway->name ?></a>
 	
 	<div class="collapse p-3" id="steps<?= $pathway->id ?>">
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
