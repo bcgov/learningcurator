@@ -2,7 +2,7 @@
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-12">
-<div class="pad-lg">
+<div class="pad-md">
 <h1>Learning Curator</h1>
 <h2>The best educational resources organized by expert teams on different topic areas:</h2>
 

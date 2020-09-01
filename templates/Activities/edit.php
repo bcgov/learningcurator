@@ -109,7 +109,7 @@ $(document).ready(function() {
             ['table',['table']],
             ['insert',['media','link','hr']],
             ['cleaner',['cleaner']], // The Button
-            ['view', ['codeview'],
+            ['view', ['codeview']],
         ],
         cleaner:{
             action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
