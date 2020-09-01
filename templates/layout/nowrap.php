@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<title>Learning Curator <?= $this->fetch('title') ?></title>
+<title><?= $this->fetch('title') ?> | Learning Curator</title>
 
 <!--
 <link rel="stylesheet" href="/learning-curator/bootstrap-theme/dist/css/bootstrap-theme.min.css">

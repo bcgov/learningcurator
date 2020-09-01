@@ -163,7 +163,7 @@ if ($this->Identity->isLoggedIn()) {
 		Steps
 	  </button>
 	
-	<a href="/learning-curator/pathways/view/<?= $pathway->id ?>"><?= $pathway->name ?></a>
+	<a href="/learning-curator/pathways/view/<?= $pathway->id ?>" target="_blank" rel="noopener"><?= $pathway->name ?></a>
 	
 	<div class="collapse p-3" id="steps<?= $pathway->id ?>">
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
@@ -212,7 +212,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php endforeach ?>
 <?php endforeach ?>
 </div>
-
+<?php if($role == 2 || $role == 5): ?>
 <?php if (!empty($activity->users)) : ?>
 <div class="col-md-4">
 <h3 class="mt-3"><?= __('Related Users') ?></h3>
@@ -223,7 +223,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php endforeach; ?>
 </div>
 <?php endif; ?>
-
+<?php endif; ?>
 
 
 <?php if($role == 2 || $role == 5): ?>

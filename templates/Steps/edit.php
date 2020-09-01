@@ -131,7 +131,7 @@ label {
     <?php endforeach ?>
     </ul>
 
-    <h3 class="mt-3">Supplmental Activities</h3>
+    <h3 class="mt-3">Supplemental Activities</h3>
     <ul class="list-group list-group-flush" id="supplementalacts">
     <?php foreach($supplementalacts as $supp): ?>
         <li class="list-group-item" id="exac-<?= $supp->id ?>" data-stepid="<?= $supp->_joinData->id ?>">

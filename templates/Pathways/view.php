@@ -13,6 +13,8 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 $totalusers = count($usersonthispathway);
+$this->assign('title', h($pathway->name));
+
 ?>
 <style>
 /* Start desktop-specific code for this page.
@@ -83,7 +85,7 @@ This seems to work out, but #TODO investigate optimizing this
 	<!-- totals below updated via JS -->
 
 	<div class="py-3" style="background-color: rgba(255,255,255,.5)">
-	<?= $this->Text->autoParagraph(h($pathway->objective)); ?> 
+	<?= $pathway->objective ?> 
 	<div class="mb-2">
 	<span class="badge badge-light readtotal"></span>  
 	<span class="badge badge-light watchtotal"></span>  
@@ -161,7 +163,7 @@ This seems to work out, but #TODO investigate optimizing this
 
 	
 	<div class="card card-body mt-3 text-center stickyrings">
-	<div>Overall Progress: %<span class="mb-3 following"></span></div>
+	<div>Overall Progress: <span class="mb-3 following"></span>%</div>
 	<canvas id="myChart" width="250" height="250"></canvas>
 	</div>
 	
@@ -286,7 +288,7 @@ if($stepclaimcount > 0) {
 		</a>
 	</h2>
 	
-	<div style="font-size; 130%"><?= h($steps->description) ?></div>
+	<div style="font-size; 130%"><?= $steps->description ?></div>
 	
 	<div class="my-3">
 		<span class="badge badge-light" style="background-color: rgba(<?= $readcolor ?>,1)"><?= $readstepcount ?> to read</span>  
@@ -411,7 +413,7 @@ function loadStatus() {
 
 			$('.following').html(pathstatus.status);
 
-			//console.log(pathstatus.typecolors);
+			console.log(pathstatus.status);
 			$('.readtotal').html(pathstatus.typecounts.readtotal + ' to read')
 							.css('backgroundColor','rgba(' + pathstatus.typecolors.readcolor + ',1)');
 			$('.watchtotal').html(pathstatus.typecounts.watchtotal + ' to watch')

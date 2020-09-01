@@ -45,7 +45,8 @@ class PathwaysController extends AppController
     }
 
     /**
-     * View method
+     * Standard, tightly-couple view method that will be deprecated or refactored in favor
+     * of the static-site export with independent datastore used for user info (e.g. claims)
      *
      * @param string|null $id Pathway id.
      * @return \Cake\Http\Response|null
@@ -92,43 +93,72 @@ class PathwaysController extends AppController
                             'Steps.Activities.Tags', 
                             'Users'],
         ]);
-    //
-	// we want to be able to tell if the current user is already on this
-	// pathway or not, so we take the same approach as above, parsing all
-	// the users into a single array so that we can perform a simple
-	// in_array($thisuser,$usersonthispathway) check and show the "take
-	// this Pathway" button or "you're on this Pathway" text
-	//
-	// Create the initially empty array that we also pass into the template
-    $usersonthispathway = array();
-    $followers = array();
-	// Loop through the users that are on this pathway and parse just the 
-	// IDs into the array that we just created
-	foreach($pathway->users as $pu) {
-        array_push($usersonthispathway,$pu->id);
-        array_push($followers,[$pu->id,$pu->name]);
-    }
+        //
+        // we want to be able to tell if the current user is already on this
+        // pathway or not, so we take the same approach as above, parsing all
+        // the users into a single array so that we can perform a simple
+        // in_array($thisuser,$usersonthispathway) check and show the "take
+        // this Pathway" button or "you're on this Pathway" text
+        //
+        // Create the initially empty array that we also pass into the template
+        $usersonthispathway = array();
+        $followers = array();
+        // Loop through the users that are on this pathway and parse just the 
+        // IDs into the array that we just created
+        foreach($pathway->users as $pu) {
+            array_push($usersonthispathway,$pu->id);
+            array_push($followers,[$pu->id,$pu->name]);
+        }
 
-    // In order to implement the scrollspy step navigation we zip through
-    // and compile a list of the steps and convert them to slugs. Now we
-    // can run through the steps and link to them outside of the main 
-    // loop #TODO in the template we're hacking this by having a separate
-    // slugify function because we don't yet store the slug when we save
-    // the step. We need to add a new entity to the steps table (also the
-    // pathways table) to do this. Fairly high priority really.
-    $stepsalongtheway = array();
-    foreach($pathway->steps as $step) {
-        array_push($stepsalongtheway,array('slug' => Text::slug(strtolower($step->name)), 
-                                            'name' => $step->name, 
-                                            'objective' => $step->description));
-	}
+        // In order to implement the scrollspy step navigation we zip through
+        // and compile a list of the steps and convert them to slugs. Now we
+        // can run through the steps and link to them outside of the main 
+        // loop #TODO in the template we're hacking this by having a separate
+        // slugify function because we don't yet store the slug when we save
+        // the step. We need to add a new entity to the steps table (also the
+        // pathways table) to do this. Fairly high priority really.
+        $stepsalongtheway = array();
+        foreach($pathway->steps as $step) {
+            array_push($stepsalongtheway,array('slug' => Text::slug(strtolower($step->name)), 
+                                                'name' => $step->name, 
+                                                'objective' => $step->description));
+        }
 
-
-
-	$this->set(compact('pathway', 'usersonthispathway','stepsalongtheway', 'useractivitylist','followers'));
+        $this->set(compact('pathway', 'usersonthispathway','stepsalongtheway', 'useractivitylist','followers'));
 
 
     }
+
+
+    /**
+     * Make exports a pathway index page to pathway-name.html
+     *
+     * @param string|null $id Pathway id.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function make($id = null)
+    {
+        $this->Authorization->skipAuthorization();
+        //$this->layout = false;
+        /*$pathway = $this->Pathways->get($id, [
+            'contain' => ['Categories', 
+                            'Ministries', 
+                            'Competencies', 
+                            'Steps', 
+                            'Steps.Activities', 
+                            'Steps.Activities.ActivityTypes', 
+                            'Steps.Activities.Tags'],
+        ]);
+
+
+        $this->set(compact('pathway'));*/
+        exec("wget --mirror --convert-links --adjust-extension --page-requisites --no-parent http://localhost:8080/learning-curator/");
+
+
+    }
+
+    
 
     /**
      * API method returns a JSON object that contains the current 
