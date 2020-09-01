@@ -630,7 +630,7 @@ function loadStatus() {
 		{
 			var pathstatus = JSON.parse(data);
 
-			$('.following').html('Overall Progress: %' + pathstatus.status);
+			$('.following').html('Overall Progress: ' + pathstatus.status + '%');
 
 			//console.log(pathstatus.typecolors);
 			$('.readtotal').html(pathstatus.typecounts.readtotal + ' to read')

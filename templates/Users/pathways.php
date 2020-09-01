@@ -122,7 +122,7 @@ $this->layout = 'nowrap';
 		</div>
 		<h3><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?></h3>
 		<div><?= h($pathways->description) ?></div>
-		<div class="p-3 mt-3 bg-light">Overall Progress: %<span class="status<?= $pathways->id ?>"></span></div>
+		<div class="p-3 mt-3 bg-light">Overall Progress: <span class="status<?= $pathways->id ?>"></span>%</div>
 		
 	</div>
 	</div>

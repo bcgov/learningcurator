@@ -163,7 +163,7 @@ This seems to work out, but #TODO investigate optimizing this
 
 	
 	<div class="card card-body mt-3 text-center stickyrings">
-	<div>Overall Progress: %<span class="mb-3 following"></span></div>
+	<div>Overall Progress: <span class="mb-3 following"></span>%</div>
 	<canvas id="myChart" width="250" height="250"></canvas>
 	</div>
 	
@@ -413,7 +413,7 @@ function loadStatus() {
 
 			$('.following').html(pathstatus.status);
 
-			//console.log(pathstatus.typecolors);
+			console.log(pathstatus.status);
 			$('.readtotal').html(pathstatus.typecounts.readtotal + ' to read')
 							.css('backgroundColor','rgba(' + pathstatus.typecolors.readcolor + ',1)');
 			$('.watchtotal').html(pathstatus.typecounts.watchtotal + ' to watch')
