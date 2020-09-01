@@ -13,6 +13,8 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 $totalusers = count($usersonthispathway);
+$this->assign('title', h($pathway->name));
+
 ?>
 <style>
 /* Start desktop-specific code for this page.
@@ -82,8 +84,8 @@ This seems to work out, but #TODO investigate optimizing this
 
 	<!-- totals below updated via JS -->
 
-	<div class="p-3" style="background-color: rgba(255,255,255,.5)">
-	<?= $this->Text->autoParagraph(h($pathway->objective)); ?> 
+	<div class="py-3" style="background-color: rgba(255,255,255,.5)">
+	<?= $pathway->objective ?> 
 	<div class="mb-2">
 	<span class="badge badge-light readtotal"></span>  
 	<span class="badge badge-light watchtotal"></span>  
@@ -161,7 +163,7 @@ This seems to work out, but #TODO investigate optimizing this
 
 	
 	<div class="card card-body mt-3 text-center stickyrings">
-	<div>Overall Progress: %<span class="mb-3 following"></span></div>
+	<div>Overall Progress: <span class="mb-3 following"></span>%</div>
 	<canvas id="myChart" width="250" height="250"></canvas>
 	</div>
 	
@@ -204,7 +206,7 @@ accessed from your profile page. Think of it as “bookmarking” learning you w
 $stepTime = 0;
 $defunctacts = array();
 $requiredacts = array();
-$tertiaryacts = array();
+$supplementalacts = array();
 $acts = array();
 
 $readstepcount = 0;
@@ -228,28 +230,28 @@ foreach ($steps->activities as $activity) {
 		// if it's required
 		if($activity->_joinData->required == 1) {
 			array_push($requiredacts,$activity);
-			if($activity->activity_types_id == 1) {
-				$watchstepcount++;
-				$watchcolor = $activity->activity_type->color;
-			} elseif($activity->activity_types_id == 2) {
-				$readstepcount++;
-				$readcolor = $activity->activity_type->color;
-			} elseif($activity->activity_types_id == 3) {
-				$listenstepcount++;
-				$listencolor = $activity->activity_type->color;
-			} elseif($activity->activity_types_id == 4) {
-				$participatestepcount++;
-				$participatecolor = $activity->activity_type->color;
-			}
-			if(in_array($activity->id,$useractivitylist)) {
-				$stepclaimcount++;
-			}
-		// Otherwise it's teriary
+
+		// Otherwise it's supplemental
 		} else {
-			array_push($tertiaryacts,$activity);
+			array_push($supplementalacts,$activity);
 		}
 		array_push($acts,$activity);
-
+		if($activity->activity_types_id == 1) {
+			$watchstepcount++;
+			$watchcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 2) {
+			$readstepcount++;
+			$readcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 3) {
+			$listenstepcount++;
+			$listencolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 4) {
+			$participatestepcount++;
+			$participatecolor = $activity->activity_type->color;
+		}
+		if(in_array($activity->id,$useractivitylist)) {
+			$stepclaimcount++;
+		}
 		$tmp = array();
 		// Loop through the whole list, add steporder to tmp array
 		foreach($acts as $line) {
@@ -264,6 +266,7 @@ foreach ($steps->activities as $activity) {
 
 <?php
 $stepacts = count($requiredacts);
+$supplmentalcount = count($supplementalacts);
 $completeclass = 'notcompleted'; 
 if($stepclaimcount == $totalacts) {
 	$completeclass = 'completed';
@@ -285,13 +288,17 @@ if($stepclaimcount > 0) {
 		</a>
 	</h2>
 	
-	<div style="font-size; 130%"><?= h($steps->description) ?></div>
+	<div style="font-size; 130%"><?= $steps->description ?></div>
 	
 	<div class="my-3">
 		<span class="badge badge-light" style="background-color: rgba(<?= $readcolor ?>,1)"><?= $readstepcount ?> to read</span>  
 		<span class="badge badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)"><?= $watchstepcount ?> to watch</span>  
 		<span class="badge badge-light" style="background-color: rgba(<?= $listencolor ?>,1)"><?= $listenstepcount ?> to listen to</span>  
 		<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
+		
+		<span class="badge badge-pill badge-light"><?= $totalacts ?> total</span> 
+		<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
+		<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
 	</div>
 	<div class="progress progress-bar-striped mb-3" style="background-color: #F1F1F1; height: 26px;">
 	  <div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,.8); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
@@ -406,7 +413,7 @@ function loadStatus() {
 
 			$('.following').html(pathstatus.status);
 
-			//console.log(pathstatus.typecolors);
+			console.log(pathstatus.status);
 			$('.readtotal').html(pathstatus.typecounts.readtotal + ' to read')
 							.css('backgroundColor','rgba(' + pathstatus.typecolors.readcolor + ',1)');
 			$('.watchtotal').html(pathstatus.typecounts.watchtotal + ' to watch')

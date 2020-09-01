@@ -35,6 +35,7 @@ $totalacts = count($step->activities);
 $stepclaimcount = 0;
 
 foreach ($step->activities as $activity) {
+	$stepname = '';
 	//print_r($activity);
 	// If this is 'defunct' then we pull it out of the list 
 	if($activity->status_id == 3) {
@@ -88,6 +89,9 @@ foreach ($step->activities as $activity) {
 		//array_multisort($tmp, SORT_DESC, $supplementalacts);
 	}
 }
+
+$pagetitle = $step->name . ' - ' . $step->pathways[0]->name;
+$this->assign('title', h($pagetitle));
 $stepacts = count($requiredacts);
 $supplmentalcount = count($supplementalacts);
 $completeclass = 'notcompleted'; 
@@ -143,8 +147,10 @@ if($stepclaimcount > 0) {
 
 <?php foreach($pathways->steps as $s): ?>
 <?php $c = ''; ?>
+<?php $pagetitle = ''; ?>
 <?php $n = next($pathways->steps) ?>
 <?php if($s->id == $step->id): ?>
+
 <div class="row mx-0">
 	<div class="col" style="background-color: rgba(255,255,255,.5); border-radius: .25rem;">
 		<h2 class="mt-2">
@@ -154,7 +160,7 @@ if($stepclaimcount > 0) {
 			<?php endif ?>
 			<!--<small><span class="badge badge-dark"><?= $totalsteps ?></span> total steps</small>-->
 		</h2>	
-		<div class="" style="font-size: 130%;"><em>Goal:</em> <?= h($s->description); ?></div>
+		<div class="" style="font-size: 130%;"><?= $s->description; ?></div>
 		<div class="my-3">
 			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
 				<?= $allreadstepcount ?> to read
@@ -180,7 +186,7 @@ if($stepclaimcount > 0) {
 		<?php endif ?>
 
 		<?php if(!empty($n->id)): ?>
-		<a href="/learning-curator/steps/view/<?= $n->id ?>" style="color: #000; font-size: 250%; float: right;"><i class="fas fa-arrow-circle-right"></i></a>
+		<a href="/learning-curator/steps/view/<?= $n->id ?>" class="nextstep" style="color: #000; font-size: 250%; float: right;"><i class="fas fa-arrow-circle-right"></i></a>
 		<?php endif ?>
 		
 	</div>
@@ -212,12 +218,11 @@ $lastobj = $s->description;
 
 
 
-</div>
-</div>
+
 </div>
 
 <div class="progress progress-bar-striped stickyprogress" style="background-color: #F1F1F1; border-radius: 0; height: 18px;">
-		<div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,1); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+		<div class="progress-bar bg-dark" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
 		This step is <?= $steppercent ?>% done
 	  </div>
 </div>
@@ -234,16 +239,15 @@ $lastobj = $s->description;
 <div class="p-3 mb-3 rounded-lg activity" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
-
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-light', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-dark', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
 	<?php else: // they have claimed it, so show that ?>
 
 	<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
-
+	<?php //$this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-dark', 'confirm' => __('Really delete?')]) ?>
 	<?php endif; // claimed or not ?>
 
 	<h3 class="my-3">
@@ -379,7 +383,7 @@ $lastobj = $s->description;
 	<h3>Supplementary Resources</h3>
 	<div class="row">
 	<?php foreach ($supplementalacts as $activity): ?>
-	<div class="col-6">
+	<div class="col-md-12 col-lg-12">
 	<div class="p-3 my-3 bg-white rounded-lg">
 		<h4>
 			<a href="/learning-curator/activities/view/<?= $activity->id ?>">
@@ -475,9 +479,8 @@ echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
+
+
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 
@@ -597,6 +600,20 @@ $(document).ready(function(){
 			}
 		});
 	});
+	$(window).keydown(function(e) {
+		switch (e.keyCode) {
+			case 37: // left arrow key
+				e.preventDefault(); // avoid browser scrolling due to pressed key
+				
+			case 38: // up arrow key
+			return;
+			case 39: // right arrow key
+				e.preventDefault();
+				$('.nextstep').click();
+			case 40: // up arrow key
+			return;
+		}
+	});
 
 });
 
@@ -613,7 +630,7 @@ function loadStatus() {
 		{
 			var pathstatus = JSON.parse(data);
 
-			$('.following').html('Overall Progress: %' + pathstatus.status);
+			$('.following').html('Overall Progress: ' + pathstatus.status + '%');
 
 			//console.log(pathstatus.typecolors);
 			$('.readtotal').html(pathstatus.typecounts.readtotal + ' to read')

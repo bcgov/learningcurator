@@ -314,8 +314,10 @@ class UsersController extends AppController
         $user = $this->Users->get($u->id, [
             'contain' => ['Pathways', 
                             'Pathways.Categories', 
-                            'Activities', 
+                            'Activities' => ['sort' => ['ActivitiesUsers.started' => 'desc']], 
                             'Activities.ActivityTypes',
+                            'Activities.Steps',
+                            'Activities.Steps.Pathways',
                             'Competencies',
                             'Ministries'],
         ]);

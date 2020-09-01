@@ -25,7 +25,7 @@ label {
 </div>
 <div class="container-fluid linear">
 <div class="row justify-content-md-center pt-3">
-<div class="col-md-4">
+<div class="col-md-3">
 <h2>Step Details</h2>
 <div class="my-3 p-3 rounded-lg bg-white">
     <?= $this->Form->create($step) ?>
@@ -34,13 +34,14 @@ label {
     <?= $this->Form->hidden('modifiedby') ?>
     <?= $this->Form->hidden('pathway_id', ['value' => $step->pathway_id]) ?>
     <?= $this->Form->control('name', ['class' => 'form-control']) ?>
-    <?= $this->Form->control('description', ['class' => 'form-control']) ?>
+    <?= $this->Form->control('description', ['class' => 'form-control summernote']) ?>
+    <?= $this->Form->control('objective', ['class' => 'form-control summernote']) ?>
     <?= $this->Form->button(__('Save Step'),['class' => 'btn btn-success btn-block my-3']) ?>
     <?= $this->Form->end() ?>
     </div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-5">
     
     <h2>Add Existing Activity</h2>
     <div class="my-3 p-3 rounded-lg bg-white">
@@ -84,7 +85,7 @@ label {
         <li class="list-group-item" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>" style="background-color: rgba(<?= $a->activity_type->color ?>,.2); border: 0;">
             <div class="row">
             <div class="col-1">
-            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => 'form-inline']) ?>
+            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => '']) ?>
             <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
             <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'up']) ?>
             <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
@@ -93,7 +94,7 @@ label {
             <button class="btn btn-light"><i class="fas fa-chevron-circle-up"></i></button>
             <?= $this->Form->end() ?>
 
-            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => 'form-inline']) ?>
+            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => '']) ?>
             <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
             <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'down']) ?>
             <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
@@ -102,11 +103,11 @@ label {
             <button class="btn btn-light"><i class="fas fa-chevron-circle-down"></i></button>
             <?= $this->Form->end() ?>
             </div>
-            <div class="col-8">
+            <div class="col-9">
                 <div><?= $a->activity_type->name ?></div>
                 <div class="actname"><a href="/learning-curator/activities/view/<?= $a->id ?>"><?= $a->name ?></a> </div>
             </div>
-            <div class="col-3">
+            <div class="col-2">
 
             <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $a->_joinData->id, 'class' => '']]) ?>
             <?= $this->Form->hidden('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
@@ -119,8 +120,8 @@ label {
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
             <?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light float-left']) ?>
             <?= $this->Form->end() ?>
-
-            <?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $a->_joinData->id, 'class' => 'form-inline']) ?>
+<br>
+            <?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $a->_joinData->id, 'class' => '']) ?>
             <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
             <?= $this->Form->button(__('Delete'),['class' => 'btn btn-sm btn-light']) ?>
             <?= $this->Form->end() ?>
@@ -130,7 +131,7 @@ label {
     <?php endforeach ?>
     </ul>
 
-    <h3 class="mt-3">Supplmental Activities</h3>
+    <h3 class="mt-3">Supplemental Activities</h3>
     <ul class="list-group list-group-flush" id="supplementalacts">
     <?php foreach($supplementalacts as $supp): ?>
         <li class="list-group-item" id="exac-<?= $supp->id ?>" data-stepid="<?= $supp->_joinData->id ?>">
@@ -186,7 +187,7 @@ label {
     </label>
     <?php //echo $this->Form->control('activity_type_id', ['class' => 'form-control', 'options' => $atypes]); ?>
     <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
-    <?php echo $this->Form->control('description', ['class' => 'form-control']); ?>
+    <?php echo $this->Form->control('description', ['class' => 'form-control summernote']); ?>
     <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
@@ -273,5 +274,39 @@ $(function () {
 		});
     });
 
+});
+</script>
+
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="/learning-curator/js/summernote-cleaner.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('.summernote').summernote({
+        toolbar:[
+            ['style',['style']],
+            ['font',['bold','italic','underline','clear']],
+            ['para',['ul','ol','paragraph']],
+            ['table',['table']],
+            ['insert',['media','link','hr']],
+            ['cleaner',['cleaner']]
+        ],
+        cleaner:{
+            action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+            newline: '<br>', // Summernote's default is to use '<p><br></p>'
+            notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
+            icon: '<i class="fas fa-broom"></i>',
+            keepHtml: false, // Remove all Html formats
+            keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'], // If keepHtml is true, remove all tags except these
+            keepClasses: false, // Remove Classes
+            badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], // Remove full tags with contents
+            badAttributes: ['style', 'start'], // Remove attributes from remaining tags
+            limitChars: false, // 0/false|# 0/false disables option
+            limitDisplay: 'both', // text|html|both
+            limitStop: false // true/false
+        }
+    });
 });
 </script>

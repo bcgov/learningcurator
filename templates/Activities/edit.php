@@ -61,8 +61,8 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
     <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('description', ['class' => 'form-control summernote']); ?>
     <?php //echo $this->Form->control('steps._ids', ['class' => 'form-control', 'options' => $steps]); ?>
-    <?php echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
-    <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
+    <?php echo $this->Form->control('licensing', ['class' => 'form-control summernote']); ?>
+    <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control summernote']); ?>
     <?php echo $this->Form->control('isbn', ['class' => 'form-control']); ?>
     </div>
     </div>
@@ -109,7 +109,7 @@ $(document).ready(function() {
             ['table',['table']],
             ['insert',['media','link','hr']],
             ['cleaner',['cleaner']], // The Button
-            ['help',['help']]
+            ['view', ['codeview']],
         ],
         cleaner:{
             action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.

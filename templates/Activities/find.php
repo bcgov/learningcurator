@@ -68,7 +68,7 @@ if($activity->activity_types_id == 1) {
 <div class="p-3 mb-3 bg-white rounded-lg">This activity is on the following pathways:
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
-<span class="badge badge-light"><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
+<span class="badge badge-light"><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
 <?php endforeach ?>
 <?php endforeach ?>
 </div>
