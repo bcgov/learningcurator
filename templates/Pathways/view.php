@@ -85,7 +85,7 @@ This seems to work out, but #TODO investigate optimizing this
 	<!-- totals below updated via JS -->
 
 	<div class="py-3" style="background-color: rgba(255,255,255,.5)">
-	<?= $this->Text->autoParagraph(h($pathway->objective)); ?> 
+	<?= $pathway->objective ?> 
 	<div class="mb-2">
 	<span class="badge badge-light readtotal"></span>  
 	<span class="badge badge-light watchtotal"></span>  
@@ -288,7 +288,7 @@ if($stepclaimcount > 0) {
 		</a>
 	</h2>
 	
-	<div style="font-size; 130%"><?= h($steps->description) ?></div>
+	<div style="font-size; 130%"><?= $steps->description ?></div>
 	
 	<div class="my-3">
 		<span class="badge badge-light" style="background-color: rgba(<?= $readcolor ?>,1)"><?= $readstepcount ?> to read</span>  
