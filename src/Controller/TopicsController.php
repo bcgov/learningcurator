@@ -38,7 +38,7 @@ class TopicsController extends AppController
     public function view($id = null)
     {
         $topic = $this->Topics->get($id, [
-            'contain' => ['Users', 'Categories'],
+            'contain' => ['Users', 'Categories', 'Pathways'],
         ]);
         $this->Authorization->authorize($topic);
 

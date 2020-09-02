@@ -3,93 +3,72 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Topic $topic
  */
+$this->layout = 'nowrap';
+$this->loadHelper('Authentication.Identity');
+$uid = 0;
+$role = 0;
+if ($this->Identity->isLoggedIn()) {
+	$role = $this->Identity->get('role_id');
+	$uid = $this->Identity->get('id');
+}
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Topic'), ['action' => 'edit', $topic->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Topic'), ['action' => 'delete', $topic->id], ['confirm' => __('Are you sure you want to delete # {0}?', $topic->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Topics'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Topic'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
-    <div class="column-responsive column-80">
-        <div class="topics view content">
-            <h3><?= h($topic->name) ?></h3>
-            <table>
-                <tr>
-                    <th><?= __('Name') ?></th>
-                    <td><?= h($topic->name) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Image Path') ?></th>
-                    <td><?= h($topic->image_path) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Color') ?></th>
-                    <td><?= h($topic->color) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Featured') ?></th>
-                    <td><?= h($topic->featured) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('User') ?></th>
-                    <td><?= $topic->has('user') ? $this->Html->link($topic->user->name, ['controller' => 'Users', 'action' => 'view', $topic->user->id]) : '' ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($topic->id) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Created') ?></th>
-                    <td><?= h($topic->created) ?></td>
-                </tr>
-            </table>
-            <div class="text">
-                <strong><?= __('Description') ?></strong>
-                <blockquote>
-                    <?= $this->Text->autoParagraph(h($topic->description)); ?>
-                </blockquote>
-            </div>
-            <div class="related">
-                <h4><?= __('Related Categories') ?></h4>
-                <?php if (!empty($topic->categories)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Name') ?></th>
-                            <th><?= __('Description') ?></th>
-                            <th><?= __('Image Path') ?></th>
-                            <th><?= __('Color') ?></th>
-                            <th><?= __('Featured') ?></th>
-                            <th><?= __('Created') ?></th>
-                            <th><?= __('Createdby') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                        <?php foreach ($topic->categories as $categories) : ?>
-                        <tr>
-                            <td><?= h($categories->id) ?></td>
-                            <td><?= h($categories->name) ?></td>
-                            <td><?= h($categories->description) ?></td>
-                            <td><?= h($categories->image_path) ?></td>
-                            <td><?= h($categories->color) ?></td>
-                            <td><?= h($categories->featured) ?></td>
-                            <td><?= h($categories->created) ?></td>
-                            <td><?= h($categories->createdby) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'Categories', 'action' => 'view', $categories->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Categories', 'action' => 'edit', $categories->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Categories', 'action' => 'delete', $categories->id], ['confirm' => __('Are you sure you want to delete # {0}?', $categories->id)]) ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
+
+
+<div class="container-fluid">
+<div class="row justify-content-md-center align-items-center"  id="colorful">
+<div class="col-md-4">
+<div class="pad-sm">
+<div><?= $this->Html->link(h($topic->categories[0]->name), ['controller' => 'Categories', 'action' => 'view', $topic->categories[0]->id],['class' => '']) ?></div>
+<h1><?= h($topic->name) ?></h1>
+<div>
+<?= h($topic->description) ?>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="container-fluid linear">
+<div class="row justify-content-md-center">
+<div class="col-md-4">
+<?php foreach($topic->pathways as $pathway): ?>
+    <div class="p-3 my-3 bg-white rounded-lg">
+        <h2><?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->id],['class' => '']) ?></h2>
+        <div><?= h($pathway->description) ?></div>
+    </div>
+<?php endforeach ?>
+</div>
+<?php if($role == 2 || $role == 5): ?>
+<div class="col-md-3">
+<div class="p-3 my-3 bg-white rounded-lg">
+    <?= $this->Form->create(null,['url' => ['controller' => 'Pathways', 'action' => 'add']]) ?>
+    <?php 
+    echo $this->Form->hidden('createdby', ['value' => $this->Identity->get('id')]);
+    echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]); 
+    ?>
+    <fieldset>
+        <legend><?= __('Add Pathway') ?></legend>
+        <?php
+            echo $this->Form->hidden('category_id', ['value' => $topic->categories[0]->id]);
+            echo $this->Form->hidden('topics.0.id', ['value' => $topic->id]);
+            echo $this->Form->hidden('status_id',['value' => 1]);
+            echo $this->Form->control('name',['class' => 'form-control']);
+            echo $this->Form->control('description',['class' => 'form-control']);
+            echo $this->Form->control('objective',['class' => 'form-control']);
+        ?>
+    </fieldset>
+    <?= $this->Form->button(__('Add new pathway'),['class' => 'btn btn-block btn-success mt-3']) ?>
+    <?= $this->Form->end() ?>
+</div>
+</div>
+<?php endif;  // if curator /admin ?>
+</div>
+</div>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+	crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
+	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
+	crossorigin="anonymous"></script>
