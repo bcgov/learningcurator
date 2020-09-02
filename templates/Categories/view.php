@@ -37,9 +37,13 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php if (!empty($category->topics)) : ?>
 <?php foreach ($category->topics as $topic) : ?>
-<div class="col-md-4 pt-3">
 
-<h2><i class="fas fa-sitemap"></i> <?= $topic->name ?></h2>
+<div class="col-md-4 pt-3">
+<h2>
+	<i class="fas fa-sitemap"></i> <!-- topic_id: <?= $topic->id ?> --> 
+	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
+	
+</h2>
 <div class="p-3"><?= $topic->description ?></div>
 <?php foreach ($topic->pathways as $pathway) : ?>
 
@@ -62,18 +66,31 @@ if ($this->Identity->isLoggedIn()) {
 <?= h($pathway->description) ?>
 </div>
 <?php endif; // is not published ?>
-
 </div>
 <?php endforeach ?>
 </div>
-
+</div>
 <?php endforeach ?>
-
 <?php endif; // topics ?>
 
 
-
-
+<div class="col-md-4 pt-3">
+<?= $this->Form->create(null,['url' => ['controller' => 'Topics', 'action' => 'add']]) ?>
+<fieldset>
+	<legend><?= __('Add Topic') ?></legend>
+	<?php
+		echo $this->Form->control('name');
+		echo $this->Form->control('description');
+		//echo $this->Form->control('image_path');
+		///echo $this->Form->control('color');
+		//echo $this->Form->control('featured');
+		echo $this->Form->hidden('user_id', ['value' => $uid]);
+		echo $this->Form->hidden('categories.0.id', ['value' => $category->id]);
+	?>
+</fieldset>
+<?= $this->Form->button(__('Submit')) ?>
+<?= $this->Form->end() ?>
+</div>
 </div>
 </div>
 

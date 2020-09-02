@@ -48,9 +48,9 @@ class UsersController extends AppController
      */
     public function list()
     {
-        //$this->Authorization->skipAuthorization();
+        $this->Authorization->skipAuthorization();
         $users = $this->paginate($this->Users, ['order' => ['Users.id' => 'desc']]);
-        $this->Authorization->can($users);
+        //$this->Authorization->can($users);
         $this->set(compact('users'));
     }
     /**

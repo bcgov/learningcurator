@@ -57,14 +57,14 @@ class CategoriesController extends AppController
     {
         $category = $this->Categories->newEmptyEntity();
         $this->Authorization->authorize($category);
+        
         if ($this->request->is('post')) {
             $category = $this->Categories->patchEntity($category, $this->request->getData());
             if ($this->Categories->save($category)) {
-                $this->Flash->success(__('The category has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+            
+                return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The category could not be saved. Please, try again.'));
+            echo __('The category could not be saved. Please, try again.');
         }
         $this->set(compact('category'));
     }

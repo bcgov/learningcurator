@@ -19,6 +19,10 @@ $this->loadHelper('Authentication.Identity');
                 <?php
                     echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true,'class'=>'form-control']);
                     echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true,'class'=>'form-control']);
+                    ?>
+
+
+                    <?php
                     echo $this->Form->control('name',['class' => 'form-control']);
                     echo $this->Form->control('description',['class' => 'form-control']);
                     echo $this->Form->control('objective',['class' => 'form-control']);
@@ -27,16 +31,30 @@ $this->loadHelper('Authentication.Identity');
                     //echo $this->Form->control('file_path');
                     //echo $this->Form->control('image_path');
                     //echo $this->Form->control('featured');
-                    
                     //echo $this->Form->control('ministry_id', ['options' => $ministries, 'empty' => true]);
                     //echo $this->Form->control('competencies._ids', ['options' => $competencies]);
                     //echo $this->Form->control('steps._ids', ['options' => $steps]);
                     //echo $this->Form->control('users._ids', ['options' => $users]);
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit'),['class' => 'btn btn-block btn-success mt-3']) ?>
+            <?= $this->Form->button(__('Add new pathway'),['class' => 'btn btn-block btn-success mt-3']) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>
+</div>
+<div class="col-md-6">
+
+<?= $this->Form->create(null,['url' => ['controller' => 'Categories', 'action' => 'add']]) ?>
+<fieldset>
+<legend><?= __('Add Category') ?></legend>
+<?php
+echo $this->Form->hidden('createdby',['value' => $this->Identity->get('id')]);
+echo $this->Form->hidden('modifiedby',['value' => $this->Identity->get('id')]);
+echo $this->Form->control('name', ['class' => 'form-control']);
+echo $this->Form->control('description', ['class' => 'form-control']);
+?>
+</fieldset>
+<?= $this->Form->button(__('Add new category'),['class' => 'btn btn-block btn-success mt-3']) ?>
+<?= $this->Form->end() ?>
 </div>
 </div>
