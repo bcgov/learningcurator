@@ -301,7 +301,18 @@ $lastobj = $s->description;
 			allowfullscreen>
 		</iframe>
 	</div>
-
+	<?php elseif($tag->name == 'Vimeo'): ?>
+		<?php 
+		$vimeoid = substr(parse_url($activity->hyperlink, PHP_URL_PATH), 1);
+		?>
+		<iframe src="https://player.vimeo.com/video/<?= $vimeoid ?>" 
+			width="100%" 
+			height="315" 
+			frameborder="0" 
+			allow="fullscreen" 
+			allowfullscreen>
+		</iframe>
+		
 	<?php endif; // logic check for formatting differently based on tag ?>	
 
 	<?php endforeach; // tags loop ?>
