@@ -20,7 +20,17 @@ if ($this->Identity->isLoggedIn()) {
 <div class="pad-sm">
 <div>Learning Pathways</div>
 <?php if($role == 2 || $role == 5): // is curator or admin ?>
-<div class="float-right"><?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id],['class' => 'btn btn-light']) ?></div>
+<div class="float-right btn-group">
+	<?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id],['class' => 'btn btn-light']) ?>
+	<a class="btn btn-light" 
+		data-toggle="collapse" 
+		href="#addnewtopic" 
+		role="button" 
+		aria-expanded="false" 
+		aria-controls="addnewtopic">
+    		New Topic
+  	</a>
+</div>
 <?php endif; // is curator or admin ?>
 <h1><?= h($category->name) ?></h1>
 <div class="text">
@@ -28,6 +38,27 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 </div>
 </div>
+<?php if($role == 2 || $role == 5): ?>
+<div class="col-md-3 collapse" id="addnewtopic">
+<div class="p-3 my-3 bg-white rounded-lg">
+<?= $this->Form->create(null,['url' => ['controller' => 'Topics', 'action' => 'add']]) ?>
+<fieldset>
+	<legend><?= __('Add Topic') ?></legend>
+	<?php
+		echo $this->Form->control('name', ['class' => 'form-control']);
+		echo $this->Form->control('description', ['class' => 'form-control']);
+		//echo $this->Form->control('image_path');
+		///echo $this->Form->control('color');
+		//echo $this->Form->control('featured');
+		echo $this->Form->hidden('user_id', ['value' => $uid]);
+		echo $this->Form->hidden('categories.0.id', ['value' => $category->id]);
+	?>
+</fieldset>
+<?= $this->Form->button(__('Add Topic'), ['class' => 'btn btn-dark mt-2']) ?>
+<?= $this->Form->end() ?>
+</div>
+</div>
+<?php endif;  // curator or admin? ?>
 </div>
 </div>
 
@@ -68,30 +99,13 @@ if ($this->Identity->isLoggedIn()) {
 <?php endif; // is not published ?>
 </div>
 <?php endforeach ?>
-</div>
+
 </div>
 <?php endforeach ?>
+</div>
 <?php endif; // topics ?>
-
-
-<div class="col-md-4 pt-3">
-<?= $this->Form->create(null,['url' => ['controller' => 'Topics', 'action' => 'add']]) ?>
-<fieldset>
-	<legend><?= __('Add Topic') ?></legend>
-	<?php
-		echo $this->Form->control('name');
-		echo $this->Form->control('description');
-		//echo $this->Form->control('image_path');
-		///echo $this->Form->control('color');
-		//echo $this->Form->control('featured');
-		echo $this->Form->hidden('user_id', ['value' => $uid]);
-		echo $this->Form->hidden('categories.0.id', ['value' => $category->id]);
-	?>
-</fieldset>
-<?= $this->Form->button(__('Submit')) ?>
-<?= $this->Form->end() ?>
 </div>
-</div>
+
 </div>
 
 <div class="container-fluid">
