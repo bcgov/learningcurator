@@ -56,6 +56,17 @@ class ActivitiesStepsController extends AppController
         $activitiesStep->step_id = $this->request->getData()['step_id'];
         $activitiesStep->activity_id = $this->request->getData()['activity_id'];
         $pathid = $this->request->getData()['pathway_id'] ?? 0;
+        // We want to check to see if this activity has already been added to this step
+        // so that it doesn't accidentally get added twice. 
+        $checkfirst = $this->ActivitiesSteps->find('all')->
+                                                where(['step_id' => $this->request->getData()['step_id']])->
+                                                where(['activity_id' => $this->request->getData()['activity_id']]);
+        // #TODO make this a better UX by checking in javascript or something
+        if(!$checkfirst->isEmpty()) { 
+            echo 'This activity is already on this step! Please go back and try again.';
+            exit;
+        }
+        
         if ($this->request->is('post')) {
             
             if ($this->ActivitiesSteps->save($activitiesStep)) {
