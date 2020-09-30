@@ -322,7 +322,7 @@ $lastobj = $s->description;
 
 	<a target="_blank" 
 		rel="noopener" 
-		data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
+		data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
 		href="<?= $activity->hyperlink ?>" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
@@ -406,7 +406,7 @@ $lastobj = $s->description;
 			
 			<a target="_blank" 
 				rel="noopener" 
-				data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
+				data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
 				href="<?= $activity->hyperlink ?>" 
 				style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 				class="btn btn-block my-3 text-uppercase btn-lg">
