@@ -209,8 +209,15 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach($step->pathways as $path): ?>
 <?php if($path->status_id == 2): ?>
 <div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
+
 	<h4><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
+	<?php if($role == 2 || $role == 5): ?>
+		<?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $step->_joinData->id, 'class' => 'my-3']) ?>
+		<?= $this->Form->hidden('id', ['value' => $step->_joinData->id]) ?>
+		<?= $this->Form->button(__('Remove from step'),['class' => 'btn btn-sm btn-light']) ?>
+		<?= $this->Form->end() ?>
+	<?php endif ?>
 </div>
 <?php else: ?>
 <?php if($role == 2 || $role == 5): ?>
