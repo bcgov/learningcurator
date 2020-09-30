@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\I18n\FrozenTime;
+
 /**
  * ActivitiesBookmarks Controller
  *
@@ -58,6 +60,7 @@ class ActivitiesBookmarksController extends AppController
         $activitiesBookmark = $this->ActivitiesBookmarks->newEmptyEntity();
         $activitiesBookmark->user_id = $user->id;
         $activitiesBookmark->activity_id = $this->request->getData()['activity_id'];
+        $activitiesBookmark->created = FrozenTime::now();
         $this->Authorization->authorize($activitiesBookmark);
         if ($this->request->is('post')) {
             $activitiesBookmark = $this->ActivitiesBookmarks->patchEntity($activitiesBookmark, $this->request->getData());

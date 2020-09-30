@@ -519,9 +519,6 @@ $(document).ready(function(){
 		
 		e.preventDefault();
 		var form = $(this);
-		form.children('button').removeClass('btn-light').addClass('btn-dark').html('<span class="fas fa-bookmark"></span> Bookmarked!').tooltip('dispose').attr('title','Good job!');
-		
-		//$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
 
 		var url = form.attr('action');
 		$.ajax({
@@ -530,7 +527,13 @@ $(document).ready(function(){
 			data: form.serialize(),
 			success: function(data)
 			{
-				//loadStatus();
+				form.children('button')
+					.removeClass('btn-light')
+					.addClass('btn-dark')
+					.html('<span class="fas fa-bookmark"></span> Bookmarked!')
+					.tooltip('dispose')
+					.attr('title','Good job!')
+					.after('&nbsp; <a href="/learning-curator/users/bookmarks">Access all your bookmarks through your profile</a>.');
 			},
 			statusCode: 
 			{

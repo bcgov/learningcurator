@@ -286,7 +286,8 @@ class UsersController extends AppController
         $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
         $bookmarks = $books->find('all')
                             ->where(['user_id' => $u->id])
-                            ->contain(['Activities','Activities.ActivityTypes']);
+                            ->contain(['Activities','Activities.ActivityTypes'])
+                            ->order(['ActivitiesBookmarks.created' => 'desc']);
         
         $user = $this->Users->get($u->id, [
             'contain' => ['Pathways', 

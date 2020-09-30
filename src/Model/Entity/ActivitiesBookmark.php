@@ -30,5 +30,6 @@ class ActivitiesBookmark extends Entity
         'notes' => true,
         'activity' => true,
         'user' => true,
+        'created' => true
     ];
 }
