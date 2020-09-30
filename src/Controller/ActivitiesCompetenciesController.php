@@ -54,11 +54,11 @@ class ActivitiesCompetenciesController extends AppController
         if ($this->request->is('post')) {
             $activitiesCompetency = $this->ActivitiesCompetencies->patchEntity($activitiesCompetency, $this->request->getData());
             if ($this->ActivitiesCompetencies->save($activitiesCompetency)) {
-                $this->Flash->success(__('The activities competency has been saved.'));
+                print(__('The activities competency has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The activities competency could not be saved. Please, try again.'));
+            print(__('The activities competency could not be saved. Please, try again.'));
         }
         $activities = $this->ActivitiesCompetencies->Activities->find('list', ['limit' => 200]);
         $competencies = $this->ActivitiesCompetencies->Competencies->find('list', ['limit' => 200]);
@@ -80,11 +80,11 @@ class ActivitiesCompetenciesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activitiesCompetency = $this->ActivitiesCompetencies->patchEntity($activitiesCompetency, $this->request->getData());
             if ($this->ActivitiesCompetencies->save($activitiesCompetency)) {
-                $this->Flash->success(__('The activities competency has been saved.'));
+                print(__('The activities competency has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The activities competency could not be saved. Please, try again.'));
+            print(__('The activities competency could not be saved. Please, try again.'));
         }
         $activities = $this->ActivitiesCompetencies->Activities->find('list', ['limit' => 200]);
         $competencies = $this->ActivitiesCompetencies->Competencies->find('list', ['limit' => 200]);
@@ -103,9 +103,9 @@ class ActivitiesCompetenciesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $activitiesCompetency = $this->ActivitiesCompetencies->get($id);
         if ($this->ActivitiesCompetencies->delete($activitiesCompetency)) {
-            $this->Flash->success(__('The activities competency has been deleted.'));
+            print(__('The activities competency has been deleted.'));
         } else {
-            $this->Flash->error(__('The activities competency could not be deleted. Please, try again.'));
+            print(__('The activities competency could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

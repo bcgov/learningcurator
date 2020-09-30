@@ -58,11 +58,11 @@ class ActivityTypesController extends AppController
         if ($this->request->is('post')) {
             $activityType = $this->ActivityTypes->patchEntity($activityType, $this->request->getData());
             if ($this->ActivityTypes->save($activityType)) {
-                $this->Flash->success(__('The activity type has been saved.'));
+                print(__('The activity type has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The activity type could not be saved. Please, try again.'));
+            print(__('The activity type could not be saved. Please, try again.'));
         }
         $this->set(compact('activityType'));
     }
@@ -83,11 +83,11 @@ class ActivityTypesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activityType = $this->ActivityTypes->patchEntity($activityType, $this->request->getData());
             if ($this->ActivityTypes->save($activityType)) {
-                $this->Flash->success(__('The activity type has been saved.'));
+                print(__('The activity type has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The activity type could not be saved. Please, try again.'));
+            print(__('The activity type could not be saved. Please, try again.'));
         }
         $this->set(compact('activityType'));
     }
@@ -104,9 +104,9 @@ class ActivityTypesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $activityType = $this->ActivityTypes->get($id);
         if ($this->ActivityTypes->delete($activityType)) {
-            $this->Flash->success(__('The activity type has been deleted.'));
+            print(__('The activity type has been deleted.'));
         } else {
-            $this->Flash->error(__('The activity type could not be deleted. Please, try again.'));
+            print(__('The activity type could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

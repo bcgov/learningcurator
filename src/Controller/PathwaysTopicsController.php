@@ -54,11 +54,11 @@ class PathwaysTopicsController extends AppController
         if ($this->request->is('post')) {
             $pathwaysTopic = $this->PathwaysTopics->patchEntity($pathwaysTopic, $this->request->getData());
             if ($this->PathwaysTopics->save($pathwaysTopic)) {
-                $this->Flash->success(__('The pathways topic has been saved.'));
+                print(__('The pathways topic has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The pathways topic could not be saved. Please, try again.'));
+            print(__('The pathways topic could not be saved. Please, try again.'));
         }
         $pathways = $this->PathwaysTopics->Pathways->find('list', ['limit' => 200]);
         $topics = $this->PathwaysTopics->Topics->find('list', ['limit' => 200]);
@@ -80,11 +80,11 @@ class PathwaysTopicsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pathwaysTopic = $this->PathwaysTopics->patchEntity($pathwaysTopic, $this->request->getData());
             if ($this->PathwaysTopics->save($pathwaysTopic)) {
-                $this->Flash->success(__('The pathways topic has been saved.'));
+                print(__('The pathways topic has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The pathways topic could not be saved. Please, try again.'));
+            print(__('The pathways topic could not be saved. Please, try again.'));
         }
         $pathways = $this->PathwaysTopics->Pathways->find('list', ['limit' => 200]);
         $topics = $this->PathwaysTopics->Topics->find('list', ['limit' => 200]);
@@ -103,9 +103,9 @@ class PathwaysTopicsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $pathwaysTopic = $this->PathwaysTopics->get($id);
         if ($this->PathwaysTopics->delete($pathwaysTopic)) {
-            $this->Flash->success(__('The pathways topic has been deleted.'));
+            print(__('The pathways topic has been deleted.'));
         } else {
-            $this->Flash->error(__('The pathways topic could not be deleted. Please, try again.'));
+            print(__('The pathways topic could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

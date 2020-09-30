@@ -229,11 +229,11 @@ class ActivitiesController extends AppController
             $activity->modifiedby_id = $user->id;
 
             if ($this->Activities->save($activity)) {
-                //$this->Flash->success(__('The activity has been saved.'));
+                //print(__('The activity has been saved.'));
                 $go = '/activities/view/' . $activity->id;
                 return $this->redirect($go);
             }
-            //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
+            //print(__('The activity could not be saved. Please, try again.'));
         }
         $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
         $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
@@ -304,11 +304,11 @@ class ActivitiesController extends AppController
             $activity->moderator_notes = '';
 
             if ($this->Activities->save($activity)) {
-                //$this->Flash->success(__('The activity has been saved.'));
+                //print(__('The activity has been saved.'));
                 $go = '/activities/view/' . $activity->id;
                 return $this->redirect($go);
             }
-            //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
+            //print(__('The activity could not be saved. Please, try again.'));
         }
         $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
         $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
@@ -337,11 +337,11 @@ class ActivitiesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             if ($this->Activities->save($activity)) {
-                //$this->Flash->success(__('The activity has been saved.'));
+                //print(__('The activity has been saved.'));
                 $go = '/activities/view/' . $id;
                 return $this->redirect($go);
             }
-            //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
+            //print(__('The activity could not be saved. Please, try again.'));
         }
         $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
         $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
@@ -376,7 +376,7 @@ class ActivitiesController extends AppController
                 echo 'Liked!';
                 //return $this->redirect($this->referer());
             } else {
-                //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
+                //print(__('The activity could not be saved. Please, try again.'));
             }
         }
     }
@@ -396,9 +396,9 @@ class ActivitiesController extends AppController
         $activity = $this->Activities->get($id);
         $this->Authorization->authorize($activity);
         if ($this->Activities->delete($activity)) {
-            //$this->Flash->success(__('The activity has been deleted.'));
+            //print(__('The activity has been deleted.'));
         } else {
-            //$this->Flash->error(__('The activity could not be deleted. Please, try again.'));
+            //print(__('The activity could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

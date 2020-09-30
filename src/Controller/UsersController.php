@@ -130,11 +130,11 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                print(__('The user has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            print(__('The user could not be saved. Please, try again.'));
         }
         $ministries = $this->Users->Ministries->find('list', ['limit' => 200]);
         $roles = $this->Users->Roles->find('list', ['limit' => 200]);
@@ -161,11 +161,11 @@ class UsersController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                print(__('The user has been saved.'));
 
                 return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            print(__('The user could not be saved. Please, try again.'));
         }
         $ministries = $this->Users->Ministries->find('list', ['limit' => 200]);
         $roles = $this->Users->Roles->find('list', ['limit' => 200]);
@@ -187,9 +187,9 @@ class UsersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
+            print(__('The user has been deleted.'));
         } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+            print(__('The user could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -220,7 +220,7 @@ class UsersController extends AppController
         }
         // display error if user submitted and authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
-            $this->Flash->error(__('Invalid username'));
+            print(__('Invalid username'));
         }
     }
 

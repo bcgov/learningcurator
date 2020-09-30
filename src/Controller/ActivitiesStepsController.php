@@ -90,11 +90,11 @@ class ActivitiesStepsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
             if ($this->ActivitiesSteps->save($activitiesStep)) {
-                $this->Flash->success(__('The activities step has been saved.'));
+                print(__('The activities step has been saved.'));
 
                 return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The activities step could not be saved. Please, try again.'));
+            print(__('The activities step could not be saved. Please, try again.'));
         }
         $activities = $this->ActivitiesSteps->Activities->find('list', ['limit' => 200]);
         $steps = $this->ActivitiesSteps->Steps->find('list', ['limit' => 200]);
@@ -136,11 +136,11 @@ class ActivitiesStepsController extends AppController
             $activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
             $this->Authorization->authorize($activitiesStep);
             if ($this->ActivitiesSteps->save($activitiesStep)) {
-                $this->Flash->success(__('The activities step has been saved.'));
+                print(__('The activities step has been saved.'));
 
                 return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The activities step could not be saved. Please, try again.'));
+            print(__('The activities step could not be saved. Please, try again.'));
         }
         $activities = $this->ActivitiesSteps->Activities->find('list', ['limit' => 200]);
         $steps = $this->ActivitiesSteps->Steps->find('list', ['limit' => 200]);
@@ -172,10 +172,10 @@ class ActivitiesStepsController extends AppController
         
         //if ($this->request->is('post')) {
             if ($this->ActivitiesSteps->save($activitiesStep)) {
-                //$this->Flash->success(__('That activity is now in a different order. Good job!'));
+                //print(__('That activity is now in a different order. Good job!'));
                 return $this->redirect($this->referer());
             }
-            //$this->Flash->error(__('The users action could not be saved. Please, try again.'));
+            //print(__('The users action could not be saved. Please, try again.'));
         //}
     }
 

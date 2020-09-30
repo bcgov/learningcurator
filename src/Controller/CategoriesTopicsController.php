@@ -54,11 +54,11 @@ class CategoriesTopicsController extends AppController
         if ($this->request->is('post')) {
             $categoriesTopic = $this->CategoriesTopics->patchEntity($categoriesTopic, $this->request->getData());
             if ($this->CategoriesTopics->save($categoriesTopic)) {
-                $this->Flash->success(__('The categories topic has been saved.'));
+                print(__('The categories topic has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The categories topic could not be saved. Please, try again.'));
+            print(__('The categories topic could not be saved. Please, try again.'));
         }
         $categories = $this->CategoriesTopics->Categories->find('list', ['limit' => 200]);
         $topics = $this->CategoriesTopics->Topics->find('list', ['limit' => 200]);
@@ -80,11 +80,11 @@ class CategoriesTopicsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $categoriesTopic = $this->CategoriesTopics->patchEntity($categoriesTopic, $this->request->getData());
             if ($this->CategoriesTopics->save($categoriesTopic)) {
-                $this->Flash->success(__('The categories topic has been saved.'));
+                print(__('The categories topic has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The categories topic could not be saved. Please, try again.'));
+            print(__('The categories topic could not be saved. Please, try again.'));
         }
         $categories = $this->CategoriesTopics->Categories->find('list', ['limit' => 200]);
         $topics = $this->CategoriesTopics->Topics->find('list', ['limit' => 200]);
@@ -103,9 +103,9 @@ class CategoriesTopicsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $categoriesTopic = $this->CategoriesTopics->get($id);
         if ($this->CategoriesTopics->delete($categoriesTopic)) {
-            $this->Flash->success(__('The categories topic has been deleted.'));
+            print(__('The categories topic has been deleted.'));
         } else {
-            $this->Flash->error(__('The categories topic could not be deleted. Please, try again.'));
+            print(__('The categories topic could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

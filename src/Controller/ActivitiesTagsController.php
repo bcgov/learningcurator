@@ -54,11 +54,11 @@ class ActivitiesTagsController extends AppController
         if ($this->request->is('post')) {
             $activitiesTag = $this->ActivitiesTags->patchEntity($activitiesTag, $this->request->getData());
             if ($this->ActivitiesTags->save($activitiesTag)) {
-                $this->Flash->success(__('The activities tag has been saved.'));
+                print(__('The activities tag has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The activities tag could not be saved. Please, try again.'));
+            print(__('The activities tag could not be saved. Please, try again.'));
         }
         $activities = $this->ActivitiesTags->Activities->find('list', ['limit' => 200]);
         $tags = $this->ActivitiesTags->Tags->find('list', ['limit' => 200]);
@@ -80,11 +80,11 @@ class ActivitiesTagsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activitiesTag = $this->ActivitiesTags->patchEntity($activitiesTag, $this->request->getData());
             if ($this->ActivitiesTags->save($activitiesTag)) {
-                $this->Flash->success(__('The activities tag has been saved.'));
+                print(__('The activities tag has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The activities tag could not be saved. Please, try again.'));
+            print(__('The activities tag could not be saved. Please, try again.'));
         }
         $activities = $this->ActivitiesTags->Activities->find('list', ['limit' => 200]);
         $tags = $this->ActivitiesTags->Tags->find('list', ['limit' => 200]);
@@ -103,9 +103,9 @@ class ActivitiesTagsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $activitiesTag = $this->ActivitiesTags->get($id);
         if ($this->ActivitiesTags->delete($activitiesTag)) {
-            $this->Flash->success(__('The activities tag has been deleted.'));
+            print(__('The activities tag has been deleted.'));
         } else {
-            $this->Flash->error(__('The activities tag could not be deleted. Please, try again.'));
+            print(__('The activities tag could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
