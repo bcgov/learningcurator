@@ -68,9 +68,9 @@ The curators who have worked so far on the Leadership resources
 <li>They researched current informal learning available that would support the priorities, using a set criteria that include standards of quality and relevance for BC public service.
  </ul>
  </div>
-<div class="p-3 mb-3 bg-white rounded-lg"><h2>Will the Learning Agent remember what I’ve done?</h2> 
+<div class="p-3 mb-3 bg-white rounded-lg"><h2>Will the Learning Curator remember what I’ve done?</h2> 
 <ul>
-<li>Once you log into the Learning Agent with your IDIR for the first time, a profile is created for you. Learning Agent will retain your chosen pathways and claimed items between visits.  
+<li>Once you log into the Learning Curator with your IDIR for the first time, a profile is created for you. Learning Curator will retain your chosen pathways and claimed items between visits.  
 <li>The Learning Curator only records your activities through the “Follow this Pathway” and “Claim” buttons.  
 <li>Record of your progress stays in the Learning Curator, and is only visible to site administrators.  
 </ul>
@@ -78,7 +78,7 @@ The curators who have worked so far on the Leadership resources
 <div class="p-3 mb-3 bg-white rounded-lg"><h2>How can I share my learning with my manager?</h2> 
 <ul>
 <li>You can save a copy of your profile page, which will show which steps you’ve taken on which pathways. Share your saved page with your manager in a one-on-one meeting and discuss your plans. 
-<li>You can enter Learning Agent pathways as goals in your MyPerformance Plan. Discuss the goal with your manager, and if you like, set target dates for completing steps and pathways. 
+<li>You can enter Learning Curator pathways as goals in your MyPerformance Plan. Discuss the goal with your manager, and if you like, set target dates for completing steps and pathways. 
 </ul></div>
 <div class="p-3 mb-3 bg-white rounded-lg"><h2>How can I track my learning? Do my completed pathways show in my Learning Record?</h2> 
 <ul>
