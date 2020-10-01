@@ -291,15 +291,22 @@ if($stepclaimcount > 0) {
 	<div style="font-size; 130%"><?= $steps->description ?></div>
 	
 	<div class="my-3">
-		<span class="badge badge-light" style="background-color: rgba(<?= $readcolor ?>,1)"><?= $readstepcount ?> to read</span>  
-		<span class="badge badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)"><?= $watchstepcount ?> to watch</span>  
-		<span class="badge badge-light" style="background-color: rgba(<?= $listencolor ?>,1)"><?= $listenstepcount ?> to listen to</span>  
-		<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
-		
-		<span class="badge badge-pill badge-light"><?= $totalacts ?> total</span> 
-		<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
-		<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
-	</div>
+			<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
+			<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
+			<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
+				<?= $allreadstepcount ?> to read
+			</span>  
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
+				<?= $allwatchstepcount ?> to watch
+			</span>  
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
+				<?= $alllistenstepcount ?> to listen to
+			</span>  
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
+				<?= $allparticipatestepcount ?> to participate in
+			</span>  
+		</div>
 	<div class="progress progress-bar-striped mb-3" style="background-color: #F1F1F1; height: 26px;">
 	  <div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,.8); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
 		<?= $steppercent ?>% completed

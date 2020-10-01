@@ -168,6 +168,9 @@ if($stepclaimcount > 0) {
 		</h2>	
 		<div class="" style="font-size: 130%;"><?= $s->description; ?></div>
 		<div class="my-3">
+			<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
+			<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
+			<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
 			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
 				<?= $allreadstepcount ?> to read
 			</span>  
@@ -180,10 +183,6 @@ if($stepclaimcount > 0) {
 			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
 				<?= $allparticipatestepcount ?> to participate in
 			</span>  
-
-			<span class="badge badge-pill badge-light"><?= $totalacts ?> total</span> 
-			<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
-			<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
 		</div>
 	</div>
 	<div class="col-2">
