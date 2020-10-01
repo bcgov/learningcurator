@@ -180,7 +180,7 @@ This seems to work out, but #TODO investigate optimizing this
 <?= $this->Form->end() ?>
 <div class="py-3">
 
-<div>Following a pathway is a committment to moving 
+<div>Following a pathway is a commitment to moving 
 through each step and claiming each required activity as you complete it.
 Fill your activity rings and get a certificate!
 </div>
