@@ -62,6 +62,8 @@ class ActivitiesStepsController extends AppController
                                                 where(['step_id' => $this->request->getData()['step_id']])->
                                                 where(['activity_id' => $this->request->getData()['activity_id']]);
         // #TODO make this a better UX by checking in javascript or something
+        // #TODO also refactor this so that it doesn't make the above queries 
+        // if the test fails
         if(!$checkfirst->isEmpty()) { 
             echo 'This activity is already on this step! Please go back and try again.';
             exit;
