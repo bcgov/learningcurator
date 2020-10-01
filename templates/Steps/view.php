@@ -11,7 +11,11 @@ if ($this->Identity->isLoggedIn()) {
 	$role = $this->Identity->get('role_id');
 	$uid = $this->Identity->get('id');
 }
-
+/** 
+ * Most of the following should be moved into the controller
+ * I just find it easier to prototype when the logic I'm working
+ * with is in the same file
+ */
 $stepTime = 0;
 $defunctacts = array();
 $requiredacts = array();
@@ -38,6 +42,8 @@ foreach ($step->activities as $activity) {
 	$stepname = '';
 	//print_r($activity);
 	// If this is 'defunct' then we pull it out of the list 
+	// and add it the defunctacts array so we can show them
+	// but in a different section
 	if($activity->status_id == 3) {
 		array_push($defunctacts,$activity);
 	} elseif($activity->status_id == 2) {
