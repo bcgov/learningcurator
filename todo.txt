@@ -1,0 +1,11 @@
+
+What if we just didn't track user progress?
+What if we track it, but only track it on-device?
+JOIN A WORKING GROUP needs to be prominently displayed and invite each
+EXPOSE CURATORS we need to put faces to these working groups??
+
+-[] move to mysql(maria)/postgres?
+-[] convert session management to use redis cache
+-[] further investigate Mongo/Express/NodeJS/TypeScript API for just user info
+-[] investigate redoing Curator CMS in Python/Django
+-[] create reports dashboard so we can see reports!
