@@ -12,7 +12,6 @@
 <div class="row justify-content-md-center">
 <div class="col-md-5 pt-3">
 
-
 <div class="p-3 my-3 bg-white rounded-lg">
 <h2>What happens when I follow a pathway?</h2> 
 <ul>
