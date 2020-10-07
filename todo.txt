@@ -9,3 +9,32 @@ EXPOSE CURATORS we need to put faces to these working groups??
 -[] further investigate Mongo/Express/NodeJS/TypeScript API for just user info
 -[] investigate redoing Curator CMS in Python/Django
 -[] create reports dashboard so we can see reports!
+-[] 
+
+------------------
+New home page copy:
+------------------
+
+Follow a Pathway
+    By following a pathway, you begin to track your progress as you step through it
+Claim Activities
+    By claiming required activities you complete the steps 
+Track Your Progress
+    Activity Rings show how you progress through each of the activity types
+
+Explore
+Pathways are organized by topic. Curators create and contribute to these topics based on their area of expertise, working together in working groups.
+
+- Leadership
+- Diversity & Inclusion
+
+Keyword Search
+
+Latest Additions
+
+Your Profile
+A dashboard with all of your pathways, claimed activities, bookmarks, and reports.
+
+Contribute
+Is there a great acitivity that's missing from a step? Suggest it to the curator team, or look into becoming a curator yourself.
+

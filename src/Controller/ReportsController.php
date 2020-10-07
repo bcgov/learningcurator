@@ -21,8 +21,9 @@ class ReportsController extends AppController
     public function listit()
     {
         
-        $reports = $this->Reports->find('all');
-        $this->Authorization->authorize($reports);
+        $reports = $this->Reports->find('all')->contain(['Users','Activities']);
+        //$this->Authorization->authorize($reports);
+        $this->Authorization->skipAuthorization();
         $user = $this->request->getAttribute('identity');
         $this->set(compact('reports'));   
 
