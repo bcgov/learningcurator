@@ -8,7 +8,42 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
+<div class="container-fluid">
+<div class="row justify-content-md-center" id="colorful">
+<div class="col-12">
+<div class="pad-lg">
+<h1>Activities that are <?= $timeframe ?></h1>
+<div>Found <span class="badge badge-dark"><?= $numresults ?></span> activities</div>
+<div class="py-3">
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Time frames
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
+<?php
+$options = array(
+'Under 10 mins',
+'Under 30 mins',
+'Under 1 hour',
+'About an hour',
+'A couple of hours',
+'A half day',
+'About a day',
+'A couple of days',
+'About a week',
+'A week +');
+?>
+<?php foreach($options as $o): ?>
+<a class="dropdown-item" href="/learning-curator/activities/estimatedtime/<?= $o ?>"><?= $o ?></a>
+<?php endforeach ?>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="container-fluid pt-3 linear">
 <div class="row justify-content-md-center">
 <div class="col-md-7">
@@ -46,7 +81,10 @@ if($activity->activity_types_id == 1) {
 	<a href="/learning-curator/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
 	<?php //$this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
 </h3>
-<?php echo $this->Html->link($activity->estimated_time, ['action' => 'estimatedtime', $activity->estimated_time]) ?>
+<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+			<i class="fas fa-clock"></i>
+			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
+		</span> 
 <div class="py-3 ">
 	<?= $activity->description ?>
 </div>

@@ -264,7 +264,6 @@ $lastobj = $s->description;
 		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 			<i class="fas fa-clock"></i>
 			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
-			<?php //$activity->estimated_time ?>
 		</span> 
 		<?php foreach($activity->tags as $tag): ?>
 		<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 

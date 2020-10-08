@@ -188,16 +188,16 @@ class ActivitiesController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function estimatedtime($time = null)
+    public function estimatedtime($timeframe = null)
     {
         $this->Authorization->skipAuthorization();
-        $activities = $this->Activities->find()->contain('Steps.Pathways','ActivityTypes')->where(function ($exp, $query) use($time) {
-            return $exp->like('estimated_time', '%'.$time.'%');
+        $activities = $this->Activities->find()->contain('Steps.Pathways','ActivityTypes')->where(function ($exp, $query) use($timeframe) {
+            return $exp->like('estimated_time', '%'.$timeframe.'%');
         })->order(['name' => 'ASC']);
         //$activities = $this->Activities->findByEstimated_time($time)->firstOrFail();
-       
+        $numresults = $activities->count();
         
-        $this->set(compact('activities'));
+        $this->set(compact('activities','numresults','timeframe'));
     }
 
     /**
