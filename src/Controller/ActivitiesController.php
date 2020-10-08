@@ -183,6 +183,24 @@ class ActivitiesController extends AppController
     }
 
     /**
+     * Time method for activities so you can show activities based on estimated_time
+     *
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function estimatedtime($time = null)
+    {
+        $this->Authorization->skipAuthorization();
+        $activities = $this->Activities->find()->contain('Steps.Pathways','ActivityTypes')->where(function ($exp, $query) use($time) {
+            return $exp->like('estimated_time', '%'.$time.'%');
+        })->order(['name' => 'ASC']);
+        //$activities = $this->Activities->findByEstimated_time($time)->firstOrFail();
+       
+        
+        $this->set(compact('activities'));
+    }
+
+    /**
      * Find method for activities; intended for use as an auto-complete
      *  search function for adding activities to steps
      *

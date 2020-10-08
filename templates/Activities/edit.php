@@ -41,7 +41,31 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
             <?php echo $this->Form->control('status_id', ['class' => 'form-control', 'options' => $statuses, 'empty' => true]); ?>
         </div>
         <div class="col-md-4">
-            <?php echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
+            <?php //echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
+            <label>Estimated Time
+            <select name="estimated_time" id="estimated_time_id" class="form-control">
+<?php
+$options = array(
+'Under 10 mins',
+'Under 30 mins',
+'Under 1 hour',
+'About an hour',
+'A couple of hours',
+'A half day',
+'About a day',
+'A couple of days',
+'About a week',
+'A week +');
+?>
+<?php foreach($options as $o): ?>
+<?php if($o == $activity->estimated_time): ?>
+    <option selected><?= $o ?></option>
+<?php else: ?>
+    <option><?= $o ?></option>
+<?php endif ?>
+<?php endforeach ?>
+            </select>
+            </label>
         </div>
         <div class="col-md-4 pt-3">
             <?php echo $this->Form->control('featured', ['type' => 'checkbox', 'class' => 'form-control']); ?>
