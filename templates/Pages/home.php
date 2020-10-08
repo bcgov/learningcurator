@@ -4,7 +4,34 @@
 <div class="col-md-12">
 <div class="pad-md">
 <h1>Learning Curator</h1>
-<h2>The best educational resources organized by expert teams on different topic areas:</h2>
+
+<div class="row mt-3">
+<div class="col-md-4">
+<div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
+
+	<h3>Follow a Pathway</h3>
+    By following a pathway, you begin to track your progress as you step through it
+
+</div>
+</div>
+<div class="col-md-4">
+<div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
+
+	<h3>Claim Activities</h3>
+    By claiming required activities you complete the steps 
+
+</div>
+</div>
+<div class="col-md-4">
+<div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
+
+	<h3>Track Your Progress</h3>
+    Activity Rings show how you progress through each of the activity types
+
+</div>
+</div>
+</div>
+
 
 <div class="row mt-3">
 <div class="col-md-4">

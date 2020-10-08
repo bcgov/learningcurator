@@ -18,22 +18,22 @@ What if we track it, but only track it on-device? localstorage
 JOIN A WORKING GROUP needs to be prominently displayed and invite each
 EXPOSE CURATORS we need to put faces to these working groups??
 
+
 Curator CMS lives on Kepler (or similar--even Spitzer), segrated to just curators, and there's a build process 
 that outputs a static version of _just the content_ 
 Within the static output, javascript is added to talk to a user info API that handles pathway follows, 
 activity claims, and bookmarks?
 
-
--[] convert session management to use redis cache? 
+-[] Fork learning-curator into curator-cms
 -[] further investigate Mongo/Express/NodeJS/TypeScript API for just user info
 -[] investigate redoing Curator CMS in Python/Django
--[] create reports dashboard so we can see reports!
--[]
+
 
 -----
 DONE
 -----
 -[x] move to mysql(maria)/postgres?
+-[x] create reports dashboard so we can see reports! (rudimentary and unauthed but there /reports/listall)
 
 ------------------
 New home page copy:
