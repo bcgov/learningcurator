@@ -295,16 +295,16 @@ if($stepclaimcount > 0) {
 			<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
 			<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
 			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
-				<?= $allreadstepcount ?> to read
+				<?= $readstepcount ?> to read
 			</span>  
 			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
-				<?= $allwatchstepcount ?> to watch
+				<?= $watchstepcount ?> to watch
 			</span>  
 			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
-				<?= $alllistenstepcount ?> to listen to
+				<?= $listenstepcount ?> to listen to
 			</span>  
 			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
-				<?= $allparticipatestepcount ?> to participate in
+				<?= $participatestepcount ?> to participate in
 			</span>  
 		</div>
 	<div class="progress progress-bar-striped mb-3" style="background-color: #F1F1F1; height: 26px;">

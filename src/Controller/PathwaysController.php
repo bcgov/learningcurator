@@ -126,7 +126,6 @@ class PathwaysController extends AppController
 
         $this->set(compact('pathway', 'usersonthispathway','stepsalongtheway', 'useractivitylist','followers'));
 
-
     }
 
 
