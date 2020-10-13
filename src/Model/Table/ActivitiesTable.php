@@ -126,6 +126,12 @@ class ActivitiesTable extends Table
             ->notEmptyString('name');
 
         $validator
+            ->scalar('slug')
+            ->maxLength('slug', 255)
+            ->requirePresence('slug', 'create')
+            ->notEmptyString('slug');
+
+        $validator
             ->scalar('hyperlink')
             ->maxLength('hyperlink', 255)
             ->allowEmptyString('hyperlink');

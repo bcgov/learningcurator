@@ -11,6 +11,7 @@ use Cake\Collection\Collection;
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  * @property string|null $hyperlink
  * @property string|null $description
  * @property string|null $licensing
@@ -56,6 +57,7 @@ class Activity extends Entity
      */
     protected $_accessible = [
         'name' => true,
+        'slug' => true,
         'hyperlink' => true,
         'description' => true,
         'licensing' => true,

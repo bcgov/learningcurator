@@ -15,6 +15,27 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  */
 class ActivitiesController extends AppController
 {
+        /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function export()
+    {
+        $this->Authorization->skipAuthorization();
+        $activities = $this->Activities
+                            ->find('all')
+                            ->contain(['Statuses', 
+                                        'Ministries', 
+                                        'Categories', 
+                                        'ActivityTypes',
+                                        'Steps.Pathways'])
+                            ->where(['Activities.status_id' => 2])
+                            ->order(['Activities.created' => 'DESC']);
+
+        $this->set(compact('activities'));
+    }
+
     /**
      * Index method
      *
