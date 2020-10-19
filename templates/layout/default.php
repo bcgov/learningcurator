@@ -116,6 +116,9 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 			<a class="nav-link" href="/learning-curator/activities">Latest</a>
 		</li>
 		<li class="nav-item">
+			<a class="nav-link" href="/learning-curator/pages/howto">How To Use</a>
+		</li>
+		<li class="nav-item">
 			<a class="nav-link" href="/learning-curator/pages/faq">FAQ</a>
 		</li>
 		<li class="nav-item">

@@ -1,0 +1,16 @@
+
+Moodle
+    Pros
+        Standardized admin interface
+        Expansion of activity types
+        Existing documentation
+    Cons
+        Expansion of activity types
+        Existing documentation means can't stray too far for themeing options
+
+Curator CMS
+    Pros
+        Modern code base, written for OpenShift
+        We can do whatever we want
+    Cons
+        We can do whatever we want00
