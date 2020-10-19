@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 Use Cake\ORM\TableRegistry;
+use Cake\I18n\FrozenTime;
 
 
 /**
@@ -101,7 +102,8 @@ class UsersController extends AppController
         $this->Authorization->skipAuthorization();
         $user = $this->Users->newEmptyEntity();
         $idir = env('REMOTE_USER');
-		$idir = strtolower(str_replace('IDIR\\','',$idir));
+        $idir = strtolower(str_replace('IDIR\\','',$idir));
+        $user->created = FrozenTime::now();
         $user->name = $idir;
         $user->idir = $idir;
         $user->ministry_id = 1;
@@ -126,6 +128,7 @@ class UsersController extends AppController
     public function add()
     {
         $user = $this->Users->newEmptyEntity();
+        $this->request->getData()['created'] = FrozenTime::now();
         $this->Authorization->authorize($user);
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());

@@ -16,7 +16,7 @@ use Cake\ORM\Locator\LocatorAwareTrait;
 class ActivitiesController extends AppController
 {
         /**
-     * Index method
+     * Export method to create an XML export method
      *
      * @return \Cake\Http\Response|null
      */
@@ -33,6 +33,27 @@ class ActivitiesController extends AppController
                             ->where(['Activities.status_id' => 2])
                             ->order(['Activities.created' => 'DESC']);
 
+        $this->set(compact('activities'));
+    }
+    
+    /**
+     * list method 
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function list()
+    {
+        $this->Authorization->skipAuthorization();
+        $activities = $this->Activities
+                            ->find('all')
+                            ->contain(['Statuses', 
+                                        'Ministries', 
+                                        'Categories', 
+                                        'ActivityTypes',
+                                        'Steps.Pathways'])
+                            ->where(['Activities.status_id' => 2])
+                            ->order(['Activities.created' => 'DESC']);
+        
         $this->set(compact('activities'));
     }
 
@@ -378,7 +399,7 @@ class ActivitiesController extends AppController
             if ($this->Activities->save($activity)) {
                 //print(__('The activity has been saved.'));
                 $go = '/activities/view/' . $id;
-                return $this->redirect($go);
+                return $this->redirect($this->referer());
             }
             //print(__('The activity could not be saved. Please, try again.'));
         }

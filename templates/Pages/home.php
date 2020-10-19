@@ -4,7 +4,8 @@
 <div class="col-md-12">
 <div class="pad-md">
 <h1>Learning Curator</h1>
-
+<h2>The best educational resources organized by expert teams on different topic areas</h2>
+<!--
 <div class="row mt-3">
 <div class="col-md-4">
 <div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
@@ -31,7 +32,7 @@
 </div>
 </div>
 </div>
-
+-->
 
 <div class="row mt-3">
 <div class="col-md-4">

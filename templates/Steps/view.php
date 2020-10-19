@@ -401,12 +401,19 @@ $lastobj = $s->description;
 	<?php foreach ($supplementalacts as $activity): ?>
 	<div class="col-md-12 col-lg-12">
 	<div class="p-3 my-3 bg-white rounded-lg">
+
 		<h4>
 			<a href="/learning-curator/activities/view/<?= $activity->id ?>">
 				<?= $activity->name ?>
 			</a>
 		</h4>
-		<div class="">
+		<div class="p-2">
+			<div>
+				<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+					<i class="fas fa-clock"></i>
+					<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
+				</span> 
+			</div>
 			<?= $activity->description ?>
 			
 			<a target="_blank" 

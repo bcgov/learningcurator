@@ -12,7 +12,7 @@ $this->loadHelper('Authentication.Identity');
 // echo $this->Form->control('ministry_id', ['class' => 'form-control', 'options' => $ministries, 'empty' => true]);
 // echo $this->Form->control('category_id', ['class' => 'form-control', 'options' => $categories, 'empty' => true]);
 // echo $this->Form->control('approvedby_id', ['class' => 'form-control']);
-echo $this->Form->hidden('createdby_id', ['value' => $activity->createdby_id, 'class' => 'form-control']);
+//echo $this->Form->hidden('createdby_id', ['value' => $activity->createdby_id, 'class' => 'form-control']);
 echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'),'class' => 'form-control']);
 ?>
 <div class="container-fluid">
@@ -46,16 +46,13 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
             <select name="estimated_time" id="estimated_time_id" class="form-control">
 <?php
 $options = array(
-'Under 10 mins',
-'Under 30 mins',
-'Under 1 hour',
-'About an hour',
-'A couple of hours',
-'A half day',
-'About a day',
-'A couple of days',
-'About a week',
-'A week +');
+    'Under 10 mins',
+    'Under 30 mins',
+    'Under 1 hour',
+    'Half day or less',
+    '1 day',
+    'More than 1 day',
+    'Variable');
 ?>
 <?php foreach($options as $o): ?>
 <?php if($o == $activity->estimated_time): ?>

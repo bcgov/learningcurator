@@ -23,16 +23,13 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php
 $options = array(
-'Under 10 mins',
-'Under 30 mins',
-'Under 1 hour',
-'About an hour',
-'A couple of hours',
-'A half day',
-'About a day',
-'A couple of days',
-'About a week',
-'A week +');
+    'Under 10 mins',
+    'Under 30 mins',
+    'Under 1 hour',
+    'Half day or less',
+    '1 day',
+    'More than 1 day',
+    'Variable');
 ?>
 <?php foreach($options as $o): ?>
 <a class="dropdown-item" href="/learning-curator/activities/estimatedtime/<?= $o ?>"><?= $o ?></a>
