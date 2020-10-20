@@ -128,14 +128,20 @@ class UsersController extends AppController
     public function add()
     {
         $user = $this->Users->newEmptyEntity();
-        $this->request->getData()['created'] = FrozenTime::now();
+        
         $this->Authorization->authorize($user);
         if ($this->request->is('post')) {
+
+      
+            
+            
             $user = $this->Users->patchEntity($user, $this->request->getData());
+            $user->created = FrozenTime::now();
+            print_r($user); exit;
             if ($this->Users->save($user)) {
                 print(__('The user has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'list']);
             }
             print(__('The user could not be saved. Please, try again.'));
         }
