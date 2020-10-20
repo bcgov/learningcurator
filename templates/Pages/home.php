@@ -67,7 +67,7 @@
 </div> <!-- /.pad-lg -->
 
 <div class="text-center">
-	<a href="#activitytypes">
+	<a href="#dipdivedeeper">
 		<i class="animate__animated animate__tada fas fa-chevron-circle-down" 
 			style="color: #000; font-size: 300%; margin: 0 0 30px 0;"></i>
 	</a>
