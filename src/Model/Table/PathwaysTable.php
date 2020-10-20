@@ -102,6 +102,10 @@ class PathwaysTable extends Table
             ->allowEmptyString('color');
 
         $validator
+            ->scalar('estimated_time')
+            ->allowEmptyString('estimated_time');
+        
+        $validator
             ->scalar('description')
             ->allowEmptyString('description');
 

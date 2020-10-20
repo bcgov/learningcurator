@@ -62,5 +62,6 @@ class Pathway extends Entity
         'topics' => true,
         'users' => true,
         'status_id' => true,
+        'estimated_time' => true,
     ];
 }

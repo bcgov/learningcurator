@@ -86,12 +86,16 @@ This seems to work out, but #TODO investigate optimizing this
 
 	<div class="py-3" style="background-color: rgba(255,255,255,.5)">
 	<?= $pathway->objective ?> 
+	
+	<div class="my-2"><em>Estimated time for this pathway: <?= h($pathway->estimated_time) ?></em></div>
+
 	<div class="mb-2">
 	<span class="badge badge-light readtotal"></span>  
 	<span class="badge badge-light watchtotal"></span>  
 	<span class="badge badge-light listentotal"></span>  
 	<span class="badge badge-light participatetotal"></span>  
 	</div>
+	
 	<?php if($role == 2 || $role == 5): ?>
 
 	<a class="" 
@@ -307,6 +311,7 @@ if($stepclaimcount > 0) {
 				<?= $participatestepcount ?> to participate in
 			</span>  
 		</div>
+		
 	<div class="progress progress-bar-striped mb-3" style="background-color: #F1F1F1; height: 26px;">
 	  <div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,.8); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
 		<?= $steppercent ?>% completed
