@@ -17,6 +17,7 @@
             <fieldset>
                 <legend><?= __('Add User') ?></legend>
                 <?php
+                    echo $this->Form->hidden('created', ['value' => date('Y-m-d H:i:s')]);
                     echo $this->Form->control('name');
                     echo $this->Form->control('idir');
                     echo $this->Form->control('ministry_id', ['options' => $ministries]);

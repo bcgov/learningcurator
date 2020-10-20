@@ -103,7 +103,7 @@ class UsersController extends AppController
         $user = $this->Users->newEmptyEntity();
         $idir = env('REMOTE_USER');
         $idir = strtolower(str_replace('IDIR\\','',$idir));
-        $user->created = FrozenTime::now();
+        $user->created = date('Y-m-d H:i:s');
         $user->name = $idir;
         $user->idir = $idir;
         $user->ministry_id = 1;
@@ -132,12 +132,13 @@ class UsersController extends AppController
         $this->Authorization->authorize($user);
         if ($this->request->is('post')) {
 
-      
-            
+            // I don't know why the following won't work 
+            // to reassign the created date :( it's in the form now
+            // leaving this here as a puzzler
+            //$this->request->getData()['created'] = FrozenTime::now();
+            //$user->created = FrozenTime::now();
             
             $user = $this->Users->patchEntity($user, $this->request->getData());
-            $user->created = FrozenTime::now();
-            print_r($user); exit;
             if ($this->Users->save($user)) {
                 print(__('The user has been saved.'));
 

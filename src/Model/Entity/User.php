@@ -17,6 +17,7 @@ use Cake\ORM\Entity;
  * @property string|null $image_path
  * @property string $email
  * @property string $password
+ * @property datetime $created
  *
  * @property \App\Model\Entity\Ministry $ministry
  * @property \App\Model\Entity\Role $role
@@ -48,6 +49,7 @@ class User extends Entity
         'activities' => true,
         'competencies' => true,
         'pathways' => true,
+        'created' => true,
     ];
 
     /**
