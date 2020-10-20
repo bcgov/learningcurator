@@ -5,7 +5,7 @@
 <page>
 	<title><?= $activity->name ?></title>
 	<estimated_time><?= $activity->estimated_time ?></estimated_time>
-	<description><?= $activity->description ?></description>
+	<description><?= h($activity->description) ?></description>
 	<hyperlink><?= $activity->hyperlink ?></hyperlink>
 </page>
 <?php endforeach; ?>
