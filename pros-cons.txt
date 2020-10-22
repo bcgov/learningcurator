@@ -1,5 +1,8 @@
 
 To Track Or Not To Track
+    Full tracking (pathways followed, activities claimed, show progress)
+    Partial tracking (implemented on-device only) (could start here and add in remote sync later)
+    No Tracking at all; just lists of pathways and steps and activities BYOTracking
 
 
 Moodle
