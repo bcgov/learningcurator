@@ -55,11 +55,11 @@ class PathwaysStepsController extends AppController
         if ($this->request->is('post')) {
             $pathwaysStep = $this->PathwaysSteps->patchEntity($pathwaysStep, $this->request->getData());
             if ($this->PathwaysSteps->save($pathwaysStep)) {
-                $this->Flash->success(__('The pathways step has been saved.'));
+                print(__('The pathways step has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The pathways step could not be saved. Please, try again.'));
+            print(__('The pathways step could not be saved. Please, try again.'));
         }
         $steps = $this->PathwaysSteps->Steps->find('list', ['limit' => 200]);
         $pathways = $this->PathwaysSteps->Pathways->find('list', ['limit' => 200]);
@@ -81,11 +81,11 @@ class PathwaysStepsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pathwaysStep = $this->PathwaysSteps->patchEntity($pathwaysStep, $this->request->getData());
             if ($this->PathwaysSteps->save($pathwaysStep)) {
-                $this->Flash->success(__('The pathways step has been saved.'));
+                print(__('The pathways step has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The pathways step could not be saved. Please, try again.'));
+            print(__('The pathways step could not be saved. Please, try again.'));
         }
         $steps = $this->PathwaysSteps->Steps->find('list', ['limit' => 200]);
         $pathways = $this->PathwaysSteps->Pathways->find('list', ['limit' => 200]);
@@ -110,9 +110,9 @@ class PathwaysStepsController extends AppController
         
 
         if ($this->PathwaysSteps->delete($pathwaysStep)) {
-            $this->Flash->success(__('The pathways step has been deleted.'));
+            print(__('The pathways step has been deleted.'));
         } else {
-            $this->Flash->error(__('The pathways step could not be deleted. Please, try again.'));
+            print(__('The pathways step could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

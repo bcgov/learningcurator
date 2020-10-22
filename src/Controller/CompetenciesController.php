@@ -51,11 +51,11 @@ class CompetenciesController extends AppController
         if ($this->request->is('post')) {
             $competency = $this->Competencies->patchEntity($competency, $this->request->getData());
             if ($this->Competencies->save($competency)) {
-                $this->Flash->success(__('The competency has been saved.'));
+                print(__('The competency has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The competency could not be saved. Please, try again.'));
+            print(__('The competency could not be saved. Please, try again.'));
         }
         $activities = $this->Competencies->Activities->find('list', ['limit' => 200]);
         $pathways = $this->Competencies->Pathways->find('list', ['limit' => 200]);
@@ -78,11 +78,11 @@ class CompetenciesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $competency = $this->Competencies->patchEntity($competency, $this->request->getData());
             if ($this->Competencies->save($competency)) {
-                $this->Flash->success(__('The competency has been saved.'));
+                print(__('The competency has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The competency could not be saved. Please, try again.'));
+            print(__('The competency could not be saved. Please, try again.'));
         }
         $activities = $this->Competencies->Activities->find('list', ['limit' => 200]);
         $pathways = $this->Competencies->Pathways->find('list', ['limit' => 200]);
@@ -102,9 +102,9 @@ class CompetenciesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $competency = $this->Competencies->get($id);
         if ($this->Competencies->delete($competency)) {
-            $this->Flash->success(__('The competency has been deleted.'));
+            print(__('The competency has been deleted.'));
         } else {
-            $this->Flash->error(__('The competency could not be deleted. Please, try again.'));
+            print(__('The competency could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

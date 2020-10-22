@@ -51,11 +51,11 @@ class MinistriesController extends AppController
         if ($this->request->is('post')) {
             $ministry = $this->Ministries->patchEntity($ministry, $this->request->getData());
             if ($this->Ministries->save($ministry)) {
-                $this->Flash->success(__('The ministry has been saved.'));
+                print(__('The ministry has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The ministry could not be saved. Please, try again.'));
+            print(__('The ministry could not be saved. Please, try again.'));
         }
         $this->set(compact('ministry'));
     }
@@ -75,11 +75,11 @@ class MinistriesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $ministry = $this->Ministries->patchEntity($ministry, $this->request->getData());
             if ($this->Ministries->save($ministry)) {
-                $this->Flash->success(__('The ministry has been saved.'));
+                print(__('The ministry has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The ministry could not be saved. Please, try again.'));
+            print(__('The ministry could not be saved. Please, try again.'));
         }
         $this->set(compact('ministry'));
     }
@@ -96,9 +96,9 @@ class MinistriesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $ministry = $this->Ministries->get($id);
         if ($this->Ministries->delete($ministry)) {
-            $this->Flash->success(__('The ministry has been deleted.'));
+            print(__('The ministry has been deleted.'));
         } else {
-            $this->Flash->error(__('The ministry could not be deleted. Please, try again.'));
+            print(__('The ministry could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

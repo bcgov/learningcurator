@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 Use Cake\ORM\TableRegistry;
+use Cake\I18n\FrozenTime;
 
 
 /**
@@ -101,7 +102,8 @@ class UsersController extends AppController
         $this->Authorization->skipAuthorization();
         $user = $this->Users->newEmptyEntity();
         $idir = env('REMOTE_USER');
-		$idir = strtolower(str_replace('IDIR\\','',$idir));
+        $idir = strtolower(str_replace('IDIR\\','',$idir));
+        $user->created = date('Y-m-d H:i:s');
         $user->name = $idir;
         $user->idir = $idir;
         $user->ministry_id = 1;
@@ -126,15 +128,23 @@ class UsersController extends AppController
     public function add()
     {
         $user = $this->Users->newEmptyEntity();
+        
         $this->Authorization->authorize($user);
         if ($this->request->is('post')) {
+
+            // I don't know why the following won't work 
+            // to reassign the created date :( it's in the form now
+            // leaving this here as a puzzler
+            //$this->request->getData()['created'] = FrozenTime::now();
+            //$user->created = FrozenTime::now();
+            
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                print(__('The user has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'list']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            print(__('The user could not be saved. Please, try again.'));
         }
         $ministries = $this->Users->Ministries->find('list', ['limit' => 200]);
         $roles = $this->Users->Roles->find('list', ['limit' => 200]);
@@ -161,11 +171,11 @@ class UsersController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                print(__('The user has been saved.'));
 
                 return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            print(__('The user could not be saved. Please, try again.'));
         }
         $ministries = $this->Users->Ministries->find('list', ['limit' => 200]);
         $roles = $this->Users->Roles->find('list', ['limit' => 200]);
@@ -187,9 +197,9 @@ class UsersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
+            print(__('The user has been deleted.'));
         } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+            print(__('The user could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -220,7 +230,7 @@ class UsersController extends AppController
         }
         // display error if user submitted and authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
-            $this->Flash->error(__('Invalid username'));
+            print(__('Invalid username'));
         }
     }
 
@@ -286,7 +296,8 @@ class UsersController extends AppController
         $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
         $bookmarks = $books->find('all')
                             ->where(['user_id' => $u->id])
-                            ->contain(['Activities','Activities.ActivityTypes']);
+                            ->contain(['Activities','Activities.ActivityTypes'])
+                            ->order(['ActivitiesBookmarks.created' => 'desc']);
         
         $user = $this->Users->get($u->id, [
             'contain' => ['Pathways', 

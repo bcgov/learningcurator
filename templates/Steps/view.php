@@ -11,7 +11,11 @@ if ($this->Identity->isLoggedIn()) {
 	$role = $this->Identity->get('role_id');
 	$uid = $this->Identity->get('id');
 }
-
+/** 
+ * Most of the following should be moved into the controller
+ * I just find it easier to prototype when the logic I'm working
+ * with is in the same file
+ */
 $stepTime = 0;
 $defunctacts = array();
 $requiredacts = array();
@@ -38,6 +42,8 @@ foreach ($step->activities as $activity) {
 	$stepname = '';
 	//print_r($activity);
 	// If this is 'defunct' then we pull it out of the list 
+	// and add it the defunctacts array so we can show them
+	// but in a different section
 	if($activity->status_id == 3) {
 		array_push($defunctacts,$activity);
 	} elseif($activity->status_id == 2) {
@@ -162,6 +168,9 @@ if($stepclaimcount > 0) {
 		</h2>	
 		<div class="" style="font-size: 130%;"><?= $s->description; ?></div>
 		<div class="my-3">
+			<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
+			<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
+			<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
 			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
 				<?= $allreadstepcount ?> to read
 			</span>  
@@ -174,10 +183,6 @@ if($stepclaimcount > 0) {
 			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
 				<?= $allparticipatestepcount ?> to participate in
 			</span>  
-
-			<span class="badge badge-pill badge-light"><?= $totalacts ?> total</span> 
-			<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
-			<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
 		</div>
 	</div>
 	<div class="col-2">
@@ -258,7 +263,7 @@ $lastobj = $s->description;
 		<div class="mb-3">
 		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 			<i class="fas fa-clock"></i>
-			<?= $activity->estimated_time ?>
+			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
 		</span> 
 		<?php foreach($activity->tags as $tag): ?>
 		<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
@@ -322,7 +327,7 @@ $lastobj = $s->description;
 
 	<a target="_blank" 
 		rel="noopener" 
-		data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
+		data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
 		href="<?= $activity->hyperlink ?>" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
@@ -396,17 +401,24 @@ $lastobj = $s->description;
 	<?php foreach ($supplementalacts as $activity): ?>
 	<div class="col-md-12 col-lg-12">
 	<div class="p-3 my-3 bg-white rounded-lg">
+
 		<h4>
 			<a href="/learning-curator/activities/view/<?= $activity->id ?>">
 				<?= $activity->name ?>
 			</a>
 		</h4>
-		<div class="">
+		<div class="p-2">
+			<div>
+				<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+					<i class="fas fa-clock"></i>
+					<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
+				</span> 
+			</div>
 			<?= $activity->description ?>
 			
 			<a target="_blank" 
 				rel="noopener" 
-				data-toggle="tooltip" data-placement="bottom" title="<?= $activity->activity_type->name ?> this activity"
+				data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
 				href="<?= $activity->hyperlink ?>" 
 				style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 				class="btn btn-block my-3 text-uppercase btn-lg">
@@ -519,9 +531,6 @@ $(document).ready(function(){
 		
 		e.preventDefault();
 		var form = $(this);
-		form.children('button').removeClass('btn-light').addClass('btn-dark').html('<span class="fas fa-bookmark"></span> Bookmarked!').tooltip('dispose').attr('title','Good job!');
-		
-		//$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
 
 		var url = form.attr('action');
 		$.ajax({
@@ -530,7 +539,13 @@ $(document).ready(function(){
 			data: form.serialize(),
 			success: function(data)
 			{
-				//loadStatus();
+				form.children('button')
+					.removeClass('btn-light')
+					.addClass('btn-dark')
+					.html('<span class="fas fa-bookmark"></span> Bookmarked!')
+					.tooltip('dispose')
+					.attr('title','Good job!')
+					.after('&nbsp; <a href="/learning-curator/users/bookmarks">Access all your bookmarks through your profile</a>.');
 			},
 			statusCode: 
 			{

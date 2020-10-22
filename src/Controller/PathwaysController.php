@@ -126,7 +126,6 @@ class PathwaysController extends AppController
 
         $this->set(compact('pathway', 'usersonthispathway','stepsalongtheway', 'useractivitylist','followers'));
 
-
     }
 
 
@@ -196,11 +195,11 @@ class PathwaysController extends AppController
         if ($this->request->is('post')) {
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
             if ($this->Pathways->save($pathway)) {
-                //$this->Flash->success(__('The pathway has been saved.'));
+                //print(__('The pathway has been saved.'));
                 $go = '/pathways/view/' . $pathway->id;
                 return $this->redirect($go);
             }
-            //$this->Flash->error(__('The pathway could not be saved. Please, try again.'));
+            //print(__('The pathway could not be saved. Please, try again.'));
         }
         $categories = $this->Pathways->Categories->find('list', ['limit' => 200]);
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
@@ -229,11 +228,11 @@ class PathwaysController extends AppController
             $this->request->getData()['status_id'] = 2;
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
             if ($this->Pathways->save($pathway)) {
-                $this->Flash->success(__('The pathway has been saved.'));
+                print(__('The pathway has been saved.'));
                 $pathback = '/pathways/view/' . $id;
                 return $this->redirect($pathback);
             }
-            $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
+            print(__('The pathway could not be saved. Please, try again.'));
         }
 
     }
@@ -256,11 +255,11 @@ class PathwaysController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
             if ($this->Pathways->save($pathway)) {
-                $this->Flash->success(__('The pathway has been saved.'));
+                print(__('The pathway has been saved.'));
                 $pathback = '/pathways/view/' . $id;
                 return $this->redirect($pathback);
             }
-            $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
+            print(__('The pathway could not be saved. Please, try again.'));
         }
         $categories = $this->Pathways->Categories->find('list', ['limit' => 200]);
         $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
@@ -284,9 +283,9 @@ class PathwaysController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $pathway = $this->Pathways->get($id);
         if ($this->Pathways->delete($pathway)) {
-            $this->Flash->success(__('The pathway has been deleted.'));
+            print(__('The pathway has been deleted.'));
         } else {
-            $this->Flash->error(__('The pathway could not be deleted. Please, try again.'));
+            print(__('The pathway could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

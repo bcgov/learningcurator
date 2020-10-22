@@ -54,11 +54,11 @@ class CompetenciesPathwaysController extends AppController
         if ($this->request->is('post')) {
             $competenciesPathway = $this->CompetenciesPathways->patchEntity($competenciesPathway, $this->request->getData());
             if ($this->CompetenciesPathways->save($competenciesPathway)) {
-                $this->Flash->success(__('The competencies pathway has been saved.'));
+                print(__('The competencies pathway has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The competencies pathway could not be saved. Please, try again.'));
+            print(__('The competencies pathway could not be saved. Please, try again.'));
         }
         $competencies = $this->CompetenciesPathways->Competencies->find('list', ['limit' => 200]);
         $pathways = $this->CompetenciesPathways->Pathways->find('list', ['limit' => 200]);
@@ -80,11 +80,11 @@ class CompetenciesPathwaysController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $competenciesPathway = $this->CompetenciesPathways->patchEntity($competenciesPathway, $this->request->getData());
             if ($this->CompetenciesPathways->save($competenciesPathway)) {
-                $this->Flash->success(__('The competencies pathway has been saved.'));
+                print(__('The competencies pathway has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The competencies pathway could not be saved. Please, try again.'));
+            print(__('The competencies pathway could not be saved. Please, try again.'));
         }
         $competencies = $this->CompetenciesPathways->Competencies->find('list', ['limit' => 200]);
         $pathways = $this->CompetenciesPathways->Pathways->find('list', ['limit' => 200]);
@@ -103,9 +103,9 @@ class CompetenciesPathwaysController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $competenciesPathway = $this->CompetenciesPathways->get($id);
         if ($this->CompetenciesPathways->delete($competenciesPathway)) {
-            $this->Flash->success(__('The competencies pathway has been deleted.'));
+            print(__('The competencies pathway has been deleted.'));
         } else {
-            $this->Flash->error(__('The competencies pathway could not be deleted. Please, try again.'));
+            print(__('The competencies pathway could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

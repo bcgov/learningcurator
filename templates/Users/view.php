@@ -9,6 +9,7 @@
 <?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id], ['class' => 'btn btn-dark btn-sm']) ?>
 <?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'btn btn-dark btn-sm']) ?>
 </div>
+Created on: <?= h($user->created) ?>
 <h1><?= h($user->name) ?></h1>
 <div class="row">
 <?php if (!empty($user->pathways)) : ?>

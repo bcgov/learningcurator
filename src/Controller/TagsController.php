@@ -54,11 +54,11 @@ class TagsController extends AppController
         if ($this->request->is('post')) {
             $tag = $this->Tags->patchEntity($tag, $this->request->getData());
             if ($this->Tags->save($tag)) {
-                $this->Flash->success(__('The tag has been saved.'));
+                print(__('The tag has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The tag could not be saved. Please, try again.'));
+            print(__('The tag could not be saved. Please, try again.'));
         }
         $activities = $this->Tags->Activities->find('list', ['limit' => 200]);
         $this->set(compact('tag', 'activities'));
@@ -80,11 +80,11 @@ class TagsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $tag = $this->Tags->patchEntity($tag, $this->request->getData());
             if ($this->Tags->save($tag)) {
-                $this->Flash->success(__('The tag has been saved.'));
+                print(__('The tag has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The tag could not be saved. Please, try again.'));
+            print(__('The tag could not be saved. Please, try again.'));
         }
         $activities = $this->Tags->Activities->find('list', ['limit' => 200]);
         $this->set(compact('tag', 'activities'));
@@ -103,9 +103,9 @@ class TagsController extends AppController
         $tag = $this->Tags->get($id);
         $this->Authorization->authorize($tag);
         if ($this->Tags->delete($tag)) {
-            $this->Flash->success(__('The tag has been deleted.'));
+            print(__('The tag has been deleted.'));
         } else {
-            $this->Flash->error(__('The tag could not be deleted. Please, try again.'));
+            print(__('The tag could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

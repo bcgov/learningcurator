@@ -83,7 +83,7 @@ $this->layout = 'nowrap';
 
 <div class="p-3 mb-2 bg-white rounded-lg">
 <div class="float-right">
-<?= $this->Form->postLink(__('x'), ['controller' => 'ActivitiesBookmarks','action' => 'delete/'. $bookmark->id], ['class' => 'btn btn-sm btn-dark', 'confirm' => __('Are you sure you want to delete # {0}?', $bookmark->activity_id)]) ?>
+<?= $this->Form->postLink(__('x'), ['controller' => 'ActivitiesBookmarks','action' => 'delete/'. $bookmark->id], ['class' => 'btn btn-sm btn-dark', 'confirm' => __('Delete this bookmark?', $bookmark->activity_id)]) ?>
 </div>
 		<a href="/learning-curator/activity-types/view/<?= $bookmark->activity->activity_type->id ?>" 
 			class="activity-icon activity-icon-md" 

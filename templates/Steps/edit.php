@@ -194,7 +194,21 @@ label {
     <?php //echo $this->Form->control('isbn', ['class' => 'form-control']); ?>
     
     <?php //echo $this->Form->control('status_id', ['class' => 'form-control', 'options' => $statuses, 'empty' => true]); ?>
-    <?php echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
+    <?php //echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
+    <label>Estimated Time
+    <select name="estimated_time" id="estimated_time_id" class="form-control">
+        <option>Under 10 mins</option>
+        <option>Under 30 mins</option>
+        <option>Under 1 hour</option>
+        <option>About an hour</option>
+        <option>A couple of hours</option>
+        <option>A half day</option>
+        <option>About a day</option>
+        <option>A couple of days</option>
+        <option>About a week</option>
+        <option>A week +</option>
+    </select>
+    </label>
     <?php //echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text', 'label' => 'Tags']); ?>
     <?php //echo $this->Form->control('users._ids', ['class' => 'form-control', 'options' => $users]); ?>
     <?php //echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); ?>

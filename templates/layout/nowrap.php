@@ -116,6 +116,9 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 			<a class="nav-link" href="/learning-curator/activities">Latest</a>
 		</li>
 		<li class="nav-item">
+			<a class="nav-link" href="/learning-curator/pages/howto">How To Use</a>
+		</li>
+		<li class="nav-item">
 			<a class="nav-link" href="/learning-curator/pages/faq">FAQ</a>
 		</li>
 		<li class="nav-item">
@@ -135,7 +138,7 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 			<a class="dropdown-item" href="/learning-curator/pathways">All Pathways</a>
 			<a class="dropdown-item" href="/learning-curator/activity-types">Activity Types</a>
 			<a class="dropdown-item" href="/learning-curator/activities">All Activities</a>
-			<a class="dropdown-item" href="/learning-curator/users">All Users</a>
+			<a class="dropdown-item" href="/learning-curator/users/list">All Users</a>
 			<a class="dropdown-item" href="/learning-curator/competencies">All Competencies</a>
 			<a class="dropdown-item" href="/learning-curator/ministries">All Ministries</a>
 			<a class="dropdown-item" href="/learning-curator/categories">All Categories</a>

@@ -26,6 +26,7 @@ $this->loadHelper('Authentication.Identity');
                     echo $this->Form->control('name',['class' => 'form-control']);
                     echo $this->Form->control('description',['class' => 'form-control']);
                     echo $this->Form->control('objective',['class' => 'form-control']);
+                    echo $this->Form->control('estimated_time', ['class' => 'form-control']);
                     echo $this->Form->hidden('status_id',['value' => 1]);
                     //echo $this->Form->control('color');
                     //echo $this->Form->control('file_path');

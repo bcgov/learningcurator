@@ -15,6 +15,48 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  */
 class ActivitiesController extends AppController
 {
+        /**
+     * Export method to create an XML export method
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function export()
+    {
+        $this->Authorization->skipAuthorization();
+        $activities = $this->Activities
+                            ->find('all')
+                            ->contain(['Statuses', 
+                                        'Ministries', 
+                                        'Categories', 
+                                        'ActivityTypes',
+                                        'Steps.Pathways'])
+                            ->where(['Activities.status_id' => 2])
+                            ->order(['Activities.created' => 'DESC']);
+
+        $this->set(compact('activities'));
+    }
+    
+    /**
+     * list method 
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function list()
+    {
+        $this->Authorization->skipAuthorization();
+        $activities = $this->Activities
+                            ->find('all')
+                            ->contain(['Statuses', 
+                                        'Ministries', 
+                                        'Categories', 
+                                        'ActivityTypes',
+                                        'Steps.Pathways'])
+                            ->where(['Activities.status_id' => 2])
+                            ->order(['Activities.created' => 'DESC']);
+        
+        $this->set(compact('activities'));
+    }
+
     /**
      * Index method
      *
@@ -183,6 +225,24 @@ class ActivitiesController extends AppController
     }
 
     /**
+     * Time method for activities so you can show activities based on estimated_time
+     *
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function estimatedtime($timeframe = null)
+    {
+        $this->Authorization->skipAuthorization();
+        $activities = $this->Activities->find()->contain('Steps.Pathways','ActivityTypes')->where(function ($exp, $query) use($timeframe) {
+            return $exp->like('estimated_time', '%'.$timeframe.'%');
+        })->order(['name' => 'ASC']);
+        //$activities = $this->Activities->findByEstimated_time($time)->firstOrFail();
+        $numresults = $activities->count();
+        
+        $this->set(compact('activities','numresults','timeframe'));
+    }
+
+    /**
      * Find method for activities; intended for use as an auto-complete
      *  search function for adding activities to steps
      *
@@ -229,11 +289,11 @@ class ActivitiesController extends AppController
             $activity->modifiedby_id = $user->id;
 
             if ($this->Activities->save($activity)) {
-                //$this->Flash->success(__('The activity has been saved.'));
+                //print(__('The activity has been saved.'));
                 $go = '/activities/view/' . $activity->id;
                 return $this->redirect($go);
             }
-            //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
+            //print(__('The activity could not be saved. Please, try again.'));
         }
         $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
         $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
@@ -304,11 +364,11 @@ class ActivitiesController extends AppController
             $activity->moderator_notes = '';
 
             if ($this->Activities->save($activity)) {
-                //$this->Flash->success(__('The activity has been saved.'));
+                //print(__('The activity has been saved.'));
                 $go = '/activities/view/' . $activity->id;
                 return $this->redirect($go);
             }
-            //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
+            //print(__('The activity could not be saved. Please, try again.'));
         }
         $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
         $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
@@ -337,11 +397,11 @@ class ActivitiesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             if ($this->Activities->save($activity)) {
-                //$this->Flash->success(__('The activity has been saved.'));
+                //print(__('The activity has been saved.'));
                 $go = '/activities/view/' . $id;
-                return $this->redirect($go);
+                return $this->redirect($this->referer());
             }
-            //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
+            //print(__('The activity could not be saved. Please, try again.'));
         }
         $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
         $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
@@ -376,7 +436,7 @@ class ActivitiesController extends AppController
                 echo 'Liked!';
                 //return $this->redirect($this->referer());
             } else {
-                //$this->Flash->error(__('The activity could not be saved. Please, try again.'));
+                //print(__('The activity could not be saved. Please, try again.'));
             }
         }
     }
@@ -396,9 +456,9 @@ class ActivitiesController extends AppController
         $activity = $this->Activities->get($id);
         $this->Authorization->authorize($activity);
         if ($this->Activities->delete($activity)) {
-            //$this->Flash->success(__('The activity has been deleted.'));
+            //print(__('The activity has been deleted.'));
         } else {
-            //$this->Flash->error(__('The activity could not be deleted. Please, try again.'));
+            //print(__('The activity could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

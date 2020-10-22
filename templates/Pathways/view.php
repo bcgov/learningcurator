@@ -86,12 +86,16 @@ This seems to work out, but #TODO investigate optimizing this
 
 	<div class="py-3" style="background-color: rgba(255,255,255,.5)">
 	<?= $pathway->objective ?> 
+	
+	<div class="my-2"><em>Estimated time for this pathway: <?= h($pathway->estimated_time) ?></em></div>
+
 	<div class="mb-2">
 	<span class="badge badge-light readtotal"></span>  
 	<span class="badge badge-light watchtotal"></span>  
 	<span class="badge badge-light listentotal"></span>  
 	<span class="badge badge-light participatetotal"></span>  
 	</div>
+	
 	<?php if($role == 2 || $role == 5): ?>
 
 	<a class="" 
@@ -180,7 +184,7 @@ This seems to work out, but #TODO investigate optimizing this
 <?= $this->Form->end() ?>
 <div class="py-3">
 
-<div>Following a pathway is a committment to moving 
+<div>Following a pathway is a commitment to moving 
 through each step and claiming each required activity as you complete it.
 Fill your activity rings and get a certificate!
 </div>
@@ -291,15 +295,23 @@ if($stepclaimcount > 0) {
 	<div style="font-size; 130%"><?= $steps->description ?></div>
 	
 	<div class="my-3">
-		<span class="badge badge-light" style="background-color: rgba(<?= $readcolor ?>,1)"><?= $readstepcount ?> to read</span>  
-		<span class="badge badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)"><?= $watchstepcount ?> to watch</span>  
-		<span class="badge badge-light" style="background-color: rgba(<?= $listencolor ?>,1)"><?= $listenstepcount ?> to listen to</span>  
-		<span class="badge badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)"><?= $participatestepcount ?> to participate in</span>  
+			<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
+			<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
+			<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
+				<?= $readstepcount ?> to read
+			</span>  
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
+				<?= $watchstepcount ?> to watch
+			</span>  
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
+				<?= $listenstepcount ?> to listen to
+			</span>  
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
+				<?= $participatestepcount ?> to participate in
+			</span>  
+		</div>
 		
-		<span class="badge badge-pill badge-light"><?= $totalacts ?> total</span> 
-		<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
-		<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
-	</div>
 	<div class="progress progress-bar-striped mb-3" style="background-color: #F1F1F1; height: 26px;">
 	  <div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,.8); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
 		<?= $steppercent ?>% completed

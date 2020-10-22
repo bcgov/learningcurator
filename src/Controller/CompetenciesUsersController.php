@@ -54,11 +54,11 @@ class CompetenciesUsersController extends AppController
         if ($this->request->is('post')) {
             $competenciesUser = $this->CompetenciesUsers->patchEntity($competenciesUser, $this->request->getData());
             if ($this->CompetenciesUsers->save($competenciesUser)) {
-                $this->Flash->success(__('The competencies user has been saved.'));
+                print(__('The competencies user has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The competencies user could not be saved. Please, try again.'));
+            print(__('The competencies user could not be saved. Please, try again.'));
         }
         $competencies = $this->CompetenciesUsers->Competencies->find('list', ['limit' => 200]);
         $users = $this->CompetenciesUsers->Users->find('list', ['limit' => 200]);
@@ -80,11 +80,11 @@ class CompetenciesUsersController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $competenciesUser = $this->CompetenciesUsers->patchEntity($competenciesUser, $this->request->getData());
             if ($this->CompetenciesUsers->save($competenciesUser)) {
-                $this->Flash->success(__('The competencies user has been saved.'));
+                print(__('The competencies user has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The competencies user could not be saved. Please, try again.'));
+            print(__('The competencies user could not be saved. Please, try again.'));
         }
         $competencies = $this->CompetenciesUsers->Competencies->find('list', ['limit' => 200]);
         $users = $this->CompetenciesUsers->Users->find('list', ['limit' => 200]);
@@ -103,9 +103,9 @@ class CompetenciesUsersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $competenciesUser = $this->CompetenciesUsers->get($id);
         if ($this->CompetenciesUsers->delete($competenciesUser)) {
-            $this->Flash->success(__('The competencies user has been deleted.'));
+            print(__('The competencies user has been deleted.'));
         } else {
-            $this->Flash->error(__('The competencies user could not be deleted. Please, try again.'));
+            print(__('The competencies user could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

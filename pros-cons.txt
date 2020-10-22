@@ -1,0 +1,23 @@
+
+To Track Or Not To Track
+    Full tracking (pathways followed, activities claimed, show progress)
+    Partial tracking (implemented on-device only) (could start here and add in remote sync later)
+    No Tracking at all; just lists of pathways and steps and activities BYOTracking
+
+
+Moodle
+    Pros
+        Standardized admin interface
+        Expansion of activity types
+        Existing documentation
+    Cons
+        Expansion of activity types
+        Existing documentation means can't stray too far for themeing options
+
+
+Curator CMS
+    Pros
+        Modern code base, written for OpenShift
+        We can do whatever we want
+    Cons
+        We can do whatever we want

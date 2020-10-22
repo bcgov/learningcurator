@@ -56,6 +56,19 @@ class ActivitiesStepsController extends AppController
         $activitiesStep->step_id = $this->request->getData()['step_id'];
         $activitiesStep->activity_id = $this->request->getData()['activity_id'];
         $pathid = $this->request->getData()['pathway_id'] ?? 0;
+        // We want to check to see if this activity has already been added to this step
+        // so that it doesn't accidentally get added twice. 
+        $checkfirst = $this->ActivitiesSteps->find('all')->
+                                                where(['step_id' => $this->request->getData()['step_id']])->
+                                                where(['activity_id' => $this->request->getData()['activity_id']]);
+        // #TODO make this a better UX by checking in javascript or something
+        // #TODO also refactor this so that it doesn't make the above queries 
+        // if the test fails
+        if(!$checkfirst->isEmpty()) { 
+            echo 'This activity is already on this step! Please go back and try again.';
+            exit;
+        }
+        
         if ($this->request->is('post')) {
             
             if ($this->ActivitiesSteps->save($activitiesStep)) {
@@ -90,11 +103,11 @@ class ActivitiesStepsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
             if ($this->ActivitiesSteps->save($activitiesStep)) {
-                $this->Flash->success(__('The activities step has been saved.'));
+                print(__('The activities step has been saved.'));
 
                 return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The activities step could not be saved. Please, try again.'));
+            print(__('The activities step could not be saved. Please, try again.'));
         }
         $activities = $this->ActivitiesSteps->Activities->find('list', ['limit' => 200]);
         $steps = $this->ActivitiesSteps->Steps->find('list', ['limit' => 200]);
@@ -136,11 +149,11 @@ class ActivitiesStepsController extends AppController
             $activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
             $this->Authorization->authorize($activitiesStep);
             if ($this->ActivitiesSteps->save($activitiesStep)) {
-                $this->Flash->success(__('The activities step has been saved.'));
+                print(__('The activities step has been saved.'));
 
                 return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The activities step could not be saved. Please, try again.'));
+            print(__('The activities step could not be saved. Please, try again.'));
         }
         $activities = $this->ActivitiesSteps->Activities->find('list', ['limit' => 200]);
         $steps = $this->ActivitiesSteps->Steps->find('list', ['limit' => 200]);
@@ -172,10 +185,10 @@ class ActivitiesStepsController extends AppController
         
         //if ($this->request->is('post')) {
             if ($this->ActivitiesSteps->save($activitiesStep)) {
-                //$this->Flash->success(__('That activity is now in a different order. Good job!'));
+                //print(__('That activity is now in a different order. Good job!'));
                 return $this->redirect($this->referer());
             }
-            //$this->Flash->error(__('The users action could not be saved. Please, try again.'));
+            //print(__('The users action could not be saved. Please, try again.'));
         //}
     }
 

@@ -57,11 +57,11 @@ class TopicsController extends AppController
         if ($this->request->is('post')) {
             $topic = $this->Topics->patchEntity($topic, $this->request->getData());
             if ($this->Topics->save($topic)) {
-                $this->Flash->success(__('The topic has been saved.'));
+                print(__('The topic has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The topic could not be saved. Please, try again.'));
+            print(__('The topic could not be saved. Please, try again.'));
         }
         $users = $this->Topics->Users->find('list', ['limit' => 200]);
         $categories = $this->Topics->Categories->find('list', ['limit' => 200]);
@@ -84,11 +84,11 @@ class TopicsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $topic = $this->Topics->patchEntity($topic, $this->request->getData());
             if ($this->Topics->save($topic)) {
-                $this->Flash->success(__('The topic has been saved.'));
+                print(__('The topic has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The topic could not be saved. Please, try again.'));
+            print(__('The topic could not be saved. Please, try again.'));
         }
         $users = $this->Topics->Users->find('list', ['limit' => 200]);
         $categories = $this->Topics->Categories->find('list', ['limit' => 200]);
@@ -108,9 +108,9 @@ class TopicsController extends AppController
         $topic = $this->Topics->get($id);
         $this->Authorization->authorize($topic);
         if ($this->Topics->delete($topic)) {
-            $this->Flash->success(__('The topic has been deleted.'));
+            print(__('The topic has been deleted.'));
         } else {
-            $this->Flash->error(__('The topic could not be deleted. Please, try again.'));
+            print(__('The topic could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -1,0 +1,64 @@
+
+---
+Thoughts
+--- 
+
+If we pivot into Moodle and start adding (more? we should eval the use of the PDF exercises as they muddle the message) 
+curator-specific activities that move into different types of courses, aren't we then just de facto creating new 
+entirely new courses? How are these courses different than any other course type that we're creating? It's the same pedgogy,
+just with an emphasis placed upon external resources? But the courses we create already leverage external resources.
+Having custom content almost defeats the purpose of this thing and creates confusion as to what the platform is.
+We curate links. Period. The actual content is _out there_; the curator _just points to stuff_ and tells you why
+--in context of the pathway--it helps you achieve the goal. There should be no more to this and it should be 
+clearly branded and communicated that this is the case.
+
+
+What if we just didn't track user progress?
+What if we track it, but only track it on-device? localstorage
+JOIN A WORKING GROUP needs to be prominently displayed and invite each
+EXPOSE CURATORS we need to put faces to these working groups?? Why not???
+
+
+Curator CMS lives on Kepler (or similar--even Spitzer), segrated to just curators, and there's a build process 
+that outputs a static version of _just the content_ 
+Within the static output, javascript is added to talk to a user info API that handles pathway follows, 
+activity claims, and bookmarks?
+
+-[] Fork learning-curator into curator-cms
+-[] curator-ta built on Mongo/Express/NodeJS/TypeScript API for just user info
+-[] investigate redoing Curator CMS in Python/Django?
+
+
+-----
+DONE
+-----
+-[x] move to mysql(maria)/postgres?
+-[x] create reports dashboard so we can see reports! (rudimentary and unauthed but there /reports/listall)
+
+------------------
+New home page copy:
+------------------
+
+Follow a Pathway
+    By following a pathway, you begin to track your progress as you step through it
+Claim Activities
+    By claiming required activities you complete the steps 
+Track Your Progress
+    Activity Rings show how you progress through each of the activity types
+
+Explore
+Pathways are organized by topic. Curators create and contribute to these topics based on their area of expertise, working together in working groups.
+
+- Leadership
+- Diversity & Inclusion
+
+Keyword Search
+
+Latest Additions
+
+Your Profile
+A dashboard with all of your pathways, claimed activities, bookmarks, and reports.
+
+Contribute
+Is there a great acitivity that's missing from a step? Suggest it to the curator team, or look into becoming a curator yourself.
+

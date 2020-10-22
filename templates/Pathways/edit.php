@@ -25,6 +25,7 @@ if ($this->Identity->isLoggedIn()) {
                     echo $this->Form->control('name', ['class' => 'form-control']);
                     //echo $this->Form->control('color');
                     echo $this->Form->control('description', ['class' => 'form-control']);
+                    echo $this->Form->control('estimated_time', ['class' => 'form-control']);
                     echo $this->Form->control('objective', ['class' => 'form-control']);
                     //echo $this->Form->control('file_path');
                     //echo $this->Form->control('image_path');

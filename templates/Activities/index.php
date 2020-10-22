@@ -49,6 +49,10 @@ if ($this->Identity->isLoggedIn()) {
 	<?= $this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
 </h3>
 <div class="">
+<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+			<i class="fas fa-clock"></i>
+			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
+		</span> 
 	<div class="py-3">
 	<?= $activity->description ?>
 	</div>

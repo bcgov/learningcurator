@@ -21,8 +21,9 @@ class ReportsController extends AppController
     public function listit()
     {
         
-        $reports = $this->Reports->find('all');
-        $this->Authorization->authorize($reports);
+        $reports = $this->Reports->find('all')->contain(['Users','Activities']);
+        //$this->Authorization->authorize($reports);
+        $this->Authorization->skipAuthorization();
         $user = $this->request->getAttribute('identity');
         $this->set(compact('reports'));   
 
@@ -57,11 +58,11 @@ class ReportsController extends AppController
         if ($this->request->is('post')) {
             $report = $this->Reports->patchEntity($report, $this->request->getData());
             if ($this->Reports->save($report)) {
-                $this->Flash->success(__('The report has been saved.'));
+                print(__('The report has been saved.'));
 
                 return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The report could not be saved. Please, try again.'));
+            print(__('The report could not be saved. Please, try again.'));
         }
         $activities = $this->Reports->Activities->find('list', ['limit' => 200]);
         $users = $this->Reports->Users->find('list', ['limit' => 200]);
@@ -84,11 +85,11 @@ class ReportsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $report = $this->Reports->patchEntity($report, $this->request->getData());
             if ($this->Reports->save($report)) {
-                $this->Flash->success(__('The report has been saved.'));
+                print(__('The report has been saved.'));
 
                 return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The report could not be saved. Please, try again.'));
+            print(__('The report could not be saved. Please, try again.'));
         }
         $activities = $this->Reports->Activities->find('list', ['limit' => 200]);
         $users = $this->Reports->Users->find('list', ['limit' => 200]);
@@ -108,9 +109,9 @@ class ReportsController extends AppController
         $report = $this->Reports->get($id);
         $this->Authorization->authorize($report);
         if ($this->Reports->delete($report)) {
-            $this->Flash->success(__('The report has been deleted.'));
+            print(__('The report has been deleted.'));
         } else {
-            $this->Flash->error(__('The report could not be deleted. Please, try again.'));
+            print(__('The report could not be deleted. Please, try again.'));
         }
 
         return $this->redirect($this->referer());

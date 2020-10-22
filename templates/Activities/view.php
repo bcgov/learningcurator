@@ -18,6 +18,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <div class="col-md-12 col-lg-6">
 <div class="pad-lg">
+
 	<?php if($role == 2 || $role == 5): ?>
 	<div class="btn-group float-right">
 	<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $activity->id], ['confirm' => __('Really delete?'), 'class' => 'btn btn-sm btn-light']) ?>
@@ -50,10 +51,10 @@ if ($this->Identity->isLoggedIn()) {
 	</h1>
 	<div class="p-3 rounded-lg" style="background: rgba(255,255,255,.3);">
 		<div class="mb-2">
-			<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
-				<i class="fas fa-clock"></i>
-				<?= $activity->estimated_time ?>
-			</span>
+		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+			<i class="fas fa-clock"></i>
+			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time], ['class' => 'text-dark']) ?>
+		</span> 
 			<?php foreach($activity->tags as $tag): ?>
 			<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
 			<?php endforeach ?>
@@ -209,8 +210,15 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach($step->pathways as $path): ?>
 <?php if($path->status_id == 2): ?>
 <div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
+
 	<h4><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
+	<?php if($role == 2 || $role == 5): ?>
+		<?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $step->_joinData->id, 'class' => 'my-3']) ?>
+		<?= $this->Form->hidden('id', ['value' => $step->_joinData->id]) ?>
+		<?= $this->Form->button(__('Remove from step'),['class' => 'btn btn-sm btn-light']) ?>
+		<?= $this->Form->end() ?>
+	<?php endif ?>
 </div>
 <?php else: ?>
 <?php if($role == 2 || $role == 5): ?>

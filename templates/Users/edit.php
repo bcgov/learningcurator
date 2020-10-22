@@ -3,6 +3,13 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
+$this->loadHelper('Authentication.Identity');
+$uid = 0;
+$role = 0;
+if ($this->Identity->isLoggedIn()) {
+	$role = $this->Identity->get('role_id');
+	$uid = $this->Identity->get('id');
+}
 ?>
 
 <div class="row justify-content-md-center">
@@ -15,7 +22,10 @@
 			echo $this->Form->control('name',['class'=>'form-control']);
 			echo $this->Form->control('idir',['class'=>'form-control']);
 			echo $this->Form->control('ministry_id', ['options' => $ministries, 'class'=>'form-control']);
-			echo $this->Form->control('role_id', ['options' => $roles, 'class'=>'form-control']);
+			// Only Curators and admins can change roles
+			if($role == 2 || $role == 5) {
+				echo $this->Form->control('role_id', ['options' => $roles, 'class'=>'form-control']);
+			}
 			//echo $this->Form->control('image_path');
 			echo $this->Form->control('email',['class'=>'form-control']);
 			echo $this->Form->control('password',['class'=>'form-control']);
