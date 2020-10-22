@@ -16,7 +16,7 @@ clearly branded and communicated that this is the case.
 What if we just didn't track user progress?
 What if we track it, but only track it on-device? localstorage
 JOIN A WORKING GROUP needs to be prominently displayed and invite each
-EXPOSE CURATORS we need to put faces to these working groups??
+EXPOSE CURATORS we need to put faces to these working groups?? Why not???
 
 
 Curator CMS lives on Kepler (or similar--even Spitzer), segrated to just curators, and there's a build process 
@@ -25,8 +25,8 @@ Within the static output, javascript is added to talk to a user info API that ha
 activity claims, and bookmarks?
 
 -[] Fork learning-curator into curator-cms
--[] further investigate Mongo/Express/NodeJS/TypeScript API for just user info
--[] investigate redoing Curator CMS in Python/Django
+-[] curator-ta built on Mongo/Express/NodeJS/TypeScript API for just user info
+-[] investigate redoing Curator CMS in Python/Django?
 
 
 -----
