@@ -52,7 +52,7 @@ class PathwaysController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($slug = null)
     {
         $this->Authorization->skipAuthorization();
         // As we loop through the activities for the steps on this pathway, we 
@@ -82,8 +82,7 @@ class PathwaysController extends AppController
                 array_push($useractivitylist, $uact['activity_id']);
             }
         }
-        $pathway = $this->Pathways->get($id, [
-            'contain' => ['Categories', 
+        $pathway = $this->Pathways->findBySlug($slug)->contain(['Categories', 
                             'Ministries', 
                             'Competencies', 
                             'Steps', 
@@ -91,8 +90,7 @@ class PathwaysController extends AppController
                             'Steps.Activities.ActivityTypes', 
                             'Steps.Activities.Users', 
                             'Steps.Activities.Tags', 
-                            'Users'],
-        ]);
+                            'Users'])->firstOrFail();
         //
         // we want to be able to tell if the current user is already on this
         // pathway or not, so we take the same approach as above, parsing all

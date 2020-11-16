@@ -34,6 +34,7 @@ label {
     <?= $this->Form->hidden('modifiedby') ?>
     <?= $this->Form->hidden('pathway_id', ['value' => $step->pathway_id]) ?>
     <?= $this->Form->control('name', ['class' => 'form-control']) ?>
+    <?= $this->Form->control('slug', ['class' => 'form-control']); ?>
     <?= $this->Form->control('description', ['class' => 'form-control summernote']) ?>
     <?= $this->Form->control('objective', ['class' => 'form-control summernote']) ?>
     <?= $this->Form->button(__('Save Step'),['class' => 'btn btn-success btn-block my-3']) ?>

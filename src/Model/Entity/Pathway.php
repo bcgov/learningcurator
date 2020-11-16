@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  * @property string|null $color
  * @property string|null $description
  * @property string|null $objective
@@ -43,6 +44,7 @@ class Pathway extends Entity
      */
     protected $_accessible = [
         'name' => true,
+        'slug' => true,
         'color' => true,
         'description' => true,
         'objective' => true,

@@ -98,7 +98,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($role == 2 || $role == 5): ?>
 	<div class="p-3 mb-3 bg-white rounded-lg">
 		<span class="badge badge-warning"><?= $path->status->name ?></span>
-		<h3><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?></a></h3>
+		<h3><a href="/learning-curator/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
 		<?= $path->objective ?>
 		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
 	</div>
@@ -106,7 +106,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php else: ?>
 	<div class="p-3 mb-3 bg-white rounded-lg">
 		
-		<h3><a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?></a></h3>
+		<h3><a href="/learning-curator/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
 		<?= $path->objective ?>
 		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
 	</div>

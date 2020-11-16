@@ -83,7 +83,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($role == 2 || $role == 5): // is curator or admin ?>
 <span class="badge badge-warning"><?= $pathway->status->name ?></span>
 <h2>
-	<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->id]) ?>
+	<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
 </h2>
 <div class="mb-3">
 <?= h($pathway->objective) ?>
@@ -91,7 +91,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php endif; // is curator or admin ?>
 <?php else: ?>
 <h3>
-<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->id]) ?>
+<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
 </h3>
 <div class="mb-3">
 <?= h($pathway->description) ?>
