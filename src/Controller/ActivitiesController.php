@@ -5,6 +5,8 @@ namespace App\Controller;
 
 Use Cake\ORM\TableRegistry;
 use Cake\ORM\Locator\LocatorAwareTrait;
+// the Text class
+use Cake\Utility\Text;
 
 /**
  * Activities Controller
@@ -282,11 +284,17 @@ class ActivitiesController extends AppController
 	    $user = $this->request->getAttribute('authentication')->getIdentity();
         $activity = $this->Activities->newEmptyEntity();
         $this->Authorization->authorize($activity);
+        
+
+
 	    if ($this->request->is('post')) {
 
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             $activity->createdby_id = $user->id;
             $activity->modifiedby_id = $user->id;
+            $sluggedTitle = Text::slug($this->request->getData()['name']);
+            // trim slug to maximum length defined in schema
+            $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
 
             if ($this->Activities->save($activity)) {
                 //print(__('The activity has been saved.'));
@@ -324,13 +332,17 @@ class ActivitiesController extends AppController
             $activity->modifiedby_id = $user->id;
             $activity->status_id = 2;
 
+            $sluggedTitle = Text::slug($activity->name);
+            // trim slug to maximum length defined in schema
+            $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
+
             if ($this->Activities->save($activity)) {
 
                 $asteptable = TableRegistry::getTableLocator()->get('ActivitiesSteps');
                 $activitiesStep = $asteptable->newEmptyEntity();
                 $activitiesStep->step_id = $this->request->getData()['step_id'];
                 $activitiesStep->activity_id = $activity->id;
-                    
+
                 if (!$asteptable->save($activitiesStep)) {
                     echo 'Cannot add to step! Contact an admin. Sorry :)';
                     echo '' . $activity->id;
@@ -396,6 +408,9 @@ class ActivitiesController extends AppController
         $this->Authorization->authorize($activity);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+            $sluggedTitle = Text::slug($activity->name);
+            // trim slug to maximum length defined in schema
+            $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
             if ($this->Activities->save($activity)) {
                 //print(__('The activity has been saved.'));
                 $go = '/activities/view/' . $id;

@@ -74,6 +74,12 @@ class StepsTable extends Table
             ->notEmptyString('name');
 
         $validator
+            ->scalar('slug')
+            ->maxLength('slug', 255)
+            ->requirePresence('slug')
+            ->notEmptyString('slug');
+
+        $validator
             ->scalar('description')
             ->allowEmptyString('description');
 

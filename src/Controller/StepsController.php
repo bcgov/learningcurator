@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 Use Cake\ORM\TableRegistry;
+// the Text class
+use Cake\Utility\Text;
 
 /**
  * Steps Controller
@@ -32,17 +34,16 @@ class StepsController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($pathslug = null, $stepslug = null)
+    public function view($stepid = null)
     {
-        
-        $step = $this->Steps->get($stepslug, [
-            'contain' => ['Activities', 
-                            'Activities.ActivityTypes', 
-                            'Activities.Tags', 
-                            'Pathways', 
-                            'Pathways.Steps',
-                            'Pathways.Categories', 
-                            'Pathways.Users'],
+
+        $step = $this->Steps->get($stepid, ['contain' => ['Activities', 
+                                                            'Activities.ActivityTypes', 
+                                                            'Activities.Tags', 
+                                                            'Pathways', 
+                                                            'Pathways.Steps',
+                                                            'Pathways.Categories', 
+                                                            'Pathways.Users'],
         ]);
         $this->Authorization->authorize($step);
         $user = $this->request->getAttribute('authentication')->getIdentity();
@@ -95,8 +96,13 @@ class StepsController extends AppController
     {
         $step = $this->Steps->newEmptyEntity();
         $this->Authorization->authorize($step);
+        
         if ($this->request->is('post')) {
             $step = $this->Steps->patchEntity($step, $this->request->getData());
+            $sluggedTitle = Text::slug($step->name);
+            // trim slug to maximum length defined in schema
+            $step->slug = strtolower(substr($sluggedTitle, 0, 191));
+
             if ($this->Steps->save($step)) {
                 //print(__('The step has been saved.'));
                 $go = '/steps/edit/' . $step->id;
@@ -124,7 +130,15 @@ class StepsController extends AppController
         
         $this->Authorization->authorize($step);
         if ($this->request->is(['patch', 'post', 'put'])) {
+
+
+
             $step = $this->Steps->patchEntity($step, $this->request->getData());
+            $sluggedTitle = Text::slug($step->name);
+            // trim slug to maximum length defined in schema
+            $step->slug = strtolower(substr($sluggedTitle, 0, 191));
+            //echo $step->slug; exit;
+            
             if ($this->Steps->save($step)) {
                 //print(__('The step has been saved.'));
                 $pathback = '/steps/view/' . $id;

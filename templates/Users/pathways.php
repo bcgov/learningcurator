@@ -116,11 +116,15 @@ $this->layout = 'nowrap';
 	</div>
 	<div class="col">
 	
-<?= $this->Form->postLink(__('Unfollow'), ['controller' => 'PathwaysUsers','action' => 'delete/'. $pathways->_joinData->id], ['class' => 'btn btn-dark float-right', 'confirm' => __('Really unfollow?')]) ?>
+		<?= $this->Form->postLink(__('Unfollow'), ['controller' => 'PathwaysUsers','action' => 'delete/'. $pathways->_joinData->id], ['class' => 'btn btn-dark float-right', 'confirm' => __('Really unfollow?')]) ?>
 		<div>
 			<?= $pathways->has('category') ? $this->Html->link($pathways->category->name, ['controller' => 'Categories', 'action' => 'view', $pathways->category->id]) : '' ?>
 		</div>
-		<h3><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?></h3>
+		
+		<h3>
+		<?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->slug]) ?>
+		</h3>
+
 		<div><?= h($pathways->description) ?></div>
 		<div class="p-3 mt-3 bg-light">Overall Progress: <span class="status<?= $pathways->id ?>"></span>%</div>
 		

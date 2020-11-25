@@ -73,8 +73,9 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * Pathways 
      */
     $builder->connect('/pathways/{slug}', ['controller' => 'Pathways', 'action' => 'view'])->setPass(['slug']);
-    $builder->connect('/pathways/{pathslug}/s/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['pathslug','stepslug']);
+    $builder->connect('/pathways/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
     $builder->connect('/pathways/edit/*', ['controller' => 'Pathways', 'action' => 'edit']);
+    $builder->connect('/pathways/add', ['controller' => 'Pathways', 'action' => 'add']);
     $builder->connect('/pathways/status/*', ['controller' => 'Pathways', 'action' => 'status']);
     
     /*
