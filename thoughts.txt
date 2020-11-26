@@ -39,15 +39,17 @@ DONE
 New home page copy:
 ------------------
 
-Follow a Pathway
-    By following a pathway, you begin to track your progress as you step through it
-Claim Activities
-    By claiming required activities you complete the steps 
-Track Your Progress
-    Activity Rings show how you progress through each of the activity types
 
-Explore
-Pathways are organized by topic. Curators create and contribute to these topics based on their area of expertise, working together in working groups.
+FOLLOW A PATHWAY
+    By following a pathway, you begin to track your progress as you step through it
+CLAIM ACTIVITIES
+    By claiming required activities you complete the steps and fill in the rings
+BECOME A CURATOR
+    Pathways are organized by topic; Curators are immersed in it and collaborating on pathways
+
+
+Curators
+Pathways are organized by topic; Curators are immersed in that topic; they've been to the conferences, taken the courses, read the books, and consumed many hours of content; they are already aware of the big names and terminology; they are able to compare and contrast these aspects; it's their passion. When great new resources pop up somewhere, or perhaps some watershed moment happens and all the old information is wrong? Our Curators are often the first to know. When multiple Curators collaborate, they are able to create pathways which have defined goals and a clear progression from start-to-end, using only the most relevant and high-quality resources available. Pathways are organic in nature, changing over time to allow for growth and pruning; rearranging and correcting; collaborated upon with other Curators, with help from you!
 
 - Leadership
 - Diversity & Inclusion
