@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  * @property string|null $description
  * @property string|null $image_path
  * @property int|null $featured
@@ -34,6 +35,7 @@ class Step extends Entity
      */
     protected $_accessible = [
         'name' => true,
+        'slug' => true,
         'description' => true,
         'image_path' => true,
         'featured' => true,

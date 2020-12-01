@@ -22,6 +22,7 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
 <h1>
     <a href="/learning-curator/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
 </h1>
+<div class="alert alert-light"><em><?= $activity->slug ?></em></div>
 <a href="/learning-curator/activities/view/<?= $activity->id ?>" class="btn btn-sm btn-light">View</a>
 </div>
 </div>
@@ -73,9 +74,7 @@ $options = array(
         <div class="col-md-4 pt-3">
             <?php echo $this->Form->control('recommended', ['type' => 'text', 'class' => 'form-control']); ?>
         </div>
-        <div class="col-md-4 pt-3">
-            <?php echo $this->Form->control('slug', ['type' => 'text', 'class' => 'form-control']); ?>
-        </div>
+
     </div>
     </div>
     </div>
@@ -100,7 +99,7 @@ $options = array(
     <?= $this->Form->button(__('Save Activity'), ['class' => 'btn btn-block btn-success my-3']) ?>
     <h2>Pathways</h2>
     <?php foreach($activity->steps as $s): ?>
-<a href="/learning-curator/steps/view/<?= $s->id ?>"><?= $s->pathways[0]['name'] ?> - <?= $s->name ?></a>
+<a href="/learning-curator/pathways/<?= $s->pathways[0]['slug'] ?>/s/<?= $s->id ?>/<?= $s->slug ?>"><?= $s->pathways[0]['name'] ?> - <?= $s->name ?></a>
 <?php endforeach ?>
     </div>
     </div>

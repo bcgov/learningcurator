@@ -176,7 +176,7 @@ if ($this->Identity->isLoggedIn()) {
 		Steps
 	  </button>
 	
-	<a href="/learning-curator/pathways/view/<?= $pathway->id ?>" target="_blank" rel="noopener"><?= $pathway->name ?></a>
+	<a href="/learning-curator/pathways/<?= $pathway->slug ?>" target="_blank" rel="noopener"><?= $pathway->name ?></a>
 	
 	<div class="collapse p-3" id="steps<?= $pathway->id ?>">
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
@@ -211,7 +211,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($path->status_id == 2): ?>
 <div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
 
-	<h4><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
+	<h4><a href="/learning-curator/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
 	<?php if($role == 2 || $role == 5): ?>
 		<?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $step->_joinData->id, 'class' => 'my-3']) ?>
@@ -224,7 +224,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($role == 2 || $role == 5): ?>
 <div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
 <span class="badge badge-warning">DRAFT</span>
-	<h4><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
+	<h4><a href="/learning-curator/pathways/<?= $pathway->slug ?>/s/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
 </div>
 <?php endif ?>

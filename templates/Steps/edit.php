@@ -16,9 +16,10 @@ label {
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-12">
+
 <div class="pad-md">
-    <h1><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $step->name ?></a></h1>
-    <div><a href="/learning-curator/steps/view/<?= $step->id ?>" class="btn btn-light btn-sm">View Step</a></div>
+    <h1><a href="/learning-curator/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $step->name ?></a></h1>
+    <div><a href="/learning-curator/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>" class="btn btn-light btn-sm">View Step</a></div>
 </div>
 </div>
 </div>
@@ -34,6 +35,7 @@ label {
     <?= $this->Form->hidden('modifiedby') ?>
     <?= $this->Form->hidden('pathway_id', ['value' => $step->pathway_id]) ?>
     <?= $this->Form->control('name', ['class' => 'form-control']) ?>
+    <?php  //$this->Form->control('slug', ['class' => 'form-control']); ?>
     <?= $this->Form->control('description', ['class' => 'form-control summernote']) ?>
     <?= $this->Form->control('objective', ['class' => 'form-control summernote']) ?>
     <?= $this->Form->button(__('Save Step'),['class' => 'btn btn-success btn-block my-3']) ?>

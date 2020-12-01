@@ -23,6 +23,7 @@ if ($this->Identity->isLoggedIn()) {
                     echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true, 'class' => 'form-control']);
                     echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true, 'class' => 'form-control']);
                     echo $this->Form->control('name', ['class' => 'form-control']);
+                    echo $this->Form->control('slug', ['class' => 'form-control']);
                     //echo $this->Form->control('color');
                     echo $this->Form->control('description', ['class' => 'form-control']);
                     echo $this->Form->control('estimated_time', ['class' => 'form-control']);

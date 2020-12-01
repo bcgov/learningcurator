@@ -70,6 +70,15 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
     /*
+     * Pathways 
+     */
+    $builder->connect('/pathways/{slug}', ['controller' => 'Pathways', 'action' => 'view'])->setPass(['slug']);
+    $builder->connect('/pathways/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
+    $builder->connect('/pathways/edit/*', ['controller' => 'Pathways', 'action' => 'edit']);
+    $builder->connect('/pathways/add', ['controller' => 'Pathways', 'action' => 'add']);
+    $builder->connect('/pathways/status/*', ['controller' => 'Pathways', 'action' => 'status']);
+    
+    /*
      * Connect catchall routes for all controllers.
      *
      * The `fallbacks` method is a shortcut for
