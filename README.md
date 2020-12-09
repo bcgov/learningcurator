@@ -48,7 +48,7 @@ Under active development.
 
 ## How to Contribute
 
-Be part of the BC Gov organization here on Github, and join the group on [https://teams.microsoft.com/l/team/19%3a806e7ba6694e4bb1865bd3263084f80f%40thread.tacv2/conversations?groupId=08283480-3b33-45cd-ab68-0c9d6ede80e0&tenantId=6fdb5200-3d0d-4a8a-b036-d3685e359adc](MS Teams) 
+Be part of the BC Gov organization here on Github, and join the group on (https://teams.microsoft.com/l/team/19%3a806e7ba6694e4bb1865bd3263084f80f%40thread.tacv2/conversations?groupId=08283480-3b33-45cd-ab68-0c9d6ede80e0&tenantId=6fdb5200-3d0d-4a8a-b036-d3685e359adc)[MS Teams] 
 
 ## License
 Apache 2.0
