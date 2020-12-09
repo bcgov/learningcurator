@@ -23,12 +23,19 @@ SQLite database
 * Clone the repository
 * cd into learning-agent folder
 * run composer install
-* mkdir db && chmod 777 db
+* cp config/IdirAuthenticator.php vendor/cakephp/authentication/src/Authenticator/
+* cp config/IdirIdentifier.php vendor/cakephp/authentication/src/Identifier/
 * "somehow" obtain the starter database (ask Allan) and copy it into db #TODO figure this out!
-* chmod 777 db/curator.db
 * cp config/app_local.example.php to app_local.php
-* edit config/app_local.php to point to curator.db
-* if server is setup right to point the webroot folder, you should be good to go
+* edit config/app_local.php to point to MySQL database
+* if server is setup right to point the learning-curator/webroot folder, you should be good to go
+
+* if setting up locally, set a server variable of REMOTE_USER
+On Apache: 
+
+        SetEnv REMOTE_USER ahaggett
+
+Where "ahaggett" is the IDIR value assigned to user ID 1
 
 ## Project Status
 
