@@ -16,7 +16,7 @@ Follow pathways and complete the activities; get a certificate of completion.
 ## Requirements
 
 CakePHP 4.03
-SQLite database
+MySQL/MariaDB
 
 ## Installation
 
@@ -28,8 +28,7 @@ SQLite database
 * "somehow" obtain the starter database (ask Allan) and copy it into db #TODO figure this out!
 * cp config/app_local.example.php to app_local.php
 * edit config/app_local.php to point to MySQL database
-* if server is setup right to point the learning-curator/webroot folder, you should be good to go
-
+* point server (Apache?) to learning-curator/webroot folder
 * if setting up locally, set a server variable of REMOTE_USER
 On Apache: 
 
@@ -39,16 +38,17 @@ Where "ahaggett" is the IDIR value assigned to user ID 1
 
 ## Project Status
 
-Under active development; approaching beta.
+Under active development.
 
 ## Goals/Roadmap
-* Ministry-exclusive pathways
+* Currently using ZenHub to track our various backlogs
+* #TODO find a way to keep this section up-to-date rather than just pointing at zenhub 
 
 ## Getting Help or Reporting an Issue
 
 ## How to Contribute
 
-Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+Be part of the BC Gov organization here on Github, and join the group on [https://teams.microsoft.com/l/team/19%3a806e7ba6694e4bb1865bd3263084f80f%40thread.tacv2/conversations?groupId=08283480-3b33-45cd-ab68-0c9d6ede80e0&tenantId=6fdb5200-3d0d-4a8a-b036-d3685e359adc](MS Teams) 
 
 ## License
 Apache 2.0
