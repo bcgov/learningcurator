@@ -32,7 +32,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-4">
 <?php foreach($topic->pathways as $pathway): ?>
     <div class="p-3 my-3 bg-white rounded-lg">
-        <h2><?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?></h2>
+        <h2><?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->id],['class' => '']) ?></h2>
         <div><?= h($pathway->description) ?></div>
     </div>
 <?php endforeach ?>

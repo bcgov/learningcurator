@@ -52,7 +52,7 @@ class PathwaysController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($slug = null)
+    public function view($id = null)
     {
         $this->Authorization->skipAuthorization();
         // As we loop through the activities for the steps on this pathway, we 
@@ -82,15 +82,25 @@ class PathwaysController extends AppController
                 array_push($useractivitylist, $uact['activity_id']);
             }
         }
-        $pathway = $this->Pathways->findBySlug($slug)->contain(['Categories', 
+        $pathway = $this->Pathways->get($id, [
+            'contain' => ['Categories', 
+                            'Topics', 
                             'Ministries', 
                             'Competencies', 
                             'Steps', 
                             'Steps.Activities', 
                             'Steps.Activities.ActivityTypes', 
-                            'Steps.Activities.Users', 
-                            'Steps.Activities.Tags', 
-                            'Users'])->firstOrFail();
+                            'Steps.Activities.Tags'],
+        ]);
+        // $pathway = $this->Pathways->find($id)->contain(['Categories', 
+        //                     'Ministries', 
+        //                     'Competencies', 
+        //                     'Steps', 
+        //                     'Steps.Activities', 
+        //                     'Steps.Activities.ActivityTypes', 
+        //                     'Steps.Activities.Users', 
+        //                     'Steps.Activities.Tags', 
+        //                     'Users'])->firstOrFail();
         //
         // we want to be able to tell if the current user is already on this
         // pathway or not, so we take the same approach as above, parsing all
@@ -137,9 +147,10 @@ class PathwaysController extends AppController
     public function make($id = null)
     {
         $this->Authorization->skipAuthorization();
-        //$this->layout = false;
-        /*$pathway = $this->Pathways->get($id, [
+        
+        $pathway = $this->Pathways->get($id, [
             'contain' => ['Categories', 
+                            'Topics', 
                             'Ministries', 
                             'Competencies', 
                             'Steps', 
@@ -149,8 +160,8 @@ class PathwaysController extends AppController
         ]);
 
 
-        $this->set(compact('pathway'));*/
-        exec("wget --mirror --convert-links --adjust-extension --page-requisites --no-parent http://localhost:8080/learning-curator/");
+        $this->set(compact('pathway'));
+        //exec("wget --mirror --convert-links --adjust-extension --page-requisites --no-parent http://localhost:8080/learning-curator/");
 
 
     }
