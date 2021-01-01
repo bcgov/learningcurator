@@ -9,7 +9,7 @@
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-<link href="/learning-curator/fontawesome/css/all.css" rel="stylesheet"> 
+<link href="/node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> 
 
 </head>
 <body>
@@ -22,7 +22,13 @@
 	<span class="navbar-brand">
 	Functions of Government	</span>
 	<div class="progress">
-		<div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+		<div class="progress-bar bg-success" 
+				id="pathprogress"
+				role="progressbar" 
+				style="width: 0" 
+				aria-valuenow="0" 
+				aria-valuemin="0" 
+				aria-valuemax="100"></div>
 	</div>
 </div>
 
@@ -35,8 +41,8 @@
 	
 	<nav aria-label="breadcrumb">
 	<ol class="breadcrumb mt-3">
-		<li class="breadcrumb-item"><a href="/learning-curator/categories/view/1">Leadership</a></li>
-		<li class="breadcrumb-item"><a href="/learning-curator/topics/view/1">Fundamentals</a></li>
+		<li class="breadcrumb-item"><a href="/categories/view/1">Leadership</a></li>
+		<li class="breadcrumb-item"><a href="/topics/view/1">Fundamentals</a></li>
 		<!-- <li class="breadcrumb-item" aria-current="page">Functions of Government </li> -->
 	</ol>
 	</nav> 
@@ -59,7 +65,7 @@
 
 	<div class="p-3 bg-light shadow-sm rounded-3">
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-252"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-252"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-252" 
@@ -91,7 +97,7 @@
 		</div>
 	</div>
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-253"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-253"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-253" 
@@ -129,7 +135,7 @@ This is an excellent reference to keep for future use.</div>
 		</div>
 	</div>
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-254"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-254"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-254" 
@@ -163,7 +169,7 @@ This is an excellent reference to keep for future use.</div>
 		</div>
 	</div>
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-255"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-255"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-255" 
@@ -209,7 +215,7 @@ This is an excellent reference to keep for future use.</div>
 
 	<div class="p-3 bg-light shadow-sm rounded-3">
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-263"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-263"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-263" 
@@ -280,7 +286,7 @@ This is an excellent reference to keep for future use.</div>
 
 	<div class="p-3 bg-light shadow-sm rounded-3">
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-271"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-271"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-271" 
@@ -312,7 +318,7 @@ This is an excellent reference to keep for future use.</div>
 		</div>
 	</div>
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-272"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-272"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-272" 
@@ -344,7 +350,7 @@ This is an excellent reference to keep for future use.</div>
 		</div>
 	</div>
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-273"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-273"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-273" 
@@ -443,7 +449,7 @@ The declaration was adopted by resolution of the United Nations General Assembly
 
 	<div class="p-3 bg-light shadow-sm rounded-3">
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-257"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-257"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-257" 
@@ -475,7 +481,7 @@ The declaration was adopted by resolution of the United Nations General Assembly
 		</div>
 	</div>
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-256"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-256"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-256" 
@@ -507,7 +513,7 @@ The declaration was adopted by resolution of the United Nations General Assembly
 		</div>
 	</div>
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-347"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-347"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-347" 
@@ -637,7 +643,7 @@ You can register for this course in the Learning system.</div>
 
 	<div class="p-3 bg-light shadow-sm rounded-3">
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-259"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-259"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-259" 
@@ -670,7 +676,7 @@ Each video is under 5 minutes.</div>
 		</div>
 	</div>
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-348"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-348"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-348" 
@@ -742,7 +748,7 @@ B.C.'s Response to COVID-19 outlines the information, actions and support availa
 
 	<div class="p-3 bg-light shadow-sm rounded-3">
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-253"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-253"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-253" 
@@ -780,7 +786,7 @@ This is an excellent reference to keep for future use.</div>
 		</div>
 	</div>
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-261"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-261"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-261" 
@@ -848,7 +854,7 @@ This is an excellent reference to keep for future use.</div>
 
 	<div class="p-3 bg-light shadow-sm rounded-3">
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-262"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-262"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-262" 
@@ -880,7 +886,7 @@ This is an excellent reference to keep for future use.</div>
 		</div>
 	</div>
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-276"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-276"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-276" 
@@ -912,7 +918,7 @@ This is an excellent reference to keep for future use.</div>
 		</div>
 	</div>
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-264"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-264"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-264" 
@@ -944,7 +950,7 @@ This is an excellent reference to keep for future use.</div>
 		</div>
 	</div>
 		<div class="p-1 my-1">
-		<i class="far fa-check-circle d-none" id="actcheck-279"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-279"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-279" 
@@ -1144,6 +1150,7 @@ function loadStatus() {
 
 		// UPDATE UI...
 		console.log(Math.floor(percentleft));
+		//#pathprogress
 
 
 	});

@@ -37,7 +37,7 @@
 <div class="row mt-3">
 <div class="col-md-4">
 <div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
-	<h3><a href="/learning-curator/categories/view/1" class="">Leadership</a></h3>
+	<h3><a href="/categories/view/1" class="">Leadership</a></h3>
 	<div>Building your leadership skills is something you can do in whatever role you're 
 	in now, as well as something you may look towards for future roles. As BCPS 
 	leaders, we aim to develop our core leadership competencies, as well as role-specific ones 
@@ -47,7 +47,7 @@
 </div>
 <div class="col-md-4">
 <div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
-	<h3><a href="/learning-curator/categories/view/3" class="">Diversity &amp; Inclusion</a></h3>
+	<h3><a href="/categories/view/3" class="">Diversity &amp; Inclusion</a></h3>
 	<div>Every individual needs to know their role in creating a diverse and inclusive workplace 
 	in the BCPS. Learn the definitions and the value of diversity and inclusion. 
 	Deepen your understanding and learn how to be an ally with a little engagement or a deeper dive 
@@ -97,7 +97,7 @@
 		<p>Check out the latest activities that have been added to the site.
 		Curators are continually adding new resources and creating new pathways
 		in various categories.</p>
-		<a class="btn btn-lg btn-dark btn-block" href="/learning-curator/activities">The Latest Stuff</a>
+		<a class="btn btn-lg btn-dark btn-block" href="/activities">The Latest Stuff</a>
 		</div> <!-- /.pad-sm -->
 	</div>
 	<div class="col-md-4">
@@ -105,7 +105,7 @@
 		<h4>Search for something</h4>
 		<p>Looking for something specific? Type it into the box and see if we already 
 		have it included on some path. Explore the links!</p>
-		<form method="get" action="/learning-curator/activities/find" class="bg-dark rounded-lg p-2 form-inline">
+		<form method="get" action="/activities/find" class="bg-dark rounded-lg p-2 form-inline">
 			<input class="form-control " type="search" placeholder="Activity Search" aria-label="Search" name="q">
 			<button class="btn btn-light" type="submit">Search</button>
 		</form>
@@ -116,7 +116,7 @@
 		<h4>Bookmarks</h4>
 		<p>See something you like? Bookmark it and come back to it later without having to dig 
 		around. This is a great way to use the site, while not going any deeper.</p>
-		<a class="btn btn-lg btn-dark btn-block" href="/learning-curator/users/bookmarks">Bookmarks</a>
+		<a class="btn btn-lg btn-dark btn-block" href="/users/bookmarks">Bookmarks</a>
 	</div> <!-- /.pad-sm -->
 	
 	</div>
@@ -138,7 +138,7 @@
 		<p>Your profile shows you all of your activity in the site: 
 		pathways you're following; acitvities you've claimed; 
 		your bookmarks, and reports made.</p>
-		<a class="btn btn-lg btn-dark btn-block" href="/learning-curator/users/pathways">Your Profile</a>
+		<a class="btn btn-lg btn-dark btn-block" href="/users/pathways">Your Profile</a>
 	</div> <!-- /.pad-sm -->
 	</div>
 	<div class="col-md-4">
@@ -147,7 +147,7 @@
 		<p>Following a pathway is a commitment look at each step, claim its
 		required activities after you complete them, and to consider the supplemental.
 		Pathways are organized around common organizational goals.</p>
-		<a class="btn btn-lg btn-dark btn-block" href="/learning-curator/users/pathways">Your Pathways</a>
+		<a class="btn btn-lg btn-dark btn-block" href="/users/pathways">Your Pathways</a>
 	</div> <!-- /.pad-sm -->
 	</div>
 	<div class="col-md-4">
@@ -157,7 +157,7 @@
 		supposed to "Claim" the activities in pathway steps, and do so 
 		approximately in the order indicated. Each step has a goal, and 
 		you work progressively towards it.</p>
-		<a class="btn btn-lg btn-dark btn-block" href="/learning-curator/users/claimed">Your Activities</a>
+		<a class="btn btn-lg btn-dark btn-block" href="/users/claimed">Your Activities</a>
 	</div> <!-- /.pad-sm -->
 	</div>
 	</div> <!-- /.row -->
@@ -194,9 +194,9 @@
 	<div class="pad-sm bg-white rounded-lg mb-2">
 		<h4>Contribute</h4>
 		<p>Do you know of an activity that would be perfect for a pathway? Let us know by 
-		<a href="/learning-curator/activities/contribute">filling out the form</a> and suggesting it to our curator team. We'll review your 
+		<a href="/activities/contribute">filling out the form</a> and suggesting it to our curator team. We'll review your 
 		contribution and collaborate with you. </p>
-		<!-- <a class="btn btn-lg btn-dark btn-block" href="/learning-curator/activities/contribute">Suggest an Activity</a> -->
+		<!-- <a class="btn btn-lg btn-dark btn-block" href="/activities/contribute">Suggest an Activity</a> -->
 	</div> <!-- /.pad-sm -->
 	</div>
 	</div> <!-- /.row -->
@@ -218,10 +218,10 @@
 	<div class="pad-md">
 	<div class="pad-sm bg-white rounded-lg mb-2">
 	<div class="mb-3">
-		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $type->color ?>,1)">
+		<a href="/activity-types/view/<?= $type->id ?>" class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $type->color ?>,1)">
 			<i class="activity-icon activity-icon-lg fas <?= $type->image_path ?>"></i>
 		</a>
-		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="" style="color: #333; font-size: 230%">
+		<a href="/activity-types/view/<?= $type->id ?>" class="" style="color: #333; font-size: 230%">
 			<?= h($type->name) ?>
 		</a>
 	</div>

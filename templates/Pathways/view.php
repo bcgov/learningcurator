@@ -13,7 +13,7 @@ if ($this->Identity->isLoggedIn()) {
 }
 
 $this->assign('title', h($pathway->name));
-
+$pathallactivities = '';
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +26,7 @@ $this->assign('title', h($pathway->name));
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-<link href="/learning-curator/fontawesome/css/all.css" rel="stylesheet"> 
+<link href="/node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> 
 
 </head>
 <body>
@@ -40,7 +40,13 @@ $this->assign('title', h($pathway->name));
 	<?= h($pathway->name) ?>
 	</span>
 	<div class="progress">
-		<div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+		<div class="progress-bar bg-success" 
+				id="pathprogress"
+				role="progressbar" 
+				style="width: 0" 
+				aria-valuenow="0" 
+				aria-valuemin="0" 
+				aria-valuemax="100"></div>
 	</div>
 </div>
 
@@ -61,7 +67,7 @@ $this->assign('title', h($pathway->name));
 		<!-- <li class="breadcrumb-item" aria-current="page"><?= h($pathway->name) ?> </li> -->
 	</ol>
 	</nav> 
-<a href="/learning-curator/pathways/make/<?= $pathway->id ?>">Make</a>
+
 	<h1 class="display-3"><?= h($pathway->name) ?></h1>
 
 
@@ -82,6 +88,7 @@ $acts = array();
 $totalacts = count($steps->activities);
 $stepclaimcount = 0;
 
+
 foreach ($steps->activities as $activity) {
 	//print_r($activity);
 	// If this is 'defunct' then we pull it out of the list 
@@ -91,6 +98,7 @@ foreach ($steps->activities as $activity) {
 		// if it's required
 		if($activity->_joinData->required == 1) {
 			array_push($requiredacts,$activity);
+			$pathallactivities = $pathallactivities . ',' . $activity->id;
 		// Otherwise it's supplemental
 		} else {
 			array_push($supplementalacts,$activity);
@@ -104,6 +112,7 @@ foreach ($steps->activities as $activity) {
 		// Use the tmp array to sort acts list
 		array_multisort($tmp, SORT_DESC, $acts);
 		array_multisort($tmp, SORT_DESC, $requiredacts);
+		$pathallactivities = $pathallactivities . ',' . $activity->id;
 		//array_multisort($tmp, SORT_DESC, $acts);
 	}
 }
@@ -121,10 +130,32 @@ $supplmentalcount = count($supplementalacts);
 	<div class="p-3 bg-light shadow-sm rounded-3">
 	<?php foreach($requiredacts as $activity): ?>
 	<div class="p-1 my-1">
-		<a class="fs-5" data-bs-toggle="collapse" href="#actinfo-<?= $activity->id ?>" role="button" aria-expanded="false" aria-controls="actinfo-<?= $activity->id ?>">
-			<?= $activity->name ?>
+		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-<?= $activity->id ?>"></i>
+		<a class="fs-5" 
+			data-bs-toggle="collapse" 
+			href="#actinfo-<?= $activity->id ?>" 
+			role="button" 
+			aria-expanded="false" 
+			aria-controls="actinfo-<?= $activity->id ?>">
+				<?= $activity->name ?>
 		</a>
 		<div class="collapse p-5 bg-white rounded-lg shadow-sm" id="actinfo-<?= $activity->id ?>">
+
+
+			<div class="activity" id="activity-<?= $activity->id ?>">
+				<a href="#" 
+					class="btn btn-success btn-lg" 
+					onclick="return claimit('<?= $activity->id ?>')">
+
+						Claim 
+						
+
+				</a>
+			</div>
+
+
+
+
 			<h4><?= $activity->name ?></h4>
 			<div><?= $activity->description ?></div>
 			<a class="btn btn-lg btn-primary" href="<?= $activity->hyperlink ?>" target="_blank">
@@ -251,6 +282,7 @@ function loadStatus() {
 					// Use the activity ID so that we can target the cooresponding
 					// dom id and update things accordingly
 					let iid = 'activity-' + item;
+					let actchk = 'actcheck-' + item;
 				
 					// Does the activity appear on this page? If so, 
 					// update the UI to show it's claimed
@@ -261,8 +293,9 @@ function loadStatus() {
 						newbutton += '</span>';
 						document.getElementById(iid).innerHTML = newbutton;
 					}
-
-
+					if(document.getElementById(actchk)) {
+						document.getElementById(actchk).classList.remove('d-none');
+					}
 					// Update the overall progress counter
 					overallprogress++;
 				}
@@ -277,6 +310,12 @@ function loadStatus() {
 		var percentleft = 100 - percent;
 
 		// UPDATE UI...
+		let progress = Math.floor(percent);
+		let attwidth = 'width: ' + progress + '%;';
+		//#pathprogress
+		document.getElementById('pathprogress').setAttribute('aria-valuenow',progress);
+		document.getElementById('pathprogress').setAttribute('style',attwidth);
+
 
 	});
 
@@ -303,7 +342,7 @@ function claimit (activityid) {
 	};
 	db.put(doc);
 
-	var iid = 'activity-' + item;
+	var iid = 'activity-' + activityid;
 	newbutton = '<span class="btn btn-dark btn-lg">';
 	newbutton += 'Claimed ';
 	newbutton += '<i class="fas fa-check-circle"></i>';
