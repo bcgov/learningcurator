@@ -80,7 +80,7 @@
 <div class="list"> 
 	<?php foreach ($user->activities as $activity) : ?>
 	
-	<div class="p-3 mb-2 bg-white rounded-lg">
+	<div class="p-3 mb-2 bg-dark text-white rounded-lg">
 	<?= $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-sm btn-dark float-right', 'confirm' => __('Really delete?')]) ?>
 		<?php if($activity->status_id == 3): ?>
 		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>

@@ -37,11 +37,11 @@ class TopicsController extends AppController
      */
     public function view($id = null)
     {
+        $this->Authorization->skipAuthorization();
         $topic = $this->Topics->get($id, [
             'contain' => ['Users', 'Categories', 'Pathways'],
         ]);
-        $this->Authorization->authorize($topic);
-
+        
         $this->set('topic', $topic);
     }
 

@@ -22,7 +22,7 @@ class CategoriesController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
-        $categories = $this->paginate($this->Categories);
+        $categories = $this->Categories->contain(['Topics','Topics.Pathways','Topics.Pathways.Steps']);
 
         $this->set(compact('categories'));
     }

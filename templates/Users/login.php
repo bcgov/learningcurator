@@ -1,7 +1,7 @@
 <div class="container-fluid">
 <div class="row justify-content-md-center">
 <div class="col">
-<div class="p-3 m-3 bg-white rounded-3 shadow-sm">
+<div class="p-3 m-3 bg-dark text-white rounded-3 shadow-sm">
 
    
     <?= $this->Form->create() ?>

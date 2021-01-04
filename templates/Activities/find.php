@@ -52,7 +52,7 @@ if($activity->activity_types_id == 1) {
 	$acticon = 'fa-users';
 }
 ?>
-<div class="rounded-lg bg-white">
+<div class="rounded-lg bg-dark text-white">
 <div class="p-3 my-3 rounded-lg" style="background-color: rgba(<?= $bgcolor ?>,.2)">
 <div class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $bgcolor ?>,1)">
 			<i class="activity-icon activity-icon-lg fas <?= $acticon ?>"></i>
@@ -65,7 +65,7 @@ if($activity->activity_types_id == 1) {
 	<?= $activity->description ?>
 </div>
 <?php if(!empty($activity->steps)): ?>
-<div class="p-3 mb-3 bg-white rounded-lg">This activity is on the following pathways:
+<div class="p-3 mb-3 bg-dark text-white rounded-lg">This activity is on the following pathways:
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
 <span class="badge badge-light"><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>

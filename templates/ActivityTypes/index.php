@@ -19,12 +19,12 @@ function rgbToHex(r, g, b) {
 </script>
 <h1>Activity Types</h1>
 <div class="container-fluid">
-<div class="row justify-content-md-center bg-white" id="activitytypes">
+<div class="row justify-content-md-center bg-dark text-white" id="activitytypes">
 <?php foreach($activityTypes as $type): ?>
 <?php $count++ ?>
 	<div class="col-md-6" style="background-color: rgba(<?= $type->color ?>,.2)">
 	<div class="pad-md">
-	<div class="pad-sm bg-white rounded-lg mb-2">
+	<div class="pad-sm bg-dark text-white rounded-lg mb-2">
 	<div class="mb-3">
     <div class="float-right"><?= $this->Html->link(__('Edit'), ['action' => 'edit', $type->id],['class' => 'btn btn-light mt-3']) ?></div>
 		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $type->color ?>,1)">

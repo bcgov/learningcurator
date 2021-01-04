@@ -241,7 +241,7 @@ $lastobj = $s->description;
 
 <?php foreach ($requiredacts as $activity) : ?>
 
-<div class="bg-white rounded-lg">
+<div class="bg-dark text-white rounded-lg">
 <div class="p-3 mb-3 rounded-lg activity" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
@@ -353,7 +353,7 @@ $lastobj = $s->description;
 				<i class="fas fa-exclamation-triangle"></i> Report
 		</a>	
 		<div class="collapse" id="newreport<?= $activity->id ?>">
-		<div class="my-3 p-3 bg-white rounded-lg">
+		<div class="my-3 p-3 bg-dark text-white rounded-lg">
 		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add'],'class'=>'reportform']) ?>
             <fieldset>
                 <legend><?= __('Report this activity') ?></legend>
@@ -401,7 +401,7 @@ $lastobj = $s->description;
 	<div class="row">
 	<?php foreach ($supplementalacts as $activity): ?>
 	<div class="col-md-12 col-lg-12">
-	<div class="p-3 my-3 bg-white rounded-lg">
+	<div class="p-3 my-3 bg-dark text-white rounded-lg">
 
 		<h4>
 			<a href="/learning-curator/activities/view/<?= $activity->id ?>">
@@ -442,7 +442,7 @@ $lastobj = $s->description;
 				<i class="fas fa-exclamation-triangle"></i> Report
 		</a>	
 		<div class="collapse" id="newreport<?= $activity->id ?>">
-		<div class="my-3 p-3 bg-white rounded-lg">
+		<div class="my-3 p-3 bg-dark text-white rounded-lg">
 		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add'],'class'=>'reportform']) ?>
             <fieldset>
                 <legend><?= __('Report this activity') ?></legend>
@@ -484,7 +484,7 @@ $lastobj = $s->description;
 </div>
 <div class="col-8 col-md-3 col-lg-2">
 <?php if(in_array($uid,$usersonthispathway)): ?>
-<div class="p-3 bg-white mb-3 text-center stickyrings rounded-lg">
+<div class="p-3 bg-dark text-white mb-3 text-center stickyrings rounded-lg">
 <div class="mb-3 following"></div>
 <canvas id="myChart" width="250" height="250"></canvas>
 </div>

@@ -32,10 +32,13 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-6">
 <?php foreach ($categories as $category): ?>
 <div class="my-2 p-5 bg-dark text-white rounded-3">
-	<h2><?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?></h2>
-	<div>
-	<?= $category->description ?>
-	</div>
+<div><?= $this->Html->link($category->name, ['action' => 'edit', $category->id]) ?></div>
+<div>
+<?= $category->description ?>
+</div>
+<?php foreach ($category->topics as $topic): ?>
+<?= $topic ?><br>
+<?php endforeach; ?>
 </div>
 <?php endforeach; ?>
 </div>

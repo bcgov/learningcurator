@@ -33,7 +33,7 @@ Created on: <?= h($user->created) ?>
 <div class="col-md-6">
 <h2 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h2>
 <?php foreach($user->reports as $report): ?>
-<div class="my-3 p-3 bg-white rounded-lg">
+<div class="my-3 p-3 bg-dark text-white rounded-lg">
 <?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-dark']) ?>
 <h4><a href="/learning-curator/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></h4>
 <div><?= $report->issue ?></div>

@@ -81,7 +81,7 @@
 
 <?php foreach($bookmarks as $bookmark): ?>
 
-<div class="p-3 mb-2 bg-white rounded-lg">
+<div class="p-3 mb-2 bg-dark text-white rounded-lg">
 <div class="float-right">
 <?= $this->Form->postLink(__('x'), ['controller' => 'ActivitiesBookmarks','action' => 'delete/'. $bookmark->id], ['class' => 'btn btn-sm btn-dark', 'confirm' => __('Delete this bookmark?', $bookmark->activity_id)]) ?>
 </div>
@@ -103,7 +103,7 @@
 
 <?php else: ?>
 	
-	<div class="p-3 mb-3 bg-white rounded-lg">
+	<div class="p-3 mb-3 bg-dark text-white rounded-lg">
 		<h2>You don't have any bookmarks yet</h2>
 		<p>You can bookmark any activity by clicking the "Bookmark" button on any activity.</p>
 	</div>
