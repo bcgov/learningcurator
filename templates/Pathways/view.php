@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pathway $pathway
  */
-$this->layout = 'ajax';
+$this->layout = 'public';
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
@@ -16,25 +16,6 @@ $this->assign('title', h($pathway->name));
 $pathallactivities = '';
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-<title><?= $pathway->name ?> - Learning Curator</title>
-<!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-
-<link href="/node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> 
-
-</head>
-<body>
-<nav class="navbar navbar-expand-lg sticky-top bg-dark px-4">
-	<a class="navbar-brand text-light" href="https://learningcurator.ca">
-		Learning Curator
-	</a>
-</nav>
 <div class="sticky-top bg-white shadow-sm p-4">
 	<span class="navbar-brand">
 	<?= h($pathway->name) ?>
@@ -56,17 +37,12 @@ $pathallactivities = '';
 	
 <div class="p-3">
 	
-	<?php if($pathway->status_id == 1): ?>
-	<span class="badge text-dark bg-warning" title="Edit to set to publish">DRAFT</span>
-	<?php endif ?>
-
-	<nav aria-label="breadcrumb">
-	<ol class="breadcrumb mt-3">
-		<li class="breadcrumb-item"><?= $pathway->has('category') ? $this->Html->link($pathway->category->name, ['controller' => 'Categories', 'action' => 'view', $pathway->category->id]) : '' ?></li>
-		<li class="breadcrumb-item"><?= $pathway->has('category') ? $this->Html->link($pathway->topics[0]->name, ['controller' => 'Topics', 'action' => 'view', $pathway->topics[0]->id]) : '' ?></li>
-		<!-- <li class="breadcrumb-item" aria-current="page"><?= h($pathway->name) ?> </li> -->
-	</ol>
-	</nav> 
+	<div class="bg-white p-2 rounded-3">
+	<a href="index.html">
+		<?= $pathway->category->name ?> <?= $pathway->topics[0]->name ?>
+	</a>
+	</div>
+	
 
 	<h1 class="display-3"><?= h($pathway->name) ?></h1>
 
@@ -112,7 +88,7 @@ foreach ($steps->activities as $activity) {
 		// Use the tmp array to sort acts list
 		array_multisort($tmp, SORT_DESC, $acts);
 		array_multisort($tmp, SORT_DESC, $requiredacts);
-		$pathallactivities = $pathallactivities . ',' . $activity->id;
+		
 		//array_multisort($tmp, SORT_DESC, $acts);
 	}
 }
@@ -127,10 +103,10 @@ $supplmentalcount = count($supplementalacts);
 	
 	<div class="fs-3 fw-light"><?= h($steps->description) ?></div>
 
-	<div class="p-3 bg-light shadow-sm rounded-3">
+	<div class="p-3 bg-white shadow-sm rounded-3">
 	<?php foreach($requiredacts as $activity): ?>
 	<div class="p-1 my-1">
-		<i class="bi bi-check-circle-fill d-none" style="color:green" id="actcheck-<?= $activity->id ?>"></i>
+		<i class="bi bi-check-circle-fill d-none" style="color: rgba(88,174,36,1)" id="actcheck-<?= $activity->id ?>"></i>
 		<a class="fs-5" 
 			data-bs-toggle="collapse" 
 			href="#actinfo-<?= $activity->id ?>" 
@@ -139,7 +115,7 @@ $supplmentalcount = count($supplementalacts);
 			aria-controls="actinfo-<?= $activity->id ?>">
 				<?= $activity->name ?>
 		</a>
-		<div class="collapse p-5 bg-white rounded-lg shadow-sm" id="actinfo-<?= $activity->id ?>">
+		<div class="collapse p-5 bg-light rounded-lg shadow-sm" id="actinfo-<?= $activity->id ?>">
 
 
 			<div class="activity" id="activity-<?= $activity->id ?>">
@@ -209,8 +185,6 @@ $supplmentalcount = count($supplementalacts);
 
 </div>
 
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 <script src="//cdn.jsdelivr.net/npm/pouchdb@7.2.1/dist/pouchdb.min.js"></script>
 <script>
 
@@ -304,14 +278,14 @@ function loadStatus() {
 
 		}); // end of db.allDocs()
 
-
 		var totalacts = acts.length;
 		var percent = (Number(overallprogress) * 100) / Number(totalacts);
 		var percentleft = 100 - percent;
 
 		// UPDATE UI...
-		let progress = Math.floor(percent);
+		let progress = Math.ceil(percent);
 		let attwidth = 'width: ' + progress + '%;';
+		console.log(attwidth);
 		//#pathprogress
 		document.getElementById('pathprogress').setAttribute('aria-valuenow',progress);
 		document.getElementById('pathprogress').setAttribute('style',attwidth);
