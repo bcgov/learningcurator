@@ -79,6 +79,31 @@ class UsersController extends AppController
     }
 
 
+    /**
+     * Home method to show curators their pathways
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function home()
+    {
+        $userid = $this->request->getAttribute('authentication')->getIdentity();
+        $user = $this->Users->get($userid->id, [
+            'contain' => ['Ministries', 
+                            'Roles', 
+                            'Activities', 
+                            'Competencies', 
+                            'Pathways',
+                            'Reports' => ['sort' => ['Reports.id' => 'desc']],
+                            'Reports.Activities'],
+        ]);
+		//$categories = $this->Categories->find('all');
+        $this->Authorization->authorize($user);
+
+        $this->set('user', $user);
+    }
+
 
     /**
      * Add method
