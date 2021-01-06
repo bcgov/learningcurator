@@ -14,6 +14,13 @@ Use Cake\ORM\TableRegistry;
  */
 class CategoriesController extends AppController
 {
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        // Configure the login action to not require authentication, preventing
+        // the infinite redirect loop issue
+        $this->Authentication->addUnauthenticatedActions(['index','view']);
+    }
     /**
      * Index method
      *
@@ -22,7 +29,7 @@ class CategoriesController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
-        $categories = $this->paginate($this->Categories);
+        $categories = $this->Categories->contain(['Topics','Topics.Pathways','Topics.Pathways.Steps']);
 
         $this->set(compact('categories'));
     }
@@ -42,9 +49,6 @@ class CategoriesController extends AppController
             'contain' => ['Activities', 'Pathways','Pathways.Statuses','Topics','Topics.Pathways'],
         ]);
         
-        // $cats = TableRegistry::getTableLocator()->get('Categories');
-        // $category = $cats->find('all')->contain('Activities', 'Pathways')->where(['status_id' => 3]);
-
         $this->set(compact('categories','category'));
     }
 
