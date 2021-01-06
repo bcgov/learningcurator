@@ -82,11 +82,11 @@ foreach ($steps->activities as $activity) {
 		array_push($acts,$activity);
 		$tmp = array();
 		// Loop through the whole list, add steporder to tmp array
-		foreach($acts as $line) {
+		foreach($requiredacts as $line) {
 			$tmp[] = $line->_joinData->steporder;
 		}
 		// Use the tmp array to sort acts list
-		array_multisort($tmp, SORT_DESC, $acts);
+		//array_multisort($tmp, SORT_DESC, $acts);
 		array_multisort($tmp, SORT_DESC, $requiredacts);
 		
 		//array_multisort($tmp, SORT_DESC, $acts);

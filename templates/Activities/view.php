@@ -132,7 +132,7 @@ if ($this->Identity->isLoggedIn()) {
 				<i class="fas fa-exclamation-triangle"></i> Report
 		</a>	
 		<div class="collapse" id="newreport">
-		<div class="my-3 p-3 bg-dark text-white rounded-lg">
+		<div class="my-3 p-3 bg-white rounded-lg">
 		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add'],'class'=>'reportform']) ?>
             <fieldset>
                 <legend><?= __('Report this activity') ?></legend>
@@ -209,7 +209,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
 <?php if($path->status_id == 2): ?>
-<div class="my-3 p-3 bg-dark text-white" style="background-color: rgba(255,255,255,.3)">
+<div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
 
 	<h4><a href="/learning-curator/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
@@ -222,7 +222,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php else: ?>
 <?php if($role == 2 || $role == 5): ?>
-<div class="my-3 p-3 bg-dark text-white" style="background-color: rgba(255,255,255,.3)">
+<div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
 <span class="badge badge-warning">DRAFT</span>
 	<h4><a href="/learning-curator/pathways/<?= $pathway->slug ?>/s/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
@@ -237,7 +237,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-4">
 <h3 class="mt-3"><?= __('Related Users') ?></h3>
 <?php foreach ($activity->users as $users) : ?>
-<div class="my-3 p-3 bg-dark text-white rounded-lg">
+<div class="my-3 p-3 bg-white rounded-lg">
 <?= $this->Html->link($users->name, ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
 </div>
 <?php endforeach; ?>
@@ -251,7 +251,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-4">
 <h3 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h3>
 <?php foreach($activity->reports as $report): ?>
-<div class="my-3 p-3 bg-dark text-white rounded-lg">
+<div class="my-3 p-3 bg-white rounded-lg">
 <div><a href="/learning-curator/users/view/<?= $report->user->id ?>"><?= $report->user->name ?></a> says:</div>
 <div><?= $report->issue ?></div>
 <div class="mt-2" style="font-size: 12px">Added on <?= $report->created ?></div>

@@ -12,7 +12,7 @@
 <div class="row justify-content-md-center">
 <div class="col-md-5 pt-3">
 
-<div class="p-3 my-3 bg-dark text-white rounded-lg">
+<div class="p-3 my-3 bg-white rounded-lg">
 
 	<iframe width="560" 
 			height="315" 

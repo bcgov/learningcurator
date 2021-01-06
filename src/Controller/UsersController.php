@@ -54,6 +54,7 @@ class UsersController extends AppController
         //$this->Authorization->can($users);
         $this->set(compact('users'));
     }
+
     /**
      * View method
      *
@@ -88,8 +89,8 @@ class UsersController extends AppController
      */
     public function home()
     {
-        $userid = $this->request->getAttribute('authentication')->getIdentity();
-        $user = $this->Users->get($userid->id, [
+        $userinfo = $this->request->getAttribute('authentication')->getIdentity();
+        $user = $this->Users->get($userinfo->id, [
             'contain' => ['Ministries', 
                             'Roles', 
                             'Activities', 
@@ -101,7 +102,13 @@ class UsersController extends AppController
 		//$categories = $this->Categories->find('all');
         $this->Authorization->authorize($user);
 
-        $this->set('user', $user);
+        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
+        $pathways = $allpaths->find('all')->contain(['Steps','Statuses'])->where(['Pathways.createdby' => $userinfo->id]);
+
+        $allcats = TableRegistry::getTableLocator()->get('Categories');
+        $categories = $allcats->find('all')->contain(['Topics']);
+
+        $this->set(compact('user', 'pathways', 'categories'));
     }
 
 

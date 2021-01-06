@@ -15,7 +15,7 @@
 <link href="/node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> 
 
 </head>
-<body class="bg-dark text-white">
+<body class="bg-light">
 <nav class="navbar navbar-expand-lg sticky-top bg-dark px-4 shadow-sm">
 	<a class="navbar-brand text-light" href="https://cms.learningcurator.ca">
 		Curator CMS

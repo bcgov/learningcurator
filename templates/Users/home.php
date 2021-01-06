@@ -4,29 +4,43 @@
  * @var \App\Model\Entity\User $user
 */
 ?>
-<div class="btn-group float-right">
-<?= $this->Html->link(__('Logout'), ['action' => 'logout', $user->id], ['class' => 'btn btn-dark btn-sm']) ?>
-<?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id], ['class' => 'btn btn-dark btn-sm']) ?>
-</div>
-Created on: <?= h($user->created) ?>
-<h1><?= h($user->name) ?> <?= h($user->id) ?></h1>
+<div class="container-fluid">
 <div class="row">
-<?php if (!empty($user->pathways)) : ?>
-<div class="col-md-4">
-<div class="card">
-<div class="card-header">
-	<h2><?= __('Pathways following') ?></h2>
+<div class="col-12">
+	<!-- Created on: <?= h($user->created) ?> -->
+	<h1>Welcome <?= h($user->name) ?> <!-- ID: <?= h($user->id) ?> --></h1>
+	<!-- <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id], ['class' => 'btn btn-dark btn-sm']) ?> -->
 </div>
-<ul class="list-group list-group-flush">
-	<?php foreach ($user->pathways as $pathways) : ?>
-	<li class="list-group-item">
-	<?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?>
-	</li>
+
+<?php if (!empty($pathways)) : ?>
+	<div class="col-4">
+	<h2>Your Pathways</h2>
+	<?php foreach ($pathways as $p) : ?>
+	<div class="p-3 mb-3 bg-white rounded-3 shadow-sm">
+	<div class="fw-light fs-4">
+		<?= $this->Html->link($p->name, ['controller' => 'Pathways', 'action' => 'view', $p->id]) ?>
+	</div>
+	<?= $this->Html->link(__('Make'), ['controller' => 'Pathways', 'action' => 'make', $p->id],['class' => 'btn btn-warning']) ?>
+	<?php foreach ($p->steps as $s) : ?>
+	<?= $this->Html->link($s->name, ['controller' => 'Steps', 'action' => 'edit', $s->id]) ?> 
 	<?php endforeach; ?>
-</ul>
-</div>
+	</div>
+	<?php endforeach; ?>
 </div>
 <?php endif; ?>
 
-
+<?php if (!empty($categories)) : ?>
+	<div class="col-4">
+	<h2>Topics</h2>
+	<?php foreach ($categories as $c) : ?>
+	<div class="p-3 mb-3 bg-white rounded-3 shadow-sm">
+	<div class="fs-4"><?= $c->name ?></div>
+	<?php foreach ($c->topics as $t) : ?>
+	<a href="/topics/view/<?= $t->id ?>"><?= $t->name ?></a>
+	<?php endforeach; ?>
+	</div>
+	<?php endforeach; ?>
+	</div>
+<?php endif; ?>
+</div>
 </div>

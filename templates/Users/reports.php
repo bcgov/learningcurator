@@ -74,7 +74,7 @@
 	<?php if(!empty($user->reports)): ?>
 	<h2 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h2>
 	<?php foreach($user->reports as $report): ?>
-		<div class="my-3 p-3 bg-dark text-white rounded-lg">
+		<div class="my-3 p-3 bg-white rounded-lg">
 			<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-dark']) ?>
 			<div class="mt-2">On <?= $report->created ?> you reported:</div>
 			<h4>
@@ -94,7 +94,7 @@
 		</div>
 	<?php endforeach ?>
 	<?php else: ?>
-	<div class="p-3 mb-3 bg-dark text-white rounded-lg">
+	<div class="p-3 mb-3 bg-white rounded-lg">
 		<h2>You have no reports yet</h2>
 		<p>If you have issues with an activity, use its "Report" button.</p> 
 	</div>

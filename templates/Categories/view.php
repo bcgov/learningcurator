@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="container-fluid">
 <div class="row justify-content-md-center align-items-center"  id="colorful">
 <div class="col-md-12">
-<div class="my-3 p-5 bg-dark text-white rounded-3 shadow-sm">
+<div class="my-3 p-5 bg-white rounded-3 shadow-sm">
 <h1 class="display-2"><?= h($category->name) ?></h1>
 <div class="text">
 <?= $this->Text->autoParagraph(h($category->description)); ?>
@@ -27,7 +27,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-6">
 <?php if (!empty($category->topics)) : ?>
 <?php foreach ($category->topics as $topic) : ?>
-<div class="bg-dark text-white rounded-3 shadow-sm p-3">
+<div class="bg-white rounded-3 shadow-sm p-3">
 <h2>
 	<i class="fas fa-sitemap"></i> <!-- topic_id: <?= $topic->id ?> --> 
 	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>

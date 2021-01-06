@@ -76,11 +76,11 @@
 <?php if (!empty($user->pathways)) : ?>
 	<h2><i class="fas fa-sitemap"></i> <?= __('Your Pathways') ?></h2>
 	<?php foreach ($user->pathways as $pathways) : ?>
-	<div class="p-3 mb-2 bg-dark text-white rounded-lg">
+	<div class="p-3 mb-2 bg-white rounded-lg">
 	<div class="row">
 	<div class="col-3 ">
 	
-		<canvas class="bg-dark text-white rounded-lg" id="chart<?= $pathways->id ?>" width="400" height="400"></canvas>
+		<canvas class="bg-white rounded-lg" id="chart<?= $pathways->id ?>" width="400" height="400"></canvas>
 		<script>
 			var request<?= $pathways->id ?> = new XMLHttpRequest();
 
@@ -136,7 +136,7 @@
 <h2><?= _('You\'re not following any pathways yet.') ?></h2>
 <p><?= _('Pathways are organized into topics. Here some topics for you to explore:') ?></p>
 <?php foreach ($allcats as $cat) : ?>
-<div class="p-3 mb-2 bg-dark text-white rounded-lg">
+<div class="p-3 mb-2 bg-white rounded-lg">
 <h3>
 	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
 </h3>

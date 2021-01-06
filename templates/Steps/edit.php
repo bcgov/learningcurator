@@ -28,7 +28,7 @@ label {
 <div class="row justify-content-md-center pt-3">
 <div class="col-md-3">
 <h2>Step Details</h2>
-<div class="my-3 p-3 rounded-lg bg-dark text-white">
+<div class="my-3 p-3 rounded-lg bg-white">
     <?= $this->Form->create($step) ?>
     <?= $this->Form->hidden('image_path', ['class' => 'form-control']) ?>
     <?= $this->Form->hidden('featured', ['class' => 'form-control']) ?>
@@ -46,7 +46,7 @@ label {
 <div class="col-md-5">
     
     <h2>Add Existing Activity</h2>
-    <div class="my-3 p-3 rounded-lg bg-dark text-white">
+    <div class="my-3 p-3 rounded-lg bg-white">
     <form method="get" id="actfind" action="/learning-curator/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
         <input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
         <input type="hidden" name="step_id" value="<?= $step->id ?>">
@@ -55,7 +55,7 @@ label {
     <ul class="list-group list-group-flush" id="results">
     </ul>
     </div>
-    <div class="my-3 p-3 rounded-lg bg-dark text-white">
+    <div class="my-3 p-3 rounded-lg bg-white">
     <h3>Required Activities</h3>
     <ul class="list-group list-group-flush mb-3" id="requiredactivities">
     <?php  //$this->Form->control('activities._ids', ['options' => $activities]) 
@@ -171,7 +171,7 @@ label {
 <div class="col-md-4">
 
     <h2>Add New Activity</h2>
-    <div class="my-3 p-3 rounded-lg bg-dark text-white">
+    <div class="my-3 p-3 rounded-lg bg-white">
     <?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'addtostep']]) ?>
     <?php 
     echo $this->Form->hidden('createdby_id', ['value' => $this->Identity->get('id'), 'class' => 'form-control']);
