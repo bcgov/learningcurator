@@ -183,14 +183,9 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 
 	</div> <!-- /endof .collapse navbar-collapse -->
 </nav>
-<div class="container" style="padding-top: 60px;">
-<div class="row">
-<div class="col">
 
 <?= $this->fetch('content') ?>
-</div>
-</div>
-</div>
+
 
 <div class="container-fluid bg-white" style="padding-top: 60px;">
 <div class="row mt-3">

@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\ActivityType[]|\Cake\Collection\CollectionInterface $activityTypes
  */
-
+$this->layout = 'nowrap';
 ?>
 <script>
 function componentToHex(c) {

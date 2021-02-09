@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Activity $activity
  */
-
+$this->layout = 'nowrap';
 $this->loadHelper('Authentication.Identity');
 ?>
 

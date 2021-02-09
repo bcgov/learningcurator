@@ -12,13 +12,6 @@ namespace App\Controller;
  */
 class TopicsController extends AppController
 {
-    public function beforeFilter(\Cake\Event\EventInterface $event)
-    {
-        parent::beforeFilter($event);
-        // Configure the login action to not require authentication, preventing
-        // the infinite redirect loop issue
-        $this->Authentication->addUnauthenticatedActions(['index','view']);
-    }
     /**
      * Index method
      *
@@ -44,11 +37,11 @@ class TopicsController extends AppController
      */
     public function view($id = null)
     {
-        $this->Authorization->skipAuthorization();
         $topic = $this->Topics->get($id, [
             'contain' => ['Users', 'Categories', 'Pathways'],
         ]);
-        
+        $this->Authorization->authorize($topic);
+
         $this->set('topic', $topic);
     }
 
