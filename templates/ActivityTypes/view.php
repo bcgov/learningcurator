@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\ActivityType $activityType
  */
-
+$this->layout = 'nowrap';
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" style="background-color: rgba(<?= h($activityType->color) ?>,1)">

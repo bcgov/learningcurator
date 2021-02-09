@@ -41,8 +41,7 @@ nbproject/*
 .vscode
 # Sass preprocessor
 .sass-cache/
-/webroot/node_modules/*
-/static/node_modules/*
+
 /webroot/bootstrap-theme/*
 /webroot/fontawesome/*
 /webroot/js/summernote/*

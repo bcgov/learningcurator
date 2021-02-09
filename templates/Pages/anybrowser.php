@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Step $step
  */
-
+$this->layout = 'nowrap';
 
 ?>
 <div class="container-fluid linear">

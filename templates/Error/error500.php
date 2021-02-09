@@ -1,11 +1,11 @@
 <div class="row justify-content-md-center">
 <div class="col-md-6">
-<div class="bg-dark text-light p-3 rounded-3 mt-3">
-
-<h1>OH NO!</h1>
-<p>We're really sorry, but it seems as though you're either attempting to access and area you
-don't have permission to, or something else is going on. Either way, we apologize for the
-situation. Please contact learning.curator@gov.bc.ca and tell me all about your troubles.</p>
+<div class="card">
+<div class="card-body">
+<h1>OH NOES!</h1>
+<p>I'm really sorry, but it seems as though you're either attempting to access and area you
+don't have permission to, or something else is going on. Either way, I apologize for the
+situation. Please contact learning.agent@gov.bc.ca and tell me all about your troubles.</p>
 
 <?php
 /**
@@ -49,7 +49,7 @@ endif;
     <strong><?= __d('cake', 'Error') ?>: </strong>
     <?= h($message) ?>
 </p>
-
+</div>
 </div>
 </div>
 </div>

@@ -1,9 +1,10 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pathway $pathway
  */
-$this->layout = 'public';
+$this->layout = 'nowrap';
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
@@ -11,59 +12,218 @@ if ($this->Identity->isLoggedIn()) {
 	$role = $this->Identity->get('role_id');
 	$uid = $this->Identity->get('id');
 }
-
+$totalusers = count($usersonthispathway);
 $this->assign('title', h($pathway->name));
-$pathallactivities = '';
+
 ?>
+<style>
+/* Start desktop-specific code for this page.
+Arbitrarily set to 45em based on sample code from ...somewhere. 
+This seems to work out, but #TODO investigate optimizing this
+*/
+@media (min-width: 45em) {
+	/* probably can be removed as probably not using columns any more */
+    .card-columns {
+        -webkit-column-count:2;
+        -moz-column-count:2;
+        column-count:2;
+    }
+	
+	.stickyrings {
+		align-self: flex-start; 
+		position: -webkit-sticky;
+		position: sticky;
+		
+		top: 86px;
+		z-index: 1000;
+	}
+} /* end desktop-specific code */
 
-<div class="sticky-top bg-white shadow-sm p-4">
-	<span class="navbar-brand">
-	<?= h($pathway->name) ?>
-	</span>
-	<div class="progress">
-		<div class="progress-bar bg-success" 
-				id="pathprogress"
-				role="progressbar" 
-				style="width: 0" 
-				aria-valuenow="0" 
-				aria-valuemin="0" 
-				aria-valuemax="100"></div>
-	</div>
-</div>
-
+.following {
+	font-size: 20px;
+	font-weight: 200;
+	text-align: center;
+}
+.stickynav {
+	align-self: flex-start; 
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+#stepnav {
+	box-shadow: 0 0 20px rgba(0,0,0,.05);
+}
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+	background-color: #F1F1F1;
+	color: #333;
+}
+</style>
 <div class="container-fluid">
-<div class="row justify-content-md-center" id="">
-<div class="col">
-	
+<div class="row justify-content-md-center" id="colorful">
+<div class="col-md-6">
 <div class="p-3">
+	<?php if($pathway->status_id == 1): ?>
+	<span class="badge badge-warning" title="Edit to set to publish">DRAFT</span>
+	<?php endif ?>
+
+	<nav aria-label="breadcrumb">
+	<ol class="breadcrumb mt-3">
+		<li class="breadcrumb-item"><?= $pathway->has('category') ? $this->Html->link($pathway->category->name, ['controller' => 'Categories', 'action' => 'view', $pathway->category->id]) : '' ?></li>
+		<li class="breadcrumb-item" aria-current="page"><?= h($pathway->name) ?> </li>
+	</ol>
+	</nav> 
+
+	<?php if($role == 2 || $role == 5): ?>
+	<div class="btn-group float-right">
+	<?= $this->Html->link(__('Edit'), ['action' => 'edit', $pathway->id], ['class' => 'btn btn-light']) ?>
+	<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'btn btn-light']) ?>
+	</div>
+	<?php endif ?>
+	<h1><?= h($pathway->name) ?></h1>
+
+	<!-- totals below updated via JS -->
+
+	<div class="py-3" style="background-color: rgba(255,255,255,.5)">
+	<?= $pathway->objective ?> 
 	
-	<div class="bg-white p-2 rounded-3">
-	<a href="index.html">
-		<?= $pathway->category->name ?> <?= $pathway->topics[0]->name ?>
-	</a>
+	<div class="my-2"><em>Estimated time for this pathway: <?= h($pathway->estimated_time) ?></em></div>
+
+	<div class="mb-2">
+	<span class="badge badge-light readtotal"></span>  
+	<span class="badge badge-light watchtotal"></span>  
+	<span class="badge badge-light listentotal"></span>  
+	<span class="badge badge-light participatetotal"></span>  
 	</div>
 	
+	<?php if($role == 2 || $role == 5): ?>
 
-	<h1 class="display-3"><?= h($pathway->name) ?></h1>
+	<a class="" 
+		data-toggle="collapse" 
+		href="#addstepform" 
+		role="button" 
+		aria-expanded="false" 
+		aria-controls="addstepform">
+			<span>+</span> Add a step
+	</a>
+	<div class="collapse" id="addstepform">
+	<div class="card my-3">
+	<div class="card-body">
+	<?= $this->Form->create(null, ['url' => [
+			'controller' => 'Steps',
+			'action' => 'add'
+	]]) ?>
+	<fieldset>
+	<legend class=""><?= __('Add Step') ?></legend>
+	<?php
+	echo $this->Form->control('name',['class'=>'form-control']);
+	echo $this->Form->control('description',['class' => 'form-control', 'type' => 'textarea']);
+	echo $this->Form->hidden('createdby', ['value' => $uid]);
+	echo $this->Form->hidden('modifiedby', ['value' => $uid]);
+	echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
+	?>
+	</fieldset>
+	<?= $this->Form->button(__('Add Step'), ['class'=>'btn btn-block btn-primary']) ?>
+	<?= $this->Form->end() ?>
+	</div>
+	</div>
+	</div>
 
+	<?php endif ?>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container-fluid linear">
+<div class="row justify-content-md-center">
+<?php if($role == 2 || $role == 5): ?>
+<div class="col-md-2 col-lg-2 order-last">
+<div class="bg-white rounded-lg p-3 my-3">
+<a class="" 
+	data-toggle="collapse" 
+	href="#followerlist" 
+	role="button" 
+	aria-expanded="false" 
+	aria-controls="collapseExample">
+		<span class="badge badge-pill badge-dark"><?= $totalusers ?></span> 
+		people are following this path
+</a>
+<div class="collapse" id="followerlist">
+<ul class="list-group list-group-flush">
+<?php foreach($followers as $follower): ?>
+<li class="list-group-item">
+	<a href="/learning-curator/users/view/<?= $follower[0] ?>"><?= $follower[1] ?></a>
+</li>
+<?php endforeach ?>
+</ul>
+</div>
+</div>
+</div>
+<?php endif ?>
+<div class="col-6 col-md-3 col-lg-2">
 
-
-	<h2 class="fs-2 fw-light"><?= h($pathway->objective); ?> </h2>
+<?php if(in_array($uid,$usersonthispathway)): ?>
 
 	
+	<div class="card card-body mt-3 text-center stickyrings">
+	<div>Overall Progress: <span class="mb-3 following"></span>%</div>
+	<canvas id="myChart" width="250" height="250"></canvas>
+	</div>
+	
+<?php else: ?>
+<div class="card card-body my-3 stickyrings">
+<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'add']]) ?>
+<?php
+    echo $this->Form->control('user_id',['type' => 'hidden', 'value' => $uid]);
+    echo $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]);
+    echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
+?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
 
+<?= $this->Form->end() ?>
+<div class="py-3">
+
+<div>Following a pathway is a commitment to moving 
+through each step and claiming each required activity as you complete it.
+Fill your activity rings and get a certificate!
+</div>
+<!--When you select to follow a pathway, this pathway will show as a journey you are on and may be 
+accessed from your profile page. Think of it as “bookmarking” learning you want to come back to and track your progress on.-->
+
+</div>
+</div>
+<?php endif ?>
+
+<!--<div class="" style="font-size: 12px">Published <?= h(date('D M jS \'y',strtotime($pathway->created))) ?></div>-->
+
+
+</div>
 <?php if (!empty($pathway->steps)) : ?>
+
+<div class="col-md-6 col-lg-4">
+
 <?php foreach ($pathway->steps as $steps) : ?>
+
 <?php 
+
 $stepTime = 0;
 $defunctacts = array();
 $requiredacts = array();
 $supplementalacts = array();
 $acts = array();
 
+$readstepcount = 0;
+$watchstepcount = 0;
+$listenstepcount = 0;
+$participatestepcount = 0;
+$readcolor = '';
+$watchcolor = '';
+$listencolor = '';
+$participatecolor = '';
+
 $totalacts = count($steps->activities);
 $stepclaimcount = 0;
-
 
 foreach ($steps->activities as $activity) {
 	//print_r($activity);
@@ -74,105 +234,91 @@ foreach ($steps->activities as $activity) {
 		// if it's required
 		if($activity->_joinData->required == 1) {
 			array_push($requiredacts,$activity);
-			$pathallactivities = $pathallactivities . ',' . $activity->id;
+
 		// Otherwise it's supplemental
 		} else {
 			array_push($supplementalacts,$activity);
 		}
 		array_push($acts,$activity);
+		if($activity->activity_types_id == 1) {
+			$watchstepcount++;
+			$watchcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 2) {
+			$readstepcount++;
+			$readcolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 3) {
+			$listenstepcount++;
+			$listencolor = $activity->activity_type->color;
+		} elseif($activity->activity_types_id == 4) {
+			$participatestepcount++;
+			$participatecolor = $activity->activity_type->color;
+		}
+		if(in_array($activity->id,$useractivitylist)) {
+			$stepclaimcount++;
+		}
 		$tmp = array();
 		// Loop through the whole list, add steporder to tmp array
-		foreach($requiredacts as $line) {
+		foreach($acts as $line) {
 			$tmp[] = $line->_joinData->steporder;
 		}
 		// Use the tmp array to sort acts list
-		//array_multisort($tmp, SORT_DESC, $acts);
-		array_multisort($tmp, SORT_DESC, $requiredacts);
-		
-		//array_multisort($tmp, SORT_DESC, $acts);
+		array_multisort($tmp, SORT_DESC, $acts);
 	}
 }
-$stepacts = count($requiredacts);
-$supplmentalcount = count($supplementalacts);
+
 ?>
 
-<div class="p-3 my-3 rounded-lg">
-	<h3 class="fs-2">
+<?php
+$stepacts = count($requiredacts);
+$supplmentalcount = count($supplementalacts);
+$completeclass = 'notcompleted'; 
+if($stepclaimcount == $totalacts) {
+	$completeclass = 'completed';
+}
+
+if($stepclaimcount > 0) {
+	$steppercent = ceil(($stepclaimcount * 100) / $stepacts);
+} else {
+	$steppercent = 0;
+}
+?>
+
+<div class="p-3 my-3 bg-white rounded-lg">
+	<h2>
+
+		<a href="/learning-curator/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
 			<?= h($steps->name) ?> 
-	</h3>
+			<i class="fas fa-arrow-circle-right"></i>
+		</a>
+	</h2>
 	
-	<div class="fs-3 fw-light"><?= h($steps->description) ?></div>
-
-	<div class="p-3 bg-white shadow-sm rounded-3">
-	<?php foreach($requiredacts as $activity): ?>
-	<div class="p-1 my-1">
-		<i class="bi bi-check-circle-fill d-none" style="color: rgba(88,174,36,1)" id="actcheck-<?= $activity->id ?>"></i>
-		<a class="fs-5" 
-			data-bs-toggle="collapse" 
-			href="#actinfo-<?= $activity->id ?>" 
-			role="button" 
-			aria-expanded="false" 
-			aria-controls="actinfo-<?= $activity->id ?>">
-				<?= $activity->name ?>
-		</a>
-		<div class="collapse p-5 bg-light rounded-lg shadow-sm" id="actinfo-<?= $activity->id ?>">
-
-
-			<div class="activity" id="activity-<?= $activity->id ?>">
-				<a href="#" 
-					class="btn btn-success btn-lg" 
-					onclick="return claimit('<?= $activity->id ?>')">
-
-						Claim 
-						
-
-				</a>
-			</div>
-
-
-
-
-			<h4><?= $activity->name ?></h4>
-			<div><?= $activity->description ?></div>
-			<a class="btn btn-lg btn-primary" href="<?= $activity->hyperlink ?>" target="_blank">
-				<?= $activity->activity_type->name ?>
-			</a>
+	<div style="font-size; 130%"><?= $steps->description ?></div>
+	
+	<div class="my-3">
+			<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
+			<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
+			<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
+				<?= $readstepcount ?> to read
+			</span>  
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
+				<?= $watchstepcount ?> to watch
+			</span>  
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
+				<?= $listenstepcount ?> to listen to
+			</span>  
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
+				<?= $participatestepcount ?> to participate in
+			</span>  
 		</div>
+		
+	<div class="progress progress-bar-striped mb-3" style="background-color: #F1F1F1; height: 26px;">
+	  <div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,.8); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+		<?= $steppercent ?>% completed
+	  </div>
 	</div>
-	<?php endforeach ?>
-	<?php if(count($supplementalacts) > 0): ?>
-	<h5>
-		<a class="btn bg-white mt-0" 
-			data-bs-toggle="collapse" 
-			href="#supplemental-step-<?= $steps->id ?>" 
-			role="button" 
-			aria-expanded="false" 
-			aria-controls="supplemental-step-<?= $steps->id ?>">
-				Supplemental Activities
-		</a>
-	</h5>
-	<div class="collapse bg-white p-3 mt-0" id="supplemental-step-<?= $steps->id ?>">
-	<?php foreach($supplementalacts as $activity): ?>
-	<div class="p-1 my-1">
-		<a class="" data-bs-toggle="collapse" href="#actinfo-<?= $activity->id ?>" role="button" aria-expanded="false" aria-controls="actinfo-<?= $activity->id ?>">
-			<?= $activity->name ?>
-		</a>
-		<div class="collapse p-5 bg-light rounded-3" id="actinfo-<?= $activity->id ?>">
-			<h4><?= $activity->name ?></h4>
-			<div><?= $activity->description ?></div>
-			<a class="btn btn-lg btn-dark" href="<?= $activity->hyperlink ?>" target="_blank">
-				<?= $activity->activity_type->name ?>
-			</a>
-		</div>
-	</div>
-	<?php endforeach ?>
-	</div>
-	<?php endif ?>
-
-	</div>
-
+	
 </div>
-
 <?php endforeach ?>
 
 
@@ -184,151 +330,130 @@ $supplmentalcount = count($supplementalacts);
 </div>
 
 </div>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 
-<script src="//cdn.jsdelivr.net/npm/pouchdb@7.2.1/dist/pouchdb.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+	crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
+	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
+	crossorigin="anonymous"></script>
+
+
+<script type="text/javascript" src="/learning-curator/js/jquery.scrollTo.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+
 <script>
 
-// A list of all activity IDs from the *pathway*
-// We use this list when we build the activity rings
-var pathallactivities = '<?= rtrim($pathallactivities,',') ?>';
+$(document).ready(function(){
 
-// A list of all activity IDs from this step
-// We use this list when we compare it with IDs 
-// that are listed in the localstore 
-var stepactivitylist = '<?= rtrim($stepactivitylist,',') ?>';
-
-// The PHP generated the comma-separated list
-// now split into an array
-var acts = pathallactivities.split(',');
-
-// The pathway ID of this step
-var pathwayid = <?= $pathway->id ?>;
-
-// Open the localstore database
-// If we're planning on synching this to a remote, that 
-// is where we're going to absolutely need a session/unique id 
-// variable to create a new database for each user; otherwise, 
-// everyone is writing to the same datbase and if I claim something
-// it's now claimed for you too.
-// If we're not going to create a unique DB for each user, we still
-// need the unique ID as we'll have to store the value with 
-// each entry and modify below to use a query instead of 
-// db.allDocs()
-var db = new PouchDB('curator-ta'); // http://localhost:5984/
-
-//
-// Initialize activity ring load on page load
-//
-loadStatus();
-
-function loadStatus() {
-
-
-	var overallprogress = 0;
-
-	// Start looping through each item in the localstore
-	// A record will either be a pathway or an activity
-	// so we perform a check for either and update the UI 
-	// accordingly
-	db.allDocs({include_docs: true, descending: true}, function(err, doc) {
-
-		doc.rows.forEach(function(e,index){
-
-			//
-			// Activities
-			//
-			// Take the list of all activities on this pathway and 
-			// break it into an array. Then loop through said array
-			// and compare each of the IDs against the ID from our
-			// localstore. If there's a match, then update the claim
-			// button to indicate you've already claimed.
-			//
-			// We also build up the vars necessary to show
-			// the activity rings .
-			//
-			// #TODO implement unclaim
-			// 
-			acts.forEach(function(item, index, arr) {
-				
-				// Does the ID in the localstore equal an ID from the path?
-				if(e.doc['activity'] === item) {
-
-					// Use the activity ID so that we can target the cooresponding
-					// dom id and update things accordingly
-					let iid = 'activity-' + item;
-					let actchk = 'actcheck-' + item;
-				
-					// Does the activity appear on this page? If so, 
-					// update the UI to show it's claimed
-					if(document.getElementById(iid)) {
-						let newbutton = '<span class="btn btn-dark btn-lg">';
-						newbutton += 'Claimed ';
-						newbutton += '<i class="fas fa-check-circle">';
-						newbutton += '</span>';
-						document.getElementById(iid).innerHTML = newbutton;
-					}
-					if(document.getElementById(actchk)) {
-						document.getElementById(actchk).classList.remove('d-none');
-					}
-					// Update the overall progress counter
-					overallprogress++;
-				}
-			});
-			
-
-		}); // end of db.allDocs()
-
-		var totalacts = acts.length;
-		var percent = (Number(overallprogress) * 100) / Number(totalacts);
-		var percentleft = 100 - percent;
-
-		// UPDATE UI...
-		let progress = Math.ceil(percent);
-		let attwidth = 'width: ' + progress + '%;';
-		console.log(attwidth);
-		//#pathprogress
-		document.getElementById('pathprogress').setAttribute('aria-valuenow',progress);
-		document.getElementById('pathprogress').setAttribute('style',attwidth);
-
-
-	});
-
-	
-}
-
-//
-// When the user clicks on the "Claim" button
-// this function fires and inserts the ID for 
-// activity into the localstore.
-// We also update the UI immediately to indicate the claim.
-// We are encoding both the activity ID and the its 
-// associated activity type ID so that we can properly
-// build the activity rings on each page 
-//
-function claimit (activityid) {	
-
-	// use a simple timestamp as the id	
-	rightnow = new Date().getTime();
-	var doc = {
-		"_id": rightnow.toString(),
-		"date": rightnow.toString(),
-		"activity": activityid,
-	};
-	db.put(doc);
-
-	var iid = 'activity-' + activityid;
-	newbutton = '<span class="btn btn-dark btn-lg">';
-	newbutton += 'Claimed ';
-	newbutton += '<i class="fas fa-check-circle"></i>';
-	newbutton += '</span> ';
-	//newbutton += 'View all of your claims on <a href="#">your dashboard</a>';
-	document.getElementById(iid).innerHTML = newbutton;
-
+	// load up the activity rings
 	loadStatus();
 
-	return false;
+
+	$('#stepnav .nav-link').on('click', function(event) {
+		event.preventDefault();
+		$(this).tooltip('hide');
+        $.scrollTo(event.target.hash, 250, {offset:-105,});
+	});
+
+	$('.claim').on('submit', function(e){
+		
+		e.preventDefault();
+		var form = $(this);
+		form.children('button').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/learning-curator/activities-users/claim',
+			data: form.serialize(),
+			success: function(data)
+			{
+				
+				loadStatus();
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
+
+	$('[data-toggle="tooltip"]').tooltip();
+
+	$('.likingit').on('click',function(e){
+		var url = $(this).attr('href');
+		$(this).children('.lcount').html('Liked!');
+		e.preventDefault();
+		$.ajax({
+			type: "GET",
+			url: url,
+			data: '',
+			success: function(data)
+			{
+			},
+			statusCode: 
+			{
+				403: function() {
+					let alert = 'You must be logged in.</div>';
+					console.log(alert);
+				}
+			}
+		});
+	});
+
+});
+
+//
+// Get the summary for this pathway independently of the page load
+//
+function loadStatus() {
+
+	var form = $(this);
+	$.ajax({
+		type: "GET",
+		url: '/learning-curator/pathways/status/<?= $pathway->id ?>',
+		data: '',
+		success: function(data)
+		{
+			form.find('btn').val('Claimed!');
+			var pathstatus = JSON.parse(data);
+
+			$('.following').html(pathstatus.status);
+
+			console.log(pathstatus.status);
+			$('.readtotal').html(pathstatus.typecounts.readtotal + ' to read')
+							.css('backgroundColor','rgba(' + pathstatus.typecolors.readcolor + ',1)');
+			$('.watchtotal').html(pathstatus.typecounts.watchtotal + ' to watch')
+							.css('backgroundColor','rgba(' + pathstatus.typecolors.watchcolor + ',1)');
+			$('.listentotal').html(pathstatus.typecounts.listentotal + ' to listen to')
+							.css('backgroundColor','rgba(' + pathstatus.typecolors.listencolor + ',1)');
+			$('.participatetotal').html(pathstatus.typecounts.participatetotal + ' to participate in')
+							.css('backgroundColor','rgba(' + pathstatus.typecolors.participatecolor + ',1)');
+
+			var ctx = document.getElementById('myChart').getContext('2d');
+			var myDoughnutChart = new Chart(ctx, {
+				type: 'doughnut',
+				data: JSON.parse(pathstatus.chartjs),
+				options: { 
+					legend: { 
+						display: false 
+					},
+				}
+			});
+		},
+		statusCode: 
+		{
+			403: function() {
+				form.after('<div class="alert alert-warning">You must be logged in.</div>');
+			}
+		}
+	});
+
 }
 
 </script>
-</body>
-</html>
