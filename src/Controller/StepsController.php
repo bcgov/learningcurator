@@ -274,5 +274,39 @@ class StepsController extends AppController
 
         $this->set(compact('step','steppercent','stepacts'));
     }
+    /**
+     * update slugs method
+     * We added the slug field _after_ we had a bunch in there
+     * so we needed to update all steps at once to have each
+     * step have the right slug, based on its name
+     *
+     * @param string|null $id Step id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function updateslugs()
+    {
+        $this->Authorization->skipAuthorization();
+        $allsteps = $this->Steps->find('all');
+        foreach($allsteps as $s) {
+            
+            $newslug = $this->Steps->get($s->id);
+            $sluggedTitle = strtolower(Text::slug($s->name));
+            $st = array('slug' => $sluggedTitle);
+
+            $newslug = $this->Steps->patchEntity($newslug, $st);
+            
+            if ($this->Steps->save($newslug)) {
+                print(__('The step has been saved.'));
+            }
+            //echo $s->slug;
+
+
+        }
+
+
+
+    
+    }
 	
 }
