@@ -7,17 +7,19 @@
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
+,  `slug` varchar(255) NOT NULL
 ,  `description` text
 ,  `image_path` varchar(255) DEFAULT NULL
 ,  `color` varchar(255) DEFAULT NULL
 );
-INSERT INTO roles VALUES(1,'Learner','These are regular end-users who can''t do anything but join pathways and claim activities.','','');
-INSERT INTO roles VALUES(2,'Curator','Curators are the subject matter experts who create pathways, add steps, assigning activities to steps, and determining which activities are required for pathway completion.','','');
-INSERT INTO roles VALUES(5,'Super User','Can do anything, anywhere.','','');
+INSERT INTO roles VALUES(1,'Learner','learner','These are regular end-users who can''t do anything but join pathways and claim activities.','','');
+INSERT INTO roles VALUES(2,'Curator','curator','Curators are the subject matter experts who create pathways, add steps, assigning activities to steps, and determining which activities are required for pathway completion.','','');
+INSERT INTO roles VALUES(5,'Super User','super','Can do anything, anywhere.','','');
 
 CREATE TABLE IF NOT EXISTS `ministries` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
+,  `slug` varchar(255) NOT NULL
 ,  `elm_learner_group` varchar(255) NOT NULL
 ,  `description` text
 ,  `hyperlink` varchar(255) DEFAULT NULL
@@ -25,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `ministries` (
 ,  `color` varchar(255) DEFAULT NULL
 ,  `featured` integer DEFAULT '0'
 );
-INSERT INTO ministries VALUES(1,'BC Public Service Agency','All Government of British Columbia Learners','','','','',1);
+INSERT INTO ministries VALUES(1,'BC Public Service Agency','bcpsa','All Government of British Columbia Learners','','','','',1);
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
@@ -53,30 +55,27 @@ INSERT INTO users VALUES(1,'Allan','ahaggett',1,5,NULL,'ahaggett@gov.bc.ca','$2y
 
 
 
-
-
-
-
-
 CREATE TABLE IF NOT EXISTS `statuses` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
+,  `slug` varchar(255) NOT NULL
 ,  `description` text
 ,  `created` datetime NOT NULL
 ,  `createdby` integer NOT NULL
 ,  CONSTRAINT `stat_createduser_ibfk_1` FOREIGN KEY (`createdby`) REFERENCES `users` (`id`)
 );
-INSERT INTO statuses VALUES(1,'Draft','','2020-02-02 04:00:07',1);
-INSERT INTO statuses VALUES(2,'Published','Activities that, for one reason or another, are no longer valid (e.g. a YouTube video that''s been taken down)','2020-02-09 18:46:41',1);
-INSERT INTO statuses VALUES(3,'Defunct','','2020-05-05 19:30:50',1);
-INSERT INTO statuses VALUES(4,'Future','An activity or pathway with this status will be included in a scheduled task to see if a publish_on date is passed.','2020-05-05 19:34:40',1);
-INSERT INTO statuses VALUES(5,'Suggested','Activities which have been suggested by regular users.','2020-07-11 22:00:55',1);
+INSERT INTO statuses VALUES(1,'Draft','draft','','2020-02-02 04:00:07',1);
+INSERT INTO statuses VALUES(2,'Published','published','Activities that, for one reason or another, are no longer valid (e.g. a YouTube video that''s been taken down)','2020-02-09 18:46:41',1);
+INSERT INTO statuses VALUES(3,'Defunct','defunct','','2020-05-05 19:30:50',1);
+INSERT INTO statuses VALUES(4,'Future','future','An activity or pathway with this status will be included in a scheduled task to see if a publish_on date is passed.','2020-05-05 19:34:40',1);
+INSERT INTO statuses VALUES(5,'Suggested','future','Activities which have been suggested by regular users.','2020-07-11 22:00:55',1);
 
 
 
 CREATE TABLE IF NOT EXISTS `activity_types` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
+,  `slug` varchar(255) NOT NULL
 ,  `description` text
 ,  `color` varchar(255) DEFAULT NULL
 ,  `delivery_method` varchar(255) DEFAULT NULL
@@ -89,14 +88,15 @@ CREATE TABLE IF NOT EXISTS `activity_types` (
 ,  CONSTRAINT `activity_type_createduser_ibfk_1` FOREIGN KEY (`createdby`) REFERENCES `users` (`id`)
 ,  CONSTRAINT `activity_type_modifieduser_ibfk_1` FOREIGN KEY (`modifiedby`) REFERENCES `users` (`id`)
 );
-INSERT INTO activity_types VALUES(1,'Watch','Only the best of video content from YouTube, Vimeo, and any other source that helps the learning goal.','193,129,183','','fa-video',0,'2020-02-02 03:10:44',1,'2020-07-05 04:19:14',1);
-INSERT INTO activity_types VALUES(2,'Read','From real paper books to study abstracts and blog posts; the classic written word enhancing your learning in many ways.','249,145,80','','fa-book-reader',0,'2020-02-02 03:11:03',1,'2020-07-06 23:42:12',1);
-INSERT INTO activity_types VALUES(3,'Listen','There are so many things to listen to from podcasts and audio books to radio shows and even music to help achieve your goals.','244,105,115','','fa-headphones',0,'2020-02-02 03:11:24',1,'2020-07-05 04:19:46',1);
-INSERT INTO activity_types VALUES(4,'Participate','Activities that require your interactaction, either in person courses, or via elearning, quizzes, or surveys that provide measurable feedback.','255,218,96','','fa-users',0,'2020-02-02 03:11:39',1,'2020-07-05 04:20:02',1);
+INSERT INTO activity_types VALUES(1,'Watch','watch','Only the best of video content from YouTube, Vimeo, and any other source that helps the learning goal.','193,129,183','','fa-video',0,'2020-02-02 03:10:44',1,'2020-07-05 04:19:14',1);
+INSERT INTO activity_types VALUES(2,'Read','read','From real paper books to study abstracts and blog posts; the classic written word enhancing your learning in many ways.','249,145,80','','fa-book-reader',0,'2020-02-02 03:11:03',1,'2020-07-06 23:42:12',1);
+INSERT INTO activity_types VALUES(3,'Listen','listen','There are so many things to listen to from podcasts and audio books to radio shows and even music to help achieve your goals.','244,105,115','','fa-headphones',0,'2020-02-02 03:11:24',1,'2020-07-05 04:19:46',1);
+INSERT INTO activity_types VALUES(4,'Participate','participate','Activities that require your interactaction, either in person courses, or via elearning, quizzes, or surveys that provide measurable feedback.','255,218,96','','fa-users',0,'2020-02-02 03:11:39',1,'2020-07-05 04:20:02',1);
 
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
+,  `slug` varchar(255) NOT NULL
 ,  `description` text
 ,  `image_path` varchar(255) DEFAULT NULL
 ,  `color` varchar(255) DEFAULT NULL
@@ -105,13 +105,14 @@ CREATE TABLE IF NOT EXISTS `categories` (
 ,  `createdby` integer NOT NULL
 ,  CONSTRAINT `cat_createduser_ibfk_1` FOREIGN KEY (`createdby`) REFERENCES `users` (`id`)
 );
-INSERT INTO categories VALUES(1,'Leadership','Building your leadership skills is something you can do in whatever role you''re in now, as well as something you may look towards for future roles. As BC Public Service leaders, we aim to develop our core leadership competencies, as well as role-specific ones that apply to certain positions. Wherever you are today, you''ll find useful learning here for developing your leadership skills.','','','','2020-02-02 04:07:02',1);
-INSERT INTO categories VALUES(2,'Other Topics','Coming Soon: The Learning Curator will be populated with other topics of interest to learners in the BCPS.','','','','2020-05-27 18:28:21',1);
-INSERT INTO categories VALUES(3,'Diversity and Inclusion','Every individual needs to know their role in creating a diverse and inclusive workplace in the BC Public Service. Learn the definitions and the value of diversity and inclusion. Deepen your understanding and learn how to be an ally with a little engagement or a deeper dive in the resources within this topic&mdash;it''s up to you.','','','','2020-05-27 18:34:49',1);
+INSERT INTO categories VALUES(1,'Leadership','leadership','Building your leadership skills is something you can do in whatever role you''re in now, as well as something you may look towards for future roles. As BC Public Service leaders, we aim to develop our core leadership competencies, as well as role-specific ones that apply to certain positions. Wherever you are today, you''ll find useful learning here for developing your leadership skills.','','','','2020-02-02 04:07:02',1);
+INSERT INTO categories VALUES(2,'Other Topics','other-topics','Coming Soon: The Learning Curator will be populated with other topics of interest to learners in the BCPS.','','','','2020-05-27 18:28:21',1);
+INSERT INTO categories VALUES(3,'Diversity and Inclusion','d-i','Every individual needs to know their role in creating a diverse and inclusive workplace in the BC Public Service. Learn the definitions and the value of diversity and inclusion. Deepen your understanding and learn how to be an ally with a little engagement or a deeper dive in the resources within this topic&mdash;it''s up to you.','','','','2020-05-27 18:34:49',1);
 
 CREATE TABLE IF NOT EXISTS `competencies` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
+,  `slug` varchar(255) NOT NULL
 ,  `description` text
 ,  `image_path` varchar(255) DEFAULT NULL
 ,  `color` varchar(255) DEFAULT NULL
@@ -130,6 +131,7 @@ CREATE TABLE IF NOT EXISTS `competencies` (
 CREATE TABLE IF NOT EXISTS `activities` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
+,  `slug` varchar(255) NOT NULL
 ,  `hyperlink` varchar(255) DEFAULT NULL
 ,  `description` text
 ,  `licensing` text
@@ -173,6 +175,7 @@ CREATE TABLE IF NOT EXISTS `activities_competencies` (
 CREATE TABLE IF NOT EXISTS `pathways` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
+,  `slug` varchar(255) NOT NULL
 ,  `color` varchar(255) DEFAULT NULL
 ,  `description` text
 ,  `objective` text
@@ -197,27 +200,27 @@ CREATE TABLE IF NOT EXISTS `pathways` (
 CREATE TABLE IF NOT EXISTS `tags` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
+,  `slug` varchar(255) NOT NULL
 ,  `description` text
 ,  `created` datetime NOT NULL
 ,  `createdby` integer NOT NULL
 ,  `modified` datetime NOT NULL
 ,  `modifiedby` integer NOT NULL
-
 ,  CONSTRAINT `tagcreateduser_ibfk_1` FOREIGN KEY (`createdby`) REFERENCES `users` (`id`)
 ,  CONSTRAINT `tagmodifieduser_ibfk_1` FOREIGN KEY (`modifiedby`) REFERENCES `users` (`id`)
 );
-INSERT INTO tags VALUES(2,'Book','Physical book','2020-02-08 18:49:48',1,'2020-02-08 18:49:48',1);
-INSERT INTO tags VALUES(3,'YouTube','Videos hosted on the YouTube platform (Google)','2020-02-08 18:50:17',1,'2020-02-08 18:55:46',1);
-INSERT INTO tags VALUES(4,'Podcast','A series of audio-only recordings, usually discussions on various topics.','2020-02-08 18:50:53',1,'2020-02-08 18:50:53',1);
-INSERT INTO tags VALUES(5,'PDF','An Adobe Portable Document Format (PDF) resource.','2020-02-08 18:51:54',1,'2020-02-08 18:51:54',1);
-INSERT INTO tags VALUES(6,'Website','A general-purpose website','2020-02-08 18:52:25',1,'2020-02-08 18:52:25',1);
-INSERT INTO tags VALUES(7,'Web App','An application which is accessible via the world wide web. ','2020-02-08 18:53:16',1,'2020-02-08 18:53:16',1);
-INSERT INTO tags VALUES(8,'iOS App','A mobile app designed for Apple''s iOS/iPadOS devices.','2020-02-08 18:53:50',1,'2020-02-08 18:53:50',1);
-INSERT INTO tags VALUES(9,'Android App','A mobile application designed for Google''s Android platform.','2020-02-08 18:54:17',1,'2020-02-08 18:54:17',1);
-INSERT INTO tags VALUES(10,'eBook','Not all physical books are available in eBook format. ','2020-02-08 18:55:21',1,'2020-02-08 18:55:21',1);
-INSERT INTO tags VALUES(11,'Vimeo','A video-hosting platform.','2020-02-08 18:56:06',1,'2020-02-08 18:56:06',1);
-INSERT INTO tags VALUES(12,'Social Media','This activity relates somehow to social media and its platforms.','2020-02-08 18:56:43',1,'2020-02-08 18:56:43',1);
-INSERT INTO tags VALUES(13,'Learning System Course','','2020-03-01 03:19:38',1,'2020-03-01 03:19:38',1);
+INSERT INTO tags VALUES(2,'Book','book','Physical book','2020-02-08 18:49:48',1,'2020-02-08 18:49:48',1);
+INSERT INTO tags VALUES(3,'YouTube','youtube','Videos hosted on the YouTube platform (Google)','2020-02-08 18:50:17',1,'2020-02-08 18:55:46',1);
+INSERT INTO tags VALUES(4,'Podcast','podcast','A series of audio-only recordings, usually discussions on various topics.','2020-02-08 18:50:53',1,'2020-02-08 18:50:53',1);
+INSERT INTO tags VALUES(5,'PDF','pdf','An Adobe Portable Document Format (PDF) resource.','2020-02-08 18:51:54',1,'2020-02-08 18:51:54',1);
+INSERT INTO tags VALUES(6,'Website','website','A general-purpose website','2020-02-08 18:52:25',1,'2020-02-08 18:52:25',1);
+INSERT INTO tags VALUES(7,'Web App','webapp','An application which is accessible via the world wide web. ','2020-02-08 18:53:16',1,'2020-02-08 18:53:16',1);
+INSERT INTO tags VALUES(8,'iOS App','iosapp','A mobile app designed for Apple''s iOS/iPadOS devices.','2020-02-08 18:53:50',1,'2020-02-08 18:53:50',1);
+INSERT INTO tags VALUES(9,'Android App','android-app','A mobile application designed for Google''s Android platform.','2020-02-08 18:54:17',1,'2020-02-08 18:54:17',1);
+INSERT INTO tags VALUES(10,'eBook','ebook','Not all physical books are available in eBook format. ','2020-02-08 18:55:21',1,'2020-02-08 18:55:21',1);
+INSERT INTO tags VALUES(11,'Vimeo','vimeo','A video-hosting platform.','2020-02-08 18:56:06',1,'2020-02-08 18:56:06',1);
+INSERT INTO tags VALUES(12,'Social Media','social-media','This activity relates somehow to social media and its platforms.','2020-02-08 18:56:43',1,'2020-02-08 18:56:43',1);
+INSERT INTO tags VALUES(13,'Learning System Course','learning-system','','2020-03-01 03:19:38',1,'2020-03-01 03:19:38',1);
 
 
 
@@ -251,6 +254,7 @@ CREATE TABLE IF NOT EXISTS `competencies_users` (
 CREATE TABLE IF NOT EXISTS `steps` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
+,  `slug` varchar(255) NOT NULL
 ,  `description` text
 ,  `image_path` varchar(255) DEFAULT NULL
 ,  `featured` integer DEFAULT '0'
@@ -281,6 +285,7 @@ CREATE TABLE IF NOT EXISTS `activities_steps` (
 ,  `step_id` integer NOT NULL
 ,  `required` integer DEFAULT '0'
 ,  `steporder` integer DEFAULT '0'
+,  `curator_context` text
 ,  CONSTRAINT `activities_steps_ibfk_1` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
 ,  CONSTRAINT `activities_steps_ibfk_2` FOREIGN KEY (`step_id`) REFERENCES `steps` (`id`)
 );
@@ -288,6 +293,7 @@ CREATE TABLE IF NOT EXISTS `activities_steps` (
 CREATE TABLE IF NOT EXISTS `topics` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
+,  `slug` varchar(255) NOT NULL
 ,  `description` text
 ,  `image_path` varchar(255) DEFAULT NULL
 ,  `color` varchar(255) DEFAULT NULL
@@ -314,11 +320,12 @@ CREATE TABLE IF NOT EXISTS `pathways_topics` (
 );
 
 CREATE TABLE IF NOT EXISTS `activities_bookmarks` (
-    `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
+   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `activity_id` integer NOT NULL
 ,  `user_id` integer NOT NULL
 ,  `notes` text
-, created datetime,  CONSTRAINT `activities_bookmarks_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+,  `created` datetime   
+,  CONSTRAINT `activities_bookmarks_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ,  CONSTRAINT `activities_bookmarks_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
 );
 
@@ -332,7 +339,7 @@ CREATE TABLE IF NOT EXISTS `reports` (
 ,  `response` text
 ,  `created` datetime NOT NULL
 ,  CONSTRAINT `report_ibfk_1` FOREIGN KEY (`curator_id`) REFERENCES `users` (`id`)
-,  CONSTRAINT `report_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+,  CONSTRAINT `report_user_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ,  CONSTRAINT `report_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
 );
 
@@ -359,22 +366,6 @@ CREATE TABLE IF NOT EXISTS `pathways_users` (
 ,  CONSTRAINT `pathways_users_ibfk_2` FOREIGN KEY (`pathway_id`) REFERENCES `pathways` (`id`)
 ,  CONSTRAINT `pathways_users_ibfk_3` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`)
 );
-
-
-
-CREATE TABLE `reports` (
-  `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
-,  `activity_id` integer NOT NULL
-,  `user_id` integer NOT NULL
-,  `issue` text
-,  `curator_id` integer DEFAULT NULL
-,  `response` text
-,  `created` datetime NOT NULL
-,  CONSTRAINT `report_ibfk_1` FOREIGN KEY (`curator_id`) REFERENCES `users` (`id`)
-,  CONSTRAINT `report_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-,  CONSTRAINT `report_ibfk_3` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
-);
-
 
 
 CREATE INDEX `idx_statuses_stat_createduser_ibfk_1` ON `statuses` (`createdby`);
