@@ -55,16 +55,16 @@ $this->layout = 'nowrap';
 <div class="col-md-8 col-lg-6">
 <ul class="nav nav-tabs mb-3">
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/pathways">Pathways</a>
+    <a class="nav-link" href="/users/pathways">Pathways</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/bookmarks">Bookmarks</a>
+    <a class="nav-link" href="/users/bookmarks">Bookmarks</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="/learning-curator/users/claimed">Claimed</a>
+    <a class="nav-link active" href="/users/claimed">Claimed</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/reports">Reports</a>
+    <a class="nav-link" href="/users/reports">Reports</a>
   </li>
 </ul>
 </div>
@@ -86,7 +86,7 @@ $this->layout = 'nowrap';
 		<span class="badge badge-warning" title="This link has been deemed to be non-functional or no longer relevant to the pathway">DEFUNCT</span>
 		<?php endif ?>
 
-		<a href="/learning-curator/activity-types/view/<?= $activity->activity_type->id ?>" 
+		<a href="/activity-types/view/<?= $activity->activity_type->id ?>" 
 			class="activity-icon activity-icon-md" 
 			style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
 				<i class="activity-icon activity-icon-md fas <?= $activity->activity_type->image_path ?>"></i>
@@ -100,9 +100,9 @@ $this->layout = 'nowrap';
 		From: 
 		<?php foreach ($activity->steps as $step) : ?>
 		<?php foreach ($step->pathways as $path) : ?>
-		<a href="/learning-curator/pathways/view/<?= $path->id ?>"><?= $path->name ?></a>
+		<a href="/pathways/view/<?= $path->id ?>"><?= $path->name ?></a>
 		<?php endforeach; ?>
-		 - <a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $step->name ?></a>
+		 - <a href="/steps/view/<?= $step->id ?>"><?= $step->name ?></a>
 		<?php endforeach; ?>
 		</div>
 		
@@ -121,7 +121,7 @@ $this->layout = 'nowrap';
 
 <div class="card card-body my-3">
 	<p>If you're looking for something specific, try searching for it!</p>
-	<form method="get" action="/learning-curator/activities/find" class="form-inline my-2 my-lg-0">
+	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0">
 		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
 		<button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
 	</form>

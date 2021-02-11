@@ -55,16 +55,16 @@ $this->layout = 'nowrap';
 <div class="col-md-8 col-lg-6">
 <ul class="nav nav-tabs mb-3">
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/pathways">Pathways</a>
+    <a class="nav-link" href="/users/pathways">Pathways</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="/learning-curator/users/bookmarks">Bookmarks</a>
+    <a class="nav-link active" href="/users/bookmarks">Bookmarks</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/claimed">Claimed</a>
+    <a class="nav-link" href="/users/claimed">Claimed</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/reports">Reports</a>
+    <a class="nav-link" href="/users/reports">Reports</a>
   </li>
 </ul>
 </div>
@@ -85,7 +85,7 @@ $this->layout = 'nowrap';
 <div class="float-right">
 <?= $this->Form->postLink(__('x'), ['controller' => 'ActivitiesBookmarks','action' => 'delete/'. $bookmark->id], ['class' => 'btn btn-sm btn-dark', 'confirm' => __('Delete this bookmark?', $bookmark->activity_id)]) ?>
 </div>
-		<a href="/learning-curator/activity-types/view/<?= $bookmark->activity->activity_type->id ?>" 
+		<a href="/activity-types/view/<?= $bookmark->activity->activity_type->id ?>" 
 			class="activity-icon activity-icon-md" 
 			style="background-color: rgba(<?= $bookmark->activity->activity_type->color ?>,1)">
 				<i class="activity-icon activity-icon-md fas <?= $bookmark->activity->activity_type->image_path ?>"></i>

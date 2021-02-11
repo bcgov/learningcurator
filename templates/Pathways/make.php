@@ -173,7 +173,7 @@ if($stepclaimcount > 0) {
 <div class="p-3 my-3 bg-white rounded-lg">
 	<h2>
 
-		<a href="/learning-curator/steps/view/<?= $steps->id ?>">
+		<a href="/steps/view/<?= $steps->id ?>">
 			<?= h($steps->name) ?> 
 			<i class="fas fa-arrow-circle-right"></i>
 		</a>

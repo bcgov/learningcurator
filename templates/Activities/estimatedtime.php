@@ -32,7 +32,7 @@ $options = array(
     'Variable');
 ?>
 <?php foreach($options as $o): ?>
-<a class="dropdown-item" href="/learning-curator/activities/estimatedtime/<?= $o ?>"><?= $o ?></a>
+<a class="dropdown-item" href="/activities/estimatedtime/<?= $o ?>"><?= $o ?></a>
 <?php endforeach ?>
   </div>
 </div>
@@ -75,7 +75,7 @@ if($activity->activity_types_id == 1) {
 			<i class="activity-icon activity-icon-lg fas <?= $acticon ?>"></i>
 	</div>
 <h3>
-	<a href="/learning-curator/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
+	<a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
 	<?php //$this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
 </h3>
 <span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
@@ -89,7 +89,7 @@ if($activity->activity_types_id == 1) {
 <div class="p-3 mb-3 bg-white rounded-lg">This activity is on the following pathways:
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
-<span class="badge badge-light"><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
+<span class="badge badge-light"><a href="/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
 <?php endforeach ?>
 <?php endforeach ?>
 </div>

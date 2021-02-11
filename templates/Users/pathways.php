@@ -59,13 +59,13 @@ $this->layout = 'nowrap';
     <a class="nav-link active" href="#">Pathways</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/bookmarks">Bookmarks</a>
+    <a class="nav-link" href="/users/bookmarks">Bookmarks</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/claimed">Claimed</a>
+    <a class="nav-link" href="/users/claimed">Claimed</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/reports">Reports</a>
+    <a class="nav-link" href="/users/reports">Reports</a>
   </li>
 </ul>
 </div>
@@ -84,7 +84,7 @@ $this->layout = 'nowrap';
 		<script>
 			var request<?= $pathways->id ?> = new XMLHttpRequest();
 
-			request<?= $pathways->id ?>.open('GET', '/learning-curator/pathways/status/<?= $pathways->id ?>', true);
+			request<?= $pathways->id ?>.open('GET', '/pathways/status/<?= $pathways->id ?>', true);
 
 			request<?= $pathways->id ?>.onload = function() {
 			if (this.status >= 200 && this.status < 400) {

@@ -60,7 +60,7 @@ if ($this->Identity->isLoggedIn()) {
 	<?php foreach($activity->steps as $step): ?>
 	<?php foreach($step->pathways as $path): ?>
 	<?php if($path->status_id == 2): ?>
-	<span class="badge badge-light"><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
+	<span class="badge badge-light"><a href="/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
 	<?php endif ?>
 	<?php endforeach ?>
 	<?php endforeach ?>
@@ -98,7 +98,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($role == 2 || $role == 5): ?>
 	<div class="p-3 mb-3 bg-white rounded-lg">
 		<span class="badge badge-warning"><?= $path->status->name ?></span>
-		<h3><a href="/learning-curator/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
+		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
 		<?= $path->objective ?>
 		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
 	</div>
@@ -106,7 +106,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php else: ?>
 	<div class="p-3 mb-3 bg-white rounded-lg">
 		
-		<h3><a href="/learning-curator/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
+		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
 		<?= $path->objective ?>
 		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
 	</div>
@@ -165,7 +165,7 @@ $(document).ready(function(){
 		var url = form.attr('action');
 		$.ajax({
 			type: "POST",
-			url: '/learning-curator/activities-bookmarks/add',
+			url: '/activities-bookmarks/add',
 			data: form.serialize(),
 			success: function(data)
 			{
@@ -190,7 +190,7 @@ $(document).ready(function(){
 		var url = form.attr('action');
 		$.ajax({
 			type: "POST",
-			url: '/learning-curator/activities-users/claim',
+			url: '/activities-users/claim',
 			data: form.serialize(),
 			success: function(data)
 			{

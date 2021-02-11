@@ -18,8 +18,8 @@ label {
 <div class="col-md-12">
 
 <div class="pad-md">
-    <h1><a href="/learning-curator/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $step->name ?></a></h1>
-    <div><a href="/learning-curator/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>" class="btn btn-light btn-sm">View Step</a></div>
+    <h1><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $step->name ?></a></h1>
+    <div><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>" class="btn btn-light btn-sm">View Step</a></div>
 </div>
 </div>
 </div>
@@ -47,7 +47,7 @@ label {
     
     <h2>Add Existing Activity</h2>
     <div class="my-3 p-3 rounded-lg bg-white">
-    <form method="get" id="actfind" action="/learning-curator/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
+    <form method="get" id="actfind" action="/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
         <input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
         <input type="hidden" name="step_id" value="<?= $step->id ?>">
         <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
@@ -107,7 +107,7 @@ label {
             </div>
             <div class="col-9">
                 <div><?= $a->activity_type->name ?></div>
-                <div class="actname"><a href="/learning-curator/activities/view/<?= $a->id ?>"><?= $a->name ?></a> </div>
+                <div class="actname"><a href="/activities/view/<?= $a->id ?>"><?= $a->name ?></a> </div>
             </div>
             <div class="col-2">
 
@@ -123,7 +123,7 @@ label {
             <?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light float-left']) ?>
             <?= $this->Form->end() ?>
 <br>
-            <?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $a->_joinData->id, 'class' => '']) ?>
+            <?= $this->Form->create(null,['action' => '/activities-steps/delete/' . $a->_joinData->id, 'class' => '']) ?>
             <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
             <?= $this->Form->button(__('Delete'),['class' => 'btn btn-sm btn-light']) ?>
             <?= $this->Form->end() ?>
@@ -140,7 +140,7 @@ label {
             <div class="row">
             <div class="col-9">
                 <?php if($supp->_joinData->required) echo '<span class="badge badge-success">Required</span>' ?> 
-                <a href="/learning-curator/activities/view/<?= $supp->id ?>"><?= $supp->name ?></a> 
+                <a href="/activities/view/<?= $supp->id ?>"><?= $supp->name ?></a> 
             </div>
             <div class="col-3">
             <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $supp->_joinData->id, 'class' => '']]) ?>
@@ -155,7 +155,7 @@ label {
             <?= $this->Form->button(__('r'),['class'=>'btn btn-sm btn-light float-left']) ?>
             <?= $this->Form->end() ?>
 
-            <?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $supp->_joinData->id, 'class' => 'form-inline']) ?>
+            <?= $this->Form->create(null,['action' => '/activities-steps/delete/' . $supp->_joinData->id, 'class' => 'form-inline']) ?>
             <?= $this->Form->hidden('id', ['value' => $supp->_joinData->id]) ?>
             <?= $this->Form->button(__('x'),['class' => 'btn btn-sm btn-light']) ?>
             <?= $this->Form->end() ?>
@@ -242,7 +242,7 @@ $(function () {
             var foo = itemEl.split('-');
             var formd = {id: sid, activity_id: foo[1], step_id: "<?= $step->id ?>", direction: "down", sortorder: 0};
             //var formd = 'id='+sid+'&activity_id='+foo[1]+'&step_id=<?= $step->id ?>&direction=down&sortorder=0';
-            var u = '/learning-curator/activities-steps/sort/' + sid;
+            var u = '/activities-steps/sort/' + sid;
             //console.log(sid);
             $.ajax({
                 type: "POST",
@@ -296,7 +296,7 @@ $(function () {
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src="/learning-curator/js/summernote-cleaner.js"></script>
+<script src="/js/summernote-cleaner.js"></script>
 
 <script>
 $(document).ready(function() {
