@@ -74,6 +74,12 @@ class TopicsTable extends Table
         $validator
             ->scalar('name')
             ->maxLength('name', 255)
+            ->requirePresence('slug', 'create')
+            ->notEmptyString('slug');
+        
+        $validator
+            ->scalar('slug')
+            ->maxLength('slug', 255)
             ->requirePresence('name', 'create')
             ->notEmptyString('name');
 

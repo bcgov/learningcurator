@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use Cake\Utility\Text;
 
 /**
  * Topics Controller
@@ -54,8 +55,13 @@ class TopicsController extends AppController
     {
         $topic = $this->Topics->newEmptyEntity();
         $this->Authorization->authorize($topic);
+
         if ($this->request->is('post')) {
+            //$this->request->getData()['slug'] = Text::slug(strtolower($this->request->getData()['name']));
             $topic = $this->Topics->patchEntity($topic, $this->request->getData());
+            $sluggedTitle = Text::slug(strtolower($topic->name));
+            // trim slug to maximum length defined in schema
+            $topic->slug = $sluggedTitle;
             if ($this->Topics->save($topic)) {
                 print(__('The topic has been saved.'));
 
