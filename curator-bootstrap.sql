@@ -38,20 +38,17 @@ CREATE TABLE IF NOT EXISTS `users` (
 ,  `image_path` varchar(255) DEFAULT NULL
 ,  `email` varchar(255) NOT NULL
 ,  `password` varchar(255) NOT NULL
+,  `created` datetime NOT NULL
 ,  CONSTRAINT `user_ministry_ibfk_1` FOREIGN KEY (`ministry_id`) REFERENCES `ministries` (`id`)
 ,  CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
 );
-
-
-
-
 
 
 --
 -- You'll want to change the default user info below for info that makes sense for your super-user
 -- You could also bulk create new users here.
 -- 
-INSERT INTO users VALUES(1,'Allan','ahaggett',1,5,NULL,'ahaggett@gov.bc.ca','$2y$10$qZphp.fHBH4ZkfNAXHghFOP14f4SuJs7I.GDJcDxJlr2LyjsDrvYG');
+INSERT INTO users VALUES(1,'Chief Curator','curator',1,5,NULL,'learning.curator@gov.bc.ca','$2y$10$qZphp.fHBH4ZkfNAXHghFOP14f4SuJs7I.GDJcDxJlr2LyjsDrvYG','2020-02-02 04:00:07');
 
 
 
@@ -126,8 +123,6 @@ CREATE TABLE IF NOT EXISTS `competencies` (
 );
 
 
-
-
 CREATE TABLE IF NOT EXISTS `activities` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
@@ -154,7 +149,8 @@ CREATE TABLE IF NOT EXISTS `activities` (
 ,  `modified` datetime NOT NULL
 ,  `modifiedby_id` integer NOT NULL
 ,  `activity_types_id` integer NOT NULL
-,  `estimated_time` varchar(100),  CONSTRAINT `activities_ibfk_0` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`)
+,  `estimated_time` varchar(100)
+,  CONSTRAINT `activities_ibfk_0` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`)
 ,  CONSTRAINT `activities_ibfk_1` FOREIGN KEY (`activity_types_id`) REFERENCES `activity_types` (`id`)
 ,  CONSTRAINT `activities_ibfk_2` FOREIGN KEY (`ministry_id`) REFERENCES `ministries` (`id`)
 ,  CONSTRAINT `activities_ibfk_3` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
@@ -163,10 +159,22 @@ CREATE TABLE IF NOT EXISTS `activities` (
 ,  CONSTRAINT `activitymodifieduser_ibfk_1` FOREIGN KEY (`modifiedby_id`) REFERENCES `users` (`id`)
 );
 
+
+
+CREATE TABLE IF NOT EXISTS `activities_bookmarks` (
+  `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
+,  `activity_id` integer NOT NULL
+,  `user_id` integer NOT NULL
+,  `notes` text
+,  `created` datetime NOT NULL
+,  CONSTRAINT `activities_bookmarks_ibfk_1` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
+,  CONSTRAINT `activities_bookmarks_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+);
+
 CREATE TABLE IF NOT EXISTS `activities_competencies` (
-  `activity_id` integer NOT NULL
+  `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
+,  `activity_id` integer NOT NULL
 ,  `competency_id` integer NOT NULL
-,  PRIMARY KEY (`activity_id`,`competency_id`)
 ,  CONSTRAINT `competencies_activities_ibfk_1` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
 ,  CONSTRAINT `competencies_activities_ibfk_2` FOREIGN KEY (`competency_id`) REFERENCES `competencies` (`id`)
 );
@@ -225,27 +233,27 @@ INSERT INTO tags VALUES(13,'Learning System Course','learning-system','','2020-0
 
 
 CREATE TABLE IF NOT EXISTS `activities_tags` (
-  `activity_id` integer NOT NULL
+  `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
+,  `activity_id` integer NOT NULL
 ,  `tag_id` integer NOT NULL
-,  PRIMARY KEY (`activity_id`,`tag_id`)
 ,  CONSTRAINT `tags_activities_ibfk_1` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
 ,  CONSTRAINT `tags_activities_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`)
 );
 
 
 CREATE TABLE IF NOT EXISTS `competencies_pathways` (
-  `competency_id` integer NOT NULL
+  `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
+,  `competency_id` integer NOT NULL
 ,  `pathway_id` integer NOT NULL
-,  PRIMARY KEY (`competency_id`,`pathway_id`)
 ,  CONSTRAINT `competencies_pathways_ibfk_1` FOREIGN KEY (`pathway_id`) REFERENCES `pathways` (`id`)
 ,  CONSTRAINT `competencies_pathways_ibfk_2` FOREIGN KEY (`competency_id`) REFERENCES `competencies` (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `competencies_users` (
-  `competency_id` integer NOT NULL
+  `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
+,  `competency_id` integer NOT NULL
 ,  `user_id` integer NOT NULL
 ,  `priority` varchar(255) DEFAULT NULL
-,  PRIMARY KEY (`competency_id`,`user_id`)
 ,  CONSTRAINT `competencies_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ,  CONSTRAINT `competencies_users_ibfk_2` FOREIGN KEY (`competency_id`) REFERENCES `competencies` (`id`)
 );
@@ -268,11 +276,12 @@ CREATE TABLE IF NOT EXISTS `steps` (
 
 
 CREATE TABLE IF NOT EXISTS `pathways_steps` (
-  `step_id` integer NOT NULL
+  `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
+,  `step_id` integer NOT NULL
 ,  `pathway_id` integer NOT NULL
+,  `sortorder` integer DEFAULT 0
 ,  `date_start` datetime DEFAULT NULL
 ,  `date_complete` datetime DEFAULT NULL
-,  PRIMARY KEY (`step_id`,`pathway_id`)
 ,  CONSTRAINT `pathways_steps_ibfk_1` FOREIGN KEY (`step_id`) REFERENCES `steps` (`id`)
 ,  CONSTRAINT `pathways_steps_ibfk_2` FOREIGN KEY (`pathway_id`) REFERENCES `pathways` (`id`)
 );
@@ -283,8 +292,8 @@ CREATE TABLE IF NOT EXISTS `activities_steps` (
 `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `activity_id` integer NOT NULL
 ,  `step_id` integer NOT NULL
-,  `required` integer DEFAULT '0'
-,  `steporder` integer DEFAULT '0'
+,  `required` integer DEFAULT 0
+,  `steporder` integer DEFAULT 0
 ,  `curator_context` text
 ,  CONSTRAINT `activities_steps_ibfk_1` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
 ,  CONSTRAINT `activities_steps_ibfk_2` FOREIGN KEY (`step_id`) REFERENCES `steps` (`id`)
@@ -312,9 +321,9 @@ CREATE TABLE IF NOT EXISTS `categories_topics` (
 );
 
 CREATE TABLE IF NOT EXISTS `pathways_topics` (
-  `pathway_id` integer NOT NULL
+  `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
+,  `pathway_id` integer NOT NULL
 , `topic_id` integer NOT NULL
-,  PRIMARY KEY (`pathway_id`,`topic_id`)
 ,  CONSTRAINT `pathways_topics_ibfk_1` FOREIGN KEY (`pathway_id`) REFERENCES `pathways` (`id`)
 ,  CONSTRAINT `pathways_topics_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`)
 );
