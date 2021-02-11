@@ -112,7 +112,7 @@ class UsersController extends AppController
         $user->password = 'learning';
 
         if ($this->Users->save($user)) {
-            return $this->redirect('/learning-curator/');
+            return $this->redirect('/');
         } else {
             //return $user;
 			echo 'Something went wrong when creating your account. Please contact learning.curator@gov.bc.ca for assistance.';

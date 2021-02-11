@@ -150,7 +150,7 @@ class PathwaysController extends AppController
 
 
         $this->set(compact('pathway'));*/
-        exec("wget --mirror --convert-links --adjust-extension --page-requisites --no-parent http://localhost:8080/learning-curator/");
+        exec("wget --mirror --convert-links --adjust-extension --page-requisites --no-parent http://localhost:8080/");
 
 
     }
