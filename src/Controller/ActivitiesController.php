@@ -141,33 +141,70 @@ class ActivitiesController extends AppController
     public function view($id = null)
     {
         $this->Authorization->skipAuthorization();
-        // As we loop through the activities for the steps on this pathway, we 
-        // need to be able to check to see if the current user has "claimed" 
-        // that activity. Here we get the current user id and use it to select 
+        //
+        // Check to see if the current user has "claimed" 
+        // this activity. Here we get the current user id and use it to select 
         // all of the claimed activities assigned to them, and then process out 
         // just the activity IDs into a simple array. Then, in the template 
-        // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
+        // code, we if(in_array($activity->id,$useractivitylist)):
         //
         // First let's check to see if this person is logged in or not.
         //
 	    $user = $this->request->getAttribute('authentication')->getIdentity();
         if(!empty($user)) {
+
             // We need create two empty arrays first. If nothing gets added to
             // them, so be it
             $useractivitylist = array();
             $userbooklist = array();
-            // Get access to the apprprioate tables
+
+            // Get access to the appropriate tables
             $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
             $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
-            // Select based on currently logged in person
+
+            // Select all activities that this user has claimed
             $useacts = $au->find()->where(['user_id = ' => $user->id]);
+
+            //
+            // For some reason, the contain('Users') aspect of the $activity query below
+            // isn't working. Apparently, because we are "claiming" things directly
+            // into the activities_users table, (via jquery ajax call on steps view)
+            // we're bypassing some mechanism that binds the activity itself with the 
+            // activities_users table; for example, if you claim
+            // an activity, it creates the appropriate entry in activities_users
+            // but the activities object itself is unaware that the relation exists.
+            // If you edit the activity itself and choose the user from the list,
+            // the relation is created, but it does nothing to the actual 
+            // activities_users table entry. #TODO figure this out! 
+            //
+            // In the meantime, we're bypassing that contain entirely and querying the 
+            // table directly. This is inefficient, but at this scale it doesn't really
+            // matter, and we can fix it later when it's not blocking a bunch of other
+            // issues; besides, we're actually already making this query and are simply 
+            // piggybacking on the connection overhead needed to query for all the activities
+            // that the current user has. The fact that we're doing it this way is actually
+            // why the interface still works for learners, and it's just curators who
+            // aren't able to see all the claimants directly on the activity view.
+            //
+            // This is in reference to issue #233 
+            //
+            $allusers = '';
+            if($user->role_id == 2 || $user->role_id == 5) {
+                $allusers = $au->find()->contain(['Users'])->where(['activity_id = ' => $id])->toList();
+            }
+            // Get a list of bookmarks for this user so that we can in_array compare it 
+            // in the template; #TODO maybe start trying to do things the "right" way 
+            // and moving that logic out of the template?  
             $userbooks = $books->find()->where(['user_id = ' => $user->id]);
+
             // convert the results into a simple array so that we can
             // use in_array in the template
             $useractivities = $useacts->toList();
             $userbookmarks = $userbooks->toList();
+
             // Loop through the resources and add just the ID to the 
             // array that we will pass into the template
+            // #TODO this is probably really inefficient #refactor
             foreach($useractivities as $uact) {
                 array_push($useractivitylist, $uact['activity_id']);
             }
@@ -194,7 +231,7 @@ class ActivitiesController extends AppController
         $pathways = $allpaths->find('all')->contain(['steps']);
         $allpathways = $pathways->toList();
 
-        $this->set(compact('activity', 'useractivitylist','allpathways','userbooklist'));
+        $this->set(compact('activity', 'allusers', 'useractivitylist','allpathways','userbooklist'));
     }
 
 

@@ -160,6 +160,23 @@ if ($this->Identity->isLoggedIn()) {
 	<?php else: ?>
 		<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
 	<?php endif ?>
+	
+
+
+	<?php if($role == 2 || $role == 5): ?>
+	<?php if (!empty($activity->moderator_notes)) : ?>
+	<div class="my-3 p-3 bg-white rounded-lg">
+	<h4><?= __('Moderator Notes') ?></h4>
+	<blockquote>
+	<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
+	</blockquote>
+	</div>
+	<?php endif ?>
+	<?php endif; ?>
+
+
+
+	
 		</div>
 
 		
@@ -195,7 +212,7 @@ if ($this->Identity->isLoggedIn()) {
 	
 	<?php endforeach ?>
 	</div> <!-- .collapse -->
-	<?php endif ?>
+<?php endif ?>
 
 </div>
 </div>
@@ -231,16 +248,20 @@ if ($this->Identity->isLoggedIn()) {
 <?php endif ?>
 <?php endforeach ?>
 <?php endforeach ?>
+
 </div>
+
+
 <?php if($role == 2 || $role == 5): ?>
-<?php if (!empty($activity->users)) : ?>
+<?php if(!empty($allusers)): ?>
 <div class="col-md-4">
-<h3 class="mt-3"><?= __('Related Users') ?></h3>
-<?php foreach ($activity->users as $users) : ?>
+<h3 class="mt-3">Learners</h3>
 <div class="my-3 p-3 bg-white rounded-lg">
-<?= $this->Html->link($users->name, ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
+<div><em>These folx have claimed this activity:</em></div>
+<?php foreach($allusers as $u): ?>
+<a href="/users/view/<?= $u->user->id ?>"><?= $u->user->idir ?></a>, 
+<?php endforeach ?>
 </div>
-<?php endforeach; ?>
 </div>
 <?php endif; ?>
 <?php endif; ?>
@@ -292,15 +313,7 @@ echo $this->Form->textarea('response',['class' => 'form-control', 'placeholder' 
 <?php endforeach ?>
 <?php endif ?>
 <?php endif ?>
-<?php if($role == 2 || $role == 5): ?>
-<?php if (!empty($activity->moderator_notes)) : ?>
-<h4><?= __('Moderator Notes') ?></h4>
-<blockquote>
-<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
-</blockquote>
-<?php endif ?>
-</div>
-<?php endif; ?>
+
 
 
 
