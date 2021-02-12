@@ -303,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `activities_steps` (
 ,  `step_id` integer NOT NULL
 ,  `required` integer DEFAULT 0
 ,  `steporder` integer DEFAULT 0
-,  `curator_context` text
+,  `stepcontext` text
 ,  CONSTRAINT `activities_steps_ibfk_1` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
 ,  CONSTRAINT `activities_steps_ibfk_2` FOREIGN KEY (`step_id`) REFERENCES `steps` (`id`)
 );
