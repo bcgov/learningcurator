@@ -58,9 +58,6 @@ $this->layout = 'nowrap';
     <a class="nav-link" href="/users/pathways">Pathways</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/users/bookmarks">Bookmarks</a>
-  </li>
-  <li class="nav-item">
     <a class="nav-link" href="/users/claimed">Claimed</a>
   </li>
   <li class="nav-item">

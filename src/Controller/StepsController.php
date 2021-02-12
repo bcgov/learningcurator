@@ -50,25 +50,23 @@ class StepsController extends AppController
         // We need create an empty array first. If nothing gets added to
         // it, so be it
         $useractivitylist = array();
-        $userbooklist = array();
+        
         // Get access to the apprprioate table
         $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
-        $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
+        
         // Select based on currently logged in person
         $useacts = $au->find()->where(['user_id = ' => $user->id]);
-        $userbooks = $books->find()->where(['user_id = ' => $user->id]);
+        
         // convert the results into a simple array so that we can
         // use in_array in the template
         $useractivities = $useacts->toList();
-        $userbookmarks = $userbooks->toList();
+        
         // Loop through the resources and add just the ID to the 
         // array that we will pass into the template
         foreach($useractivities as $uact) {
             array_push($useractivitylist, $uact['activity_id']);
         }
-        foreach($userbookmarks as $b) {
-            array_push($userbooklist, $b['activity_id']);
-        }
+
         //
         // we want to be able to tell if the current user is already on this
         // pathway or not, so we take the same approach as above, parsing all
@@ -84,7 +82,7 @@ class StepsController extends AppController
             array_push($usersonthispathway,$pu->id);
         }
 
-        $this->set(compact('step','useractivitylist','usersonthispathway', 'userbooklist'));
+        $this->set(compact('step','useractivitylist','usersonthispathway'));
     }
 
     /**

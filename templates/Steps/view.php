@@ -126,7 +126,7 @@ if($stepclaimcount > 0) {
 <div class="col-md-8">
 <?php if (!empty($step->pathways)) : ?>
 <?php if($role == 2 || $role == 5): ?>
-<div class="btn-group float-right mt-3 ml-3">
+<div class="btn-group  mt-3 ml-3">
 <?= $this->Html->link(__('Edit'), ['controller' => 'Steps', 'action' => 'edit', $step->id], ['class' => 'btn btn-light btn-sm']) ?>
 <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $step->id],['class' => 'btn btn-light btn-sm', 'confirm' => __('Are you sure you want to delete # {0}?', $step->name)]) ?>
 </div> <!-- /.btn-group -->
@@ -143,7 +143,7 @@ if($stepclaimcount > 0) {
   </ol>
 </nav> 
 
-<!--<div class="float-right"><a href="/pathways/path/<?= $pathways->id ?>"><i class="fas fa-scroll"></i></a></div>-->
+<!--<div class=""><a href="/pathways/path/<?= $pathways->id ?>"><i class="fas fa-scroll"></i></a></div>-->
 <h1>
 	<?= h($pathways->name) ?>
 	<?php //$this->Html->link(h($pathways->name), ['controller' => 'Pathways', 'action' => 'path', $pathways->id]) ?>
@@ -246,10 +246,23 @@ $lastobj = $s->description;
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
+
+
+		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'newclaim']) ?>
+		<?= $this->Form->hidden('user_id', ['value' => $uid]); ?>
+		<?= $this->Form->button(__('Claim'),['class'=>'btn btn-dark', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+		<?= $this->Form->end() ?>
+
+<!--
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
 	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-dark', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 	<?= $this->Form->end() ?>
+
+-->
+
+
+
 	<?php else: // they have claimed it, so show that ?>
 
 	<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
@@ -344,7 +357,7 @@ $lastobj = $s->description;
 
 	<a href="#newreport<?= $activity->id ?>" 
 			style="color:#333;" 
-			class="btn btn-light float-right" 
+			class="btn btn-light " 
 			data-toggle="collapse" 
 			title="Report this activity for some reason" 
 			data-target="#newreport<?= $activity->id ?>" 
@@ -371,19 +384,6 @@ $lastobj = $s->description;
 	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 	</a>
-	<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
-	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark form-inline']) ?>
-		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
-		<button class="btn btn-light"><i class="fas fa-bookmark"></i> Bookmark</button>
-		<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
-		<?= $this->Form->end() ?>
-	<?php else: ?>
-		<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
-	<?php endif ?>
-		<!--
-	<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
-		<i class="fas fa-bookmark"></i> Bookmark
-	</a>-->
 
 
 
@@ -433,7 +433,7 @@ $lastobj = $s->description;
 		<div>
 		<a href="#newreport<?= $activity->id ?>" 
 			style="color:#333;" 
-			class="btn btn-light float-right" 
+			class="btn btn-light" 
 			data-toggle="collapse" 
 			title="Report this activity for some reason" 
 			data-target="#newreport<?= $activity->id ?>" 
@@ -460,19 +460,7 @@ $lastobj = $s->description;
 		<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 		</a>
-		<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
-			<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark']) ?>
-			<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
-			<button class="btn btn-light"><i class="fas fa-bookmark"></i> Bookmark</button>
-			<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
-			<?= $this->Form->end() ?>
-		<?php else: ?>
-			<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
-		<?php endif ?>
 
-			<!--<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
-				<i class="fas fa-bookmark"></i> Bookmark
-			</a>-->
 
 		</div>
 	</div>
@@ -528,34 +516,6 @@ $(document).ready(function(){
 	// load up the activity rings
 	loadStatus();
 
-	$('.bookmark').on('submit', function(e){
-		
-		e.preventDefault();
-		var form = $(this);
-
-		var url = form.attr('action');
-		$.ajax({
-			type: "POST",
-			url: '/activities-bookmarks/add',
-			data: form.serialize(),
-			success: function(data)
-			{
-				form.children('button')
-					.removeClass('btn-light')
-					.addClass('btn-dark')
-					.html('<span class="fas fa-bookmark"></span> Bookmarked!')
-					.tooltip('dispose')
-					.attr('title','Good job!')
-					.after('&nbsp; <a href="/users/bookmarks">Access all your bookmarks through your profile</a>.');
-			},
-			statusCode: 
-			{
-				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
-				}
-			}
-		});
-	});
 	$('.claim').on('submit', function(e){
 		
 		e.preventDefault();

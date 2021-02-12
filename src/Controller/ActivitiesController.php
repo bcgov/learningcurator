@@ -153,54 +153,19 @@ class ActivitiesController extends AppController
 	    $user = $this->request->getAttribute('authentication')->getIdentity();
         if(!empty($user)) {
 
-            // We need create two empty arrays first. If nothing gets added to
-            // them, so be it
+            // We need create am empty array first. If nothing gets added to
+            // it, so be it
             $useractivitylist = array();
-            $userbooklist = array();
 
-            // Get access to the appropriate tables
+            // Get access to the appropriate table
             $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
-            $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
-
+            
             // Select all activities that this user has claimed
             $useacts = $au->find()->where(['user_id = ' => $user->id]);
-
-            //
-            // For some reason, the contain('Users') aspect of the $activity query below
-            // isn't working. Apparently, because we are "claiming" things directly
-            // into the activities_users table, (via jquery ajax call on steps view)
-            // we're bypassing some mechanism that binds the activity itself with the 
-            // activities_users table; for example, if you claim
-            // an activity, it creates the appropriate entry in activities_users
-            // but the activities object itself is unaware that the relation exists.
-            // If you edit the activity itself and choose the user from the list,
-            // the relation is created, but it does nothing to the actual 
-            // activities_users table entry. #TODO figure this out! 
-            //
-            // In the meantime, we're bypassing that contain entirely and querying the 
-            // table directly. This is inefficient, but at this scale it doesn't really
-            // matter, and we can fix it later when it's not blocking a bunch of other
-            // issues; besides, we're actually already making this query and are simply 
-            // piggybacking on the connection overhead needed to query for all the activities
-            // that the current user has. The fact that we're doing it this way is actually
-            // why the interface still works for learners, and it's just curators who
-            // aren't able to see all the claimants directly on the activity view.
-            //
-            // This is in reference to issue #233 
-            //
-            $allusers = '';
-            if($user->role_id == 2 || $user->role_id == 5) {
-                $allusers = $au->find()->contain(['Users'])->where(['activity_id = ' => $id])->toList();
-            }
-            // Get a list of bookmarks for this user so that we can in_array compare it 
-            // in the template; #TODO maybe start trying to do things the "right" way 
-            // and moving that logic out of the template?  
-            $userbooks = $books->find()->where(['user_id = ' => $user->id]);
 
             // convert the results into a simple array so that we can
             // use in_array in the template
             $useractivities = $useacts->toList();
-            $userbookmarks = $userbooks->toList();
 
             // Loop through the resources and add just the ID to the 
             // array that we will pass into the template
@@ -208,9 +173,7 @@ class ActivitiesController extends AppController
             foreach($useractivities as $uact) {
                 array_push($useractivitylist, $uact['activity_id']);
             }
-            foreach($userbookmarks as $b) {
-                array_push($userbooklist, $b['activity_id']);
-            }
+
 
         }
         $activity = $this->Activities->get($id, [
@@ -231,7 +194,7 @@ class ActivitiesController extends AppController
         $pathways = $allpaths->find('all')->contain(['steps']);
         $allpathways = $pathways->toList();
 
-        $this->set(compact('activity', 'allusers', 'useractivitylist','allpathways','userbooklist'));
+        $this->set(compact('activity', 'allusers', 'useractivitylist','allpathways'));
     }
 
 
@@ -448,6 +411,7 @@ class ActivitiesController extends AppController
             $sluggedTitle = Text::slug($activity->name);
             // trim slug to maximum length defined in schema
             $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
+            //echo '<pre>'; print_r($activity); exit;
             if ($this->Activities->save($activity)) {
                 //print(__('The activity has been saved.'));
                 $go = '/activities/view/' . $id;
@@ -466,6 +430,46 @@ class ActivitiesController extends AppController
         $this->set(compact('activity', 'statuses', 'ministries', 'categories', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
     }
 
+
+    /**
+     * Claim an activity method
+     *
+     * @param string|null $id Activity id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function claim($id = null)
+    {
+        $activity = $this->Activities->get($id, [
+            'contain' => ['Users'],
+        ]);
+        $this->Authorization->authorize($activity);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+
+            $user = $this->request->getAttribute('authentication')->getIdentity();
+
+            $activity->users = array($user);
+
+            //print_r($this->request->getData()); exit;
+            //echo '<pre>'; print_r($activity); exit;
+
+            if ($this->Activities->save($activity)) {
+                //print(__('The activity has been saved.'));
+                $go = '/activities/view/' . $id;
+                return $this->redirect($this->referer());
+            }
+            //print(__('The activity could not be saved. Please, try again.'));
+        }
+        $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
+        $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
+        $categories = $this->Activities->Categories->find('list', ['limit' => 200]);
+        $activityTypes = $this->Activities->ActivityTypes->find('list', ['limit' => 200]);
+        $users = $this->Activities->Users->find('list', ['limit' => 200]);
+        $competencies = $this->Activities->Competencies->find('list', ['limit' => 200]);
+        $steps = $this->Activities->Steps->find('list', ['limit' => 200])->contain(['pathways']);
+        $tags = $this->Activities->Tags->find('list', ['limit' => 200]);
+        $this->set(compact('activity', 'statuses', 'ministries', 'categories', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
+    }
 
     /**
     * Like an activity

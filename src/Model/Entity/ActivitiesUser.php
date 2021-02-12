@@ -36,7 +36,5 @@ class ActivitiesUser extends Entity
         'finished' => true,
         'liked' => true,
         'notes' => true,
-        'activity' => true,
-        'user' => true,
     ];
 }
