@@ -93,7 +93,6 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 		</a>
 		<div class="dropdown-menu" aria-labelledby="pathwaysDropdown">
 			<a class="dropdown-item" href="/users/pathways">Pathways</a>
-			<a class="dropdown-item" href="/users/bookmarks">Bookmarks</a>
 			<a class="dropdown-item" href="/users/claimed">Claimed</a>
 			<a class="dropdown-item" href="/users/reports">Reports</a>
 		</div>

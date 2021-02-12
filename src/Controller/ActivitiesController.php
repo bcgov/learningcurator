@@ -106,29 +106,27 @@ class ActivitiesController extends AppController
             // We need create two empty arrays first. If nothing gets added to
             // them, so be it
             $useractivitylist = array();
-            $userbooklist = array();
+     
             // Get access to the apprprioate tables
             $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
-            $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
+            
             // Select based on currently logged in person
             $useacts = $au->find()->where(['user_id = ' => $user->id]);
-            $userbooks = $books->find()->where(['user_id = ' => $user->id]);
+            
             // convert the results into a simple array so that we can
             // use in_array in the template
             $useractivities = $useacts->toList();
-            $userbookmarks = $userbooks->toList();
+            
             // Loop through the resources and add just the ID to the 
             // array that we will pass into the template
             foreach($useractivities as $uact) {
                 array_push($useractivitylist, $uact['activity_id']);
             }
-            foreach($userbookmarks as $b) {
-                array_push($userbooklist, $b['activity_id']);
-            }
+
 
         }
 
-        $this->set(compact('activities','allpathways','allcats','userbooklist','useractivitylist'));
+        $this->set(compact('activities','allpathways','allcats','useractivitylist'));
     }
 
     /**

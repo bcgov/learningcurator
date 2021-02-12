@@ -65,15 +65,7 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endforeach ?>
 	<?php endforeach ?>
 	</div>
-	<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
-	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark form-inline']) ?>
-		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
-		<button class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmark</button>
-		<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
-		<?= $this->Form->end() ?>
-	<?php else: ?>
-		<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
-	<?php endif ?>
+	
 	<div class="mt-3"><span class="badge badge-light">Added: <?= h($activity->created) ?></span></div>
 
 </div>
@@ -154,31 +146,6 @@ if ($this->Identity->isLoggedIn()) {
 $(document).ready(function(){
 
 
-	$('.bookmark').on('submit', function(e){
-		
-		e.preventDefault();
-		var form = $(this);
-		form.children('button').removeClass('btn-light').addClass('btn-dark').html('<span class="fas fa-bookmark"></span> Bookmarked!').tooltip('dispose').attr('title','Good job!');
-		
-		//$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
-
-		var url = form.attr('action');
-		$.ajax({
-			type: "POST",
-			url: '/activities-bookmarks/add',
-			data: form.serialize(),
-			success: function(data)
-			{
-				//loadStatus();
-			},
-			statusCode: 
-			{
-				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
-				}
-			}
-		});
-	});
 	$('.claim').on('submit', function(e){
 		
 		e.preventDefault();

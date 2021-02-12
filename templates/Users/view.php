@@ -28,6 +28,22 @@ Created on: <?= h($user->created) ?>
 </div>
 </div>
 <?php endif; ?>
+<?php if (!empty($user->activities)) : ?>
+<div class="col-md-4">
+<div class="card">
+<div class="card-header">
+	<h2><?= __('Activities claimed') ?></h2>
+</div>
+<ul class="list-group list-group-flush">
+	<?php foreach ($user->activities as $a) : ?>
+	<li class="list-group-item">
+	<?= $this->Html->link($a->name, ['controller' => 'Activities', 'action' => 'view', $a->id]) ?>
+	</li>
+	<?php endforeach; ?>
+</ul>
+</div>
+</div>
+<?php endif; ?>
 
 <?php if(!empty($user->reports)): ?>
 <div class="col-md-6">

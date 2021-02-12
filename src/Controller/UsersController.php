@@ -280,37 +280,7 @@ class UsersController extends AppController
 		
         $this->set(compact('user','allcats'));
     }
-  /**
-     * User bookmarks method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Http\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function bookmarks()
-    {
 
-	    $u = $this->request->getAttribute('authentication')->getIdentity();
-        
-
-        $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
-        $bookmarks = $books->find('all')
-                            ->where(['user_id' => $u->id])
-                            ->contain(['Activities','Activities.ActivityTypes'])
-                            ->order(['ActivitiesBookmarks.created' => 'desc']);
-        
-        $user = $this->Users->get($u->id, [
-            'contain' => ['Pathways', 
-                            'Pathways.Categories', 
-                            'Activities', 
-                            'Activities.ActivityTypes',
-                            'Competencies',
-                            'Ministries'],
-        ]);
-        $this->Authorization->authorize($user);
-        
-        $this->set(compact('user','bookmarks'));
-    }
   /**
      * User claimed activities method
      *

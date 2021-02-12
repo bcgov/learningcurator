@@ -66,12 +66,7 @@
 
 </div> <!-- /.pad-lg -->
 
-<div class="text-center">
-	<a href="#dipdivedeeper">
-		<i class="animate__animated animate__tada fas fa-chevron-circle-down" 
-			style="color: #000; font-size: 300%; margin: 0 0 30px 0;"></i>
-	</a>
-</div>
+
 </div> <!-- /.col-12 -->
 </div> <!-- /.row -->
 
@@ -112,12 +107,7 @@
 		</div> <!-- /.pad-sm -->
 	</div>
 	<div class="col-md-4">
-	<div class="pad-sm bg-white rounded-lg mb-2">
-		<h4>Bookmarks</h4>
-		<p>See something you like? Bookmark it and come back to it later without having to dig 
-		around. This is a great way to use the site, while not going any deeper.</p>
-		<a class="btn btn-lg btn-dark btn-block" href="/users/bookmarks">Bookmarks</a>
-	</div> <!-- /.pad-sm -->
+
 	
 	</div>
 	</div> <!-- /.row -->
@@ -210,29 +200,7 @@
 
 
 
-<div class="row justify-content-md-center bg-white" id="activitytypes">
-<?php $count = 0 ?>
-<?php foreach($atypes as $type): ?>
-<?php $count++ ?>
-	<div class="col-md-6" style="background-color: rgba(<?= $type->color ?>,.2)">
-	<div class="pad-md">
-	<div class="pad-sm bg-white rounded-lg mb-2">
-	<div class="mb-3">
-		<a href="/activity-types/view/<?= $type->id ?>" class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $type->color ?>,1)">
-			<i class="activity-icon activity-icon-lg fas <?= $type->image_path ?>"></i>
-		</a>
-		<a href="/activity-types/view/<?= $type->id ?>" class="" style="color: #333; font-size: 230%">
-			<?= h($type->name) ?>
-		</a>
-	</div>
-		<div class="mb-3" style="font-size: 120%;">
-		<?= $type->description ?>
-		</div>
-	</div>
-	</div>
-	</div>
-<?php endforeach ?>
-</div>
+
 
 
 
