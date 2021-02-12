@@ -33,6 +33,7 @@ class Category extends Entity
      */
     protected $_accessible = [
         'name' => true,
+        'slug' => true,
         'description' => true,
         'image_path' => true,
         'color' => true,

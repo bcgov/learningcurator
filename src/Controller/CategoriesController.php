@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 Use Cake\ORM\TableRegistry;
+use Cake\Utility\Text;
 
 /**
  * Categories Controller
@@ -60,6 +61,9 @@ class CategoriesController extends AppController
         
         if ($this->request->is('post')) {
             $category = $this->Categories->patchEntity($category, $this->request->getData());
+            $sluggedTitle = Text::slug(strtolower($category->name));
+            // trim slug to maximum length defined in schema
+            $category->slug = $sluggedTitle;
             if ($this->Categories->save($category)) {
             
                 return $this->redirect($this->referer());
@@ -84,6 +88,9 @@ class CategoriesController extends AppController
         $this->Authorization->authorize($category);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $category = $this->Categories->patchEntity($category, $this->request->getData());
+            $sluggedTitle = Text::slug(strtolower($category->name));
+            // trim slug to maximum length defined in schema
+            $category->slug = $sluggedTitle;
             if ($this->Categories->save($category)) {
                 print(__('The category has been saved.'));
 
