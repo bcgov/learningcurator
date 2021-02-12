@@ -4,6 +4,15 @@
 -- A blank slate for a new installation with no initial pathways set up.
 -- 
 
+CREATE TABLE `sessions` (
+  `id` char(40) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `created` datetime DEFAULT CURRENT_TIMESTAMP, -- Optional
+  `modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- Optional
+  `data` blob DEFAULT NULL, -- for PostgreSQL use bytea instead of blob
+  `expires` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
