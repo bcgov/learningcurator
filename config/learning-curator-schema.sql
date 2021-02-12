@@ -312,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `activities_bookmarks` (
 ,  `activity_id` integer NOT NULL
 ,  `user_id` integer NOT NULL
 ,  `notes` text
-,  `created` datetime
+,  `created` datetime NOT NULL
 ,  CONSTRAINT `activities_bookmarks_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ,  CONSTRAINT `activities_bookmarks_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
 );
