@@ -2,10 +2,10 @@
 <div class="col-md-6">
 <div class="card">
 <div class="card-body">
-<h1>OH NOES!</h1>
-<p>I'm really sorry, but it seems as though you're either attempting to access and area you
+<h1>Error <i class="fas fa-frown"></i></h1>
+<p>We're really sorry, but it seems as though you're either attempting to access and area you
 don't have permission to, or something else is going on. Either way, I apologize for the
-situation. Please contact learning.agent@gov.bc.ca and tell me all about your troubles.</p>
+situation. Please contact learning.curator@gov.bc.ca</p>
 
 <?php
 /**
