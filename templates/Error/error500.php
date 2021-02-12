@@ -2,7 +2,7 @@
 <div class="col-md-6">
 <div class="card">
 <div class="card-body">
-<h1>Error <i class="fas fa-frown"></i></h1>
+<h1>Error <i class="far fa-frown"></i></h1>
 <p>We're really sorry, but it seems as though you're either attempting to access and area you
 don't have permission to, or something else is going on. Either way, I apologize for the
 situation. Please contact learning.curator@gov.bc.ca</p>
