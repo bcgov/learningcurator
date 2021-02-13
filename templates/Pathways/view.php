@@ -4,7 +4,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pathway $pathway
  */
-$this->layout = 'nowrap';
+
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;

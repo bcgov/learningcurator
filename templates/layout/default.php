@@ -83,96 +83,10 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 	<ul class="navbar-nav mr-auto">
-	<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="pathwaysDropdown" 
-			role="button" 
-			data-toggle="dropdown" 
-			aria-haspopup="true" 
-			aria-expanded="false">
-				Your Profile
-		</a>
-		<div class="dropdown-menu" aria-labelledby="pathwaysDropdown">
-			<a class="dropdown-item" href="/users/pathways">Pathways</a>
-			<a class="dropdown-item" href="/users/claimed">Claimed</a>
-			<a class="dropdown-item" href="/users/reports">Reports</a>
-		</div>
-		</li>
-		<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="pathwaysDropdown" 
-			role="button" 
-			data-toggle="dropdown" 
-			aria-haspopup="true" 
-			aria-expanded="false">
-				All Topics
-		</a>
-		<div class="dropdown-menu" aria-labelledby="pathwaysDropdown">
-			<a class="dropdown-item" href="/categories/view/1">Leadership</a>
-			<a class="dropdown-item" href="/categories/view/3">Diversity &amp; Inclusion</a>
-			<a class="dropdown-item" href="/categories/view/2">Role Specific</a>
-		</div>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" href="/activities">Latest</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" href="/pages/howto">How To Use</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" href="/pages/faq">FAQ</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" href="/activities/contribute">Contribute</a>
-		</li>	
-		<?php if(!empty($active)): ?>
-		<?php if($active->role_id == 5): ?>
-		<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="adminDropdown" 
-			role="button" 
-			data-toggle="dropdown" 
-			aria-haspopup="true" 
-			aria-expanded="false">
-				View
-		</a>
-		<div class="dropdown-menu" aria-labelledby="adminDropdown">
-			<a class="dropdown-item" href="/pathways">All Pathways</a>
-			<a class="dropdown-item" href="/activity-types">Activity Types</a>
-			<a class="dropdown-item" href="/activities">All Activities</a>
-			<a class="dropdown-item" href="/users/list">All Users</a>
-			<a class="dropdown-item" href="/competencies">All Competencies</a>
-			<a class="dropdown-item" href="/ministries">All Ministries</a>
-			<a class="dropdown-item" href="/categories">All Categories</a>
-			<a class="dropdown-item" href="/statuses">All Statuses</a>
-			<a class="dropdown-item" href="/tags">All Tags</a>
-			
-		</div>
-		</li>
-		<?php endif ?>
-		<?php if($active->role_id == 5 || $active->role_id == 2): ?>
-        <li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="adminAddDropdown" 
-			role="button" 
-			data-toggle="dropdown" 
-			aria-haspopup="true" 
-			aria-expanded="false">
-				Add
-		</a>
-		<div class="dropdown-menu" aria-labelledby="adminAddDropdown">
-			<a class="dropdown-item" href="/categories/add">Add a Category</a>
-			<a class="dropdown-item" href="/topics/add">Add a Topic</a>
-			<a class="dropdown-item" href="/pathways/add">Add a Pathway</a>
-			<a class="dropdown-item" href="/activities/add">Add an Activity</a>
-			<a class="dropdown-item" href="/tags/add">Add a Tag</a>
-			<?php if($active->role_id == 5): ?>
-			<a class="dropdown-item" href="/activity-types/add">Add a Type</a>
-			<a class="dropdown-item" href="/users/add">Add a User</a>
-			<a class="dropdown-item" href="/competencies/add">Add a Competency</a>
-			<a class="dropdown-item" href="/ministries/add">Add a Ministry</a>
-			<a class="dropdown-item" href="/statuses/add">Add a Status</a>
-			<?php endif ?>
-		</div>
-		</li>
-		<?php endif ?>
-		<?php endif ?>
+	<li class="nav-item">
+		<a class="nav-link" href="/users/pathways">Your Profile</a>
+	</li>
+	
 	</ul>
 
 	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
@@ -182,14 +96,9 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 
 	</div> <!-- /endof .collapse navbar-collapse -->
 </nav>
-<div class="container" style="padding-top: 60px;">
-<div class="row">
-<div class="col">
 
 <?= $this->fetch('content') ?>
-</div>
-</div>
-</div>
+
 
 <div class="container-fluid bg-white" style="padding-top: 60px;">
 <div class="row mt-3">

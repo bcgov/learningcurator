@@ -1,5 +1,5 @@
 <?php 
-$this->layout = 'nowrap';
+
 $this->loadHelper('Authentication.Identity');
 $options = array(
 	'Under 10 mins',

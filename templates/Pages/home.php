@@ -1,42 +1,30 @@
-<?php $this->layout = 'nowrap'; ?>
+
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-12">
+<div class="col-md-10 col-lg-8 col-xl-6">
 <div class="pad-md">
-<h1>Learning Curator</h1>
-<h2>The best educational resources organized by expert teams on different topic areas</h2>
-<!--
-<div class="row mt-3">
-<div class="col-md-4">
-<div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
 
-	<h3>Follow a Pathway</h3>
-    By following a pathway, you begin to track your progress as you step through it
 
-</div>
-</div>
-<div class="col-md-4">
-<div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
+<h1 class="display-4">Access learning resources on demand</h1>
+<h2 class="font-weight-light">Sourced by BC Public Service curators</h2>
+<p>BC Public Service curators are trusted guides designing pathways of knowledge and 
+skill development. Learning Curator pathways may stand alone or they may supplement 
+your corporate training offered through the Learning Centre.</p>
+<p>A [link]best practice in learning for organizations[/link], curation helps us develop 
+ourselves as part of a trusted, talented, and modern public service.</p>
 
-	<h3>Claim Activities</h3>
-    By claiming required activities you complete the steps 
+<nav class="nav bg-white shadow-sm my-5">
+	<a class="nav-link" href="/activities">Latest</a>
 
-</div>
-</div>
-<div class="col-md-4">
-<div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
+	<a class="nav-link" href="/pages/howto">How To Use</a>
 
-	<h3>Track Your Progress</h3>
-    Activity Rings show how you progress through each of the activity types
+	<a class="nav-link" href="/pages/faq">FAQ</a>
 
-</div>
-</div>
-</div>
--->
+	<a class="nav-link" href="/activities/contribute">Contribute</a>
+</nav>
 
-<div class="row mt-3">
-<div class="col-md-4">
-<div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
+<h3 class="font-weight-light">Topics</h3>
+<div class="p-3 rounded-lg my-3 bg-white shadow-sm">
 	<h3><a href="/categories/view/1" class="">Leadership</a></h3>
 	<div>Building your leadership skills is something you can do in whatever role you're 
 	in now, as well as something you may look towards for future roles. As BCPS 
@@ -44,162 +32,28 @@
 	that apply to certain positions. Wherever you are today, you'll find useful learning here for 
 	developing your leadership skills.</div>
 </div>
-</div>
-<div class="col-md-4">
-<div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
+
+<div class="p-3 rounded-lg my-3 bg-white shadow-sm">
 	<h3><a href="/categories/view/3" class="">Diversity &amp; Inclusion</a></h3>
 	<div>Every individual needs to know their role in creating a diverse and inclusive workplace 
 	in the BCPS. Learn the definitions and the value of diversity and inclusion. 
 	Deepen your understanding and learn how to be an ally with a little engagement or a deeper dive 
 	in the resources within this topic—your choice.</div>
 </div>
-</div>
-<div class="col-md-4">
-<div class="p-3 rounded-lg my-3" style="background-color: rgba(255,255,255,.3)">
+
+<div class="p-3 rounded-lg my-3 bg-white shadow-sm">
 	<h3 style="color: #666">Role Specific <small><em>coming soon</em></small></h3>
 	<div>The learning in this topic if all in the context of a specific role and what it takes 
 	to perform in that role. Managers and Supervisors may use role-specific pathways for 
 	onboarding and development of their employees.</div>
 </div>	
-</div>
-</div> <!-- /.row -->
+
 
 </div> <!-- /.pad-lg -->
 
 
 </div> <!-- /.col-12 -->
 </div> <!-- /.row -->
-
-
-
-
-
-
-
-<div class="row justify-content-md-center bg-white align-items-center linear" id="dipdivedeeper">
-<div class="col">
-<div class="pad-lg">
-
-	<h3 class="mb-3">
-		<i class="fas fa-thermometer-quarter" style="font-size: 300%"></i>
-		Dip your toe in the pool
-	</h3>
-	
-	<div class="row mt-3">
-	<div class="col-md-4">
-	<div class="pad-sm bg-white rounded-lg mb-2">
-		<h4>The Latest Additions</h4>
-		<p>Check out the latest activities that have been added to the site.
-		Curators are continually adding new resources and creating new pathways
-		in various categories.</p>
-		<a class="btn btn-lg btn-dark btn-block" href="/activities">The Latest Stuff</a>
-		</div> <!-- /.pad-sm -->
-	</div>
-	<div class="col-md-4">
-	<div class="pad-sm bg-white rounded-lg mb-2">
-		<h4>Search for something</h4>
-		<p>Looking for something specific? Type it into the box and see if we already 
-		have it included on some path. Explore the links!</p>
-		<form method="get" action="/activities/find" class="bg-dark rounded-lg p-2 form-inline">
-			<input class="form-control " type="search" placeholder="Activity Search" aria-label="Search" name="q">
-			<button class="btn btn-light" type="submit">Search</button>
-		</form>
-		</div> <!-- /.pad-sm -->
-	</div>
-	<div class="col-md-4">
-
-	
-	</div>
-	</div> <!-- /.row -->
-
-
-
-
-
-	<h3 class="my-3">
-		<i class="fas fa-thermometer-half" style="font-size: 300%"></i>
-		Go a bit deeper
-	</h3>
-	
-	<div class="row mt-3 align-items-stretch">
-	<div class="col-md-4">
-	<div class="pad-sm bg-white rounded-lg mb-2">
-		<h4>Your Profile</h4>
-		<p>Your profile shows you all of your activity in the site: 
-		pathways you're following; acitvities you've claimed; 
-		your bookmarks, and reports made.</p>
-		<a class="btn btn-lg btn-dark btn-block" href="/users/pathways">Your Profile</a>
-	</div> <!-- /.pad-sm -->
-	</div>
-	<div class="col-md-4">
-	<div class="pad-sm bg-white rounded-lg mb-2">
-		<h4>Follow Pathways</h4>
-		<p>Following a pathway is a commitment look at each step, claim its
-		required activities after you complete them, and to consider the supplemental.
-		Pathways are organized around common organizational goals.</p>
-		<a class="btn btn-lg btn-dark btn-block" href="/users/pathways">Your Pathways</a>
-	</div> <!-- /.pad-sm -->
-	</div>
-	<div class="col-md-4">
-	<div class="pad-sm bg-white rounded-lg mb-2">
-		<h4>Claim Activities</h4>
-		<p>In order to track your progress through a pathway, you're 
-		supposed to "Claim" the activities in pathway steps, and do so 
-		approximately in the order indicated. Each step has a goal, and 
-		you work progressively towards it.</p>
-		<a class="btn btn-lg btn-dark btn-block" href="/users/claimed">Your Activities</a>
-	</div> <!-- /.pad-sm -->
-	</div>
-	</div> <!-- /.row -->
-
-
-
-
-
-
-
-	<h3 class="mt-3">
-	<i class="fas fa-thermometer-full" style="font-size: 300%"></i>
-	Dive in and fully engage</h3>
-	
-	<div class="row mt-3">
-	<div class="col-md-4">
-	<div class="pad-sm bg-white rounded-lg mb-2">
-		<h4>MyPerformance Goals</h4>
-		<p>Talk to your supervisor/manager at a 1:1 and let them know
-		that you're following a pathway and incorporate your progress
-		into your yearly goals.</p>
-	</div> <!-- /.pad-sm -->
-	</div>
-	<div class="col-md-4">
-	<div class="pad-sm bg-white rounded-lg mb-2">
-		<h4>Report!</h4>
-		<p>Is something not quite right? Is that link dead? Has that activity
-		been replaced with something else? There's a "Report" button on every
-		activity. Let us know!</p>
-
-	</div> <!-- /.pad-sm -->
-	</div>
-	<div class="col-md-4">
-	<div class="pad-sm bg-white rounded-lg mb-2">
-		<h4>Contribute</h4>
-		<p>Do you know of an activity that would be perfect for a pathway? Let us know by 
-		<a href="/activities/contribute">filling out the form</a> and suggesting it to our curator team. We'll review your 
-		contribution and collaborate with you. </p>
-		<!-- <a class="btn btn-lg btn-dark btn-block" href="/activities/contribute">Suggest an Activity</a> -->
-	</div> <!-- /.pad-sm -->
-	</div>
-	</div> <!-- /.row -->
-
-
-
-
-</div> <!-- /.pad-lg -->
-</div> <!-- /.col -->
-</div> <!-- /.row -->
-
-
-
 
 
 
