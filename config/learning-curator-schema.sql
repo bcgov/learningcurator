@@ -306,18 +306,6 @@ CREATE TABLE IF NOT EXISTS `pathways_topics` (
 ,  CONSTRAINT `pathways_topics_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`)
 );
 
-
-CREATE TABLE IF NOT EXISTS `activities_bookmarks` (
-   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
-,  `activity_id` integer NOT NULL
-,  `user_id` integer NOT NULL
-,  `notes` text
-,  `created` datetime NOT NULL
-,  CONSTRAINT `activities_bookmarks_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-,  CONSTRAINT `activities_bookmarks_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
-);
-
-
 CREATE TABLE IF NOT EXISTS `activities_tags` (
   `activity_id` integer NOT NULL
 ,  `tag_id` integer NOT NULL
