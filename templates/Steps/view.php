@@ -249,19 +249,9 @@ $lastobj = $s->description;
 
 
 		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'newclaim']) ?>
-		<?= $this->Form->hidden('user_id', ['value' => $uid]); ?>
+		<?= $this->Form->hidden('users.0.id', ['value' => $uid]); ?>
 		<?= $this->Form->button(__('Claim'),['class'=>'btn btn-dark', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 		<?= $this->Form->end() ?>
-
-<!--
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-dark', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
-	<?= $this->Form->end() ?>
-
--->
-
-
 
 	<?php else: // they have claimed it, so show that ?>
 

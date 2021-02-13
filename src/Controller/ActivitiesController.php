@@ -409,7 +409,7 @@ class ActivitiesController extends AppController
             $sluggedTitle = Text::slug($activity->name);
             // trim slug to maximum length defined in schema
             $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
-            //echo '<pre>'; print_r($activity); exit;
+            
             if ($this->Activities->save($activity)) {
                 //print(__('The activity has been saved.'));
                 $go = '/activities/view/' . $id;
@@ -443,30 +443,12 @@ class ActivitiesController extends AppController
         ]);
         $this->Authorization->authorize($activity);
         if ($this->request->is(['patch', 'post', 'put'])) {
-
-            $user = $this->request->getAttribute('authentication')->getIdentity();
-
-            $activity->users = array($user);
-
-            //print_r($this->request->getData()); exit;
-            //echo '<pre>'; print_r($activity); exit;
-
+            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             if ($this->Activities->save($activity)) {
-                //print(__('The activity has been saved.'));
-                $go = '/activities/view/' . $id;
                 return $this->redirect($this->referer());
             }
-            //print(__('The activity could not be saved. Please, try again.'));
         }
-        $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
-        $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
-        $categories = $this->Activities->Categories->find('list', ['limit' => 200]);
-        $activityTypes = $this->Activities->ActivityTypes->find('list', ['limit' => 200]);
-        $users = $this->Activities->Users->find('list', ['limit' => 200]);
-        $competencies = $this->Activities->Competencies->find('list', ['limit' => 200]);
-        $steps = $this->Activities->Steps->find('list', ['limit' => 200])->contain(['pathways']);
-        $tags = $this->Activities->Tags->find('list', ['limit' => 200]);
-        $this->set(compact('activity', 'statuses', 'ministries', 'categories', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
+
     }
 
     /**
