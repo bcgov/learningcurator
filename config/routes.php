@@ -76,6 +76,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/pathways/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
     $builder->connect('/pathways/edit/*', ['controller' => 'Pathways', 'action' => 'edit']);
     $builder->connect('/pathways/add', ['controller' => 'Pathways', 'action' => 'add']);
+    $builder->connect('/pathways/import', ['controller' => 'Pathways', 'action' => 'import']);
     $builder->connect('/pathways/status/*', ['controller' => 'Pathways', 'action' => 'status']);
     
     /*
