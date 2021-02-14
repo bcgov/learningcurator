@@ -576,21 +576,31 @@ class PathwaysController extends AppController
         $this->Authorization->skipAuthorization();
         $user = $this->request->getAttribute('authentication')->getIdentity();
 
+        //$articlesTable = $this->getTableLocator()->get('Articles');
+
         $data = file_get_contents('/home/a/learning-curator/personal-development.json',true);
             
         $path = json_decode($data, true);
         
         // create a new pathway here
         $pathway = $this->Pathways->newEmptyEntity();
+
+        $topic = $this->Pathways->Topics->get($path['topics'][0]['id']);
+
         $pathway->name = $path['name'];
         $pathway->description = $path['description'];
         $pathway->objective = $path['objective'];
         $pathway->createdby = $user->id;
+
+        $pathway->topics = [$topic];
+
+        print_r($pathway); exit;
         
         //$pathway = $this->Pathways->patchEntity($pathway, $newpath);
         $sluggedTitle = Text::slug($pathway->name);
         // trim slug to maximum length defined in schema
         $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
+
         if ($this->Pathways->save($pathway)) {
             echo $pathway->id . ' created.<br>';
            
