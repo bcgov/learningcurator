@@ -65,7 +65,7 @@ class TopicsController extends AppController
             if ($this->Topics->save($topic)) {
                 print(__('The topic has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view/'.$topic->id]);
             }
             print(__('The topic could not be saved. Please, try again.'));
         }
@@ -90,9 +90,9 @@ class TopicsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $topic = $this->Topics->patchEntity($topic, $this->request->getData());
             if ($this->Topics->save($topic)) {
-                print(__('The topic has been saved.'));
+                //print(__('The topic has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view'],$topic->id);
             }
             print(__('The topic could not be saved. Please, try again.'));
         }

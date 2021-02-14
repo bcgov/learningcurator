@@ -136,11 +136,11 @@ if($stepclaimcount > 0) {
 <?php $totalsteps = count($pathways->steps) ?>
 
 <nav aria-label="breadcrumb">
-  <ol class="breadcrumb mt-3">
-  	
-	<li class="breadcrumb-item"><a href="/pathways/<?= $pathways->slug ?>"><?= h($pathways->name) ?></a></li>
-	<!--<li class="breadcrumb-item" aria-current="page"><?= h($pathways->steps[0]->name) ?> </li>-->
-  </ol>
+<ol class="breadcrumb mt-3">
+	<li class="breadcrumb-item"><?= $this->Html->link($pathways->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $pathways->topic->categories[0]->id]) ?></li>
+	<li class="breadcrumb-item"><?= $this->Html->link($pathways->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathways->topic->id]) ?></li>
+	<li class="breadcrumb-item" aria-current="page"><?= h($pathways->name) ?> </li>
+</ol>
 </nav> 
 
 <!--<div class=""><a href="/pathways/path/<?= $pathways->id ?>"><i class="fas fa-scroll"></i></a></div>-->
@@ -249,7 +249,9 @@ $lastobj = $s->description;
 
 
 		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'newclaim']) ?>
+		<?= $this->Form->hidden('users.0.created', ['value' => date('Y-m-d H:i:s')]); ?>
 		<?= $this->Form->hidden('users.0.id', ['value' => $uid]); ?>
+
 		<?= $this->Form->button(__('Claim'),['class'=>'btn btn-dark', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 		<?= $this->Form->end() ?>
 

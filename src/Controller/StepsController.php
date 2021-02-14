@@ -40,7 +40,9 @@ class StepsController extends AppController
         $step = $this->Steps->get($stepid, ['contain' => ['Activities', 
                                                             'Activities.ActivityTypes', 
                                                             'Activities.Tags', 
-                                                            'Pathways', 
+                                                            'Pathways',
+                                                            'Pathways.Topics',
+                                                            'Pathways.Topics.Categories', 
                                                             'Pathways.Steps',
                                                             'Pathways.Users'],
         ]);

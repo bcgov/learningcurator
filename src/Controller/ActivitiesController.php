@@ -29,7 +29,6 @@ class ActivitiesController extends AppController
                             ->find('all')
                             ->contain(['Statuses', 
                                         'Ministries', 
-                                        'Categories', 
                                         'ActivityTypes',
                                         'Steps.Pathways'])
                             ->where(['Activities.status_id' => 2])
@@ -50,7 +49,6 @@ class ActivitiesController extends AppController
                             ->find('all')
                             ->contain(['Statuses', 
                                         'Ministries', 
-                                        'Categories', 
                                         'ActivityTypes',
                                         'Steps.Pathways'])
                             ->where(['Activities.status_id' => 2])
@@ -73,7 +71,7 @@ class ActivitiesController extends AppController
         $allpathways = $pathways->toList();
        
         $this->paginate = [
-            'contain' => ['Statuses', 'Ministries', 'Categories', 'ActivityTypes','Steps.Pathways'],
+            'contain' => ['Statuses', 'Ministries', 'ActivityTypes','Steps.Pathways'],
             'order' => [
                 'Activities.id' => 'desc'
             ]
@@ -82,7 +80,6 @@ class ActivitiesController extends AppController
                             ->find('all')
                             ->contain(['Statuses', 
                                         'Ministries', 
-                                        'Categories', 
                                         'ActivityTypes',
                                         'Steps.Pathways'])
                             ->where(['Activities.status_id' => 2])
@@ -177,7 +174,6 @@ class ActivitiesController extends AppController
         $activity = $this->Activities->get($id, [
             'contain' => ['Statuses', 
                             'Ministries', 
-                            'Categories', 
                             'ActivityTypes', 
                             'Users', 
                             'Competencies', 
@@ -192,7 +188,7 @@ class ActivitiesController extends AppController
         $pathways = $allpaths->find('all')->contain(['steps']);
         $allpathways = $pathways->toList();
 
-        $this->set(compact('activity', 'allusers', 'useractivitylist','allpathways'));
+        $this->set(compact('activity', 'useractivitylist','allpathways'));
     }
 
 
@@ -441,9 +437,11 @@ class ActivitiesController extends AppController
         $activity = $this->Activities->get($id, [
             'contain' => ['Users'],
         ]);
+        
         $this->Authorization->authorize($activity);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+  
             if ($this->Activities->save($activity)) {
                 return $this->redirect($this->referer());
             }
