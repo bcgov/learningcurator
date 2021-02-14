@@ -172,8 +172,7 @@ class PathwaysController extends AppController
     {
         $this->Authorization->skipAuthorization();
         $pathway = $this->Pathways->get($id, [
-            'contain' => ['Categories', 
-                            'Ministries', 
+            'contain' => ['Ministries', 
                             'Topics', 
                             'Competencies', 
                             'Steps', 

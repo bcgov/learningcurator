@@ -122,6 +122,7 @@ label {
             <div class="col-9">
                 <div><?= $a->activity_type->name ?></div>
                 <div class="actname"><a href="/activities/view/<?= $a->id ?>"><?= $a->name ?></a> </div>
+                <div><?= $a->_joinData->stepcontext ?></div>
             </div>
             <div class="col-2">
 
@@ -155,6 +156,7 @@ label {
             <div class="col-9">
                 <?php if($supp->_joinData->required) echo '<span class="badge badge-success">Required</span>' ?> 
                 <a href="/activities/view/<?= $supp->id ?>"><?= $supp->name ?></a> 
+                <div><?= $supp->_joinData->stepcontext ?></div>
             </div>
             <div class="col-3">
             <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $supp->_joinData->id, 'class' => '']]) ?>
@@ -204,9 +206,11 @@ label {
     <?php //echo $this->Form->control('activity_type_id', ['class' => 'form-control', 'options' => $atypes]); ?>
     <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
     <?php echo $this->Form->control('description', ['class' => 'form-control summernote']); ?>
+    <?php echo $this->Form->control('stepcontext', ['class' => 'form-control summernote', 'label' => 'Set Context for this step']); ?>
     <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
+    
     <?php //echo $this->Form->control('isbn', ['class' => 'form-control']); ?>
     
     <?php //echo $this->Form->control('status_id', ['class' => 'form-control', 'options' => $statuses, 'empty' => true]); ?>

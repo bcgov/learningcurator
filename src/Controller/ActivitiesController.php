@@ -336,6 +336,7 @@ class ActivitiesController extends AppController
                 $activitiesStep = $asteptable->newEmptyEntity();
                 $activitiesStep->step_id = $this->request->getData()['step_id'];
                 $activitiesStep->activity_id = $activity->id;
+                $activitiesStep->stepcontext = $this->request->getData()['stepcontext'];
 
                 if (!$asteptable->save($activitiesStep)) {
                     echo 'Cannot add to step! Contact an admin. Sorry :)';

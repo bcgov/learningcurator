@@ -278,6 +278,12 @@ $lastobj = $s->description;
 
 		<?= $activity->description ?>
 
+		<?= $activity->description ?>
+		<div class="alert alert-light">
+				Curator says:<br>
+				<?= $activity->_joinData->stepcontext ?>
+			</div>
+
 	</div>
 	
 	<?php if(!empty($activity->tags)): ?>
@@ -408,7 +414,12 @@ $lastobj = $s->description;
 				</span> 
 			</div>
 			<?= $activity->description ?>
-			
+
+			<div class="alert alert-light">
+				Curator says:<br>
+				<?= $activity->_joinData->stepcontext ?>
+			</div>
+
 			<a target="_blank" 
 				rel="noopener" 
 				data-toggle="tooltip" data-placement="bottom" title="Launch this activity"

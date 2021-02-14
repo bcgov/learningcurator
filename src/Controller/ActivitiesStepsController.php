@@ -55,6 +55,7 @@ class ActivitiesStepsController extends AppController
         $this->Authorization->authorize($activitiesStep);
         $activitiesStep->step_id = $this->request->getData()['step_id'];
         $activitiesStep->activity_id = $this->request->getData()['activity_id'];
+        $activitiesStep->stepcontext = $this->request->getData()['stepcontext'];
         $pathid = $this->request->getData()['pathway_id'] ?? 0;
         // We want to check to see if this activity has already been added to this step
         // so that it doesn't accidentally get added twice. 
