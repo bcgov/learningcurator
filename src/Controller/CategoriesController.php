@@ -40,7 +40,7 @@ class CategoriesController extends AppController
 	    $this->Authorization->skipAuthorization();
         $categories = $this->Categories->find('all');
 		$category = $this->Categories->get($id, [
-            'contain' => ['Topics','Topics.Pathways'],
+            'contain' => ['Topics','Topics.Pathways','Topics.Pathways.Statuses'],
         ]);
         $this->set(compact('categories','category'));
     }

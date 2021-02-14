@@ -80,7 +80,6 @@ if ($this->Identity->isLoggedIn()) {
 
 
 <?php foreach ($topic->pathways as $pathway) : ?>
-
 <div class="p-3 my-3 bg-white rounded-lg">
 <?php if($pathway->status_id != 2): // is not published? ?>
 <?php if($role == 2 || $role == 5): // is curator or admin ?>
