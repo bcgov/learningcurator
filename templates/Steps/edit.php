@@ -45,6 +45,12 @@ label {
 
 <div class="col-md-5">
     
+
+
+
+
+
+    
     <h2>Add Existing Activity</h2>
     <div class="my-3 p-3 rounded-lg bg-white">
     <form method="get" id="actfind" action="/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
@@ -55,6 +61,14 @@ label {
     <ul class="list-group list-group-flush" id="results">
     </ul>
     </div>
+
+
+
+
+
+
+
+
     <div class="my-3 p-3 rounded-lg bg-white">
     <h3>Required Activities</h3>
     <ul class="list-group list-group-flush mb-3" id="requiredactivities">
