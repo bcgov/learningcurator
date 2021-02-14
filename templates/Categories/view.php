@@ -12,6 +12,7 @@ if ($this->Identity->isLoggedIn()) {
 	$role = $this->Identity->get('role_id');
 	$uid = $this->Identity->get('id');
 }
+
 ?>
 
 <div class="container-fluid">
@@ -76,6 +77,8 @@ if ($this->Identity->isLoggedIn()) {
 	
 </h2>
 <div class="p-3"><?= $topic->description ?></div>
+
+
 <?php foreach ($topic->pathways as $pathway) : ?>
 
 <div class="p-3 my-3 bg-white rounded-lg">

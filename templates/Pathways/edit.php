@@ -20,8 +20,8 @@ if ($this->Identity->isLoggedIn()) {
                 <legend><?= __('Edit Pathway') ?></legend>
                 <?php
                     echo $this->Form->control('status_id', ['type' => 'radio', 'options' => $statuses]);
-                    echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true, 'class' => 'form-control']);
-                    echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true, 'class' => 'form-control']);
+                    echo $this->Form->control('topic_id', ['options' => $topics, 'empty' => true, 'class' => 'form-control']);
+                    
                     echo $this->Form->control('name', ['class' => 'form-control']);
                     echo $this->Form->control('slug', ['class' => 'form-control']);
                     //echo $this->Form->control('color');

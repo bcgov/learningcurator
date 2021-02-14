@@ -47,16 +47,17 @@ class TopicsTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
+        
+        $this->hasMany('Pathways', [
+            'foreignKey' => 'topic_id',
+        ]);
+        
         $this->belongsToMany('Categories', [
             'foreignKey' => 'topic_id',
             'targetForeignKey' => 'category_id',
             'joinTable' => 'categories_topics',
         ]);
-        $this->belongsToMany('Pathways', [
-            'foreignKey' => 'topic_id',
-            'targetForeignKey' => 'pathway_id',
-            'joinTable' => 'pathways_topics',
-        ]);
+
     }
 
     /**
@@ -115,6 +116,7 @@ class TopicsTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['topic_id'], 'Topics'));
 
         return $rules;
     }

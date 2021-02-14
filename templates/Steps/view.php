@@ -137,7 +137,7 @@ if($stepclaimcount > 0) {
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb mt-3">
-  	<li class="breadcrumb-item"><?= $pathways->has('category') ? $this->Html->link($pathways->category->name, ['controller' => 'Categories', 'action' => 'view', $pathways->category->id]) : '' ?></li>
+  	
 	<li class="breadcrumb-item"><a href="/pathways/<?= $pathways->slug ?>"><?= h($pathways->name) ?></a></li>
 	<!--<li class="breadcrumb-item" aria-current="page"><?= h($pathways->steps[0]->name) ?> </li>-->
   </ol>

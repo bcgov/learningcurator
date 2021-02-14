@@ -36,9 +36,9 @@ class PathwaysController extends AppController
         // regardless of their statuses. Regular users should only ever see 
         // 'published' pathways.
         if($user->role_id == 2 || $user->role_id == 5) {
-            $pathways = $paths->find('all')->contain(['Categories','Statuses']);
+            $pathways = $paths->find('all')->contain(['Statuses']);
         } else {
-            $pathways = $paths->find('all')->contain(['Categories','Statuses'])->where(['status_id' => 2]);
+            $pathways = $paths->find('all')->contain(['Statuses'])->where(['status_id' => 2]);
         }
         //$this->paginate($pathways);
         $this->set(compact('pathways'));
@@ -82,7 +82,7 @@ class PathwaysController extends AppController
                 array_push($useractivitylist, $uact['activity_id']);
             }
         }
-        $pathway = $this->Pathways->findBySlug($slug)->contain(['Categories', 
+        $pathway = $this->Pathways->findBySlug($slug)->contain([
                             'Ministries', 
                             'Competencies', 
                             'Steps', 
@@ -205,13 +205,13 @@ class PathwaysController extends AppController
             }
             //print(__('The pathway could not be saved. Please, try again.'));
         }
-        $categories = $this->Pathways->Categories->find('list', ['limit' => 200]);
+        
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
         $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'categories', 'ministries', 'competencies', 'steps', 'users','topics'));
+        $this->set(compact('pathway', 'ministries', 'competencies', 'steps', 'users','topics'));
     }
 
     /**
@@ -270,14 +270,14 @@ class PathwaysController extends AppController
             }
             print(__('The pathway could not be saved. Please, try again.'));
         }
-        $categories = $this->Pathways->Categories->find('list', ['limit' => 200]);
+        
         $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $statuses = $this->Pathways->Statuses->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'categories', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
+        $this->set(compact('pathway', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
     }
 
     /**

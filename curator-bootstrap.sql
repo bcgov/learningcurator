@@ -115,6 +115,29 @@ INSERT INTO categories VALUES(1,'Leadership','leadership','Building your leaders
 INSERT INTO categories VALUES(2,'Other Topics','other-topics','Coming Soon: The Learning Curator will be populated with other topics of interest to learners in the BCPS.','','','','2020-05-27 18:28:21',1);
 INSERT INTO categories VALUES(3,'Diversity and Inclusion','d-i','Every individual needs to know their role in creating a diverse and inclusive workplace in the BC Public Service. Learn the definitions and the value of diversity and inclusion. Deepen your understanding and learn how to be an ally with a little engagement or a deeper dive in the resources within this topic&mdash;it''s up to you.','','','','2020-05-27 18:34:49',1);
 
+
+CREATE TABLE IF NOT EXISTS `topics` (
+  `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
+,  `name` varchar(255) NOT NULL
+,  `slug` varchar(255) NOT NULL
+,  `description` text
+,  `image_path` varchar(255) DEFAULT NULL
+,  `color` varchar(255) DEFAULT NULL
+,  `featured` varchar(255) DEFAULT NULL
+,  `created` datetime NOT NULL
+,  `user_id` integer NOT NULL
+,  CONSTRAINT `topic_user_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `categories_topics` (
+  `category_id` integer NOT NULL
+, `topic_id` integer NOT NULL
+,  PRIMARY KEY (`category_id`,`topic_id`)
+,  CONSTRAINT `categories_topics_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
+,  CONSTRAINT `categories_topics_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`)
+);
+
+
 CREATE TABLE IF NOT EXISTS `competencies` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
@@ -151,7 +174,6 @@ CREATE TABLE IF NOT EXISTS `activities` (
 ,  `hours` integer DEFAULT '0'
 ,  `recommended` integer DEFAULT '0'
 ,  `ministry_id` integer DEFAULT NULL
-,  `category_id` integer DEFAULT NULL
 ,  `approvedby_id` integer DEFAULT '1'
 ,  `created` datetime NOT NULL
 ,  `createdby_id` integer NOT NULL
@@ -162,23 +184,11 @@ CREATE TABLE IF NOT EXISTS `activities` (
 ,  CONSTRAINT `activities_ibfk_0` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`)
 ,  CONSTRAINT `activities_ibfk_1` FOREIGN KEY (`activity_types_id`) REFERENCES `activity_types` (`id`)
 ,  CONSTRAINT `activities_ibfk_2` FOREIGN KEY (`ministry_id`) REFERENCES `ministries` (`id`)
-,  CONSTRAINT `activities_ibfk_3` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 ,  CONSTRAINT `activityapprovedby_ibfk_1` FOREIGN KEY (`approvedby_id`) REFERENCES `users` (`id`)
 ,  CONSTRAINT `activitycreateduser_ibfk_1` FOREIGN KEY (`createdby_id`) REFERENCES `users` (`id`)
 ,  CONSTRAINT `activitymodifieduser_ibfk_1` FOREIGN KEY (`modifiedby_id`) REFERENCES `users` (`id`)
 );
 
-
-
-CREATE TABLE IF NOT EXISTS `activities_bookmarks` (
-  `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
-,  `activity_id` integer NOT NULL
-,  `user_id` integer NOT NULL
-,  `notes` text
-,  `created` datetime NOT NULL
-,  CONSTRAINT `activities_bookmarks_ibfk_1` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
-,  CONSTRAINT `activities_bookmarks_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-);
 
 CREATE TABLE IF NOT EXISTS `activities_competencies` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
@@ -199,14 +209,14 @@ CREATE TABLE IF NOT EXISTS `pathways` (
 ,  `file_path` varchar(255) DEFAULT NULL
 ,  `image_path` varchar(255) DEFAULT NULL
 ,  `featured` integer DEFAULT '0'
-,  `category_id` integer DEFAULT NULL
+,  `topic_id` integer DEFAULT NULL
 ,  `ministry_id` integer DEFAULT NULL
 ,  `created` datetime NOT NULL
 ,  `createdby` integer NOT NULL
 ,  `modified` datetime NOT NULL
 ,  `modifiedby` integer NOT NULL
 ,  `status_id` integer(100)
-,  CONSTRAINT `pathway_category_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
+,  CONSTRAINT `pathway_topics_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`)
 ,  CONSTRAINT `pathway_createduser_ibfk_1` FOREIGN KEY (`createdby`) REFERENCES `users` (`id`)
 ,  CONSTRAINT `pathway_ministry_ibfk_1` FOREIGN KEY (`ministry_id`) REFERENCES `ministries` (`id`)
 ,  CONSTRAINT `pathway_modifieduser_ibfk_1` FOREIGN KEY (`modifiedby`) REFERENCES `users` (`id`)
@@ -308,44 +318,6 @@ CREATE TABLE IF NOT EXISTS `activities_steps` (
 ,  CONSTRAINT `activities_steps_ibfk_2` FOREIGN KEY (`step_id`) REFERENCES `steps` (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `topics` (
-  `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
-,  `name` varchar(255) NOT NULL
-,  `slug` varchar(255) NOT NULL
-,  `description` text
-,  `image_path` varchar(255) DEFAULT NULL
-,  `color` varchar(255) DEFAULT NULL
-,  `featured` varchar(255) DEFAULT NULL
-,  `created` datetime NOT NULL
-,  `user_id` integer NOT NULL
-,  CONSTRAINT `topic_user_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-);
-
-CREATE TABLE IF NOT EXISTS `categories_topics` (
-  `category_id` integer NOT NULL
-, `topic_id` integer NOT NULL
-,  PRIMARY KEY (`category_id`,`topic_id`)
-,  CONSTRAINT `categories_topics_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
-,  CONSTRAINT `categories_topics_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`)
-);
-
-CREATE TABLE IF NOT EXISTS `pathways_topics` (
-  `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
-,  `pathway_id` integer NOT NULL
-, `topic_id` integer NOT NULL
-,  CONSTRAINT `pathways_topics_ibfk_1` FOREIGN KEY (`pathway_id`) REFERENCES `pathways` (`id`)
-,  CONSTRAINT `pathways_topics_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`)
-);
-
-CREATE TABLE IF NOT EXISTS `activities_bookmarks` (
-   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
-,  `activity_id` integer NOT NULL
-,  `user_id` integer NOT NULL
-,  `notes` text
-,  `created` datetime   
-,  CONSTRAINT `activities_bookmarks_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-,  CONSTRAINT `activities_bookmarks_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
-);
 
 
 CREATE TABLE IF NOT EXISTS `reports` (
@@ -365,10 +337,7 @@ CREATE TABLE IF NOT EXISTS `activities_users` (
    `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `activity_id` integer NOT NULL
 ,  `user_id` integer NOT NULL
-,  `started` datetime DEFAULT NULL
-,  `finished` datetime DEFAULT NULL
-,  `liked` integer DEFAULT '0'
-,  `notes` text
+,  `created` datetime NOT NULL
 ,  CONSTRAINT `users_activities_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ,  CONSTRAINT `users_activities_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
 );
@@ -384,33 +353,3 @@ CREATE TABLE IF NOT EXISTS `pathways_users` (
 ,  CONSTRAINT `pathways_users_ibfk_2` FOREIGN KEY (`pathway_id`) REFERENCES `pathways` (`id`)
 ,  CONSTRAINT `pathways_users_ibfk_3` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`)
 );
-
-
-CREATE INDEX `idx_statuses_stat_createduser_ibfk_1` ON `statuses` (`createdby`);
-CREATE INDEX `idx_competencies_pathways_competencies_pathways_ibfk_1` ON `competencies_pathways` (`pathway_id`);
-CREATE INDEX `idx_activity_types_activity_type_createduser_ibfk_1` ON `activity_types` (`createdby`);
-CREATE INDEX `idx_activity_types_activity_type_modifieduser_ibfk_1` ON `activity_types` (`modifiedby`);
-CREATE INDEX `idx_users_user_ministry_ibfk_1` ON `users` (`ministry_id`);
-CREATE INDEX `idx_users_user_role_ibfk_1` ON `users` (`role_id`);
-CREATE INDEX `idx_tags_tagcreateduser_ibfk_1` ON `tags` (`createdby`);
-CREATE INDEX `idx_tags_tagmodifieduser_ibfk_1` ON `tags` (`modifiedby`);
-CREATE INDEX `idx_pathways_steps_pathway_key` ON `pathways_steps` (`pathway_id`);
-CREATE INDEX `idx_pathways_pathway_category_ibfk_1` ON `pathways` (`category_id`);
-CREATE INDEX `idx_pathways_pathway_ministry_ibfk_1` ON `pathways` (`ministry_id`);
-CREATE INDEX `idx_pathways_pathway_createduser_ibfk_1` ON `pathways` (`createdby`);
-CREATE INDEX `idx_pathways_pathway_modifieduser_ibfk_1` ON `pathways` (`modifiedby`);
-CREATE INDEX `idx_competencies_comp_createduser_ibfk_1` ON `competencies` (`createdby`);
-CREATE INDEX `idx_competencies_comp_modifieduser_ibfk_1` ON `competencies` (`modifiedby`);
-CREATE INDEX `idx_activities_competencies_competency_key` ON `activities_competencies` (`competency_id`);
-CREATE INDEX `idx_activities_activities_ibfk_0` ON `activities` (`status_id`);
-CREATE INDEX `idx_activities_activities_ibfk_1` ON `activities` (`activity_types_id`);
-CREATE INDEX `idx_activities_activities_ibfk_2` ON `activities` (`ministry_id`);
-CREATE INDEX `idx_activities_activities_ibfk_3` ON `activities` (`category_id`);
-CREATE INDEX `idx_activities_activityapprovedby_ibfk_1` ON `activities` (`approvedby_id`);
-CREATE INDEX `idx_activities_activitycreateduser_ibfk_1` ON `activities` (`createdby_id`);
-CREATE INDEX `idx_activities_activitymodifieduser_ibfk_1` ON `activities` (`modifiedby_id`);
-CREATE INDEX `idx_activities_tags_tag_key` ON `activities_tags` (`tag_id`);
-CREATE INDEX `idx_steps_step_createduser_ibfk_1` ON `steps` (`createdby`);
-CREATE INDEX `idx_steps_step_modifieduser_ibfk_1` ON `steps` (`modifiedby`);
-CREATE INDEX `idx_competencies_users_competencies_users_ibfk_1` ON `competencies_users` (`user_id`);
-CREATE INDEX `idx_categories_cat_createduser_ibfk_1` ON `categories` (`createdby`);

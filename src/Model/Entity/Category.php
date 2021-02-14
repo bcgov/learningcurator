@@ -40,7 +40,5 @@ class Category extends Entity
         'featured' => true,
         'created' => true,
         'createdby' => true,
-        'activities' => true,
-        'pathways' => true,
     ];
 }

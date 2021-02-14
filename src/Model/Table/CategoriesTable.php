@@ -43,12 +43,6 @@ class CategoriesTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->hasMany('Activities', [
-            'foreignKey' => 'category_id',
-        ]);
-        $this->hasMany('Pathways', [
-            'foreignKey' => 'category_id',
-        ]);
         $this->belongsToMany('Topics', [
             'foreignKey' => 'category_id',
             'targetForeignKey' => 'topic_id',

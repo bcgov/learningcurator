@@ -60,9 +60,7 @@ class ActivitiesTable extends Table
         $this->belongsTo('Ministries', [
             'foreignKey' => 'ministry_id',
         ]);
-        $this->belongsTo('Categories', [
-            'foreignKey' => 'category_id',
-        ]);
+
         $this->belongsTo('Users', [
             'foreignKey' => 'approvedby_id',
         ]);
@@ -74,6 +72,7 @@ class ActivitiesTable extends Table
             'foreignKey' => 'modifiedby_id',
             'joinType' => 'INNER',
         ]);
+
         $this->belongsTo('ActivityTypes', [
             'foreignKey' => 'activity_types_id',
             'joinType' => 'INNER',
@@ -203,7 +202,6 @@ class ActivitiesTable extends Table
     {
         $rules->add($rules->existsIn(['status_id'], 'Statuses'));
         $rules->add($rules->existsIn(['ministry_id'], 'Ministries'));
-        $rules->add($rules->existsIn(['category_id'], 'Categories'));
         $rules->add($rules->existsIn(['approvedby_id'], 'Users'));
         $rules->add($rules->existsIn(['createdby_id'], 'Users'));
         $rules->add($rules->existsIn(['modifiedby_id'], 'Users'));

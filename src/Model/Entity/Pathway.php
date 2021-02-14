@@ -17,15 +17,14 @@ use Cake\ORM\Entity;
  * @property string|null $file_path
  * @property string|null $image_path
  * @property int|null $featured
- * @property int|null $category_id
+ * @property int|null $topic_id
  * @property int|null $ministry_id
  * @property \Cake\I18n\FrozenTime $created
  * @property int $createdby
  * @property \Cake\I18n\FrozenTime $modified
  * @property int $modifiedby
  * @property int|null $status_id
- *
- * @property \App\Model\Entity\Category $category
+ * @property \App\Model\Entity\Topic $topic
  * @property \App\Model\Entity\Ministry $ministry
  * @property \App\Model\Entity\Competency[] $competencies
  * @property \App\Model\Entity\Step[] $steps
@@ -51,17 +50,15 @@ class Pathway extends Entity
         'file_path' => true,
         'image_path' => true,
         'featured' => true,
-        'category_id' => true,
+        'topic_id' => true,
         'ministry_id' => true,
         'created' => true,
         'createdby' => true,
         'modified' => true,
         'modifiedby' => true,
-        'category' => true,
         'ministry' => true,
         'competencies' => true,
         'steps' => true,
-        'topics' => true,
         'users' => true,
         'status_id' => true,
         'estimated_time' => true,

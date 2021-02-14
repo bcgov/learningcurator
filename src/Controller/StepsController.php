@@ -42,7 +42,6 @@ class StepsController extends AppController
                                                             'Activities.Tags', 
                                                             'Pathways', 
                                                             'Pathways.Steps',
-                                                            'Pathways.Categories', 
                                                             'Pathways.Users'],
         ]);
         $this->Authorization->authorize($step);

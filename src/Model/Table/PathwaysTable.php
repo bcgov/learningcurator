@@ -46,8 +46,8 @@ class PathwaysTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Categories', [
-            'foreignKey' => 'category_id',
+        $this->belongsTo('Topics', [
+            'foreignKey' => 'topic_id',
         ]);
         $this->belongsTo('Ministries', [
             'foreignKey' => 'ministry_id',
@@ -64,11 +64,6 @@ class PathwaysTable extends Table
             'foreignKey' => 'pathway_id',
             'targetForeignKey' => 'step_id',
             'joinTable' => 'pathways_steps',
-        ]);
-        $this->belongsToMany('Topics', [
-            'foreignKey' => 'pathway_id',
-            'targetForeignKey' => 'topic_id',
-            'joinTable' => 'pathways_topics',
         ]);
         $this->belongsToMany('Users', [
             'foreignKey' => 'pathway_id',
@@ -155,7 +150,7 @@ class PathwaysTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['name']));
-        $rules->add($rules->existsIn(['category_id'], 'Categories'));
+        $rules->add($rules->existsIn(['topic_id'], 'Topics'));
         $rules->add($rules->existsIn(['ministry_id'], 'Ministries'));
         $rules->add($rules->existsIn(['status_id'], 'Statuses'));
 
