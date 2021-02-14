@@ -116,8 +116,6 @@ class TopicsTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
-        $rules->add($rules->existsIn(['topic_id'], 'Topics'));
-
         return $rules;
     }
 }

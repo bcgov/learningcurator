@@ -48,8 +48,7 @@ if ($this->Identity->isLoggedIn()) {
     <fieldset>
         <legend><?= __('Add Pathway') ?></legend>
         <?php
-            echo $this->Form->hidden('category_id', ['value' => $topic->categories[0]->id]);
-            echo $this->Form->hidden('topics.0.id', ['value' => $topic->id]);
+            echo $this->Form->hidden('topic_id', ['value' => $topic->id]);
             echo $this->Form->hidden('status_id',['value' => 1]);
             echo $this->Form->control('name',['class' => 'form-control']);
             echo $this->Form->control('description',['class' => 'form-control']);

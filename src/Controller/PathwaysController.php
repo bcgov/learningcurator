@@ -83,6 +83,8 @@ class PathwaysController extends AppController
             }
         }
         $pathway = $this->Pathways->findBySlug($slug)->contain([
+                            'Topics',
+                            'Topics.Categories', 
                             'Ministries', 
                             'Competencies', 
                             'Steps', 

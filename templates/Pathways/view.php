@@ -69,7 +69,9 @@ This seems to work out, but #TODO investigate optimizing this
 
 	<nav aria-label="breadcrumb">
 	<ol class="breadcrumb mt-3">
-		
+	
+	<li class="breadcrumb-item"><?= $this->Html->link($pathway->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $pathway->topic->categories[0]->id]) ?></li>
+		<li class="breadcrumb-item"><?= $pathway->has('topic') ? $this->Html->link($pathway->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id]) : '' ?></li>
 		<li class="breadcrumb-item" aria-current="page"><?= h($pathway->name) ?> </li>
 	</ol>
 	</nav> 
