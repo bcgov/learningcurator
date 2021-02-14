@@ -172,6 +172,7 @@ class PathwaysController extends AppController
         $pathway = $this->Pathways->get($id, [
             'contain' => ['Categories', 
                             'Ministries', 
+                            'Topics', 
                             'Competencies', 
                             'Steps', 
                             'Steps.Activities', 
@@ -572,13 +573,39 @@ class PathwaysController extends AppController
      */
     public function import ()
     {
+        $this->Authorization->skipAuthorization();
+        $user = $this->request->getAttribute('authentication')->getIdentity();
 
         $data = file_get_contents('/home/a/learning-curator/personal-development.json',true);
             
-        $foo = json_decode($data);
-        foreach($foo->steps as $f) {
-            echo '<pre>'; print_r($f);
+        $path = json_decode($data, true);
+        
+        // create a new pathway here
+        $pathway = $this->Pathways->newEmptyEntity();
+        $pathway->name = $path['name'];
+        $pathway->description = $path['description'];
+        $pathway->objective = $path['objective'];
+        $pathway->createdby = $user->id;
+        
+        //$pathway = $this->Pathways->patchEntity($pathway, $newpath);
+        $sluggedTitle = Text::slug($pathway->name);
+        // trim slug to maximum length defined in schema
+        $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
+        if ($this->Pathways->save($pathway)) {
+            echo $pathway->id . ' created.<br>';
+           
         }
+        
+        
+        foreach($path['steps'] as $step) {
+            echo $step['name'] . ' mocked.<br>';
+            // create a new step here
+            foreach($step['activities'] as $activity) {
+                echo $activity['name'] . ' mocked.<br>';
+                // create a new activity here
+            }
+        }
+        
 
         
 

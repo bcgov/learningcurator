@@ -2961,6 +2961,24 @@
   ],
   "competencies": [],
   "ministry": null,
+  "topics": [
+    {
+      "id": 2,
+      "name": "Fundamentals",
+      "slug": "fundamentals",
+      "description": "Get the basics of why and how.",
+      "image_path": null,
+      "color": null,
+      "featured": null,
+      "created": "2021-02-11T23:16:43+00:00",
+      "user_id": 1,
+      "_joinData": {
+        "id": 2,
+        "pathway_id": 2,
+        "topic_id": 2
+      }
+    }
+  ],
   "category": {
     "id": 1,
     "name": "Leadership",

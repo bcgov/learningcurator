@@ -78,6 +78,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/pathways/add', ['controller' => 'Pathways', 'action' => 'add']);
     $builder->connect('/pathways/import', ['controller' => 'Pathways', 'action' => 'import']);
     $builder->connect('/pathways/status/*', ['controller' => 'Pathways', 'action' => 'status']);
+    $builder->connect('/pathways/api/*', ['controller' => 'Pathways', 'action' => 'api']);
     
     /*
      * Connect catchall routes for all controllers.
