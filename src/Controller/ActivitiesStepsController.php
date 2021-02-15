@@ -101,8 +101,10 @@ class ActivitiesStepsController extends AppController
         $activitiesStep = $this->ActivitiesSteps->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($activitiesStep);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
+            $activitiesStep->stepcontext = $this->request->getData()['stepcontext'];
             if ($this->ActivitiesSteps->save($activitiesStep)) {
                 print(__('The activities step has been saved.'));
 

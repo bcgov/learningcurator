@@ -122,7 +122,12 @@ label {
             <div class="col-9">
                 <div><?= $a->activity_type->name ?></div>
                 <div class="actname"><a href="/activities/view/<?= $a->id ?>"><?= $a->name ?></a> </div>
-                <div><?= $a->_joinData->stepcontext ?></div>
+                <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'edit/' . $a->_joinData->id], 'class' => '']) ?>
+                <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id,]) ?>
+                <?= $this->Form->control('stepcontext',['value' => $a->_joinData->stepcontext,'class' => 'form-control', 'label' => '']) ?>
+                <button class="btn btn-light btn-sm">Save</button>
+                <?= $this->Form->end() ?>
+
             </div>
             <div class="col-2">
 

@@ -36,8 +36,15 @@ class ActivitiesStepPolicy
      * @param App\Model\Entity\ActivitiesStep $ActivitiesStep
      * @return bool
      */
-    public function canUpdate(IdentityInterface $user, ActivitiesStep $ActivitiesStep)
+    public function canEdit(IdentityInterface $user, ActivitiesStep $ActivitiesStep)
     {
+        if($this->isAdmin($user, $ActivitiesStep)) {
+            return true;
+        } elseif($this->isCurator($user,$ActivitiesStep)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
