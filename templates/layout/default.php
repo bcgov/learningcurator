@@ -97,13 +97,22 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 	</div> <!-- /endof .collapse navbar-collapse -->
 </nav>
 
+
+
 <?= $this->fetch('content') ?>
 
 
-<div class="container-fluid bg-white" style="padding-top: 60px;">
-<div class="row mt-3">
-<div class="col-md-5 mt-3">
+
+
+<div class="container-fluid bg-light" style="padding-top: 60px;">
+<div class="row mt-3 justify-content-md-center">
+<div class="col-md-5 mt-3 text-center">
 <div class="p-3">
+
+	<div class="p-3 m-3 bg-white shadow-sm">
+		Brought to you by The Learning Centre <img src="/img/learning-logo-small-transparent.png" width="40" alt="Learning Centre logo">
+	</div>
+	<div class="p-3 m-3 bg-white shadow-sm">
 	<div><img src="/img/BCID_BCPSA_rgb_pos.jpg" width="400" alt="BC Public Service Agency logo"></div>
 	<p>Your personal information is collected by the BC Public Service Agency in accordance with 
 		section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes 
@@ -113,6 +122,7 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 				www.gov.bc.ca/myhr/contact
 			</a> 
 		or call 250-952-6000.</p>
+	</div>
 </div>
 </div>
 </div>
