@@ -1,6 +1,6 @@
 
 a {
-	color: #666;
+	color: #000;
 }
 a:hover {
 	color: #000;
@@ -10,6 +10,7 @@ img {
 	height: auto;
 	max-width: 100%;
 }
+.bg-success,
 .btn-success {
     background-color: rgba(88,174,36,1) !important;
     border: 0;

@@ -416,13 +416,13 @@ class ActivitiesController extends AppController
         }
         $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
         $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
-        $categories = $this->Activities->Categories->find('list', ['limit' => 200]);
+        
         $activityTypes = $this->Activities->ActivityTypes->find('list', ['limit' => 200]);
         $users = $this->Activities->Users->find('list', ['limit' => 200]);
         $competencies = $this->Activities->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Activities->Steps->find('list', ['limit' => 200])->contain(['pathways']);
         $tags = $this->Activities->Tags->find('list', ['limit' => 200]);
-        $this->set(compact('activity', 'statuses', 'ministries', 'categories', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
+        $this->set(compact('activity', 'statuses', 'ministries', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
     }
 
 
