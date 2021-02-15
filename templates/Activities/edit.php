@@ -47,6 +47,10 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
             <select name="estimated_time" id="estimated_time_id" class="form-control">
 <?php
 $options = array(
+    'Under 5 mins',
+    'Under 10 mins', 
+    'Under 15 mins', 
+    'Under 20 mins',
     'Under 10 mins',
     'Under 30 mins',
     'Under 1 hour',
