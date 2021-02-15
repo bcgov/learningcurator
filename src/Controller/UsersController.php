@@ -266,7 +266,7 @@ class UsersController extends AppController
 	    $u = $this->request->getAttribute('authentication')->getIdentity();
         $user = $this->Users->get($u->id, [
             'contain' => ['Pathways', 
-                            'Pathways.Categories', 
+                            'Pathways.Topics', 
                             'Activities', 
                             'Activities.ActivityTypes',
                             'Competencies',
@@ -294,8 +294,8 @@ class UsersController extends AppController
 	    $u = $this->request->getAttribute('authentication')->getIdentity();
         $user = $this->Users->get($u->id, [
             'contain' => ['Pathways', 
-                            'Pathways.Categories', 
-                            'Activities' => ['sort' => ['ActivitiesUsers.started' => 'desc']], 
+                            'Pathways.Topics', 
+                            'Activities' => ['sort' => ['ActivitiesUsers.created' => 'desc']], 
                             'Activities.ActivityTypes',
                             'Activities.Steps',
                             'Activities.Steps.Pathways',
@@ -321,7 +321,7 @@ class UsersController extends AppController
 	    $u = $this->request->getAttribute('authentication')->getIdentity();
         $user = $this->Users->get($u->id, [
             'contain' => ['Pathways', 
-                            'Pathways.Categories', 
+                            'Pathways.Topics', 
                             'Activities', 
                             'Activities.ActivityTypes',
                             'Competencies',
