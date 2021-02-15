@@ -38,18 +38,10 @@ return [
             'host' => 'localhost',
             //'port' => 'non_standard_port_number',
             'username' => 'curator',
-            'password' => 'Learning1!',
-            'database' => 'curator_db',
+            'password' => 'SecurePassword',
+            'database' => 'learning_curator_db',
             //'schema' => 'myapp',
             'url' => env('DATABASE_URL', null),
-        ],
-
-        'elastic' => [
-            'className' => 'Cake\ElasticSearch\Datasource\Connection',
-            'driver' => 'Cake\ElasticSearch\Datasource\Connection',
-            'host' => '127.0.0.1',
-            'port' => 9200,
-            'index' => 'testindex',
         ],
         /*
          * The test connection is used during the test suite.
@@ -82,6 +74,9 @@ return [
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
     ],
+    /**
+     * Sessions should use the database so that the app is more stateless
+     */
     'Session' => [
         'defaults' => 'database',
     ],
