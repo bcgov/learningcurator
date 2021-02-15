@@ -24,17 +24,33 @@ if ($this->Identity->isLoggedIn()) {
 </style>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-8">
-<div class="pad-sm">
-<h1><?= __('The Latest') ?></h1>
-<p><?= __('The most recently published topics, pathways, and activities.') ?></p>
+<div class="col-md-6">
+
+<h1 class="display-4 mt-5">Access learning resources on demand</h1>
+<h2 class="font-weight-light">Sourced by BC Public Service curators</h2>
+<div class="p-3 rounded-lg mb-5 bg-white shadow-sm">
+<p style="font-size: 1.5rem">BC Public Service curators are trusted guides designing pathways of knowledge and 
+skill development. Learning Curator pathways may stand alone or they may supplement 
+your corporate training offered through the Learning Centre.</p>
+<p style="font-size: 1.3rem">A <a href="#">best practice in learning for organizations</a>, curation helps us develop 
+ourselves as part of a trusted, talented, and modern public service.</p>
+<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
+	<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
+	<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+</form>
+<nav class="nav bg-white mt-3">
+	<a class="nav-link" href="/pages/faq">Questions?</a>
+	<a class="nav-link" href="/activities/contribute">Contribute</a>
+</nav>
 </div>
+
 </div>
 </div>
 </div>
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
 <div class="col-md-5">
+
 <h2 class="mt-3"><i class="fas fa-check"></i> Latest Activities</h2>
 
 <div class="">

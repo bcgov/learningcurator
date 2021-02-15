@@ -66,8 +66,8 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 <?php endif ?>
 <nav class="navbar navbar-expand-lg sticky-top bg-white shadow-sm">
 	
-	<a class="navbar-brand" href="/" style="margin: 0 0 0 20px">
-	<img class="animate__animated animate__rotateIn" alt="Logo" height="50" src="/img/curator-rings-logo.svg" width="50">
+	<a class="navbar-brand" href="/">
+		<img class="animate__animated animate__rotateIn" alt="Logo" height="50" src="/img/curator-rings-logo.svg" width="50">
 		Learning Curator
 	</a>
 

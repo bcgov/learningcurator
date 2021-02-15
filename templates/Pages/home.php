@@ -5,13 +5,13 @@
 
 
 
-<h1 class="display-4 my-5">Access learning resources on demand</h1>
+<h1 class="display-4 mt-5">Access learning resources on demand</h1>
 <h2 class="font-weight-light">Sourced by BC Public Service curators</h2>
-<div class="p-3 rounded-lg my-3 bg-white shadow-sm">
-<p>BC Public Service curators are trusted guides designing pathways of knowledge and 
+<div class="p-3 rounded-lg mb-5 bg-white shadow-sm">
+<p style="font-size: 1.5rem">BC Public Service curators are trusted guides designing pathways of knowledge and 
 skill development. Learning Curator pathways may stand alone or they may supplement 
 your corporate training offered through the Learning Centre.</p>
-<p>A <a href="#">best practice in learning for organizations</a>, curation helps us develop 
+<p style="font-size: 1.3rem">A <a href="#">best practice in learning for organizations</a>, curation helps us develop 
 ourselves as part of a trusted, talented, and modern public service.</p>
 </div>
 
