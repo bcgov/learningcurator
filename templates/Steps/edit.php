@@ -206,7 +206,7 @@ label {
     <?php //echo $this->Form->control('activity_type_id', ['class' => 'form-control', 'options' => $atypes]); ?>
     <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
     <?php echo $this->Form->control('description', ['class' => 'form-control summernote']); ?>
-    <?php echo $this->Form->control('stepcontext', ['class' => 'form-control summernote', 'label' => 'Set Context for this step']); ?>
+    <?php echo $this->Form->control('stepcontext', ['class' => 'form-control', 'label' => 'Set Context for this step']); ?>
     <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
