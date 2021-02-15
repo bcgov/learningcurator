@@ -585,17 +585,18 @@ class PathwaysController extends AppController
         
         // create a new pathway here
         $pathway = $this->Pathways->newEmptyEntity();
-
-        $topic = $this->Pathways->Topics->get($path['topics'][0]['id']);
+        //$path['topics'][0]['id']
+        $topic = $this->Pathways->Topics->get(1);
 
         $pathway->name = $path['name'];
         $pathway->description = $path['description'];
         $pathway->objective = $path['objective'];
         $pathway->createdby = $user->id;
+        $pathway->modifiedby = $user->id;
 
         $pathway->topics = [$topic];
 
-        print_r($pathway); exit;
+        //print_r($pathway); exit;
         
         //$pathway = $this->Pathways->patchEntity($pathway, $newpath);
         $sluggedTitle = Text::slug($pathway->name);
