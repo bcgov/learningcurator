@@ -119,7 +119,8 @@ if ($this->Identity->isLoggedIn()) {
 <div class="bg-light p-3 my-3">
 <div class="mb-3"><strong>View pathways on the following topics:</strong></div>
 <?php foreach($cat->topics as $topic): ?>
-<span class=""><?= $topic->name ?></span>
+	<?= $this->Html->link($topic->name, ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
+
 <?php endforeach ?>
 </div>
 <div><span class="badge badge-light">Added: <?= h($cat->created) ?></span></div>
