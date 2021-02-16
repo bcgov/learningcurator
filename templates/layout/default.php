@@ -104,7 +104,7 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 
 
 
-<div class="container-fluid bg-light" style="padding-top: 60px;">
+<div class="container-fluid bg-light py-3">
 <div class="row mt-3 justify-content-md-center">
 <div class="col-md-5 mt-3 text-center">
 <div class="p-3">

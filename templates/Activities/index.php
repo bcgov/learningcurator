@@ -34,14 +34,10 @@ skill development. Learning Curator pathways may stand alone or they may supplem
 your corporate training offered through the Learning Centre.</p>
 <p style="font-size: 1.3rem">A <a href="#">best practice in learning for organizations</a>, curation helps us develop 
 ourselves as part of a trusted, talented, and modern public service.</p>
-<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
-	<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
-	<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-</form>
-<nav class="nav bg-white mt-3">
-	<a class="nav-link" href="/pages/faq">Questions?</a>
-	<a class="nav-link" href="/activities/contribute">Contribute</a>
-</nav>
+
+<a class="btn btn-lg btn-success my-3" href="/pages/faq">Learn More</a>
+
+
 </div>
 
 </div>
@@ -49,9 +45,65 @@ ourselves as part of a trusted, talented, and modern public service.</p>
 </div>
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
+
+
+
+
+
+<div class="col-md-3">
+<h2 class="mt-3">Latest Topics</h2>
+<?php foreach ($allcats as $cat) : ?>
+<div class="p-3 mb-3 bg-white rounded-lg">
+<h3>
+	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
+</h3>
+<div><?= h($cat->description) ?></div>
+
+<?php foreach($cat->topics as $topic): ?>
+<div class="bg-light p-3 my-3">
+	<div class="font-weight-bold"><?= $this->Html->link($topic->name, ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?></div>
+	<div><?= h($topic->description) ?></div>
+</div>
+<?php endforeach ?>
+
+<!-- <div><span class="badge badge-light">Added: <?= h($cat->created) ?></span></div> -->
+</div>
+<?php endforeach; ?>
+</div>
+
+
+
+<div class="col-md-4">
+
+<h2 class="mt-3">Latest Pathways</h2>
+<div>
+<?php foreach($allpathways as $path): ?>
+<?php if($path->status_id != 2): ?>
+<?php if($role == 2 || $role == 5): ?>
+	<div class="p-3 mb-3 bg-white rounded-lg">
+		<span class="badge badge-warning"><?= $path->status->name ?></span>
+		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
+		<?= $path->objective ?>
+		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
+	</div>
+<?php endif ?>
+<?php else: ?>
+	<div class="p-3 mb-3 bg-white rounded-lg">
+		
+		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
+		<?= $path->objective ?>
+		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
+	</div>
+<?php endif ?>
+
+<?php endforeach ?>
+</div>
+</div>
+
+
 <div class="col-md-5">
 
-<h2 class="mt-3"><i class="fas fa-check"></i> Latest Activities</h2>
+<h2 class="mt-3">Latest Activities</h2>
 
 <div class="">
 <?php foreach ($activities as $activity): ?>
@@ -94,54 +146,6 @@ ourselves as part of a trusted, talented, and modern public service.</p>
 
 
 
-</div>
-
-
-<div class="col-md-4">
-
-<h2 class="mt-3"><i class="fas fa-sitemap"></i> Latest Pathways</h2>
-<div>
-<?php foreach($allpathways as $path): ?>
-<?php if($path->status_id != 2): ?>
-<?php if($role == 2 || $role == 5): ?>
-	<div class="p-3 mb-3 bg-white rounded-lg">
-		<span class="badge badge-warning"><?= $path->status->name ?></span>
-		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
-		<?= $path->objective ?>
-		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
-	</div>
-<?php endif ?>
-<?php else: ?>
-	<div class="p-3 mb-3 bg-white rounded-lg">
-		
-		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
-		<?= $path->objective ?>
-		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
-	</div>
-<?php endif ?>
-
-<?php endforeach ?>
-</div>
-</div>
-
-<div class="col-md-3">
-<h2 class="mt-3">Latest Categories</h2>
-<?php foreach ($allcats as $cat) : ?>
-<div class="p-3 mb-3 bg-white rounded-lg">
-<h3>
-	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
-</h3>
-<div><?= h($cat->description) ?></div>
-<div class="bg-light p-3 my-3">
-<div class="mb-3"><strong>View pathways on the following topics:</strong></div>
-<?php foreach($cat->topics as $topic): ?>
-	<?= $this->Html->link($topic->name, ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
-
-<?php endforeach ?>
-</div>
-<div><span class="badge badge-light">Added: <?= h($cat->created) ?></span></div>
-</div>
-<?php endforeach; ?>
 </div>
 
 
