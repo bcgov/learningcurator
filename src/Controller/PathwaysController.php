@@ -572,53 +572,47 @@ class PathwaysController extends AppController
      * Import an entire pathway from a provided JSON file
      *
      */
-    public function import ()
+    public function import ($topic_id = null)
     {
         $this->Authorization->skipAuthorization();
         $user = $this->request->getAttribute('authentication')->getIdentity();
-
-        //$articlesTable = $this->getTableLocator()->get('Articles');
 
         $data = file_get_contents('/home/a/learning-curator/personal-development.json',true);
             
         $path = json_decode($data, true);
         
-        // create a new pathway here
-        $pathway = $this->Pathways->newEmptyEntity();
-        //$path['topics'][0]['id']
-        $topic = $this->Pathways->Topics->get(1);
+        $allsteps = array();
+        foreach($path['steps'] as $step) {
+            
+            $newstep = array('name' => $step['name'], 'description' => $step['description'], 'createdby' => $user->id);
+            array_push($allsteps,$newstep);
 
-        $pathway->name = $path['name'];
-        $pathway->description = $path['description'];
-        $pathway->objective = $path['objective'];
-        $pathway->createdby = $user->id;
-        $pathway->modifiedby = $user->id;
+            //echo $step['name'] . ' mocked.<br>';
+            // foreach($step['activities'] as $activity) {
+            //     echo $activity['name'] . ' mocked.<br>';
+            //     // create a new activity here
+            // }
+        }
 
-        $pathway->topics = [$topic];
+        $sluggedTitle = Text::slug($path['name']);
+        $data = [
+            'name' => $path['name'],
+            'slug' => strtolower(substr($sluggedTitle, 0, 191)),
+            'description' => $path['description'],
+            'objective' => $path['objective'],
+            'createdby' => $user->id,
+            'modifiedby' => $user->id,
+            'topic_id' => $topic_id
+        ];
 
-        //print_r($pathway); exit;
-        
-        //$pathway = $this->Pathways->patchEntity($pathway, $newpath);
-        $sluggedTitle = Text::slug($pathway->name);
-        // trim slug to maximum length defined in schema
-        $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
+//echo '<pre>';print_r($data); exit;
+        $p = $this->getTableLocator()->get('Pathways');
+        $complete = $p->newEntity($data);
 
-        if ($this->Pathways->save($pathway)) {
-            echo $pathway->id . ' created.<br>';
+        if ($p->save($complete)) {
+            echo $complete->id . ' created.<br>';
            
         }
-        
-        
-        foreach($path['steps'] as $step) {
-            echo $step['name'] . ' mocked.<br>';
-            // create a new step here
-            foreach($step['activities'] as $activity) {
-                echo $activity['name'] . ' mocked.<br>';
-                // create a new activity here
-            }
-        }
-        
-
         
 
     }
