@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS `roles` (
 ,  `image_path` varchar(255) DEFAULT NULL
 ,  `color` varchar(255) DEFAULT NULL
 );
-INSERT INTO roles VALUES(1,'Learner','learner','These are regular end-users who can''t do anything but join pathways and claim activities.','','');
-INSERT INTO roles VALUES(2,'Curator','curator','Curators are the subject matter experts who create pathways, add steps, assigning activities to steps, and determining which activities are required for pathway completion.','','');
+INSERT INTO roles VALUES(1,'Learner','learner','These are regular end-users who only join pathways and claim activities.','','');
+INSERT INTO roles VALUES(2,'Curator','curator','Curators are the subject matter experts who create pathways.','','');
 INSERT INTO roles VALUES(5,'Super User','super','Can do anything, anywhere.','','');
 
 CREATE TABLE IF NOT EXISTS `ministries` (
