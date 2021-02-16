@@ -89,41 +89,9 @@ class ActivitiesController extends AppController
 		$cats = TableRegistry::getTableLocator()->get('Categories');
         $allcats = $cats->find('all')->contain(['Topics'])->order(['Categories.created' => 'desc']);
         
-        // As we loop through the activities for the steps on this pathway, we 
-        // need to be able to check to see if the current user has "claimed" 
-        // that activity. Here we get the current user id and use it to select 
-        // all of the claimed activities assigned to them, and then process out 
-        // just the activity IDs into a simple array. Then, in the template 
-        // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
-        //
-        // First let's check to see if this person is logged in or not.
-        //
-	    $user = $this->request->getAttribute('authentication')->getIdentity();
-        if(!empty($user)) {
-            // We need create two empty arrays first. If nothing gets added to
-            // them, so be it
-            $useractivitylist = array();
-     
-            // Get access to the apprprioate tables
-            $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
-            
-            // Select based on currently logged in person
-            $useacts = $au->find()->where(['user_id = ' => $user->id]);
-            
-            // convert the results into a simple array so that we can
-            // use in_array in the template
-            $useractivities = $useacts->toList();
-            
-            // Loop through the resources and add just the ID to the 
-            // array that we will pass into the template
-            foreach($useractivities as $uact) {
-                array_push($useractivitylist, $uact['activity_id']);
-            }
 
 
-        }
-
-        $this->set(compact('activities','allpathways','allcats','useractivitylist'));
+        $this->set(compact('activities','allpathways','allcats'));
     }
 
     /**
@@ -624,5 +592,66 @@ class ActivitiesController extends AppController
         
             //return $this->redirect(['action' => 'index']);
         }
+    }
+
+
+       /**
+     * Import an entire pathway from a provided JSON file
+     *
+     */
+    public function import ($topic_id = null)
+    {
+        $this->Authorization->skipAuthorization();
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+
+        $data = file_get_contents('/home/a/learning-curator/personal-development.json',true);
+            
+        $path = json_decode($data, true);
+        
+
+        foreach($path['steps'] as $step) {
+
+            foreach($step['activities'] as $act) {
+
+                
+                // #TODO Should we check for existing activities before proceding? 
+                $activity = $this->Activities->newEmptyEntity();
+                
+                // Get started
+                $activity->name = $act['name'];
+                $sluggedTitle = Text::slug($act['name']);
+                $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
+                $activity->description = $act['description'];
+                // #TODO url encode this?
+                $activity->hyperlink = $act['hyperlink'];
+                $activity->topic_id = $topic_id;
+                $activity->status_id = 2;
+                $activity->modifiedby_id = $user->id;
+                $activity->createdby_id = $user->id;
+                $activity->approvedby_id =  $user->id;
+                $activity->estimated_time = $act['estimated_time'];
+                $activity->activity_types_id = $act['activity_types_id'];
+
+                //print_r($activity); exit;
+                
+                if ($this->Activities->save($activity)) {
+                    // do nothing, move to the next activity
+                    echo 'Created!';
+                } else {
+                    echo 'Did not import ' . $data[4] . '. Something\'s wrong!<br>';
+                }
+
+
+
+
+            }
+        }
+
+
+
+
+        
+        
+
     }
 }
