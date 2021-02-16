@@ -120,7 +120,11 @@ label {
             <?= $this->Form->end() ?>
             </div>
             <div class="col-9">
-                <div><?= $a->activity_type->name ?></div>
+
+                <div>
+                    <span class="badge bg-dark text-white"><?= $a->status->name ?></span> 
+                    <span class="badge" style="background-color: rgba(<?= $a->activity_type->color ?>,1);"><?= $a->activity_type->name ?>
+                </div>
                 <div class="actname"><a href="/activities/view/<?= $a->id ?>"><?= $a->name ?></a> </div>
                 <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'edit/' . $a->_joinData->id], 'class' => '']) ?>
                 <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id,]) ?>
@@ -140,12 +144,12 @@ label {
             <?php endif ?>
             <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
-            <?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light float-left']) ?>
+            <?= $this->Form->button(__('Unrequire'),['class'=>'btn btn-sm btn-light float-left']) ?>
             <?= $this->Form->end() ?>
 <br>
             <?= $this->Form->create(null,['action' => '/activities-steps/delete/' . $a->_joinData->id, 'class' => '']) ?>
             <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
-            <?= $this->Form->button(__('Delete'),['class' => 'btn btn-sm btn-light']) ?>
+            <?= $this->Form->button(__('Remove'),['class' => 'btn btn-sm btn-light']) ?>
             <?= $this->Form->end() ?>
             </div>
             </div>
@@ -159,6 +163,10 @@ label {
         <li class="list-group-item" id="exac-<?= $supp->id ?>" data-stepid="<?= $supp->_joinData->id ?>">
             <div class="row">
             <div class="col-9">
+            <div>
+                    <span class="badge bg-dark text-white"><?= $supp->status->name ?></span> 
+                    <span class="badge" style="background-color: rgba(<?= $supp->activity_type->color ?>,1);"><?= $supp->activity_type->name ?>
+                </div>
                 <?php if($supp->_joinData->required) echo '<span class="badge badge-success">Required</span>' ?> 
                 <a href="/activities/view/<?= $supp->id ?>"><?= $supp->name ?></a> 
                 <div><?= $supp->_joinData->stepcontext ?></div>

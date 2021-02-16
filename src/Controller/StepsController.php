@@ -124,7 +124,7 @@ class StepsController extends AppController
     public function edit($id = null)
     {
         $step = $this->Steps->get($id, [
-            'contain' => ['Activities', 'Activities.ActivityTypes', 'Pathways'],
+            'contain' => ['Activities', 'Activities.ActivityTypes', 'Activities.Statuses', 'Pathways'],
         ]);
         
         $this->Authorization->authorize($step);
