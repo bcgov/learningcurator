@@ -249,7 +249,7 @@ $lastobj = $s->description;
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
 
 
-		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'newclaim']) ?>
+		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'claim']) ?>
 		<?= $this->Form->hidden('users.0.created', ['value' => date('Y-m-d H:i:s')]); ?>
 		<?= $this->Form->hidden('users.0.id', ['value' => $uid]); ?>
 
@@ -278,11 +278,12 @@ $lastobj = $s->description;
 		</div>
 
 		<?= $activity->description ?>
-
-		<div class="alert alert-light">
+		<?php if(!empty($activity->_joinData->stepcontext)): ?>
+		<div class="alert alert-light text-dark mt-3 shadow-sm">
 				Curator says:<br>
 				<?= $activity->_joinData->stepcontext ?>
 			</div>
+			<?php endif ?>
 
 	</div>
 	
@@ -415,10 +416,12 @@ $lastobj = $s->description;
 			</div>
 			<?= $activity->description ?>
 
-			<div class="alert alert-light">
+			<?php if(!empty($activity->_joinData->stepcontext)): ?>
+		<div class="alert alert-light text-dark mt-3">
 				Curator says:<br>
 				<?= $activity->_joinData->stepcontext ?>
 			</div>
+			<?php endif ?>
 
 			<a target="_blank" 
 				rel="noopener" 
@@ -523,17 +526,14 @@ $(document).ready(function(){
 		
 		e.preventDefault();
 		var form = $(this);
-		form.children('button').removeClass('btn-light').addClass('btn-dark').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
-		
-		//$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
-
 		var url = form.attr('action');
 		$.ajax({
 			type: "POST",
-			url: '/activities-users/claim',
+			url: url,
 			data: form.serialize(),
 			success: function(data)
 			{
+				form.children('button').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
 				loadStatus();
 			},
 			statusCode: 

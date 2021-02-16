@@ -361,29 +361,6 @@ $(document).ready(function(){
         $.scrollTo(event.target.hash, 250, {offset:-105,});
 	});
 
-	$('.claim').on('submit', function(e){
-		
-		e.preventDefault();
-		var form = $(this);
-		form.children('button').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
-		var url = form.attr('action');
-		$.ajax({
-			type: "POST",
-			url: '/activities-users/claim',
-			data: form.serialize(),
-			success: function(data)
-			{
-				
-				loadStatus();
-			},
-			statusCode: 
-			{
-				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
-				}
-			}
-		});
-	});
 
 	$('[data-toggle="tooltip"]').tooltip();
 
