@@ -343,7 +343,7 @@ class PathwaysController extends AppController
         }
 
         $pathway = $this->Pathways->get($id, [
-            'contain' => ['Categories', 
+            'contain' => ['Topics', 
                             'Ministries', 
                             'Competencies', 
                             'Steps', 

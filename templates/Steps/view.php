@@ -139,7 +139,8 @@ if($stepclaimcount > 0) {
 <ol class="breadcrumb mt-3">
 	<li class="breadcrumb-item"><?= $this->Html->link($pathways->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $pathways->topic->categories[0]->id]) ?></li>
 	<li class="breadcrumb-item"><?= $this->Html->link($pathways->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathways->topic->id]) ?></li>
-	<li class="breadcrumb-item" aria-current="page"><?= h($pathways->name) ?> </li>
+	<li class="breadcrumb-item"><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => '/' . $pathways->slug]) ?></li>
+	
 </ol>
 </nav> 
 
