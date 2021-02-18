@@ -130,9 +130,9 @@ CREATE TABLE IF NOT EXISTS `topics` (
 );
 
 CREATE TABLE IF NOT EXISTS `categories_topics` (
-  `category_id` integer NOT NULL
+ `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
+,  `category_id` integer NOT NULL
 , `topic_id` integer NOT NULL
-,  PRIMARY KEY (`category_id`,`topic_id`)
 ,  CONSTRAINT `categories_topics_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 ,  CONSTRAINT `categories_topics_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`)
 );
@@ -158,7 +158,6 @@ CREATE TABLE IF NOT EXISTS `competencies` (
 CREATE TABLE IF NOT EXISTS `activities` (
   `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 ,  `name` varchar(255) NOT NULL
-,  `slug` varchar(255) NOT NULL
 ,  `hyperlink` varchar(255) DEFAULT NULL
 ,  `description` text
 ,  `licensing` text
@@ -181,6 +180,7 @@ CREATE TABLE IF NOT EXISTS `activities` (
 ,  `modifiedby_id` integer NOT NULL
 ,  `activity_types_id` integer NOT NULL
 ,  `estimated_time` varchar(100)
+,  `slug` varchar(255)
 ,  CONSTRAINT `activities_ibfk_0` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`)
 ,  CONSTRAINT `activities_ibfk_1` FOREIGN KEY (`activity_types_id`) REFERENCES `activity_types` (`id`)
 ,  CONSTRAINT `activities_ibfk_2` FOREIGN KEY (`ministry_id`) REFERENCES `ministries` (`id`)
@@ -199,28 +199,35 @@ CREATE TABLE IF NOT EXISTS `activities_competencies` (
 );
 
 
-CREATE TABLE IF NOT EXISTS `pathways` (
-  `id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT
-,  `name` varchar(255) NOT NULL
-,  `slug` varchar(255) NOT NULL
-,  `color` varchar(255) DEFAULT NULL
-,  `description` text
-,  `objective` text
-,  `file_path` varchar(255) DEFAULT NULL
-,  `image_path` varchar(255) DEFAULT NULL
-,  `featured` integer DEFAULT '0'
-,  `topic_id` integer DEFAULT NULL
-,  `ministry_id` integer DEFAULT NULL
-,  `created` datetime NOT NULL
-,  `createdby` integer NOT NULL
-,  `modified` datetime NOT NULL
-,  `modifiedby` integer NOT NULL
-,  `status_id` integer(100)
-,  CONSTRAINT `pathway_topics_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`)
-,  CONSTRAINT `pathway_createduser_ibfk_1` FOREIGN KEY (`createdby`) REFERENCES `users` (`id`)
-,  CONSTRAINT `pathway_ministry_ibfk_1` FOREIGN KEY (`ministry_id`) REFERENCES `ministries` (`id`)
-,  CONSTRAINT `pathway_modifieduser_ibfk_1` FOREIGN KEY (`modifiedby`) REFERENCES `users` (`id`)
-);
+CREATE TABLE `pathways` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `color` varchar(255) DEFAULT NULL,
+  `description` text,
+  `objective` text,
+  `file_path` varchar(255) DEFAULT NULL,
+  `image_path` varchar(255) DEFAULT NULL,
+  `featured` int(11) DEFAULT '0',
+  `topic_id` int(11) DEFAULT NULL,
+  `ministry_id` int(11) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `createdby` int(11) NOT NULL,
+  `modified` datetime NOT NULL,
+  `modifiedby` int(11) NOT NULL,
+  `status_id` int(100) DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `estimated_time` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  KEY `idx_pathways_pathway_topic_ibfk_1` (`topic_id`),
+  KEY `idx_pathways_pathway_ministry_ibfk_1` (`ministry_id`),
+  KEY `idx_pathways_pathway_createduser_ibfk_1` (`createdby`),
+  KEY `idx_pathways_pathway_modifieduser_ibfk_1` (`modifiedby`),
+  CONSTRAINT `pathway_topic_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`),
+  CONSTRAINT `pathway_createduser_ibfk_1` FOREIGN KEY (`createdby`) REFERENCES `users` (`id`),
+  CONSTRAINT `pathway_ministry_ibfk_1` FOREIGN KEY (`ministry_id`) REFERENCES `ministries` (`id`),
+  CONSTRAINT `pathway_modifieduser_ibfk_1` FOREIGN KEY (`modifiedby`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 
 
