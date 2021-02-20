@@ -106,10 +106,16 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 
 <div class="container-fluid bg-light py-3">
 <div class="row mt-3 justify-content-md-center">
-<div class="col-md-5 mt-3 text-center">
-<div class="p-3">
+<div class="col-md-5 mt-3">
+<nav class="nav bg-white shadow-sm p-3 m-3">
+	<a class="nav-link" href="/">Latest</a>
+	<a class="nav-link" href="/pages/faq">FAQ</a>
+	<a class="nav-link" href="/activities/contribute">Contribute</a>
+</nav>
+</div>
+<div class="col-md-5 mt-3">
 
-	<div class="p-3 m-3 bg-white shadow-sm">
+	<div class="p-3 m-3 bg-white shadow-sm text-center">
 		Brought to you by The Learning Centre <img src="/img/learning-logo-small-transparent.png" width="40" alt="Learning Centre logo">
 	</div>
 	<div class="p-3 m-3 bg-white shadow-sm">
@@ -123,7 +129,7 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 			</a> 
 		or call 250-952-6000.</p>
 	</div>
-</div>
+
 </div>
 </div>
 </div>

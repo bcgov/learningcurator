@@ -121,9 +121,7 @@ ourselves as part of a trusted, talented, and modern public service.</p>
 			<i class="fas fa-clock"></i>
 			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
 		</span> 
-	<div class="py-3">
-	<?= $activity->description ?>
-	</div>
+
 	<div class="pb-3">
 	<?php foreach($activity->steps as $step): ?>
 	<?php foreach($step->pathways as $path): ?>
