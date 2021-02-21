@@ -103,7 +103,7 @@ ourselves as part of a trusted, talented, and modern public service.</p>
 
 <div class="col-md-5">
 
-<h2 class="mt-3">Latest Activities</h2>
+<h2 class="mt-3">Top 5 Most-Liked Activities</h2>
 
 <div class="">
 <?php foreach ($activities as $activity): ?>

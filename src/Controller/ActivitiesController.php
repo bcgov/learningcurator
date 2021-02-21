@@ -67,15 +67,9 @@ class ActivitiesController extends AppController
         $this->Authorization->skipAuthorization();
 
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
-        $pathways = $allpaths->find('all')->contain(['Steps','Statuses'])->order(['Pathways.created' => 'desc']); //->where(['status_id' => 2]);
+        $pathways = $allpaths->find('all')->contain(['Steps','Statuses'])->order(['Pathways.created' => 'desc'])->limit(5); //->where(['status_id' => 2]);
         $allpathways = $pathways->toList();
        
-        $this->paginate = [
-            'contain' => ['Statuses', 'Ministries', 'ActivityTypes','Steps.Pathways'],
-            'order' => [
-                'Activities.id' => 'desc'
-            ]
-        ];
         $activities = $this->Activities
                             ->find('all')
                             ->contain(['Statuses', 
@@ -83,8 +77,8 @@ class ActivitiesController extends AppController
                                         'ActivityTypes',
                                         'Steps.Pathways'])
                             ->where(['Activities.status_id' => 2])
-                            ->order(['Activities.created' => 'DESC'])
-                            ->limit(10);
+                            ->order(['Activities.recommended' => 'DESC'])
+                            ->limit(5);
         
 		$cats = TableRegistry::getTableLocator()->get('Categories');
         $allcats = $cats->find('all')->contain(['Topics'])->order(['Categories.created' => 'desc']);
@@ -347,13 +341,12 @@ class ActivitiesController extends AppController
         }
         $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
         $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
-        $categories = $this->Activities->Categories->find('list', ['limit' => 200]);
         $activityTypes = $this->Activities->ActivityTypes->find('list', ['limit' => 200]);
         $users = $this->Activities->Users->find('list', ['limit' => 200]);
         $competencies = $this->Activities->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Activities->Steps->find('list', ['limit' => 200]);
         $tags = $this->Activities->Tags->find('list', ['limit' => 200]);
-        $this->set(compact('activity', 'statuses', 'ministries', 'categories', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
+        $this->set(compact('activity', 'statuses', 'ministries', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
     }
 
     /**
