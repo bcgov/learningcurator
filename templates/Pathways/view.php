@@ -181,14 +181,14 @@ This seems to work out, but #TODO investigate optimizing this
     echo $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]);
     echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-success mb-0']) ?>
 
 <?= $this->Form->end() ?>
 <div class="py-3">
 
 <div>Following a pathway is a commitment to moving 
 through each step and claiming each required activity as you complete it.
-Fill your activity rings and get a certificate!
+<!-- Fill your activity rings and get a certificate! -->
 </div>
 <!--When you select to follow a pathway, this pathway will show as a journey you are on and may be 
 accessed from your profile page. Think of it as “bookmarking” learning you want to come back to and track your progress on.-->
