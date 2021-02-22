@@ -490,7 +490,7 @@ echo $this->Form->control('user_id',['type' => 'hidden', 'value' => $uid]);
 echo $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathways->id]);
 echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-success mb-0']) ?>
 <?= $this->Form->end() ?>
 </div>
 <?php endif ?>
