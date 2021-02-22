@@ -9,7 +9,7 @@
 -- during the prototype testing period. All content is now attributed
 -- to the default, main super-user (see `users` table below).
 -- The main super user created below does use 'ahaggett' as the IDIR
--- value as the initial author of this was Allan.Haggett@gov.bc.ca
+-- value as the initial author of this code is Allan.Haggett@gov.bc.ca
 --
 --
 -- Dumping data for table `roles`
@@ -59,7 +59,7 @@ INSERT INTO activity_types VALUES(4,'Participate','participate','Activities that
 --
 INSERT INTO categories VALUES(1,'Leadership','leadership','Building your leadership skills is something you can do in whatever role you''re in now, as well as something you may look towards for future roles. As BC Public Service leaders, we aim to develop our core leadership competencies, as well as role-specific ones that apply to certain positions. Wherever you are today, you''ll find useful learning here for developing your leadership skills.','','','','2020-02-02 04:07:02',1);
 INSERT INTO categories VALUES(2,'Other Topics','other-topics','Coming Soon: The Learning Curator will be populated with other topics of interest to learners in the BCPS.','','','','2020-05-27 18:28:21',1);
-INSERT INTO categories VALUES(3,'Diversity and Inclusion','d-i','Every individual needs to know their role in creating a diverse and inclusive workplace in the BC Public Service. Learn the definitions and the value of diversity and inclusion. Deepen your understanding and learn how to be an ally with a little engagement or a deeper dive in the resources within this topic&mdash;it''s up to you.','','','','2020-05-27 18:34:49',1);
+INSERT INTO categories VALUES(3,'Diversity and Inclusion','diversity-inclusion','Every individual needs to know their role in creating a diverse and inclusive workplace in the BC Public Service. Learn the definitions and the value of diversity and inclusion. Deepen your understanding and learn how to be an ally with a little engagement or a deeper dive in the resources within this topic&mdash;it''s up to you.','','','','2020-05-27 18:34:49',1);
 
 --
 -- Dumping data for table `tags`
