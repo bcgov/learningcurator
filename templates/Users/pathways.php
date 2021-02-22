@@ -131,6 +131,7 @@
 	<?php endforeach; ?>
 <?php else: ?>
 <h2><?= _('You\'re not following any pathways yet.') ?></h2>
+<?php endif ?>
 <p><?= _('Pathways are organized into topics. Here some topics for you to explore:') ?></p>
 <?php foreach ($allcats as $cat) : ?>
 <div class="p-3 mb-2 bg-white rounded-lg">
@@ -141,7 +142,6 @@
 </div>
 <?php endforeach; ?>
 
-<?php endif; ?>
 
 </div>
 
