@@ -67,7 +67,11 @@ class ActivitiesController extends AppController
         $this->Authorization->skipAuthorization();
 
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
-        $pathways = $allpaths->find('all')->contain(['Steps','Statuses'])->order(['Pathways.created' => 'desc'])->limit(10); //->where(['status_id' => 2]);
+        $pathways = $allpaths->find('all')
+                                ->contain(['Steps','Statuses'])
+                                ->order(['Pathways.created' => 'desc'])
+                                ->where(['Pathways.featured' => 1])
+                                ->limit(10);
         $allpathways = $pathways->toList();
        
         $activities = $this->Activities

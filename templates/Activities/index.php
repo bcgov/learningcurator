@@ -75,7 +75,7 @@ ourselves as part of a trusted, talented, and modern public service.</p>
 
 <div class="col-md-4">
 
-<h2 class="mt-3">Latest Pathways</h2>
+<h2 class="mt-3">Featured Pathways</h2>
 <div>
 <?php foreach($allpathways as $path): ?>
 <?php if($path->status_id != 2): ?>
@@ -92,7 +92,7 @@ ourselves as part of a trusted, talented, and modern public service.</p>
 		
 		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
 		<?= $path->objective ?>
-		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
+		<!-- <div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div> -->
 	</div>
 <?php endif ?>
 
@@ -117,22 +117,22 @@ ourselves as part of a trusted, talented, and modern public service.</p>
 	<?= $this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
 </h3>
 <div class="">
-<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+<!-- <span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 			<i class="fas fa-clock"></i>
 			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
-		</span> 
+		</span>  -->
 
 	<div class="pb-3">
 	<?php foreach($activity->steps as $step): ?>
 	<?php foreach($step->pathways as $path): ?>
 	<?php if($path->status_id == 2): ?>
-	<span class="badge badge-light"><a href="/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
+	<div><a href="/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></div>
 	<?php endif ?>
 	<?php endforeach ?>
 	<?php endforeach ?>
 	</div>
 	
-	<div class="mt-3"><span class="badge badge-light">Added: <?= h($activity->created) ?></span></div>
+	<!-- <div class="mt-3"><span class="badge badge-light">Added: <?= h($activity->created) ?></span></div> -->
 
 </div>
 

@@ -18,6 +18,7 @@ if ($this->Identity->isLoggedIn()) {
 
             <fieldset>
                 <legend><?= __('Edit Pathway') ?></legend>
+                <label>Featured? <?= $this->Form->checkbox('featured') ?></label>
                 <?php
                     echo $this->Form->control('status_id', ['type' => 'radio', 'options' => $statuses]);
                     echo $this->Form->control('topic_id', ['options' => $topics, 'empty' => true, 'class' => 'form-control']);
@@ -30,8 +31,7 @@ if ($this->Identity->isLoggedIn()) {
                     echo $this->Form->control('objective', ['class' => 'form-control']);
                     //echo $this->Form->control('file_path');
                     //echo $this->Form->control('image_path');
-                    //echo $this->Form->control('featured');
-                    
+
                     //echo $this->Form->control('ministry_id', ['options' => $ministries, 'empty' => true]);
                     
                     echo $this->Form->hidden('modifiedby',['value' => $uid]);
