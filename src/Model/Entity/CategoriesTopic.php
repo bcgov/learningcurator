@@ -26,7 +26,7 @@ class CategoriesTopic extends Entity
      * @var array
      */
     protected $_accessible = [
-        'category' => true,
-        'topic' => true,
+        'category_id' => true,
+        'topic_id' => true,
     ];
 }

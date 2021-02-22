@@ -27,7 +27,6 @@ use Cake\Collection\Collection;
  * @property string|null $hours
  * @property int|null $recommended
  * @property int|null $ministry_id
- * @property int|null $category_id
  * @property int|null $approvedby_id
  * @property \Cake\I18n\FrozenTime $created
  * @property int $createdby_id
@@ -37,7 +36,7 @@ use Cake\Collection\Collection;
  *
  * @property \App\Model\Entity\Status $status
  * @property \App\Model\Entity\Ministry $ministry
- * @property \App\Model\Entity\Category $category
+
  * @property \App\Model\Entity\User[] $users
  * @property \App\Model\Entity\ActivityType $activity_type
  * @property \App\Model\Entity\Competency[] $competencies
@@ -73,7 +72,6 @@ class Activity extends Entity
         'hours' => true,
         'recommended' => true,
         'ministry_id' => true,
-        'category_id' => true,
         'approvedby_id' => true,
         'created' => true,
         'createdby_id' => true,
@@ -82,7 +80,6 @@ class Activity extends Entity
         'activity_types_id' => true,
         'status' => true,
         'ministry' => true,
-        'category' => true,
         'users' => true,
         'activity_type' => true,
         'competencies' => true,

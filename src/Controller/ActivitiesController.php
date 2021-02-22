@@ -29,7 +29,6 @@ class ActivitiesController extends AppController
                             ->find('all')
                             ->contain(['Statuses', 
                                         'Ministries', 
-                                        'Categories', 
                                         'ActivityTypes',
                                         'Steps.Pathways'])
                             ->where(['Activities.status_id' => 2])
@@ -50,7 +49,6 @@ class ActivitiesController extends AppController
                             ->find('all')
                             ->contain(['Statuses', 
                                         'Ministries', 
-                                        'Categories', 
                                         'ActivityTypes',
                                         'Steps.Pathways'])
                             ->where(['Activities.status_id' => 2])
@@ -69,66 +67,29 @@ class ActivitiesController extends AppController
         $this->Authorization->skipAuthorization();
 
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
-        $pathways = $allpaths->find('all')->contain(['Steps','Statuses'])->order(['Pathways.created' => 'desc']); //->where(['status_id' => 2]);
+        $pathways = $allpaths->find('all')
+                                ->contain(['Steps','Statuses'])
+                                ->order(['Pathways.created' => 'desc'])
+                                ->where(['Pathways.featured' => 1])
+                                ->limit(10);
         $allpathways = $pathways->toList();
        
-        $this->paginate = [
-            'contain' => ['Statuses', 'Ministries', 'Categories', 'ActivityTypes','Steps.Pathways'],
-            'order' => [
-                'Activities.id' => 'desc'
-            ]
-        ];
         $activities = $this->Activities
                             ->find('all')
                             ->contain(['Statuses', 
                                         'Ministries', 
-                                        'Categories', 
                                         'ActivityTypes',
                                         'Steps.Pathways'])
                             ->where(['Activities.status_id' => 2])
-                            ->order(['Activities.created' => 'DESC'])
-                            ->limit(10);
+                            ->order(['Activities.recommended' => 'DESC'])
+                            ->limit(5);
         
 		$cats = TableRegistry::getTableLocator()->get('Categories');
         $allcats = $cats->find('all')->contain(['Topics'])->order(['Categories.created' => 'desc']);
         
-        // As we loop through the activities for the steps on this pathway, we 
-        // need to be able to check to see if the current user has "claimed" 
-        // that activity. Here we get the current user id and use it to select 
-        // all of the claimed activities assigned to them, and then process out 
-        // just the activity IDs into a simple array. Then, in the template 
-        // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
-        //
-        // First let's check to see if this person is logged in or not.
-        //
-	    $user = $this->request->getAttribute('authentication')->getIdentity();
-        if(!empty($user)) {
-            // We need create two empty arrays first. If nothing gets added to
-            // them, so be it
-            $useractivitylist = array();
-            $userbooklist = array();
-            // Get access to the apprprioate tables
-            $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
-            $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
-            // Select based on currently logged in person
-            $useacts = $au->find()->where(['user_id = ' => $user->id]);
-            $userbooks = $books->find()->where(['user_id = ' => $user->id]);
-            // convert the results into a simple array so that we can
-            // use in_array in the template
-            $useractivities = $useacts->toList();
-            $userbookmarks = $userbooks->toList();
-            // Loop through the resources and add just the ID to the 
-            // array that we will pass into the template
-            foreach($useractivities as $uact) {
-                array_push($useractivitylist, $uact['activity_id']);
-            }
-            foreach($userbookmarks as $b) {
-                array_push($userbooklist, $b['activity_id']);
-            }
 
-        }
 
-        $this->set(compact('activities','allpathways','allcats','userbooklist','useractivitylist'));
+        $this->set(compact('activities','allpathways','allcats'));
     }
 
     /**
@@ -141,45 +102,44 @@ class ActivitiesController extends AppController
     public function view($id = null)
     {
         $this->Authorization->skipAuthorization();
-        // As we loop through the activities for the steps on this pathway, we 
-        // need to be able to check to see if the current user has "claimed" 
-        // that activity. Here we get the current user id and use it to select 
+        //
+        // Check to see if the current user has "claimed" 
+        // this activity. Here we get the current user id and use it to select 
         // all of the claimed activities assigned to them, and then process out 
         // just the activity IDs into a simple array. Then, in the template 
-        // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
+        // code, we if(in_array($activity->id,$useractivitylist)):
         //
         // First let's check to see if this person is logged in or not.
         //
 	    $user = $this->request->getAttribute('authentication')->getIdentity();
         if(!empty($user)) {
-            // We need create two empty arrays first. If nothing gets added to
-            // them, so be it
+
+            // We need create am empty array first. If nothing gets added to
+            // it, so be it
             $useractivitylist = array();
-            $userbooklist = array();
-            // Get access to the apprprioate tables
+
+            // Get access to the appropriate table
             $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
-            $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
-            // Select based on currently logged in person
+            
+            // Select all activities that this user has claimed
             $useacts = $au->find()->where(['user_id = ' => $user->id]);
-            $userbooks = $books->find()->where(['user_id = ' => $user->id]);
+
             // convert the results into a simple array so that we can
             // use in_array in the template
             $useractivities = $useacts->toList();
-            $userbookmarks = $userbooks->toList();
+
             // Loop through the resources and add just the ID to the 
             // array that we will pass into the template
+            // #TODO this is probably really inefficient #refactor
             foreach($useractivities as $uact) {
                 array_push($useractivitylist, $uact['activity_id']);
             }
-            foreach($userbookmarks as $b) {
-                array_push($userbooklist, $b['activity_id']);
-            }
+
 
         }
         $activity = $this->Activities->get($id, [
             'contain' => ['Statuses', 
                             'Ministries', 
-                            'Categories', 
                             'ActivityTypes', 
                             'Users', 
                             'Competencies', 
@@ -194,7 +154,7 @@ class ActivitiesController extends AppController
         $pathways = $allpaths->find('all')->contain(['steps']);
         $allpathways = $pathways->toList();
 
-        $this->set(compact('activity', 'useractivitylist','allpathways','userbooklist'));
+        $this->set(compact('activity', 'useractivitylist','allpathways'));
     }
 
 
@@ -342,6 +302,7 @@ class ActivitiesController extends AppController
                 $activitiesStep = $asteptable->newEmptyEntity();
                 $activitiesStep->step_id = $this->request->getData()['step_id'];
                 $activitiesStep->activity_id = $activity->id;
+                $activitiesStep->stepcontext = $this->request->getData()['stepcontext'];
 
                 if (!$asteptable->save($activitiesStep)) {
                     echo 'Cannot add to step! Contact an admin. Sorry :)';
@@ -384,13 +345,12 @@ class ActivitiesController extends AppController
         }
         $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
         $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
-        $categories = $this->Activities->Categories->find('list', ['limit' => 200]);
         $activityTypes = $this->Activities->ActivityTypes->find('list', ['limit' => 200]);
         $users = $this->Activities->Users->find('list', ['limit' => 200]);
         $competencies = $this->Activities->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Activities->Steps->find('list', ['limit' => 200]);
         $tags = $this->Activities->Tags->find('list', ['limit' => 200]);
-        $this->set(compact('activity', 'statuses', 'ministries', 'categories', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
+        $this->set(compact('activity', 'statuses', 'ministries', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
     }
 
     /**
@@ -411,6 +371,7 @@ class ActivitiesController extends AppController
             $sluggedTitle = Text::slug($activity->name);
             // trim slug to maximum length defined in schema
             $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
+            
             if ($this->Activities->save($activity)) {
                 //print(__('The activity has been saved.'));
                 $go = '/activities/view/' . $id;
@@ -420,15 +381,39 @@ class ActivitiesController extends AppController
         }
         $statuses = $this->Activities->Statuses->find('list', ['limit' => 200]);
         $ministries = $this->Activities->Ministries->find('list', ['limit' => 200]);
-        $categories = $this->Activities->Categories->find('list', ['limit' => 200]);
+        
         $activityTypes = $this->Activities->ActivityTypes->find('list', ['limit' => 200]);
         $users = $this->Activities->Users->find('list', ['limit' => 200]);
         $competencies = $this->Activities->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Activities->Steps->find('list', ['limit' => 200])->contain(['pathways']);
         $tags = $this->Activities->Tags->find('list', ['limit' => 200]);
-        $this->set(compact('activity', 'statuses', 'ministries', 'categories', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
+        $this->set(compact('activity', 'statuses', 'ministries', 'activityTypes', 'users', 'competencies', 'steps', 'tags'));
     }
 
+
+    /**
+     * Claim an activity method
+     *
+     * @param string|null $id Activity id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function claim($id = null)
+    {
+        $activity = $this->Activities->get($id, [
+            'contain' => ['Users'],
+        ]);
+        
+        $this->Authorization->authorize($activity);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+  
+            if ($this->Activities->save($activity)) {
+                return $this->redirect($this->referer());
+            }
+        }
+
+    }
 
     /**
     * Like an activity
@@ -604,5 +589,66 @@ class ActivitiesController extends AppController
         
             //return $this->redirect(['action' => 'index']);
         }
+    }
+
+
+       /**
+     * Import an entire pathway from a provided JSON file
+     *
+     */
+    public function import ($topic_id = null)
+    {
+        $this->Authorization->skipAuthorization();
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+
+        $data = file_get_contents('/home/a/learning-curator/personal-development.json',true);
+            
+        $path = json_decode($data, true);
+        
+
+        foreach($path['steps'] as $step) {
+
+            foreach($step['activities'] as $act) {
+
+                
+                // #TODO Should we check for existing activities before proceding? 
+                $activity = $this->Activities->newEmptyEntity();
+                
+                // Get started
+                $activity->name = $act['name'];
+                $sluggedTitle = Text::slug($act['name']);
+                $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
+                $activity->description = $act['description'];
+                // #TODO url encode this?
+                $activity->hyperlink = $act['hyperlink'];
+                $activity->topic_id = $topic_id;
+                $activity->status_id = 2;
+                $activity->modifiedby_id = $user->id;
+                $activity->createdby_id = $user->id;
+                $activity->approvedby_id =  $user->id;
+                $activity->estimated_time = $act['estimated_time'];
+                $activity->activity_types_id = $act['activity_types_id'];
+
+                //print_r($activity); exit;
+                
+                if ($this->Activities->save($activity)) {
+                    // do nothing, move to the next activity
+                    echo 'Created!';
+                } else {
+                    echo 'Did not import ' . $data[4] . '. Something\'s wrong!<br>';
+                }
+
+
+
+
+            }
+        }
+
+
+
+
+        
+        
+
     }
 }

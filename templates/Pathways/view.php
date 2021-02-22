@@ -4,7 +4,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pathway $pathway
  */
-$this->layout = 'nowrap';
+
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
@@ -69,7 +69,9 @@ This seems to work out, but #TODO investigate optimizing this
 
 	<nav aria-label="breadcrumb">
 	<ol class="breadcrumb mt-3">
-		<li class="breadcrumb-item"><?= $pathway->has('category') ? $this->Html->link($pathway->category->name, ['controller' => 'Categories', 'action' => 'view', $pathway->category->id]) : '' ?></li>
+	
+	<li class="breadcrumb-item"><?= $this->Html->link($pathway->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $pathway->topic->categories[0]->id]) ?></li>
+		<li class="breadcrumb-item"><?= $pathway->has('topic') ? $this->Html->link($pathway->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id]) : '' ?></li>
 		<li class="breadcrumb-item" aria-current="page"><?= h($pathway->name) ?> </li>
 	</ol>
 	</nav> 
@@ -153,7 +155,7 @@ This seems to work out, but #TODO investigate optimizing this
 <ul class="list-group list-group-flush">
 <?php foreach($followers as $follower): ?>
 <li class="list-group-item">
-	<a href="/learning-curator/users/view/<?= $follower[0] ?>"><?= $follower[1] ?></a>
+	<a href="/users/view/<?= $follower[0] ?>"><?= $follower[1] ?></a>
 </li>
 <?php endforeach ?>
 </ul>
@@ -179,14 +181,14 @@ This seems to work out, but #TODO investigate optimizing this
     echo $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]);
     echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-success mb-0']) ?>
 
 <?= $this->Form->end() ?>
 <div class="py-3">
 
 <div>Following a pathway is a commitment to moving 
 through each step and claiming each required activity as you complete it.
-Fill your activity rings and get a certificate!
+<!-- Fill your activity rings and get a certificate! -->
 </div>
 <!--When you select to follow a pathway, this pathway will show as a journey you are on and may be 
 accessed from your profile page. Think of it as “bookmarking” learning you want to come back to and track your progress on.-->
@@ -286,7 +288,7 @@ if($stepclaimcount > 0) {
 <div class="p-3 my-3 bg-white rounded-lg">
 	<h2>
 
-		<a href="/learning-curator/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
+		<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
 			<?= h($steps->name) ?> 
 			<i class="fas fa-arrow-circle-right"></i>
 		</a>
@@ -341,7 +343,7 @@ if($stepclaimcount > 0) {
 	crossorigin="anonymous"></script>
 
 
-<script type="text/javascript" src="/learning-curator/js/jquery.scrollTo.min.js"></script>
+<script type="text/javascript" src="/js/jquery.scrollTo.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 
@@ -359,29 +361,6 @@ $(document).ready(function(){
         $.scrollTo(event.target.hash, 250, {offset:-105,});
 	});
 
-	$('.claim').on('submit', function(e){
-		
-		e.preventDefault();
-		var form = $(this);
-		form.children('button').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
-		var url = form.attr('action');
-		$.ajax({
-			type: "POST",
-			url: '/learning-curator/activities-users/claim',
-			data: form.serialize(),
-			success: function(data)
-			{
-				
-				loadStatus();
-			},
-			statusCode: 
-			{
-				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
-				}
-			}
-		});
-	});
 
 	$('[data-toggle="tooltip"]').tooltip();
 
@@ -416,7 +395,7 @@ function loadStatus() {
 	var form = $(this);
 	$.ajax({
 		type: "GET",
-		url: '/learning-curator/pathways/status/<?= $pathway->id ?>',
+		url: '/pathways/status/<?= $pathway->id ?>',
 		data: '',
 		success: function(data)
 		{

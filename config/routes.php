@@ -62,7 +62,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, templates/Pages/home.php)...
      */
-    $builder->connect('/', ['controller' => 'Pages', 'action' => 'display','home']);
+    $builder->connect('/', ['controller' => 'Activities', 'action' => 'index']);
 
     /*
      * ...and connect the rest of 'Pages' controller's URLs.
@@ -76,7 +76,9 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/pathways/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
     $builder->connect('/pathways/edit/*', ['controller' => 'Pathways', 'action' => 'edit']);
     $builder->connect('/pathways/add', ['controller' => 'Pathways', 'action' => 'add']);
+    $builder->connect('/pathways/import', ['controller' => 'Pathways', 'action' => 'import']);
     $builder->connect('/pathways/status/*', ['controller' => 'Pathways', 'action' => 'status']);
+    $builder->connect('/pathways/api/*', ['controller' => 'Pathways', 'action' => 'api']);
     
     /*
      * Connect catchall routes for all controllers.

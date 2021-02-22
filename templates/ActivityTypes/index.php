@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\ActivityType[]|\Cake\Collection\CollectionInterface $activityTypes
  */
-$this->layout = 'nowrap';
+
 ?>
 <script>
 function componentToHex(c) {
@@ -27,10 +27,10 @@ function rgbToHex(r, g, b) {
 	<div class="pad-sm bg-white rounded-lg mb-2">
 	<div class="mb-3">
     <div class="float-right"><?= $this->Html->link(__('Edit'), ['action' => 'edit', $type->id],['class' => 'btn btn-light mt-3']) ?></div>
-		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $type->color ?>,1)">
+		<a href="/activity-types/view/<?= $type->id ?>" class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $type->color ?>,1)">
 			<i class="activity-icon activity-icon-lg fas <?= $type->image_path ?>"></i>
 		</a>
-		<a href="/learning-curator/activity-types/view/<?= $type->id ?>" class="" style="color: #333; font-size: 230%">
+		<a href="/activity-types/view/<?= $type->id ?>" class="" style="color: #333; font-size: 230%">
 			<?= h($type->name) ?>
 		</a>
 	</div>

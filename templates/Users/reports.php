@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
 */
-$this->layout = 'nowrap';
+
 ?>
 <style>
 .badge {
@@ -55,16 +55,13 @@ $this->layout = 'nowrap';
 <div class="col-md-8 col-lg-6">
 <ul class="nav nav-tabs mb-3">
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/pathways">Pathways</a>
+    <a class="nav-link" href="/users/pathways">Pathways</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/bookmarks">Bookmarks</a>
+    <a class="nav-link" href="/users/claimed">Claimed</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/claimed">Claimed</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" href="/learning-curator/users/reports">Reports</a>
+    <a class="nav-link active" href="/users/reports">Reports</a>
   </li>
 </ul>
 </div>
@@ -78,7 +75,7 @@ $this->layout = 'nowrap';
 			<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-dark']) ?>
 			<div class="mt-2">On <?= $report->created ?> you reported:</div>
 			<h4>
-				<a href="/learning-curator/activities/view/<?= $report->activity->id ?>">
+				<a href="/activities/view/<?= $report->activity->id ?>">
 					<?= $report->activity->name ?>
 				</a>
 			</h4>

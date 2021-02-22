@@ -30,11 +30,11 @@ class ActivitiesUser extends Entity
      * @var array
      */
     protected $_accessible = [
+        'activity_id' => true,
+        'user_id' => true,
         'started' => true,
         'finished' => true,
         'liked' => true,
         'notes' => true,
-        'activity' => true,
-        'user' => true,
     ];
 }

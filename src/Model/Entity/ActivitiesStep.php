@@ -30,6 +30,7 @@ class ActivitiesStep extends Entity
     protected $_accessible = [
         'required' => true,
         'steporder' => true,
+        'stepcontext' => true,
         'activity' => true,
         'step' => true,
     ];

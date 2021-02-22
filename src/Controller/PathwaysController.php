@@ -36,9 +36,9 @@ class PathwaysController extends AppController
         // regardless of their statuses. Regular users should only ever see 
         // 'published' pathways.
         if($user->role_id == 2 || $user->role_id == 5) {
-            $pathways = $paths->find('all')->contain(['Categories','Statuses']);
+            $pathways = $paths->find('all')->contain(['Statuses']);
         } else {
-            $pathways = $paths->find('all')->contain(['Categories','Statuses'])->where(['status_id' => 2]);
+            $pathways = $paths->find('all')->contain(['Statuses'])->where(['status_id' => 2]);
         }
         //$this->paginate($pathways);
         $this->set(compact('pathways'));
@@ -82,7 +82,9 @@ class PathwaysController extends AppController
                 array_push($useractivitylist, $uact['activity_id']);
             }
         }
-        $pathway = $this->Pathways->findBySlug($slug)->contain(['Categories', 
+        $pathway = $this->Pathways->findBySlug($slug)->contain([
+                            'Topics',
+                            'Topics.Categories', 
                             'Ministries', 
                             'Competencies', 
                             'Steps', 
@@ -150,7 +152,7 @@ class PathwaysController extends AppController
 
 
         $this->set(compact('pathway'));*/
-        exec("wget --mirror --convert-links --adjust-extension --page-requisites --no-parent http://localhost:8080/learning-curator/");
+        exec("wget --mirror --convert-links --adjust-extension --page-requisites --no-parent http://localhost:8080/");
 
 
     }
@@ -170,8 +172,8 @@ class PathwaysController extends AppController
     {
         $this->Authorization->skipAuthorization();
         $pathway = $this->Pathways->get($id, [
-            'contain' => ['Categories', 
-                            'Ministries', 
+            'contain' => ['Ministries', 
+                            'Topics', 
                             'Competencies', 
                             'Steps', 
                             'Steps.Activities', 
@@ -204,13 +206,13 @@ class PathwaysController extends AppController
             }
             //print(__('The pathway could not be saved. Please, try again.'));
         }
-        $categories = $this->Pathways->Categories->find('list', ['limit' => 200]);
+        
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
         $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'categories', 'ministries', 'competencies', 'steps', 'users','topics'));
+        $this->set(compact('pathway', 'ministries', 'competencies', 'steps', 'users','topics'));
     }
 
     /**
@@ -269,14 +271,14 @@ class PathwaysController extends AppController
             }
             print(__('The pathway could not be saved. Please, try again.'));
         }
-        $categories = $this->Pathways->Categories->find('list', ['limit' => 200]);
+        
         $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $statuses = $this->Pathways->Statuses->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'categories', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
+        $this->set(compact('pathway', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
     }
 
     /**
@@ -341,7 +343,7 @@ class PathwaysController extends AppController
         }
 
         $pathway = $this->Pathways->get($id, [
-            'contain' => ['Categories', 
+            'contain' => ['Topics', 
                             'Ministries', 
                             'Competencies', 
                             'Steps', 
@@ -566,97 +568,54 @@ class PathwaysController extends AppController
 
 
 
-
-
-
-        /**
-     * View method
+    /**
+     * Import an entire pathway from a provided JSON file
      *
-     * @param string|null $id Pathway id.
-     * @return \Cake\Http\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function path ($id = null)
+    public function import ($topic_id = null)
     {
         $this->Authorization->skipAuthorization();
-        // As we loop through the activities for the steps on this pathway, we 
-        // need to be able to check to see if the current user has "claimed" 
-        // that activity. Here we get the current user id and use it to select 
-        // all of the claimed activities assigned to them, and then process out 
-        // just the activity IDs into a simple array. Then, in the template 
-        // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
-        //
-        // First let's check to see if this person is logged in or not.
-        //
-	    $user = $this->request->getAttribute('authentication')->getIdentity();
-        if(!empty($user)) {
-            // We need create an empty array first. If nothing gets added to
-            // it, so be it
-            $useractivitylist = array();
-            // Get access to the apprprioate table
-            $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
-            // Select based on currently logged in person
-            $useacts = $au->find()->where(['user_id = ' => $user->id]);
-            // convert the results into a simple array so that we can
-            // use in_array in the template
-            $useractivities = $useacts->toList();
-            // Loop through the resources and add just the ID to the 
-            // array that we will pass into the template
-            foreach($useractivities as $uact) {
-                array_push($useractivitylist, $uact['activity_id']);
-            }
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+
+        $data = file_get_contents('/home/a/learning-curator/personal-development.json',true);
+            
+        $path = json_decode($data, true);
+        
+        $allsteps = array();
+        foreach($path['steps'] as $step) {
+            
+            $newstep = array('name' => $step['name'], 'description' => $step['description'], 'createdby' => $user->id);
+            array_push($allsteps,$newstep);
+
+            //echo $step['name'] . ' mocked.<br>';
+            // foreach($step['activities'] as $activity) {
+            //     echo $activity['name'] . ' mocked.<br>';
+            //     // create a new activity here
+            // }
         }
 
-        $pathway = $this->Pathways->get($id, [
-            'contain' => ['Categories', 
-                            'Ministries', 
-                            'Competencies', 
-                            'Steps', 
-                            'Steps.Activities', 
-                            'Steps.Activities.ActivityTypes', 
-                            'Steps.Activities.Users', 
-                            'Steps.Activities.Tags', 
-                            'Users'],
-        ]);
-    //
-	// we want to be able to tell if the current user is already on this
-	// pathway or not, so we take the same approach as above, parsing all
-	// the users into a single array so that we can perform a simple
-	// in_array($thisuser,$usersonthispathway) check and show the "take
-	// this Pathway" button or "you're on this Pathway" text
-	//
-	// Create the initially empty array that we also pass into the template
-	$usersonthispathway = array();
-	// Loop through the users that are on this pathway and parse just the 
-	// IDs into the array that we just created
-	foreach($pathway->users as $pu) {
-		array_push($usersonthispathway,$pu->id);
-    }
+        $sluggedTitle = Text::slug($path['name']);
+        $data = [
+            'name' => $path['name'],
+            'slug' => strtolower(substr($sluggedTitle, 0, 191)),
+            'description' => $path['description'],
+            'objective' => $path['objective'],
+            'createdby' => $user->id,
+            'modifiedby' => $user->id,
+            'topic_id' => $topic_id
+        ];
 
-    // In order to implement the scrollspy step navigation we zip through
-    // and compile a list of the steps and convert them to slugs. Now we
-    // can run through the steps and link to them outside of the main 
-    // loop #TODO in the template we're hacking this by having a separate
-    // slugify function because we don't yet store the slug when we save
-    // the step. We need to add a new entity to the steps table (also the
-    // pathways table) to do this. Fairly high priority really.
-    $stepsalongtheway = array();
-    foreach($pathway->steps as $step) {
-        array_push($stepsalongtheway,array('slug' => Text::slug(strtolower($step->name)), 
-                                            'name' => $step->name, 
-                                            'objective' => $step->description));
-	}
+//echo '<pre>';print_r($data); exit;
+        $p = $this->getTableLocator()->get('Pathways');
+        $complete = $p->newEntity($data);
 
-
-    if(!empty($user)) {
-		$this->set(compact('pathway', 'usersonthispathway','stepsalongtheway', 'useractivitylist'));
-	} else {
-		$this->set(compact('pathway', 'usersonthispathway','stepsalongtheway'));
-	}
+        if ($p->save($complete)) {
+            echo $complete->id . ' created.<br>';
+           
+        }
+        
 
     }
-
-
 
 
 

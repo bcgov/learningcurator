@@ -3,14 +3,14 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Activity $activity
  */
-$this->layout = 'nowrap';
+
 $this->loadHelper('Authentication.Identity');
 ?>
 
 <?= $this->Form->create($activity) ?>
 <?php 
 // echo $this->Form->control('ministry_id', ['class' => 'form-control', 'options' => $ministries, 'empty' => true]);
-// echo $this->Form->control('category_id', ['class' => 'form-control', 'options' => $categories, 'empty' => true]);
+
 // echo $this->Form->control('approvedby_id', ['class' => 'form-control']);
 //echo $this->Form->hidden('createdby_id', ['value' => $activity->createdby_id, 'class' => 'form-control']);
 echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'),'class' => 'form-control']);
@@ -20,10 +20,10 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
 <div class="col-12">
 <div class="pad-lg">
 <h1>
-    <a href="/learning-curator/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
+    <a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
 </h1>
 <div class="alert alert-light"><em><?= $activity->slug ?></em></div>
-<a href="/learning-curator/activities/view/<?= $activity->id ?>" class="btn btn-sm btn-light">View</a>
+<a href="/activities/view/<?= $activity->id ?>" class="btn btn-sm btn-light">View</a>
 </div>
 </div>
 </div>
@@ -47,6 +47,10 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
             <select name="estimated_time" id="estimated_time_id" class="form-control">
 <?php
 $options = array(
+    'Under 5 mins',
+    'Under 10 mins', 
+    'Under 15 mins', 
+    'Under 20 mins',
     'Under 10 mins',
     'Under 30 mins',
     'Under 1 hour',
@@ -99,7 +103,7 @@ $options = array(
     <?= $this->Form->button(__('Save Activity'), ['class' => 'btn btn-block btn-success my-3']) ?>
     <h2>Pathways</h2>
     <?php foreach($activity->steps as $s): ?>
-<a href="/learning-curator/pathways/<?= $s->pathways[0]['slug'] ?>/s/<?= $s->id ?>/<?= $s->slug ?>"><?= $s->pathways[0]['name'] ?> - <?= $s->name ?></a>
+<a href="/pathways/<?= $s->pathways[0]['slug'] ?>/s/<?= $s->id ?>/<?= $s->slug ?>"><?= $s->pathways[0]['name'] ?> - <?= $s->name ?></a>
 <?php endforeach ?>
     </div>
     </div>
@@ -120,7 +124,7 @@ $options = array(
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src="/learning-curator/js/summernote-cleaner.js"></script>
+<script src="/js/summernote-cleaner.js"></script>
 
 <script>
 $(document).ready(function() {

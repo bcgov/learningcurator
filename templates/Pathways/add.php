@@ -17,7 +17,7 @@ $this->loadHelper('Authentication.Identity');
             <fieldset>
                 <legend><?= __('Add Pathway') ?></legend>
                 <?php
-                    echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true,'class'=>'form-control']);
+                    
                     echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true,'class'=>'form-control']);
                     ?>
 
@@ -43,19 +43,5 @@ $this->loadHelper('Authentication.Identity');
         </div>
     </div>
 </div>
-<div class="col-md-6">
 
-<?= $this->Form->create(null,['url' => ['controller' => 'Categories', 'action' => 'add']]) ?>
-<fieldset>
-<legend><?= __('Add Category') ?></legend>
-<?php
-echo $this->Form->hidden('createdby',['value' => $this->Identity->get('id')]);
-echo $this->Form->hidden('modifiedby',['value' => $this->Identity->get('id')]);
-echo $this->Form->control('name', ['class' => 'form-control']);
-echo $this->Form->control('description', ['class' => 'form-control']);
-?>
-</fieldset>
-<?= $this->Form->button(__('Add new category'),['class' => 'btn btn-block btn-success mt-3']) ?>
-<?= $this->Form->end() ?>
-</div>
 </div>

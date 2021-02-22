@@ -36,8 +36,10 @@ class ActivitiesUsersTable extends Table
         parent::initialize($config);
 
         $this->setTable('activities_users');
-        
+        $this->setDisplayField('id');
         $this->setPrimaryKey(['id']);
+
+        $this->addBehavior('Timestamp');
 
         $this->belongsTo('Activities', [
             'foreignKey' => 'activity_id',
@@ -57,21 +59,7 @@ class ActivitiesUsersTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
-        $validator
-            ->dateTime('started')
-            ->allowEmptyDateTime('started');
-
-        $validator
-            ->dateTime('finished')
-            ->allowEmptyDateTime('finished');
-
-        $validator
-            ->integer('liked')
-            ->allowEmptyString('liked');
-
-        $validator
-            ->scalar('notes')
-            ->allowEmptyString('notes');
+        $validator->requirePresence(['created'], 'create');
 
         return $validator;
     }

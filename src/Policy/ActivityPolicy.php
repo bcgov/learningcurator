@@ -78,6 +78,21 @@ class ActivityPolicy
 
 
     }
+    /**
+     * Check if $user can claim Activity
+     *
+     * @param Authorization\IdentityInterface $user The user.
+     * @param App\Model\Entity\Activity $activity
+     * @return bool
+     */
+    public function canClaim(IdentityInterface $user, Activity $activity)
+    {
+
+            return true;
+
+
+
+    }
 
     /**
      * Check if $user can import Activity

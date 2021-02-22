@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Step $step
  */
-$this->layout = 'nowrap';
+
 $this->loadHelper('Authentication.Identity');
 ?>
 <style>
@@ -18,8 +18,8 @@ label {
 <div class="col-md-12">
 
 <div class="pad-md">
-    <h1><a href="/learning-curator/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $step->name ?></a></h1>
-    <div><a href="/learning-curator/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>" class="btn btn-light btn-sm">View Step</a></div>
+    <h1><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $step->name ?></a></h1>
+    <div><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>" class="btn btn-light btn-sm">View Step</a></div>
 </div>
 </div>
 </div>
@@ -45,9 +45,15 @@ label {
 
 <div class="col-md-5">
     
+
+
+
+
+
+    
     <h2>Add Existing Activity</h2>
     <div class="my-3 p-3 rounded-lg bg-white">
-    <form method="get" id="actfind" action="/learning-curator/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
+    <form method="get" id="actfind" action="/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
         <input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
         <input type="hidden" name="step_id" value="<?= $step->id ?>">
         <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
@@ -55,6 +61,14 @@ label {
     <ul class="list-group list-group-flush" id="results">
     </ul>
     </div>
+
+
+
+
+
+
+
+
     <div class="my-3 p-3 rounded-lg bg-white">
     <h3>Required Activities</h3>
     <ul class="list-group list-group-flush mb-3" id="requiredactivities">
@@ -106,8 +120,18 @@ label {
             <?= $this->Form->end() ?>
             </div>
             <div class="col-9">
-                <div><?= $a->activity_type->name ?></div>
-                <div class="actname"><a href="/learning-curator/activities/view/<?= $a->id ?>"><?= $a->name ?></a> </div>
+
+                <div>
+                    <span class="badge bg-dark text-white"><?= $a->status->name ?></span> 
+                    <span class="badge" style="background-color: rgba(<?= $a->activity_type->color ?>,1);"><?= $a->activity_type->name ?>
+                </div>
+                <div class="actname"><a href="/activities/view/<?= $a->id ?>"><?= $a->name ?></a> </div>
+                <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'edit/' . $a->_joinData->id], 'class' => '']) ?>
+                <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id,]) ?>
+                <?= $this->Form->control('stepcontext',['value' => $a->_joinData->stepcontext,'class' => 'form-control', 'label' => '']) ?>
+                <button class="btn btn-light btn-sm">Save</button>
+                <?= $this->Form->end() ?>
+
             </div>
             <div class="col-2">
 
@@ -120,12 +144,12 @@ label {
             <?php endif ?>
             <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
-            <?= $this->Form->button(__('Required'),['class'=>'btn btn-sm btn-light float-left']) ?>
+            <?= $this->Form->button(__('Unrequire'),['class'=>'btn btn-sm btn-light float-left']) ?>
             <?= $this->Form->end() ?>
 <br>
-            <?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $a->_joinData->id, 'class' => '']) ?>
+            <?= $this->Form->create(null,['action' => '/activities-steps/delete/' . $a->_joinData->id, 'class' => '']) ?>
             <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
-            <?= $this->Form->button(__('Delete'),['class' => 'btn btn-sm btn-light']) ?>
+            <?= $this->Form->button(__('Remove'),['class' => 'btn btn-sm btn-light']) ?>
             <?= $this->Form->end() ?>
             </div>
             </div>
@@ -139,8 +163,13 @@ label {
         <li class="list-group-item" id="exac-<?= $supp->id ?>" data-stepid="<?= $supp->_joinData->id ?>">
             <div class="row">
             <div class="col-9">
+            <div>
+                    <span class="badge bg-dark text-white"><?= $supp->status->name ?></span> 
+                    <span class="badge" style="background-color: rgba(<?= $supp->activity_type->color ?>,1);"><?= $supp->activity_type->name ?>
+                </div>
                 <?php if($supp->_joinData->required) echo '<span class="badge badge-success">Required</span>' ?> 
-                <a href="/learning-curator/activities/view/<?= $supp->id ?>"><?= $supp->name ?></a> 
+                <a href="/activities/view/<?= $supp->id ?>"><?= $supp->name ?></a> 
+                <div><?= $supp->_joinData->stepcontext ?></div>
             </div>
             <div class="col-3">
             <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $supp->_joinData->id, 'class' => '']]) ?>
@@ -155,7 +184,7 @@ label {
             <?= $this->Form->button(__('r'),['class'=>'btn btn-sm btn-light float-left']) ?>
             <?= $this->Form->end() ?>
 
-            <?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $supp->_joinData->id, 'class' => 'form-inline']) ?>
+            <?= $this->Form->create(null,['action' => '/activities-steps/delete/' . $supp->_joinData->id, 'class' => 'form-inline']) ?>
             <?= $this->Form->hidden('id', ['value' => $supp->_joinData->id]) ?>
             <?= $this->Form->button(__('x'),['class' => 'btn btn-sm btn-light']) ?>
             <?= $this->Form->end() ?>
@@ -190,16 +219,21 @@ label {
     <?php //echo $this->Form->control('activity_type_id', ['class' => 'form-control', 'options' => $atypes]); ?>
     <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
     <?php echo $this->Form->control('description', ['class' => 'form-control summernote']); ?>
+    <?php echo $this->Form->control('stepcontext', ['class' => 'form-control', 'label' => 'Set Context for this step']); ?>
     <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
+    
     <?php //echo $this->Form->control('isbn', ['class' => 'form-control']); ?>
     
     <?php //echo $this->Form->control('status_id', ['class' => 'form-control', 'options' => $statuses, 'empty' => true]); ?>
     <?php //echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
     <label>Estimated Time
     <select name="estimated_time" id="estimated_time_id" class="form-control">
+        <option>Under 5 mins</option>
         <option>Under 10 mins</option>
+        <option>Under 15 mins </option>
+        <option>Under 20 mins</option>
         <option>Under 30 mins</option>
         <option>Under 1 hour</option>
         <option>About an hour</option>
@@ -242,7 +276,7 @@ $(function () {
             var foo = itemEl.split('-');
             var formd = {id: sid, activity_id: foo[1], step_id: "<?= $step->id ?>", direction: "down", sortorder: 0};
             //var formd = 'id='+sid+'&activity_id='+foo[1]+'&step_id=<?= $step->id ?>&direction=down&sortorder=0';
-            var u = '/learning-curator/activities-steps/sort/' + sid;
+            var u = '/activities-steps/sort/' + sid;
             //console.log(sid);
             $.ajax({
                 type: "POST",
@@ -296,7 +330,7 @@ $(function () {
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src="/learning-curator/js/summernote-cleaner.js"></script>
+<script src="/js/summernote-cleaner.js"></script>
 
 <script>
 $(document).ready(function() {

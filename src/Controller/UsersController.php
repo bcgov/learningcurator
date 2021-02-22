@@ -112,7 +112,7 @@ class UsersController extends AppController
         $user->password = 'learning';
 
         if ($this->Users->save($user)) {
-            return $this->redirect('/learning-curator/');
+            return $this->redirect('/');
         } else {
             //return $user;
 			echo 'Something went wrong when creating your account. Please contact learning.curator@gov.bc.ca for assistance.';
@@ -266,7 +266,7 @@ class UsersController extends AppController
 	    $u = $this->request->getAttribute('authentication')->getIdentity();
         $user = $this->Users->get($u->id, [
             'contain' => ['Pathways', 
-                            'Pathways.Categories', 
+                            'Pathways.Topics', 
                             'Activities', 
                             'Activities.ActivityTypes',
                             'Competencies',
@@ -280,37 +280,7 @@ class UsersController extends AppController
 		
         $this->set(compact('user','allcats'));
     }
-  /**
-     * User bookmarks method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Http\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function bookmarks()
-    {
 
-	    $u = $this->request->getAttribute('authentication')->getIdentity();
-        
-
-        $books = TableRegistry::getTableLocator()->get('ActivitiesBookmarks');
-        $bookmarks = $books->find('all')
-                            ->where(['user_id' => $u->id])
-                            ->contain(['Activities','Activities.ActivityTypes'])
-                            ->order(['ActivitiesBookmarks.created' => 'desc']);
-        
-        $user = $this->Users->get($u->id, [
-            'contain' => ['Pathways', 
-                            'Pathways.Categories', 
-                            'Activities', 
-                            'Activities.ActivityTypes',
-                            'Competencies',
-                            'Ministries'],
-        ]);
-        $this->Authorization->authorize($user);
-        
-        $this->set(compact('user','bookmarks'));
-    }
   /**
      * User claimed activities method
      *
@@ -324,8 +294,8 @@ class UsersController extends AppController
 	    $u = $this->request->getAttribute('authentication')->getIdentity();
         $user = $this->Users->get($u->id, [
             'contain' => ['Pathways', 
-                            'Pathways.Categories', 
-                            'Activities' => ['sort' => ['ActivitiesUsers.started' => 'desc']], 
+                            'Pathways.Topics', 
+                            'Activities' => ['sort' => ['ActivitiesUsers.created' => 'desc']], 
                             'Activities.ActivityTypes',
                             'Activities.Steps',
                             'Activities.Steps.Pathways',
@@ -351,7 +321,7 @@ class UsersController extends AppController
 	    $u = $this->request->getAttribute('authentication')->getIdentity();
         $user = $this->Users->get($u->id, [
             'contain' => ['Pathways', 
-                            'Pathways.Categories', 
+                            'Pathways.Topics', 
                             'Activities', 
                             'Activities.ActivityTypes',
                             'Competencies',

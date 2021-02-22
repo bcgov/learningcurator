@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 Use Cake\ORM\TableRegistry;
+use Cake\Utility\Text;
 
 /**
  * Categories Controller
@@ -39,12 +40,8 @@ class CategoriesController extends AppController
 	    $this->Authorization->skipAuthorization();
         $categories = $this->Categories->find('all');
 		$category = $this->Categories->get($id, [
-            'contain' => ['Activities', 'Pathways','Pathways.Statuses','Topics','Topics.Pathways'],
+            'contain' => ['Topics','Topics.Pathways','Topics.Pathways.Statuses'],
         ]);
-        
-        // $cats = TableRegistry::getTableLocator()->get('Categories');
-        // $category = $cats->find('all')->contain('Activities', 'Pathways')->where(['status_id' => 3]);
-
         $this->set(compact('categories','category'));
     }
 
@@ -60,6 +57,9 @@ class CategoriesController extends AppController
         
         if ($this->request->is('post')) {
             $category = $this->Categories->patchEntity($category, $this->request->getData());
+            $sluggedTitle = Text::slug(strtolower($category->name));
+            // trim slug to maximum length defined in schema
+            $category->slug = $sluggedTitle;
             if ($this->Categories->save($category)) {
             
                 return $this->redirect($this->referer());
@@ -84,6 +84,9 @@ class CategoriesController extends AppController
         $this->Authorization->authorize($category);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $category = $this->Categories->patchEntity($category, $this->request->getData());
+            $sluggedTitle = Text::slug(strtolower($category->name));
+            // trim slug to maximum length defined in schema
+            $category->slug = $sluggedTitle;
             if ($this->Categories->save($category)) {
                 print(__('The category has been saved.'));
 

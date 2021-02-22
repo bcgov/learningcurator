@@ -1,21 +1,16 @@
 
 a {
-    -moz-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-    -webkit-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-    -ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-    transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-    color: #0279ba;
-    text-decoration: none; 
+	color: #000;
 }
 a:hover {
-    color: #005b8b; 
+	color: #000;
 }
-
 
 img {
 	height: auto;
 	max-width: 100%;
 }
+.bg-success,
 .btn-success {
     background-color: rgba(88,174,36,1) !important;
     border: 0;
@@ -28,17 +23,16 @@ img {
 	background-size: 50rem;
 	background-position: -25rem 0;
 }
-#colorful a {
-    color: #000;
-}
+
 #colorful .breadcrumb a {
     text-decoration: underline;
 }
 .linear {
 	background: linear-gradient(0deg, rgba(255,218,96,.2) 0%, rgba(244,105,115,.2) 33%, rgba(249,145,180,.2) 63%, rgba(193,129,183,.2) 100%);
+	padding-bottom: 180px;
 }
 .linear a {
-    color: #000;
+    
 }
 .linear a.btn {
     color: #FFF;
@@ -105,17 +99,6 @@ canvas {
 		background-size: 90rem;
 		background-position: -3rem -35rem;
 	}
-
-    .pad-sm {
-        padding: 2rem;
-    }
-    .pad-md {
-        padding: 3rem;
-    }
-    .pad-lg {
-        padding: 4rem;
-    }
-
 	
 	.stickyrings {
 		align-self: flex-start; 

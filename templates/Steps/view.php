@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Step $step
  */
-$this->layout = 'nowrap';
+
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
@@ -126,7 +126,7 @@ if($stepclaimcount > 0) {
 <div class="col-md-8">
 <?php if (!empty($step->pathways)) : ?>
 <?php if($role == 2 || $role == 5): ?>
-<div class="btn-group float-right mt-3 ml-3">
+<div class="btn-group  mt-3 ml-3">
 <?= $this->Html->link(__('Edit'), ['controller' => 'Steps', 'action' => 'edit', $step->id], ['class' => 'btn btn-light btn-sm']) ?>
 <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $step->id],['class' => 'btn btn-light btn-sm', 'confirm' => __('Are you sure you want to delete # {0}?', $step->name)]) ?>
 </div> <!-- /.btn-group -->
@@ -136,14 +136,15 @@ if($stepclaimcount > 0) {
 <?php $totalsteps = count($pathways->steps) ?>
 
 <nav aria-label="breadcrumb">
-  <ol class="breadcrumb mt-3">
-  	<li class="breadcrumb-item"><?= $pathways->has('category') ? $this->Html->link($pathways->category->name, ['controller' => 'Categories', 'action' => 'view', $pathways->category->id]) : '' ?></li>
-	<li class="breadcrumb-item"><a href="/learning-curator/pathways/<?= $pathways->slug ?>"><?= h($pathways->name) ?></a></li>
-	<!--<li class="breadcrumb-item" aria-current="page"><?= h($pathways->steps[0]->name) ?> </li>-->
-  </ol>
+<ol class="breadcrumb mt-3">
+	<li class="breadcrumb-item"><?= $this->Html->link($pathways->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $pathways->topic->categories[0]->id]) ?></li>
+	<li class="breadcrumb-item"><?= $this->Html->link($pathways->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathways->topic->id]) ?></li>
+	<li class="breadcrumb-item"><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => '/' . $pathways->slug]) ?></li>
+	
+</ol>
 </nav> 
 
-<!--<div class="float-right"><a href="/learning-curator/pathways/path/<?= $pathways->id ?>"><i class="fas fa-scroll"></i></a></div>-->
+<!--<div class=""><a href="/pathways/path/<?= $pathways->id ?>"><i class="fas fa-scroll"></i></a></div>-->
 <h1>
 	<?= h($pathways->name) ?>
 	<?php //$this->Html->link(h($pathways->name), ['controller' => 'Pathways', 'action' => 'path', $pathways->id]) ?>
@@ -187,11 +188,11 @@ if($stepclaimcount > 0) {
 	</div>
 	<div class="col-2">
 		<?php if(!empty($laststep)): ?>
-		<a href="/learning-curator/pathways/<?= $pathways->slug ?>/s/<?= $laststep ?>/<?= $lastslug ?>" style="color: #000; font-size: 250%;"><i class="fas fa-arrow-circle-left"></i></a>
+		<a href="/pathways/<?= $pathways->slug ?>/s/<?= $laststep ?>/<?= $lastslug ?>" style="color: #000; font-size: 250%;"><i class="fas fa-arrow-circle-left"></i></a>
 		<?php endif ?>
 
 		<?php if(!empty($n->id)): ?>
-		<a href="/learning-curator/pathways/<?= $pathways->slug ?>/s/<?= $n->id ?>/<?= $n->slug ?>" class="nextstep" style="color: #000; font-size: 250%; float: right;"><i class="fas fa-arrow-circle-right"></i></a>
+		<a href="/pathways/<?= $pathways->slug ?>/s/<?= $n->id ?>/<?= $n->slug ?>" class="nextstep" style="color: #000; font-size: 250%; float: right;"><i class="fas fa-arrow-circle-right"></i></a>
 		<?php endif ?>
 		
 	</div>
@@ -210,7 +211,7 @@ $lastobj = $s->description;
 <?php foreach($pathways->steps as $s): ?>
 	<?php $c = 'dot' ?>
 	<?php if($s->id == $step->id) $c = 'dotactive' ?>
-	<a href="/learning-curator/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+	<a href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
 		<i class="fas fa-dot-circle <?= $c ?>" title="Step <?= $count ?>"></i>
 	</a>
 <?php $count++ ?>
@@ -228,7 +229,7 @@ $lastobj = $s->description;
 </div>
 
 <div class="progress progress-bar-striped stickyprogress" style="background-color: #F1F1F1; border-radius: 0; height: 18px;">
-		<div class="progress-bar bg-dark" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+		<div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
 		This step is <?= $steppercent ?>% done
 	  </div>
 </div>
@@ -246,19 +247,24 @@ $lastobj = $s->description;
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-users','action' => 'claim'], 'class' => 'claim']) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?= $this->Form->button(__('Claim'),['class'=>'btn btn-dark', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
-	<?= $this->Form->end() ?>
+
+
+		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'claim']) ?>
+		<?= $this->Form->hidden('users.0.created', ['value' => date('Y-m-d H:i:s')]); ?>
+		<?= $this->Form->hidden('users.0.id', ['value' => $uid]); ?>
+
+		<?= $this->Form->button(__('Claim'),['class'=>'btn btn-success', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+		<?= $this->Form->end() ?>
+
 	<?php else: // they have claimed it, so show that ?>
 
-	<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
+	<div class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
 	<?php //$this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-dark', 'confirm' => __('Really delete?')]) ?>
 	<?php endif; // claimed or not ?>
 
 	<h3 class="my-3">
-		<a href="/learning-curator/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
-		<!--<a class="btn btn-sm btn-light" href="/learning-curator/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
+		<a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
+		<!--<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
 	</h3>
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
 		<div class="mb-3">
@@ -267,11 +273,17 @@ $lastobj = $s->description;
 			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
 		</span> 
 		<?php foreach($activity->tags as $tag): ?>
-		<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
+		<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
 		<?php endforeach ?>
 		</div>
 
 		<?= $activity->description ?>
+		<?php if(!empty($activity->_joinData->stepcontext)): ?>
+		<div class="alert alert-light text-dark mt-3 shadow-sm">
+				Curator says:<br>
+				<?= $activity->_joinData->stepcontext ?>
+			</div>
+			<?php endif ?>
 
 	</div>
 	
@@ -344,7 +356,7 @@ $lastobj = $s->description;
 
 	<a href="#newreport<?= $activity->id ?>" 
 			style="color:#333;" 
-			class="btn btn-light float-right" 
+			class="btn btn-light " 
 			data-toggle="collapse" 
 			title="Report this activity for some reason" 
 			data-target="#newreport<?= $activity->id ?>" 
@@ -368,22 +380,9 @@ $lastobj = $s->description;
             <?= $this->Form->end() ?>
 		</div>
 		</div>
-	<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 	</a>
-	<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
-	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark form-inline']) ?>
-		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
-		<button class="btn btn-light"><i class="fas fa-bookmark"></i> Bookmark</button>
-		<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
-		<?= $this->Form->end() ?>
-	<?php else: ?>
-		<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
-	<?php endif ?>
-		<!--
-	<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
-		<i class="fas fa-bookmark"></i> Bookmark
-	</a>-->
 
 
 
@@ -404,7 +403,7 @@ $lastobj = $s->description;
 	<div class="p-3 my-3 bg-white rounded-lg">
 
 		<h4>
-			<a href="/learning-curator/activities/view/<?= $activity->id ?>">
+			<a href="/activities/view/<?= $activity->id ?>">
 				<?= $activity->name ?>
 			</a>
 		</h4>
@@ -416,7 +415,14 @@ $lastobj = $s->description;
 				</span> 
 			</div>
 			<?= $activity->description ?>
-			
+
+			<?php if(!empty($activity->_joinData->stepcontext)): ?>
+		<div class="alert alert-light text-dark mt-3">
+				Curator says:<br>
+				<?= $activity->_joinData->stepcontext ?>
+			</div>
+			<?php endif ?>
+
 			<a target="_blank" 
 				rel="noopener" 
 				data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
@@ -433,7 +439,7 @@ $lastobj = $s->description;
 		<div>
 		<a href="#newreport<?= $activity->id ?>" 
 			style="color:#333;" 
-			class="btn btn-light float-right" 
+			class="btn btn-light" 
 			data-toggle="collapse" 
 			title="Report this activity for some reason" 
 			data-target="#newreport<?= $activity->id ?>" 
@@ -457,22 +463,10 @@ $lastobj = $s->description;
             <?= $this->Form->end() ?>
 		</div>
 		</div>
-		<a href="/learning-curator/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+		<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
 		</a>
-		<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
-			<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark']) ?>
-			<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
-			<button class="btn btn-light"><i class="fas fa-bookmark"></i> Bookmark</button>
-			<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
-			<?= $this->Form->end() ?>
-		<?php else: ?>
-			<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
-		<?php endif ?>
 
-			<!--<a href="#" style="color:#333;" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Report this activity for some reason">
-				<i class="fas fa-bookmark"></i> Bookmark
-			</a>-->
 
 		</div>
 	</div>
@@ -496,7 +490,7 @@ echo $this->Form->control('user_id',['type' => 'hidden', 'value' => $uid]);
 echo $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathways->id]);
 echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-success mb-0']) ?>
 <?= $this->Form->end() ?>
 </div>
 <?php endif ?>
@@ -517,7 +511,7 @@ echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
 	crossorigin="anonymous"></script>
 
 
-<script type="text/javascript" src="/learning-curator/js/jquery.scrollTo.min.js"></script>
+<script type="text/javascript" src="/js/jquery.scrollTo.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 
@@ -528,49 +522,18 @@ $(document).ready(function(){
 	// load up the activity rings
 	loadStatus();
 
-	$('.bookmark').on('submit', function(e){
-		
-		e.preventDefault();
-		var form = $(this);
-
-		var url = form.attr('action');
-		$.ajax({
-			type: "POST",
-			url: '/learning-curator/activities-bookmarks/add',
-			data: form.serialize(),
-			success: function(data)
-			{
-				form.children('button')
-					.removeClass('btn-light')
-					.addClass('btn-dark')
-					.html('<span class="fas fa-bookmark"></span> Bookmarked!')
-					.tooltip('dispose')
-					.attr('title','Good job!')
-					.after('&nbsp; <a href="/learning-curator/users/bookmarks">Access all your bookmarks through your profile</a>.');
-			},
-			statusCode: 
-			{
-				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
-				}
-			}
-		});
-	});
 	$('.claim').on('submit', function(e){
 		
 		e.preventDefault();
 		var form = $(this);
-		form.children('button').removeClass('btn-light').addClass('btn-dark').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
-		
-		//$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
-
 		var url = form.attr('action');
 		$.ajax({
 			type: "POST",
-			url: '/learning-curator/activities-users/claim',
+			url: url,
 			data: form.serialize(),
 			success: function(data)
 			{
+				form.children('button').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
 				loadStatus();
 			},
 			statusCode: 
@@ -608,12 +571,12 @@ $(document).ready(function(){
 		
 		e.preventDefault();
 		var form = $(this);
-		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/learning-curator/users/reports">View all your reports</a>.').remove();
+		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/users/reports">View all your reports</a>.').remove();
 		
 		var url = form.attr('action');
 		$.ajax({
 			type: "POST",
-			url: '/learning-curator/reports/add',
+			url: '/reports/add',
 			data: form.serialize(),
 			success: function(data)
 			{
@@ -651,7 +614,7 @@ function loadStatus() {
 
 	$.ajax({
 		type: "GET",
-		url: '/learning-curator/pathways/status/<?= $step->pathways[0]->id ?>',
+		url: '/pathways/status/<?= $step->pathways[0]->id ?>',
 		data: '',
 		success: function(data)
 		{
@@ -692,7 +655,7 @@ function loadStatus() {
 
 	$.ajax({
 		type: "GET",
-		url: '/learning-curator/steps/status/<?= $step->id ?>',
+		url: '/steps/status/<?= $step->id ?>',
 		data: '',
 		success: function(data)
 		{

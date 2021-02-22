@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
 */
-$this->layout = 'nowrap';
+
 ?>
 <style>
 .badge {
@@ -59,13 +59,10 @@ $this->layout = 'nowrap';
     <a class="nav-link active" href="#">Pathways</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/bookmarks">Bookmarks</a>
+    <a class="nav-link" href="/users/claimed">Claimed</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/claimed">Claimed</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/learning-curator/users/reports">Reports</a>
+    <a class="nav-link" href="/users/reports">Reports</a>
   </li>
 </ul>
 </div>
@@ -84,7 +81,7 @@ $this->layout = 'nowrap';
 		<script>
 			var request<?= $pathways->id ?> = new XMLHttpRequest();
 
-			request<?= $pathways->id ?>.open('GET', '/learning-curator/pathways/status/<?= $pathways->id ?>', true);
+			request<?= $pathways->id ?>.open('GET', '/pathways/status/<?= $pathways->id ?>', true);
 
 			request<?= $pathways->id ?>.onload = function() {
 			if (this.status >= 200 && this.status < 400) {
@@ -134,6 +131,7 @@ $this->layout = 'nowrap';
 	<?php endforeach; ?>
 <?php else: ?>
 <h2><?= _('You\'re not following any pathways yet.') ?></h2>
+<?php endif ?>
 <p><?= _('Pathways are organized into topics. Here some topics for you to explore:') ?></p>
 <?php foreach ($allcats as $cat) : ?>
 <div class="p-3 mb-2 bg-white rounded-lg">
@@ -144,7 +142,6 @@ $this->layout = 'nowrap';
 </div>
 <?php endforeach; ?>
 
-<?php endif; ?>
 
 </div>
 

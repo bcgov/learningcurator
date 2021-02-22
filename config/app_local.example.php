@@ -1,10 +1,8 @@
 <?php
 /*
  * Local configuration file to provide any overrides to your app.php configuration.
- * Copy and save this file as app_local.php and make changes as required.
- * Note: It is not recommended to commit files with credentials such as app_local.php
- * into source code version control.
  */
+
 return [
     /*
      * Debug Level:
@@ -36,28 +34,14 @@ return [
      */
     'Datasources' => [
         
-        /*'default' => [
+        'default' => [
             'host' => 'localhost',
             //'port' => 'non_standard_port_number',
             'username' => 'curator',
-            'password' => 'Learning1!',
-            'database' => 'the_agent',
+            'password' => 'SecurePassword',
+            'database' => 'learning_curator_db',
             //'schema' => 'myapp',
             'url' => env('DATABASE_URL', null),
-        ],*/
-
-        'default' => [
-            'className' => 'Cake\Database\Connection',
-            'driver' => 'Cake\Database\Driver\Sqlite',
-            'persistent' => false,
-            'host' => 'localhost',
-            'port' => '',
-            'login' => '',
-            'password' => '',
-            'database' => '/path/to/source/db/curator.db',
-            'schema' => '',
-            'prefix' => '',
-            'encoding' => ''
         ],
         /*
          * The test connection is used during the test suite.
@@ -71,6 +55,7 @@ return [
             //'schema' => 'myapp',
         ],
     ],
+
 
     /*
      * Email configuration.
@@ -88,5 +73,11 @@ return [
             'client' => null,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
+    ],
+    /**
+     * Sessions should use the database so that the app is more stateless
+     */
+    'Session' => [
+        'defaults' => 'database',
     ],
 ];

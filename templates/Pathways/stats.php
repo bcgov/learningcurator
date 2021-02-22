@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Step $step
  */
-$this->layout = 'nowrap';
+
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
@@ -32,7 +32,7 @@ if ($this->Identity->isLoggedIn()) {
 	crossorigin="anonymous"></script>
 
 
-<script type="text/javascript" src="/learning-curator/js/jquery.scrollTo.min.js"></script>
+<script type="text/javascript" src="/js/jquery.scrollTo.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 

@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Activity $activity
  */
-$this->layout = 'nowrap';
+
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
@@ -56,7 +56,7 @@ if ($this->Identity->isLoggedIn()) {
 			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time], ['class' => 'text-dark']) ?>
 		</span> 
 			<?php foreach($activity->tags as $tag): ?>
-			<a href="/learning-curator/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
+			<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
 			<?php endforeach ?>
 		</div>
 		<?= $activity->description ?>
@@ -147,19 +147,28 @@ if ($this->Identity->isLoggedIn()) {
             <?= $this->Form->end() ?>
 		</div>
 		</div>
-		<a href="/learning-curator/activities/like/<?= $activity->id ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+		<a href="/activities/like/<?= $activity->id ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 			<i class="fas fa-thumbs-up"></i> <span class="lcount"><?= h($activity->recommended) ?> likes</span>
 		</a>
 
-		<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
-	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark form-inline']) ?>
-		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
-		<button class="btn btn-light"><i class="fas fa-bookmark"></i> Bookmark</button>
-		<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
-		<?= $this->Form->end() ?>
-	<?php else: ?>
-		<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
+	
+	
+
+
+	<?php if($role == 2 || $role == 5): ?>
+	<?php if (!empty($activity->moderator_notes)) : ?>
+	<div class="my-3 p-3 bg-white rounded-lg">
+	<h4><?= __('Moderator Notes') ?></h4>
+	<blockquote>
+	<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
+	</blockquote>
+	</div>
 	<?php endif ?>
+	<?php endif; ?>
+
+
+
+	
 		</div>
 
 		
@@ -176,7 +185,7 @@ if ($this->Identity->isLoggedIn()) {
 		Steps
 	  </button>
 	
-	<a href="/learning-curator/pathways/<?= $pathway->slug ?>" target="_blank" rel="noopener"><?= $pathway->name ?></a>
+	<a href="/pathways/<?= $pathway->slug ?>" target="_blank" rel="noopener"><?= $pathway->name ?></a>
 	
 	<div class="collapse p-3" id="steps<?= $pathway->id ?>">
 	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
@@ -195,7 +204,7 @@ if ($this->Identity->isLoggedIn()) {
 	
 	<?php endforeach ?>
 	</div> <!-- .collapse -->
-	<?php endif ?>
+<?php endif ?>
 
 </div>
 </div>
@@ -211,10 +220,10 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($path->status_id == 2): ?>
 <div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
 
-	<h4><a href="/learning-curator/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
+	<h4><a href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
 	<?php if($role == 2 || $role == 5): ?>
-		<?= $this->Form->create(null,['action' => '/learning-curator/activities-steps/delete/' . $step->_joinData->id, 'class' => 'my-3']) ?>
+		<?= $this->Form->create(null,['action' => '/activities-steps/delete/' . $step->_joinData->id, 'class' => 'my-3']) ?>
 		<?= $this->Form->hidden('id', ['value' => $step->_joinData->id]) ?>
 		<?= $this->Form->button(__('Remove from step'),['class' => 'btn btn-sm btn-light']) ?>
 		<?= $this->Form->end() ?>
@@ -224,23 +233,43 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($role == 2 || $role == 5): ?>
 <div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
 <span class="badge badge-warning">DRAFT</span>
-	<h4><a href="/learning-curator/pathways/<?= $pathway->slug ?>/s/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
+	<h4><a href="/pathways/<?= $pathway->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
 </div>
 <?php endif ?>
 <?php endif ?>
 <?php endforeach ?>
 <?php endforeach ?>
+
 </div>
+
+
 <?php if($role == 2 || $role == 5): ?>
-<?php if (!empty($activity->users)) : ?>
+<?php if(!empty($activity->users)): ?>
 <div class="col-md-4">
-<h3 class="mt-3"><?= __('Related Users') ?></h3>
-<?php foreach ($activity->users as $users) : ?>
+<h3 class="mt-3">Learners</h3>
 <div class="my-3 p-3 bg-white rounded-lg">
-<?= $this->Html->link($users->name, ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
+<div><em>These folx have claimed this activity:</em></div>
+<?php foreach($activity->users as $u): ?>
+<a href="/users/view/<?= $u->id ?>"><?= $u->idir ?></a>, 
+<?php endforeach ?>
 </div>
-<?php endforeach; ?>
+</div>
+<?php endif; ?>
+<?php endif; ?>
+
+
+
+<?php if($role == 2 || $role == 5): ?>
+<?php if(!empty($allusers)): ?>
+<div class="col-md-4">
+<h3 class="mt-3">Learners</h3>
+<div class="my-3 p-3 bg-white rounded-lg">
+<div><em>These folx have claimed this activity:</em></div>
+<?php foreach($allusers as $u): ?>
+<a href="/users/view/<?= $u->user->id ?>"><?= $u->user->idir ?></a>, 
+<?php endforeach ?>
+</div>
 </div>
 <?php endif; ?>
 <?php endif; ?>
@@ -252,14 +281,14 @@ if ($this->Identity->isLoggedIn()) {
 <h3 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h3>
 <?php foreach($activity->reports as $report): ?>
 <div class="my-3 p-3 bg-white rounded-lg">
-<div><a href="/learning-curator/users/view/<?= $report->user->id ?>"><?= $report->user->name ?></a> says:</div>
+<div><a href="/users/view/<?= $report->user->id ?>"><?= $report->user->name ?></a> says:</div>
 <div><?= $report->issue ?></div>
 <div class="mt-2" style="font-size: 12px">Added on <?= $report->created ?></div>
 <?php if(empty($report->response)): ?>
 <div class="my-2 alert alert-warning">No reply yet</div>
 <?php else: ?>
 <div class="mt-3">
-	<a href="/learning-curator/users/view/<?= $report->curator_id ?>">Curator</a> repsonse:
+	<a href="/users/view/<?= $report->curator_id ?>">Curator</a> repsonse:
 	<div class="my-2 alert alert-success"><?= $report->response ?></div>
 </div>
 <?php endif ?>
@@ -292,15 +321,7 @@ echo $this->Form->textarea('response',['class' => 'form-control', 'placeholder' 
 <?php endforeach ?>
 <?php endif ?>
 <?php endif ?>
-<?php if($role == 2 || $role == 5): ?>
-<?php if (!empty($activity->moderator_notes)) : ?>
-<h4><?= __('Moderator Notes') ?></h4>
-<blockquote>
-<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
-</blockquote>
-<?php endif ?>
-</div>
-<?php endif; ?>
+
 
 
 
@@ -326,31 +347,7 @@ echo $this->Form->textarea('response',['class' => 'form-control', 'placeholder' 
 
 $(document).ready(function(){
 
-	$('.bookmark').on('submit', function(e){
-		
-		e.preventDefault();
-		var form = $(this);
-		form.children('button').removeClass('btn-light').addClass('btn-dark').html('<span class="fas fa-bookmark"></span> Bookmarked!').tooltip('dispose').attr('title','Good job!');
-		
-		//$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
 
-		var url = form.attr('action');
-		$.ajax({
-			type: "POST",
-			url: '/learning-curator/activities-bookmarks/add',
-			data: form.serialize(),
-			success: function(data)
-			{
-				//loadStatus();
-			},
-			statusCode: 
-			{
-				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
-				}
-			}
-		});
-	});
 	$('.claim').on('submit', function(e){
 		
 		e.preventDefault();
@@ -362,7 +359,7 @@ $(document).ready(function(){
 		var url = form.attr('action');
 		$.ajax({
 			type: "POST",
-			url: '/learning-curator/activities-users/claim',
+			url: '/activities-users/claim',
 			data: form.serialize(),
 			success: function(data)
 			{
@@ -381,12 +378,12 @@ $(document).ready(function(){
 		
 		e.preventDefault();
 		var form = $(this);
-		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/learning-curator/users/reports">View all your reports</a>.').remove();
+		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/users/reports">View all your reports</a>.').remove();
 		
 		var url = form.attr('action');
 		$.ajax({
 			type: "POST",
-			url: '/learning-curator/reports/add',
+			url: '/reports/add',
 			data: form.serialize(),
 			success: function(data)
 			{

@@ -43,12 +43,6 @@ class CategoriesTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->hasMany('Activities', [
-            'foreignKey' => 'category_id',
-        ]);
-        $this->hasMany('Pathways', [
-            'foreignKey' => 'category_id',
-        ]);
         $this->belongsToMany('Topics', [
             'foreignKey' => 'category_id',
             'targetForeignKey' => 'topic_id',
@@ -73,6 +67,12 @@ class CategoriesTable extends Table
             ->maxLength('name', 255)
             ->requirePresence('name', 'create')
             ->notEmptyString('name');
+        
+        $validator
+            ->scalar('slug')
+            ->maxLength('slug', 255)
+            ->requirePresence('slug', 'create')
+            ->notEmptyString('slug');
 
         $validator
             ->scalar('description')

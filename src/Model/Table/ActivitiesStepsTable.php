@@ -64,6 +64,10 @@ class ActivitiesStepsTable extends Table
         $validator
             ->integer('steporder')
             ->allowEmptyString('steporder');
+        
+        $validator
+            ->integer('stepcontext')
+            ->allowEmptyString('stepcontext');
 
         return $validator;
     }

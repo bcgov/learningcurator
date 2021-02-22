@@ -3,7 +3,7 @@
 * @var \App\View\AppView $this
 * @var \App\Model\Entity\Action[]|\Cake\Collection\CollectionInterface $activitys
 */
-$this->layout = 'nowrap';
+
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
@@ -24,18 +24,86 @@ if ($this->Identity->isLoggedIn()) {
 </style>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-8">
-<div class="pad-sm">
-<h1><?= __('The Latest') ?></h1>
-<p><?= __('The most recently published topics, pathways, and activities.') ?></p>
+<div class="col-md-6">
+
+<h1 class="display-4 mt-5">Access learning resources on demand</h1>
+<h2 class="font-weight-light">Sourced by BC Public Service curators</h2>
+<div class="p-3 rounded-lg mb-5 bg-white shadow-sm">
+<p style="font-size: 1.5rem">BC Public Service curators are trusted guides designing pathways of knowledge and 
+skill development. Learning Curator pathways may stand alone or they may supplement 
+your corporate training offered through the Learning Centre.</p>
+<p style="font-size: 1.3rem">A <a href="#">best practice in learning for organizations</a>, curation helps us develop 
+ourselves as part of a trusted, talented, and modern public service.</p>
+
+<a class="btn btn-lg btn-success my-3" href="/pages/faq">Learn More</a>
+
+
 </div>
+
 </div>
 </div>
 </div>
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
+
+
+
+
+
+<div class="col-md-3">
+<h2 class="mt-3">Latest Topics</h2>
+<?php foreach ($allcats as $cat) : ?>
+<div class="p-3 mb-3 bg-white rounded-lg">
+<h3>
+	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
+</h3>
+<div><?= h($cat->description) ?></div>
+
+<?php foreach($cat->topics as $topic): ?>
+<div class="bg-light p-3 my-3">
+	<div class="font-weight-bold"><?= $this->Html->link($topic->name, ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?></div>
+	<div><?= h($topic->description) ?></div>
+</div>
+<?php endforeach ?>
+
+<!-- <div><span class="badge badge-light">Added: <?= h($cat->created) ?></span></div> -->
+</div>
+<?php endforeach; ?>
+</div>
+
+
+
+<div class="col-md-4">
+
+<h2 class="mt-3">Featured Pathways</h2>
+<div>
+<?php foreach($allpathways as $path): ?>
+<?php if($path->status_id != 2): ?>
+<?php if($role == 2 || $role == 5): ?>
+	<div class="p-3 mb-3 bg-white rounded-lg">
+		<span class="badge badge-warning"><?= $path->status->name ?></span>
+		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
+		<?= $path->objective ?>
+		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
+	</div>
+<?php endif ?>
+<?php else: ?>
+	<div class="p-3 mb-3 bg-white rounded-lg">
+		
+		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
+		<?= $path->objective ?>
+		<!-- <div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div> -->
+	</div>
+<?php endif ?>
+
+<?php endforeach ?>
+</div>
+</div>
+
+
 <div class="col-md-5">
-<h2 class="mt-3"><i class="fas fa-check"></i> Latest Activities</h2>
+
+<h2 class="mt-3">Top 5 Most-Liked Activities</h2>
 
 <div class="">
 <?php foreach ($activities as $activity): ?>
@@ -49,32 +117,22 @@ if ($this->Identity->isLoggedIn()) {
 	<?= $this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
 </h3>
 <div class="">
-<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+<!-- <span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 			<i class="fas fa-clock"></i>
 			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
-		</span> 
-	<div class="py-3">
-	<?= $activity->description ?>
-	</div>
+		</span>  -->
+
 	<div class="pb-3">
 	<?php foreach($activity->steps as $step): ?>
 	<?php foreach($step->pathways as $path): ?>
 	<?php if($path->status_id == 2): ?>
-	<span class="badge badge-light"><a href="/learning-curator/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
+	<div><a href="/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></div>
 	<?php endif ?>
 	<?php endforeach ?>
 	<?php endforeach ?>
 	</div>
-	<?php if(!in_array($activity->id,$userbooklist)): // if the user hasn't bookmarked this, then show them claim form ?>
-	<?= $this->Form->create(null,['url' => ['controller' => 'activities-bookmarks', 'action' => 'add'], 'class' => 'bookmark form-inline']) ?>
-		<?= $this->Form->hidden('activity_id',['value' => $activity->id]) ?>
-		<button class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmark</button>
-		<?php //$this->Form->button(__('Bookmark'),['class' => 'btn btn-light']) ?>
-		<?= $this->Form->end() ?>
-	<?php else: ?>
-		<span class="btn btn-dark"><i class="fas fa-bookmark"></i> Bookmarked</span>
-	<?php endif ?>
-	<div class="mt-3"><span class="badge badge-light">Added: <?= h($activity->created) ?></span></div>
+	
+	<!-- <div class="mt-3"><span class="badge badge-light">Added: <?= h($activity->created) ?></span></div> -->
 
 </div>
 
@@ -86,53 +144,6 @@ if ($this->Identity->isLoggedIn()) {
 
 
 
-</div>
-
-
-<div class="col-md-4">
-
-<h2 class="mt-3"><i class="fas fa-sitemap"></i> Latest Pathways</h2>
-<div>
-<?php foreach($allpathways as $path): ?>
-<?php if($path->status_id != 2): ?>
-<?php if($role == 2 || $role == 5): ?>
-	<div class="p-3 mb-3 bg-white rounded-lg">
-		<span class="badge badge-warning"><?= $path->status->name ?></span>
-		<h3><a href="/learning-curator/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
-		<?= $path->objective ?>
-		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
-	</div>
-<?php endif ?>
-<?php else: ?>
-	<div class="p-3 mb-3 bg-white rounded-lg">
-		
-		<h3><a href="/learning-curator/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
-		<?= $path->objective ?>
-		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
-	</div>
-<?php endif ?>
-
-<?php endforeach ?>
-</div>
-</div>
-
-<div class="col-md-3">
-<h2 class="mt-3">Latest Categories</h2>
-<?php foreach ($allcats as $cat) : ?>
-<div class="p-3 mb-3 bg-white rounded-lg">
-<h3>
-	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
-</h3>
-<div><?= h($cat->description) ?></div>
-<div class="bg-light p-3 my-3">
-<div class="mb-3"><strong>View pathways on the following topics:</strong></div>
-<?php foreach($cat->topics as $topic): ?>
-<span class=""><?= $topic->name ?></span>
-<?php endforeach ?>
-</div>
-<div><span class="badge badge-light">Added: <?= h($cat->created) ?></span></div>
-</div>
-<?php endforeach; ?>
 </div>
 
 
@@ -154,31 +165,6 @@ if ($this->Identity->isLoggedIn()) {
 $(document).ready(function(){
 
 
-	$('.bookmark').on('submit', function(e){
-		
-		e.preventDefault();
-		var form = $(this);
-		form.children('button').removeClass('btn-light').addClass('btn-dark').html('<span class="fas fa-bookmark"></span> Bookmarked!').tooltip('dispose').attr('title','Good job!');
-		
-		//$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
-
-		var url = form.attr('action');
-		$.ajax({
-			type: "POST",
-			url: '/learning-curator/activities-bookmarks/add',
-			data: form.serialize(),
-			success: function(data)
-			{
-				//loadStatus();
-			},
-			statusCode: 
-			{
-				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
-				}
-			}
-		});
-	});
 	$('.claim').on('submit', function(e){
 		
 		e.preventDefault();
@@ -190,7 +176,7 @@ $(document).ready(function(){
 		var url = form.attr('action');
 		$.ajax({
 			type: "POST",
-			url: '/learning-curator/activities-users/claim',
+			url: '/activities-users/claim',
 			data: form.serialize(),
 			success: function(data)
 			{
