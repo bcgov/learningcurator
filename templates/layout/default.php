@@ -86,7 +86,11 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 	<li class="nav-item">
 		<a class="nav-link" href="/users/pathways">Your Profile</a>
 	</li>
-	
+	<?php if($active->role_id == 2 || $active->role_id ==5): ?>
+	<li class="nav-item">
+		<a class="nav-link" href="/reports/listit">Reports</a>
+	</li>
+	<?php endif ?>
 	</ul>
 
 	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
