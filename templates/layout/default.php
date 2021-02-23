@@ -87,8 +87,22 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 		<a class="nav-link" href="/users/pathways">Your Profile</a>
 	</li>
 	<?php if($active->role_id == 2 || $active->role_id ==5): ?>
-	<li class="nav-item">
-		<a class="nav-link" href="/reports/listit">Reports</a>
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			Curators
+		</a>
+		<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			<li>
+				<a class="dropdown-item" href="/users/list">
+					User List
+				</a>
+			</li>
+			<li>
+				<a class="dropdown-item" href="/reports/listit">
+					Reports
+				</a>
+			</li>
+		</ul>
 	</li>
 	<?php endif ?>
 	</ul>
