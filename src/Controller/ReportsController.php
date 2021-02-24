@@ -18,7 +18,7 @@ class ReportsController extends AppController
      *
      * @return \Cake\Http\Response|null
      */
-    public function listit()
+    public function list()
     {
         
         $reports = $this->Reports->find('all')->contain(['Users','Activities']);

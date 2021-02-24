@@ -93,7 +93,7 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 		</a>
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 			<a class="dropdown-item" href="/users/list">All Users</a>
-			<a class="dropdown-item" href="/reports/listit">All Reports</a>
+			<a class="dropdown-item" href="/reports/list">All Reports</a>
 		</div>
 	</li>
 	<?php endif ?>

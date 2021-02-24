@@ -85,10 +85,16 @@ class ReportPolicy
      * @param App\Model\Entity\Report $report
      * @return bool
      */
-    public function canListit(IdentityInterface $user, Report $report)
+    public function canList(IdentityInterface $user, Report $report)
     {
         
+        if($this->isAdmin($user, $report)) {
             return true;
+        } elseif($this->isCurator($user,$report)) {
+            return true;
+        } else {
+            return false;
+        }
        
     }
 
