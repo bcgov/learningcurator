@@ -121,22 +121,30 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
 
     protected function configAuth(): \Authentication\AuthenticationService
     {
-        $authenticationService = new \Authentication\AuthenticationService();
-        
-        $authenticationService->setConfig([
-            'unauthenticatedRedirect' => '/users/autoadd',
+        $authenticationService = new \Authentication\AuthenticationService([
+            'unauthenticatedRedirect' => '/users/login',
             'queryParam' => 'redirect',
         ]);
-        // The Idir authenticator is currently just a stripped down version 
-        // of the token authenticator, and is in the 
-        // vendor\cakephp\authentication\src\Authenticator and 
-        // vendor\cakephp\authentication\src\Identified
-        // directories that are outside of version control at the moment
-        // #TODO figure out where to put these custom authenticator files
-        // so that they're part of the repo!
-        $authenticationService->loadAuthenticator('Authentication.Idir');
-        $authenticationService->loadIdentifier('Authentication.Idir');
-
+    
+        // Load identifiers, ensure we check email and password fields
+        $authenticationService->loadIdentifier('Authentication.Password', [
+            'fields' => [
+                'username' => 'email',
+                'password' => 'password',
+            ]
+        ]);
+    
+        // Load the authenticators, you want session first
+        $authenticationService->loadAuthenticator('Authentication.Session');
+        // Configure form data check to pick email and password
+        $authenticationService->loadAuthenticator('Authentication.Form', [
+            'fields' => [
+                'username' => 'email',
+                'password' => 'password',
+            ],
+            'loginUrl' => '/users/login',
+        ]);
+    
         return $authenticationService;
     }
 

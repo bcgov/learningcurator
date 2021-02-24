@@ -21,7 +21,7 @@ class UsersController extends AppController
         parent::beforeFilter($event);
         // Configure the login action to not require authentication, preventing
         // the infinite redirect loop issue
-        $this->Authentication->addUnauthenticatedActions(['autoadd']);
+        $this->Authentication->addUnauthenticatedActions(['login']);
     }
     /**
      * Index method
@@ -223,7 +223,7 @@ class UsersController extends AppController
             // redirect to /pages/home after login success
             $redirect = $this->request->getQuery('redirect', [
                 'controller' => 'Users',
-                'action' => 'home',
+                'action' => 'pathways',
             ]);
 
             return $this->redirect($redirect);
