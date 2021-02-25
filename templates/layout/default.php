@@ -70,7 +70,7 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 		<img class="animate__animated animate__rotateIn" alt="Logo" height="50" src="/img/curator-rings-logo.svg" width="50">
 		Learning Curator
 	</a>
-
+	<?php if(!empty($active)): ?>
 	<button class="navbar-toggler " 
 		type="button" 
 		data-toggle="collapse" 
@@ -86,6 +86,7 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 	<li class="nav-item">
 		<a class="nav-link" href="/users/pathways">Your Profile</a>
 	</li>
+	
 	<?php if($active->role_id == 2 || $active->role_id ==5): ?>
 	<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -105,6 +106,7 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 	</form>
 
 	</div> <!-- /endof .collapse navbar-collapse -->
+	<?php endif ?>
 </nav>
 
 
@@ -116,17 +118,22 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 
 <div class="container-fluid bg-light py-3">
 <div class="row mt-3 justify-content-md-center">
+<?php if(!empty($active)): ?>
 <div class="col-md-5 mt-3">
 <nav class="nav bg-white shadow-sm p-3 m-3">
-	<a class="nav-link" href="/">Latest</a>
-	<a class="nav-link" href="/pages/faq">FAQ</a>
+	<a class="nav-link" href="/pages/faq">Frequently Asked Questions</a>
 	<a class="nav-link" href="/activities/contribute">Contribute</a>
 </nav>
 </div>
+<?php endif ?>
 <div class="col-md-5 mt-3">
 
 	<div class="p-3 m-3 bg-white shadow-sm text-center">
-		Brought to you by The Learning Centre <img src="/img/learning-logo-small-transparent.png" width="40" alt="Learning Centre logo">
+		Brought to you by The 
+		<a href="https://learningcentre.gww.gov.bc.ca/" target="_blank" rel="noopener">
+			Learning Centre 
+			<img src="/img/learning-logo-small-transparent.png" width="40" alt="Learning Centre logo">
+		</a>
 	</div>
 	<div class="p-3 m-3 bg-white shadow-sm">
 	<div><img src="/img/BCID_BCPSA_rgb_pos.jpg" width="400" alt="BC Public Service Agency logo"></div>
