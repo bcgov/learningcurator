@@ -49,7 +49,10 @@ class AppController extends Controller
          * Enable the following component for recommended CakePHP form protection settings.
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
          */
-        $this->loadComponent('FormProtection');
+        // #TODO fix all the forms so that this doesn't throw errors when enabled?
+        // Figure out if we can enable this at all, since I need to be able to alter
+        // forms after they've been submitted?
+        //$this->loadComponent('FormProtection');
 
         $this->loadComponent('Authentication.Authentication');
 	
