@@ -21,10 +21,8 @@ class TopicsController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
-        $this->paginate = [
-            'contain' => ['Users'],
-        ];
-        $topics = $this->paginate($this->Topics);
+
+        $topics = $this->Topics->find()->contain(['Categories'])->order(['created' => 'desc']);
 
         $this->set(compact('topics'));
     }
