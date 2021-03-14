@@ -36,6 +36,7 @@ class CategoriesController extends AppController
     {
         $this->Authorization->skipAuthorization();
         $categories = $this->Categories->find()->contain(['Topics','Topics.Pathways']);
+        
 
         $this->set(compact('categories'));
     }
