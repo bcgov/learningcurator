@@ -23,7 +23,19 @@ class CategoriesController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
-        $categories = $this->paginate($this->Categories);
+        $categories = $this->Categories->find()->contain(['Topics','Topics.Pathways']);
+
+        $this->set(compact('categories'));
+    }
+    /**
+     * API method outputs JSON of the index listing of all topics, and the pathways beneath them
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function api()
+    {
+        $this->Authorization->skipAuthorization();
+        $categories = $this->Categories->find()->contain(['Topics','Topics.Pathways']);
 
         $this->set(compact('categories'));
     }
