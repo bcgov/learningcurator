@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
 /**
  * ActivitiesTag Entity
  *
+ * @property int $id
  * @property int $activity_id
  * @property int $tag_id
  *
@@ -26,6 +27,8 @@ class ActivitiesTag extends Entity
      * @var array
      */
     protected $_accessible = [
+        'activity_id' => true,
+        'tag_id' => true,
         'activity' => true,
         'tag' => true,
     ];

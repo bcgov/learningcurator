@@ -6,14 +6,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <title><?= $this->fetch('title') ?> | Learning Curator</title>
-
-<!--
-<link rel="stylesheet" href="/bootstrap-theme/dist/css/bootstrap-theme.min.css">
-
-Wanna go from getting a 60 on peformance in Lighthouse to a 97? 
-	Stop serving the Gov Bootstrap theme and call in Bootstrap via its CDN:
-
--->
 	
 <link rel="stylesheet" 
 		href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
@@ -51,23 +43,11 @@ Wanna go from getting a 60 on peformance in Lighthouse to a 97?
 
 
 </head>
-<body class="" data-spy="scroll" data-target="#stepnav" data-offset="110">
-<?php 
-if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
-&& strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/7.0;')!== false): ?>
-<div class="alert alert-warning mb-0 fade show">
-	You appear to be using Internet Explorer as your browser. 
-	To see the intended user experience, please access this site using 
-	<em><a href="/pages/anybrowser">any modern browser</a></em>.
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		<span aria-hidden="true">&times;</span>
-	</button>
-</div>
-<?php endif ?>
+<body>
+
 <nav class="navbar navbar-expand-lg sticky-top bg-white shadow-sm">
-	
 	<a class="navbar-brand" href="/">
-		<img class="animate__animated animate__rotateIn" alt="Logo" height="50" src="/img/curator-rings-logo.svg" width="50">
+		<img alt="Logo" class="animate__animated animate__rotateIn" height="50" src="/img/curator-rings-logo.svg" width="50">
 		Learning Curator
 	</a>
 	<?php if(!empty($active)): ?>
@@ -84,31 +64,21 @@ if ( strpos($_SERVER['HTTP_USER_AGENT'], 'rv:11.0')     !== false
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 	<ul class="navbar-nav mr-auto">
 	<li class="nav-item">
-		<a class="nav-link" href="/users/pathways">Your Profile</a>
+		<a class="nav-link" href="/profile">Your Profile</a>
 	</li>
-	
-	<?php if($active->role_id == 2 || $active->role_id ==5): ?>
-	<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Curators
-		</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-			<a class="dropdown-item" href="/users/list">All Users</a>
-			<a class="dropdown-item" href="/reports/list">All Reports</a>
-		</div>
+	<li class="nav-item">
+		<?php echo $this->User->logout() ?>
+		
 	</li>
-	<?php endif ?>
 	</ul>
-
 	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
 		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
 		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
 	</form>
 
-	</div> <!-- /endof .collapse navbar-collapse -->
-	<?php endif ?>
+	 </div><!-- /endof .collapse navbar-collapse -->
+	 <?php endif ?>
 </nav>
-
 
 
 <?= $this->fetch('content') ?>

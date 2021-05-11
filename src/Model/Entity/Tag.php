@@ -10,11 +10,12 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  * @property string|null $description
  * @property \Cake\I18n\FrozenTime $created
- * @property int $createdby
+ * @property string $createdby
  * @property \Cake\I18n\FrozenTime $modified
- * @property int $modifiedby
+ * @property string $modifiedby
  *
  * @property \App\Model\Entity\Activity[] $activities
  */
@@ -31,6 +32,7 @@ class Tag extends Entity
      */
     protected $_accessible = [
         'name' => true,
+        'slug' => true,
         'description' => true,
         'created' => true,
         'createdby' => true,

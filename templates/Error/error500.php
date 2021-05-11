@@ -1,23 +1,17 @@
-<div class="row justify-content-md-center">
-<div class="col-md-6">
-<div class="card">
-<div class="card-body">
-<h1>Error <i class="far fa-frown"></i></h1>
-<p>We're really sorry, but it seems as though you're either attempting to access and area you
-don't have permission to, or something else is going on. Either way, I apologize for the
-situation. Please contact learning.curator@gov.bc.ca</p>
-
 <?php
 /**
  * @var \App\View\AppView $this
+ * @var \Cake\Database\StatementInterface $error
+ * @var string $message
+ * @var string $url
  */
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 
-//$this->layout = 'error';
+$this->layout = 'error';
 
 if (Configure::read('debug')) :
-    //$this->layout = 'dev_error';
+    $this->layout = 'dev_error';
 
     $this->assign('title', $message);
     $this->assign('templateName', 'error500.php');
@@ -49,7 +43,3 @@ endif;
     <strong><?= __d('cake', 'Error') ?>: </strong>
     <?= h($message) ?>
 </p>
-</div>
-</div>
-</div>
-</div>

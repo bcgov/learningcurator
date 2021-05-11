@@ -14,14 +14,19 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ActivitiesTable&\Cake\ORM\Association\BelongsToMany $Activities
  * @property \App\Model\Table\PathwaysTable&\Cake\ORM\Association\BelongsToMany $Pathways
  *
- * @method \App\Model\Entity\Step get($primaryKey, $options = [])
- * @method \App\Model\Entity\Step newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Step newEmptyEntity()
+ * @method \App\Model\Entity\Step newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Step[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Step get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Step findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Step patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Step[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Step|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Step saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Step patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Step[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Step findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Step[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Step[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Step[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Step[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -76,7 +81,7 @@ class StepsTable extends Table
         $validator
             ->scalar('slug')
             ->maxLength('slug', 255)
-            ->requirePresence('slug')
+            ->requirePresence('slug', 'create')
             ->notEmptyString('slug');
 
         $validator
@@ -93,12 +98,12 @@ class StepsTable extends Table
             ->allowEmptyString('featured');
 
         $validator
-            ->integer('createdby')
+            ->uuid('createdby')
             ->requirePresence('createdby', 'create')
             ->notEmptyString('createdby');
 
         $validator
-            ->integer('modifiedby')
+            ->uuid('modifiedby')
             ->requirePresence('modifiedby', 'create')
             ->notEmptyString('modifiedby');
 

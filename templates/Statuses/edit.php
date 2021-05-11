@@ -23,6 +23,7 @@
                 <legend><?= __('Edit Status') ?></legend>
                 <?php
                     echo $this->Form->control('name');
+                    echo $this->Form->control('slug');
                     echo $this->Form->control('description');
                     echo $this->Form->control('createdby');
                 ?>

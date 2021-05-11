@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
 /**
  * CategoriesTopic Entity
  *
+ * @property int $id
  * @property int $category_id
  * @property int $topic_id
  *
@@ -28,5 +29,7 @@ class CategoriesTopic extends Entity
     protected $_accessible = [
         'category_id' => true,
         'topic_id' => true,
+        'category' => true,
+        'topic' => true,
     ];
 }

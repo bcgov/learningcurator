@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\PathwaysTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -26,8 +25,9 @@ class PathwaysTableTest extends TestCase
      */
     protected $fixtures = [
         'app.Pathways',
-        'app.Categories',
+        'app.Topics',
         'app.Ministries',
+        'app.Statuses',
         'app.Competencies',
         'app.Steps',
         'app.Users',
@@ -41,8 +41,8 @@ class PathwaysTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Pathways') ? [] : ['className' => PathwaysTable::class];
-        $this->Pathways = TableRegistry::getTableLocator()->get('Pathways', $config);
+        $config = $this->getTableLocator()->exists('Pathways') ? [] : ['className' => PathwaysTable::class];
+        $this->Pathways = $this->getTableLocator()->get('Pathways', $config);
     }
 
     /**
@@ -55,16 +55,6 @@ class PathwaysTableTest extends TestCase
         unset($this->Pathways);
 
         parent::tearDown();
-    }
-
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**

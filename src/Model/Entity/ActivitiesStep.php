@@ -8,10 +8,12 @@ use Cake\ORM\Entity;
 /**
  * ActivitiesStep Entity
  *
+ * @property int $id
  * @property int $activity_id
  * @property int $step_id
  * @property int|null $required
  * @property int|null $steporder
+ * @property string|null $stepcontext
  *
  * @property \App\Model\Entity\Activity $activity
  * @property \App\Model\Entity\Step $step
@@ -28,6 +30,8 @@ class ActivitiesStep extends Entity
      * @var array
      */
     protected $_accessible = [
+        'activity_id' => true,
+        'step_id' => true,
         'required' => true,
         'steporder' => true,
         'stepcontext' => true,

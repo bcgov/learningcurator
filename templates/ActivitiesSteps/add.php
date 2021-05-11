@@ -17,8 +17,11 @@
             <fieldset>
                 <legend><?= __('Add Activities Step') ?></legend>
                 <?php
+                    echo $this->Form->control('activity_id', ['options' => $activities]);
+                    echo $this->Form->control('step_id', ['options' => $steps]);
                     echo $this->Form->control('required');
                     echo $this->Form->control('steporder');
+                    echo $this->Form->control('stepcontext');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

@@ -12,16 +12,22 @@ use Cake\Validation\Validator;
  * Statuses Model
  *
  * @property \App\Model\Table\ActivitiesTable&\Cake\ORM\Association\HasMany $Activities
+ * @property \App\Model\Table\PathwaysTable&\Cake\ORM\Association\HasMany $Pathways
  * @property \App\Model\Table\PathwaysUsersTable&\Cake\ORM\Association\HasMany $PathwaysUsers
  *
- * @method \App\Model\Entity\Status get($primaryKey, $options = [])
- * @method \App\Model\Entity\Status newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Status newEmptyEntity()
+ * @method \App\Model\Entity\Status newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Status[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Status get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Status findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Status patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Status[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Status|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Status saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Status patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Status[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Status findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Status[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Status[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Status[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Status[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -43,13 +49,17 @@ class StatusesTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('CakeDC/Users.Users', [
+            'foreignKey' => 'createdby',
+            'joinType' => 'INNER',
+        ]);
         $this->hasMany('Activities', [
             'foreignKey' => 'status_id',
         ]);
-        $this->hasMany('PathwaysUsers', [
+        $this->hasMany('Pathways', [
             'foreignKey' => 'status_id',
         ]);
-        $this->hasMany('Pathways', [
+        $this->hasMany('PathwaysUsers', [
             'foreignKey' => 'status_id',
         ]);
     }
@@ -70,32 +80,23 @@ class StatusesTable extends Table
             ->scalar('name')
             ->maxLength('name', 255)
             ->requirePresence('name', 'create')
-            ->notEmptyString('name')
-            ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->notEmptyString('name');
+
+        $validator
+            ->scalar('slug')
+            ->maxLength('slug', 255)
+            ->requirePresence('slug', 'create')
+            ->notEmptyString('slug');
 
         $validator
             ->scalar('description')
             ->allowEmptyString('description');
 
         $validator
-            ->integer('createdby')
+            ->uuid('createdby')
             ->requirePresence('createdby', 'create')
             ->notEmptyString('createdby');
 
         return $validator;
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules): RulesChecker
-    {
-        $rules->add($rules->isUnique(['name']));
-
-        return $rules;
     }
 }

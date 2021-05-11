@@ -15,18 +15,26 @@ class CategoriesTopicsFixture extends TestFixture
      *
      * @var array
      */
-    // @codingStandardsIgnoreStart
+    // phpcs:disable
     public $fields = [
-        'category_id' => ['autoIncrement' => null, 'type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'precision' => null, 'comment' => null],
-        'topic_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'precision' => null, 'comment' => null, 'autoIncrement' => null],
+        'id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'category_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'topic_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        '_indexes' => [
+            'categories_topics_ibfk_1' => ['type' => 'index', 'columns' => ['category_id'], 'length' => []],
+            'categories_topics_ibfk_2' => ['type' => 'index', 'columns' => ['topic_id'], 'length' => []],
+        ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['category_id', 'topic_id'], 'length' => []],
-            'sqlite_autoindex_categories_topics_1' => ['type' => 'unique', 'columns' => ['category_id', 'topic_id'], 'length' => []],
-            'topic_id_fk' => ['type' => 'foreign', 'columns' => ['topic_id'], 'references' => ['topics', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
-            'category_id_fk' => ['type' => 'foreign', 'columns' => ['category_id'], 'references' => ['categories', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
+            'categories_topics_ibfk_2' => ['type' => 'foreign', 'columns' => ['topic_id'], 'references' => ['topics', 'id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'categories_topics_ibfk_1' => ['type' => 'foreign', 'columns' => ['category_id'], 'references' => ['categories', 'id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+        ],
+        '_options' => [
+            'engine' => 'InnoDB',
+            'collation' => 'latin1_swedish_ci'
         ],
     ];
-    // @codingStandardsIgnoreEnd
+    // phpcs:enable
     /**
      * Init method
      *
@@ -36,6 +44,7 @@ class CategoriesTopicsFixture extends TestFixture
     {
         $this->records = [
             [
+                'id' => 1,
                 'category_id' => 1,
                 'topic_id' => 1,
             ],

@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  * @property string $elm_learner_group
  * @property string|null $description
  * @property string|null $hyperlink
@@ -19,7 +20,6 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Activity[] $activities
  * @property \App\Model\Entity\Pathway[] $pathways
- * @property \App\Model\Entity\User[] $users
  */
 class Ministry extends Entity
 {
@@ -34,6 +34,7 @@ class Ministry extends Entity
      */
     protected $_accessible = [
         'name' => true,
+        'slug' => true,
         'elm_learner_group' => true,
         'description' => true,
         'hyperlink' => true,
@@ -42,6 +43,5 @@ class Ministry extends Entity
         'featured' => true,
         'activities' => true,
         'pathways' => true,
-        'users' => true,
     ];
 }

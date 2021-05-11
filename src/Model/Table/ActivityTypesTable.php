@@ -11,14 +11,19 @@ use Cake\Validation\Validator;
 /**
  * ActivityTypes Model
  *
- * @method \App\Model\Entity\ActivityType get($primaryKey, $options = [])
- * @method \App\Model\Entity\ActivityType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\ActivityType newEmptyEntity()
+ * @method \App\Model\Entity\ActivityType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\ActivityType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\ActivityType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\ActivityType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\ActivityType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\ActivityType[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\ActivityType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\ActivityType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ActivityType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\ActivityType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\ActivityType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\ActivityType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ActivityType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ActivityType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ActivityType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -60,6 +65,12 @@ class ActivityTypesTable extends Table
             ->notEmptyString('name');
 
         $validator
+            ->scalar('slug')
+            ->maxLength('slug', 255)
+            ->requirePresence('slug', 'create')
+            ->notEmptyString('slug');
+
+        $validator
             ->scalar('description')
             ->allowEmptyString('description');
 
@@ -83,12 +94,12 @@ class ActivityTypesTable extends Table
             ->allowEmptyString('featured');
 
         $validator
-            ->integer('createdby')
+            ->uuid('createdby')
             ->requirePresence('createdby', 'create')
             ->notEmptyString('createdby');
 
         $validator
-            ->integer('modifiedby')
+            ->uuid('modifiedby')
             ->requirePresence('modifiedby', 'create')
             ->notEmptyString('modifiedby');
 

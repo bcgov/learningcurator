@@ -25,7 +25,6 @@ class MinistriesControllerTest extends TestCase
         'app.Ministries',
         'app.Activities',
         'app.Pathways',
-        'app.Users',
     ];
 
     /**

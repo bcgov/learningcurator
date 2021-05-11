@@ -24,6 +24,7 @@ class StatusesControllerTest extends TestCase
     protected $fixtures = [
         'app.Statuses',
         'app.Activities',
+        'app.Pathways',
         'app.PathwaysUsers',
     ];
 

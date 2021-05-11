@@ -13,16 +13,20 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\ActivitiesTable&\Cake\ORM\Association\HasMany $Activities
  * @property \App\Model\Table\PathwaysTable&\Cake\ORM\Association\HasMany $Pathways
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
  *
- * @method \App\Model\Entity\Ministry get($primaryKey, $options = [])
- * @method \App\Model\Entity\Ministry newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Ministry newEmptyEntity()
+ * @method \App\Model\Entity\Ministry newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Ministry[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Ministry get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Ministry findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Ministry patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Ministry[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Ministry|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Ministry saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Ministry patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Ministry[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Ministry findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Ministry[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Ministry[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Ministry[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Ministry[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class MinistriesTable extends Table
 {
@@ -46,9 +50,6 @@ class MinistriesTable extends Table
         $this->hasMany('Pathways', [
             'foreignKey' => 'ministry_id',
         ]);
-        $this->hasMany('Users', [
-            'foreignKey' => 'ministry_id',
-        ]);
     }
 
     /**
@@ -68,6 +69,12 @@ class MinistriesTable extends Table
             ->maxLength('name', 255)
             ->requirePresence('name', 'create')
             ->notEmptyString('name');
+
+        $validator
+            ->scalar('slug')
+            ->maxLength('slug', 255)
+            ->requirePresence('slug', 'create')
+            ->notEmptyString('slug');
 
         $validator
             ->scalar('elm_learner_group')

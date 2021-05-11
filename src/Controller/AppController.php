@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Controller\Controller;
-Use Cake\ORM\TableRegistry;
 
 /**
  * Application Controller
@@ -49,31 +48,9 @@ class AppController extends Controller
          * Enable the following component for recommended CakePHP form protection settings.
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
          */
-        // #TODO fix all the forms so that this doesn't throw errors when enabled?
-        // Figure out if we can enable this at all, since I need to be able to alter
-        // forms after they've been submitted?
         //$this->loadComponent('FormProtection');
-
-        $this->loadComponent('Authentication.Authentication');
-	
-        $this->loadComponent('Authorization.Authorization');
-
         $active = $this->request->getAttribute('authentication')->getIdentity();
-        
-        $at = TableRegistry::getTableLocator()->get('ActivityTypes');
-        $atype = $at->find('all');
-        $atypes = $atype->toList();
+        $this->set(compact('active'));
 
-        $this->set(compact('active','atypes'));
-        
-
-    }
-
-    public function beforeFilter(\Cake\Event\EventInterface $event)
-    {
-        parent::beforeFilter($event);
-        // for all controllers in our application, make index and view
-        // actions public, skipping the authentication check
-        //$this->Authentication->addUnauthenticatedActions(['home', 'pathways']);
     }
 }

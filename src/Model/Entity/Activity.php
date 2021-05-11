@@ -4,14 +4,12 @@ declare(strict_types=1);
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\Collection\Collection;
 
 /**
  * Activity Entity
  *
  * @property int $id
  * @property string $name
- * @property string $slug
  * @property string|null $hyperlink
  * @property string|null $description
  * @property string|null $licensing
@@ -24,21 +22,23 @@ use Cake\Collection\Collection;
  * @property int|null $moderation_flag
  * @property string|null $file_path
  * @property string|null $image_path
- * @property string|null $hours
+ * @property int|null $hours
  * @property int|null $recommended
  * @property int|null $ministry_id
- * @property int|null $approvedby_id
+ * @property string|null $approvedby_id
  * @property \Cake\I18n\FrozenTime $created
- * @property int $createdby_id
+ * @property string $createdby_id
  * @property \Cake\I18n\FrozenTime $modified
- * @property int $modifiedby_id
+ * @property string $modifiedby_id
  * @property int $activity_types_id
+ * @property string|null $estimated_time
+ * @property string|null $slug
  *
  * @property \App\Model\Entity\Status $status
  * @property \App\Model\Entity\Ministry $ministry
-
- * @property \App\Model\Entity\User[] $users
+ * @property \CakeDC\Users\Model\Entity\User[] $users
  * @property \App\Model\Entity\ActivityType $activity_type
+ * @property \App\Model\Entity\Report[] $reports
  * @property \App\Model\Entity\Competency[] $competencies
  * @property \App\Model\Entity\Step[] $steps
  * @property \App\Model\Entity\Tag[] $tags
@@ -56,7 +56,6 @@ class Activity extends Entity
      */
     protected $_accessible = [
         'name' => true,
-        'slug' => true,
         'hyperlink' => true,
         'description' => true,
         'licensing' => true,
@@ -78,29 +77,15 @@ class Activity extends Entity
         'modified' => true,
         'modifiedby_id' => true,
         'activity_types_id' => true,
+        'estimated_time' => true,
+        'slug' => true,
         'status' => true,
         'ministry' => true,
         'users' => true,
         'activity_type' => true,
+        'reports' => true,
         'competencies' => true,
         'steps' => true,
         'tags' => true,
-        'tag_string' => true,
-        'estimated_time' => true
     ];
-
-    protected function _getTagString()
-    {
-        if (isset($this->_fields['tag_string'])) {
-            return $this->_fields['tag_string'];
-        }
-        if (empty($this->tags)) {
-            return '';
-        }
-        $tags = new Collection($this->tags);
-        $str = $tags->reduce(function ($string, $tag) {
-            return $string . $tag->name . ', ';
-        }, '');
-        return trim($str, ', ');
-    }
 }

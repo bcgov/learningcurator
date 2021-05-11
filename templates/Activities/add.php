@@ -14,6 +14,7 @@ $this->loadHelper('Authentication.Identity');
 echo $this->Form->hidden('createdby_id', ['value' => $activity->createdby_id, 'class' => 'form-control']);
 echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'),'class' => 'form-control']);
 ?>
+<div class="container-fluid">
 <div class="row justify-content-md-center">
 <div class="col-md-6">
 
@@ -59,6 +60,7 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
     </div>
     </div>
     </div>
+</div>
 </div>
 <?= $this->Form->end() ?>
 

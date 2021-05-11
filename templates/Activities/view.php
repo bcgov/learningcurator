@@ -6,9 +6,9 @@
 
 $this->loadHelper('Authentication.Identity');
 $uid = 0;
-$role = 0;
+$role = '';
 if ($this->Identity->isLoggedIn()) {
-	$role = $this->Identity->get('role_id');
+	$role = $this->Identity->get('role');
 	$uid = $this->Identity->get('id');
 }
 ?>
@@ -19,7 +19,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-12 col-lg-6">
 <div class="pad-lg">
 
-	<?php if($role == 2 || $role == 5): ?>
+	<?php if($role == 2 || $role == 'superuser'): ?>
 	<div class="btn-group float-right">
 	<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $activity->id], ['confirm' => __('Really delete?'), 'class' => 'btn btn-sm btn-light']) ?>
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
@@ -155,7 +155,7 @@ if ($this->Identity->isLoggedIn()) {
 	
 
 
-	<?php if($role == 2 || $role == 5): ?>
+	<?php if($role == 'curator' || $role == 'superuser'): ?>
 	<?php if (!empty($activity->moderator_notes)) : ?>
 	<div class="my-3 p-3 bg-white rounded-lg">
 	<h4><?= __('Moderator Notes') ?></h4>
@@ -172,7 +172,7 @@ if ($this->Identity->isLoggedIn()) {
 		</div>
 
 		
-<?php if($role == 2 || $role == 5): ?>
+<?php if($role == 'curator' || $role == 'superuser'): ?>
 	
 	<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#assignment<?= $activity->id ?>" aria-expanded="false" aria-controls="assignment<?= $activity->id ?>">
 	<i class="fas fa-sitemap"></i> Path Assigment
@@ -215,6 +215,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-4">
 
 <h3 class="mt-3"><i class="fas fa-sitemap"></i> Pathways</h3>
+
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
 <?php if($path->status_id == 2): ?>
@@ -222,7 +223,7 @@ if ($this->Identity->isLoggedIn()) {
 
 	<h4><a href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
-	<?php if($role == 2 || $role == 5): ?>
+	<?php if($role == 'curator' || $role == 'superuser'): ?>
 		<?= $this->Form->create(null,['action' => '/activities-steps/delete/' . $step->_joinData->id, 'class' => 'my-3']) ?>
 		<?= $this->Form->hidden('id', ['value' => $step->_joinData->id]) ?>
 		<?= $this->Form->button(__('Remove from step'),['class' => 'btn btn-sm btn-light']) ?>
@@ -230,13 +231,13 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endif ?>
 </div>
 <?php else: ?>
-<?php if($role == 2 || $role == 5): ?>
+
 <div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
 <span class="badge badge-warning">DRAFT</span>
-	<h4><a href="/pathways/<?= $pathway->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
+<h4><a href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
 </div>
-<?php endif ?>
+
 <?php endif ?>
 <?php endforeach ?>
 <?php endforeach ?>
@@ -244,7 +245,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 
 
-<?php if($role == 2 || $role == 5): ?>
+<?php if($role == 'curator' || $role == 'superuser'): ?>
 <?php if(!empty($activity->users)): ?>
 <div class="col-md-4">
 <h3 class="mt-3">Learners</h3>
@@ -260,7 +261,7 @@ if ($this->Identity->isLoggedIn()) {
 
 
 
-<?php if($role == 2 || $role == 5): ?>
+<?php if($role == 'curator' || $role == 'superuser'): ?>
 <?php if(!empty($allusers)): ?>
 <div class="col-md-4">
 <h3 class="mt-3">Learners</h3>
@@ -275,7 +276,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php endif; ?>
 
 
-<?php if($role == 2 || $role == 5): ?>
+<?php if($role == 'curator' || $role == 'superuser'): ?>
 <?php if(!empty($activity->reports)): ?>
 <div class="col-md-4">
 <h3 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h3>

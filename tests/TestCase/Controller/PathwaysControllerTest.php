@@ -23,8 +23,9 @@ class PathwaysControllerTest extends TestCase
      */
     protected $fixtures = [
         'app.Pathways',
-        'app.Categories',
+        'app.Topics',
         'app.Ministries',
+        'app.Statuses',
         'app.Competencies',
         'app.Steps',
         'app.Users',

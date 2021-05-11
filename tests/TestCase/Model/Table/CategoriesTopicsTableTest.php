@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\CategoriesTopicsTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -38,8 +37,8 @@ class CategoriesTopicsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('CategoriesTopics') ? [] : ['className' => CategoriesTopicsTable::class];
-        $this->CategoriesTopics = TableRegistry::getTableLocator()->get('CategoriesTopics', $config);
+        $config = $this->getTableLocator()->exists('CategoriesTopics') ? [] : ['className' => CategoriesTopicsTable::class];
+        $this->CategoriesTopics = $this->getTableLocator()->get('CategoriesTopics', $config);
     }
 
     /**
@@ -55,11 +54,11 @@ class CategoriesTopicsTableTest extends TestCase
     }
 
     /**
-     * Test initialize method
+     * Test validationDefault method
      *
      * @return void
      */
-    public function testInitialize(): void
+    public function testValidationDefault(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

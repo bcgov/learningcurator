@@ -18,6 +18,7 @@
                 <legend><?= __('Add Competency') ?></legend>
                 <?php
                     echo $this->Form->control('name');
+                    echo $this->Form->control('slug');
                     echo $this->Form->control('description');
                     echo $this->Form->control('image_path');
                     echo $this->Form->control('color');

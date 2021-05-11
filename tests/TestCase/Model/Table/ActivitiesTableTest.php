@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\ActivitiesTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -28,9 +27,9 @@ class ActivitiesTableTest extends TestCase
         'app.Activities',
         'app.Statuses',
         'app.Ministries',
-        'app.Categories',
         'app.Users',
         'app.ActivityTypes',
+        'app.Reports',
         'app.Competencies',
         'app.Steps',
         'app.Tags',
@@ -44,8 +43,8 @@ class ActivitiesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Activities') ? [] : ['className' => ActivitiesTable::class];
-        $this->Activities = TableRegistry::getTableLocator()->get('Activities', $config);
+        $config = $this->getTableLocator()->exists('Activities') ? [] : ['className' => ActivitiesTable::class];
+        $this->Activities = $this->getTableLocator()->get('Activities', $config);
     }
 
     /**
@@ -58,16 +57,6 @@ class ActivitiesTableTest extends TestCase
         unset($this->Activities);
 
         parent::tearDown();
-    }
-
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**

@@ -11,20 +11,26 @@ use Cake\Validation\Validator;
 /**
  * Pathways Model
  *
- * @property \App\Model\Table\CategoriesTable&\Cake\ORM\Association\BelongsTo $Categories
+ * @property \App\Model\Table\TopicsTable&\Cake\ORM\Association\BelongsTo $Topics
  * @property \App\Model\Table\MinistriesTable&\Cake\ORM\Association\BelongsTo $Ministries
+ * @property \App\Model\Table\StatusesTable&\Cake\ORM\Association\BelongsTo $Statuses
  * @property \App\Model\Table\CompetenciesTable&\Cake\ORM\Association\BelongsToMany $Competencies
  * @property \App\Model\Table\StepsTable&\Cake\ORM\Association\BelongsToMany $Steps
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
+ * @property \CakeDC\Users\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
  *
- * @method \App\Model\Entity\Pathway get($primaryKey, $options = [])
- * @method \App\Model\Entity\Pathway newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Pathway newEmptyEntity()
+ * @method \App\Model\Entity\Pathway newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Pathway[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Pathway get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Pathway findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Pathway patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Pathway[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Pathway|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Pathway saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Pathway patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Pathway[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Pathway findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Pathway[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Pathway[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Pathway[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Pathway[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -65,7 +71,7 @@ class PathwaysTable extends Table
             'targetForeignKey' => 'step_id',
             'joinTable' => 'pathways_steps',
         ]);
-        $this->belongsToMany('Users', [
+        $this->belongsToMany('CakeDC/Users.Users', [
             'foreignKey' => 'pathway_id',
             'targetForeignKey' => 'user_id',
             'joinTable' => 'pathways_users',
@@ -97,10 +103,6 @@ class PathwaysTable extends Table
             ->allowEmptyString('color');
 
         $validator
-            ->scalar('estimated_time')
-            ->allowEmptyString('estimated_time');
-        
-        $validator
             ->scalar('description')
             ->allowEmptyString('description');
 
@@ -123,19 +125,24 @@ class PathwaysTable extends Table
             ->allowEmptyString('featured');
 
         $validator
-            ->integer('createdby')
+            ->uuid('createdby')
             ->requirePresence('createdby', 'create')
             ->notEmptyString('createdby');
 
         $validator
-            ->integer('modifiedby')
+            ->uuid('modifiedby')
             ->requirePresence('modifiedby', 'create')
             ->notEmptyString('modifiedby');
-        
+
         $validator
-            ->integer('status_id')
-            ->requirePresence('status_id', 'create')
-            ->notEmptyString('status_id');
+            ->scalar('slug')
+            ->maxLength('slug', 255)
+            ->allowEmptyString('slug');
+
+        $validator
+            ->scalar('estimated_time')
+            ->maxLength('estimated_time', 255)
+            ->allowEmptyString('estimated_time');
 
         return $validator;
     }
@@ -149,10 +156,10 @@ class PathwaysTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['name']));
-        $rules->add($rules->existsIn(['topic_id'], 'Topics'));
-        $rules->add($rules->existsIn(['ministry_id'], 'Ministries'));
-        $rules->add($rules->existsIn(['status_id'], 'Statuses'));
+        $rules->add($rules->isUnique(['name']), ['errorField' => 'name']);
+        $rules->add($rules->existsIn(['topic_id'], 'Topics'), ['errorField' => 'topic_id']);
+        $rules->add($rules->existsIn(['ministry_id'], 'Ministries'), ['errorField' => 'ministry_id']);
+        $rules->add($rules->existsIn(['status_id'], 'Statuses'), ['errorField' => 'status_id']);
 
         return $rules;
     }

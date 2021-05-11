@@ -17,6 +17,8 @@
             <fieldset>
                 <legend><?= __('Add Categories Topic') ?></legend>
                 <?php
+                    echo $this->Form->control('category_id', ['options' => $categories]);
+                    echo $this->Form->control('topic_id', ['options' => $topics]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

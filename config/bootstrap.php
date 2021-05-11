@@ -212,4 +212,10 @@ ServerRequest::addDetector('tablet', function ($request) {
 //Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
-//Inflector::rules('transliteration', ['/å/' => 'aa']);
+
+$this->addPlugin(\CakeDC\Users\Plugin::class);
+
+Configure::write('Users.config', ['users']);
+
+Configure::write('OAuth.providers.azuread.options.clientId', 'f3b1c861-45bb-44e3-b298-16831341821d');
+Configure::write('OAuth.providers.azuread.options.clientSecret', 'TKkjrd454Zf.V3IGQ8arASS_-Dx9Hp1l.Y');

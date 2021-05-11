@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\MinistriesTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -28,7 +27,6 @@ class MinistriesTableTest extends TestCase
         'app.Ministries',
         'app.Activities',
         'app.Pathways',
-        'app.Users',
     ];
 
     /**
@@ -39,8 +37,8 @@ class MinistriesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Ministries') ? [] : ['className' => MinistriesTable::class];
-        $this->Ministries = TableRegistry::getTableLocator()->get('Ministries', $config);
+        $config = $this->getTableLocator()->exists('Ministries') ? [] : ['className' => MinistriesTable::class];
+        $this->Ministries = $this->getTableLocator()->get('Ministries', $config);
     }
 
     /**
@@ -53,16 +51,6 @@ class MinistriesTableTest extends TestCase
         unset($this->Ministries);
 
         parent::tearDown();
-    }
-
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**

@@ -14,14 +14,19 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ActivitiesTable&\Cake\ORM\Association\BelongsTo $Activities
  * @property \App\Model\Table\StepsTable&\Cake\ORM\Association\BelongsTo $Steps
  *
- * @method \App\Model\Entity\ActivitiesStep get($primaryKey, $options = [])
- * @method \App\Model\Entity\ActivitiesStep newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\ActivitiesStep newEmptyEntity()
+ * @method \App\Model\Entity\ActivitiesStep newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\ActivitiesStep[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\ActivitiesStep get($primaryKey, $options = [])
+ * @method \App\Model\Entity\ActivitiesStep findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\ActivitiesStep patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\ActivitiesStep[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\ActivitiesStep|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\ActivitiesStep saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ActivitiesStep patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\ActivitiesStep[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\ActivitiesStep findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\ActivitiesStep[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ActivitiesStep[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ActivitiesStep[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ActivitiesStep[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class ActivitiesStepsTable extends Table
 {
@@ -36,8 +41,8 @@ class ActivitiesStepsTable extends Table
         parent::initialize($config);
 
         $this->setTable('activities_steps');
-        $this->setDisplayField('activity_id');
-        $this->setPrimaryKey(['id']);
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
         $this->belongsTo('Activities', [
             'foreignKey' => 'activity_id',
@@ -58,15 +63,19 @@ class ActivitiesStepsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
+            ->integer('id')
+            ->allowEmptyString('id', null, 'create');
+
+        $validator
             ->integer('required')
             ->allowEmptyString('required');
 
         $validator
             ->integer('steporder')
             ->allowEmptyString('steporder');
-        
+
         $validator
-            ->integer('stepcontext')
+            ->scalar('stepcontext')
             ->allowEmptyString('stepcontext');
 
         return $validator;
@@ -81,8 +90,8 @@ class ActivitiesStepsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['activity_id'], 'Activities'));
-        $rules->add($rules->existsIn(['step_id'], 'Steps'));
+        $rules->add($rules->existsIn(['activity_id'], 'Activities'), ['errorField' => 'activity_id']);
+        $rules->add($rules->existsIn(['step_id'], 'Steps'), ['errorField' => 'step_id']);
 
         return $rules;
     }

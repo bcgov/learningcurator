@@ -10,8 +10,8 @@
             <h4 class="heading"><?= __('Actions') ?></h4>
             <?= $this->Form->postLink(
                 __('Delete'),
-                ['action' => 'delete', $activitiesStep->activity_id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $activitiesStep->activity_id), 'class' => 'side-nav-item']
+                ['action' => 'delete', $activitiesStep->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $activitiesStep->id), 'class' => 'side-nav-item']
             ) ?>
             <?= $this->Html->link(__('List Activities Steps'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
@@ -22,8 +22,11 @@
             <fieldset>
                 <legend><?= __('Edit Activities Step') ?></legend>
                 <?php
+                    echo $this->Form->control('activity_id', ['options' => $activities]);
+                    echo $this->Form->control('step_id', ['options' => $steps]);
                     echo $this->Form->control('required');
                     echo $this->Form->control('steporder');
+                    echo $this->Form->control('stepcontext');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

@@ -2,13 +2,11 @@
 declare(strict_types=1);
 
 namespace App\Controller;
-use Cake\Utility\Text;
 
 /**
  * Topics Controller
  *
  * @property \App\Model\Table\TopicsTable $Topics
- *
  * @method \App\Model\Entity\Topic[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class TopicsController extends AppController
@@ -16,13 +14,14 @@ class TopicsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
     {
-        $this->Authorization->skipAuthorization();
-
-        $topics = $this->Topics->find()->contain(['Categories'])->order(['created' => 'desc']);
+        $this->paginate = [
+            'contain' => ['Users'],
+        ];
+        $topics = $this->paginate($this->Topics);
 
         $this->set(compact('topics'));
     }
@@ -31,7 +30,7 @@ class TopicsController extends AppController
      * View method
      *
      * @param string|null $id Topic id.
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
@@ -39,33 +38,26 @@ class TopicsController extends AppController
         $topic = $this->Topics->get($id, [
             'contain' => ['Users', 'Categories', 'Pathways'],
         ]);
-        $this->Authorization->authorize($topic);
 
-        $this->set('topic', $topic);
+        $this->set(compact('topic'));
     }
 
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
         $topic = $this->Topics->newEmptyEntity();
-        $this->Authorization->authorize($topic);
-
         if ($this->request->is('post')) {
-            //$this->request->getData()['slug'] = Text::slug(strtolower($this->request->getData()['name']));
             $topic = $this->Topics->patchEntity($topic, $this->request->getData());
-            $sluggedTitle = Text::slug(strtolower($topic->name));
-            // trim slug to maximum length defined in schema
-            $topic->slug = $sluggedTitle;
             if ($this->Topics->save($topic)) {
-                print(__('The topic has been saved.'));
+                $this->Flash->success(__('The topic has been saved.'));
 
-                return $this->redirect(['action' => 'view/'.$topic->id]);
+                return $this->redirect(['action' => 'index']);
             }
-            print(__('The topic could not be saved. Please, try again.'));
+            $this->Flash->error(__('The topic could not be saved. Please, try again.'));
         }
         $users = $this->Topics->Users->find('list', ['limit' => 200]);
         $categories = $this->Topics->Categories->find('list', ['limit' => 200]);
@@ -76,7 +68,7 @@ class TopicsController extends AppController
      * Edit method
      *
      * @param string|null $id Topic id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
@@ -84,15 +76,14 @@ class TopicsController extends AppController
         $topic = $this->Topics->get($id, [
             'contain' => ['Categories'],
         ]);
-        $this->Authorization->authorize($topic);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $topic = $this->Topics->patchEntity($topic, $this->request->getData());
             if ($this->Topics->save($topic)) {
-                //print(__('The topic has been saved.'));
+                $this->Flash->success(__('The topic has been saved.'));
 
-                return $this->redirect(['action' => 'view'],$topic->id);
+                return $this->redirect(['action' => 'index']);
             }
-            print(__('The topic could not be saved. Please, try again.'));
+            $this->Flash->error(__('The topic could not be saved. Please, try again.'));
         }
         $users = $this->Topics->Users->find('list', ['limit' => 200]);
         $categories = $this->Topics->Categories->find('list', ['limit' => 200]);
@@ -103,18 +94,17 @@ class TopicsController extends AppController
      * Delete method
      *
      * @param string|null $id Topic id.
-     * @return \Cake\Http\Response|null Redirects to index.
+     * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
         $topic = $this->Topics->get($id);
-        $this->Authorization->authorize($topic);
         if ($this->Topics->delete($topic)) {
-            print(__('The topic has been deleted.'));
+            $this->Flash->success(__('The topic has been deleted.'));
         } else {
-            print(__('The topic could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The topic could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
