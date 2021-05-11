@@ -7,7 +7,6 @@ namespace App\Controller;
  * Ministries Controller
  *
  * @property \App\Model\Table\MinistriesTable $Ministries
- *
  * @method \App\Model\Entity\Ministry[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class MinistriesController extends AppController
@@ -15,7 +14,7 @@ class MinistriesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
     {
@@ -28,22 +27,22 @@ class MinistriesController extends AppController
      * View method
      *
      * @param string|null $id Ministry id.
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
         $ministry = $this->Ministries->get($id, [
-            'contain' => ['Activities', 'Pathways', 'Users'],
+            'contain' => ['Activities', 'Pathways'],
         ]);
 
-        $this->set('ministry', $ministry);
+        $this->set(compact('ministry'));
     }
 
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -51,11 +50,11 @@ class MinistriesController extends AppController
         if ($this->request->is('post')) {
             $ministry = $this->Ministries->patchEntity($ministry, $this->request->getData());
             if ($this->Ministries->save($ministry)) {
-                print(__('The ministry has been saved.'));
+                $this->Flash->success(__('The ministry has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            print(__('The ministry could not be saved. Please, try again.'));
+            $this->Flash->error(__('The ministry could not be saved. Please, try again.'));
         }
         $this->set(compact('ministry'));
     }
@@ -64,7 +63,7 @@ class MinistriesController extends AppController
      * Edit method
      *
      * @param string|null $id Ministry id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
@@ -75,11 +74,11 @@ class MinistriesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $ministry = $this->Ministries->patchEntity($ministry, $this->request->getData());
             if ($this->Ministries->save($ministry)) {
-                print(__('The ministry has been saved.'));
+                $this->Flash->success(__('The ministry has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            print(__('The ministry could not be saved. Please, try again.'));
+            $this->Flash->error(__('The ministry could not be saved. Please, try again.'));
         }
         $this->set(compact('ministry'));
     }
@@ -88,7 +87,7 @@ class MinistriesController extends AppController
      * Delete method
      *
      * @param string|null $id Ministry id.
-     * @return \Cake\Http\Response|null Redirects to index.
+     * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
@@ -96,9 +95,9 @@ class MinistriesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $ministry = $this->Ministries->get($id);
         if ($this->Ministries->delete($ministry)) {
-            print(__('The ministry has been deleted.'));
+            $this->Flash->success(__('The ministry has been deleted.'));
         } else {
-            print(__('The ministry could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The ministry could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

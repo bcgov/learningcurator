@@ -10,11 +10,13 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  * @property string|null $description
  * @property \Cake\I18n\FrozenTime $created
- * @property int $createdby
+ * @property string $createdby
  *
  * @property \App\Model\Entity\Activity[] $activities
+ * @property \App\Model\Entity\Pathway[] $pathways
  * @property \App\Model\Entity\PathwaysUser[] $pathways_users
  */
 class Status extends Entity
@@ -30,11 +32,12 @@ class Status extends Entity
      */
     protected $_accessible = [
         'name' => true,
+        'slug' => true,
         'description' => true,
         'created' => true,
         'createdby' => true,
         'activities' => true,
-        'pathways_users' => true,
         'pathways' => true,
+        'pathways_users' => true,
     ];
 }

@@ -10,14 +10,14 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $activity_id
- * @property int $user_id
+ * @property string $user_id
  * @property string|null $issue
- * @property int|null $curator_id
+ * @property string|null $curator_id
  * @property string|null $response
  * @property \Cake\I18n\FrozenTime $created
  *
  * @property \App\Model\Entity\Activity $activity
- * @property \App\Model\Entity\User $user
+ * @property \CakeDC\Users\Model\Entity\User $user
  */
 class Report extends Entity
 {

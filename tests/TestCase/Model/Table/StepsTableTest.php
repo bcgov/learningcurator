@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\StepsTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -38,8 +37,8 @@ class StepsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Steps') ? [] : ['className' => StepsTable::class];
-        $this->Steps = TableRegistry::getTableLocator()->get('Steps', $config);
+        $config = $this->getTableLocator()->exists('Steps') ? [] : ['className' => StepsTable::class];
+        $this->Steps = $this->getTableLocator()->get('Steps', $config);
     }
 
     /**
@@ -52,16 +51,6 @@ class StepsTableTest extends TestCase
         unset($this->Steps);
 
         parent::tearDown();
-    }
-
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**

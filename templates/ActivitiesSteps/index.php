@@ -11,6 +11,7 @@
         <table>
             <thead>
                 <tr>
+                    <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('activity_id') ?></th>
                     <th><?= $this->Paginator->sort('step_id') ?></th>
                     <th><?= $this->Paginator->sort('required') ?></th>
@@ -21,14 +22,15 @@
             <tbody>
                 <?php foreach ($activitiesSteps as $activitiesStep): ?>
                 <tr>
+                    <td><?= $this->Number->format($activitiesStep->id) ?></td>
                     <td><?= $activitiesStep->has('activity') ? $this->Html->link($activitiesStep->activity->name, ['controller' => 'Activities', 'action' => 'view', $activitiesStep->activity->id]) : '' ?></td>
                     <td><?= $activitiesStep->has('step') ? $this->Html->link($activitiesStep->step->name, ['controller' => 'Steps', 'action' => 'view', $activitiesStep->step->id]) : '' ?></td>
                     <td><?= $this->Number->format($activitiesStep->required) ?></td>
                     <td><?= $this->Number->format($activitiesStep->steporder) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $activitiesStep->activity_id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $activitiesStep->activity_id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $activitiesStep->activity_id], ['confirm' => __('Are you sure you want to delete # {0}?', $activitiesStep->activity_id)]) ?>
+                        <?= $this->Html->link(__('View'), ['action' => 'view', $activitiesStep->id]) ?>
+                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $activitiesStep->id]) ?>
+                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $activitiesStep->id], ['confirm' => __('Are you sure you want to delete # {0}?', $activitiesStep->id)]) ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

@@ -18,6 +18,7 @@
                 <legend><?= __('Add Activity Type') ?></legend>
                 <?php
                     echo $this->Form->control('name');
+                    echo $this->Form->control('slug');
                     echo $this->Form->control('description');
                     echo $this->Form->control('color');
                     echo $this->Form->control('delivery_method');

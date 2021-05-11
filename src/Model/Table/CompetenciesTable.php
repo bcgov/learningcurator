@@ -13,16 +13,21 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\ActivitiesTable&\Cake\ORM\Association\BelongsToMany $Activities
  * @property \App\Model\Table\PathwaysTable&\Cake\ORM\Association\BelongsToMany $Pathways
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
+ * @property \CakeDC\Users\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
  *
- * @method \App\Model\Entity\Competency get($primaryKey, $options = [])
- * @method \App\Model\Entity\Competency newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Competency newEmptyEntity()
+ * @method \App\Model\Entity\Competency newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Competency[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Competency get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Competency findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Competency patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Competency[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Competency|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Competency saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Competency patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Competency[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Competency findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Competency[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Competency[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Competency[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Competency[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -80,6 +85,12 @@ class CompetenciesTable extends Table
             ->notEmptyString('name');
 
         $validator
+            ->scalar('slug')
+            ->maxLength('slug', 255)
+            ->requirePresence('slug', 'create')
+            ->notEmptyString('slug');
+
+        $validator
             ->scalar('description')
             ->allowEmptyString('description');
 
@@ -99,12 +110,12 @@ class CompetenciesTable extends Table
             ->allowEmptyString('featured');
 
         $validator
-            ->integer('createdby')
+            ->uuid('createdby')
             ->requirePresence('createdby', 'create')
             ->notEmptyString('createdby');
 
         $validator
-            ->integer('modifiedby')
+            ->uuid('modifiedby')
             ->requirePresence('modifiedby', 'create')
             ->notEmptyString('modifiedby');
 

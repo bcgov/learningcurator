@@ -17,6 +17,8 @@
             <fieldset>
                 <legend><?= __('Add Activities Competency') ?></legend>
                 <?php
+                    echo $this->Form->control('activity_id', ['options' => $activities]);
+                    echo $this->Form->control('competency_id', ['options' => $competencies]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

@@ -8,7 +8,7 @@ $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
 if ($this->Identity->isLoggedIn()) {
-	$role = $this->Identity->get('role_id');
+	$role = $this->Identity->get('role');
 	$uid = $this->Identity->get('id');
 }
 ?>
@@ -37,7 +37,7 @@ if ($this->Identity->isLoggedIn()) {
     </div>
 <?php endforeach ?>
 </div>
-<?php if($role == 2 || $role == 5): ?>
+<?php if($role == 2 || $role == 'superadmin'): ?>
 <div class="col-md-3">
 <div class="p-3 my-3 bg-white rounded-lg">
     <?= $this->Form->create(null,['url' => ['controller' => 'Pathways', 'action' => 'add']]) ?>

@@ -17,21 +17,17 @@ declare(strict_types=1);
 namespace App;
 
 use Cake\Core\Configure;
+use Cake\Core\ContainerInterface;
 use Cake\Core\Exception\MissingPluginException;
+use Cake\Datasource\FactoryLocator;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
+use Cake\Http\Middleware\BodyParserMiddleware;
+use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Http\MiddlewareQueue;
+use Cake\ORM\Locator\TableLocator;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
-
-use Authorization\AuthorizationService;
-use Authorization\AuthorizationServiceInterface;
-use Authorization\AuthorizationServiceProviderInterface;
-use Authorization\Middleware\AuthorizationMiddleware;
-use Authorization\Policy\OrmResolver;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-
 
 /**
  * Application setup class.
@@ -39,7 +35,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication implements AuthorizationServiceProviderInterface
+class Application extends BaseApplication
 {
     /**
      * Load all the application configuration and bootstrap logic.
@@ -53,6 +49,11 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
 
         if (PHP_SAPI === 'cli') {
             $this->bootstrapCli();
+        } else {
+            FactoryLocator::add(
+                'Table',
+                (new TableLocator())->allowFallbackClass(false)
+            );
         }
 
         /*
@@ -62,9 +63,9 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
         if (Configure::read('debug')) {
             $this->addPlugin('DebugKit');
         }
+
         // Load more plugins here
-        $this->addPlugin('Authentication');
-	    $this->addPlugin('Authorization');
+        $this->addPlugin(\CakeDC\Users\Plugin::class);
     }
 
     /**
@@ -92,15 +93,34 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
             // using it's second constructor argument:
             // `new RoutingMiddleware($this, '_cake_routes_')`
             ->add(new RoutingMiddleware($this))
-            ->add(new \Authentication\Middleware\AuthenticationMiddleware($this->configAuth()));
-	
-	    $middlewareQueue->add(new AuthorizationMiddleware($this));
-        
-	    return $middlewareQueue;
+
+            // Parse various types of encoded request bodies so that they are
+            // available as array through $request->getData()
+            // https://book.cakephp.org/4/en/controllers/middleware.html#body-parser-middleware
+            ->add(new BodyParserMiddleware())
+
+            // Cross Site Request Forgery (CSRF) Protection Middleware
+            // https://book.cakephp.org/4/en/controllers/middleware.html#cross-site-request-forgery-csrf-middleware
+            ->add(new CsrfProtectionMiddleware([
+                'httponly' => true,
+            ]));
+
+        return $middlewareQueue;
     }
 
     /**
-     * Bootrapping for CLI application.
+     * Register application container services.
+     *
+     * @param \Cake\Core\ContainerInterface $container The Container to update.
+     * @return void
+     * @link https://book.cakephp.org/4/en/development/dependency-injection.html#dependency-injection
+     */
+    public function services(ContainerInterface $container): void
+    {
+    }
+
+    /**
+     * Bootstrapping for CLI application.
      *
      * That is when running commands.
      *
@@ -118,42 +138,4 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
 
         // Load more plugins here
     }
-
-    protected function configAuth(): \Authentication\AuthenticationService
-    {
-        $authenticationService = new \Authentication\AuthenticationService([
-            'unauthenticatedRedirect' => '/users/login',
-            'queryParam' => 'redirect',
-        ]);
-    
-        // Load identifiers, ensure we check email and password fields
-        $authenticationService->loadIdentifier('Authentication.Password', [
-            'fields' => [
-                'username' => 'email',
-                'password' => 'password',
-            ]
-        ]);
-    
-        // Load the authenticators, you want session first
-        $authenticationService->loadAuthenticator('Authentication.Session');
-        // Configure form data check to pick email and password
-        $authenticationService->loadAuthenticator('Authentication.Form', [
-            'fields' => [
-                'username' => 'email',
-                'password' => 'password',
-            ],
-            'loginUrl' => '/users/login',
-        ]);
-    
-        return $authenticationService;
-    }
-
-    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
-    {
-        $resolver = new OrmResolver();
-
-        return new AuthorizationService($resolver);
-    }
-
-
 }

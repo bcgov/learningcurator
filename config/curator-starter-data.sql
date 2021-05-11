@@ -11,14 +11,6 @@
 -- The main super user created below does use 'ahaggett' as the IDIR
 -- value as the initial author of this code is Allan.Haggett@gov.bc.ca
 --
---
--- Dumping data for table `roles`
---
-
-INSERT INTO roles VALUES(1,'Learner','learner','These are regular end-users who only join pathways and claim activities.','','');
-INSERT INTO roles VALUES(2,'Curator','curator','Curators are the subject matter experts who create pathways.','','');
-INSERT INTO roles VALUES(5,'Super User','super','Can do anything, anywhere.','','');
-
 
 --
 -- Dumping data for table `ministries`

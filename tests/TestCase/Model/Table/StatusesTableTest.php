@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\StatusesTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -27,6 +26,7 @@ class StatusesTableTest extends TestCase
     protected $fixtures = [
         'app.Statuses',
         'app.Activities',
+        'app.Pathways',
         'app.PathwaysUsers',
     ];
 
@@ -38,8 +38,8 @@ class StatusesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Statuses') ? [] : ['className' => StatusesTable::class];
-        $this->Statuses = TableRegistry::getTableLocator()->get('Statuses', $config);
+        $config = $this->getTableLocator()->exists('Statuses') ? [] : ['className' => StatusesTable::class];
+        $this->Statuses = $this->getTableLocator()->get('Statuses', $config);
     }
 
     /**
@@ -55,31 +55,11 @@ class StatusesTableTest extends TestCase
     }
 
     /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
      * Test validationDefault method
      *
      * @return void
      */
     public function testValidationDefault(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

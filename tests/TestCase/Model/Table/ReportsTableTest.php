@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\ReportsTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -38,8 +37,8 @@ class ReportsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Reports') ? [] : ['className' => ReportsTable::class];
-        $this->Reports = TableRegistry::getTableLocator()->get('Reports', $config);
+        $config = $this->getTableLocator()->exists('Reports') ? [] : ['className' => ReportsTable::class];
+        $this->Reports = $this->getTableLocator()->get('Reports', $config);
     }
 
     /**
@@ -52,16 +51,6 @@ class ReportsTableTest extends TestCase
         unset($this->Reports);
 
         parent::tearDown();
-    }
-
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**

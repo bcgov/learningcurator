@@ -5,10 +5,10 @@
  */
 
 $this->loadHelper('Authentication.Identity');
-$uid = 0;
-$role = 0;
+$uid = '';
+$role = '';
 if ($this->Identity->isLoggedIn()) {
-	$role = $this->Identity->get('role_id');
+	$role = $this->Identity->get('role');
 	$uid = $this->Identity->get('id');
 }
 /** 
@@ -125,7 +125,7 @@ if($stepclaimcount > 0) {
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-8">
 <?php if (!empty($step->pathways)) : ?>
-<?php if($role == 2 || $role == 5): ?>
+<?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="btn-group  mt-3 ml-3">
 <?= $this->Html->link(__('Edit'), ['controller' => 'Steps', 'action' => 'edit', $step->id], ['class' => 'btn btn-light btn-sm']) ?>
 <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $step->id],['class' => 'btn btn-light btn-sm', 'confirm' => __('Are you sure you want to delete # {0}?', $step->name)]) ?>
@@ -250,9 +250,8 @@ $lastobj = $s->description;
 
 
 		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'claim']) ?>
-		<?= $this->Form->hidden('users.0.created', ['value' => date('Y-m-d H:i:s')]); ?>
+		<?php //$this->Form->hidden('users.0.created', ['value' => date('Y-m-d H:i:s')]); ?>
 		<?= $this->Form->hidden('users.0.id', ['value' => $uid]); ?>
-
 		<?= $this->Form->button(__('Claim'),['class'=>'btn btn-success', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 		<?= $this->Form->end() ?>
 

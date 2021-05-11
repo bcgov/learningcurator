@@ -23,6 +23,7 @@
                 <legend><?= __('Edit Ministry') ?></legend>
                 <?php
                     echo $this->Form->control('name');
+                    echo $this->Form->control('slug');
                     echo $this->Form->control('elm_learner_group');
                     echo $this->Form->control('description');
                     echo $this->Form->control('hyperlink');

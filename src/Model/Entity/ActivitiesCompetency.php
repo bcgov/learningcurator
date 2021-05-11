@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
 /**
  * ActivitiesCompetency Entity
  *
+ * @property int $id
  * @property int $activity_id
  * @property int $competency_id
  *
@@ -26,6 +27,8 @@ class ActivitiesCompetency extends Entity
      * @var array
      */
     protected $_accessible = [
+        'activity_id' => true,
+        'competency_id' => true,
         'activity' => true,
         'competency' => true,
     ];

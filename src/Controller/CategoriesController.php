@@ -3,14 +3,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-Use Cake\ORM\TableRegistry;
-use Cake\Utility\Text;
-
 /**
  * Categories Controller
  *
  * @property \App\Model\Table\CategoriesTable $Categories
- *
  * @method \App\Model\Entity\Category[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CategoriesController extends AppController
@@ -18,25 +14,11 @@ class CategoriesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
     {
-        $this->Authorization->skipAuthorization();
-        $categories = $this->Categories->find()->contain(['Topics','Topics.Pathways']);
-
-        $this->set(compact('categories'));
-    }
-    /**
-     * API method outputs JSON of the index listing of all topics, and the pathways beneath them
-     *
-     * @return \Cake\Http\Response|null
-     */
-    public function api()
-    {
-        $this->Authorization->skipAuthorization();
-        $categories = $this->Categories->find()->contain(['Topics','Topics.Pathways']);
-        
+        $categories = $this->paginate($this->Categories);
 
         $this->set(compact('categories'));
     }
@@ -45,87 +27,80 @@ class CategoriesController extends AppController
      * View method
      *
      * @param string|null $id Category id.
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-	    $this->Authorization->skipAuthorization();
-        $categories = $this->Categories->find('all');
-		$category = $this->Categories->get($id, [
-            'contain' => ['Topics','Topics.Pathways','Topics.Pathways.Statuses'],
+        $category = $this->Categories->get($id, [
+            'contain' => ['Topics'],
         ]);
-        $this->set(compact('categories','category'));
+
+        $this->set(compact('category'));
     }
 
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
         $category = $this->Categories->newEmptyEntity();
-        $this->Authorization->authorize($category);
-        
         if ($this->request->is('post')) {
             $category = $this->Categories->patchEntity($category, $this->request->getData());
-            $sluggedTitle = Text::slug(strtolower($category->name));
-            // trim slug to maximum length defined in schema
-            $category->slug = $sluggedTitle;
             if ($this->Categories->save($category)) {
-            
-                return $this->redirect($this->referer());
+                $this->Flash->success(__('The category has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
             }
-            echo __('The category could not be saved. Please, try again.');
+            $this->Flash->error(__('The category could not be saved. Please, try again.'));
         }
-        $this->set(compact('category'));
+        $users = $this->Categories->Users->find('list', ['limit' => 200]);
+        $topics = $this->Categories->Topics->find('list', ['limit' => 200]);
+        $this->set(compact('category', 'topics', 'users'));
     }
 
     /**
      * Edit method
      *
      * @param string|null $id Category id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
         $category = $this->Categories->get($id, [
-            'contain' => [],
+            'contain' => ['Topics'],
         ]);
-        $this->Authorization->authorize($category);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $category = $this->Categories->patchEntity($category, $this->request->getData());
-            $sluggedTitle = Text::slug(strtolower($category->name));
-            // trim slug to maximum length defined in schema
-            $category->slug = $sluggedTitle;
             if ($this->Categories->save($category)) {
-                print(__('The category has been saved.'));
+                $this->Flash->success(__('The category has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            print(__('The category could not be saved. Please, try again.'));
+            $this->Flash->error(__('The category could not be saved. Please, try again.'));
         }
-        $this->set(compact('category'));
+        $topics = $this->Categories->Topics->find('list', ['limit' => 200]);
+        $this->set(compact('category', 'topics'));
     }
 
     /**
      * Delete method
      *
      * @param string|null $id Category id.
-     * @return \Cake\Http\Response|null Redirects to index.
+     * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
         $category = $this->Categories->get($id);
-        $this->Authorization->authorize($category);
         if ($this->Categories->delete($category)) {
-            print(__('The category has been deleted.'));
+            $this->Flash->success(__('The category has been deleted.'));
         } else {
-            print(__('The category could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The category could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -11,26 +11,24 @@
         <table>
             <thead>
                 <tr>
+                    <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('activity_id') ?></th>
                     <th><?= $this->Paginator->sort('user_id') ?></th>
-                    <th><?= $this->Paginator->sort('started') ?></th>
-                    <th><?= $this->Paginator->sort('finished') ?></th>
-                    <th><?= $this->Paginator->sort('liked') ?></th>
+                    <th><?= $this->Paginator->sort('created') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($activitiesUsers as $activitiesUser): ?>
                 <tr>
+                    <td><?= $this->Number->format($activitiesUser->id) ?></td>
                     <td><?= $activitiesUser->has('activity') ? $this->Html->link($activitiesUser->activity->name, ['controller' => 'Activities', 'action' => 'view', $activitiesUser->activity->id]) : '' ?></td>
-                    <td><?= $activitiesUser->has('user') ? $this->Html->link($activitiesUser->user->name, ['controller' => 'Users', 'action' => 'view', $activitiesUser->user->id]) : '' ?></td>
-                    <td><?= h($activitiesUser->started) ?></td>
-                    <td><?= h($activitiesUser->finished) ?></td>
-                    <td><?= $this->Number->format($activitiesUser->liked) ?></td>
+                    <td><?= $activitiesUser->has('user') ? $this->Html->link($activitiesUser->user->id, ['controller' => 'Users', 'action' => 'view', $activitiesUser->user->id]) : '' ?></td>
+                    <td><?= h($activitiesUser->created) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $activitiesUser->user_id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $activitiesUser->user_id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $activitiesUser->user_id], ['confirm' => __('Are you sure you want to delete # {0}?', $activitiesUser->user_id)]) ?>
+                        <?= $this->Html->link(__('View'), ['action' => 'view', $activitiesUser->id]) ?>
+                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $activitiesUser->id]) ?>
+                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $activitiesUser->id], ['confirm' => __('Are you sure you want to delete # {0}?', $activitiesUser->id)]) ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

@@ -12,17 +12,22 @@ use Cake\Validation\Validator;
  * Reports Model
  *
  * @property \App\Model\Table\ActivitiesTable&\Cake\ORM\Association\BelongsTo $Activities
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \CakeDC\Users\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \CakeDC\Users\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  *
- * @method \App\Model\Entity\Report get($primaryKey, $options = [])
- * @method \App\Model\Entity\Report newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Report newEmptyEntity()
+ * @method \App\Model\Entity\Report newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Report[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Report get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Report findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Report patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Report[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Report|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Report saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Report patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Report[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Report findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Report[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Report[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Report[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Report[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -52,7 +57,9 @@ class ReportsTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
-
+        $this->belongsTo('Users', [
+            'foreignKey' => 'curator_id',
+        ]);
     }
 
     /**
@@ -87,9 +94,9 @@ class ReportsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['activity_id'], 'Activities'));
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
-        $rules->add($rules->existsIn(['curator_id'], 'Users'));
+        $rules->add($rules->existsIn(['activity_id'], 'Activities'), ['errorField' => 'activity_id']);
+        $rules->add($rules->existsIn(['user_id'], 'Users'), ['errorField' => 'user_id']);
+        $rules->add($rules->existsIn(['curator_id'], 'Users'), ['errorField' => 'curator_id']);
 
         return $rules;
     }

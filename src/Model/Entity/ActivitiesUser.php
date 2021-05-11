@@ -8,15 +8,13 @@ use Cake\ORM\Entity;
 /**
  * ActivitiesUser Entity
  *
+ * @property int $id
  * @property int $activity_id
- * @property int $user_id
- * @property \Cake\I18n\FrozenTime|null $started
- * @property \Cake\I18n\FrozenTime|null $finished
- * @property int|null $liked
- * @property string|null $notes
+ * @property string $user_id
+ * @property \Cake\I18n\FrozenTime $created
  *
  * @property \App\Model\Entity\Activity $activity
- * @property \App\Model\Entity\User $user
+ * @property \CakeDC\Users\Model\Entity\User $user
  */
 class ActivitiesUser extends Entity
 {
@@ -32,9 +30,8 @@ class ActivitiesUser extends Entity
     protected $_accessible = [
         'activity_id' => true,
         'user_id' => true,
-        'started' => true,
-        'finished' => true,
-        'liked' => true,
-        'notes' => true,
+        'created' => true,
+        'activity' => true,
+        'user' => true,
     ];
 }

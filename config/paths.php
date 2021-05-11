@@ -53,8 +53,7 @@ define('CONFIG', ROOT . DS . 'config' . DS);
  *
  * `define('WWW_ROOT', rtrim($_SERVER['DOCUMENT_ROOT'], DS) . DS);`
  */
-define('WWW_ROOT', rtrim($_SERVER['DOCUMENT_ROOT'], DS) . DS);
-//define('WWW_ROOT', ROOT . DS . 'webroot' . DS);
+define('WWW_ROOT', ROOT . DS . 'webroot' . DS);
 
 /*
  * Path to the tests directory.
@@ -76,12 +75,12 @@ define('LOGS', ROOT . DS . 'logs' . DS);
  */
 define('CACHE', TMP . 'cache' . DS);
 
-/**
+/*
  * Path to the resources directory.
  */
 define('RESOURCES', ROOT . DS . 'resources' . DS);
 
-/**
+/*
  * The absolute path to the "cake" directory, WITHOUT a trailing DS.
  *
  * CakePHP should always be installed with composer, so look there.

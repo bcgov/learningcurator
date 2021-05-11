@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+
 Use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
 
@@ -10,51 +11,35 @@ use Cake\Utility\Text;
  * Pathways Controller
  *
  * @property \App\Model\Table\PathwaysTable $Pathways
- *
  * @method \App\Model\Entity\Pathway[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class PathwaysController extends AppController
 {
-    public function beforeFilter(\Cake\Event\EventInterface $event)
-    {
-        parent::beforeFilter($event);
-        // configure the login action to don't require authentication, preventing
-        // the infinite redirect loop issue
-        $this->Authentication->addUnauthenticatedActions(['index','view']);
-    }
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
     {
-        $this->Authorization->skipAuthorization();
-        $user = $this->request->getAttribute('authentication')->getIdentity();
-        $paths = TableRegistry::getTableLocator()->get('Pathways');
-        // If the person is a curator or an admin, then return all of the pathways,
-        // regardless of their statuses. Regular users should only ever see 
-        // 'published' pathways.
-        if($user->role_id == 2 || $user->role_id == 5) {
-            $pathways = $paths->find('all')->contain(['Statuses']);
-        } else {
-            $pathways = $paths->find('all')->contain(['Statuses'])->where(['status_id' => 2]);
-        }
-        //$this->paginate($pathways);
+        $this->paginate = [
+            'contain' => ['Topics', 'Ministries', 'Statuses'],
+        ];
+        $pathways = $this->paginate($this->Pathways);
+
         $this->set(compact('pathways'));
     }
 
     /**
-     * Standard, tightly-couple view method that will be deprecated or refactored in favor
-     * of the static-site export with independent datastore used for user info (e.g. claims)
+     * View method
      *
      * @param string|null $id Pathway id.
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($slug = null)
     {
-        $this->Authorization->skipAuthorization();
+        //$this->Authorization->skipAuthorization();
         // As we loop through the activities for the steps on this pathway, we 
         // need to be able to check to see if the current user has "claimed" 
         // that activity. Here we get the current user id and use it to select 
@@ -86,12 +71,9 @@ class PathwaysController extends AppController
                             'Topics',
                             'Topics.Categories', 
                             'Ministries', 
-                            'Competencies', 
                             'Steps', 
                             'Steps.Activities', 
                             'Steps.Activities.ActivityTypes', 
-                            'Steps.Activities.Users', 
-                            'Steps.Activities.Tags', 
                             'Users'])->firstOrFail();
         //
         // we want to be able to tell if the current user is already on this
@@ -128,154 +110,57 @@ class PathwaysController extends AppController
 
     }
 
-
-    /**
-     * Make exports a pathway index page to pathway-name.html
-     *
-     * @param string|null $id Pathway id.
-     * @return \Cake\Http\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function make($id = null)
-    {
-        $this->Authorization->skipAuthorization();
-        //$this->layout = false;
-        /*$pathway = $this->Pathways->get($id, [
-            'contain' => ['Categories', 
-                            'Ministries', 
-                            'Competencies', 
-                            'Steps', 
-                            'Steps.Activities', 
-                            'Steps.Activities.ActivityTypes', 
-                            'Steps.Activities.Tags'],
-        ]);
-
-
-        $this->set(compact('pathway'));*/
-        exec("wget --mirror --convert-links --adjust-extension --page-requisites --no-parent http://localhost:8080/");
-
-
-    }
-
-    
-
-    /**
-     * API method returns a JSON object that contains the current 
-     * pathways steps and activities breakdown. You should be able to 
-     * recreate a complete pathway from this one call.
-     *
-     * @param string|null $id Pathway id.
-     * @return \Cake\Http\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function api($id = null)
-    {
-        $this->Authorization->skipAuthorization();
-        $pathway = $this->Pathways->get($id, [
-            'contain' => ['Ministries', 
-                            'Topics', 
-                            'Competencies', 
-                            'Steps', 
-                            'Steps.Activities', 
-                            'Steps.Activities.ActivityTypes', 
-                            'Steps.Activities.Tags'],
-        ]);
-	    $this->set(compact('pathway'));
-    }
-
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
         $pathway = $this->Pathways->newEmptyEntity();
-        $this->Authorization->authorize($pathway);
-
-
         if ($this->request->is('post')) {
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
-            $sluggedTitle = Text::slug($pathway->name);
-            // trim slug to maximum length defined in schema
-            $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
             if ($this->Pathways->save($pathway)) {
-                //print(__('The pathway has been saved.'));
-                $go = '/pathways/' . $pathway->slug;
-                return $this->redirect($go);
+                $this->Flash->success(__('The pathway has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
             }
-            //print(__('The pathway could not be saved. Please, try again.'));
+            $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
         }
-        
+        $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
+        $statuses = $this->Pathways->Statuses->find('list', ['limit' => 200]);
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
-        $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'ministries', 'competencies', 'steps', 'users','topics'));
+        $this->set(compact('pathway', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
     }
-
-    /**
-     * Publish pathway method
-     *
-     * @param string|null $id Pathway id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function publish($id = null)
-    {
-        $pathway = $this->Pathways->get($id, [
-            'contain' => ['Competencies', 'Steps', 'Users'],
-        ]);
-
-        $this->Authorization->authorize($pathway);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $this->request->getData()['status_id'] = 2;
-            $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
-            if ($this->Pathways->save($pathway)) {
-                print(__('The pathway has been saved.'));
-                $pathback = '/pathways/view/' . $id;
-                return $this->redirect($pathback);
-            }
-            print(__('The pathway could not be saved. Please, try again.'));
-        }
-
-    }
-
 
     /**
      * Edit method
      *
      * @param string|null $id Pathway id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
         $pathway = $this->Pathways->get($id, [
-            'contain' => ['Competencies', 'Steps', 'Users', 'Topics'],
+            'contain' => ['Competencies', 'Steps', 'Users'],
         ]);
-
-        $this->Authorization->authorize($pathway);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
-
-            $sluggedTitle = Text::slug($pathway->name);
-            // trim slug to maximum length defined in schema
-            $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
-
             if ($this->Pathways->save($pathway)) {
-                print(__('The pathway has been saved.'));
-                $pathback = '/pathways/' . $pathway->slug;
-                return $this->redirect($pathback);
+                $this->Flash->success(__('The pathway has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
             }
-            print(__('The pathway could not be saved. Please, try again.'));
+            $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
         }
-        
         $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
-        $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $statuses = $this->Pathways->Statuses->find('list', ['limit' => 200]);
+        $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
         $this->set(compact('pathway', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
@@ -285,7 +170,7 @@ class PathwaysController extends AppController
      * Delete method
      *
      * @param string|null $id Pathway id.
-     * @return \Cake\Http\Response|null Redirects to index.
+     * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
@@ -293,17 +178,35 @@ class PathwaysController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $pathway = $this->Pathways->get($id);
         if ($this->Pathways->delete($pathway)) {
-            print(__('The pathway has been deleted.'));
+            $this->Flash->success(__('The pathway has been deleted.'));
         } else {
-            print(__('The pathway could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The pathway could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
     }
 
-
-
     /**
+     * Follow a pathway. Adds user_id to pathways_users table.
+     *
+     * @param string|null $id Pathway id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function follow ($id = null)
+    {
+        $pathway = $this->Pathways->get($id, [
+            'contain' => ['Users'],
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
+            if ($this->Pathways->save($pathway)) {
+                return $this->redirect($this->referer());
+            }
+        }
+    }
+    
+   /**
      * Process and return a status for this pathway for the logged in user 
      *
      * @param string|null $id Pathway id.
@@ -312,7 +215,7 @@ class PathwaysController extends AppController
      */
     public function status($id = null)
     {
-        $this->Authorization->skipAuthorization();
+        
         $this->viewBuilder()->setLayout('ajax');
         // As we loop through the activities for the steps on this pathway, we 
         // need to be able to check to see if the current user has "claimed" 
@@ -546,16 +449,8 @@ class PathwaysController extends AppController
         
             $chartjs .= '}';
             
-            if(!empty($user)) {
-
-                $this->set(compact(['percentages','status','chartjs','typecounts','typecolors']));
+            $this->set(compact(['percentages','status','chartjs','typecounts','typecolors']));
                 
-            } else {
-
-                return $this->redirect(['controller' => 'Users', 'action' => 'login']);
-            
-            }
-
         else:
 
             // There are no steps
@@ -564,59 +459,5 @@ class PathwaysController extends AppController
 
 
     } // end of method
-
-
-
-
-    /**
-     * Import an entire pathway from a provided JSON file
-     *
-     */
-    public function import ($topic_id = null)
-    {
-        $this->Authorization->skipAuthorization();
-        $user = $this->request->getAttribute('authentication')->getIdentity();
-
-        $data = file_get_contents('/home/a/learning-curator/personal-development.json',true);
-            
-        $path = json_decode($data, true);
-        
-        $allsteps = array();
-        foreach($path['steps'] as $step) {
-            
-            $newstep = array('name' => $step['name'], 'description' => $step['description'], 'createdby' => $user->id);
-            array_push($allsteps,$newstep);
-
-            //echo $step['name'] . ' mocked.<br>';
-            // foreach($step['activities'] as $activity) {
-            //     echo $activity['name'] . ' mocked.<br>';
-            //     // create a new activity here
-            // }
-        }
-
-        $sluggedTitle = Text::slug($path['name']);
-        $data = [
-            'name' => $path['name'],
-            'slug' => strtolower(substr($sluggedTitle, 0, 191)),
-            'description' => $path['description'],
-            'objective' => $path['objective'],
-            'createdby' => $user->id,
-            'modifiedby' => $user->id,
-            'topic_id' => $topic_id
-        ];
-
-//echo '<pre>';print_r($data); exit;
-        $p = $this->getTableLocator()->get('Pathways');
-        $complete = $p->newEntity($data);
-
-        if ($p->save($complete)) {
-            echo $complete->id . ' created.<br>';
-           
-        }
-        
-
-    }
-
-
 
 }

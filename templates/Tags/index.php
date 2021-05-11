@@ -13,6 +13,7 @@
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('name') ?></th>
+                    <th><?= $this->Paginator->sort('slug') ?></th>
                     <th><?= $this->Paginator->sort('created') ?></th>
                     <th><?= $this->Paginator->sort('createdby') ?></th>
                     <th><?= $this->Paginator->sort('modified') ?></th>
@@ -25,10 +26,11 @@
                 <tr>
                     <td><?= $this->Number->format($tag->id) ?></td>
                     <td><?= h($tag->name) ?></td>
+                    <td><?= h($tag->slug) ?></td>
                     <td><?= h($tag->created) ?></td>
-                    <td><?= $this->Number->format($tag->createdby) ?></td>
+                    <td><?= h($tag->createdby) ?></td>
                     <td><?= h($tag->modified) ?></td>
-                    <td><?= $this->Number->format($tag->modifiedby) ?></td>
+                    <td><?= h($tag->modifiedby) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $tag->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tag->id]) ?>

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\CompetenciesTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -39,8 +38,8 @@ class CompetenciesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Competencies') ? [] : ['className' => CompetenciesTable::class];
-        $this->Competencies = TableRegistry::getTableLocator()->get('Competencies', $config);
+        $config = $this->getTableLocator()->exists('Competencies') ? [] : ['className' => CompetenciesTable::class];
+        $this->Competencies = $this->getTableLocator()->get('Competencies', $config);
     }
 
     /**
@@ -53,16 +52,6 @@ class CompetenciesTableTest extends TestCase
         unset($this->Competencies);
 
         parent::tearDown();
-    }
-
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**

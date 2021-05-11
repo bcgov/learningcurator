@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\ActivitiesUsersTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -38,8 +37,8 @@ class ActivitiesUsersTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('ActivitiesUsers') ? [] : ['className' => ActivitiesUsersTable::class];
-        $this->ActivitiesUsers = TableRegistry::getTableLocator()->get('ActivitiesUsers', $config);
+        $config = $this->getTableLocator()->exists('ActivitiesUsers') ? [] : ['className' => ActivitiesUsersTable::class];
+        $this->ActivitiesUsers = $this->getTableLocator()->get('ActivitiesUsers', $config);
     }
 
     /**
@@ -52,16 +51,6 @@ class ActivitiesUsersTableTest extends TestCase
         unset($this->ActivitiesUsers);
 
         parent::tearDown();
-    }
-
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**

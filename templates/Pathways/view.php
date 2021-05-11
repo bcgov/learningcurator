@@ -9,7 +9,7 @@ $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
 if ($this->Identity->isLoggedIn()) {
-	$role = $this->Identity->get('role_id');
+	$role = $this->Identity->get('role');
 	$uid = $this->Identity->get('id');
 }
 $totalusers = count($usersonthispathway);
@@ -76,7 +76,7 @@ This seems to work out, but #TODO investigate optimizing this
 	</ol>
 	</nav> 
 
-	<?php if($role == 2 || $role == 5): ?>
+	<?php if($role == 'curator' || $role == 'superuser'): ?>
 	<div class="btn-group float-right">
 	<?= $this->Html->link(__('Edit'), ['action' => 'edit', $pathway->id], ['class' => 'btn btn-light']) ?>
 	<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'btn btn-light']) ?>
@@ -98,7 +98,7 @@ This seems to work out, but #TODO investigate optimizing this
 	<span class="badge badge-light participatetotal"></span>  
 	</div>
 	
-	<?php if($role == 2 || $role == 5): ?>
+	<?php if($role == 'curator' || $role == 'superuser'): ?>
 
 	<a class="" 
 		data-toggle="collapse" 
@@ -139,7 +139,7 @@ This seems to work out, but #TODO investigate optimizing this
 </div>
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
-<?php if($role == 2 || $role == 5): ?>
+<?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="col-md-2 col-lg-2 order-last">
 <div class="bg-white rounded-lg p-3 my-3">
 <a class="" 
@@ -175,12 +175,9 @@ This seems to work out, but #TODO investigate optimizing this
 	
 <?php else: ?>
 <div class="card card-body my-3 stickyrings">
-<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'add']]) ?>
-<?php
-    echo $this->Form->control('user_id',['type' => 'hidden', 'value' => $uid]);
-    echo $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]);
-    echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
-?>
+
+<?= $this->Form->create(null, ['url' => ['controller' => 'pathways','action' => 'follow/' . $pathway->id]]) ?>
+<?= $this->Form->control('users.0.id',['type' => 'hidden', 'value' => $uid]) ?>
 <?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-success mb-0']) ?>
 
 <?= $this->Form->end() ?>

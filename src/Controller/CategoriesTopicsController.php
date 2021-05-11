@@ -7,7 +7,6 @@ namespace App\Controller;
  * CategoriesTopics Controller
  *
  * @property \App\Model\Table\CategoriesTopicsTable $CategoriesTopics
- *
  * @method \App\Model\Entity\CategoriesTopic[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CategoriesTopicsController extends AppController
@@ -15,7 +14,7 @@ class CategoriesTopicsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
     {
@@ -31,7 +30,7 @@ class CategoriesTopicsController extends AppController
      * View method
      *
      * @param string|null $id Categories Topic id.
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
@@ -40,13 +39,13 @@ class CategoriesTopicsController extends AppController
             'contain' => ['Categories', 'Topics'],
         ]);
 
-        $this->set('categoriesTopic', $categoriesTopic);
+        $this->set(compact('categoriesTopic'));
     }
 
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -54,11 +53,11 @@ class CategoriesTopicsController extends AppController
         if ($this->request->is('post')) {
             $categoriesTopic = $this->CategoriesTopics->patchEntity($categoriesTopic, $this->request->getData());
             if ($this->CategoriesTopics->save($categoriesTopic)) {
-                print(__('The categories topic has been saved.'));
+                $this->Flash->success(__('The categories topic has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            print(__('The categories topic could not be saved. Please, try again.'));
+            $this->Flash->error(__('The categories topic could not be saved. Please, try again.'));
         }
         $categories = $this->CategoriesTopics->Categories->find('list', ['limit' => 200]);
         $topics = $this->CategoriesTopics->Topics->find('list', ['limit' => 200]);
@@ -69,7 +68,7 @@ class CategoriesTopicsController extends AppController
      * Edit method
      *
      * @param string|null $id Categories Topic id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
@@ -80,11 +79,11 @@ class CategoriesTopicsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $categoriesTopic = $this->CategoriesTopics->patchEntity($categoriesTopic, $this->request->getData());
             if ($this->CategoriesTopics->save($categoriesTopic)) {
-                print(__('The categories topic has been saved.'));
+                $this->Flash->success(__('The categories topic has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            print(__('The categories topic could not be saved. Please, try again.'));
+            $this->Flash->error(__('The categories topic could not be saved. Please, try again.'));
         }
         $categories = $this->CategoriesTopics->Categories->find('list', ['limit' => 200]);
         $topics = $this->CategoriesTopics->Topics->find('list', ['limit' => 200]);
@@ -95,7 +94,7 @@ class CategoriesTopicsController extends AppController
      * Delete method
      *
      * @param string|null $id Categories Topic id.
-     * @return \Cake\Http\Response|null Redirects to index.
+     * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
@@ -103,9 +102,9 @@ class CategoriesTopicsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $categoriesTopic = $this->CategoriesTopics->get($id);
         if ($this->CategoriesTopics->delete($categoriesTopic)) {
-            print(__('The categories topic has been deleted.'));
+            $this->Flash->success(__('The categories topic has been deleted.'));
         } else {
-            print(__('The categories topic could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The categories topic could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

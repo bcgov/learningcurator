@@ -14,14 +14,19 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ActivitiesTable&\Cake\ORM\Association\BelongsTo $Activities
  * @property \App\Model\Table\CompetenciesTable&\Cake\ORM\Association\BelongsTo $Competencies
  *
- * @method \App\Model\Entity\ActivitiesCompetency get($primaryKey, $options = [])
- * @method \App\Model\Entity\ActivitiesCompetency newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\ActivitiesCompetency newEmptyEntity()
+ * @method \App\Model\Entity\ActivitiesCompetency newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\ActivitiesCompetency[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\ActivitiesCompetency get($primaryKey, $options = [])
+ * @method \App\Model\Entity\ActivitiesCompetency findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\ActivitiesCompetency patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\ActivitiesCompetency[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\ActivitiesCompetency|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\ActivitiesCompetency saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ActivitiesCompetency patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\ActivitiesCompetency[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\ActivitiesCompetency findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\ActivitiesCompetency[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ActivitiesCompetency[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ActivitiesCompetency[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ActivitiesCompetency[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class ActivitiesCompetenciesTable extends Table
 {
@@ -36,8 +41,8 @@ class ActivitiesCompetenciesTable extends Table
         parent::initialize($config);
 
         $this->setTable('activities_competencies');
-        $this->setDisplayField('activity_id');
-        $this->setPrimaryKey(['activity_id', 'competency_id']);
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
         $this->belongsTo('Activities', [
             'foreignKey' => 'activity_id',
@@ -50,6 +55,21 @@ class ActivitiesCompetenciesTable extends Table
     }
 
     /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator): Validator
+    {
+        $validator
+            ->integer('id')
+            ->allowEmptyString('id', null, 'create');
+
+        return $validator;
+    }
+
+    /**
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
@@ -58,8 +78,8 @@ class ActivitiesCompetenciesTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['activity_id'], 'Activities'));
-        $rules->add($rules->existsIn(['competency_id'], 'Competencies'));
+        $rules->add($rules->existsIn(['activity_id'], 'Activities'), ['errorField' => 'activity_id']);
+        $rules->add($rules->existsIn(['competency_id'], 'Competencies'), ['errorField' => 'competency_id']);
 
         return $rules;
     }

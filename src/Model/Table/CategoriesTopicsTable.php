@@ -14,14 +14,19 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\CategoriesTable&\Cake\ORM\Association\BelongsTo $Categories
  * @property \App\Model\Table\TopicsTable&\Cake\ORM\Association\BelongsTo $Topics
  *
- * @method \App\Model\Entity\CategoriesTopic get($primaryKey, $options = [])
- * @method \App\Model\Entity\CategoriesTopic newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\CategoriesTopic newEmptyEntity()
+ * @method \App\Model\Entity\CategoriesTopic newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\CategoriesTopic[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\CategoriesTopic get($primaryKey, $options = [])
+ * @method \App\Model\Entity\CategoriesTopic findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\CategoriesTopic patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\CategoriesTopic[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\CategoriesTopic|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\CategoriesTopic saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CategoriesTopic patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\CategoriesTopic[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\CategoriesTopic findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\CategoriesTopic[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CategoriesTopic[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CategoriesTopic[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CategoriesTopic[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class CategoriesTopicsTable extends Table
 {
@@ -36,8 +41,8 @@ class CategoriesTopicsTable extends Table
         parent::initialize($config);
 
         $this->setTable('categories_topics');
-        $this->setDisplayField('category_id');
-        $this->setPrimaryKey(['category_id', 'topic_id']);
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
@@ -50,6 +55,21 @@ class CategoriesTopicsTable extends Table
     }
 
     /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator): Validator
+    {
+        $validator
+            ->integer('id')
+            ->allowEmptyString('id', null, 'create');
+
+        return $validator;
+    }
+
+    /**
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
@@ -58,8 +78,8 @@ class CategoriesTopicsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['category_id'], 'Categories'));
-        $rules->add($rules->existsIn(['topic_id'], 'Topics'));
+        $rules->add($rules->existsIn(['category_id'], 'Categories'), ['errorField' => 'category_id']);
+        $rules->add($rules->existsIn(['topic_id'], 'Topics'), ['errorField' => 'topic_id']);
 
         return $rules;
     }

@@ -17,6 +17,8 @@
             <fieldset>
                 <legend><?= __('Add Activities Tag') ?></legend>
                 <?php
+                    echo $this->Form->control('activity_id', ['options' => $activities]);
+                    echo $this->Form->control('tag_id', ['options' => $tags]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

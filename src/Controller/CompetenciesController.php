@@ -7,7 +7,6 @@ namespace App\Controller;
  * Competencies Controller
  *
  * @property \App\Model\Table\CompetenciesTable $Competencies
- *
  * @method \App\Model\Entity\Competency[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CompetenciesController extends AppController
@@ -15,7 +14,7 @@ class CompetenciesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
     {
@@ -28,7 +27,7 @@ class CompetenciesController extends AppController
      * View method
      *
      * @param string|null $id Competency id.
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
@@ -37,13 +36,13 @@ class CompetenciesController extends AppController
             'contain' => ['Activities', 'Pathways', 'Users'],
         ]);
 
-        $this->set('competency', $competency);
+        $this->set(compact('competency'));
     }
 
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -51,11 +50,11 @@ class CompetenciesController extends AppController
         if ($this->request->is('post')) {
             $competency = $this->Competencies->patchEntity($competency, $this->request->getData());
             if ($this->Competencies->save($competency)) {
-                print(__('The competency has been saved.'));
+                $this->Flash->success(__('The competency has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            print(__('The competency could not be saved. Please, try again.'));
+            $this->Flash->error(__('The competency could not be saved. Please, try again.'));
         }
         $activities = $this->Competencies->Activities->find('list', ['limit' => 200]);
         $pathways = $this->Competencies->Pathways->find('list', ['limit' => 200]);
@@ -67,7 +66,7 @@ class CompetenciesController extends AppController
      * Edit method
      *
      * @param string|null $id Competency id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
@@ -78,11 +77,11 @@ class CompetenciesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $competency = $this->Competencies->patchEntity($competency, $this->request->getData());
             if ($this->Competencies->save($competency)) {
-                print(__('The competency has been saved.'));
+                $this->Flash->success(__('The competency has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            print(__('The competency could not be saved. Please, try again.'));
+            $this->Flash->error(__('The competency could not be saved. Please, try again.'));
         }
         $activities = $this->Competencies->Activities->find('list', ['limit' => 200]);
         $pathways = $this->Competencies->Pathways->find('list', ['limit' => 200]);
@@ -94,7 +93,7 @@ class CompetenciesController extends AppController
      * Delete method
      *
      * @param string|null $id Competency id.
-     * @return \Cake\Http\Response|null Redirects to index.
+     * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
@@ -102,9 +101,9 @@ class CompetenciesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $competency = $this->Competencies->get($id);
         if ($this->Competencies->delete($competency)) {
-            print(__('The competency has been deleted.'));
+            $this->Flash->success(__('The competency has been deleted.'));
         } else {
-            print(__('The competency could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The competency could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -11,17 +11,21 @@ use Cake\Validation\Validator;
 /**
  * Categories Model
  *
- * @property \App\Model\Table\ActivitiesTable&\Cake\ORM\Association\HasMany $Activities
- * @property \App\Model\Table\PathwaysTable&\Cake\ORM\Association\HasMany $Pathways
+ * @property \App\Model\Table\TopicsTable&\Cake\ORM\Association\BelongsToMany $Topics
  *
- * @method \App\Model\Entity\Category get($primaryKey, $options = [])
- * @method \App\Model\Entity\Category newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Category newEmptyEntity()
+ * @method \App\Model\Entity\Category newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Category[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Category get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Category findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Category patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Category[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Category|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Category saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Category patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Category[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Category findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Category[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Category[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Category[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Category[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -43,6 +47,11 @@ class CategoriesTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('CakeDC/Users.Users', [
+            'foreignKey' => 'createdby',
+            'joinType' => 'INNER',
+        ]);
+        
         $this->belongsToMany('Topics', [
             'foreignKey' => 'category_id',
             'targetForeignKey' => 'topic_id',
@@ -67,7 +76,7 @@ class CategoriesTable extends Table
             ->maxLength('name', 255)
             ->requirePresence('name', 'create')
             ->notEmptyString('name');
-        
+
         $validator
             ->scalar('slug')
             ->maxLength('slug', 255)
@@ -94,7 +103,7 @@ class CategoriesTable extends Table
             ->allowEmptyString('featured');
 
         $validator
-            ->integer('createdby')
+            ->uuid('createdby')
             ->requirePresence('createdby', 'create')
             ->notEmptyString('createdby');
 

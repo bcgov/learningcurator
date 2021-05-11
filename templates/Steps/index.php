@@ -13,6 +13,7 @@
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('name') ?></th>
+                    <th><?= $this->Paginator->sort('slug') ?></th>
                     <th><?= $this->Paginator->sort('image_path') ?></th>
                     <th><?= $this->Paginator->sort('featured') ?></th>
                     <th><?= $this->Paginator->sort('created') ?></th>
@@ -27,12 +28,13 @@
                 <tr>
                     <td><?= $this->Number->format($step->id) ?></td>
                     <td><?= h($step->name) ?></td>
+                    <td><?= h($step->slug) ?></td>
                     <td><?= h($step->image_path) ?></td>
                     <td><?= $this->Number->format($step->featured) ?></td>
                     <td><?= h($step->created) ?></td>
-                    <td><?= $this->Number->format($step->createdby) ?></td>
+                    <td><?= h($step->createdby) ?></td>
                     <td><?= h($step->modified) ?></td>
-                    <td><?= $this->Number->format($step->modifiedby) ?></td>
+                    <td><?= h($step->modifiedby) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $step->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $step->id]) ?>

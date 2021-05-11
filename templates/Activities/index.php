@@ -8,7 +8,7 @@ $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
 if ($this->Identity->isLoggedIn()) {
-	$role = $this->Identity->get('role_id');
+	$role = $this->Identity->get('role');
 	$uid = $this->Identity->get('id');
 }
 ?>
@@ -51,6 +51,7 @@ ourselves as part of a trusted, talented, and modern public service.</p>
 
 
 <div class="col-md-3">
+
 <h2 class="mt-3">Latest Topics</h2>
 <?php foreach ($allcats as $cat) : ?>
 <div class="p-3 mb-3 bg-white rounded-lg">
@@ -79,7 +80,7 @@ ourselves as part of a trusted, talented, and modern public service.</p>
 <div>
 <?php foreach($allpathways as $path): ?>
 <?php if($path->status_id != 2): ?>
-<?php if($role == 2 || $role == 5): ?>
+<?php if($role == 'curator' || $role == 'superuser'): ?>
 	<div class="p-3 mb-3 bg-white rounded-lg">
 		<span class="badge badge-warning"><?= $path->status->name ?></span>
 		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
@@ -116,29 +117,9 @@ ourselves as part of a trusted, talented, and modern public service.</p>
 
 	<?= $this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
 </h3>
-<div class="">
-<!-- <span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
-			<i class="fas fa-clock"></i>
-			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
-		</span>  -->
+ 
+ </div>
 
-	<div class="pb-3">
-	<?php foreach($activity->steps as $step): ?>
-	<?php foreach($step->pathways as $path): ?>
-	<?php if($path->status_id == 2): ?>
-	<div><a href="/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></div>
-	<?php endif ?>
-	<?php endforeach ?>
-	<?php endforeach ?>
-	</div>
-	
-	<!-- <div class="mt-3"><span class="badge badge-light">Added: <?= h($activity->created) ?></span></div> -->
-
-</div>
-
-
-
-</div>
 <?php endforeach; ?>
 </div> <!-- /. -->
 

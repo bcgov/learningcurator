@@ -4,26 +4,32 @@
  * @var \App\Model\Entity\Category $category
  */
 ?>
-<div class="row justify-content-md-center">
-<div class="col-md-6">
-<div class="card mb-3">
-<div class="card-body">
-
-<?= $this->Form->create($category) ?>
-<fieldset>
-<legend><?= __('Add Category') ?></legend>
-<?php
-echo $this->Form->control('name');
-echo $this->Form->control('description');
-echo $this->Form->control('image_path');
-echo $this->Form->control('color');
-echo $this->Form->control('featured');
-echo $this->Form->control('createdby');
-?>
-</fieldset>
-<?= $this->Form->button(__('Submit')) ?>
-<?= $this->Form->end() ?>
-</div>
-</div>
-</div>
+<div class="row">
+    <aside class="column">
+        <div class="side-nav">
+            <h4 class="heading"><?= __('Actions') ?></h4>
+            <?= $this->Html->link(__('List Categories'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+        </div>
+    </aside>
+    <div class="column-responsive column-80">
+        <div class="categories form content">
+            <?= $this->Form->create($category) ?>
+            <fieldset>
+                <legend><?= __('Add Category') ?></legend>
+                <?php
+                    echo $this->Form->control('name');
+                    echo $this->Form->control('slug');
+                    echo $this->Form->control('description');
+                    echo $this->Form->control('image_path');
+                    echo $this->Form->control('color');
+                    echo $this->Form->control('featured');
+                    echo $this->Form->control('createdby', ['options' => $users]);
+                    
+                    echo $this->Form->control('topics._ids', ['options' => $topics]);
+                ?>
+            </fieldset>
+            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->end() ?>
+        </div>
+    </div>
 </div>

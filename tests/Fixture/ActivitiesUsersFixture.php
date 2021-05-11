@@ -15,28 +15,27 @@ class ActivitiesUsersFixture extends TestFixture
      *
      * @var array
      */
-    // @codingStandardsIgnoreStart
+    // phpcs:disable
     public $fields = [
-        'activity_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'user_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'started' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => true, 'default' => null, 'comment' => ''],
-        'finished' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => true, 'default' => null, 'comment' => ''],
-        'liked' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'notes' => ['type' => 'text', 'length' => null, 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null],
+        'id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'activity_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'user_id' => ['type' => 'uuid', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
+        'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         '_indexes' => [
-            'activity_key' => ['type' => 'index', 'columns' => ['activity_id'], 'length' => []],
+            'users_activities_ibfk_1' => ['type' => 'index', 'columns' => ['user_id'], 'length' => []],
+            'users_activities_ibfk_2' => ['type' => 'index', 'columns' => ['activity_id'], 'length' => []],
         ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['user_id', 'activity_id'], 'length' => []],
-            'users_activities_ibfk_1' => ['type' => 'foreign', 'columns' => ['user_id'], 'references' => ['users', 'id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'users_activities_ibfk_2' => ['type' => 'foreign', 'columns' => ['activity_id'], 'references' => ['activities', 'id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'users_activities_ibfk_1' => ['type' => 'foreign', 'columns' => ['user_id'], 'references' => ['users', 'id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
             'collation' => 'latin1_swedish_ci'
         ],
     ];
-    // @codingStandardsIgnoreEnd
+    // phpcs:enable
     /**
      * Init method
      *
@@ -46,12 +45,10 @@ class ActivitiesUsersFixture extends TestFixture
     {
         $this->records = [
             [
+                'id' => 1,
                 'activity_id' => 1,
-                'user_id' => 1,
-                'started' => '2020-01-28 22:27:06',
-                'finished' => '2020-01-28 22:27:06',
-                'liked' => 1,
-                'notes' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+                'user_id' => '52814e7a-0947-4fcf-91c3-a69c087d8f07',
+                'created' => '2021-03-31 17:39:29',
             ],
         ];
         parent::init();

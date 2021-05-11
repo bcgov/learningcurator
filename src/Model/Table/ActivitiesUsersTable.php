@@ -12,16 +12,23 @@ use Cake\Validation\Validator;
  * ActivitiesUsers Model
  *
  * @property \App\Model\Table\ActivitiesTable&\Cake\ORM\Association\BelongsTo $Activities
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \CakeDC\Users\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  *
- * @method \App\Model\Entity\ActivitiesUser get($primaryKey, $options = [])
- * @method \App\Model\Entity\ActivitiesUser newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\ActivitiesUser newEmptyEntity()
+ * @method \App\Model\Entity\ActivitiesUser newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\ActivitiesUser[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\ActivitiesUser get($primaryKey, $options = [])
+ * @method \App\Model\Entity\ActivitiesUser findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\ActivitiesUser patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\ActivitiesUser[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\ActivitiesUser|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\ActivitiesUser saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ActivitiesUser patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\ActivitiesUser[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\ActivitiesUser findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\ActivitiesUser[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ActivitiesUser[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ActivitiesUser[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ActivitiesUser[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class ActivitiesUsersTable extends Table
 {
@@ -37,7 +44,7 @@ class ActivitiesUsersTable extends Table
 
         $this->setTable('activities_users');
         $this->setDisplayField('id');
-        $this->setPrimaryKey(['id']);
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 
@@ -45,7 +52,7 @@ class ActivitiesUsersTable extends Table
             'foreignKey' => 'activity_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Users', [
+        $this->belongsTo('CakeDC/Users.Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
@@ -59,7 +66,9 @@ class ActivitiesUsersTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
-        $validator->requirePresence(['created'], 'create');
+        $validator
+            ->integer('id')
+            ->allowEmptyString('id', null, 'create');
 
         return $validator;
     }
@@ -73,8 +82,8 @@ class ActivitiesUsersTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['activity_id'], 'Activities'));
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['activity_id'], 'Activities'), ['errorField' => 'activity_id']);
+        $rules->add($rules->existsIn(['user_id'], 'Users'), ['errorField' => 'user_id']);
 
         return $rules;
     }

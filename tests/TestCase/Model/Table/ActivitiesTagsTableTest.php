@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\ActivitiesTagsTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -38,8 +37,8 @@ class ActivitiesTagsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('ActivitiesTags') ? [] : ['className' => ActivitiesTagsTable::class];
-        $this->ActivitiesTags = TableRegistry::getTableLocator()->get('ActivitiesTags', $config);
+        $config = $this->getTableLocator()->exists('ActivitiesTags') ? [] : ['className' => ActivitiesTagsTable::class];
+        $this->ActivitiesTags = $this->getTableLocator()->get('ActivitiesTags', $config);
     }
 
     /**
@@ -55,11 +54,11 @@ class ActivitiesTagsTableTest extends TestCase
     }
 
     /**
-     * Test initialize method
+     * Test validationDefault method
      *
      * @return void
      */
-    public function testInitialize(): void
+    public function testValidationDefault(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

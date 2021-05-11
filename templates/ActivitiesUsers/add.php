@@ -17,10 +17,8 @@
             <fieldset>
                 <legend><?= __('Add Activities User') ?></legend>
                 <?php
-                    echo $this->Form->control('started', ['empty' => true]);
-                    echo $this->Form->control('finished', ['empty' => true]);
-                    echo $this->Form->control('liked');
-                    echo $this->Form->control('notes');
+                    echo $this->Form->control('activity_id', ['options' => $activities]);
+                    echo $this->Form->control('user_id', ['options' => $users]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

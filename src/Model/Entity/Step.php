@@ -15,9 +15,9 @@ use Cake\ORM\Entity;
  * @property string|null $image_path
  * @property int|null $featured
  * @property \Cake\I18n\FrozenTime $created
- * @property int $createdby
+ * @property string $createdby
  * @property \Cake\I18n\FrozenTime $modified
- * @property int $modifiedby
+ * @property string $modifiedby
  *
  * @property \App\Model\Entity\Activity[] $activities
  * @property \App\Model\Entity\Pathway[] $pathways

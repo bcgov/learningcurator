@@ -3,36 +3,39 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\Event\EventInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-
 
 /**
  * Activities Model
  *
  * @property \App\Model\Table\StatusesTable&\Cake\ORM\Association\BelongsTo $Statuses
  * @property \App\Model\Table\MinistriesTable&\Cake\ORM\Association\BelongsTo $Ministries
- * @property \App\Model\Table\CategoriesTable&\Cake\ORM\Association\BelongsTo $Categories
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \CakeDC\Users\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \CakeDC\Users\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \CakeDC\Users\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\ActivityTypesTable&\Cake\ORM\Association\BelongsTo $ActivityTypes
+ * @property \App\Model\Table\ReportsTable&\Cake\ORM\Association\HasMany $Reports
  * @property \App\Model\Table\CompetenciesTable&\Cake\ORM\Association\BelongsToMany $Competencies
  * @property \App\Model\Table\StepsTable&\Cake\ORM\Association\BelongsToMany $Steps
  * @property \App\Model\Table\TagsTable&\Cake\ORM\Association\BelongsToMany $Tags
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
+ * @property \CakeDC\Users\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
  *
- * @method \App\Model\Entity\Activity get($primaryKey, $options = [])
- * @method \App\Model\Entity\Activity newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Activity newEmptyEntity()
+ * @method \App\Model\Entity\Activity newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Activity[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Activity get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Activity findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Activity patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Activity[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Activity|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Activity saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Activity patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Activity[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Activity findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Activity[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Activity[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Activity[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Activity[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -61,21 +64,33 @@ class ActivitiesTable extends Table
             'foreignKey' => 'ministry_id',
         ]);
 
-        $this->belongsTo('Users', [
+
+        $this->belongsTo('CakeDC/Users.Users', [
             'foreignKey' => 'approvedby_id',
+            'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Users', [
+        $this->belongsTo('CakeDC/Users.Users', [
             'foreignKey' => 'createdby_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Users', [
+        $this->belongsTo('CakeDC/Users.Users', [
             'foreignKey' => 'modifiedby_id',
             'joinType' => 'INNER',
+        ]);
+
+        $this->belongsToMany('CakeDC/Users.Users', [
+            'foreignKey' => 'activity_id',
+            'targetForeignKey' => 'user_id',
+            'joinTable' => 'activities_users',
         ]);
 
         $this->belongsTo('ActivityTypes', [
             'foreignKey' => 'activity_types_id',
             'joinType' => 'INNER',
+        ]);
+
+        $this->hasMany('Reports', [
+            'foreignKey' => 'activity_id',
         ]);
         $this->belongsToMany('Competencies', [
             'foreignKey' => 'activity_id',
@@ -91,13 +106,6 @@ class ActivitiesTable extends Table
             'foreignKey' => 'activity_id',
             'targetForeignKey' => 'tag_id',
             'joinTable' => 'activities_tags',
-        ]);
-        $this->hasMany('Reports');
-            
-        $this->belongsToMany('Users', [
-            'foreignKey' => 'activity_id',
-            'targetForeignKey' => 'user_id',
-            'joinTable' => 'activities_users',
         ]);
 
     }
@@ -119,12 +127,6 @@ class ActivitiesTable extends Table
             ->maxLength('name', 255)
             ->requirePresence('name', 'create')
             ->notEmptyString('name');
-
-        $validator
-            ->scalar('slug')
-            ->maxLength('slug', 255)
-            ->requirePresence('slug', 'create')
-            ->notEmptyString('slug');
 
         $validator
             ->scalar('hyperlink')
@@ -182,12 +184,17 @@ class ActivitiesTable extends Table
         $validator
             ->integer('recommended')
             ->allowEmptyString('recommended');
-        
+
         $validator
             ->scalar('estimated_time')
-            ->maxLength('estimated_time', 255)
-            ->allowEmptyFile('estimated_time');
-            
+            ->maxLength('estimated_time', 100)
+            ->allowEmptyString('estimated_time');
+
+        $validator
+            ->scalar('slug')
+            ->maxLength('slug', 255)
+            ->allowEmptyString('slug');
+
         return $validator;
     }
 
@@ -200,60 +207,13 @@ class ActivitiesTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['status_id'], 'Statuses'));
-        $rules->add($rules->existsIn(['ministry_id'], 'Ministries'));
-        $rules->add($rules->existsIn(['approvedby_id'], 'Users'));
-        $rules->add($rules->existsIn(['createdby_id'], 'Users'));
-        $rules->add($rules->existsIn(['modifiedby_id'], 'Users'));
-        $rules->add($rules->existsIn(['activity_types_id'], 'ActivityTypes'));
+        $rules->add($rules->existsIn(['status_id'], 'Statuses'), ['errorField' => 'status_id']);
+        $rules->add($rules->existsIn(['ministry_id'], 'Ministries'), ['errorField' => 'ministry_id']);
+        $rules->add($rules->existsIn(['approvedby_id'], 'Users'), ['errorField' => 'approvedby_id']);
+        $rules->add($rules->existsIn(['createdby_id'], 'Users'), ['errorField' => 'createdby_id']);
+        $rules->add($rules->existsIn(['modifiedby_id'], 'Users'), ['errorField' => 'modifiedby_id']);
+        $rules->add($rules->existsIn(['activity_types_id'], 'ActivityTypes'), ['errorField' => 'activity_types_id']);
 
         return $rules;
     }
-
-    public function beforeSave(EventInterface $event, $entity, $options)
-    {
-        if ($entity->tag_string) {
-            $entity->tags = $this->_buildTags($entity->tag_string);
-        }
-        return;
-    }
-    
-    protected function _buildTags($tagString)
-    {
-        // Trim tags
-        $newTags = array_map('trim', explode(',', $tagString));
-        
-        // Remove all empty tags
-        $newTags = array_filter($newTags);
-        // Reduce duplicated tags
-        $newTags = array_unique($newTags);
-        
-        $out = [];
-        $query = $this->Tags->find()
-            ->where(['Tags.name IN' => $newTags]);
-            
-        // Remove existing tags from the list of new tags.
-        foreach ($query->extract('name') as $existing) {
-            
-            $index = array_search($existing, $newTags);
-            if ($index !== false) {
-                unset($newTags[$index]);
-            }
-        }
-
-        // Add existing tags.
-        foreach ($query as $tag) {
-            $out[] = $tag;
-        }
-        // Add new tags.
-        foreach ($newTags as $tag) {
-            // this ish don work :()
-            $out[] = $this->Tags->newEntity(['name' => $tag, 'createby_id' => 1, 'modifiedby_id' => 1]);
-            
-
-        }
-        
-        return $out;
-    }
-
 }

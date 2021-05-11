@@ -10,7 +10,6 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $name
- * @property string $slug
  * @property string|null $color
  * @property string|null $description
  * @property string|null $objective
@@ -20,15 +19,19 @@ use Cake\ORM\Entity;
  * @property int|null $topic_id
  * @property int|null $ministry_id
  * @property \Cake\I18n\FrozenTime $created
- * @property int $createdby
+ * @property string $createdby
  * @property \Cake\I18n\FrozenTime $modified
- * @property int $modifiedby
+ * @property string $modifiedby
  * @property int|null $status_id
+ * @property string|null $slug
+ * @property string|null $estimated_time
+ *
  * @property \App\Model\Entity\Topic $topic
  * @property \App\Model\Entity\Ministry $ministry
+ * @property \App\Model\Entity\Status $status
  * @property \App\Model\Entity\Competency[] $competencies
  * @property \App\Model\Entity\Step[] $steps
- * @property \App\Model\Entity\User[] $users
+ * @property \CakeDC\Users\Model\Entity\User[] $users
  */
 class Pathway extends Entity
 {
@@ -43,7 +46,6 @@ class Pathway extends Entity
      */
     protected $_accessible = [
         'name' => true,
-        'slug' => true,
         'color' => true,
         'description' => true,
         'objective' => true,
@@ -56,11 +58,14 @@ class Pathway extends Entity
         'createdby' => true,
         'modified' => true,
         'modifiedby' => true,
+        'status_id' => true,
+        'slug' => true,
+        'estimated_time' => true,
+        'topic' => true,
         'ministry' => true,
+        'status' => true,
         'competencies' => true,
         'steps' => true,
         'users' => true,
-        'status_id' => true,
-        'estimated_time' => true,
     ];
 }

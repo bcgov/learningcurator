@@ -23,11 +23,13 @@
                 <legend><?= __('Edit Category') ?></legend>
                 <?php
                     echo $this->Form->control('name');
+                    echo $this->Form->control('slug');
                     echo $this->Form->control('description');
                     echo $this->Form->control('image_path');
                     echo $this->Form->control('color');
                     echo $this->Form->control('featured');
                     echo $this->Form->control('createdby');
+                    echo $this->Form->control('topics._ids', ['options' => $topics]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

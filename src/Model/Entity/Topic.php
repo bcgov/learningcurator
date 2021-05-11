@@ -10,14 +10,16 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  * @property string|null $description
  * @property string|null $image_path
  * @property string|null $color
  * @property string|null $featured
  * @property \Cake\I18n\FrozenTime $created
- * @property int $user_id
+ * @property string $user_id
  *
- * @property \App\Model\Entity\User $user
+ * @property \CakeDC\Users\Model\Entity\User $user
+ * @property \App\Model\Entity\Pathway[] $pathways
  * @property \App\Model\Entity\Category[] $categories
  */
 class Topic extends Entity
@@ -41,6 +43,7 @@ class Topic extends Entity
         'created' => true,
         'user_id' => true,
         'user' => true,
+        'pathways' => true,
         'categories' => true,
     ];
 }
