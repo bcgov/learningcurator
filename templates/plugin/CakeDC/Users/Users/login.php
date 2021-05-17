@@ -12,7 +12,8 @@ use Cake\Core\Configure;
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-6">
+<div class="col-md-6">
+
 <h1 class="display-4 mt-5">Access learning resources on demand</h1>
 <h2 class="font-weight-light">Sourced by BC Public Service curators</h2>
 <div class="p-3 rounded-lg mb-5 bg-white shadow-sm">
@@ -22,7 +23,8 @@ your corporate training offered through the Learning Centre.</p>
 <p style="font-size: 1.3rem">A <a href="#">best practice in learning for organizations</a>, curation helps us develop 
 ourselves as part of a trusted</a>, talented, and modern public service.</p>
 <div><a href="/auth/azuread" class="btn btn-lg btn-success">Sign In  with your.name@gov.bc.ca address to continue</a></div>
-<div class="m-5 p-3 bg-light">
+
+<div class="m-4 p-3 bg-light">
 <p><em>If you're a curator or an admin:</em></p>
 <?= $this->Form->create() ?>
 <?= $this->Form->control('username', ['label' => __d('cake_d_c/users', 'Username'), 'required' => true, 'class'=>'form-control']) ?>
