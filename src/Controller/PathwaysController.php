@@ -185,6 +185,40 @@ class PathwaysController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    /**
+     * Follow a pathway. Adds user_id to pathways_users table.
+     *
+     * @param string|null $id Pathway id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function follow ($id = null)
+    {
+        
+        
+        $pathway = $this->Pathways->get($id, [
+            'contain' => ['Users'],
+        ]);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+
+            $user = $this->request->getAttribute('authentication')->getIdentity();
+            $pathwaysTable = $this->getTableLocator()->get('Pathways');
+            //$this->request->getData()['users'] = $pathway->users;
+            $newuser = $pathwaysTable->Users->newEmptyEntity();
+            $newuser->id = $user->id;
+            //$pathwaysTable->save($newuser);
+            $pathwaysTable->Users->link($pathway, [$newuser]);
+            //print_r($newuser); exit;
+            //echo '<pre>'; print_r($pathway->users); exit;
+            // $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
+
+            // if ($this->Pathways->save($pathway)) {
+            //     return $this->redirect($this->referer());
+            // }
+        }
+    }
     
    /**
      * Process and return a status for this pathway for the logged in user 

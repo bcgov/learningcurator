@@ -45,7 +45,7 @@ class PathwaysUsersTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Users', [
+        $this->belongsTo('CakeDC/Users.Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
