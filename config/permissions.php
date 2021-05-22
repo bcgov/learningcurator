@@ -145,6 +145,11 @@ return [
         ],
         [
             'role' => '*',
+            'controller' => 'PathwaysUsers',
+            'action' => ['follow'],
+        ],
+        [
+            'role' => '*',
             'controller' => 'Steps',
             'action' => ['index','view'],
         ],

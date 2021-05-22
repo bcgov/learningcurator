@@ -18,20 +18,18 @@ class PathwaysUsersController extends AppController
      */
     public function follow()
     {
-        $pathwaysUser = $this->PathwaysUsers->newEmptyEntity();
-        $user = $this->request->getAttribute('authentication')->getIdentity();
-        $pathwaysUser->user_id = $user->id;
-        $pid = $this->request->getData()['pathway_id'];
-        $pathwaysUser->pathway_id = $pid;
         if ($this->request->is('post')) {
-            //$pathwaysUser = $this->PathwaysUsers->patchEntity($pathwaysUser, $this->request->getData());
+            $pathwaysUser = $this->PathwaysUsers->newEmptyEntity();
+            $user = $this->request->getAttribute('authentication')->getIdentity();
+            $pathwaysUser->user_id = $user->id;
+            $pid = $this->request->getData()['pathway_id'];
+            $pathwaysUser->pathway_id = $pid;
             if ($this->PathwaysUsers->save($pathwaysUser)) {
-                //print(__('The pathways user has been saved.'));
                 return $this->redirect($this->referer());
             }
             print(__('Something went wrong and you are not following this pathway. Please, try again.'));
         }
-        echo 'You cannot edit this directly.';
+        print(__('You cannot edit this directly.'));
     }
 
 }
