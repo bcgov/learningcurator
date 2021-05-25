@@ -218,4 +218,35 @@ class ActivitiesController extends AppController
 
     }
     
+    /**
+     * Find method for activities; intended for use as an auto-complete
+     *  search function for adding activities to steps
+     *
+     * @param string|null $search search pararmeters to lookup activities.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function find()
+    {
+
+	    $search = $this->request->getQuery('q');
+        $activities = $this->Activities->find()->
+                                        contain('Steps.Pathways','ActivityTypes')->
+                                        where(function ($exp, $query) use($search) {
+            return $exp->like('name', '%'.$search.'%');
+        })->order(['name' => 'ASC']);
+        $activities = $this->Activities->find()->
+                                            contain('Steps.Pathways','ActivityTypes')->
+                                            where(function ($exp, $query) use($search) {
+                                                return $exp->like('description', '%'.$search.'%');
+                                            })->
+                                            order(['name' => 'ASC']);
+        $numresults = $activities->count();
+        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
+        $pathways = $allpaths->find('all')->contain(['Steps']);
+        $allpathways = $pathways->toList();
+        
+        $this->set(compact('activities','allpathways','search', 'numresults'));
+    }
+    
 }
