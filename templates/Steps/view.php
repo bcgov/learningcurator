@@ -279,6 +279,7 @@ $lastobj = $s->description;
 		<?= $activity->description ?>
 		<?php if(!empty($activity->_joinData->stepcontext)): ?>
 		<div class="alert alert-light text-dark mt-3 shadow-sm">
+				<i class="fas fa-comment-medical"></i> 
 				Curator says:<br>
 				<?= $activity->_joinData->stepcontext ?>
 			</div>
