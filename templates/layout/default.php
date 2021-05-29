@@ -66,10 +66,7 @@
 	<li class="nav-item">
 		<a class="nav-link" href="/profile">Your Profile</a>
 	</li>
-	<li class="nav-item">
-		<?php echo $this->User->logout() ?>
-		
-	</li>
+
 	</ul>
 	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
 		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">

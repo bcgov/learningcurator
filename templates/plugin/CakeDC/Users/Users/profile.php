@@ -21,6 +21,10 @@
         )
         ?>
     </h1>
+    <div class="">
+		<?php echo $this->User->logout('Logout',['class'=>'btn btn-warning']) ?>
+		
+	</div>
 </div>
 </div>
 </div>
