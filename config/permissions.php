@@ -131,7 +131,7 @@ return [
         [
             'role' => '*',
             'controller' => 'Categories',
-            'action' => ['index','view'],
+            'action' => ['index','view','api'],
         ],
         [
             'role' => '*',
