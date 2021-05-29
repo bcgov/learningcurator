@@ -81,7 +81,7 @@ class ActivitiesStepsController extends AppController
             if ($this->ActivitiesSteps->save($activitiesStep)) {
                 $this->Flash->success(__('The activities step has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The activities step could not be saved. Please, try again.'));
         }
@@ -122,6 +122,7 @@ class ActivitiesStepsController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
+            
             if ($this->ActivitiesSteps->save($activitiesStep)) {
                 print(__('The activities step has been saved.'));
 
@@ -133,5 +134,35 @@ class ActivitiesStepsController extends AppController
         $steps = $this->ActivitiesSteps->Steps->find('list', ['limit' => 200]);
         $this->set(compact('activitiesStep', 'activities', 'steps'));
         
+    }
+
+    /**
+     * Set the order of an activity within a step
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function sort($id = null)
+    {
+        //$u = $this->request->getAttribute('authentication')->getIdentity();
+        //$activitiesSteps = $this->ActivitiesSteps->newEmptyEntity();
+        $activitiesStep = $this->ActivitiesSteps->get($id);
+        
+        $order = $this->request->getData()['sortorder'];
+        
+        if($this->request->getData()['direction'] == 'up') {
+            $neworder = $order + 2;
+        } else {
+            $neworder = $order - 2;
+        }
+        $activitiesStep->steporder = $neworder;
+        //$activitiesSteps->activity_id = $this->request->getData()['activity_id'];
+        
+        //if ($this->request->is('post')) {
+            if ($this->ActivitiesSteps->save($activitiesStep)) {
+                //print(__('That activity is now in a different order. Good job!'));
+                return $this->redirect($this->referer());
+            }
+            //print(__('The users action could not be saved. Please, try again.'));
+        //}
     }
 }

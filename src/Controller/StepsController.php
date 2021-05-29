@@ -116,20 +116,31 @@ class StepsController extends AppController
     public function edit($id = null)
     {
         $step = $this->Steps->get($id, [
-            'contain' => ['Activities', 'Pathways'],
+            'contain' => ['Activities', 'Activities.ActivityTypes', 'Activities.Statuses', 'Pathways'],
         ]);
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
+            
             $step = $this->Steps->patchEntity($step, $this->request->getData());
+            $sluggedTitle = Text::slug($step->name);
+            // trim slug to maximum length defined in schema
+            $step->slug = strtolower(substr($sluggedTitle, 0, 191));
+            //echo $step->slug; exit;
+            
             if ($this->Steps->save($step)) {
-                $this->Flash->success(__('The step has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                //print(__('The step has been saved.'));
+                $pathback = '/steps/view/' . $id;
+                return $this->redirect($pathback);
             }
-            $this->Flash->error(__('The step could not be saved. Please, try again.'));
+            //print(__('The step could not be saved. Please, try again.'));
         }
         $activities = $this->Steps->Activities->find('list', ['limit' => 200]);
+        
+        $types = TableRegistry::getTableLocator()->get('ActivityTypes');
+        $atypes = $types->find('all');
+
         $pathways = $this->Steps->Pathways->find('list', ['limit' => 200]);
-        $this->set(compact('step', 'activities', 'pathways'));
+        $this->set(compact('step', 'activities', 'pathways', 'atypes'));
     }
 
     /**
