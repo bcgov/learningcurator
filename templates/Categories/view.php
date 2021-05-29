@@ -9,7 +9,7 @@ $uid = 0;
 $role = 0;
 
 if ($this->Identity->isLoggedIn()) {
-	$role = $this->Identity->get('role_id');
+	$role = $this->Identity->get('role');
 	$uid = $this->Identity->get('id');
 }
 
@@ -20,7 +20,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-4">
 <div class="pad-sm">
 <div>Learning Pathways</div>
-<?php if($role == 2 || $role == 5): // is curator or admin ?>
+<?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right btn-group">
 	<?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id],['class' => 'btn btn-light']) ?>
 	<a class="btn btn-light" 
@@ -39,7 +39,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 </div>
 </div>
-<?php if($role == 2 || $role == 5): ?>
+<?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="col-md-3 collapse" id="addnewtopic">
 <div class="p-3 my-3 bg-white rounded-lg">
 <?= $this->Form->create(null,['url' => ['controller' => 'Topics', 'action' => 'add']]) ?>
@@ -82,7 +82,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach ($topic->pathways as $pathway) : ?>
 <div class="p-3 my-3 bg-white rounded-lg">
 <?php if($pathway->status_id != 2): // is not published? ?>
-<?php if($role == 2 || $role == 5): // is curator or admin ?>
+<?php if($role == 'curator' || $role == 'superuser'): ?>
 <span class="badge badge-warning"><?= $pathway->status->name ?></span>
 <h2>
 	<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>

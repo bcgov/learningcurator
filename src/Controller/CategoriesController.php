@@ -29,7 +29,7 @@ class CategoriesController extends AppController
      */
     public function index()
     {
-        $categories = $this->paginate($this->Categories);
+        $categories = $this->Categories->find()->contain(['Topics','Topics.Pathways']);
 
         $this->set(compact('categories'));
     }
@@ -44,7 +44,7 @@ class CategoriesController extends AppController
     public function view($id = null)
     {
         $category = $this->Categories->get($id, [
-            'contain' => ['Topics','Topics.Pathways'],
+            'contain' => ['Topics','Topics.Pathways','Topics.Pathways.Statuses'],
         ]);
 
         $this->set(compact('category'));
