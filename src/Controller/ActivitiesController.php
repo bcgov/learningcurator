@@ -270,5 +270,30 @@ class ActivitiesController extends AppController
 
         $this->set(compact('activities','allpathways','stepid'));
     }
+
+    /**
+    * Like an activity
+    *
+    * @return \Cake\Http\Response|null Redirects to courses index.
+    * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+    *
+    */
+    public function like ($id = null)
+    {
+        $activity = $this->Activities->get($id);
+        $newlike = $activity->recommended;
+        $newlike++;
+        $this->request->getData()['recommended'] = $newlike;
+        $activity->recommended = $newlike;
+        if ($this->request->is(['get'])) {
+            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+            if ($this->Activities->save($activity)) {
+                echo 'Liked!';
+                //return $this->redirect($this->referer());
+            } else {
+                //print(__('The activity could not be saved. Please, try again.'));
+            }
+        }
+    }
     
 }
