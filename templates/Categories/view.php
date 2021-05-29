@@ -19,7 +19,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="row justify-content-md-center align-items-center"  id="colorful">
 <div class="col-md-4">
 <div class="pad-sm">
-<div>Learning Pathways</div>
+<div><?= $this->Html->link(__('All Topic Categories'), ['action' => 'index']) ?></div>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right btn-group">
 	<?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id],['class' => 'btn btn-light']) ?>
