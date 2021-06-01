@@ -279,6 +279,7 @@ $lastobj = $s->description;
 		<?= $activity->description ?>
 		<?php if(!empty($activity->_joinData->stepcontext)): ?>
 		<div class="alert alert-light text-dark mt-3 shadow-sm">
+				<i class="fas fa-comment-medical"></i> 
 				Curator says:<br>
 				<?= $activity->_joinData->stepcontext ?>
 			</div>
@@ -483,14 +484,9 @@ $lastobj = $s->description;
 </div>
 <?php else: ?>
 <div class="card card-body mt-3 text-center stickyrings">
-<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'add']]) ?>
-<?php
-echo $this->Form->control('user_id',['type' => 'hidden', 'value' => $uid]);
-echo $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathways->id]);
-echo $this->Form->control('status_id',['type' => 'hidden', 'value' => 1]);
-?>
+<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
+<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathways->id]) ?>
 <?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-success mb-0']) ?>
-<?= $this->Form->end() ?>
 </div>
 <?php endif ?>
 </div>

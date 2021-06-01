@@ -218,4 +218,82 @@ class ActivitiesController extends AppController
 
     }
     
+    /**
+     * Find method for activities; this is super-duper basic and search deserves better thab
+     *
+     * @param string|null $search search pararmeters to lookup activities.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function find()
+    {
+
+	    $search = $this->request->getQuery('q');
+        $activities = $this->Activities->find()->
+                                        contain('Steps.Pathways','ActivityTypes')->
+                                        where(function ($exp, $query) use($search) {
+            return $exp->like('name', '%'.$search.'%');
+        })->order(['name' => 'ASC']);
+        $activities = $this->Activities->find()->
+                                            contain('Steps.Pathways','ActivityTypes')->
+                                            where(function ($exp, $query) use($search) {
+                                                return $exp->like('description', '%'.$search.'%');
+                                            })->
+                                            order(['name' => 'ASC']);
+        $numresults = $activities->count();
+        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
+        $pathways = $allpaths->find('all')->contain(['Steps']);
+        $allpathways = $pathways->toList();
+        
+        $this->set(compact('activities','allpathways','search', 'numresults'));
+    }
+    /**
+     * Find method for activities; intended for use as an auto-complete
+     *  search function for adding activities to steps
+     *
+     * @param string|null $search search pararmeters to lookup activities.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function stepfind()
+    {
+        $search = $this->request->getQuery('q');
+        $stepid = $this->request->getQuery('step_id');
+        
+        $activities = $this->Activities->find()->contain('Steps.Pathways')->where(function ($exp, $query) use($search) {
+            return $exp->like('name', '%'.$search.'%');
+        })->order(['name' => 'ASC']);
+
+        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
+        $pathways = $allpaths->find('all')->contain(['Steps']);
+        $allpathways = $pathways->toList();
+
+        $this->set(compact('activities','allpathways','stepid'));
+    }
+
+    /**
+    * Like an activity
+    *
+    * @return \Cake\Http\Response|null Redirects to courses index.
+    * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+    *
+    */
+    public function like ($id = null)
+    {
+        $activity = $this->Activities->get($id);
+        $newlike = $activity->recommended;
+        $newlike++;
+        $this->request->getData()['recommended'] = $newlike;
+        $activity->recommended = $newlike;
+        if ($this->request->is(['get'])) {
+            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+            if ($this->Activities->save($activity)) {
+                echo 'Liked!';
+                //return $this->redirect($this->referer());
+            } else {
+                //print(__('The activity could not be saved. Please, try again.'));
+            }
+        }
+    }
+    
 }
