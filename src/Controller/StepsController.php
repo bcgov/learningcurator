@@ -164,7 +164,11 @@ class StepsController extends AppController
     }
 
     /**
-     * Status method
+     * Status method for per-step progress bar.
+     * Output a JSON response for a users status as it pertains to 
+     * the given step ID. This is requested through AJAX on the step 
+     * view and is fired when the user claims a new activity.
+     * It reloads the progress bar.
      *
      * @param string|null $id Step id.
      * @return \Cake\Http\Response|null
@@ -183,10 +187,10 @@ class StepsController extends AppController
         $useractivitylist = array();
         // Get access to the appropriate table
         $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
-        // Select based on currently logged in person
+        // Select all activities (claims) based on currently logged in person
         $useacts = $au->find()->where(['user_id = ' => $user->id]);
         // convert the results into a simple array so that we can
-        // use in_array in the template
+        // use in_array(needle,haystack) in the template
         $useractivities = $useacts->toList();
         // Loop through the resources and add just the ID to the 
         // array that we will pass into the template
@@ -205,15 +209,16 @@ class StepsController extends AppController
 		$listenstepcount = 0;
 		$participatestepcount = 0;
 
-
 		$totalacts = count($step->activities);
 		$stepclaimcount = 0;
 
 		foreach ($step->activities as $activity) {
 			//print_r($activity);
 			// If this is 'defunct' then we pull it out of the list 
+            // entirely
 			if($activity->status_id == 3) {
 				array_push($defunctacts,$activity);
+            // otherwise, if it's published then we add it
 			} elseif($activity->status_id == 2) {
 				// if it's required
 				if($activity->_joinData->required == 1) {
@@ -234,17 +239,15 @@ class StepsController extends AppController
 				} else {
 					array_push($tertiaryacts,$activity);
 				}
-				
-
-				$tmp = array();
 				// Loop through the whole list, add steporder to tmp array
+                $tmp = array();
 				foreach($requiredacts as $line) {
 					$tmp[] = $line->_joinData->steporder;
 				}
 				// Use the tmp array to sort acts list
 				array_multisort($tmp, SORT_DESC, $requiredacts);
 			}
-		}
+		} // endforeach for activities on this step 
 
 		$stepacts = count($requiredacts);
 		$completeclass = 'notcompleted'; 
