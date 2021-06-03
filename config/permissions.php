@@ -151,7 +151,7 @@ return [
         [
             'role' => '*',
             'controller' => 'Steps',
-            'action' => ['index','view'],
+            'action' => ['index','view','status'],
         ],
         [
             'role' => '*',
