@@ -16,10 +16,11 @@ Follow pathways and complete the activities; informal, self-directed learning bu
 CakePHP 4.03
 MySQL/MariaDB
 
-- mysql source config/curator-schema-plus-starter.sql
-- cp config/tocopy/Azure.php vendor/thenetworg/oauth2-azure/src/Provider/Azure.php (overwrite existing)
-- cp config/tocopy/AzureMapper.php vendor/cakedc/auth/src/Social/Mapper/Azure.php (new file)
-- cp config/tocopy/ProfileTrait.php vendor/cakedc/users/src/Controller/Traits/ProfileTrait.php (overwrite existing)
+mysql source config/curator-schema-plus-starter.sql
+cp config/tocopy/Azure.php vendor/thenetworg/oauth2-azure/src/Provider/Azure.php
+cp config/tocopy/AzureMapper.php vendor/cakedc/auth/src/Social/Mapper/Azure.php
+cp config/tocopy/ProfileTrait.php vendor/cakedc/users/src/Controller/Traits/ProfileTrait.php
+cp config/tocopy/UsersTable.php vendor/cakedc/users/src/Model/Table/UsersTable.php
 
 ## Project Status
 
