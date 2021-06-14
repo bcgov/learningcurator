@@ -155,7 +155,7 @@ class ActivitiesController extends AppController
     public function edit($id = null)
     {
         $activity = $this->Activities->get($id, [
-            'contain' => ['Users', 'Competencies', 'Steps', 'Tags'],
+            'contain' => ['Users', 'Competencies', 'Steps', 'Tags', 'Steps.Pathways'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
