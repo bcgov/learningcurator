@@ -1,0 +1,59 @@
+array(15) { 
+["id"]=> string(25) "ahaggett@extest.gov.bc.ca" 
+["username"]=> NULL 
+["full_name"]=> string(14) "Haggett, Allan" 
+["first_name"]=> NULL 
+["last_name"]=> NULL 
+["email"]=> string(25) "ahaggett@extest.gov.bc.ca" 
+["avatar"]=> NULL 
+["gender"]=> NULL 
+["link"]=> string(1) "#" 
+["bio"]=> NULL 
+["locale"]=> NULL 
+["validated"]=> bool(true) 
+["credentials"]=> array(3) { 
+    ["token"]=> string(2403) "eyJ0eXAiOiJKV1QiLCJub25jZSI6ImFjc0Rmbm0tOTNJT0lkTkw5YmVDVTNnZGQyU1Q2cEhfSTRfcXE2R0dheWciLCJhbGciOiJSUzI1NiIsIng1dCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC84MjQwMzVkOC04YjgwLTQ2ZTAtOWJhZi0yYTlhZmM1YTE3OGIvIiwiaWF0IjoxNjIzNjk5MjkwLCJuYmYiOjE2MjM2OTkyOTAsImV4cCI6MTYyMzcwMzE5MCwiYWNjdCI6MCwiYWNyIjoiMSIsImFjcnMiOlsidXJuOnVzZXI6cmVnaXN0ZXJzZWN1cml0eWluZm8iLCJ1cm46bWljcm9zb2Z0OnJlcTEiLCJ1cm46bWljcm9zb2Z0OnJlcTIiLCJ1cm46bWljcm9zb2Z0OnJlcTMiLCJjMSIsImMyIiwiYzMiLCJjNCIsImM1IiwiYzYiLCJjNyIsImM4IiwiYzkiLCJjMTAiLCJjMTEiLCJjMTIiLCJjMTMiLCJjMTQiLCJjMTUiLCJjMTYiLCJjMTciLCJjMTgiLCJjMTkiLCJjMjAiLCJjMjEiLCJjMjIiLCJjMjMiLCJjMjQiLCJjMjUiXSwiYWlvIjoiRTJaZ1lHanAySy94OWJQVnUvN25sVjNPVVl1ckZ1a0tHbXBVVk85LzhTanYyKzdiTEkwQSIsImFtciI6WyJwd2QiXSwiYXBwX2Rpc3BsYXluYW1lIjoiT0NJTyBMZWFybmluZy1DdXJhdG9yIiwiYXBwaWQiOiJmM2IxYzg2MS00NWJiLTQ0ZTMtYjI5OC0xNjgzMTM0MTgyMWQiLCJhcHBpZGFjciI6IjEiLCJmYW1pbHlfbmFtZSI6IkhhZ2dldHQiLCJnaXZlbl9uYW1lIjoiQWxsYW4iLCJpZHR5cCI6InVzZXIiLCJpbl9jb3JwIjoidHJ1ZSIsImlwYWRkciI6IjIwOS4xNjEuMjU0LjQ3IiwibmFtZSI6IkhhZ2dldHQsIEFsbGFuIiwib2lkIjoiMzkzODQ2ZWItYjQ4NC00ODZiLTg0MzUtZWRkYzQyMGRhZGZmIiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTM2Njc1OTgyNjgtMzA3NzA4MTUzOC02NTY5ODM5NTYtMzU5ODQyIiwicGxhdGYiOiIzIiwicHVpZCI6IjEwMDMyMDAxMkJGRUMyREMiLCJyaCI6IjAuQVJjQTJEVkFnb0NMNEVhYnJ5cWFfRm9YaTJISXNmTzdSZU5Fc3BnV2d4TkJnaDBYQUFrLiIsInNjcCI6ImVtYWlsIG9wZW5pZCBwcm9maWxlIFVzZXIuUmVhZCIsInNpZ25pbl9zdGF0ZSI6WyJpbmtub3dubnR3ayJdLCJzdWIiOiJLWjRjTDJrMHR1T05GVGZVNUoxVTl1V3RWRXA1ZktrS2VXRHBMWHIwZ1JrIiwidGVuYW50X3JlZ2lvbl9zY29wZSI6Ik5BIiwidGlkIjoiODI0MDM1ZDgtOGI4MC00NmUwLTliYWYtMmE5YWZjNWExNzhiIiwidW5pcXVlX25hbWUiOiJhaGFnZ2V0dEBleHRlc3QuZ292LmJjLmNhIiwidXBuIjoiYWhhZ2dldHRAZXh0ZXN0Lmdvdi5iYy5jYSIsInV0aSI6ImtuZFlCNElhVzBlYmVzTTRSQmpXQUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfc3QiOnsic3ViIjoiRDdBZDFEaXBzbFVlMzg5Q1pTU3huTE1ra19lZjJYcXFNRFQyVHd1X3dPdyJ9LCJ4bXNfdGNkdCI6MTQ0MTg2MDE4NH0.Se3HBMjpnOtvEolWftFxkbH8oAmuVpa2wEABhGABlLgh4F3ubgrMKmbJZf4eqKxLGolwmFHXbDIZzg8cE07pJQKGS3BYrSQTXwb-eMU9t89jEceRSmHbuRrT950NkAMl1odbYV1N1r_hPfAcpYwuUduwx9TFEupsj1Yktj-hXLmTYiM9eFw6dBIn8Ny4ARpPyXr2_FXdXF4VQegYszByfeSpeBs081AJxK8PevlswrdyyL3VX5MxCHkqThlpvWubErSPQyE02iJNUnTG-pSJuq9fILlkn20TStJzEJLbSnBpfSH7LUiXlGBsKkU7FEW6KB-xur1Q6FS8ICz0oTNaYQ" ["secret"]=> NULL ["expires"]=> int(1623703189) } ["raw"]=> array(16) { ["token"]=> object(TheNetworg\OAuth2\Client\Token\AccessToken)#121 (7) { ["idToken":protected]=> string(1258) "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiJmM2IxYzg2MS00NWJiLTQ0ZTMtYjI5OC0xNjgzMTM0MTgyMWQiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vODI0MDM1ZDgtOGI4MC00NmUwLTliYWYtMmE5YWZjNWExNzhiL3YyLjAiLCJpYXQiOjE2MjM2OTkyOTAsIm5iZiI6MTYyMzY5OTI5MCwiZXhwIjoxNjIzNzAzMTkwLCJhaW8iOiJBVFFBeS84VEFBQUFiUUkxZjN5N0FlOFBMY1I1QjhFZUc1Z3MzaDF5eGl1UlE4RTRUTWJORjFzSjE4RFJDOTlNcnZsT2hvN0Niekp0IiwiZW1haWwiOiJhaGFnZ2V0dEBleHRlc3QuZ292LmJjLmNhIiwibmFtZSI6IkhhZ2dldHQsIEFsbGFuIiwib2lkIjoiMzkzODQ2ZWItYjQ4NC00ODZiLTg0MzUtZWRkYzQyMGRhZGZmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWhhZ2dldHRAZXh0ZXN0Lmdvdi5iYy5jYSIsInJoIjoiMC5BUmNBMkRWQWdvQ0w0RWFicnlxYV9Gb1hpMkhJc2ZPN1JlTkVzcGdXZ3hOQmdoMFhBQWsuIiwic3ViIjoiRDdBZDFEaXBzbFVlMzg5Q1pTU3huTE1ra19lZjJYcXFNRFQyVHd1X3dPdyIsInRpZCI6IjgyNDAzNWQ4LThiODAtNDZlMC05YmFmLTJhOWFmYzVhMTc4YiIsInV0aSI6ImtuZFlCNElhVzBlYmVzTTRSQmpXQUEiLCJ2ZXIiOiIyLjAifQ.Q6-vAU8AJBHtL43GN7NB9GcECtL4-QtdQEaMOI4d9X4v7ryUtiiEvjQ44qrElyknmEWuyvwkKW9YWFe3McBzOae8-t0blb4oQ4pdKAPI64VvWmX21tbnyIEhT9dkYw18P_o1nA_-NKNX-5jnw8tYjaqnVSjpGo_iyjZyZO57cGdWBFzbsrpcskp2R3cnzJsAcxlQmGLuGPALAXdOMRcJYkje56y9v0Pdnp0hWnF7XsWZr4GDAnadisjDYO--ydnQAzSjaWsY78-T-WVu8iVJZv2XTQpAHWgaaMly49j98YWzrfczXBrPMshk5oGpVGpdJb09JFaCPrmMiV_O80OY4Q" 
+    ["idTokenClaims":protected]=> array(15) { 
+        ["aud"]=> string(36) "f3b1c861-45bb-44e3-b298-16831341821d" 
+        ["iss"]=> string(75) "https://login.microsoftonline.com/824035d8-8b80-46e0-9baf-2a9afc5a178b/v2.0" 
+        ["iat"]=> int(1623699290) 
+        ["nbf"]=> int(1623699290) 
+        ["exp"]=> int(1623703190) 
+        ["aio"]=> string(76) "ATQAy/8TAAAAbQI1f3y7Ae8PLcR5B8EeG5gs3h1yxiuRQ8E4TMbNF1sJ18DRC99MrvlOho7CbzJt" 
+        ["email"]=> string(25) "ahaggett@extest.gov.bc.ca" 
+        ["name"]=> string(14) "Haggett, Allan" 
+        ["oid"]=> string(36) "393846eb-b484-486b-8435-eddc420dadff" 
+        ["preferred_username"]=> string(25) "ahaggett@extest.gov.bc.ca" 
+        ["rh"]=> string(54) "0.ARcA2DVAgoCL4Eabryqa_FoXi2HIsfO7ReNEspgWgxNBgh0XAAk." 
+        ["sub"]=> string(43) "D7Ad1DipslUe389CZSSxnLMkk_ef2XqqMDT2Twu_wOw" 
+        ["tid"]=> string(36) "824035d8-8b80-46e0-9baf-2a9afc5a178b" 
+        ["uti"]=> string(22) "kndYB4IaW0ebesM4RBjWAA" 
+        ["ver"]=> string(3) "2.0" 
+    } 
+    ["accessToken":protected]=> string(2403) "eyJ0eXAiOiJKV1QiLCJub25jZSI6ImFjc0Rmbm0tOTNJT0lkTkw5YmVDVTNnZGQyU1Q2cEhfSTRfcXE2R0dheWciLCJhbGciOiJSUzI1NiIsIng1dCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC84MjQwMzVkOC04YjgwLTQ2ZTAtOWJhZi0yYTlhZmM1YTE3OGIvIiwiaWF0IjoxNjIzNjk5MjkwLCJuYmYiOjE2MjM2OTkyOTAsImV4cCI6MTYyMzcwMzE5MCwiYWNjdCI6MCwiYWNyIjoiMSIsImFjcnMiOlsidXJuOnVzZXI6cmVnaXN0ZXJzZWN1cml0eWluZm8iLCJ1cm46bWljcm9zb2Z0OnJlcTEiLCJ1cm46bWljcm9zb2Z0OnJlcTIiLCJ1cm46bWljcm9zb2Z0OnJlcTMiLCJjMSIsImMyIiwiYzMiLCJjNCIsImM1IiwiYzYiLCJjNyIsImM4IiwiYzkiLCJjMTAiLCJjMTEiLCJjMTIiLCJjMTMiLCJjMTQiLCJjMTUiLCJjMTYiLCJjMTciLCJjMTgiLCJjMTkiLCJjMjAiLCJjMjEiLCJjMjIiLCJjMjMiLCJjMjQiLCJjMjUiXSwiYWlvIjoiRTJaZ1lHanAySy94OWJQVnUvN25sVjNPVVl1ckZ1a0tHbXBVVk85LzhTanYyKzdiTEkwQSIsImFtciI6WyJwd2QiXSwiYXBwX2Rpc3BsYXluYW1lIjoiT0NJTyBMZWFybmluZy1DdXJhdG9yIiwiYXBwaWQiOiJmM2IxYzg2MS00NWJiLTQ0ZTMtYjI5OC0xNjgzMTM0MTgyMWQiLCJhcHBpZGFjciI6IjEiLCJmYW1pbHlfbmFtZSI6IkhhZ2dldHQiLCJnaXZlbl9uYW1lIjoiQWxsYW4iLCJpZHR5cCI6InVzZXIiLCJpbl9jb3JwIjoidHJ1ZSIsImlwYWRkciI6IjIwOS4xNjEuMjU0LjQ3IiwibmFtZSI6IkhhZ2dldHQsIEFsbGFuIiwib2lkIjoiMzkzODQ2ZWItYjQ4NC00ODZiLTg0MzUtZWRkYzQyMGRhZGZmIiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTM2Njc1OTgyNjgtMzA3NzA4MTUzOC02NTY5ODM5NTYtMzU5ODQyIiwicGxhdGYiOiIzIiwicHVpZCI6IjEwMDMyMDAxMkJGRUMyREMiLCJyaCI6IjAuQVJjQTJEVkFnb0NMNEVhYnJ5cWFfRm9YaTJISXNmTzdSZU5Fc3BnV2d4TkJnaDBYQUFrLiIsInNjcCI6ImVtYWlsIG9wZW5pZCBwcm9maWxlIFVzZXIuUmVhZCIsInNpZ25pbl9zdGF0ZSI6WyJpbmtub3dubnR3ayJdLCJzdWIiOiJLWjRjTDJrMHR1T05GVGZVNUoxVTl1V3RWRXA1ZktrS2VXRHBMWHIwZ1JrIiwidGVuYW50X3JlZ2lvbl9zY29wZSI6Ik5BIiwidGlkIjoiODI0MDM1ZDgtOGI4MC00NmUwLTliYWYtMmE5YWZjNWExNzhiIiwidW5pcXVlX25hbWUiOiJhaGFnZ2V0dEBleHRlc3QuZ292LmJjLmNhIiwidXBuIjoiYWhhZ2dldHRAZXh0ZXN0Lmdvdi5iYy5jYSIsInV0aSI6ImtuZFlCNElhVzBlYmVzTTRSQmpXQUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfc3QiOnsic3ViIjoiRDdBZDFEaXBzbFVlMzg5Q1pTU3huTE1ra19lZjJYcXFNRFQyVHd1X3dPdyJ9LCJ4bXNfdGNkdCI6MTQ0MTg2MDE4NH0.Se3HBMjpnOtvEolWftFxkbH8oAmuVpa2wEABhGABlLgh4F3ubgrMKmbJZf4eqKxLGolwmFHXbDIZzg8cE07pJQKGS3BYrSQTXwb-eMU9t89jEceRSmHbuRrT950NkAMl1odbYV1N1r_hPfAcpYwuUduwx9TFEupsj1Yktj-hXLmTYiM9eFw6dBIn8Ny4ARpPyXr2_FXdXF4VQegYszByfeSpeBs081AJxK8PevlswrdyyL3VX5MxCHkqThlpvWubErSPQyE02iJNUnTG-pSJuq9fILlkn20TStJzEJLbSnBpfSH7LUiXlGBsKkU7FEW6KB-xur1Q6FS8ICz0oTNaYQ" 
+    ["expires":protected]=> int(1623703189) 
+    ["refreshToken":protected]=> NULL 
+    ["resourceOwnerId":protected]=> NULL 
+    ["values":protected]=> array(4) { 
+        ["token_type"]=> string(6) "Bearer" 
+        ["scope"]=> string(30) "email openid profile User.Read" 
+        ["ext_expires_in"]=> int(3599) 
+        ["id_token"]=> string(1258) "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiJmM2IxYzg2MS00NWJiLTQ0ZTMtYjI5OC0xNjgzMTM0MTgyMWQiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vODI0MDM1ZDgtOGI4MC00NmUwLTliYWYtMmE5YWZjNWExNzhiL3YyLjAiLCJpYXQiOjE2MjM2OTkyOTAsIm5iZiI6MTYyMzY5OTI5MCwiZXhwIjoxNjIzNzAzMTkwLCJhaW8iOiJBVFFBeS84VEFBQUFiUUkxZjN5N0FlOFBMY1I1QjhFZUc1Z3MzaDF5eGl1UlE4RTRUTWJORjFzSjE4RFJDOTlNcnZsT2hvN0Niekp0IiwiZW1haWwiOiJhaGFnZ2V0dEBleHRlc3QuZ292LmJjLmNhIiwibmFtZSI6IkhhZ2dldHQsIEFsbGFuIiwib2lkIjoiMzkzODQ2ZWItYjQ4NC00ODZiLTg0MzUtZWRkYzQyMGRhZGZmIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWhhZ2dldHRAZXh0ZXN0Lmdvdi5iYy5jYSIsInJoIjoiMC5BUmNBMkRWQWdvQ0w0RWFicnlxYV9Gb1hpMkhJc2ZPN1JlTkVzcGdXZ3hOQmdoMFhBQWsuIiwic3ViIjoiRDdBZDFEaXBzbFVlMzg5Q1pTU3huTE1ra19lZjJYcXFNRFQyVHd1X3dPdyIsInRpZCI6IjgyNDAzNWQ4LThiODAtNDZlMC05YmFmLTJhOWFmYzVhMTc4YiIsInV0aSI6ImtuZFlCNElhVzBlYmVzTTRSQmpXQUEiLCJ2ZXIiOiIyLjAifQ.Q6-vAU8AJBHtL43GN7NB9GcECtL4-QtdQEaMOI4d9X4v7ryUtiiEvjQ44qrElyknmEWuyvwkKW9YWFe3McBzOae8-t0blb4oQ4pdKAPI64VvWmX21tbnyIEhT9dkYw18P_o1nA_-NKNX-5jnw8tYjaqnVSjpGo_iyjZyZO57cGdWBFzbsrpcskp2R3cnzJsAcxlQmGLuGPALAXdOMRcJYkje56y9v0Pdnp0hWnF7XsWZr4GDAnadisjDYO--ydnQAzSjaWsY78-T-WVu8iVJZv2XTQpAHWgaaMly49j98YWzrfczXBrPMshk5oGpVGpdJb09JFaCPrmMiV_O80OY4Q" } } 
+        ["aud"]=> string(36) "f3b1c861-45bb-44e3-b298-16831341821d" 
+        ["iss"]=> string(75) "https://login.microsoftonline.com/824035d8-8b80-46e0-9baf-2a9afc5a178b/v2.0" 
+        ["iat"]=> int(1623699290) 
+        ["nbf"]=> int(1623699290) 
+        ["exp"]=> int(1623703190) 
+        ["aio"]=> string(76) "ATQAy/8TAAAAbQI1f3y7Ae8PLcR5B8EeG5gs3h1yxiuRQ8E4TMbNF1sJ18DRC99MrvlOho7CbzJt" 
+        ["email"]=> string(25) "ahaggett@extest.gov.bc.ca" 
+        ["name"]=> string(14) "Haggett, Allan" 
+        ["oid"]=> string(36) "393846eb-b484-486b-8435-eddc420dadff" 
+        ["preferred_username"]=> string(25) "ahaggett@extest.gov.bc.ca" 
+        ["rh"]=> string(54) "0.ARcA2DVAgoCL4Eabryqa_FoXi2HIsfO7ReNEspgWgxNBgh0XAAk." 
+        ["sub"]=> string(43) "D7Ad1DipslUe389CZSSxnLMkk_ef2XqqMDT2Twu_wOw" 
+        ["tid"]=> string(36) "824035d8-8b80-46e0-9baf-2a9afc5a178b" 
+        ["uti"]=> string(22) "kndYB4IaW0ebesM4RBjWAA" 
+        ["ver"]=> string(3) "2.0" 
+    } 
+    ["provider"]=> string(7) "azuread" 
+} 
