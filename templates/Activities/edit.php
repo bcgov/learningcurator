@@ -103,8 +103,12 @@ $options = array(
     <?= $this->Form->button(__('Save Activity'), ['class' => 'btn btn-block btn-success my-3']) ?>
     <h2>Pathways</h2>
     <?php foreach($activity->steps as $s): ?>
-<a href="/pathways/<?= $s->pathways[0]['slug'] ?>/s/<?= $s->id ?>/<?= $s->slug ?>"><?= $s->pathways[0]['name'] ?> - <?= $s->name ?></a>
-<?php endforeach ?>
+    <div>
+        <a href="/pathways/<?= $s->pathways[0]['slug'] ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+            <?= $s->pathways[0]['name'] ?> - <?= $s->name ?>
+        </a>
+    </div>
+    <?php endforeach ?>
     </div>
     </div>
     </div>

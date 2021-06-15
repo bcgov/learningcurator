@@ -159,10 +159,13 @@ class ActivitiesController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+            $sluggedTitle = Text::slug($activity->name);
+            // trim slug to maximum length defined in schema
+            $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
             if ($this->Activities->save($activity)) {
                 $this->Flash->success(__('The activity has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $go = '/activities/view/' . $id;
+                return $this->redirect($go);
             }
             $this->Flash->error(__('The activity could not be saved. Please, try again.'));
         }
