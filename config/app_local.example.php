@@ -6,6 +6,9 @@
  * into source code version control.
  */
 return [
+    'App' => [
+        'fullBaseUrl' => LINK_TO_NAMESPACE_URL_NO_TRAILING_SLASH,
+    ],
     /*
      * Debug Level:
      *
