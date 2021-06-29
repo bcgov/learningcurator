@@ -17,6 +17,8 @@ CakePHP 4.03
 MySQL/MariaDB
 
 - mysql source config/curator-schema-plus-starter.sql
+- update fullBaseUrl value in config/app_local.php
+- update database access values in config/app_local.php
 - cp config/tocopy/Azure.php vendor/thenetworg/oauth2-azure/src/Provider/Azure.php
 - cp config/tocopy/AzureMapper.php vendor/cakedc/auth/src/Social/Mapper/Azure.php
 - cp config/tocopy/ProfileTrait.php vendor/cakedc/users/src/Controller/Traits/ProfileTrait.php
