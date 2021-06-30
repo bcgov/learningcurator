@@ -15,6 +15,34 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+--
+-- Table structure for table `activities`
+--
+
+DROP TABLE IF EXISTS `questions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `content` text,
+  `status_id` int(11) DEFAULT '1',
+  `created` datetime NOT NULL,
+  `createdby_id` char(36) NOT NULL,
+  `modified` datetime NOT NULL,
+  `modifiedby_id` char(36) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `questions_ibfk_0` (`status_id`),
+  KEY `questionscreateduser_ibfk_1` (`createdby_id`),
+  KEY `questionsmodifieduser_ibfk_1` (`modifiedby_id`),
+  CONSTRAINT `questions_ibfk_0` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`),
+  CONSTRAINT `questionscreateduser_ibfk_1` FOREIGN KEY (`createdby_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `questionsmodifieduser_ibfk_1` FOREIGN KEY (`modifiedby_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 --
 -- Table structure for table `activities`
 --
