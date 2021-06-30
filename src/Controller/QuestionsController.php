@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use Cake\Utility\Text;
 
 /**
  * Questions Controller
@@ -51,7 +52,12 @@ class QuestionsController extends AppController
     {
         $question = $this->Questions->newEmptyEntity();
         if ($this->request->is('post')) {
+            $user = $this->request->getAttribute('authentication')->getIdentity();
+            $sluggedTitle = Text::slug($this->request->getData()['title']);
             $question = $this->Questions->patchEntity($question, $this->request->getData());
+            $question->createdby_id = $user->id;
+            $question->modifiedby_id = $user->id;
+            $question->slug = strtolower(substr($sluggedTitle, 0, 191));
             if ($this->Questions->save($question)) {
                 $this->Flash->success(__('The question has been saved.'));
 
@@ -77,7 +83,11 @@ class QuestionsController extends AppController
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->request->getAttribute('authentication')->getIdentity();
+            $sluggedTitle = Text::slug($this->request->getData()['title']);
             $question = $this->Questions->patchEntity($question, $this->request->getData());
+            $question->modifiedby_id = $user->id;
+            $question->slug = strtolower(substr($sluggedTitle, 0, 191));
             if ($this->Questions->save($question)) {
                 $this->Flash->success(__('The question has been saved.'));
 

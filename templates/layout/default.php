@@ -66,6 +66,9 @@
 	<li class="nav-item">
 		<a class="nav-link" href="/profile">Your Profile</a>
 	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="/questions">FAQ</a>
+	</li>
 
 	</ul>
 	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
