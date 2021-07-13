@@ -19,7 +19,7 @@ class Azure extends AbstractProvider
 
     use BearerAuthorizationTrait;
 
-    public $urlLogin = 'https://login.microsoftonline.com/824035d8-8b80-46e0-9baf-2a9afc5a178b/oauth2/v2.0/authorize';
+    public $urlLogin = 'https://login.microsoftonline.com/6fdb5200-3d0d-4a8a-b036-d3685e359adc/oauth2/v2.0/authorize';
 
     /** @var array|null */
     protected $openIdConfiguration;
