@@ -28,7 +28,7 @@ class Azure extends AbstractProvider
 
     public $scopeSeparator = ' ';
 
-    public $tenant = '824035d8-8b80-46e0-9baf-2a9afc5a178b';
+    public $tenant = '6fdb5200-3d0d-4a8a-b036-d3685e359adc';
 
     public $defaultEndPointVersion = self::ENDPOINT_VERSION_2_0;
 
