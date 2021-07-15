@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-6">
 <div class="py-5">
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<?= $this->Html->link(__('New Question'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+<?= $this->Html->link(__('New Question'), ['action' => 'add'], ['class' => 'btn btn-success float-right']) ?>
 <?php endif ?>
 <h1><?= __('Questions') ?></h1>
 <div>Questions that we find are asked frequently.</div>
@@ -35,7 +35,12 @@ if ($this->Identity->isLoggedIn()) {
 <div class="bg-white rounded-lg p-3 my-3">
 <h2><?= h($question->title) ?></h2>
 <div><?= $question->content ?></div>
-<?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id]) ?>
+<?php if($role == 'curator' || $role == 'superuser'): ?>
+    <div class="btn-group mt-3">
+    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id],['class'=>'btn btn-dark']) ?>
+    <?= $this->Form->postLink(__('Delete Question'), ['action' => 'delete', $question->id], ['confirm' => __('Are you sure you want to delete # {0}?', $question->id), 'class' => 'btn btn-danger']) ?>
+</div>
+<?php endif ?>
 </div>
 <?php else: ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
@@ -43,7 +48,10 @@ if ($this->Identity->isLoggedIn()) {
     <div><span class="badge badge-warning"><?= h($question->status->name) ?></span></div>
     <h2><?= h($question->title) ?></h2>
     <div><?= $question->content ?></div>
-    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id]) ?>
+    <div class="btn-group mt-3">
+    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id],['class'=>'btn btn-dark']) ?>
+    <?= $this->Form->postLink(__('Delete Question'), ['action' => 'delete', $question->id], ['confirm' => __('Are you sure you want to delete # {0}?', $question->id), 'class' => 'btn btn-danger']) ?>
+</div>
 </div>
 <?php endif ?>
 <?php endif ?>
