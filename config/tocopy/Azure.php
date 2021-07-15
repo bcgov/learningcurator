@@ -24,7 +24,7 @@ class Azure extends AbstractProvider
     /** @var array|null */
     protected $openIdConfiguration;
 
-    public $scope = ['openid','profile', 'email'];
+    public $scope = ['openid','profile','email'];
 
     public $scopeSeparator = ' ';
 
