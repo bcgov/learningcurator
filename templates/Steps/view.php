@@ -186,16 +186,22 @@ if($stepclaimcount > 0) {
 			</span>  
 		</div>
 	</div>
-	<div class="col-2">
+	<!-- <div class="col-2">
 		<?php if(!empty($laststep)): ?>
-		<a href="/pathways/<?= $pathways->slug ?>/s/<?= $laststep ?>/<?= $lastslug ?>" style="color: #000; font-size: 250%;"><i class="fas fa-arrow-circle-left"></i></a>
+		<a href="/pathways/<?= $pathways->slug ?>/s/<?= $laststep ?>/<?= $lastslug ?>" style="color: #000; font-size: 250%;">
+			<i class="fas fa-arrow-circle-left"></i><br>
+			<span style="font-size: .5em">Back</span>
+		</a>
 		<?php endif ?>
 
 		<?php if(!empty($n->id)): ?>
-		<a href="/pathways/<?= $pathways->slug ?>/s/<?= $n->id ?>/<?= $n->slug ?>" class="nextstep" style="color: #000; font-size: 250%; float: right;"><i class="fas fa-arrow-circle-right"></i></a>
+		<a href="/pathways/<?= $pathways->slug ?>/s/<?= $n->id ?>/<?= $n->slug ?>" class="nextstep" style="color: #000; font-size: 250%; float: right;">
+			<i class="fas fa-arrow-circle-right"></i><br>
+			<span style="font-size: .5em">Next</span>
+		</a>
 		<?php endif ?>
 		
-	</div>
+	</div> -->
 </div>
 
 <?php endif ?>
@@ -206,13 +212,14 @@ $lastname = $s->name;
 $lastobj = $s->description;
 ?>
 <?php endforeach ?>
-<div class="my-3">
+<div class="m-3">
 <?php $count = 1 ?>
 <?php foreach($pathways->steps as $s): ?>
-	<?php $c = 'dot' ?>
-	<?php if($s->id == $step->id) $c = 'dotactive' ?>
-	<a href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-		<i class="fas fa-dot-circle <?= $c ?>" title="Step <?= $count ?>"></i>
+	<?php $c = 'badge-light' ?>
+	<?php if($s->id == $step->id) $c = 'badge-dark' ?>
+	<a class="badge <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+		<!-- <i class="fas fa-dot-circle <?= $c ?>" title="Step <?= $count ?>">&bull;</i> -->
+		Step <?= $count ?>
 	</a>
 <?php $count++ ?>
 <?php endforeach ?>
