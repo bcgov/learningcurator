@@ -8,8 +8,8 @@
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-6">
 <div class="py-5">
-<?= $this->Html->link(__('New Category'), ['action' => 'add'], ['class' => 'btn btn-dark float-right']) ?>
-<h1 class="display-2"><?= __('Categories') ?></h1>
+<?= $this->Html->link(__('New Category'), ['action' => 'add'], ['class' => 'btn btn-success float-right']) ?>
+<h1 class=""><?= __('Categories') ?></h1>
 <div>Categories can contain numerous topics, with each topic containing numerous learning pathways.</div>
 </div>
 </div>
@@ -22,12 +22,12 @@
 <?php foreach ($categories as $category): ?>
 
 <div class="p-5 my-5 bg-white rounded-lg">
-	<h2 class="display-3"><?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?></h2>
-	<div class="mb-5" style="font-size: 2rem">
+	<h2 class=""><?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?></h2>
+	<div class="mb-5" style="font-size: 1.2rem">
 	<?= $category->description ?>
 	</div>
 	
-	<a class="btn btn-dark" 
+	<a class="btn btn-success btn-lg" 
 		data-toggle="collapse" 
 		href="#topics<?= $category->id ?>" 
 		role="button" 
@@ -44,7 +44,7 @@
 	
 		<h4><?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?></h4>
 		<div class="mb-3"><?= h($topic->description) ?></div>
-		<a class="btn btn-dark" 
+		<a class="btn btn-success btn-lg" 
 			data-toggle="collapse" 
 			href="#paths<?= $topic->id ?>" 
 			role="button" 
