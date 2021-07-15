@@ -35,7 +35,7 @@ your corporate training offered through the Learning Centre.</p>
 <p style="font-size: 1.3rem">A <a href="#">best practice in learning for organizations</a>, curation helps us develop 
 ourselves as part of a trusted, talented, and modern public service.</p>
 
-<a class="btn btn-lg btn-success my-3" href="/pages/faq">Learn More</a>
+<a class="btn btn-lg btn-success my-3" href="/questions">Learn More</a>
 
 
 </div>
@@ -50,7 +50,7 @@ ourselves as part of a trusted, talented, and modern public service.</p>
 
 
 
-<div class="col-md-3">
+<div class="col-md-6">
 
 <h2 class="mt-3">Latest Topics</h2>
 <?php foreach ($allcats as $cat) : ?>
@@ -102,26 +102,6 @@ ourselves as part of a trusted, talented, and modern public service.</p>
 </div>
 
 
-<div class="col-md-5">
-
-<h2 class="mt-3">Top 5 Most-Liked Activities</h2>
-
-<div class="">
-<?php foreach ($activities as $activity): ?>
-
-<div class="p-3 rounded-lg mb-3 bg-white"> <!-- style="background-color: rgba(<?= $activity->activity_type->color ?>,.2)" -->
-<div class="activity-icon activity-icon-md" style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
-		<i class="activity-icon activity-icon-md fas <?= $activity->activity_type->image_path ?>"></i>
-	</div>
-<h3>
-
-	<?= $this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
-</h3>
- 
- </div>
-
-<?php endforeach; ?>
-</div> <!-- /. -->
 
 
 
