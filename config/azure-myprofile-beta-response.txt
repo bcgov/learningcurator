@@ -1,0 +1,478 @@
+
+
+
+(myprofile BETA call)
+
+
+
+
+{
+    "@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/$entity",
+    "id": "profileId",
+    "account@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/account",
+    "account": [
+        {
+            "ageGroup": "",
+            "countryCode": "",
+            "userPrincipalName": "Allan.Haggett@gov.bc.ca",
+            "allowedAudiences": "organization",
+            "createdDateTime": "2021-02-16T17:02:38.1727976Z",
+            "inference": null,
+            "lastModifiedDateTime": "2021-07-15T15:14:36.2801844Z",
+            "id": "99a386e5-66a5-42cd-909a-33b3af34786b",
+            "isSearchable": false,
+            "preferredLanguageTag": {
+                "locale": null,
+                "displayName": null
+            },
+            "createdBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "lastModifiedBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "source": {
+                "type": [
+                    "AAD"
+                ]
+            }
+        },
+        {
+            "ageGroup": "",
+            "countryCode": "",
+            "userPrincipalName": "",
+            "allowedAudiences": "federatedOrganizations",
+            "createdDateTime": "2021-02-16T17:02:38.1727976Z",
+            "inference": null,
+            "lastModifiedDateTime": "2021-07-15T15:14:36.2801844Z",
+            "id": "fc804ab8-60e0-4f75-968f-bb3dd11ee4a7",
+            "isSearchable": false,
+            "preferredLanguageTag": {
+                "locale": null,
+                "displayName": null
+            },
+            "createdBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "lastModifiedBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "source": {
+                "type": [
+                    "AAD"
+                ]
+            }
+        }
+    ],
+    "addresses@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/addresses",
+    "addresses": [],
+    "anniversaries@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/anniversaries",
+    "anniversaries": [],
+    "websites@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/websites",
+    "websites": [],
+    "educationalActivities@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/educationalActivities",
+    "educationalActivities": [],
+    "emails@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/emails",
+    "emails": [
+        {
+            "address": "Allan.Haggett@gov.bc.ca",
+            "displayName": null,
+            "type": "main",
+            "allowedAudiences": "organization,federatedOrganizations",
+            "createdDateTime": "2021-02-16T17:02:38.1727976Z",
+            "inference": null,
+            "lastModifiedDateTime": "2021-07-15T15:14:36.2801844Z",
+            "id": "ae204c55-cba8-4097-a1ed-774879f84ecc",
+            "isSearchable": false,
+            "createdBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "lastModifiedBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "source": {
+                "type": [
+                    "AAD"
+                ]
+            }
+        },
+        {
+            "address": "AHAGGETT@bcgov.onmicrosoft.com",
+            "displayName": null,
+            "type": "work",
+            "allowedAudiences": "organization",
+            "createdDateTime": "2021-02-16T17:02:38.1727976Z",
+            "inference": null,
+            "lastModifiedDateTime": "2021-07-15T15:14:36.2801844Z",
+            "id": "8da92a46-20a5-4af0-874d-3bd5cea9b581",
+            "isSearchable": false,
+            "createdBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "lastModifiedBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "source": {
+                "type": [
+                    "AAD"
+                ]
+            }
+        },
+        {
+            "address": "AHAGGETT@Victoria1.gov.bc.ca",
+            "displayName": null,
+            "type": "work",
+            "allowedAudiences": "organization",
+            "createdDateTime": "2021-02-16T17:02:38.1727976Z",
+            "inference": null,
+            "lastModifiedDateTime": "2021-07-15T15:14:36.2801844Z",
+            "id": "4d200a6f-5f0c-47ed-b345-a8485f79682d",
+            "isSearchable": false,
+            "createdBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "lastModifiedBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "source": {
+                "type": [
+                    "AAD"
+                ]
+            }
+        }
+    ],
+    "notes@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/notes",
+    "notes": [],
+    "interests@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/interests",
+    "interests": [],
+    "languages@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/languages",
+    "languages": [],
+    "names@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/names",
+    "names": [
+        {
+            "displayName": "Haggett, Allan PSA:EX",
+            "first": "Allan",
+            "initials": "",
+            "last": "Haggett",
+            "languageTag": null,
+            "maiden": null,
+            "middle": null,
+            "nickname": null,
+            "suffix": null,
+            "title": null,
+            "pronunciation": null,
+            "allowedAudiences": "organization,federatedOrganizations",
+            "createdDateTime": "2021-02-16T17:02:38.1727976Z",
+            "inference": null,
+            "lastModifiedDateTime": "2021-07-15T15:14:36.2801844Z",
+            "id": "AadSource",
+            "isSearchable": false,
+            "createdBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "lastModifiedBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "source": {
+                "type": [
+                    "AAD"
+                ]
+            }
+        }
+    ],
+    "phones@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/phones",
+    "phones": [
+        {
+            "displayName": null,
+            "type": "business",
+            "number": "(778) 698-4318",
+            "allowedAudiences": "organization",
+            "createdDateTime": "2021-02-16T17:02:38.1727976Z",
+            "inference": null,
+            "lastModifiedDateTime": "2021-07-15T15:14:36.2801844Z",
+            "id": "7ee305b9-16e3-44a5-b36d-6ed97b6ecea7",
+            "isSearchable": false,
+            "createdBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "lastModifiedBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "source": {
+                "type": [
+                    "AAD"
+                ]
+            }
+        }
+    ],
+    "positions@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/positions",
+    "positions": [
+        {
+            "categories": [],
+            "isCurrent": true,
+            "manager": null,
+            "allowedAudiences": "organization",
+            "createdDateTime": "2021-02-16T17:02:38.1727976Z",
+            "inference": null,
+            "lastModifiedDateTime": "2021-07-15T15:14:36.2801844Z",
+            "id": "3db49b6c-38e7-4107-a556-ad936e60c4b8",
+            "isSearchable": false,
+            "detail": {
+                "description": null,
+                "endMonthYear": "0001-01-01",
+                "jobTitle": "Learning Technologist",
+                "role": null,
+                "startMonthYear": "0001-01-01",
+                "summary": null,
+                "company": {
+                    "displayName": "BC Public Service Agency",
+                    "pronunciation": null,
+                    "department": "Talent Management to People and Organizational Development",
+                    "officeLocation": "Learning Centre",
+                    "webUrl": null,
+                    "address": {
+                        "type": "business",
+                        "postOfficeBox": null,
+                        "street": "4th Floor - 716 Courtney Street",
+                        "city": "Victoria",
+                        "state": "BC",
+                        "countryOrRegion": "CA",
+                        "postalCode": "V8W 1C2"
+                    }
+                }
+            },
+            "colleagues": [],
+            "createdBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "lastModifiedBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "source": {
+                "type": [
+                    "AAD"
+                ]
+            }
+        },
+        {
+            "categories": [],
+            "isCurrent": true,
+            "manager": null,
+            "allowedAudiences": "federatedOrganizations",
+            "createdDateTime": "2021-02-16T17:02:38.1727976Z",
+            "inference": null,
+            "lastModifiedDateTime": "2021-07-15T15:14:36.2801844Z",
+            "id": "8041e1f6-70e8-4b65-8951-d85c6770ec23",
+            "isSearchable": false,
+            "detail": {
+                "description": null,
+                "endMonthYear": "0001-01-01",
+                "jobTitle": "",
+                "role": null,
+                "startMonthYear": "0001-01-01",
+                "summary": null,
+                "company": {
+                    "displayName": "BC Public Service Agency",
+                    "pronunciation": null,
+                    "department": null,
+                    "officeLocation": null,
+                    "address": null,
+                    "webUrl": null
+                }
+            },
+            "colleagues": [],
+            "createdBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "lastModifiedBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "source": {
+                "type": [
+                    "AAD"
+                ]
+            }
+        }
+    ],
+    "projects@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/projects",
+    "projects": [],
+    "skills@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/skills",
+    "skills": [],
+    "webAccounts@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/webAccounts",
+    "webAccounts": [
+        {
+            "userId": "SIP:Allan.Haggett@gov.bc.ca",
+            "description": "Address used for interacting with a user through instant messaging services",
+            "statusMessage": null,
+            "webUrl": null,
+            "allowedAudiences": "organization",
+            "createdDateTime": "2021-02-16T17:02:38.1727976Z",
+            "inference": null,
+            "lastModifiedDateTime": "2021-07-15T15:14:36.2801844Z",
+            "id": "7c5a4b59-ec9e-4960-9d49-33f8e933cec8",
+            "isSearchable": false,
+            "service": {
+                "name": "Microsoft Teams for Business",
+                "webUrl": "graph.microsoft.com/teams"
+            },
+            "createdBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "lastModifiedBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "AAD",
+                    "id": null
+                }
+            },
+            "source": {
+                "type": [
+                    "AAD"
+                ]
+            }
+        },
+        {
+            "userId": "",
+            "description": null,
+            "statusMessage": null,
+            "webUrl": "https://bcgov-my.sharepoint.com/personal/allan_haggett_gov_bc_ca",
+            "allowedAudiences": "organization",
+            "createdDateTime": "2021-01-28T19:45:02.2773354Z",
+            "inference": null,
+            "lastModifiedDateTime": "2021-07-15T15:14:37.6604144Z",
+            "id": "2426c485-8ad7-4abe-828e-d9460c434b46",
+            "isSearchable": false,
+            "service": {
+                "name": "",
+                "webUrl": ""
+            },
+            "createdBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "UPA",
+                    "id": null
+                }
+            },
+            "lastModifiedBy": {
+                "device": null,
+                "user": null,
+                "application": {
+                    "displayName": "UPA",
+                    "id": null
+                }
+            },
+            "source": {
+                "type": [
+                    "UPA"
+                ]
+            }
+        }
+    ],
+    "extensions@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/extensions",
+    "extensions": [],
+    "awards@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/awards",
+    "awards": [],
+    "publications@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/publications",
+    "publications": [],
+    "patents@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/patents",
+    "patents": [],
+    "certifications@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d3d13d47-614a-4ffb-9fe1-742ec787c7be')/profile/certifications",
+    "certifications": []
+}
