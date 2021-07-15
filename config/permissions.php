@@ -170,6 +170,11 @@ return [
         ],
         [
             'role' => '*',
+            'controller' => 'Questions',
+            'action' => ['index','view'],
+        ],
+        [
+            'role' => '*',
             'plugin' => 'DebugKit',
             'controller' => '*',
             'action' => '*',
