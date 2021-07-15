@@ -101,11 +101,10 @@
 <?php endif ?>
 <div class="col-md-5 mt-3">
 
-	<div class="p-3 m-3 bg-white shadow-sm text-center">
-		Brought to you by The 
+	<div class="p-3 m-3 bg-white shadow-sm text-center text-uppercase">
+		Brought to you by<br>
 		<a href="https://learningcentre.gww.gov.bc.ca/" target="_blank" rel="noopener">
-			Learning Centre 
-			<img src="/img/learning-logo-small-transparent.png" width="40" alt="Learning Centre logo">
+			<img height="100" src="/img/lc-logo-wordmark-300x100.png" width="300" alt="Learning Centre logo">
 		</a>
 	</div>
 	<div class="p-3 m-3 bg-white shadow-sm">
