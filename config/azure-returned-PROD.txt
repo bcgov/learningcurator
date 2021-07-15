@@ -1,3 +1,4 @@
+5F421FC1A510420B9A19A46D24069FFD
 vendor/cakedc/auth/src/Authenticator/SocialAuthenticator.php
 Under line 99:
 echo '<pre>'; print_r($rawData); exit;
@@ -16,7 +17,7 @@ Array
                     [aio] => AVQAq/8TAAAAwlFavekZaB0oOjcNII6tDsaPO8y9PFWEMxCoAh4goBG7OdoQpyTic58g9uIMR8Yxhsi3o8KDiwHq/i6c94gUCfkeYmfycgNGX911+Y+AsZw=
                     [email] => Allan.Haggett@gov.bc.ca
                     [name] => Haggett, Allan PSA:EX
-                    [oid] => d3d13d47-614a-4ffb-9fe1-742ec787c7be  5F421FC1A510420B9A19A46D24069FFD
+                    [oid] => d3d13d47-614a-4ffb-9fe1-742ec787c7be
                     [preferred_username] => Allan.Haggett@gov.bc.ca
                     [rh] => 0.ATgAAFLbbw09ikqwNtNoXjWa3GWem2cy6FxNrVRURRcBFNc4ACI.
                     [sub] => UK3J83WgEPRFjOVJmZ6a5_7tFaxGBuB9h1MxaLpszik
