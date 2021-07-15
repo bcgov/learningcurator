@@ -94,8 +94,8 @@
 <?php if(!empty($active)): ?>
 <div class="col-md-5 mt-3">
 <nav class="nav bg-white shadow-sm p-3 m-3">
-	<a class="nav-link" href="/pages/faq">Frequently Asked Questions</a>
-	<a class="nav-link" href="/activities/contribute">Contribute</a>
+	<a class="nav-link" href="/questions">Frequently Asked Questions</a>
+	<!-- <a class="nav-link" href="/activities/contribute">Contribute</a> -->
 </nav>
 </div>
 <?php endif ?>
