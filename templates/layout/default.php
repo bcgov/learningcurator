@@ -15,7 +15,8 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css">
 
 <link href="/css/home.css" rel="stylesheet"> 
-<link href="/fontawesome/css/all.css" rel="stylesheet"> 
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 
 <!-- ****** faviconit.com favicons ****** -->
