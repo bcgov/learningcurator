@@ -749,6 +749,7 @@ CREATE TABLE `steps` (
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
   `description` text,
+  `status_id` int(11) DEFAULT '1',
   `image_path` varchar(255) DEFAULT NULL,
   `featured` int(11) DEFAULT '0',
   `created` datetime NOT NULL,
@@ -756,12 +757,15 @@ CREATE TABLE `steps` (
   `modified` datetime NOT NULL,
   `modifiedby` char(36) NOT NULL,
   PRIMARY KEY (`id`),
+  KEY `step_status_ibfk_0` (`status_id`),
   KEY `step_createduser_ibfk_1` (`createdby`),
   KEY `step_modifieduser_ibfk_1` (`modifiedby`),
+  CONSTRAINT `step_status_ibfk_0` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`),
   CONSTRAINT `step_createduser_ibfk_1` FOREIGN KEY (`createdby`) REFERENCES `users` (`id`),
   CONSTRAINT `step_modifieduser_ibfk_1` FOREIGN KEY (`modifiedby`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `steps`
