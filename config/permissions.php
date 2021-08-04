@@ -134,14 +134,29 @@ return [
             'action' => ['index','view','api'],
         ],
         [
+            'role' => 'curator',
+            'controller' => 'Categories',
+            'action' => ['edit','add'],
+        ],
+        [
             'role' => '*',
             'controller' => 'Topics',
             'action' => ['index','view'],
         ],
         [
+            'role' => 'curator',
+            'controller' => 'Topics',
+            'action' => ['edit','add'],
+        ],
+        [
             'role' => '*',
             'controller' => 'Pathways',
             'action' => ['index','view','follow','status'],
+        ],
+        [
+            'role' => 'curator',
+            'controller' => 'Pathways',
+            'action' => ['edit','add'],
         ],
         [
             'role' => '*',
@@ -154,9 +169,19 @@ return [
             'action' => ['index','view','status'],
         ],
         [
+            'role' => 'curator',
+            'controller' => 'Steps',
+            'action' => ['edit','add'],
+        ],
+        [
             'role' => '*',
             'controller' => 'Activities',
             'action' => ['index','view','claim','find','stepfind','like'],
+        ],
+        [
+            'role' => 'curator',
+            'controller' => 'Activities',
+            'action' => ['edit','add'],
         ],
         [
             'role' => '*',
@@ -164,14 +189,29 @@ return [
             'action' => ['index','view'],
         ],
         [
+            'role' => 'curator',
+            'controller' => 'Tags',
+            'action' => ['edit','add'],
+        ],
+        [
             'role' => '*',
             'controller' => 'ActivityTypes',
             'action' => ['index','view'],
         ],
         [
+            'role' => 'curator',
+            'controller' => 'ActivityTypes',
+            'action' => ['edit','add'],
+        ],
+        [
             'role' => '*',
             'controller' => 'Questions',
             'action' => ['index','view'],
+        ],
+        [
+            'role' => 'curator',
+            'controller' => 'Questions',
+            'action' => ['edit','add'],
         ],
         [
             'role' => '*',
