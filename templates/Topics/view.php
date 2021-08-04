@@ -37,7 +37,7 @@ if ($this->Identity->isLoggedIn()) {
     </div>
 <?php endforeach ?>
 </div>
-<?php if($role == 2 || $role == 'superadmin'): ?>
+<?php if($role == 'superadmin' || $role == 'curator'): ?>
 <div class="col-md-3">
 <div class="p-3 my-3 bg-white rounded-lg">
     <?= $this->Form->create(null,['url' => ['controller' => 'Pathways', 'action' => 'add']]) ?>
