@@ -40,7 +40,7 @@ if ($this->Identity->isLoggedIn()) {
         echo $this->Form->control('last_name', ['label' => __d('cake_d_c/users', 'Last name')]);
         if($role == 'superuser') {
             echo $this->Form->control('role', ['label' => __d('cake_d_c/users', 'Role')]);
-            echo $this->Form->control('is_superuser', ['label' => __d('cake_d_c/users', 'Is Superuser?')]);
+            //echo $this->Form->control('is_superuser', ['label' => __d('cake_d_c/users', 'Is Superuser?')]);
         }
         echo $this->Form->control('token', ['label' => __d('cake_d_c/users', 'Token')]);
         echo $this->Form->control('token_expires', [
