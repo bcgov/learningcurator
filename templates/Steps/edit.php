@@ -34,6 +34,8 @@ label {
     <?= $this->Form->hidden('featured', ['class' => 'form-control']) ?>
     <?= $this->Form->hidden('modifiedby') ?>
     <?= $this->Form->hidden('pathway_id', ['value' => $step->pathway_id]) ?>
+
+    <?= $this->Form->control('status_id', ['options' => $statuses]) ?>
     <?= $this->Form->control('name', ['class' => 'form-control']) ?>
     <?php  //$this->Form->control('slug', ['class' => 'form-control']); ?>
     <?= $this->Form->control('description', ['class' => 'form-control summernote']) ?>
@@ -107,7 +109,7 @@ label {
             <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
             <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
-            <button class="btn btn-light"><i class="fas fa-chevron-circle-up"></i></button>
+            <button class="btn btn-light"><i class="bi bi-arrow-up-square-fill"></i></button>
             <?= $this->Form->end() ?>
 
             <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => '']) ?>
@@ -116,7 +118,7 @@ label {
             <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
             <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
-            <button class="btn btn-light"><i class="fas fa-chevron-circle-down"></i></button>
+            <button class="btn btn-light"><i class="bi bi-arrow-down-square-fill"></i></button>
             <?= $this->Form->end() ?>
             </div>
             <div class="col-9">

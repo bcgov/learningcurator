@@ -116,7 +116,7 @@ class StepsController extends AppController
     public function edit($id = null)
     {
         $step = $this->Steps->get($id, [
-            'contain' => ['Activities', 'Activities.ActivityTypes', 'Activities.Statuses', 'Pathways'],
+            'contain' => ['Statuses', 'Activities', 'Activities.ActivityTypes', 'Activities.Statuses', 'Pathways'],
         ]);
         
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -140,7 +140,8 @@ class StepsController extends AppController
         $atypes = $types->find('all');
 
         $pathways = $this->Steps->Pathways->find('list', ['limit' => 200]);
-        $this->set(compact('step', 'activities', 'pathways', 'atypes'));
+        $statuses = $this->Steps->Statuses->find('list', ['limit' => 200]);
+        $this->set(compact('step', 'activities', 'pathways', 'atypes', 'statuses'));
     }
 
     /**
