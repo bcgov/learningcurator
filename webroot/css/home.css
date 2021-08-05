@@ -28,7 +28,8 @@ img {
     text-decoration: underline;
 }
 .linear {
-	background: linear-gradient(0deg, rgba(255,218,96,.2) 0%, rgba(244,105,115,.2) 33%, rgba(249,145,180,.2) 63%, rgba(193,129,183,.2) 100%);
+	/* background: linear-gradient(0deg, rgba(255,218,96,.2) 0%, rgba(244,105,115,.2) 33%, rgba(249,145,180,.2) 63%, rgba(193,129,183,.2) 100%); */
+	background-color: #F1F1F1;
 	padding-bottom: 180px;
 }
 .linear a {
