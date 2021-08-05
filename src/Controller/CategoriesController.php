@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
-
+use Cake\Utility\Text;
 /**
  * Categories Controller
  *
@@ -60,12 +60,14 @@ class CategoriesController extends AppController
         $category = $this->Categories->newEmptyEntity();
         if ($this->request->is('post')) {
             $category = $this->Categories->patchEntity($category, $this->request->getData());
+            $sluggedTitle = Text::slug($category->name);
+            // trim slug to maximum length defined in schema
+            $category->slug = strtolower(substr($sluggedTitle, 0, 191));
             if ($this->Categories->save($category)) {
-                $this->Flash->success(__('The category has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $redir = '/categories/view/' . $category->id;
+                return $this->redirect($redir);
             }
-            $this->Flash->error(__('The category could not be saved. Please, try again.'));
+            echo __('The category could not be saved. Please, try again.');
         }
         $users = $this->Categories->Users->find('list', ['limit' => 200]);
         $topics = $this->Categories->Topics->find('list', ['limit' => 200]);
