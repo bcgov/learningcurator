@@ -94,10 +94,14 @@ class StepsController extends AppController
         $step = $this->Steps->newEmptyEntity();
         if ($this->request->is('post')) {
             $step = $this->Steps->patchEntity($step, $this->request->getData());
-            if ($this->Steps->save($step)) {
-                $this->Flash->success(__('The step has been saved.'));
+            $sluggedTitle = Text::slug($step->name);
+            // trim slug to maximum length defined in schema
+            $step->slug = strtolower(substr($sluggedTitle, 0, 191));
 
-                return $this->redirect(['action' => 'index']);
+            if ($this->Steps->save($step)) {
+                
+                $redir = '/steps/edit/' . $step->id;
+                return $this->redirect($redir);
             }
             $this->Flash->error(__('The step could not be saved. Please, try again.'));
         }

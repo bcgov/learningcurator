@@ -255,13 +255,7 @@ foreach ($steps->activities as $activity) {
 		if(in_array($activity->id,$useractivitylist)) {
 			$stepclaimcount++;
 		}
-		$tmp = array();
-		// Loop through the whole list, add steporder to tmp array
-		foreach($acts as $line) {
-			$tmp[] = $line->_joinData->steporder;
-		}
-		// Use the tmp array to sort acts list
-		array_multisort($tmp, SORT_DESC, $acts);
+
 	}
 }
 
@@ -282,7 +276,13 @@ if($stepclaimcount > 0) {
 }
 ?>
 
+
+<?php if($steps->status->name == 'Published'): ?>
+
 <div class="p-3 my-3 bg-white rounded-lg">
+
+	<div><span class="badge badge-light"><?= $steps->status->name ?></span></div>
+
 	<h2>
 
 		<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
@@ -318,6 +318,19 @@ if($stepclaimcount > 0) {
 	</div>
 	
 </div>
+<?php else: ?>
+<?php if($role == 'curator' || $role == 'superuser'): ?>
+	<div class="p-3 my-3 bg-white rounded-lg">
+<div><span class="badge badge-warning"><?= $steps->status->name ?></span></div>
+<h2>
+	<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
+		<?= h($steps->name) ?> 
+		<i class="fas fa-arrow-circle-right"></i>
+	</a>
+</h2>
+</div>
+<?php endif; // if curator or admin ?>
+<?php endif; // if published ?>
 <?php endforeach ?>
 
 

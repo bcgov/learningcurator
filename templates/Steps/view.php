@@ -215,13 +215,15 @@ $lastobj = $s->description;
 <div class="m-3">
 <?php $count = 1 ?>
 <?php foreach($pathways->steps as $s): ?>
+<?php if($s->status_id == 2): ?>
 	<?php $c = 'badge-light' ?>
 	<?php if($s->id == $step->id) $c = 'badge-dark' ?>
-	<a class="badge <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+	<a class="" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
 		<!-- <i class="fas fa-dot-circle <?= $c ?>" title="Step <?= $count ?>">&bull;</i> -->
-		Step <?= $count ?>
+		<?= $s->name ?>
 	</a>
-<?php $count++ ?>
+	<?php $count++ ?>
+<?php endif; // is published? ?>
 <?php endforeach ?>
 </div>
 </div>

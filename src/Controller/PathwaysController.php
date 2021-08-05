@@ -71,7 +71,8 @@ class PathwaysController extends AppController
                             'Topics',
                             'Topics.Categories', 
                             'Ministries', 
-                            'Steps', 
+                            'Steps' => ['sort' => ['Steps.id' => 'asc']],
+                            'Steps.Statuses', 
                             'Steps.Activities', 
                             'Steps.Activities.ActivityTypes', 
                             'Users'])->firstOrFail();
@@ -106,20 +107,24 @@ class PathwaysController extends AppController
         $pathway = $this->Pathways->newEmptyEntity();
         if ($this->request->is('post')) {
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
+            $sluggedTitle = Text::slug($pathway->name);
+            // trim slug to maximum length defined in schema
+            $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
             if ($this->Pathways->save($pathway)) {
                 $this->Flash->success(__('The pathway has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $redir = '/pathways/' . $sluggedTitle;
+                return $this->redirect($redir);
             }
             $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
         }
+        $categories = $this->Pathways->Topics->Categories->find('list', ['limit' => 200]);
         $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
         $statuses = $this->Pathways->Statuses->find('list', ['limit' => 200]);
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
+        $this->set(compact('pathway', 'categories', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
     }
 
     /**
@@ -136,10 +141,13 @@ class PathwaysController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
+            $sluggedTitle = Text::slug($pathway->name);
+            // trim slug to maximum length defined in schema
+            $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
             if ($this->Pathways->save($pathway)) {
                 $this->Flash->success(__('The pathway has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $redir = '/pathways/' . $sluggedTitle;
+                return $this->redirect($redir);
             }
             $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
         }

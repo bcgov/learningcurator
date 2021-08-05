@@ -35,7 +35,7 @@ label {
     <?= $this->Form->hidden('modifiedby') ?>
     <?= $this->Form->hidden('pathway_id', ['value' => $step->pathway_id]) ?>
 
-    <?= $this->Form->control('status_id', ['options' => $statuses]) ?>
+    <?= $this->Form->control('status_id', ['options' => $statuses, 'class' => 'form-control']) ?>
     <?= $this->Form->control('name', ['class' => 'form-control']) ?>
     <?php  //$this->Form->control('slug', ['class' => 'form-control']); ?>
     <?= $this->Form->control('description', ['class' => 'form-control summernote']) ?>

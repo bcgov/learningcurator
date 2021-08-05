@@ -181,7 +181,7 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Activities',
-            'action' => ['edit','add'],
+            'action' => ['edit','add','addtostep'],
         ],
         [
             'role' => 'curator',
