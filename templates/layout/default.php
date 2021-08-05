@@ -1,3 +1,6 @@
+<?php
+$this->loadHelper('Authentication.Identity');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,7 +76,50 @@
 	<li class="nav-item">
 		<a class="nav-link" href="/questions">FAQ</a>
 	</li>
-
+	<?php if($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'superuser'): ?>
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="adminDropdown" 
+			role="button" 
+			data-toggle="dropdown" 
+			aria-haspopup="true" 
+			aria-expanded="false">
+				View
+		</a>
+		<div class="dropdown-menu" aria-labelledby="adminDropdown">
+			<a class="dropdown-item" href="/pathways">All Pathways</a>
+			<a class="dropdown-item" href="/activity-types">Activity Types</a>
+			<!-- <a class="dropdown-item" href="/activities">All Activities</a> -->
+			<a class="dropdown-item" href="/users/index">All Users</a>
+			<a class="dropdown-item" href="/competencies">All Competencies</a>
+			<a class="dropdown-item" href="/ministries">All Ministries</a>
+			<a class="dropdown-item" href="/categories">All Categories</a>
+			<a class="dropdown-item" href="/statuses">All Statuses</a>
+			<a class="dropdown-item" href="/tags">All Tags</a>
+			
+		</div>
+		</li>
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="adminAddDropdown" 
+				role="button" 
+				data-toggle="dropdown" 
+				aria-haspopup="true" 
+				aria-expanded="false">
+					Add
+			</a>
+			<div class="dropdown-menu" aria-labelledby="adminAddDropdown">
+				<a class="dropdown-item" href="/categories/add">Add a Category</a>
+				<a class="dropdown-item" href="/topics/add">Add a Topic</a>
+				<a class="dropdown-item" href="/pathways/add">Add a Pathway</a>
+				<a class="dropdown-item" href="/activities/add">Add an Activity</a>
+				<a class="dropdown-item" href="/tags/add">Add a Tag</a>
+				<a class="dropdown-item" href="/activity-types/add">Add a Type</a>
+				<a class="dropdown-item" href="/users/add">Add a User</a>
+				<a class="dropdown-item" href="/competencies/add">Add a Competency</a>
+				<a class="dropdown-item" href="/ministries/add">Add a Ministry</a>
+				<a class="dropdown-item" href="/statuses/add">Add a Status</a>
+			</div>
+		</li>
+		<?php endif ?>
 	</ul>
 	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
 		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
