@@ -123,8 +123,26 @@ if($stepclaimcount > 0) {
 </style>
 <div class="container-fluid">
 <div class="row justify-content-md-center">
-	<div class="col-md-12">
+	
+	<div class="col-md-3 col-lg-2">
+	<?php if(in_array($uid,$usersonthispathway)): ?>
+<div class="p-3 bg-white mb-3 text-center stickyrings rounded-lg">
+<div class="mb-3 following"></div>
+<canvas id="myChart" width="250" height="250"></canvas>
+</div>
+<?php else: ?>
+<div class="card card-body mt-3 text-center stickyrings">
+<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
+<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
+</div>
+<?php endif ?>
+	</div>
+	<div class="col-md-9 col-lg-10">
 
+
+
+	
 	<?php if (!empty($step->pathways)) : ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="btn-group  mt-3 ml-3">
@@ -141,7 +159,6 @@ if($stepclaimcount > 0) {
 	<li class="breadcrumb-item"><?= $this->Html->link($pathways->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $pathways->topic->categories[0]->id]) ?></li>
 	<li class="breadcrumb-item"><?= $this->Html->link($pathways->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathways->topic->id]) ?></li>
 	<li class="breadcrumb-item"><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => '/' . $pathways->slug]) ?></li>
-	
 </ol>
 </nav> 
 
@@ -151,68 +168,82 @@ if($stepclaimcount > 0) {
 	<?php //$this->Html->link(h($pathways->name), ['controller' => 'Pathways', 'action' => 'path', $pathways->id]) ?>
 </h1>
 
+
+<div class="my-3">
+			<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
+			<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
+			<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
+				<?= $allreadstepcount ?> to read
+			</span>  
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
+				<?= $allwatchstepcount ?> to watch
+			</span>  
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
+				<?= $alllistenstepcount ?> to listen to
+			</span>  
+			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
+				<?= $allparticipatestepcount ?> to participate in
+			</span>  
+		</div>
+
+
 <?php endforeach; ?>
-
 <?php endif; ?>
+
+
+
+
+
 </div>
-	<div class="col-md-3 col-lg-2">
-		
-	<div class="text-right sticky-top" style="top: 110px;">
 
-
-	<?php $count = 1 ?>
-	<?php foreach ($step->pathways as $pathways) : ?>
+<div class="col-md-12 text-center">
+<nav class="nav justify-content-center nav-pills mt-2 w-100" role="navigation">
+<?php $count = 1 ?>
+<?php foreach ($step->pathways as $pathways) : ?>
 <?php foreach($pathways->steps as $s): ?>
 <?php if($s->status_id == 2): ?>
-	<?php $c = 'bg-light' ?>
-	<?php if($s->id == $step->id) $c = 'font-weight-bold' ?>
-	<div class="my-2">
-	<a class="<?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+	<?php $c = '' ?>
+	<?php if($s->id == $step->id) $c = 'active' ?>
+	<li class="nav-item">
+	<a class="nav-link <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
 		<!-- <i class="fas fa-dot-circle <?= $c ?>" title="Step <?= $count ?>">&bull;</i> -->
 		<?= $s->name ?>
 	</a>
-
-	</div>
+	</li>
 	<?php $count++ ?>
 <?php endif; // is published? ?>
 <?php endforeach ?>
 <?php endforeach ?>
-
-
-
-
-
-
-<?php if(in_array($uid,$usersonthispathway)): ?>
-<div class="p-3 bg-white mb-3 text-center stickyrings rounded-lg">
-<div class="mb-3 following"></div>
-<canvas id="myChart" width="250" height="250"></canvas>
+</nav>
 </div>
-<?php else: ?>
-<div class="card card-body mt-3 text-center stickyrings">
-<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
-<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathways->id]) ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
-</div>
-<?php endif ?>
-</div>
-</div>
-<div class="col-md-6">
-
-
+<!-- 
+<div class="col-md-12">
 <div class="progress progress-bar-striped stickyprogress" style="background-color: #F1F1F1; border-radius: 0; height: 18px;">
 		<div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuetext="This step is <?= $steppercent ?>% done" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
 		This step is <?= $steppercent ?>% done
 	  </div>
 </div>
+</div> -->
 
+</div>
+</div>
+
+<div class="container-fluid bg-white">
+<div class="row justify-content-md-center">
+<div class="col-md-10 col-lg-6">
+
+
+
+<div class="bg-light p-3 my-3 rounded-lg" style="font-size: 140%;">
+<?= $step->description ?>
+</div>
 
 <?php if (!empty($step->activities)) : ?>
 
 <?php foreach ($requiredacts as $activity) : ?>
 
-<div class="bg-white rounded-lg">
-<div class="p-3 m-3 rounded-lg activity" 
+<div class="p-3 my-3 rounded-lg activity" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
@@ -357,7 +388,7 @@ if($stepclaimcount > 0) {
 
 
 	</div>
-	</div> <!-- whitebg -->
+	
 
 	<?php endforeach; // end of activities loop for this step ?>
 
@@ -366,10 +397,10 @@ if($stepclaimcount > 0) {
 <?php if(count($supplementalacts) > 0): ?>
 
 	<h3>Supplementary Resources</h3>
-	<div class="row">
+
 	<?php foreach ($supplementalacts as $activity): ?>
-	<div class="col-md-12 col-lg-12">
-	<div class="p-3 my-3 bg-white rounded-lg">
+
+	<div class="p-3 my-3 bg-light rounded-lg">
 
 		<h4>
 			<a href="/activities/view/<?= $activity->id ?>">
@@ -439,7 +470,7 @@ if($stepclaimcount > 0) {
 
 		</div>
 	</div>
-	</div>
+
 	<?php endforeach; // end of activities loop for this step ?>
 </div>
 

@@ -32,6 +32,14 @@ img {
 .breadcrumb {
 	background-color: #FFF;
 }
+.nav-pills .nav-link.active, 
+.nav-pills .show>.nav-link {
+	background-color: #FFF;
+	color: #333;
+	font-weight: bold;
+}
+
+
 /* Start desktop-specific code */
 @media (min-width: 45em) {
 
