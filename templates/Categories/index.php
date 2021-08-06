@@ -31,7 +31,7 @@ BC Public Service learning curators.
 
 <div class="p-3 my-5 bg-white rounded-lg">
 	<h2 class=""><?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?></h2>
-	<div class="mb-5" style="font-size: 1.2rem">
+	<div class="mb-3" style="font-size: 1.2rem">
 	<?= $category->description ?>
 	</div>
 	
@@ -45,10 +45,10 @@ BC Public Service learning curators.
 	</a>
 	
 	<div class="collapse" id="topics<?= $category->id ?>">
-	<h3>Topics</h3>
+
 	<div class="">
 	<?php foreach ($category->topics as $topic): ?>
-	<div class="card card-body bg-light">
+	<div class="p-3 my-3 bg-light">
 	
 		<h4><?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?></h4>
 		<div class="mb-3"><?= h($topic->description) ?></div>
@@ -61,11 +61,11 @@ BC Public Service learning curators.
 				View Pathways
 		</a>
 		<div class="collapse" id="paths<?= $topic->id ?>">
-		<h5>Pathways</h5>
+		<!-- <h5>Pathways</h5> -->
 		<?php foreach ($topic->pathways as $path): ?>
 		<?php if($path->status_id === 2): ?>
 		<div class="p-2 my-3 bg-white rounded-lg shadow-sm">
-		<div class="font-weight-bold"><?= $this->Html->link(h($path->name), ['controller' => 'Pathways', 'action' => 'view', $path->slug]) ?></div>
+		<h5><?= $this->Html->link(h($path->name), ['controller' => 'Pathways', 'action' => 'view', $path->slug]) ?></h5>
 		<div><?= h($path->description) ?></div>
 		</div>
 		<?php endif ?>

@@ -12,12 +12,11 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-
-
 <div class="container-fluid">
 <div class="row justify-content-md-center align-items-center"  id="colorful">
 <div class="col-md-4">
 <div class="pad-sm">
+<div><?= $this->Html->link(__('Edit'), ['action' => 'edit', $topic->id],['class' => 'btn btn-dark float-right']) ?></div>
 <div><?= $this->Html->link(h($topic->categories[0]->name), ['controller' => 'Categories', 'action' => 'view', $topic->categories[0]->id],['class' => '']) ?></div>
 <h1><?= h($topic->name) ?></h1>
 <div>
@@ -37,7 +36,7 @@ if ($this->Identity->isLoggedIn()) {
     </div>
 <?php endforeach ?>
 </div>
-<?php if($role == 'superadmin' || $role == 'curator'): ?>
+<?php if($role == 'superuser' || $role == 'curator'): ?>
 <div class="col-md-3">
 <div class="p-3 my-3 bg-white rounded-lg">
     <?= $this->Form->create(null,['url' => ['controller' => 'Pathways', 'action' => 'add']]) ?>
