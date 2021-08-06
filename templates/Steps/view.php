@@ -122,9 +122,10 @@ if($stepclaimcount > 0) {
 
 </style>
 <div class="container-fluid">
-<div class="row justify-content-md-center" id="colorful">
-<div class="col-md-8">
-<?php if (!empty($step->pathways)) : ?>
+<div class="row justify-content-md-center">
+	<div class="col-md-12">
+
+	<?php if (!empty($step->pathways)) : ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="btn-group  mt-3 ml-3">
 <?= $this->Html->link(__('Edit'), ['controller' => 'Steps', 'action' => 'edit', $step->id], ['class' => 'btn btn-light btn-sm']) ?>
@@ -150,109 +151,68 @@ if($stepclaimcount > 0) {
 	<?php //$this->Html->link(h($pathways->name), ['controller' => 'Pathways', 'action' => 'path', $pathways->id]) ?>
 </h1>
 
-<!--<?= $this->Text->autoParagraph(h($pathways->objective)); ?>-->
-
-<?php foreach($pathways->steps as $s): ?>
-<?php $c = ''; ?>
-<?php $pagetitle = ''; ?>
-<?php $n = next($pathways->steps) ?>
-<?php if($s->id == $step->id): ?>
-
-<div class="row mx-0">
-	<div class="col" style="background-color: rgba(255,255,255,.5); border-radius: .25rem;">
-		<h2 class="mt-2">
-			<?= $s->name ?> 
-			<?php if($steppercent == 100): ?>
-				<i class="fas fas fa-check-circle"></i>
-			<?php endif ?>
-			<!--<small><span class="badge badge-dark"><?= $totalsteps ?></span> total steps</small>-->
-		</h2>	
-		<div class="" style="font-size: 130%;"><?= $s->description; ?></div>
-		<div class="my-3">
-			<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
-			<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
-			<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
-			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
-				<?= $allreadstepcount ?> to read
-			</span>  
-			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
-				<?= $allwatchstepcount ?> to watch
-			</span>  
-			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
-				<?= $alllistenstepcount ?> to listen to
-			</span>  
-			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
-				<?= $allparticipatestepcount ?> to participate in
-			</span>  
-		</div>
-	</div>
-	<!-- <div class="col-2">
-		<?php if(!empty($laststep)): ?>
-		<a href="/pathways/<?= $pathways->slug ?>/s/<?= $laststep ?>/<?= $lastslug ?>" style="color: #000; font-size: 250%;">
-			<i class="fas fa-arrow-circle-left"></i><br>
-			<span style="font-size: .5em">Back</span>
-		</a>
-		<?php endif ?>
-
-		<?php if(!empty($n->id)): ?>
-		<a href="/pathways/<?= $pathways->slug ?>/s/<?= $n->id ?>/<?= $n->slug ?>" class="nextstep" style="color: #000; font-size: 250%; float: right;">
-			<i class="fas fa-arrow-circle-right"></i><br>
-			<span style="font-size: .5em">Next</span>
-		</a>
-		<?php endif ?>
-		
-	</div> -->
-</div>
-
-<?php endif ?>
-<?php 
-$laststep = $s->id;
-$lastslug = $s->slug;
-$lastname = $s->name;
-$lastobj = $s->description;
-?>
-<?php endforeach ?>
-<div class="m-3">
-<?php $count = 1 ?>
-<?php foreach($pathways->steps as $s): ?>
-<?php if($s->status_id == 2): ?>
-	<?php $c = 'badge-light' ?>
-	<?php if($s->id == $step->id) $c = 'badge-dark' ?>
-	<a class="" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-		<!-- <i class="fas fa-dot-circle <?= $c ?>" title="Step <?= $count ?>">&bull;</i> -->
-		<?= $s->name ?>
-	</a>
-	<?php $count++ ?>
-<?php endif; // is published? ?>
-<?php endforeach ?>
-</div>
-</div>
-</div>
 <?php endforeach; ?>
 
 <?php endif; ?>
-
-
-
-
 </div>
+	<div class="col-md-3 col-lg-2">
+		
+	<div class="text-right sticky-top" style="top: 110px;">
+
+
+	<?php $count = 1 ?>
+	<?php foreach ($step->pathways as $pathways) : ?>
+<?php foreach($pathways->steps as $s): ?>
+<?php if($s->status_id == 2): ?>
+	<?php $c = 'bg-light' ?>
+	<?php if($s->id == $step->id) $c = 'font-weight-bold' ?>
+	<div class="my-2">
+	<a class="<?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+		<!-- <i class="fas fa-dot-circle <?= $c ?>" title="Step <?= $count ?>">&bull;</i> -->
+		<?= $s->name ?>
+	</a>
+
+	</div>
+	<?php $count++ ?>
+<?php endif; // is published? ?>
+<?php endforeach ?>
+<?php endforeach ?>
+
+
+
+
+
+
+<?php if(in_array($uid,$usersonthispathway)): ?>
+<div class="p-3 bg-white mb-3 text-center stickyrings rounded-lg">
+<div class="mb-3 following"></div>
+<canvas id="myChart" width="250" height="250"></canvas>
+</div>
+<?php else: ?>
+<div class="card card-body mt-3 text-center stickyrings">
+<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
+<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathways->id]) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
+</div>
+<?php endif ?>
+</div>
+</div>
+<div class="col-md-6">
+
 
 <div class="progress progress-bar-striped stickyprogress" style="background-color: #F1F1F1; border-radius: 0; height: 18px;">
-		<div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+		<div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuetext="This step is <?= $steppercent ?>% done" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
 		This step is <?= $steppercent ?>% done
 	  </div>
 </div>
 
-<div class="container-fluid linear pt-3">
-<div class="row justify-content-md-center">
 
-<div class="col-md-6 col-lg-6">
 <?php if (!empty($step->activities)) : ?>
 
 <?php foreach ($requiredacts as $activity) : ?>
 
 <div class="bg-white rounded-lg">
-<div class="p-3 mb-3 rounded-lg activity" 
+<div class="p-3 m-3 rounded-lg activity" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
@@ -261,12 +221,12 @@ $lastobj = $s->description;
 		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'claim']) ?>
 		<?php //$this->Form->hidden('users.0.created', ['value' => date('Y-m-d H:i:s')]); ?>
 		<?= $this->Form->hidden('users.0.id', ['value' => $uid]); ?>
-		<?= $this->Form->button(__('Claim'),['class'=>'btn btn-success', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+		<?= $this->Form->button(__('Claim'),['class'=>'btn btn-dark', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
 		<?= $this->Form->end() ?>
 
 	<?php else: // they have claimed it, so show that ?>
 
-	<div class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
+	<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
 	<?php //$this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-dark', 'confirm' => __('Really delete?')]) ?>
 	<?php endif; // claimed or not ?>
 
@@ -485,20 +445,7 @@ $lastobj = $s->description;
 
 <?php endif ?>
 </div>
-<div class="col-8 col-md-3 col-lg-2">
-<?php if(in_array($uid,$usersonthispathway)): ?>
-<div class="p-3 bg-white mb-3 text-center stickyrings rounded-lg">
-<div class="mb-3 following"></div>
-<canvas id="myChart" width="250" height="250"></canvas>
-</div>
-<?php else: ?>
-<div class="card card-body mt-3 text-center stickyrings">
-<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
-<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathways->id]) ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-success mb-0']) ?>
-</div>
-<?php endif ?>
-</div>
+
 </div>
 </div>
 

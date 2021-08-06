@@ -1,0 +1,43 @@
+/** 
+ * Learning Curator
+ *
+ * Keep it simple!! Reply on Bootstrap as much as possible, while adding
+ * in some flavor.
+ *
+ * Author: Allan Haggett <allan.haggett@gov.bc.ca>
+ *
+ */
+a {
+	color: #000;
+}
+a:hover {
+	color: #000;
+}
+
+img {
+	height: auto;
+	max-width: 100%;
+}
+
+#colorful {
+	background: #FFF url('../img/curator-rings-background.svg') no-repeat bottom center;
+	background-size: 50rem;
+	background-position: -25rem 0;
+}
+
+#colorful .breadcrumb a {
+    text-decoration: underline;
+}
+
+.breadcrumb {
+	background-color: #FFF;
+}
+/* Start desktop-specific code */
+@media (min-width: 45em) {
+
+	#colorful {
+		background-size: 90rem;
+		background-position: -3rem -35rem;
+	}
+
+} /* End desktop-specific code */

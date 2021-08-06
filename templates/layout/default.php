@@ -14,10 +14,8 @@ $this->loadHelper('Authentication.Identity');
 		href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
 		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
 		crossorigin="anonymous">
-<link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css">
 
-<link href="/css/home.css" rel="stylesheet"> 
+<link href="/css/curator.css" rel="stylesheet"> 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
@@ -47,11 +45,11 @@ $this->loadHelper('Authentication.Identity');
 
 
 </head>
-<body>
+<body class="bg-light">
 
 <nav class="navbar navbar-expand-lg sticky-top bg-white shadow-sm">
 	<a class="navbar-brand" href="/">
-		<img alt="Logo" class="animate__animated animate__rotateIn" height="50" src="/img/curator-rings-logo.svg" width="50">
+		<img alt="Logo" height="50" src="/img/curator-rings-logo.svg" width="50">
 		Learning Curator
 	</a>
 	<?php if(!empty($active)): ?>
@@ -76,52 +74,13 @@ $this->loadHelper('Authentication.Identity');
 	<li class="nav-item">
 		<a class="nav-link" href="/questions">FAQ</a>
 	</li>
-	<?php if($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'superuser'): ?>
-	<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="adminDropdown" 
-			role="button" 
-			data-toggle="dropdown" 
-			aria-haspopup="true" 
-			aria-expanded="false">
-				View
-		</a>
-		<div class="dropdown-menu" aria-labelledby="adminDropdown">
-			<a class="dropdown-item" href="/pathways">All Pathways</a>
-			<a class="dropdown-item" href="/activity-types">Activity Types</a>
-			<!-- <a class="dropdown-item" href="/activities">All Activities</a> -->
-			<?php if($this->Identity->get('role') == 'superuser'): ?>
-			<a class="dropdown-item" href="/users/index">All Users</a>
-			<?php endif ?>
-			<a class="dropdown-item" href="/competencies">All Competencies</a>
-			<a class="dropdown-item" href="/ministries">All Ministries</a>
-			<a class="dropdown-item" href="/categories">All Categories</a>
-			<a class="dropdown-item" href="/statuses">All Statuses</a>
-			<a class="dropdown-item" href="/tags">All Tags</a>
-			
-		</div>
-		</li>
-		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" href="#" id="adminAddDropdown" 
-				role="button" 
-				data-toggle="dropdown" 
-				aria-haspopup="true" 
-				aria-expanded="false">
-					Add
-			</a>
-			<div class="dropdown-menu" aria-labelledby="adminAddDropdown">
-				<a class="dropdown-item" href="/categories/add">Add a Category</a>
-				<!-- <a class="dropdown-item" href="/topics/add">Add a Topic</a> -->
-				<!-- <a class="dropdown-item" href="/pathways/add">Add a Pathway</a> -->
-				<a class="dropdown-item" href="/activities/add">Add an Activity</a>
-				<a class="dropdown-item" href="/tags/add">Add a Tag</a>
-				<!-- <a class="dropdown-item" href="/activity-types/add">Add a Type</a> -->
-				<!-- <a class="dropdown-item" href="/users/add">Add a User</a> -->
-				<!-- <a class="dropdown-item" href="/competencies/add">Add a Competency</a> -->
-				<!-- <a class="dropdown-item" href="/ministries/add">Add a Ministry</a> -->
-				<!-- <a class="dropdown-item" href="/statuses/add">Add a Status</a> -->
-			</div>
-		</li>
-		<?php endif ?>
+
+	<?php if($this->Identity->get('role') == 'superuser'): ?>
+	<li class="nav-item">
+		<a class="nav-link" href="/users/index">All Users</a>
+	</li>
+	<?php endif ?>
+
 	</ul>
 	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
 		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
@@ -138,26 +97,18 @@ $this->loadHelper('Authentication.Identity');
 
 
 
-<div class="container-fluid bg-light py-3">
+<div class="container-fluid bg-white py-3">
 <div class="row mt-3 justify-content-md-center">
-<?php if(!empty($active)): ?>
-<div class="col-md-5 mt-3">
-<nav class="nav bg-white shadow-sm p-3 m-3">
-	<a class="nav-link" href="/questions">Frequently Asked Questions</a>
-	<!-- <a class="nav-link" href="/activities/contribute">Contribute</a> -->
-</nav>
-</div>
-<?php endif ?>
-<div class="col-md-5 mt-3">
+<div class="col-md-8 col-lg-4 mt-3">
 
 	<div class="p-3 m-3 bg-white shadow-sm text-center text-uppercase">
-		Brought to you by<br>
+		<span style="color:#999">Brought to you by</span><br>
 		<a href="https://learningcentre.gww.gov.bc.ca/" target="_blank" rel="noopener">
 			<img height="100" src="/img/lc-logo-wordmark-300x100.png" width="300" alt="Learning Centre logo">
 		</a>
 	</div>
 	<div class="p-3 m-3 bg-white shadow-sm">
-	<div><img src="/img/BCID_BCPSA_rgb_pos.jpg" width="400" alt="BC Public Service Agency logo"></div>
+	<div><img height="127" src="/img/BCID_BCPSA_rgb_pos.png" width="400" alt="BC Public Service Agency logo"></div>
 	<p>Your personal information is collected by the BC Public Service Agency in accordance with 
 		section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes 
 		of managing and administering employee development and training. If you have any questions, 

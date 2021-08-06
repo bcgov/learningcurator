@@ -174,11 +174,11 @@ This seems to work out, but #TODO investigate optimizing this
 	</div>
 	
 <?php else: ?>
-<div class="card card-body my-3 stickyrings">
+<div class="bg-white rounded-lg p-3 my-3 stickyrings">
 
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]) ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-success mb-0']) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
 
 <?= $this->Form->end() ?>
 

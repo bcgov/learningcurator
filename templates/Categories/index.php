@@ -6,7 +6,7 @@
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-6">
+<div class="col-md-10 col-lg-6">
 
 <h1 class="display-4 mt-5">Learning on demand.</h1>
 
@@ -25,7 +25,7 @@ BC Public Service learning curators.
 
 <div class="container-fluid">
 <div class="row justify-content-md-center linear">
-<div class="col-md-6">
+<div class="col-md-10 col-lg-6">
 
 <?php foreach ($categories as $category): ?>
 
@@ -35,7 +35,7 @@ BC Public Service learning curators.
 	<?= $category->description ?>
 	</div>
 	
-	<a class="btn btn-success btn-lg" 
+	<a class="btn btn-dark btn-lg" 
 		data-toggle="collapse" 
 		href="#topics<?= $category->id ?>" 
 		role="button" 
@@ -52,7 +52,7 @@ BC Public Service learning curators.
 	
 		<h3><?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?></h3>
 		<div class="mb-3"><?= h($topic->description) ?></div>
-		<a class="btn btn-success btn-lg" 
+		<a class="btn btn-dark btn-lg" 
 			data-toggle="collapse" 
 			href="#paths<?= $topic->id ?>" 
 			role="button" 
