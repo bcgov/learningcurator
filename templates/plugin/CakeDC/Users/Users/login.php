@@ -14,17 +14,24 @@ use Cake\Core\Configure;
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-6">
 
-<h1 class="display-4 mt-5">Access learning resources on demand</h1>
-<h2 class="font-weight-light">Sourced by BC Public Service curators</h2>
-<div class="p-3 rounded-lg mb-5 bg-white shadow-sm">
-<p style="font-size: 1.5rem">BC Public Service curators are trusted guides designing pathways of knowledge and 
-skill development. Learning Curator pathways may stand alone or they may supplement 
-your corporate training offered through the Learning Centre.</p>
-<p style="font-size: 1.3rem">A <a href="#">best practice in learning for organizations</a>, curation helps us develop 
-ourselves as part of a trusted</a>, talented, and modern public service.</p>
-<div><a href="/auth/azuread" class="btn btn-lg btn-success">Sign In  with your.name@gov.bc.ca address to continue</a></div>
+<h1 class="display-4 mt-5">Learning on demand.</h1>
 
-<div class="m-4 p-3 bg-light">
+<div class="p-3 rounded-lg mb-5 bg-white shadow-sm">
+<p style="font-size: 1.5rem">Learning Curator Pathways feature informal learning by theme or community. 
+Here you’ll find recommendations for resources to watch, read, listen to, and courses that will help 
+you reach your goals. Pathways are created by BC Public Service learning curators.</p>
+<div><a href="/auth/azuread" class="btn btn-lg btn-success">Sign In  with your.name@gov.bc.ca address to continue</a></div>
+<div class="mt-3">
+<a class="" 
+	data-toggle="collapse" 
+	href="#adminlogin" 
+	role="button" 
+	aria-expanded="false" 
+	aria-controls="adminlogin">
+		&nbsp;&nbsp;&nbsp;
+</a>
+</div>
+<div class="collapse m-4 p-3 bg-light" id="adminlogin">
 <p><em>If you're a curator or an admin:</em></p>
 <?= $this->Form->create() ?>
 <?= $this->Form->control('username', ['label' => __d('cake_d_c/users', 'Username'), 'required' => true, 'class'=>'form-control']) ?>

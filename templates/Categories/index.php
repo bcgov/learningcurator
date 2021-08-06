@@ -7,21 +7,29 @@
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-6">
-<div class="py-5">
-<?= $this->Html->link(__('New Category'), ['action' => 'add'], ['class' => 'btn btn-success float-right']) ?>
-<h1 class=""><?= __('Categories') ?></h1>
-<div>Categories can contain numerous topics, with each topic containing numerous learning pathways.</div>
+
+<h1 class="display-4 mt-5">Learning on demand.</h1>
+
+<div class="p-3 rounded-lg mb-5 bg-white shadow-sm">
+<p style="font-size: 1.5rem">Learning Curator Pathways feature informal learning by 
+theme or community. Here you’ll find recommendations for resources to watch, read, 
+listen to, and courses that will help you reach your goals. Pathways are created by 
+BC Public Service learning curators.
+
+</p>
+<p style="font-size: 1.5rem"><strong>What do you want to learn today?</strong> </p>
+
 </div>
 </div>
 </div>
-</div>
+
 <div class="container-fluid">
 <div class="row justify-content-md-center linear">
-<div class="col-md-12">
+<div class="col-md-6">
 
 <?php foreach ($categories as $category): ?>
 
-<div class="p-5 my-5 bg-white rounded-lg">
+<div class="p-3 my-5 bg-white rounded-lg">
 	<h2 class=""><?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?></h2>
 	<div class="mb-5" style="font-size: 1.2rem">
 	<?= $category->description ?>
@@ -38,7 +46,7 @@
 	
 	<div class="collapse" id="topics<?= $category->id ?>">
 	<h3>Topics</h3>
-	<div class="card-columns">
+	<div class="">
 	<?php foreach ($category->topics as $topic): ?>
 	<div class="card card-body bg-light">
 	

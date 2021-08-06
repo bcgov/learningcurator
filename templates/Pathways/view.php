@@ -96,7 +96,7 @@ This seems to work out, but #TODO investigate optimizing this
 	<span class="badge badge-light watchtotal"></span>  
 	<span class="badge badge-light listentotal"></span>  
 	<span class="badge badge-light participatetotal"></span>  
-	</div><pre>
+	</div>
 
 	<?php if($role == 'curator' || $role == 'superuser'): ?>
 
