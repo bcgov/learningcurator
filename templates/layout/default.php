@@ -62,7 +62,7 @@ $this->loadHelper('Authentication.Identity');
 		aria-controls="navbarSupportedContent" 
 		aria-expanded="false" 
 		aria-label="Toggle navigation">
-		<i class="fas fa-bars"></i>
+			<i class="bi bi-justify"></i>
 	</button>
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -70,9 +70,9 @@ $this->loadHelper('Authentication.Identity');
 	<li class="nav-item">
 		<a class="nav-link" href="/profile">Your Profile</a>
 	</li>
-	<li class="nav-item">
+	<!-- <li class="nav-item">
 		<a class="nav-link" href="/categories">Topics</a>
-	</li>
+	</li> -->
 	<li class="nav-item">
 		<a class="nav-link" href="/questions">FAQ</a>
 	</li>
@@ -89,7 +89,9 @@ $this->loadHelper('Authentication.Identity');
 			<a class="dropdown-item" href="/pathways">All Pathways</a>
 			<a class="dropdown-item" href="/activity-types">Activity Types</a>
 			<!-- <a class="dropdown-item" href="/activities">All Activities</a> -->
+			<?php if($this->Identity->get('role') == 'superuser'): ?>
 			<a class="dropdown-item" href="/users/index">All Users</a>
+			<?php endif ?>
 			<a class="dropdown-item" href="/competencies">All Competencies</a>
 			<a class="dropdown-item" href="/ministries">All Ministries</a>
 			<a class="dropdown-item" href="/categories">All Categories</a>
@@ -108,15 +110,15 @@ $this->loadHelper('Authentication.Identity');
 			</a>
 			<div class="dropdown-menu" aria-labelledby="adminAddDropdown">
 				<a class="dropdown-item" href="/categories/add">Add a Category</a>
-				<a class="dropdown-item" href="/topics/add">Add a Topic</a>
-				<a class="dropdown-item" href="/pathways/add">Add a Pathway</a>
+				<!-- <a class="dropdown-item" href="/topics/add">Add a Topic</a> -->
+				<!-- <a class="dropdown-item" href="/pathways/add">Add a Pathway</a> -->
 				<a class="dropdown-item" href="/activities/add">Add an Activity</a>
 				<a class="dropdown-item" href="/tags/add">Add a Tag</a>
-				<a class="dropdown-item" href="/activity-types/add">Add a Type</a>
-				<a class="dropdown-item" href="/users/add">Add a User</a>
-				<a class="dropdown-item" href="/competencies/add">Add a Competency</a>
-				<a class="dropdown-item" href="/ministries/add">Add a Ministry</a>
-				<a class="dropdown-item" href="/statuses/add">Add a Status</a>
+				<!-- <a class="dropdown-item" href="/activity-types/add">Add a Type</a> -->
+				<!-- <a class="dropdown-item" href="/users/add">Add a User</a> -->
+				<!-- <a class="dropdown-item" href="/competencies/add">Add a Competency</a> -->
+				<!-- <a class="dropdown-item" href="/ministries/add">Add a Ministry</a> -->
+				<!-- <a class="dropdown-item" href="/statuses/add">Add a Status</a> -->
 			</div>
 		</li>
 		<?php endif ?>

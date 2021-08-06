@@ -11,7 +11,7 @@
 <h1 class="display-4 mt-5">Learning on demand.</h1>
 
 <div class="p-3 rounded-lg mb-5 bg-white shadow-sm">
-<p style="font-size: 1.5rem">Learning Curator Pathways feature informal learning by 
+<p style="font-size: 1.3rem">Learning Curator Pathways feature informal learning by 
 theme or community. Here you’ll find recommendations for resources to watch, read, 
 listen to, and courses that will help you reach your goals. Pathways are created by 
 BC Public Service learning curators.
@@ -50,7 +50,7 @@ BC Public Service learning curators.
 	<?php foreach ($category->topics as $topic): ?>
 	<div class="p-3 my-3 bg-light">
 	
-		<h4><?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?></h4>
+		<h3><?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?></h3>
 		<div class="mb-3"><?= h($topic->description) ?></div>
 		<a class="btn btn-success btn-lg" 
 			data-toggle="collapse" 
@@ -65,7 +65,7 @@ BC Public Service learning curators.
 		<?php foreach ($topic->pathways as $path): ?>
 		<?php if($path->status_id === 2): ?>
 		<div class="p-2 my-3 bg-white rounded-lg shadow-sm">
-		<h5><?= $this->Html->link(h($path->name), ['controller' => 'Pathways', 'action' => 'view', $path->slug]) ?></h5>
+		<h4><?= $this->Html->link(h($path->name), ['controller' => 'Pathways', 'action' => 'view', $path->slug]) ?></h4>
 		<div><?= h($path->description) ?></div>
 		</div>
 		<?php endif ?>
