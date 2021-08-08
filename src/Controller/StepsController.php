@@ -158,14 +158,16 @@ class StepsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $step = $this->Steps->get($id);
+        $step = $this->Steps->get($id, ['contain' => ['Pathways']]);
+        
         if ($this->Steps->delete($step)) {
-            $this->Flash->success(__('The step has been deleted.'));
+            $redir = '/pathways/' . $step->pathways[0]->slug;
+            return $this->redirect($redir);
         } else {
-            $this->Flash->error(__('The step could not be deleted. Please, try again.'));
+            echo __('The step could not be deleted. Please, try again.');
         }
 
-        return $this->redirect(['action' => 'index']);
+
     }
 
     /**

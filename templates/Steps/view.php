@@ -135,6 +135,7 @@ if($stepclaimcount > 0) {
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
 <?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
+<?= $this->Form->end(); ?>
 </div>
 <?php endif ?>
 	</div>
@@ -143,11 +144,19 @@ if($stepclaimcount > 0) {
 
 
 	
-	<?php if (!empty($step->pathways)) : ?>
+<?php if (!empty($step->pathways)) : ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="btn-group  mt-3 ml-3">
-<?= $this->Html->link(__('Edit'), ['controller' => 'Steps', 'action' => 'edit', $step->id], ['class' => 'btn btn-light btn-sm']) ?>
-<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $step->id],['class' => 'btn btn-light btn-sm', 'confirm' => __('Are you sure you want to delete # {0}?', $step->name)]) ?>
+<?= $this->Html->link(__('Edit'), 
+						['controller' => 'Steps', 'action' => 'edit', $step->id], 
+						['class' => 'btn btn-light btn-sm']); 
+?>
+<?= $this->Form->postLink(__('Delete'), 
+							['action' => 'delete', $step->id],
+							['class' => 'btn btn-light btn-sm', 
+								'confirm' => __('Are you sure you want to delete # {0}?', $step->name)
+						]);
+ ?>
 </div> <!-- /.btn-group -->
 <?php endif ?>
 
