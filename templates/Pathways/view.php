@@ -168,10 +168,14 @@ This seems to work out, but #TODO investigate optimizing this
 <?php if(in_array($uid,$usersonthispathway)): ?>
 
 	
-	<div class="card card-body mt-3 text-center stickyrings">
+	<div class="bg-white p-3 mt-3 text-center stickyrings">
 	<div>Overall Progress: <span class="mb-3 following"></span>%</div>
 	<canvas id="myChart" width="250" height="250"></canvas>
-	<?php echo $this->Form->postLink(__('Unfollow'), ['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], ['class' => 'btn btn-dark mt-4', 'confirm' => __('Really unfollow?')]) ?>
+	<?php 
+	echo $this->Form->postLink(__('Un-Follow'), 
+									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], 
+									['class' => 'btn btn-dark mt-4', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really unfollow?')]); 
+	?>
 	</div>
 	
 <?php else: ?>
@@ -184,8 +188,9 @@ This seems to work out, but #TODO investigate optimizing this
 <?= $this->Form->end() ?>
 
 <div class="py-3">
-<div>Following a pathway is a commitment to moving 
-through each step and claiming each required activity as you complete it.
+<div>
+	
+	Following a pathway allows you to track your progress and pin the pathway to <a href="/profile">your profile</a>.
 
 </div>
 <!--When you select to follow a pathway, this pathway will show as a journey you are on and may be 
