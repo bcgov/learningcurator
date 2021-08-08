@@ -6,7 +6,7 @@
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-10 col-lg-6">
+<div class="col-md-10 col-lg-8 col-xl-6">
 
 <h1 class="display-4 mt-5">Learning on demand.</h1>
 
