@@ -95,12 +95,20 @@ class PathwaysController extends AppController
         $followers = array();
         // Loop through the users that are on this pathway and parse just the 
         // IDs into the array that we just created
+        $followid = 0;
         foreach($pathway->users as $pu) {
+            // Is the current user following this pathway? If so, then 
+            // we record the pathways_users ID number so we can remove
+            // the association (unfollow) if the user clicks the "Unfollow"
+            // button.
+            if($pu->id == $user->id) {
+                $followid = $pu->_joinData->id;
+            }
             array_push($usersonthispathway,$pu->id);
             array_push($followers,[$pu->id,$pu->username]);
         }
 
-        $this->set(compact('pathway', 'usersonthispathway', 'useractivitylist','followers'));
+        $this->set(compact('pathway', 'followid', 'usersonthispathway', 'useractivitylist','followers'));
 
     }
 

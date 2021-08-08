@@ -171,6 +171,7 @@ This seems to work out, but #TODO investigate optimizing this
 	<div class="card card-body mt-3 text-center stickyrings">
 	<div>Overall Progress: <span class="mb-3 following"></span>%</div>
 	<canvas id="myChart" width="250" height="250"></canvas>
+	<?php echo $this->Form->postLink(__('Unfollow'), ['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], ['class' => 'btn btn-dark mt-4', 'confirm' => __('Really unfollow?')]) ?>
 	</div>
 	
 <?php else: ?>
