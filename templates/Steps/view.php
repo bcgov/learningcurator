@@ -256,17 +256,28 @@ if($stepclaimcount > 0) {
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
-
-
-		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'claim']) ?>
+		<a class="btn btn-dark" 
+			id="claimbutton<?= $activity->id ?>"
+			data-toggle="collapse" 
+			href="#claimconfirm<?= $activity->id ?>" 
+			role="button" 
+			aria-expanded="false" 
+			aria-controls="claimconfirm<?= $activity->id ?>">
+				<i class="bi bi-bookmark-check-fill"></i>
+				Claim
+		</a>
+	<div class="collapse" id="claimconfirm<?= $activity->id ?>">
+		<p>If you've completed this activity, claim it so it counts against your progress!</p>
+		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'claim', 'id' => $activity->id]) ?>
 		<?php //$this->Form->hidden('users.0.created', ['value' => date('Y-m-d H:i:s')]); ?>
 		<?= $this->Form->hidden('users.0.id', ['value' => $uid]); ?>
-		<?= $this->Form->button(__('Claim'),['class'=>'btn btn-dark', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+		<?= $this->Form->button(__('Confirm Claim'),['class'=>'btn btn-dark', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress']) ?>
 		<?= $this->Form->end() ?>
+	</div>
 
 	<?php else: // they have claimed it, so show that ?>
 
-	<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
+	<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="bi bi-bookmark-check-fill"></i></div>
 	<?php //$this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-dark', 'confirm' => __('Really delete?')]) ?>
 	<?php endif; // claimed or not ?>
 
@@ -518,13 +529,16 @@ $(document).ready(function(){
 		e.preventDefault();
 		var form = $(this);
 		var url = form.attr('action');
+		var buttonid = '#claimbutton' + form.attr('id');
+		//console.log(buttonid);
 		$.ajax({
 			type: "POST",
 			url: url,
 			data: form.serialize(),
 			success: function(data)
 			{
-				form.children('button').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
+				form.children('button').html('CLAIMED! <i class="bi bi-bookmark-check-fill"></i>').tooltip('dispose').attr('title','Good job!');
+				$(buttonid).hide();
 				loadStatus();
 			},
 			statusCode: 
