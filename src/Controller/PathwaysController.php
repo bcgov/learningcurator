@@ -167,12 +167,13 @@ class PathwaysController extends AppController
             $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
         }
         $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
+        $categories = $this->Pathways->Topics->Categories->find('list', ['limit' => 200]);
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
         $statuses = $this->Pathways->Statuses->find('list', ['limit' => 200]);
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
+        $this->set(compact('pathway', 'categories', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
     }
 
     /**
