@@ -112,14 +112,14 @@ if ($this->Identity->isLoggedIn()) {
 
 <div class="container-fluid">
 <div class="row justify-content-md-center align-items-center">
-<div class="col-md-12">
+<div class="col-md-6">
 
 
-<h3 class="mt-3">Other Categories</h2>
-<div class="card-columns">
+<h3 class="mt-3">Other Topic Areas</h2>
+<div class="">
 <?php foreach ($categories as $cat) : ?>
 <?php if($cat->id == $category->id) continue ?>
-<div class="card card-body">
+<div class="bg-white p-3 m-2 rounded-3">
 <h4>
 	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
 </h4>
