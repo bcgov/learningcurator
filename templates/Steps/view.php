@@ -267,7 +267,7 @@ if($stepclaimcount > 0) {
 				Claim
 		</a>
 	<div class="collapse" id="claimconfirm<?= $activity->id ?>">
-		<p>If you've completed this activity, claim it so it counts against your progress!</p>
+		<p id="claimhelp<?= $activity->id ?>">If you've completed this activity, claim it so it counts against your progress!</p>
 		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'claim', 'id' => $activity->id]) ?>
 		<?php //$this->Form->hidden('users.0.created', ['value' => date('Y-m-d H:i:s')]); ?>
 		<?= $this->Form->hidden('users.0.id', ['value' => $uid]); ?>
@@ -288,7 +288,7 @@ if($stepclaimcount > 0) {
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
 		<div class="mb-3">
 		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
-			<i class="fas fa-clock"></i>
+			<i class="bi bi-clock-history"></i>
 			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
 		</span> 
 		<?php foreach($activity->tags as $tag): ?>
@@ -299,7 +299,7 @@ if($stepclaimcount > 0) {
 		<?= $activity->description ?>
 		<?php if(!empty($activity->_joinData->stepcontext)): ?>
 		<div class="alert alert-light text-dark mt-3 shadow-sm">
-				<i class="fas fa-comment-medical"></i> 
+				<i class="bi bi-person-badge-fill"></i>
 				Curator says:<br>
 				<?= $activity->_joinData->stepcontext ?>
 			</div>
@@ -319,7 +319,7 @@ if($stepclaimcount > 0) {
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
 
-			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+			<i class="bi <?= $activity->activity_type->image_path ?>"></i>
 
 			<?= $activity->activity_type->name ?>
 
@@ -365,7 +365,7 @@ if($stepclaimcount > 0) {
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
 
-			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+			<i class="bi <?= $activity->activity_type->image_path ?>"></i>
 
 			<?= $activity->activity_type->name ?>
 
@@ -382,7 +382,7 @@ if($stepclaimcount > 0) {
 			data-target="#newreport<?= $activity->id ?>" 
 			aria-expanded="false" 
 			aria-controls="newreport<?= $activity->id ?>">
-				<i class="fas fa-exclamation-triangle"></i> Report
+				<i class="bi bi-exclamation-triangle-fill"></i> Report
 		</a>	
 		<div class="collapse" id="newreport<?= $activity->id ?>">
 		<div class="my-3 p-3 bg-white rounded-lg">
@@ -401,7 +401,7 @@ if($stepclaimcount > 0) {
 		</div>
 		</div>
 	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
+		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="bi bi-hand-thumbs-up-fill"></i>
 	</a>
 
 
@@ -430,7 +430,7 @@ if($stepclaimcount > 0) {
 		<div class="p-2">
 			<div>
 				<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
-					<i class="fas fa-clock"></i>
+					<i class="bi bi-clock-history"></i>
 					<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
 				</span> 
 			</div>
@@ -450,7 +450,7 @@ if($stepclaimcount > 0) {
 				style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 				class="btn btn-block my-3 text-uppercase btn-lg">
 
-					<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+					<i class="bi <?= $activity->activity_type->image_path ?>"></i>
 
 					<?= $activity->activity_type->name ?>
 
@@ -484,7 +484,7 @@ if($stepclaimcount > 0) {
 		</div>
 		</div>
 		<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
+			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="bi bi-hand-thumbs-up-fill"></i>
 		</a>
 
 
@@ -530,6 +530,7 @@ $(document).ready(function(){
 		var form = $(this);
 		var url = form.attr('action');
 		var buttonid = '#claimbutton' + form.attr('id');
+		var helphide = '#claimhelp' + form.attr('id');
 		//console.log(buttonid);
 		$.ajax({
 			type: "POST",
@@ -539,6 +540,7 @@ $(document).ready(function(){
 			{
 				form.children('button').html('CLAIMED! <i class="bi bi-bookmark-check-fill"></i>').tooltip('dispose').attr('title','Good job!');
 				$(buttonid).hide();
+				$(helphide).hide();
 				loadStatus();
 			},
 			statusCode: 
