@@ -190,6 +190,11 @@ return [
         ],
         [
             'role' => '*',
+            'controller' => 'ActivitiesUsers',
+            'action' => ['delete'],
+        ],
+        [
+            'role' => '*',
             'controller' => 'Tags',
             'action' => ['index','view'],
         ],
