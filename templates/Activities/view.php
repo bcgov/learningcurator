@@ -42,6 +42,9 @@ if ($this->Identity->isLoggedIn()) {
 		<div class="col">
 		<?php if(in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
 		<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
+		
+		<?php //echo $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $claimid], ['class' => 'btn btn-dark', 'confirm' => __('Really delete?')]) ?>
+		
 		<?php endif ?>
 	
 		</div>
