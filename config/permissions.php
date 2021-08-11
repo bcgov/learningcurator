@@ -176,12 +176,12 @@ return [
         [
             'role' => '*',
             'controller' => 'Activities',
-            'action' => ['index','view','claim','find','stepfind','like'],
+            'action' => ['index','view','claim','find','like'],
         ],
         [
             'role' => 'curator',
             'controller' => 'Activities',
-            'action' => ['edit','add','addtostep'],
+            'action' => ['edit','add','addtostep','stepfind'],
         ],
         [
             'role' => 'curator',
