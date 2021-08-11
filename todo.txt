@@ -3,10 +3,9 @@ TODO
 [x] implement two-step claiming process
 [x] Add featured pathways back into home page
 [x] Fix draft pathways showing up in topic view for everyone
+[x] Add role label to user profile so curators know that they are such
 [] Add these issues to https://github.com/allanhaggett/
 
-
-[] Add role label to user profile so curators know that they are such
 [] Implement unclaim 
 [] When pathway completed update database with date!
 [] TAGGING

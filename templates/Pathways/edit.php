@@ -20,9 +20,9 @@ if ($this->Identity->isLoggedIn()) {
                 <?php
                     echo $this->Form->hidden('modifiedby',['value' => $uid]);
 
-                    //echo $this->Form->control('status_id', ['type' => 'radio', 'options' => $statuses]);
+                    echo $this->Form->control('status_id', ['type' => 'radio', 'options' => $statuses]);
                     //echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true, 'class' => 'form-control']);
-                    echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true, 'class' => 'form-control']);
+                    //echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true, 'class' => 'form-control']);
                     echo $this->Form->control('name', ['class' => 'form-control']);
                     echo $this->Form->control('slug', ['class' => 'form-control']);
                     echo $this->Form->control('description', ['class' => 'form-control']);
