@@ -31,13 +31,14 @@ class ActivitiesController extends AppController
        
         $activities = $this->Activities
                             ->find('all')
-                            ->contain(['Statuses', 
+                            ->contain(['Tags',
+                                        'Statuses', 
                                         'Ministries', 
                                         'ActivityTypes',
                                         'Steps.Pathways'])
                             ->where(['Activities.status_id' => 2])
-                            ->order(['Activities.recommended' => 'DESC'])
-                            ->limit(5);
+                            ->order(['Activities.created' => 'DESC'])
+                            ->limit(100);
         
 		$cats = TableRegistry::getTableLocator()->get('Categories');
         $allcats = $cats->find('all')->contain(['Topics'])->order(['Categories.created' => 'desc']);
@@ -311,6 +312,8 @@ class ActivitiesController extends AppController
         $activity = $this->Activities->newEmptyEntity();
 
 	    if ($this->request->is('post')) {
+
+            //echo '<pre>'; print_r($this->request->getData()); exit;
 
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             $activity->createdby_id = $user->id;

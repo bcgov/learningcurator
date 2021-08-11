@@ -4,6 +4,7 @@ TODO
 [x] Add featured pathways back into home page
 [x] Fix draft pathways showing up in topic view for everyone
 [x] Add role label to user profile so curators know that they are such
+[x] Restore activities index to list top 100 recently added activities (used to be home page)
 [] Add these issues to https://github.com/allanhaggett/
 
 [] Implement unclaim 
