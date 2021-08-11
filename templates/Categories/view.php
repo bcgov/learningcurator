@@ -80,8 +80,19 @@ if ($this->Identity->isLoggedIn()) {
 
 
 <?php foreach ($topic->pathways as $pathway) : ?>
+
 <div class="p-3 my-3 bg-white rounded-lg">
-<?php if($pathway->status_id != 2): // is not published? ?>
+<?php if($pathway->status_id == 2): // is published ?>
+
+	<h3>
+<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
+</h3>
+<div class="mb-3">
+<?= h($pathway->description) ?>
+</div>
+
+<?php else: ?>
+	
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <span class="badge badge-warning"><?= $pathway->status->name ?></span>
 <h2>
@@ -91,14 +102,7 @@ if ($this->Identity->isLoggedIn()) {
 <?= h($pathway->objective) ?>
 </div>
 <?php endif; // is curator or admin ?>
-<?php else: ?>
-<h3>
-<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
-</h3>
-<div class="mb-3">
-<?= h($pathway->description) ?>
-</div>
-<?php endif; // is not published ?>
+<?php endif; // is published ?>
 </div>
 <?php endforeach ?>
 
