@@ -16,7 +16,9 @@ if ($this->Identity->isLoggedIn()) {
 <div class="row justify-content-md-center align-items-center"  id="colorful">
 <div class="col-md-4">
 <div class="py-3">
+<?php if($role == 'curator' || $role == 'superuser'): ?>
 <div><?= $this->Html->link(__('Edit'), ['action' => 'edit', $topic->id],['class' => 'btn btn-dark float-right']) ?></div>
+<?php endif ?>
 <div><?= $this->Html->link(h($topic->categories[0]->name), ['controller' => 'Categories', 'action' => 'view', $topic->categories[0]->id],['class' => '']) ?></div>
 <h1><?= h($topic->name) ?></h1>
 <div>

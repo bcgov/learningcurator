@@ -29,7 +29,7 @@ BC Public Service learning curators.
 <h2 class="mt-3">All Topics</h2>
 <?php foreach ($categories as $category): ?>
 
-<div class="p-3 mb-5 bg-white rounded-lg">
+<div class="p-3 mb-5 bg-white rounded-lg shadow-sm">
 	<h3 class=""><?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?></h3>
 	<div class="mb-3" style="font-size: 1.2rem">
 	<?= $category->description ?>
@@ -48,7 +48,7 @@ BC Public Service learning curators.
 
 	<div class="">
 	<?php foreach ($category->topics as $topic): ?>
-	<div class="p-3 my-3 bg-light">
+	<div class="p-3 my-3 bg-light shadow-sm">
 	
 		<h3><?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?></h3>
 		<div class="mb-3"><?= h($topic->description) ?></div>
@@ -97,7 +97,7 @@ BC Public Service learning curators.
 	</div>
 <?php endif ?>
 <?php else: ?>
-	<div class="p-3 mb-3 bg-white rounded-lg">
+	<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
 		
 		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
 		<?= $path->objective ?>

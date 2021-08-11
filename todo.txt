@@ -4,10 +4,11 @@ TODO
 [x] Add featured pathways back into home page
 [] Add these issues to https://github.com/allanhaggett/
 
+[] Fix draft pathways showing up in topic view for everyone
 [] Add role label to user profile so curators know that they are such
 [] Implement unclaim 
+[] When pathway completed update database with date!
 [] TAGGING
-[] Fix draft pathways showing up in topic view for everyone
 [] New topic choosing UI for pathway editing
 [] Fix report submissions (send EMAIL on submission)
 [] Create reports dashboard

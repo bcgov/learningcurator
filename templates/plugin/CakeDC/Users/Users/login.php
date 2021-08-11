@@ -12,12 +12,12 @@ use Cake\Core\Configure;
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-8 col-lg-6">
+<div class="col-md-10 col-lg-8 col-xl-6">
 
 <h1 class="display-4 mt-5">Learning on demand.</h1>
 
 <div class="p-3 rounded-lg mb-5 bg-white shadow-sm">
-<p style="font-size: 1.5rem">Learning Curator Pathways feature informal learning by theme or community. 
+<p style="font-size: 1.3rem">Learning Curator Pathways feature informal learning by theme or community. 
 Here you’ll find recommendations for resources to watch, read, listen to, and courses that will help 
 you reach your goals. Pathways are created by BC Public Service learning curators.</p>
 <div><a href="/auth/azuread" class="btn btn-lg btn-dark">Sign In  with your.name@gov.bc.ca address to continue</a></div>
