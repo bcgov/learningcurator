@@ -5,25 +5,20 @@
 */
 
 ?>
-<style>
-.badge {
-	border-radius: 50%;
-	color:#FFF; 
-	display: inline-block;
-	font-size: 24px;
-	height: 50px;
-	padding-top: 12px;
-	width: 60px;
-}
-</style>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-6">
 <div class="pad-sm">
 	<h1>
 		Welcome <?= h($user->first_name) ?> <?= h($user->last_name) ?> 	
-
 	</h1>
+	<div class="systemrole">
+	<?php if($user->role == 'curator'): ?>
+		 <span class="badge badge-success">Curator</span>
+	<?php elseif($user->role == 'superuser'): ?>
+		<span class="badge badge-success">Super User</span>
+	<?php endif ?>
+	</div>
     <?php echo $this->User->logout('Logout',['class'=>'btn btn-warning']) ?>
 
 </div>
