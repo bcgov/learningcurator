@@ -18,7 +18,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="container-fluid">
 <div class="row justify-content-md-center align-items-center"  id="colorful">
 <div class="col-md-4">
-<div class="pad-sm">
+<div class="py-3">
 <div><?= $this->Html->link(__('All Topic Categories'), ['action' => 'index']) ?></div>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right btn-group">

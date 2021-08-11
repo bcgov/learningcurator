@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 
 <div class="col-md-12 col-lg-6">
-<div class="pad-lg">
+<div class="py-5">
 
 	<?php if($role == 2 || $role == 'superuser'): ?>
 	<div class="btn-group float-right">

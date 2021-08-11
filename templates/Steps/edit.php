@@ -17,7 +17,7 @@ label {
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-12">
 
-<div class="pad-md">
+<div class="py-4">
     <h1><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $step->name ?></a></h1>
     <div><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>" class="btn btn-light btn-sm">View Step</a></div>
 </div>

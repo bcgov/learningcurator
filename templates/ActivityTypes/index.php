@@ -23,7 +23,7 @@ function rgbToHex(r, g, b) {
 <?php foreach($activityTypes as $type): ?>
 <?php $count++ ?>
 	<div class="col-md-6" style="background-color: rgba(<?= $type->color ?>,.2)">
-	<div class="pad-md">
+	<div class="py-4">
 	<div class="pad-sm bg-white rounded-lg mb-2">
 	<div class="mb-3">
     <div class="float-right"><?= $this->Html->link(__('Edit'), ['action' => 'edit', $type->id],['class' => 'btn btn-light mt-3']) ?></div>

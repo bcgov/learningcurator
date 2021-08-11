@@ -8,7 +8,7 @@
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-6">
-<div class="pad-sm">
+<div class="py-3">
 	<h1>
 		Welcome <?= h($user->first_name) ?> <?= h($user->last_name) ?> 	
 	</h1>
