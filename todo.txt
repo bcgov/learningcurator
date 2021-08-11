@@ -1,7 +1,9 @@
 TODO
 [x] Add replace old fontawesome icons with new bootstrap icons
 [x] implement two-step claiming process
+[x] Add featured pathways back into home page
 [] Add these issues to https://github.com/allanhaggett/
+
 [] Add role label to user profile so curators know that they are such
 [] Implement unclaim 
 [] TAGGING
