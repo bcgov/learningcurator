@@ -4,42 +4,36 @@
  * @var \App\Model\Entity\Pathway $pathway
  */
 $this->loadHelper('Authentication.Identity');
-$uid = 0;
-$role = 0;
-if ($this->Identity->isLoggedIn()) {
-	$role = $this->Identity->get('role_id');
-	$uid = $this->Identity->get('id');
-}
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center">
-<div class="col-md-6">
+<div class="col-md-10 col-lg-8 col-xl-5">
 <div class="bg-white p-3 my-5">
-            <?= $this->Form->create($pathway) ?>
 
-                <?php
-                    echo $this->Form->hidden('modifiedby',['value' => $uid]);
+<?= $this->Form->create($pathway) ?>
+<?php
+echo $this->Form->hidden('modifiedby',['value' => $this->Identity->get('id')]);
+echo $this->Form->control('status_id', ['type' => 'radio', 'options' => $statuses]); 
+?>
 
-                    echo $this->Form->control('status_id', ['type' => 'radio', 'options' => $statuses]);
-                    //echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true, 'class' => 'form-control']);
-                    //echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true, 'class' => 'form-control']);
-                    echo $this->Form->control('name', ['class' => 'form-control']);
-                    echo $this->Form->control('slug', ['class' => 'form-control']);
-                    echo $this->Form->control('description', ['class' => 'form-control']);
-                    echo $this->Form->control('estimated_time', ['class' => 'form-control']);
-                    echo $this->Form->control('objective', ['class' => 'form-control']);
-                    //echo $this->Form->control('color');
-                    //echo $this->Form->control('file_path');
-                    //echo $this->Form->control('image_path');
-                    //echo $this->Form->control('featured');
-                    //echo $this->Form->control('ministry_id', ['options' => $ministries, 'empty' => true]);
-                    //echo $this->Form->control('competencies._ids', ['options' => $competencies]);
-                    //echo $this->Form->control('steps._ids', ['options' => $steps]);
-                    //echo $this->Form->control('users._ids', ['options' => $users, 'class' => 'form-control']);
-                ?>
+<label><?php echo $this->Form->checkbox('featured'); ?> Featured?</label>
 
-            <?= $this->Form->button(__('Save Pathway'), ['class' => 'btn btn-block btn-success mt-3']) ?>
-            <?= $this->Form->end() ?>
+<?php
+echo $this->Form->control('name', ['class' => 'form-control']);
+echo $this->Form->control('slug', ['class' => 'form-control']);
+echo $this->Form->control('description', ['class' => 'form-control']);
+echo $this->Form->control('estimated_time', ['class' => 'form-control']);
+echo $this->Form->control('objective', ['class' => 'form-control']);
+//echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true, 'class' => 'form-control']);
+//echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true, 'class' => 'form-control']);
+//echo $this->Form->control('color');
+//echo $this->Form->control('file_path');
+//echo $this->Form->control('image_path');
+//echo $this->Form->control('ministry_id', ['options' => $ministries, 'empty' => true]);
+//echo $this->Form->control('competencies._ids', ['options' => $competencies]);
+?>
+<?= $this->Form->button(__('Save Pathway'), ['class' => 'btn btn-block btn-success mt-3']) ?>
+<?= $this->Form->end() ?>
 </div>
 </div>
 </div>
