@@ -52,7 +52,9 @@ label {
 
 
 
-    
+    <a class="btn btn-primary float-right" data-toggle="collapse" href="#showactadd" role="button" aria-expanded="false" aria-controls="showactadd">
+        Add New Activity
+    </a>
     <h2>Add Existing Activity</h2>
     <div class="my-3 p-3 rounded-lg bg-white">
     <form method="get" id="actfind" action="/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
@@ -199,7 +201,7 @@ label {
 
     </div>
 </div>
-<div class="col-md-4">
+<div class="col-md-4 collapse" id="showactadd">
 
     <h2>Add New Activity</h2>
     <div class="my-3 p-3 rounded-lg bg-white">
@@ -220,8 +222,8 @@ label {
     </label>
     <?php //echo $this->Form->control('activity_type_id', ['class' => 'form-control', 'options' => $atypes]); ?>
     <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
-    <?php echo $this->Form->control('description', ['class' => 'form-control summernote']); ?>
-    <?php echo $this->Form->control('stepcontext', ['class' => 'form-control', 'label' => 'Set Context for this step']); ?>
+    <?php echo $this->Form->textarea('description', ['class' => 'form-control summernote']) ?>
+    <?php //echo $this->Form->control('stepcontext', ['class' => 'form-control', 'label' => 'Set Context for this step']); ?>
     <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
