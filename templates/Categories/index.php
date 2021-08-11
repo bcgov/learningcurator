@@ -26,11 +26,11 @@ BC Public Service learning curators.
 <div class="container-fluid">
 <div class="row justify-content-md-center linear">
 <div class="col-md-10 col-lg-6">
-
+<h2 class="mt-3">All Topics</h2>
 <?php foreach ($categories as $category): ?>
 
-<div class="p-3 my-5 bg-white rounded-lg">
-	<h2 class=""><?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?></h2>
+<div class="p-3 mb-5 bg-white rounded-lg">
+	<h3 class=""><?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?></h3>
 	<div class="mb-3" style="font-size: 1.2rem">
 	<?= $category->description ?>
 	</div>
@@ -79,6 +79,38 @@ BC Public Service learning curators.
 </div>
 <?php endforeach; ?>
 
+</div>
+<div class="col-md-10 col-lg-6">
+<h2 class="mt-3">Featured Pathways</h2>
+<div>
+<?php foreach($featuredpathways as $path): ?>
+	
+<?php if($path->status_id != 2): ?>
+<?php if($role == 'curator' || $role == 'superuser'): ?>
+	<div class="p-3 mb-3 bg-white rounded-lg">
+		<span class="badge badge-warning"><?= $path->status->name ?></span>
+		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
+		<div><?= $path->description ?></div>
+		<div><?= $path->topic->category[0]->name ?> <?= $path->topic->name ?></div>
+		
+		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
+	</div>
+<?php endif ?>
+<?php else: ?>
+	<div class="p-3 mb-3 bg-white rounded-lg">
+		
+		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
+		<?= $path->objective ?>
+		<div>
+			
+			<?php $topiclink = $path->topic->categories[0]->name . ' - ' . $path->topic->name ?>
+			<div><?= $this->Html->link(h($topiclink), ['controller' => 'Topics', 'action' => 'view', $path->topic->id],['class' => 'badge badge-light']) ?></div>
+		</div>
+		<!-- <div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div> -->
+	</div>
+<?php endif ?>
+
+<?php endforeach ?>
 
 </div>
 </div>

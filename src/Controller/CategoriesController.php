@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+Use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
 /**
  * Categories Controller
@@ -30,8 +31,15 @@ class CategoriesController extends AppController
     public function index()
     {
         $categories = $this->Categories->find()->contain(['Topics','Topics.Pathways']);
+        $featuredpaths = TableRegistry::getTableLocator()->get('Pathways');
+        $pathways = $featuredpaths->find('all')
+                                ->contain(['Statuses','Topics','Topics.Categories'])
+                                ->order(['Pathways.created' => 'desc'])
+                                ->where(['Pathways.featured' => 1])
+                                ->limit(10);
+        $featuredpathways = $pathways->toList();
 
-        $this->set(compact('categories'));
+        $this->set(compact('categories','featuredpathways'));
     }
 
     /**
