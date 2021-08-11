@@ -32,10 +32,20 @@ if ($this->Identity->isLoggedIn()) {
 <div class="row justify-content-md-center">
 <div class="col-md-4">
 <?php foreach($topic->pathways as $pathway): ?>
+<?php if($topic->status_id == 2): ?>
     <div class="p-3 my-3 bg-white rounded-lg">
         <h2><?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?></h2>
         <div><?= h($pathway->description) ?></div>
     </div>
+<?php else: ?>
+    <?php if($role == 'curator' || $role == 'superuser'): ?>
+    <div class="p-3 my-3 bg-white rounded-lg">
+        <div class="badge badge-warning">DRAFT</div>
+        <h2><?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?></h2>
+        <div><?= h($pathway->description) ?></div>
+    </div>
+    <?php endif ?>
+<?php endif ?>
 <?php endforeach ?>
 </div>
 <?php if($role == 'superuser' || $role == 'curator'): ?>
