@@ -18,10 +18,10 @@ class ReportsController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Activities', 'Users'],
-        ];
-        $reports = $this->paginate($this->Reports);
+        $reports = $this->Reports->find('all')
+                                ->contain(['Activities','Users'])
+                                ->order(['Reports.created' => 'desc']);
+
 
         $this->set(compact('reports'));
     }
