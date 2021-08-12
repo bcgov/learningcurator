@@ -75,12 +75,43 @@ $this->loadHelper('Authentication.Identity');
 		<a class="nav-link" href="/questions">FAQ</a>
 	</li>
 
-	<?php if($this->Identity->get('role') == 'superuser'): ?>
-	<li class="nav-item">
-		<a class="nav-link" href="/users/index">All Users</a>
-	</li>
-	<?php endif ?>
 
+	<?php if($this->Identity->get('role') == 'superuser'): ?>
+	<?php endif ?>
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="adminDropdown" 
+			role="button" 
+			data-toggle="dropdown" 
+			aria-haspopup="true" 
+			aria-expanded="false">
+				View
+		</a>
+		<div class="dropdown-menu" aria-labelledby="adminDropdown">
+			<a class="dropdown-item" href="/reports">All Reports</a>
+			<a class="dropdown-item" href="/users/index">All Users</a>
+			<a class="dropdown-item" href="/pathways">All Pathways</a>
+			<a class="dropdown-item" href="/activity-types">Activity Types</a>
+			<a class="dropdown-item" href="/activities">All Activities</a>
+			<a class="dropdown-item" href="/competencies">All Competencies</a>
+			<a class="dropdown-item" href="/ministries">All Ministries</a>
+			<a class="dropdown-item" href="/categories">All Categories</a>
+			<a class="dropdown-item" href="/statuses">All Statuses</a>
+			<a class="dropdown-item" href="/tags">All Tags</a>
+			
+		</div>
+		</li>
+		<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="adminAddDropdown" 
+			role="button" 
+			data-toggle="dropdown" 
+			aria-haspopup="true" 
+			aria-expanded="false">
+				New
+		</a>
+		<div class="dropdown-menu" aria-labelledby="adminAddDropdown">
+			<a class="dropdown-item" href="/categories/add">New Topic Area</a>	
+		</div>
+		</li>
 	</ul>
 	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
 		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
