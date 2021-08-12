@@ -20,7 +20,7 @@ $Users = ${$tableAlias};
 <div class="row justify-content-end text-right">
 <div class="col-5">
 <div class="btn-group">
-<?= $this->Html->link(__d('cake_d_c/users', 'Edit User'), ['action' => 'edit', $Users->id],['class'=>'btn btn-dark']) ?> 
+<?= $this->Html->link(__d('cake_d_c/users', 'Edit User'), ['action' => 'edit', $Users->id],['class'=>'btn btn-primary']) ?> 
 <?= $this->Form->postLink(
                 __d('cake_d_c/users', 'Delete User'),
                 ['action' => 'delete', $Users->id],

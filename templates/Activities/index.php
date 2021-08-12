@@ -108,7 +108,7 @@ if ($this->Identity->isLoggedIn()) {
                     echo $this->Form->textarea('issue',['class' => 'form-control', 'placeholder' => 'Type here ...']);
                 ?>
             </fieldset>
-            <input type="submit" class="btn btn-dark" value="Submit Report">
+            <input type="submit" class="btn btn-primary" value="Submit Report">
             <?= $this->Form->end() ?>
 		</div>
 		</div>
@@ -154,7 +154,7 @@ $(document).ready(function(){
 		
 		e.preventDefault();
 		var form = $(this);
-		form.children('button').removeClass('btn-light').addClass('btn-dark').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
+		form.children('button').removeClass('btn-light').addClass('btn-primary').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
 		
 		$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
 

@@ -55,7 +55,7 @@ if ($this->Identity->isLoggedIn()) {
 		echo $this->Form->hidden('categories.0.id', ['value' => $category->id]);
 	?>
 </fieldset>
-<?= $this->Form->button(__('Add Topic'), ['class' => 'btn btn-dark mt-2']) ?>
+<?= $this->Form->button(__('Add Topic'), ['class' => 'btn btn-primary mt-2']) ?>
 <?= $this->Form->end() ?>
 </div>
 </div>

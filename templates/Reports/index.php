@@ -36,7 +36,7 @@ $this->loadHelper('Authentication.Identity');
 				Respond
 		</a>	
 		<div class="collapse" id="curatorresponse<?= $report->id ?>">
-		<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-dark']) ?>
+		<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-primary']) ?>
 		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'edit', $report->id]]) ?>
 		<fieldset>
 		<legend><?= __('Respond') ?></legend>
@@ -46,7 +46,7 @@ $this->loadHelper('Authentication.Identity');
 		echo $this->Form->textarea('response',['class' => 'form-control', 'placeholder' => 'Type here ...']);
 		?>
 		</fieldset>
-		<input type="submit" class="btn btn-dark" value="Submit Response">
+		<input type="submit" class="btn btn-primary" value="Submit Response">
 		<?= $this->Form->end() ?>
 		</div> <!-- curatorresponse -->
 

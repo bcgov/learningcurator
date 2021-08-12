@@ -134,7 +134,7 @@ if($stepclaimcount > 0) {
 <div class="card card-body mt-3 text-center stickyrings">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-primary mb-0']) ?>
 <?= $this->Form->end(); ?>
 </div>
 <?php endif ?>
@@ -256,7 +256,7 @@ if($stepclaimcount > 0) {
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
-		<a class="btn btn-dark" 
+		<a class="btn btn-primary" 
 			id="claimbutton<?= $activity->id ?>"
 			data-toggle="collapse" 
 			href="#claimconfirm<?= $activity->id ?>" 
@@ -271,14 +271,14 @@ if($stepclaimcount > 0) {
 		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'claim', 'id' => $activity->id]) ?>
 		<?php //$this->Form->hidden('users.0.created', ['value' => date('Y-m-d H:i:s')]); ?>
 		<?= $this->Form->hidden('users.0.id', ['value' => $uid]); ?>
-		<?= $this->Form->button(__('Confirm Claim'),['class'=>'btn btn-dark', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress']) ?>
+		<?= $this->Form->button(__('Confirm Claim'),['class'=>'btn btn-primary', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress']) ?>
 		<?= $this->Form->end() ?>
 	</div>
 
 	<?php else: // they have claimed it, so show that ?>
 
-	<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="bi bi-bookmark-check-fill"></i></div>
-	<?php //echo $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-dark', 'confirm' => __('Really delete?')]) ?>
+	<div class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="bi bi-bookmark-check-fill"></i></div>
+	<?php //echo $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-primary', 'confirm' => __('Really delete?')]) ?>
 	<?php endif; // claimed or not ?>
 
 	<h3 class="my-3">
@@ -396,7 +396,7 @@ if($stepclaimcount > 0) {
                     echo $this->Form->textarea('issue',['class' => 'form-control', 'placeholder' => 'Type here ...']);
                 ?>
             </fieldset>
-            <input type="submit" class="btn btn-dark" value="Submit Report">
+            <input type="submit" class="btn btn-primary" value="Submit Report">
             <?= $this->Form->end() ?>
 		</div>
 		</div>
@@ -479,7 +479,7 @@ if($stepclaimcount > 0) {
                     echo $this->Form->textarea('issue',['class' => 'form-control', 'placeholder' => 'Type here ...']);
                 ?>
             </fieldset>
-            <input type="submit" class="btn btn-dark" value="Submit Report">
+            <input type="submit" class="btn btn-primary" value="Submit Report">
             <?= $this->Form->end() ?>
 		</div>
 		</div>

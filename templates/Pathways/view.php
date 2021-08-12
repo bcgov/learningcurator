@@ -174,7 +174,7 @@ This seems to work out, but #TODO investigate optimizing this
 	<?php 
 	echo $this->Form->postLink(__('Un-Follow'), 
 									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], 
-									['class' => 'btn btn-dark mt-4', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really unfollow?')]); 
+									['class' => 'btn btn-primary mt-4', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really unfollow?')]); 
 	?>
 	</div>
 	
@@ -183,7 +183,7 @@ This seems to work out, but #TODO investigate optimizing this
 
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]) ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-dark mb-0']) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-primary mb-0']) ?>
 
 <?= $this->Form->end() ?>
 

@@ -35,7 +35,7 @@ BC Public Service learning curators.
 	<?= $category->description ?>
 	</div>
 	
-	<a class="btn btn-dark btn-lg" 
+	<a class="btn btn-primary btn-lg" 
 		data-toggle="collapse" 
 		href="#topics<?= $category->id ?>" 
 		role="button" 
@@ -52,7 +52,7 @@ BC Public Service learning curators.
 	
 		<h3><?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?></h3>
 		<div class="mb-3"><?= h($topic->description) ?></div>
-		<a class="btn btn-dark btn-lg" 
+		<a class="btn btn-primary btn-lg" 
 			data-toggle="collapse" 
 			href="#paths<?= $topic->id ?>" 
 			role="button" 
