@@ -7,10 +7,10 @@ TODO
 [x] Restore activities index to list top 100 recently added activities (used to be home page)
 [] Add these issues to https://github.com/allanhaggett/
 
+[] New topic choosing UI for pathway editing
 [] Implement unclaim 
 [] When pathway completed update database with date!
 [] TAGGING
-[] New topic choosing UI for pathway editing
 [] Fix report submissions (send EMAIL on submission)
 [] Create reports dashboard
 [] User report (paths followed, activities claimed)?

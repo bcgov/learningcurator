@@ -30,10 +30,10 @@
 </div>
 <div class="container-fluid pt-3 linear">
 <div class="row justify-content-md-center">
-<div class="col-md-6 col-lg-6">
+<div class="col-md-4 col-lg-4">
 
 <?php if (!empty($user->pathways_users)) : ?>
-	<h2><i class="fas fa-sitemap"></i> <?= __('Your Pathways') ?></h2>
+	<h2><?= __('Your Pathways') ?></h2>
 	<?php foreach ($user->pathways_users as $path) : ?>
 	<div class="p-3 mb-2 bg-white rounded-lg">
 	<div class="row">
@@ -100,14 +100,36 @@
 
 </div>
 
-<div class="col-md-6 col-lg-6">
-<h2><i class="fas fa-sitemap"></i> <?= __('Your Claims') ?></h2>
+<div class="col-md-4 col-lg-4">
+<h2><?= __('Your Claims') ?></h2>
 <?php if (!empty($user->activities_users)) : ?>
 <?php foreach($user->activities_users as $act): ?>
     <div class="p-3 mb-2 bg-white rounded-lg">
     <a href="/activities/view/<?= $act->activity->id ?>"><?= $act->activity->name ?></a>
 </div>
 <?php endforeach ?>
+<?php endif ?>
+</div>
+
+
+<div class="col-md-4 col-lg-4">
+<?php if (!empty($user->reports)) : ?>
+	<h2><i class="fas fa-sitemap"></i> <?= __('Your Reports') ?></h2>
+	<?php foreach ($user->reports as $report) : ?>
+	<div class="p-3 mb-2 bg-white rounded-lg">
+		
+		<?= h($report->created) ?><br>
+		<a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a><br>
+		<?= h($report->issue) ?><br>
+		<?php if(!empty($report->response)): ?>
+			<div class="alert alert-primary"><?= h($report->response) ?></div>
+		<?php else: ?>
+			<div class="alert alert-primary">No response yet.</div>
+		<?php endif ?>
+		
+
+	</div>
+	<?php endforeach ?>
 <?php endif ?>
 </div>
 

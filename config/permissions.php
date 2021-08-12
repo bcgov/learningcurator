@@ -195,6 +195,16 @@ return [
         ],
         [
             'role' => '*',
+            'controller' => 'Reports',
+            'action' => ['add'],
+        ],
+        [
+            'role' => 'curator',
+            'controller' => 'Reports',
+            'action' => ['index','edit','add'],
+        ],
+        [
+            'role' => '*',
             'controller' => 'Tags',
             'action' => ['index','view'],
         ],

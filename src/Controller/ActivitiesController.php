@@ -100,7 +100,8 @@ class ActivitiesController extends AppController
                             'Steps', 
                             'Steps.Pathways', 
                             'Tags',
-                            'Reports'],
+                            'Reports',
+                            'Reports.Users'],
         ]);
 
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');

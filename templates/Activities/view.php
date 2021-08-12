@@ -284,6 +284,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-4">
 <h3 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h3>
 <?php foreach($activity->reports as $report): ?>
+	<pre><?php print_r($report) ?></pre>
 <div class="my-3 p-3 bg-white rounded-lg">
 <div><a href="/users/view/<?= $report->user->id ?>"><?= $report->user->name ?></a> says:</div>
 <div><?= $report->issue ?></div>
