@@ -122,7 +122,7 @@
 		<a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a><br>
 		<?= h($report->issue) ?><br>
 		<?php if(!empty($report->response)): ?>
-			<div class="alert alert-primary"><?= h($report->response) ?></div>
+			<div class="alert alert-success"><?= h($report->response) ?></div>
 		<?php else: ?>
 			<div class="alert alert-primary">No response yet.</div>
 		<?php endif ?>
