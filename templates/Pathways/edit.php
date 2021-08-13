@@ -11,13 +11,24 @@ $this->loadHelper('Authentication.Identity');
 <div class="bg-white p-3 my-5">
 
 <?= $this->Form->create($pathway) ?>
-<?php
-echo $this->Form->hidden('modifiedby',['value' => $this->Identity->get('id')]);
-echo $this->Form->control('status_id', ['type' => 'radio', 'options' => $statuses]); 
-?>
 
 <label><?php echo $this->Form->checkbox('featured'); ?> Featured?</label>
 
+<?php echo $this->Form->hidden('modifiedby',['value' => $this->Identity->get('id')]) ?>
+
+
+<?php echo $this->Form->control('status_id', ['type' => 'select', 'options' => $statuses, 'class' => 'form-control']) ?>
+
+
+<div>
+<label>Topic:
+<?php echo $this->Form->select(
+    'topic_id',
+    $areas,
+	['class' => 'form-control'],
+);
+?></label>
+</div>
 <?php
 echo $this->Form->control('name', ['class' => 'form-control']);
 echo $this->Form->control('slug', ['class' => 'form-control']);

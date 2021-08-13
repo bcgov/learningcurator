@@ -166,14 +166,29 @@ class PathwaysController extends AppController
             }
             $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
         }
+
         $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
-        $categories = $this->Pathways->Topics->Categories->find('list', ['limit' => 200]);
+
+        $categories = $this->Pathways->Topics->Categories->find('all', ['contain' =>['Topics'], 'limit' => 200]);
+        
+        $areas = [];
+        foreach($categories as $c) {
+            $cat = $c->name;
+            foreach($c->topics as $t) {
+                $top = $t->name;
+                $mergedtitle = $cat . ' - ' . $top;
+                $merged = ['text' => $mergedtitle, 'value' => $t->id];
+                array_push($areas,$merged);
+            }
+        }
+        
+
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
         $statuses = $this->Pathways->Statuses->find('list', ['limit' => 200]);
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'categories', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
+        $this->set(compact('pathway', 'areas', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
     }
 
     /**
