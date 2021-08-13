@@ -1,24 +1,63 @@
 /** 
  * Learning Curator
  *
- * Keep it simple!! Reply on Bootstrap as much as possible, while adding
- * in some flavor.
+ * Keep it simple!! Reply on Bootstrap as **much as possible**, 
+ * while adding in some flavor. Seriously: if you're in here
+ * adding stuff, please be as minimalist as possible, and try
+ * not to alter things like margins and padding (use utility
+ * classes instead). For the most part, the intention here
+ * is to override colors and only adding absolutely necessary
+ * custom elements.
  *
  * Author: Allan Haggett <allan.haggett@gov.bc.ca>
  *
  */
+
+ /* #TODO update the below link states to make more sense. */
 a {
 	color: #000;
 }
 a:hover {
 	color: #000;
 }
-
+a:active {
+	color: #000;
+}
+a:focus {
+	color: #000;
+}
+/* This _can_ be set individually with Bootstrap's 
+ * .img-fluid class, but I prefer to set it globally; I can't think of a time
+ * when not having the image scale with the rest of the page was a desired
+ * behaviour, but YMMV
+ */
 img {
 	height: auto;
 	max-width: 100%;
 }
 
+/* For some incomprehensible-to-me reason, Bootstrap's default colors are 
+ * NOT CONSIDERED ACCESSSIBLE! 
+ * https://getbootstrap.com/docs/4.6/getting-started/accessibility/#color-contrast
+ * "Authors will need to manually modify/extend these default colors to ensure 
+ *  adequate color contrast ratios."
+ * https://github.com/twbs/bootstrap/issues/3572 looks like they attempted 
+ * to address the issue, but gave up because "Will close for now since there 
+ * is no clear solution in my mind that doesn't have some downside. "
+ * So ... yeah:
+*/
+.btn-primary {
+	/* in absence of a clearly defined blue to go with the current activities 
+	 * pallet, I'm just setting this BC Gov blue; it doesn't offend me, but 
+	 * there's room for improvement.
+	 */
+	background-color: #003366;
+}
+
+/*
+ * This is the main header area with the activity ring logo as the background;
+ * NOTE that this is altered slightly by the desktop breakpoint below.
+ */
 #colorful {
 	background: #FFF url('../img/curator-rings-background.svg') no-repeat bottom center;
 	background-size: 50rem;
