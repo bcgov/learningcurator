@@ -6,8 +6,8 @@
  * adding stuff, please be as minimalist as possible, and try
  * not to alter things like margins and padding (use utility
  * classes instead). For the most part, the intention here
- * is to override colors and only adding absolutely necessary
- * custom elements.
+ * is to override colors and font weights and only adding 
+ * absolutely necessary custom elements.
  *
  * Author: Allan Haggett <allan.haggett@gov.bc.ca>
  *
@@ -52,7 +52,11 @@ img {
 	 * there's room for improvement.
 	 */
 	background-color: #003366;
+	border-color: #003366;
 }
+/*
+ * #TODO add in accessible colors for other button types like  "success"
+ */
 
 /*
  * This is the main header area with the activity ring logo as the background;
@@ -71,6 +75,7 @@ img {
 .breadcrumb {
 	background-color: #FFF;
 }
+
 .nav-pills .nav-link.active, 
 .nav-pills .show>.nav-link {
 	background-color: #FFF;
