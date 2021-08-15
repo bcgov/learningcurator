@@ -1,10 +1,21 @@
-TODO
+#TODO
 
-[] UPDATE DATABASE SCHEMA IN PROD
+[] Have K re-deploy whole DB from SQL bootstrap
+[] add sortorder fields to categories, topics, pathways
+[] add status to categories, topics
+[] SEARCH plugin
+[] Fix page titles
 [] Implement unclaim 
+[] submit pathway follow/unfollow via JS to prevent page reload
 [] When pathway completed update database with date!
 [] TAGGING
+[] Tags for pathways
+[] Add publish option at pathway level that publishes all steps and activities
+[] Add "hold" status for activities that aren't draft, but shouldn't be
+    published (this way you can run above publish all, but still leave things out)
 [] send email on report submission
+[] Export to browser bookmarks organized by folder Area/Topic/Pathway/Step/https://Activity
+[] Import of browser bookmarks organized by folder
 [] Develop reports dashboard
 [] User report (paths followed, activities claimed)?
 [] List of Curators and what paths/activities they've authored

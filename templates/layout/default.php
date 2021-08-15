@@ -77,7 +77,7 @@ $this->loadHelper('Authentication.Identity');
 
 
 	<?php if($this->Identity->get('role') == 'superuser'): ?>
-	<?php endif ?>
+	
 	<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="adminDropdown" 
 			role="button" 
@@ -112,6 +112,7 @@ $this->loadHelper('Authentication.Identity');
 			<a class="dropdown-item" href="/categories/add">New Topic Area</a>	
 		</div>
 		</li>
+		<?php endif ?>
 	</ul>
 	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
 		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
