@@ -25,11 +25,12 @@ class Azure extends AbstractMapper
      *
      * @var array
      */
+
     protected $_mapFields = [
         'id' => 'email',
         'email' => 'email',
-        'first_name' => 'full_name',
-        'last_name' => 'full_name'
+        'first_name' => 'name',
+        'last_name' => 'name'
     ];
 
     /**

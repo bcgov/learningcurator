@@ -300,6 +300,7 @@ CREATE TABLE `categories_topics` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) NOT NULL,
   `topic_id` int(11) NOT NULL,
+  `sortorder` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `categories_topics_ibfk_1` (`category_id`),
   KEY `categories_topics_ibfk_2` (`topic_id`),
@@ -314,7 +315,7 @@ CREATE TABLE `categories_topics` (
 
 LOCK TABLES `categories_topics` WRITE;
 /*!40000 ALTER TABLE `categories_topics` DISABLE KEYS */;
-INSERT INTO `categories_topics` VALUES (1,1,1),(2,3,7),(5,2,11),(6,2,12),(7,5,13);
+INSERT INTO `categories_topics` VALUES (1,1,1,0),(2,3,7,0),(5,2,11,0),(6,2,12,0),(7,5,13,0);
 /*!40000 ALTER TABLE `categories_topics` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -906,4 +907,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-15 19:53:29
+-- Dump completed on 2021-08-15 21:17:33

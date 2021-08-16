@@ -1,8 +1,9 @@
 #TODO
 
 [] Have K re-deploy whole DB from SQL bootstrap
-[] add sortorder fields to categories, topics, pathways
+[] add sortorder fields to categories_topics, pathways
 [] add status to categories, topics
+[] New profile guidance and topic selector
 [] SEARCH plugin
 [] Fix page titles
 [] Implement unclaim 
