@@ -17,7 +17,7 @@ label {
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-12">
 
-<div class="pad-md">
+<div class="py-4">
     <h1><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $step->name ?></a></h1>
     <div><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>" class="btn btn-light btn-sm">View Step</a></div>
 </div>
@@ -34,6 +34,8 @@ label {
     <?= $this->Form->hidden('featured', ['class' => 'form-control']) ?>
     <?= $this->Form->hidden('modifiedby') ?>
     <?= $this->Form->hidden('pathway_id', ['value' => $step->pathway_id]) ?>
+
+    <?= $this->Form->control('status_id', ['options' => $statuses, 'class' => 'form-control']) ?>
     <?= $this->Form->control('name', ['class' => 'form-control']) ?>
     <?php  //$this->Form->control('slug', ['class' => 'form-control']); ?>
     <?= $this->Form->control('description', ['class' => 'form-control summernote']) ?>
@@ -50,7 +52,9 @@ label {
 
 
 
-    
+    <a class="btn btn-primary float-right" data-toggle="collapse" href="#showactadd" role="button" aria-expanded="false" aria-controls="showactadd">
+        Add New Activity
+    </a>
     <h2>Add Existing Activity</h2>
     <div class="my-3 p-3 rounded-lg bg-white">
     <form method="get" id="actfind" action="/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
@@ -107,7 +111,7 @@ label {
             <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
             <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
-            <button class="btn btn-light"><i class="fas fa-chevron-circle-up"></i></button>
+            <button class="btn btn-light"><i class="bi bi-arrow-up-square-fill"></i></button>
             <?= $this->Form->end() ?>
 
             <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => '']) ?>
@@ -116,7 +120,7 @@ label {
             <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
             <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
-            <button class="btn btn-light"><i class="fas fa-chevron-circle-down"></i></button>
+            <button class="btn btn-light"><i class="bi bi-arrow-down-square-fill"></i></button>
             <?= $this->Form->end() ?>
             </div>
             <div class="col-9">
@@ -197,7 +201,7 @@ label {
 
     </div>
 </div>
-<div class="col-md-4">
+<div class="col-md-4 collapse" id="showactadd">
 
     <h2>Add New Activity</h2>
     <div class="my-3 p-3 rounded-lg bg-white">
@@ -218,8 +222,8 @@ label {
     </label>
     <?php //echo $this->Form->control('activity_type_id', ['class' => 'form-control', 'options' => $atypes]); ?>
     <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
-    <?php echo $this->Form->control('description', ['class' => 'form-control summernote']); ?>
-    <?php echo $this->Form->control('stepcontext', ['class' => 'form-control', 'label' => 'Set Context for this step']); ?>
+    <?php echo $this->Form->textarea('description', ['class' => 'form-control summernote']) ?>
+    <?php //echo $this->Form->control('stepcontext', ['class' => 'form-control', 'label' => 'Set Context for this step']); ?>
     <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>

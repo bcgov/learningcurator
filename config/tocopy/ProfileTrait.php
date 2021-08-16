@@ -44,7 +44,13 @@ trait ProfileTrait
             $appContain = (array)Configure::read('Auth.authenticate.' . AuthComponent::ALL . '.contain');
             $socialContain = Configure::read('Users.Social.login') ? ['SocialAccounts'] : [];
             $user = $this->getUsersTable()->get($id, [
-                    'contain' => array_merge((array)$appContain, (array)$socialContain, ['PathwaysUsers','PathwaysUsers.Pathways','ActivitiesUsers','ActivitiesUsers.Activities']),
+                    'contain' => array_merge((array)$appContain, (array)$socialContain, 
+                    ['PathwaysUsers',
+                        'PathwaysUsers.Pathways',
+                        'ActivitiesUsers',
+                        'ActivitiesUsers.Activities',
+                        'Reports' => ['sort' => ['Reports.created' => 'desc']],
+                        'Reports.Activities']),
                 ]);
             $this->set('avatarPlaceholder', Configure::read('Users.Avatar.placeholder'));
             if ($user->id === $loggedUserId) {

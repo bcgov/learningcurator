@@ -2,7 +2,7 @@
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-8">
-<div class="pad-sm">
+<div class="py-3">
 <h1>Frequently Asked Questions</h1>
 </div>
 </div>

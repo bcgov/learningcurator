@@ -37,7 +37,7 @@ if ($this->Identity->isLoggedIn()) {
 <div><?= $question->content ?></div>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
     <div class="btn-group mt-3">
-    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id],['class'=>'btn btn-dark']) ?>
+    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id],['class'=>'btn btn-primary']) ?>
     <?= $this->Form->postLink(__('Delete Question'), ['action' => 'delete', $question->id], ['confirm' => __('Are you sure you want to delete # {0}?', $question->id), 'class' => 'btn btn-danger']) ?>
 </div>
 <?php endif ?>
@@ -49,7 +49,7 @@ if ($this->Identity->isLoggedIn()) {
     <h2><?= h($question->title) ?></h2>
     <div><?= $question->content ?></div>
     <div class="btn-group mt-3">
-    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id],['class'=>'btn btn-dark']) ?>
+    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id],['class'=>'btn btn-primary']) ?>
     <?= $this->Form->postLink(__('Delete Question'), ['action' => 'delete', $question->id], ['confirm' => __('Are you sure you want to delete # {0}?', $question->id), 'class' => 'btn btn-danger']) ?>
 </div>
 </div>

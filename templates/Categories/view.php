@@ -18,7 +18,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="container-fluid">
 <div class="row justify-content-md-center align-items-center"  id="colorful">
 <div class="col-md-4">
-<div class="pad-sm">
+<div class="py-3">
 <div><?= $this->Html->link(__('All Topic Categories'), ['action' => 'index']) ?></div>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right btn-group">
@@ -55,7 +55,7 @@ if ($this->Identity->isLoggedIn()) {
 		echo $this->Form->hidden('categories.0.id', ['value' => $category->id]);
 	?>
 </fieldset>
-<?= $this->Form->button(__('Add Topic'), ['class' => 'btn btn-dark mt-2']) ?>
+<?= $this->Form->button(__('Add Topic'), ['class' => 'btn btn-primary mt-2']) ?>
 <?= $this->Form->end() ?>
 </div>
 </div>
@@ -80,8 +80,19 @@ if ($this->Identity->isLoggedIn()) {
 
 
 <?php foreach ($topic->pathways as $pathway) : ?>
+
 <div class="p-3 my-3 bg-white rounded-lg">
-<?php if($pathway->status_id != 2): // is not published? ?>
+<?php if($pathway->status_id == 2): // is published ?>
+
+	<h3>
+<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
+</h3>
+<div class="mb-3">
+<?= h($pathway->description) ?>
+</div>
+
+<?php else: ?>
+	
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <span class="badge badge-warning"><?= $pathway->status->name ?></span>
 <h2>
@@ -91,14 +102,7 @@ if ($this->Identity->isLoggedIn()) {
 <?= h($pathway->objective) ?>
 </div>
 <?php endif; // is curator or admin ?>
-<?php else: ?>
-<h3>
-<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
-</h3>
-<div class="mb-3">
-<?= h($pathway->description) ?>
-</div>
-<?php endif; // is not published ?>
+<?php endif; // is published ?>
 </div>
 <?php endforeach ?>
 
@@ -112,14 +116,14 @@ if ($this->Identity->isLoggedIn()) {
 
 <div class="container-fluid">
 <div class="row justify-content-md-center align-items-center">
-<div class="col-md-12">
+<div class="col-md-6">
 
 
-<h3 class="mt-3">Other Categories</h2>
-<div class="card-columns">
+<h3 class="mt-3">Other Topic Areas</h2>
+<div class="">
 <?php foreach ($categories as $cat) : ?>
 <?php if($cat->id == $category->id) continue ?>
-<div class="card card-body">
+<div class="bg-white p-3 m-2 rounded-3">
 <h4>
 	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
 </h4>

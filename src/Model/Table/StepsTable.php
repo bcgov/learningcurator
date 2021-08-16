@@ -48,6 +48,10 @@ class StepsTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('Statuses', [
+            'foreignKey' => 'status_id',
+        ]);
+        
         $this->belongsToMany('Activities', [
             'foreignKey' => 'step_id',
             'targetForeignKey' => 'activity_id',

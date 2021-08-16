@@ -25,21 +25,10 @@ if ($this->Identity->isLoggedIn()) {
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-6">
+<div class="py-5">
 
-<h1 class="display-4 mt-5">Access learning resources on demand</h1>
-<h2 class="font-weight-light">Sourced by BC Public Service curators</h2>
-<div class="p-3 rounded-lg mb-5 bg-white shadow-sm">
-<p style="font-size: 1.5rem">BC Public Service curators are trusted guides designing pathways of knowledge and 
-skill development. Learning Curator pathways may stand alone or they may supplement 
-your corporate training offered through the Learning Centre.</p>
-<p style="font-size: 1.3rem">A <a href="#">best practice in learning for organizations</a>, curation helps us develop 
-ourselves as part of a trusted, talented, and modern public service.</p>
-
-<a class="btn btn-lg btn-success my-3" href="/questions">Learn More</a>
-
-
-</div>
-
+<h1>Activities</h1>
+<p>The 100 most recently added activities.</p>
 </div>
 </div>
 </div>
@@ -47,59 +36,94 @@ ourselves as part of a trusted, talented, and modern public service.</p>
 <div class="row justify-content-md-center">
 
 
+<div class="col-md-10 col-lg-8 col-xl-6">
+
+<?php foreach ($activities as $activity) : ?>
+	<div class=" activity bg-white">
+<div class="p-3 my-3 rounded-lg" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
 
 
-<div class="col-md-6">
+	<h3 class="my-3">
+		<a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
+		<!--<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
+	</h3>
+	<div class="p-3" style="background: rgba(255,255,255,.3);">
+		<div class="mb-3">
+		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
+			<i class="bi bi-clock-history"></i>
+			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
+		</span> 
+		<?php foreach($activity->tags as $tag): ?>
+		<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
+		<?php endforeach ?>
+		</div>
 
-<h2 class="mt-3">Latest Topics</h2>
-<?php foreach ($allcats as $cat) : ?>
-<div class="p-3 mb-3 bg-white rounded-lg">
-<h3>
-	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
-</h3>
-<div><?= h($cat->description) ?></div>
+		<?= $activity->description ?>
+		<?php if(!empty($activity->_joinData->stepcontext)): ?>
+		<div class="alert alert-light text-dark mt-3 shadow-sm">
+				<i class="bi bi-person-badge-fill"></i>
+				Curator says:<br>
+				<?= $activity->_joinData->stepcontext ?>
+			</div>
+			<?php endif ?>
 
-<?php foreach($cat->topics as $topic): ?>
-<div class="bg-light p-3 my-3">
-	<div class="font-weight-bold"><?= $this->Html->link($topic->name, ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?></div>
-	<div><?= h($topic->description) ?></div>
-</div>
-<?php endforeach ?>
-
-<!-- <div><span class="badge badge-light">Added: <?= h($cat->created) ?></span></div> -->
-</div>
-<?php endforeach; ?>
-</div>
-
-
-
-<div class="col-md-4">
-
-<h2 class="mt-3">Featured Pathways</h2>
-<div>
-<?php foreach($allpathways as $path): ?>
-<?php if($path->status_id != 2): ?>
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-	<div class="p-3 mb-3 bg-white rounded-lg">
-		<span class="badge badge-warning"><?= $path->status->name ?></span>
-		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
-		<?= $path->objective ?>
-		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
 	</div>
-<?php endif ?>
-<?php else: ?>
-	<div class="p-3 mb-3 bg-white rounded-lg">
-		
-		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
-		<?= $path->objective ?>
-		<!-- <div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div> -->
-	</div>
-<?php endif ?>
+	
 
-<?php endforeach ?>
-</div>
-</div>
+
+	<a target="_blank" 
+		rel="noopener" 
+		data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
+		href="<?= $activity->hyperlink ?>" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
+		class="btn btn-block my-3 text-uppercase btn-lg">
+
+			<i class="bi <?= $activity->activity_type->image_path ?>"></i>
+
+			<?= $activity->activity_type->name ?>
+
+	</a>
+
+
+	<a href="#newreport<?= $activity->id ?>" 
+			style="color:#333;" 
+			class="btn btn-light " 
+			data-toggle="collapse" 
+			title="Report this activity for some reason" 
+			data-target="#newreport<?= $activity->id ?>" 
+			aria-expanded="false" 
+			aria-controls="newreport<?= $activity->id ?>">
+				<i class="bi bi-exclamation-triangle-fill"></i> Report
+		</a>	
+		<div class="collapse" id="newreport<?= $activity->id ?>">
+		<div class="my-3 p-3 bg-white rounded-lg">
+		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add'],'class'=>'reportform']) ?>
+            <fieldset>
+                <legend><?= __('Report this activity') ?></legend>
+				<p>Is there something wrong with this activity? Tell us about it!</p>
+                <?php
+                    echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
+                    echo $this->Form->hidden('user_id', ['value' => $uid]);
+                    echo $this->Form->textarea('issue',['class' => 'form-control', 'placeholder' => 'Type here ...']);
+                ?>
+            </fieldset>
+            <input type="submit" class="btn btn-primary" value="Submit Report">
+            <?= $this->Form->end() ?>
+		</div>
+		</div>
+	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="bi bi-hand-thumbs-up-fill"></i>
+	</a>
+
+
+
+
+	</div>
+	</div>
+	
+
+	<?php endforeach; // end of activities loop for this step ?>
 
 
 
@@ -130,7 +154,7 @@ $(document).ready(function(){
 		
 		e.preventDefault();
 		var form = $(this);
-		form.children('button').removeClass('btn-light').addClass('btn-dark').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
+		form.children('button').removeClass('btn-light').addClass('btn-primary').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
 		
 		$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
 

@@ -38,6 +38,7 @@ if ($this->Identity->isLoggedIn()) {
         echo $this->Form->control('email', ['label' => __d('cake_d_c/users', 'Email')]);
         echo $this->Form->control('first_name', ['label' => __d('cake_d_c/users', 'First name')]);
         echo $this->Form->control('last_name', ['label' => __d('cake_d_c/users', 'Last name')]);
+        echo $this->Form->control('additional_data', ['label' => __d('cake_d_c/users', 'Additonal Data')]);
         if($role == 'superuser') {
             echo $this->Form->control('role', ['label' => __d('cake_d_c/users', 'Role')]);
             //echo $this->Form->control('is_superuser', ['label' => __d('cake_d_c/users', 'Is Superuser?')]);

@@ -18,7 +18,7 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-12">
-<div class="pad-lg">
+<div class="py-5">
 <h1>
     <a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
 </h1>

@@ -97,7 +97,7 @@ This seems to work out, but #TODO investigate optimizing this
 	<span class="badge badge-light listentotal"></span>  
 	<span class="badge badge-light participatetotal"></span>  
 	</div>
-	
+
 	<?php if($role == 'curator' || $role == 'superuser'): ?>
 
 	<a class="" 
@@ -168,23 +168,29 @@ This seems to work out, but #TODO investigate optimizing this
 <?php if(in_array($uid,$usersonthispathway)): ?>
 
 	
-	<div class="card card-body mt-3 text-center stickyrings">
+	<div class="bg-white p-3 mt-3 text-center stickyrings">
 	<div>Overall Progress: <span class="mb-3 following"></span>%</div>
 	<canvas id="myChart" width="250" height="250"></canvas>
+	<?php 
+	echo $this->Form->postLink(__('Un-Follow'), 
+									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], 
+									['class' => 'btn btn-primary mt-4', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really unfollow?')]); 
+	?>
 	</div>
 	
 <?php else: ?>
-<div class="card card-body my-3 stickyrings">
+<div class="bg-white rounded-lg p-3 my-3 stickyrings">
 
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]) ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-success mb-0']) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-primary mb-0']) ?>
 
 <?= $this->Form->end() ?>
 
 <div class="py-3">
-<div>Following a pathway is a commitment to moving 
-through each step and claiming each required activity as you complete it.
+<div>
+	
+	Following a pathway allows you to track your progress and pin the pathway to <a href="/profile">your profile</a>.
 
 </div>
 <!--When you select to follow a pathway, this pathway will show as a journey you are on and may be 
@@ -255,13 +261,7 @@ foreach ($steps->activities as $activity) {
 		if(in_array($activity->id,$useractivitylist)) {
 			$stepclaimcount++;
 		}
-		$tmp = array();
-		// Loop through the whole list, add steporder to tmp array
-		foreach($acts as $line) {
-			$tmp[] = $line->_joinData->steporder;
-		}
-		// Use the tmp array to sort acts list
-		array_multisort($tmp, SORT_DESC, $acts);
+
 	}
 }
 
@@ -282,7 +282,13 @@ if($stepclaimcount > 0) {
 }
 ?>
 
+
+<?php if($steps->status->name == 'Published'): ?>
+
 <div class="p-3 my-3 bg-white rounded-lg">
+
+	<div><span class="badge badge-light"><?= $steps->status->name ?></span></div>
+
 	<h2>
 
 		<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
@@ -318,6 +324,19 @@ if($stepclaimcount > 0) {
 	</div>
 	
 </div>
+<?php else: ?>
+<?php if($role == 'curator' || $role == 'superuser'): ?>
+	<div class="p-3 my-3 bg-white rounded-lg">
+<div><span class="badge badge-warning"><?= $steps->status->name ?></span></div>
+<h2>
+	<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
+		<?= h($steps->name) ?> 
+		<i class="fas fa-arrow-circle-right"></i>
+	</a>
+</h2>
+</div>
+<?php endif; // if curator or admin ?>
+<?php endif; // if published ?>
 <?php endforeach ?>
 
 

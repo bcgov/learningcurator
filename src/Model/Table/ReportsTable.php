@@ -53,11 +53,11 @@ class ReportsTable extends Table
             'foreignKey' => 'activity_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Users', [
+        $this->belongsTo('CakeDC/Users.Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Users', [
+        $this->belongsTo('CakeDC/Users.Users', [
             'foreignKey' => 'curator_id',
         ]);
     }

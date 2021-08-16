@@ -1,0 +1,34 @@
+#TODO
+
+[] Have K re-deploy whole DB from SQL bootstrap
+[] add sortorder fields to categories_topics, pathways
+[] add status to categories, topics
+[] New profile guidance and topic selector
+[] SEARCH plugin
+[] Fix page titles
+[] Implement unclaim 
+[] submit pathway follow/unfollow via JS to prevent page reload
+[] When pathway completed update database with date!
+[] TAGGING
+[] Tags for pathways
+[] Add publish option at pathway level that publishes all steps and activities
+[] Add "hold" status for activities that aren't draft, but shouldn't be
+    published (this way you can run above publish all, but still leave things out)
+[] send email on report submission
+[] Export to browser bookmarks organized by folder Area/Topic/Pathway/Step/https://Activity
+[] Import of browser bookmarks organized by folder
+[] Develop reports dashboard
+[] User report (paths followed, activities claimed)?
+[] List of Curators and what paths/activities they've authored
+[] Add contributor role and then a publishing workflow where contributors must have the work approved by a curator
+   [] ceate heirarchy document showing Curator
+
+[x] #290 New topic choosing UI for pathway editing 
+[x] Add replace old fontawesome icons with new bootstrap icons
+[x] implement two-step claiming process
+[x] Add featured pathways back into home page
+[x] Fix draft pathways showing up in topic view for everyone
+[x] Add role label to user profile so curators know that they are such
+[x] Restore activities index to list top 100 recently added activities (used to be home page)
+[x] Add these issues to https://github.com/allanhaggett/
+[x] Fix report submissions

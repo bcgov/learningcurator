@@ -22,11 +22,18 @@ class PathwaysController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Topics', 'Ministries', 'Statuses'],
-        ];
-        $pathways = $this->paginate($this->Pathways);
-
+        
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $paths = TableRegistry::getTableLocator()->get('Pathways');
+        // If the person is a curator or an admin, then return all of the pathways,
+        // regardless of their statuses. Regular users should only ever see 
+        // 'published' pathways.
+        if($user->role == 'curator' || $user->role == 'superuser') {
+            $pathways = $paths->find('all')->contain(['Topics','Statuses']);
+        } else {
+            $pathways = $paths->find('all')->contain(['Topics','Statuses'])->where(['status_id' => 2]);
+        }
+        //$this->paginate($pathways);
         $this->set(compact('pathways'));
     }
 
@@ -71,7 +78,8 @@ class PathwaysController extends AppController
                             'Topics',
                             'Topics.Categories', 
                             'Ministries', 
-                            'Steps', 
+                            'Steps' => ['sort' => ['Steps.id' => 'asc']],
+                            'Steps.Statuses', 
                             'Steps.Activities', 
                             'Steps.Activities.ActivityTypes', 
                             'Users'])->firstOrFail();
@@ -87,12 +95,20 @@ class PathwaysController extends AppController
         $followers = array();
         // Loop through the users that are on this pathway and parse just the 
         // IDs into the array that we just created
+        $followid = 0;
         foreach($pathway->users as $pu) {
+            // Is the current user following this pathway? If so, then 
+            // we record the pathways_users ID number so we can remove
+            // the association (unfollow) if the user clicks the "Unfollow"
+            // button.
+            if($pu->id == $user->id) {
+                $followid = $pu->_joinData->id;
+            }
             array_push($usersonthispathway,$pu->id);
             array_push($followers,[$pu->id,$pu->username]);
         }
 
-        $this->set(compact('pathway', 'usersonthispathway', 'useractivitylist','followers'));
+        $this->set(compact('pathway', 'followid', 'usersonthispathway', 'useractivitylist','followers'));
 
     }
 
@@ -106,20 +122,24 @@ class PathwaysController extends AppController
         $pathway = $this->Pathways->newEmptyEntity();
         if ($this->request->is('post')) {
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
+            $sluggedTitle = Text::slug($pathway->name);
+            // trim slug to maximum length defined in schema
+            $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
             if ($this->Pathways->save($pathway)) {
                 $this->Flash->success(__('The pathway has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $redir = '/pathways/' . $sluggedTitle;
+                return $this->redirect($redir);
             }
             $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
         }
+        $categories = $this->Pathways->Topics->Categories->find('list', ['limit' => 200]);
         $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
         $statuses = $this->Pathways->Statuses->find('list', ['limit' => 200]);
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
+        $this->set(compact('pathway', 'categories', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
     }
 
     /**
@@ -136,20 +156,39 @@ class PathwaysController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
+            $sluggedTitle = Text::slug($pathway->name);
+            // trim slug to maximum length defined in schema
+            $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
             if ($this->Pathways->save($pathway)) {
                 $this->Flash->success(__('The pathway has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $redir = '/pathways/' . $sluggedTitle;
+                return $this->redirect($redir);
             }
             $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
         }
+
         $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
+
+        $categories = $this->Pathways->Topics->Categories->find('all', ['contain' =>['Topics'], 'limit' => 200]);
+        
+        $areas = [];
+        foreach($categories as $c) {
+            $cat = $c->name;
+            foreach($c->topics as $t) {
+                $top = $t->name;
+                $mergedtitle = $cat . ' - ' . $top;
+                $merged = ['text' => $mergedtitle, 'value' => $t->id];
+                array_push($areas,$merged);
+            }
+        }
+        
+
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
         $statuses = $this->Pathways->Statuses->find('list', ['limit' => 200]);
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
+        $this->set(compact('pathway', 'areas', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
     }
 
     /**

@@ -38,6 +38,7 @@ class Step extends Entity
         'slug' => true,
         'description' => true,
         'image_path' => true,
+        'status_id' => true,
         'featured' => true,
         'created' => true,
         'createdby' => true,

@@ -161,7 +161,7 @@ return [
         [
             'role' => '*',
             'controller' => 'PathwaysUsers',
-            'action' => ['follow'],
+            'action' => ['follow','delete'],
         ],
         [
             'role' => '*',
@@ -176,12 +176,32 @@ return [
         [
             'role' => '*',
             'controller' => 'Activities',
-            'action' => ['index','view','claim','find','stepfind','like'],
+            'action' => ['index','view','claim','find','like'],
         ],
         [
             'role' => 'curator',
             'controller' => 'Activities',
-            'action' => ['edit','add'],
+            'action' => ['edit','add','addtostep','stepfind'],
+        ],
+        [
+            'role' => 'curator',
+            'controller' => 'ActivitiesSteps',
+            'action' => ['edit','add','sort','requiredToggle'],
+        ],
+        [
+            'role' => '*',
+            'controller' => 'ActivitiesUsers',
+            'action' => ['delete'],
+        ],
+        [
+            'role' => '*',
+            'controller' => 'Reports',
+            'action' => ['add'],
+        ],
+        [
+            'role' => 'curator',
+            'controller' => 'Reports',
+            'action' => ['index','edit','add'],
         ],
         [
             'role' => '*',

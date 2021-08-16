@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 
 <div class="col-md-12 col-lg-6">
-<div class="pad-lg">
+<div class="py-5">
 
 	<?php if($role == 2 || $role == 'superuser'): ?>
 	<div class="btn-group float-right">
@@ -41,7 +41,10 @@ if ($this->Identity->isLoggedIn()) {
 		</div>
 		<div class="col">
 		<?php if(in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
-		<div class="btn btn-dark" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
+		<div class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
+		
+		<?php //echo $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $claimid], ['class' => 'btn btn-primary', 'confirm' => __('Really delete?')]) ?>
+		
 		<?php endif ?>
 	
 		</div>
@@ -143,7 +146,7 @@ if ($this->Identity->isLoggedIn()) {
                     echo $this->Form->textarea('issue',['class' => 'form-control', 'placeholder' => 'Type here ...']);
                 ?>
             </fieldset>
-            <input type="submit" class="btn btn-dark" value="Submit Report">
+            <input type="submit" class="btn btn-primary" value="Submit Report">
             <?= $this->Form->end() ?>
 		</div>
 		</div>
@@ -281,6 +284,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-4">
 <h3 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h3>
 <?php foreach($activity->reports as $report): ?>
+	<pre><?php print_r($report) ?></pre>
 <div class="my-3 p-3 bg-white rounded-lg">
 <div><a href="/users/view/<?= $report->user->id ?>"><?= $report->user->name ?></a> says:</div>
 <div><?= $report->issue ?></div>
@@ -304,7 +308,7 @@ if ($this->Identity->isLoggedIn()) {
 		Respond
 </a>	
 <div class="collapse" id="curatorresponse<?= $report->id ?>">
-<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-dark']) ?>
+<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-primary']) ?>
 <?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'edit', $report->id]]) ?>
 <fieldset>
 <legend><?= __('Respond') ?></legend>
@@ -314,7 +318,7 @@ echo $this->Form->hidden('curator_id', ['value' => $uid]);
 echo $this->Form->textarea('response',['class' => 'form-control', 'placeholder' => 'Type here ...']);
 ?>
 </fieldset>
-<input type="submit" class="btn btn-dark" value="Submit Response">
+<input type="submit" class="btn btn-primary" value="Submit Response">
 <?= $this->Form->end() ?>
 </div> <!-- curatorresponse -->
 
@@ -353,7 +357,7 @@ $(document).ready(function(){
 		
 		e.preventDefault();
 		var form = $(this);
-		form.children('button').removeClass('btn-light').addClass('btn-dark').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
+		form.children('button').removeClass('btn-light').addClass('btn-primary').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
 		
 		$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
 

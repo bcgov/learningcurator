@@ -122,13 +122,41 @@ if($stepclaimcount > 0) {
 
 </style>
 <div class="container-fluid">
-<div class="row justify-content-md-center" id="colorful">
-<div class="col-md-8">
+<div class="row justify-content-md-center">
+	
+	<div class="col-md-3 col-lg-2">
+	<?php if(in_array($uid,$usersonthispathway)): ?>
+<div class="p-3 bg-white mb-3 text-center stickyrings rounded-lg">
+<div class="mb-3 following"></div>
+<canvas id="myChart" width="250" height="250"></canvas>
+</div>
+<?php else: ?>
+<div class="card card-body mt-3 text-center stickyrings">
+<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
+<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-primary mb-0']) ?>
+<?= $this->Form->end(); ?>
+</div>
+<?php endif ?>
+	</div>
+	<div class="col-md-9 col-lg-10">
+
+
+
+	
 <?php if (!empty($step->pathways)) : ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="btn-group  mt-3 ml-3">
-<?= $this->Html->link(__('Edit'), ['controller' => 'Steps', 'action' => 'edit', $step->id], ['class' => 'btn btn-light btn-sm']) ?>
-<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $step->id],['class' => 'btn btn-light btn-sm', 'confirm' => __('Are you sure you want to delete # {0}?', $step->name)]) ?>
+<?= $this->Html->link(__('Edit'), 
+						['controller' => 'Steps', 'action' => 'edit', $step->id], 
+						['class' => 'btn btn-light btn-sm']); 
+?>
+<?= $this->Form->postLink(__('Delete'), 
+							['action' => 'delete', $step->id],
+							['class' => 'btn btn-light btn-sm', 
+								'confirm' => __('Are you sure you want to delete # {0}?', $step->name)
+						]);
+ ?>
 </div> <!-- /.btn-group -->
 <?php endif ?>
 
@@ -140,7 +168,6 @@ if($stepclaimcount > 0) {
 	<li class="breadcrumb-item"><?= $this->Html->link($pathways->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $pathways->topic->categories[0]->id]) ?></li>
 	<li class="breadcrumb-item"><?= $this->Html->link($pathways->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathways->topic->id]) ?></li>
 	<li class="breadcrumb-item"><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => '/' . $pathways->slug]) ?></li>
-	
 </ol>
 </nav> 
 
@@ -150,25 +177,8 @@ if($stepclaimcount > 0) {
 	<?php //$this->Html->link(h($pathways->name), ['controller' => 'Pathways', 'action' => 'path', $pathways->id]) ?>
 </h1>
 
-<!--<?= $this->Text->autoParagraph(h($pathways->objective)); ?>-->
 
-<?php foreach($pathways->steps as $s): ?>
-<?php $c = ''; ?>
-<?php $pagetitle = ''; ?>
-<?php $n = next($pathways->steps) ?>
-<?php if($s->id == $step->id): ?>
-
-<div class="row mx-0">
-	<div class="col" style="background-color: rgba(255,255,255,.5); border-radius: .25rem;">
-		<h2 class="mt-2">
-			<?= $s->name ?> 
-			<?php if($steppercent == 100): ?>
-				<i class="fas fas fa-check-circle"></i>
-			<?php endif ?>
-			<!--<small><span class="badge badge-dark"><?= $totalsteps ?></span> total steps</small>-->
-		</h2>	
-		<div class="" style="font-size: 130%;"><?= $s->description; ?></div>
-		<div class="my-3">
+<div class="my-3">
 			<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
 			<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
 			<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
@@ -185,87 +195,90 @@ if($stepclaimcount > 0) {
 				<?= $allparticipatestepcount ?> to participate in
 			</span>  
 		</div>
-	</div>
-	<!-- <div class="col-2">
-		<?php if(!empty($laststep)): ?>
-		<a href="/pathways/<?= $pathways->slug ?>/s/<?= $laststep ?>/<?= $lastslug ?>" style="color: #000; font-size: 250%;">
-			<i class="fas fa-arrow-circle-left"></i><br>
-			<span style="font-size: .5em">Back</span>
-		</a>
-		<?php endif ?>
 
-		<?php if(!empty($n->id)): ?>
-		<a href="/pathways/<?= $pathways->slug ?>/s/<?= $n->id ?>/<?= $n->slug ?>" class="nextstep" style="color: #000; font-size: 250%; float: right;">
-			<i class="fas fa-arrow-circle-right"></i><br>
-			<span style="font-size: .5em">Next</span>
-		</a>
-		<?php endif ?>
-		
-	</div> -->
-</div>
 
-<?php endif ?>
-<?php 
-$laststep = $s->id;
-$lastslug = $s->slug;
-$lastname = $s->name;
-$lastobj = $s->description;
-?>
-<?php endforeach ?>
-<div class="m-3">
-<?php $count = 1 ?>
-<?php foreach($pathways->steps as $s): ?>
-	<?php $c = 'badge-light' ?>
-	<?php if($s->id == $step->id) $c = 'badge-dark' ?>
-	<a class="badge <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-		<!-- <i class="fas fa-dot-circle <?= $c ?>" title="Step <?= $count ?>">&bull;</i> -->
-		Step <?= $count ?>
-	</a>
-<?php $count++ ?>
-<?php endforeach ?>
-</div>
-</div>
-</div>
 <?php endforeach; ?>
-
 <?php endif; ?>
 
 
 
 
+
 </div>
 
+<div class="col-md-12 text-center">
+<nav class="nav justify-content-center nav-pills mt-2 w-100" role="navigation">
+<?php $count = 1 ?>
+<?php foreach ($step->pathways as $pathways) : ?>
+<?php foreach($pathways->steps as $s): ?>
+<?php if($s->status_id == 2): ?>
+	<?php $c = '' ?>
+	<?php if($s->id == $step->id) $c = 'active' ?>
+	<li class="nav-item">
+	<a class="nav-link <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+		<!-- <i class="fas fa-dot-circle <?= $c ?>" title="Step <?= $count ?>">&bull;</i> -->
+		<?= $s->name ?>
+	</a>
+	</li>
+	<?php $count++ ?>
+<?php endif; // is published? ?>
+<?php endforeach ?>
+<?php endforeach ?>
+</nav>
+</div>
+<!-- 
+<div class="col-md-12">
 <div class="progress progress-bar-striped stickyprogress" style="background-color: #F1F1F1; border-radius: 0; height: 18px;">
-		<div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+		<div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuetext="This step is <?= $steppercent ?>% done" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
 		This step is <?= $steppercent ?>% done
 	  </div>
 </div>
+</div> -->
 
-<div class="container-fluid linear pt-3">
+</div>
+</div>
+
+<div class="container-fluid bg-white">
 <div class="row justify-content-md-center">
+<div class="col-md-10 col-lg-6">
 
-<div class="col-md-6 col-lg-6">
+
+
+<div class="bg-light p-3 my-3 rounded-lg" style="font-size: 140%;">
+<?= $step->description ?>
+</div>
+
 <?php if (!empty($step->activities)) : ?>
 
 <?php foreach ($requiredacts as $activity) : ?>
 
-<div class="bg-white rounded-lg">
-<div class="p-3 mb-3 rounded-lg activity" 
+<div class="p-3 my-3 rounded-lg activity" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
-
-
-		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'claim']) ?>
+		<a class="btn btn-primary" 
+			id="claimbutton<?= $activity->id ?>"
+			data-toggle="collapse" 
+			href="#claimconfirm<?= $activity->id ?>" 
+			role="button" 
+			aria-expanded="false" 
+			aria-controls="claimconfirm<?= $activity->id ?>">
+				<i class="bi bi-bookmark-check-fill"></i>
+				Claim
+		</a>
+	<div class="collapse" id="claimconfirm<?= $activity->id ?>">
+		<p id="claimhelp<?= $activity->id ?>">If you've completed this activity, claim it so it counts against your progress!</p>
+		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'claim', 'id' => $activity->id]) ?>
 		<?php //$this->Form->hidden('users.0.created', ['value' => date('Y-m-d H:i:s')]); ?>
 		<?= $this->Form->hidden('users.0.id', ['value' => $uid]); ?>
-		<?= $this->Form->button(__('Claim'),['class'=>'btn btn-success', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom']) ?>
+		<?= $this->Form->button(__('Confirm Claim'),['class'=>'btn btn-primary', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress']) ?>
 		<?= $this->Form->end() ?>
+	</div>
 
 	<?php else: // they have claimed it, so show that ?>
 
-	<div class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div>
-	<?php //$this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-dark', 'confirm' => __('Really delete?')]) ?>
+	<div class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="bi bi-bookmark-check-fill"></i></div>
+	<?php //echo $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-primary', 'confirm' => __('Really delete?')]) ?>
 	<?php endif; // claimed or not ?>
 
 	<h3 class="my-3">
@@ -275,7 +288,7 @@ $lastobj = $s->description;
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
 		<div class="mb-3">
 		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
-			<i class="fas fa-clock"></i>
+			<i class="bi bi-clock-history"></i>
 			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
 		</span> 
 		<?php foreach($activity->tags as $tag): ?>
@@ -286,7 +299,7 @@ $lastobj = $s->description;
 		<?= $activity->description ?>
 		<?php if(!empty($activity->_joinData->stepcontext)): ?>
 		<div class="alert alert-light text-dark mt-3 shadow-sm">
-				<i class="fas fa-comment-medical"></i> 
+				<i class="bi bi-person-badge-fill"></i>
 				Curator says:<br>
 				<?= $activity->_joinData->stepcontext ?>
 			</div>
@@ -306,7 +319,7 @@ $lastobj = $s->description;
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
 
-			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+			<i class="bi <?= $activity->activity_type->image_path ?>"></i>
 
 			<?= $activity->activity_type->name ?>
 
@@ -352,7 +365,7 @@ $lastobj = $s->description;
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
 
-			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+			<i class="bi <?= $activity->activity_type->image_path ?>"></i>
 
 			<?= $activity->activity_type->name ?>
 
@@ -369,7 +382,7 @@ $lastobj = $s->description;
 			data-target="#newreport<?= $activity->id ?>" 
 			aria-expanded="false" 
 			aria-controls="newreport<?= $activity->id ?>">
-				<i class="fas fa-exclamation-triangle"></i> Report
+				<i class="bi bi-exclamation-triangle-fill"></i> Report
 		</a>	
 		<div class="collapse" id="newreport<?= $activity->id ?>">
 		<div class="my-3 p-3 bg-white rounded-lg">
@@ -383,19 +396,19 @@ $lastobj = $s->description;
                     echo $this->Form->textarea('issue',['class' => 'form-control', 'placeholder' => 'Type here ...']);
                 ?>
             </fieldset>
-            <input type="submit" class="btn btn-dark" value="Submit Report">
+            <input type="submit" class="btn btn-primary" value="Submit Report">
             <?= $this->Form->end() ?>
 		</div>
 		</div>
 	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
+		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="bi bi-hand-thumbs-up-fill"></i>
 	</a>
 
 
 
 
 	</div>
-	</div> <!-- whitebg -->
+	
 
 	<?php endforeach; // end of activities loop for this step ?>
 
@@ -404,10 +417,10 @@ $lastobj = $s->description;
 <?php if(count($supplementalacts) > 0): ?>
 
 	<h3>Supplementary Resources</h3>
-	<div class="row">
+
 	<?php foreach ($supplementalacts as $activity): ?>
-	<div class="col-md-12 col-lg-12">
-	<div class="p-3 my-3 bg-white rounded-lg">
+
+	<div class="p-3 my-3 bg-light rounded-lg">
 
 		<h4>
 			<a href="/activities/view/<?= $activity->id ?>">
@@ -417,7 +430,7 @@ $lastobj = $s->description;
 		<div class="p-2">
 			<div>
 				<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
-					<i class="fas fa-clock"></i>
+					<i class="bi bi-clock-history"></i>
 					<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
 				</span> 
 			</div>
@@ -437,7 +450,7 @@ $lastobj = $s->description;
 				style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 				class="btn btn-block my-3 text-uppercase btn-lg">
 
-					<i class="fas <?= $activity->activity_type->image_path ?>"></i>
+					<i class="bi <?= $activity->activity_type->image_path ?>"></i>
 
 					<?= $activity->activity_type->name ?>
 
@@ -466,37 +479,24 @@ $lastobj = $s->description;
                     echo $this->Form->textarea('issue',['class' => 'form-control', 'placeholder' => 'Type here ...']);
                 ?>
             </fieldset>
-            <input type="submit" class="btn btn-dark" value="Submit Report">
+            <input type="submit" class="btn btn-primary" value="Submit Report">
             <?= $this->Form->end() ?>
 		</div>
 		</div>
 		<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="fas fa-thumbs-up"></i>
+			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="bi bi-hand-thumbs-up-fill"></i>
 		</a>
 
 
 		</div>
 	</div>
-	</div>
+
 	<?php endforeach; // end of activities loop for this step ?>
 </div>
 
 <?php endif ?>
 </div>
-<div class="col-8 col-md-3 col-lg-2">
-<?php if(in_array($uid,$usersonthispathway)): ?>
-<div class="p-3 bg-white mb-3 text-center stickyrings rounded-lg">
-<div class="mb-3 following"></div>
-<canvas id="myChart" width="250" height="250"></canvas>
-</div>
-<?php else: ?>
-<div class="card card-body mt-3 text-center stickyrings">
-<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
-<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathways->id]) ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-success mb-0']) ?>
-</div>
-<?php endif ?>
-</div>
+
 </div>
 </div>
 
@@ -529,13 +529,18 @@ $(document).ready(function(){
 		e.preventDefault();
 		var form = $(this);
 		var url = form.attr('action');
+		var buttonid = '#claimbutton' + form.attr('id');
+		var helphide = '#claimhelp' + form.attr('id');
+		//console.log(buttonid);
 		$.ajax({
 			type: "POST",
 			url: url,
 			data: form.serialize(),
 			success: function(data)
 			{
-				form.children('button').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
+				form.children('button').html('CLAIMED! <i class="bi bi-bookmark-check-fill"></i>').tooltip('dispose').attr('title','Good job!');
+				$(buttonid).hide();
+				$(helphide).hide();
 				loadStatus();
 			},
 			statusCode: 

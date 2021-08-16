@@ -31,13 +31,14 @@ class ActivitiesController extends AppController
        
         $activities = $this->Activities
                             ->find('all')
-                            ->contain(['Statuses', 
+                            ->contain(['Tags',
+                                        'Statuses', 
                                         'Ministries', 
                                         'ActivityTypes',
                                         'Steps.Pathways'])
                             ->where(['Activities.status_id' => 2])
-                            ->order(['Activities.recommended' => 'DESC'])
-                            ->limit(5);
+                            ->order(['Activities.created' => 'DESC'])
+                            ->limit(100);
         
 		$cats = TableRegistry::getTableLocator()->get('Categories');
         $allcats = $cats->find('all')->contain(['Topics'])->order(['Categories.created' => 'desc']);
@@ -99,7 +100,8 @@ class ActivitiesController extends AppController
                             'Steps', 
                             'Steps.Pathways', 
                             'Tags',
-                            'Reports'],
+                            'Reports',
+                            'Reports.Users'],
         ]);
 
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
@@ -129,9 +131,9 @@ class ActivitiesController extends AppController
             $activity->approvedby_id = $user->id;
 
             if ($this->Activities->save($activity)) {
-                $this->Flash->success(__('The activity has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                //$this->Flash->success(__('The activity has been saved.'));
+                $redir = '/activities/view/' . $activity->id;
+                return $this->redirect($redir);
             }
             $this->Flash->error(__('The activity could not be saved. Please, try again.'));
         }
@@ -297,6 +299,50 @@ class ActivitiesController extends AppController
                 //print(__('The activity could not be saved. Please, try again.'));
             }
         }
+    }
+
+    /**
+     * Add-to-step method
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function addtostep()
+    {
+
+	    $user = $this->request->getAttribute('authentication')->getIdentity();
+        $activity = $this->Activities->newEmptyEntity();
+
+	    if ($this->request->is('post')) {
+
+            //echo '<pre>'; print_r($this->request->getData()); exit;
+
+            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+            $activity->createdby_id = $user->id;
+            $activity->modifiedby_id = $user->id;
+            $activity->approvedby_id = $user->id;
+            $activity->status_id = 2;
+
+            $sluggedTitle = Text::slug($activity->name);
+            // trim slug to maximum length defined in schema
+            $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
+
+            if ($this->Activities->save($activity)) {
+
+                $asteptable = TableRegistry::getTableLocator()->get('ActivitiesSteps');
+                $activitiesStep = $asteptable->newEmptyEntity();
+                $activitiesStep->step_id = $this->request->getData()['step_id'];
+                $activitiesStep->activity_id = $activity->id;
+
+                if (!$asteptable->save($activitiesStep)) {
+                    echo 'Cannot add to step! Contact an admin. Sorry :)';
+                    echo '' . $activity->id;
+                    exit;
+                }
+                return $this->redirect($this->referer());
+            }
+            echo __('The activity could not be saved. Please, try again.');
+        }
+    
     }
     
 }

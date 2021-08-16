@@ -11,7 +11,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-12">
-<div class="pad-lg">
+<div class="py-5">
 <h1>Searching for &quot;<?= $search ?>&quot;</h1>
 <div>Found <span class="badge badge-dark"><?= $numresults ?></span> activities</div>
 <div class="py-3">

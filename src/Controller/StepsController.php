@@ -94,10 +94,14 @@ class StepsController extends AppController
         $step = $this->Steps->newEmptyEntity();
         if ($this->request->is('post')) {
             $step = $this->Steps->patchEntity($step, $this->request->getData());
-            if ($this->Steps->save($step)) {
-                $this->Flash->success(__('The step has been saved.'));
+            $sluggedTitle = Text::slug($step->name);
+            // trim slug to maximum length defined in schema
+            $step->slug = strtolower(substr($sluggedTitle, 0, 191));
 
-                return $this->redirect(['action' => 'index']);
+            if ($this->Steps->save($step)) {
+                
+                $redir = '/steps/edit/' . $step->id;
+                return $this->redirect($redir);
             }
             $this->Flash->error(__('The step could not be saved. Please, try again.'));
         }
@@ -116,7 +120,7 @@ class StepsController extends AppController
     public function edit($id = null)
     {
         $step = $this->Steps->get($id, [
-            'contain' => ['Activities', 'Activities.ActivityTypes', 'Activities.Statuses', 'Pathways'],
+            'contain' => ['Statuses', 'Activities', 'Activities.ActivityTypes', 'Activities.Statuses', 'Pathways'],
         ]);
         
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -140,7 +144,8 @@ class StepsController extends AppController
         $atypes = $types->find('all');
 
         $pathways = $this->Steps->Pathways->find('list', ['limit' => 200]);
-        $this->set(compact('step', 'activities', 'pathways', 'atypes'));
+        $statuses = $this->Steps->Statuses->find('list', ['limit' => 200]);
+        $this->set(compact('step', 'activities', 'pathways', 'atypes', 'statuses'));
     }
 
     /**
@@ -153,14 +158,16 @@ class StepsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $step = $this->Steps->get($id);
+        $step = $this->Steps->get($id, ['contain' => ['Pathways']]);
+        
         if ($this->Steps->delete($step)) {
-            $this->Flash->success(__('The step has been deleted.'));
+            $redir = '/pathways/' . $step->pathways[0]->slug;
+            return $this->redirect($redir);
         } else {
-            $this->Flash->error(__('The step could not be deleted. Please, try again.'));
+            echo __('The step could not be deleted. Please, try again.');
         }
 
-        return $this->redirect(['action' => 'index']);
+
     }
 
     /**

@@ -53,11 +53,9 @@ class ActivitiesStepsController extends AppController
         if ($this->request->is('post')) {
             $activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
             if ($this->ActivitiesSteps->save($activitiesStep)) {
-                $this->Flash->success(__('The activities step has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The activities step could not be saved. Please, try again.'));
+            echo __('The activities step could not be saved. Please, try again.');
         }
         $activities = $this->ActivitiesSteps->Activities->find('list', ['limit' => 200]);
         $steps = $this->ActivitiesSteps->Steps->find('list', ['limit' => 200]);

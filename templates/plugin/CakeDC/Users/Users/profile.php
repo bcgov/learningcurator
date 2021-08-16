@@ -5,26 +5,24 @@
 */
 
 ?>
-<style>
-.badge {
-	border-radius: 50%;
-	color:#FFF; 
-	display: inline-block;
-	font-size: 24px;
-	height: 50px;
-	padding-top: 12px;
-	width: 60px;
-}
-</style>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-6">
-<div class="pad-sm">
+
+<div class="py-5">
+<?php echo $this->User->logout('Logout',['class'=>'btn btn-warning float-right']) ?>
+	<div class="systemrole">
+	<?php if($user->role == 'curator'): ?>
+		 <span class="badge badge-success">Curator</span>
+	<?php elseif($user->role == 'superuser'): ?>
+		<span class="badge badge-success">Super User</span>
+	<?php endif ?>
+	</div>
 	<h1>
 		Welcome <?= h($user->first_name) ?> <?= h($user->last_name) ?> 	
-
 	</h1>
-    <?php echo $this->User->logout('Logout',['class'=>'btn btn-warning']) ?>
+
+    
 
 </div>
 </div>
@@ -32,10 +30,10 @@
 </div>
 <div class="container-fluid pt-3 linear">
 <div class="row justify-content-md-center">
-<div class="col-md-6 col-lg-6">
+<div class="col-md-4 col-lg-4">
 
 <?php if (!empty($user->pathways_users)) : ?>
-	<h2><i class="fas fa-sitemap"></i> <?= __('Your Pathways') ?></h2>
+	<h2><?= __('Your Pathways') ?></h2>
 	<?php foreach ($user->pathways_users as $path) : ?>
 	<div class="p-3 mb-2 bg-white rounded-lg">
 	<div class="row">
@@ -77,18 +75,20 @@
 	</div>
 	<div class="col">
 	
-		<?php //$this->Form->postLink(__('Unfollow'), ['controller' => 'PathwaysUsers','action' => 'delete/'. $path->pathway->_joinData->id], ['class' => 'btn btn-dark float-right', 'confirm' => __('Really unfollow?')]) ?>
+		<?php //$this->Form->postLink(__('Unfollow'), ['controller' => 'PathwaysUsers','action' => 'delete/'. $path->pathway->_joinData->id], ['class' => 'btn btn-primary float-right', 'confirm' => __('Really unfollow?')]) ?>
 		<div>
 			<?= $path->pathway->has('category') ? $this->Html->link($path->pathway->category->name, ['controller' => 'Categories', 'action' => 'view', $path->pathway->category->id]) : '' ?>
 		</div>
 		
-
-    <h3><a href="/pathways/<?= $path->pathway->slug ?>"><?= $path->pathway->name ?></a></h3>
-  
+    	<h3><a href="/pathways/<?= $path->pathway->slug ?>"><?= $path->pathway->name ?></a></h3>
 
 		<div><?= h($path->pathway->objective) ?></div>
+
 		<div class="p-3 mt-3 bg-light">Overall Progress: <span class="status<?= $path->pathway->id ?>"></span>%</div>
-		
+
+		<?php //echo $this->Form->postLink(__('Unfollow'), ['controller' => 'App\PathwaysUsers','action' => 'delete/'. $path->_joinData->id], ['class' => 'btn btn-primary float-right', 'confirm' => __('Really unfollow?')]) ?>
+	
+	
 	</div>
 	</div>
 	</div>
@@ -100,14 +100,36 @@
 
 </div>
 
-<div class="col-md-6 col-lg-6">
-<h2><i class="fas fa-sitemap"></i> <?= __('Your Claims') ?></h2>
+<div class="col-md-4 col-lg-4">
+<h2><?= __('Your Claims') ?></h2>
 <?php if (!empty($user->activities_users)) : ?>
 <?php foreach($user->activities_users as $act): ?>
     <div class="p-3 mb-2 bg-white rounded-lg">
     <a href="/activities/view/<?= $act->activity->id ?>"><?= $act->activity->name ?></a>
 </div>
 <?php endforeach ?>
+<?php endif ?>
+</div>
+
+
+<div class="col-md-4 col-lg-4">
+<?php if (!empty($user->reports)) : ?>
+	<h2><i class="fas fa-sitemap"></i> <?= __('Your Reports') ?></h2>
+	<?php foreach ($user->reports as $report) : ?>
+	<div class="p-3 mb-2 bg-white rounded-lg">
+		
+		<?= h($report->created) ?><br>
+		<a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a><br>
+		<?= h($report->issue) ?><br>
+		<?php if(!empty($report->response)): ?>
+			<div class="alert alert-success"><?= h($report->response) ?></div>
+		<?php else: ?>
+			<div class="alert alert-primary">No response yet.</div>
+		<?php endif ?>
+		
+
+	</div>
+	<?php endforeach ?>
 <?php endif ?>
 </div>
 

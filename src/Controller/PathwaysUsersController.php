@@ -31,5 +31,24 @@ class PathwaysUsersController extends AppController
         }
         print(__('You cannot edit this directly.'));
     }
+    /**
+     * Delete method
+     *
+     * @param string|null $id Pathways User id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function delete($id = null)
+    {
+        $this->request->allowMethod(['post', 'delete']);
+        $pathwaysUser = $this->PathwaysUsers->get($id);
+        if ($this->PathwaysUsers->delete($pathwaysUser)) {
+            print(__('The pathways user has been deleted.'));
+        } else {
+            print(__('The pathways user could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect($this->referer());
+    }
 
 }
