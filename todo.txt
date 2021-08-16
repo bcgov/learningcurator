@@ -1,8 +1,6 @@
 #TODO
 
 [] Have K re-deploy whole DB from SQL bootstrap
-[] add sortorder fields to categories_topics, pathways
-[] add status to categories, topics
 [] New profile guidance and topic selector
 [] SEARCH plugin
 [] Fix page titles
@@ -23,6 +21,7 @@
 [] Add contributor role and then a publishing workflow where contributors must have the work approved by a curator
    [] ceate heirarchy document showing Curator
 
+[x] add sortorder fields to categories_topics, pathways
 [x] #290 New topic choosing UI for pathway editing 
 [x] Add replace old fontawesome icons with new bootstrap icons
 [x] implement two-step claiming process
