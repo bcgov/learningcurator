@@ -183,20 +183,49 @@ class SocialBehavior extends BaseTokenBehavior
                 $userData['last_name'] = $lastName;
             } else {
 
-
-
-                // I'm not entirely sure what the logic applied here
-                // was, but it doesn't work for our usecase, where
-                // we have the monstrousity of 
+                //
+                // The default code here split the full name by 
+                // spaces, but that doesn't work for our usecase, 
+                // where we have the monstrosity of:
+                // 
                 // Haggett, Allan PSA:EX
+                // 
                 // where just splitting by spaces is NOT a good strategy
-                $name = explode(' ', $data['full_name'] ?? '');
-                $userData['first_name'] = Hash::get($name, 0);
-                array_shift($name);
-                $userData['last_name'] = implode(' ', $name);
+                // (and resulted in the first/last names being flipped)
+                // 
+                // Start by splitting on the comma to get the last name
+                // in the [0] position, then split the [1] by the :EX
+                // 
+                $name = explode(',', $data['full_name'] ?? '');
+                $first = explode(':EX', $name[1]);
+                //
+                // This should result in $first[0] being "Allan PSA"
+                // or "David W CITZ" so, now we explode on known Ministries
+                // PSA and CITZ to start with to see if we can isolate and 
+                // assign.
+                //
+                $psa = explode('PSA', $first[0]);
+                $citz = explode('CITZ', $first[0]);
+                // We are of course mapping ministries to our own table
+                // completely manually at this point; hopefully, AzureAD
+                // will provide this value directly in the future (maybe
+                // it already does and I'm just not calling the correct thing)
+                // and we can ditch this; in the meantime, we start with
+                // the imperfect method so that we can at least show that
+                // we considered how to do this.
+                if(!empty($psa[0])) {
+                    $fn = $psa[0];
+                    $ministry = 2;
+                } elseif(!empty($citz[0])) {
+                    $fn = $citz[0];
+                    $ministry = 3;
+                } else {
+                    $fn = $first[0];
+                    $ministry = 1;
+                }
 
-
-
+                $userData['first_name'] = $fn;
+                $userData['last_name'] = $name[0];
                 
             }
             $userData['username'] = $data['username'] ?? null;
