@@ -23,6 +23,7 @@ MySQL/MariaDB
 - cp config/tocopy/AzureMapper.php vendor/cakedc/auth/src/Social/Mapper/Azure.php
 - cp config/tocopy/ProfileTrait.php vendor/cakedc/users/src/Controller/Traits/ProfileTrait.php
 - cp config/tocopy/UsersTable.php vendor/cakedc/users/src/Model/Table/UsersTable.php
+- cp config/toCopy/SocialBehaviour.php vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
 
 ## Project Status
 

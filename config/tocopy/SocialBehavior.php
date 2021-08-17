@@ -225,7 +225,6 @@ class SocialBehavior extends BaseTokenBehavior
                     $fn = $first[0];
                     $ministry = 1;
                 }
-
                 $userData['first_name'] = $fn;
                 $userData['last_name'] = $name[0];
                 $userData['ministry_id'] = $ministry;
