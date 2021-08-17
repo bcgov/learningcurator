@@ -99,12 +99,13 @@
 	<?php endforeach; ?>
 	
 <?php else: ?>
+	<h2 class="mb-3"><?= _('You\'re not following any pathways yet.') ?></h2>
 	<div class="p-3 mb-2 bg-white rounded-lg">
-<h2><?= _('You\'re not following any pathways yet.') ?></h2>
-<p>Check out the following topic areas for pathways aligned with your goals.</p>
-<?php foreach($categories as $cat): ?>
-<h3><a href="/categories/view/<?= $cat->id ?>"><?= $cat->name ?></a></h3>
-<?php endforeach ?>
+	<p class="mb-3">Check out the following topic areas for pathways aligned with your goals:</p>
+	<?php foreach($categories as $cat): ?>
+		<h3 class="mt-3"><a href="/categories/view/<?= $cat->id ?>"><?= $cat->name ?></a></h3>
+		<div class="p-3 mb-3 bg-light rounded-3 shadow-sm"><?= $cat->description ?></div>
+	<?php endforeach ?>
 
 </div>
 <?php endif ?>

@@ -8,6 +8,7 @@
 [] Add back in per-step percentage graph
 [] Add listjs text filter on claims profile
 [] New profile guidance and topic selector
+[] Update Questions index with question list that deep-links into page IDs
 [] SEARCH plugin
 [] Fix page titles
 [] Implement unclaim 
