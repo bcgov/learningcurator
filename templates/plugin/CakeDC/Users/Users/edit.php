@@ -38,6 +38,13 @@ if ($this->Identity->isLoggedIn()) {
         echo $this->Form->control('email', ['label' => __d('cake_d_c/users', 'Email')]);
         echo $this->Form->control('first_name', ['label' => __d('cake_d_c/users', 'First name')]);
         echo $this->Form->control('last_name', ['label' => __d('cake_d_c/users', 'Last name')]);
+        $mins = [
+                    ['text' => 'Not Specified', 'value' => 1],
+                    ['text' => 'Public Service Agency', 'value' => 2],
+                    ['text' => 'Citizen Services', 'value' => 3],
+                ];
+        echo $this->Form->control('ministry_id',['options' => $mins]);
+        
         echo $this->Form->control('additional_data', ['label' => __d('cake_d_c/users', 'Additonal Data')]);
         if($role == 'superuser') {
             echo $this->Form->control('role', ['label' => __d('cake_d_c/users', 'Role')]);

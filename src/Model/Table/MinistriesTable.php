@@ -50,6 +50,7 @@ class MinistriesTable extends Table
         $this->hasMany('Pathways', [
             'foreignKey' => 'ministry_id',
         ]);
+        
     }
 
     /**

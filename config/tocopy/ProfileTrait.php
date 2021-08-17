@@ -17,7 +17,7 @@ use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\InvalidPrimaryKeyException;
 use Cake\Datasource\Exception\RecordNotFoundException;
-
+Use Cake\ORM\TableRegistry;
 /**
  * Covers the profile action
  *
@@ -41,6 +41,11 @@ trait ProfileTrait
             $id = $loggedUserId;
         }
         try {
+            // Get access to the apprprioate table
+            $cats = TableRegistry::getTableLocator()->get('Categories');
+            // Select based on currently logged in person
+            $categories = $cats->find('all');
+
             $appContain = (array)Configure::read('Auth.authenticate.' . AuthComponent::ALL . '.contain');
             $socialContain = Configure::read('Users.Social.login') ? ['SocialAccounts'] : [];
             $user = $this->getUsersTable()->get($id, [
@@ -49,6 +54,7 @@ trait ProfileTrait
                         'PathwaysUsers.Pathways',
                         'ActivitiesUsers',
                         'ActivitiesUsers.Activities',
+                        'Ministries',
                         'Reports' => ['sort' => ['Reports.created' => 'desc']],
                         'Reports.Activities']),
                 ]);
@@ -65,7 +71,7 @@ trait ProfileTrait
 
             return $this->redirect($this->getRequest()->referer());
         }
-        $this->set(compact('user', 'isCurrentUser'));
+        $this->set(compact('user', 'categories', 'isCurrentUser'));
         $this->set('_serialize', ['user', 'isCurrentUser']);
     }
 }

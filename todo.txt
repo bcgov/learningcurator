@@ -1,15 +1,22 @@
 #TODO
 
-[] Have K re-deploy whole DB from SQL bootstrap
-[] add sortorder fields to categories_topics, pathways
-[] add status to categories, topics
+[] Add customization/override for users plugin for custom controllers
+    https://github.com/CakeDC/users/blob/master/Docs/Documentation/Extending-the-Plugin.md
+    [] Add ministry_id to users table so that we can support 
+[] Add more ministries to mapping in 
+    /vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
+[] Add back in per-step percentage graph
+[] Add listjs text filter on claims profile
 [] New profile guidance and topic selector
+[] Update Questions index with question list that deep-links into page IDs
 [] SEARCH plugin
 [] Fix page titles
 [] Implement unclaim 
+[] Check that URLs for activities don't already exist
 [] submit pathway follow/unfollow via JS to prevent page reload
 [] When pathway completed update database with date!
 [] TAGGING
+[] RSS feeds for new pathways and per-path new activity feeds
 [] Tags for pathways
 [] Add publish option at pathway level that publishes all steps and activities
 [] Add "hold" status for activities that aren't draft, but shouldn't be
@@ -23,6 +30,9 @@
 [] Add contributor role and then a publishing workflow where contributors must have the work approved by a curator
    [] ceate heirarchy document showing Curator
 
+[x] Fix name parsing from Azure
+[x] Have K re-deploy whole DB from SQL bootstrap
+[x] add sortorder fields to categories_topics, pathways
 [x] #290 New topic choosing UI for pathway editing 
 [x] Add replace old fontawesome icons with new bootstrap icons
 [x] implement two-step claiming process

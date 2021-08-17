@@ -89,9 +89,16 @@ class UsersTable extends Table
         ]);
         $this->hasMany('PathwaysUsers', [
             'foreignKey' => 'user_id',
+            'className' => 'PathwaysUsers',
         ]);
         $this->hasMany('ActivitiesUsers', [
             'foreignKey' => 'user_id',
+        ]);
+        $this->hasMany('Reports', [
+            'foreignKey' => 'user_id',
+        ]);
+        $this->belongsTo('Ministries', [
+            'foreignKey' => 'ministry_id',
         ]);
     }
 

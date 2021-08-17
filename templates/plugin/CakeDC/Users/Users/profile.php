@@ -22,7 +22,11 @@
 		Welcome <?= h($user->first_name) ?> <?= h($user->last_name) ?> 	
 	</h1>
 
-    
+    <div>
+	<?php if (!empty($user->ministry)) : ?>
+	<?= $user->ministry->name ?>
+	<?php endif ?>
+	</div>
 
 </div>
 </div>
@@ -33,12 +37,12 @@
 <div class="col-md-4 col-lg-4">
 
 <?php if (!empty($user->pathways_users)) : ?>
+	
 	<h2><?= __('Your Pathways') ?></h2>
 	<?php foreach ($user->pathways_users as $path) : ?>
 	<div class="p-3 mb-2 bg-white rounded-lg">
 	<div class="row">
 	<div class="col-3 ">
-	
 		<canvas class="bg-white rounded-lg" id="chart<?= $path->pathway->id ?>" width="400" height="400"></canvas>
 		<script>
 			var request<?= $path->pathway->id ?> = new XMLHttpRequest();
@@ -93,27 +97,42 @@
 	</div>
 	</div>
 	<?php endforeach; ?>
+	
 <?php else: ?>
-<h2><?= _('You\'re not following any pathways yet.') ?></h2>
+	<h2 class="mb-3"><?= _('You\'re not following any pathways yet.') ?></h2>
+	<div class="p-3 mb-2 bg-white rounded-lg">
+	<p class="mb-3">Check out the following topic areas for pathways aligned with your goals:</p>
+	<?php foreach($categories as $cat): ?>
+		<h3 class="mt-3"><a href="/categories/view/<?= $cat->id ?>"><?= $cat->name ?></a></h3>
+		<div class="p-3 mb-3 bg-light rounded-3 shadow-sm"><?= $cat->description ?></div>
+	<?php endforeach ?>
+
+</div>
 <?php endif ?>
-<p><?php //_('Pathways are organized into topics. Here some topics for you to explore:') ?></p>
 
 </div>
 
-<div class="col-md-4 col-lg-4">
-<h2><?= __('Your Claims') ?></h2>
+
+
 <?php if (!empty($user->activities_users)) : ?>
+	<div class="col-md-4 col-lg-4">
+	<h2><?= __('Your Claims') ?></h2>
 <?php foreach($user->activities_users as $act): ?>
     <div class="p-3 mb-2 bg-white rounded-lg">
     <a href="/activities/view/<?= $act->activity->id ?>"><?= $act->activity->name ?></a>
 </div>
 <?php endforeach ?>
-<?php endif ?>
 </div>
+<?php endif ?>
 
 
-<div class="col-md-4 col-lg-4">
+
+
+	
+
+
 <?php if (!empty($user->reports)) : ?>
+	<div class="col-md-4 col-lg-4">
 	<h2><i class="fas fa-sitemap"></i> <?= __('Your Reports') ?></h2>
 	<?php foreach ($user->reports as $report) : ?>
 	<div class="p-3 mb-2 bg-white rounded-lg">
@@ -130,8 +149,9 @@
 
 	</div>
 	<?php endforeach ?>
+	</div>
 <?php endif ?>
-</div>
+
 
 
 </div>
