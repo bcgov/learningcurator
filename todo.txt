@@ -12,7 +12,7 @@
 [] submit pathway follow/unfollow via JS to prevent page reload
 [] When pathway completed update database with date!
 [] TAGGING
-
+[] RSS feeds for new pathways and per-path new activity feeds
 [] Tags for pathways
 [] Add publish option at pathway level that publishes all steps and activities
 [] Add "hold" status for activities that aren't draft, but shouldn't be

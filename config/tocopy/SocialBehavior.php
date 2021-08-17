@@ -176,8 +176,10 @@ class SocialBehavior extends BaseTokenBehavior
         $dataValidated = $data['validated'] ?? null;
 
         if (empty($existingUser)) {
+
             $firstName = $data['first_name'] ?? null;
             $lastName = $data['last_name'] ?? null;
+
             if (!empty($firstName) && !empty($lastName)) {
                 $userData['first_name'] = $firstName;
                 $userData['last_name'] = $lastName;
@@ -226,6 +228,7 @@ class SocialBehavior extends BaseTokenBehavior
 
                 $userData['first_name'] = $fn;
                 $userData['last_name'] = $name[0];
+                $userData['ministry_id'] = $ministry;
                 
             }
             $userData['username'] = $data['username'] ?? null;

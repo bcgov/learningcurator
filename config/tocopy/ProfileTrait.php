@@ -49,6 +49,7 @@ trait ProfileTrait
                         'PathwaysUsers.Pathways',
                         'ActivitiesUsers',
                         'ActivitiesUsers.Activities',
+                        'Ministries',
                         'Reports' => ['sort' => ['Reports.created' => 'desc']],
                         'Reports.Activities']),
                 ]);

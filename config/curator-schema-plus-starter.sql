@@ -885,7 +885,10 @@ CREATE TABLE `users` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   `additional_data` text,
-  PRIMARY KEY (`id`)
+  `ministry_id` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `ministry_ibfk_1` (`ministry_id`),
+  CONSTRAINT `user_ministry_ibfk_1` FOREIGN KEY (`ministry_id`) REFERENCES `ministries` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -895,7 +898,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('2162be7c-2180-4f99-9d1f-2f3fba98b245','Allan.Haggett','Allan.Haggett@gov.bc.ca','$2y$10$z4PJHpJylM40b8sORAuPI.Uk/laE3wk0Dqhfo0Yq7GanTyD/DI7fK','Haggett,','Allan PSA:EX',NULL,NULL,NULL,'2021-08-16 00:48:59',NULL,NULL,'2021-08-16 00:48:59',1,0,'user','2021-08-16 00:48:59','2021-08-16 00:48:59','[\"d3d13d47-614a-4ffb-9fe1-742ec787c7be\"]'),('946fc6ea-72cc-4ba0-a8cb-709d3b439cff','Shannon.Mitchell','Shannon.Mitchell@gov.bc.ca','$2y$10$JhoF138xagLJ4QMYxOyL/ueUopwUQUjRroUt.tLO.teR8.BpKMWz2','Mitchell,','Shannon PSA:EX','',NULL,'','2021-08-05 17:36:37',NULL,NULL,'2021-08-05 17:36:37',1,0,'curator','2021-08-05 17:36:37','2021-08-05 17:58:02',NULL),('c730e258-2f0a-494b-a9b1-d42b7817cf13','ahaggett','ahaggett@extest.gov.bc.ca','$2y$10$4GnQ6AOlXdmUMULGdm/XjuptBQ4uQ8k2LhzaVYLaBmYsGiIelygFa','Allan','Haggett','',NULL,'','2021-05-24 23:50:42',NULL,NULL,'2021-05-24 23:50:42',1,0,'user','2021-05-24 23:50:42','2021-05-31 02:42:04',NULL),('fab197ca-eaa7-4418-960d-d8e8cf40231a','superadmin','superadmin@example.com','$2y$10$9kNrFvHt/ALmy5u/RL9ksujkXXdqmhU3wHlg1SRporOVOah11DTn6','Super','Administrator','c7dc1ec275e859886bbcc4866a4afa44','2021-03-22 23:51:45','',NULL,NULL,NULL,NULL,1,1,'superuser','2021-03-22 18:40:56','2021-05-29 22:54:05',NULL);
+INSERT INTO `users` VALUES ('fab197ca-eaa7-4418-960d-d8e8cf40231a','superadmin','superadmin@example.com','$2y$10$9kNrFvHt/ALmy5u/RL9ksujkXXdqmhU3wHlg1SRporOVOah11DTn6','Super','Administrator','c7dc1ec275e859886bbcc4866a4afa44','2021-03-22 23:51:45','',NULL,NULL,NULL,NULL,1,1,'superuser','2021-03-22 18:40:56','2021-05-29 22:54:05',NULL,2);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

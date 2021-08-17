@@ -22,7 +22,11 @@
 		Welcome <?= h($user->first_name) ?> <?= h($user->last_name) ?> 	
 	</h1>
 
-    
+    <div>
+	<?php if (!empty($user->ministry)) : ?>
+	<?= $user->ministry->name ?>
+	<?php endif ?>
+	</div>
 
 </div>
 </div>
@@ -113,6 +117,9 @@
 
 
 <div class="col-md-4 col-lg-4">
+	
+
+
 <?php if (!empty($user->reports)) : ?>
 	<h2><i class="fas fa-sitemap"></i> <?= __('Your Reports') ?></h2>
 	<?php foreach ($user->reports as $report) : ?>
