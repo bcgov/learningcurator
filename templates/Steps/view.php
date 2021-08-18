@@ -200,7 +200,11 @@ if($stepclaimcount > 0) {
 <?php endforeach; ?>
 <?php endif; ?>
 
-
+<div class="progress progress-bar-striped stickyprogress" style="background-color: #F1F1F1; border-radius: 0; height: 18px;">
+	<div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuetext="This step is <?= $steppercent ?>% done" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
+		This step is <?= $steppercent ?>% done
+	  </div>
+</div>
 
 
 
@@ -226,14 +230,7 @@ if($stepclaimcount > 0) {
 <?php endforeach ?>
 </nav>
 </div>
-<!-- 
-<div class="col-md-12">
-<div class="progress progress-bar-striped stickyprogress" style="background-color: #F1F1F1; border-radius: 0; height: 18px;">
-		<div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuetext="This step is <?= $steppercent ?>% done" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
-		This step is <?= $steppercent ?>% done
-	  </div>
-</div>
-</div> -->
+
 
 </div>
 </div>
