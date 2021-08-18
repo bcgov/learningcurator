@@ -72,6 +72,9 @@ $this->loadHelper('Authentication.Identity');
 		<a class="nav-link" href="/categories">Topics</a>
 	</li> -->
 	<li class="nav-item">
+		<a class="nav-link" href="/categories/index">Topics</a>
+	</li>
+	<li class="nav-item">
 		<a class="nav-link" href="/questions">FAQ</a>
 	</li>
 

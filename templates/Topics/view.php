@@ -19,9 +19,21 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div><?= $this->Html->link(__('Edit'), ['action' => 'edit', $topic->id],['class' => 'btn btn-primary float-right']) ?></div>
 <?php endif ?>
-<div><?= $this->Html->link(h($topic->categories[0]->name), ['controller' => 'Categories', 'action' => 'view', $topic->categories[0]->id],['class' => '']) ?></div>
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb mt-3">
+	
+	<li class="breadcrumb-item">
+    <?= $this->Html->link(__('All Topic Areas'), ['controller' => 'Categories', 'action' => 'index'],['class' => '']) ?>
+    </li>
+	<li class="breadcrumb-item">
+    <?= $this->Html->link(h($topic->categories[0]->name), ['controller' => 'Categories', 'action' => 'view', $topic->categories[0]->id],['class' => '']) ?>
+    </li>
+	
+	</ol>
+	</nav>
+
 <h1><?= h($topic->name) ?></h1>
-<div>
+<div class="mb-5">
 <?= h($topic->description) ?>
 </div>
 </div>
