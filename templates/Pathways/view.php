@@ -286,9 +286,9 @@ if($stepclaimcount > 0) {
 <?php if($steps->status->name == 'Published'): ?>
 
 <div class="p-3 my-3 bg-white rounded-lg">
-
+	<?php if($role == 'curator' || $role == 'superuser'): ?>
 	<div><span class="badge badge-light"><?= $steps->status->name ?></span></div>
-
+	<?php endif ?>
 	<h2>
 
 		<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
