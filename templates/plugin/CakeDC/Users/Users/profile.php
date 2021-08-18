@@ -117,11 +117,18 @@ $this->assign('title', 'Your Profile');
 <?php if (!empty($user->activities_users)) : ?>
 	<div class="col-md-4 col-lg-4">
 	<h2><?= __('Your Claims') ?></h2>
-<?php foreach($user->activities_users as $act): ?>
-    <div class="p-3 mb-2 bg-white rounded-lg">
-    <a href="/activities/view/<?= $act->activity->id ?>"><?= $act->activity->name ?></a>
-</div>
+	<div id="activitylist">
+	<input type="text" name="activityfilter" id="activityfilter" placeholder="Filter" class="search form-control mb-3">
+	<div class="list"> 
+	<?php foreach($user->activities_users as $act): ?>
+		<div class="p-3 mb-2 bg-white rounded-lg">
+		<span class="name">
+			<a href="/activities/view/<?= $act->activity->id ?>"><?= $act->activity->name ?></a>
+		</span>
+		</div>
 <?php endforeach ?>
+</div>
+</div>
 </div>
 <?php endif ?>
 
