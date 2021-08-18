@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
 */
-
+$this->assign('title', 'Your Profile');
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
@@ -19,7 +19,7 @@
 	<?php endif ?>
 	</div>
 	<h1>
-		Welcome <?= h($user->first_name) ?> <?= h($user->last_name) ?> 	
+		Welcome <?= h($user->first_name) ?>
 	</h1>
 
     <div>

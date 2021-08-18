@@ -3,6 +3,7 @@
 * @var \App\View\AppView $this
 * @var \App\Model\Entity\Category[]|\Cake\Collection\CollectionInterface $categories
 */
+$this->assign('title', 'Learning on demand.');
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">

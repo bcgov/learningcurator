@@ -9,6 +9,7 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 use Cake\Core\Configure;
+$this->assign('title', 'Learning on demand');
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">

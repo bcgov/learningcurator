@@ -4,45 +4,25 @@
  * @var \App\Model\Entity\Ministry[]|\Cake\Collection\CollectionInterface $ministries
  */
 ?>
-<div class="ministries index content">
-    <?= $this->Html->link(__('New Ministry'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Ministries') ?></h3>
-    <div class="table-responsive">
-        <table>
-            <thead>
-                <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('name') ?></th>
-                    <th><?= $this->Paginator->sort('slug') ?></th>
-                    <th><?= $this->Paginator->sort('elm_learner_group') ?></th>
-                    <th><?= $this->Paginator->sort('hyperlink') ?></th>
-                    <th><?= $this->Paginator->sort('image_path') ?></th>
-                    <th><?= $this->Paginator->sort('color') ?></th>
-                    <th><?= $this->Paginator->sort('featured') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($ministries as $ministry): ?>
-                <tr>
-                    <td><?= $this->Number->format($ministry->id) ?></td>
-                    <td><?= h($ministry->name) ?></td>
-                    <td><?= h($ministry->slug) ?></td>
-                    <td><?= h($ministry->elm_learner_group) ?></td>
-                    <td><?= h($ministry->hyperlink) ?></td>
-                    <td><?= h($ministry->image_path) ?></td>
-                    <td><?= h($ministry->color) ?></td>
-                    <td><?= $this->Number->format($ministry->featured) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $ministry->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $ministry->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $ministry->id], ['confirm' => __('Are you sure you want to delete # {0}?', $ministry->id)]) ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+<div class="container-fluid" id="colorful">
+<div class="row justify-content-md-center">
+<div class="col-md-6">
+<div class="m-5 p-5 bg-white rounded-lg shadow-sm">
+    <h1>Ministries</h1>
+</div>
+</div>
+</div>
+</div>
+<div class="container-fluid">
+<div class="row justify-content-md-center">
+<div class="col-md-6">
+
+    <?php foreach ($ministries as $ministry): ?>
+    <div class="my-3 p-3 bg-white rounded-lg shadow-sm">
+    <?= $this->Html->link(h($ministry->name), ['action' => 'view', $ministry->id]) ?>
     </div>
+    <?php endforeach; ?>
+     
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>
@@ -54,3 +34,14 @@
         <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
     </div>
 </div>
+</div>
+</div>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+	crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
+	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
+	crossorigin="anonymous"></script>
