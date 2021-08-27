@@ -16,7 +16,7 @@ if ($this->Identity->isLoggedIn()) {
 <div>Found <span class="badge badge-dark"><?= $numresults ?></span> activities</div>
 <div class="py-3">
 	<form method="get" action="/activities/find" class="form-inline">
-		<input class="form-control mr-sm-2" type="search" placeholder="Search again" aria-label="Search" name="q">
+		<input class="form-control mr-sm-2" type="search" placeholder="Search again" aria-label="Search" name="search">
 		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
 	</form>
 </div>
