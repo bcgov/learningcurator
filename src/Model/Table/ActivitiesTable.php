@@ -108,6 +108,21 @@ class ActivitiesTable extends Table
             'joinTable' => 'activities_tags',
         ]);
 
+        $this->addBehavior('Search.Search');
+
+	    $this->searchManager()
+                ->value('name')
+                ->value('description')
+                ->add('search', 'Search.Like', [ 
+                    'before' => true,
+                    'after' => true,
+                    'fieldMode' => 'OR',
+                    'comparison' => 'LIKE',
+                    'wildcardAny' => '*',
+                    'wildcardOne' => '?',
+                    'fields' => ['name','description'],
+                ]);
+
     }
 
     /**

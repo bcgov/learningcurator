@@ -115,7 +115,7 @@ $this->loadHelper('Authentication.Identity');
 		<?php endif ?>
 	</ul>
 	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
-		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
+		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="search">
 		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
 	</form>
 
