@@ -5,6 +5,7 @@ namespace App\Controller;
 
 Use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
+use Cake\Event\EventInterface;
 
 /**
  * Activities Controller
@@ -14,6 +15,16 @@ use Cake\Utility\Text;
  */
 class ActivitiesController extends AppController
 {
+    
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->loadComponent('Search.Search', [
+            'actions' => ['search'],
+        ]);
+    }
+
     /**
      * Index method
      *
@@ -232,25 +243,10 @@ class ActivitiesController extends AppController
      */
     public function find()
     {
-
-	    $search = $this->request->getQuery('q');
-        $activities = $this->Activities->find()->
-                                        contain('Steps.Pathways','ActivityTypes')->
-                                        where(function ($exp, $query) use($search) {
-            return $exp->like('name', '%'.$search.'%');
-        })->order(['name' => 'ASC']);
-        $activities = $this->Activities->find()->
-                                            contain('Steps.Pathways','ActivityTypes')->
-                                            where(function ($exp, $query) use($search) {
-                                                return $exp->like('description', '%'.$search.'%');
-                                            })->
-                                            order(['name' => 'ASC']);
+        $activities = $this->Activities->find('search', ['search' => $this->request->getQuery()]);
+        $search = $this->request->getQuery('search');
         $numresults = $activities->count();
-        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
-        $pathways = $allpaths->find('all')->contain(['Steps']);
-        $allpathways = $pathways->toList();
-        
-        $this->set(compact('activities','allpathways','search', 'numresults'));
+        $this->set(compact('activities','search', 'numresults'));
     }
     /**
      * Find method for activities; intended for use as an auto-complete

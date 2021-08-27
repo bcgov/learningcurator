@@ -66,6 +66,7 @@ class Application extends BaseApplication
 
         // Load more plugins here
         $this->addPlugin(\CakeDC\Users\Plugin::class);
+        $this->addPlugin('Search');
     }
 
     /**
