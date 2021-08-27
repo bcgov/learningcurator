@@ -177,59 +177,51 @@ class SocialBehavior extends BaseTokenBehavior
 
         if (empty($existingUser)) {
 
-            $firstName = $data['first_name'] ?? null;
-            $lastName = $data['last_name'] ?? null;
-
-            if (!empty($firstName) && !empty($lastName)) {
-                $userData['first_name'] = $firstName;
-                $userData['last_name'] = $lastName;
+            //
+            // The default code here split the full name by 
+            // spaces, but that doesn't work for our usecase, 
+            // where we have the monstrosity of:
+            // 
+            // Haggett, Allan PSA:EX
+            // 
+            // where just splitting by spaces is NOT a good strategy
+            // (and resulted in the first/last names being flipped)
+            // 
+            // Start by splitting on the comma to get the last name
+            // in the [0] position, then split the [1] by the :EX
+            // 
+            $name = explode(',', $data['full_name'] ?? '');
+            $first = explode(':EX', $name[1]);
+            //
+            // This should result in $first[0] being "Allan PSA"
+            // or "David W CITZ" so, now we explode on known Ministries
+            // PSA and CITZ to start with to see if we can isolate and 
+            // assign.
+            //
+            $psa = explode('PSA', $first[0]);
+            $citz = explode('CITZ', $first[0]);
+            // We are of course mapping ministries to our own table
+            // completely manually at this point; hopefully, AzureAD
+            // will provide this value directly in the future (maybe
+            // it already does and I'm just not calling the correct thing)
+            // and we can ditch this; in the meantime, we start with
+            // the imperfect method so that we can at least show that
+            // we considered how to do this.
+            if(!empty($psa[0])) {
+                $fn = $psa[0];
+                $ministry = 2;
+            } elseif(!empty($citz[0])) {
+                $fn = $citz[0];
+                $ministry = 3;
             } else {
-
-                //
-                // The default code here split the full name by 
-                // spaces, but that doesn't work for our usecase, 
-                // where we have the monstrosity of:
-                // 
-                // Haggett, Allan PSA:EX
-                // 
-                // where just splitting by spaces is NOT a good strategy
-                // (and resulted in the first/last names being flipped)
-                // 
-                // Start by splitting on the comma to get the last name
-                // in the [0] position, then split the [1] by the :EX
-                // 
-                $name = explode(',', $data['full_name'] ?? '');
-                $first = explode(':EX', $name[1]);
-                //
-                // This should result in $first[0] being "Allan PSA"
-                // or "David W CITZ" so, now we explode on known Ministries
-                // PSA and CITZ to start with to see if we can isolate and 
-                // assign.
-                //
-                $psa = explode('PSA', $first[0]);
-                $citz = explode('CITZ', $first[0]);
-                // We are of course mapping ministries to our own table
-                // completely manually at this point; hopefully, AzureAD
-                // will provide this value directly in the future (maybe
-                // it already does and I'm just not calling the correct thing)
-                // and we can ditch this; in the meantime, we start with
-                // the imperfect method so that we can at least show that
-                // we considered how to do this.
-                if(!empty($psa[0])) {
-                    $fn = $psa[0];
-                    $ministry = 2;
-                } elseif(!empty($citz[0])) {
-                    $fn = $citz[0];
-                    $ministry = 3;
-                } else {
-                    $fn = $first[0];
-                    $ministry = 1;
-                }
-                $userData['first_name'] = $fn;
-                $userData['last_name'] = $name[0];
-                $userData['ministry_id'] = $ministry;
-                
+                $fn = $first[0];
+                $ministry = 1;
             }
+            $userData['first_name'] = $fn;
+            $userData['last_name'] = $name[0];
+            $userData['ministry_id'] = $ministry;
+                
+            
             $userData['username'] = $data['username'] ?? null;
             $username = $userData['username'] ?? null;
             if (empty($username)) {
