@@ -1,14 +1,16 @@
 #TODO
 
+[] Can I create a "Learning Centre" Github organization?
+
 [] Add customization/override for users plugin for custom controllers
     https://github.com/CakeDC/users/blob/master/Docs/Documentation/Extending-the-Plugin.md
 [] Add more ministries to mapping in (and consider how to fix this)
     /vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
-[] Completely redesign the step page
+[] Completely redesign the step page (started)
 
 [] User search for superadmin and curator
 [] User role beside name in index
-[] SEARCH plugin
+
 [] Implement unclaim 
 [] Check that URLs for activities don't already exist
 [] submit pathway follow/unfollow via JS to prevent page reload
@@ -16,7 +18,7 @@
 [] TAGGING
 [] RSS feeds for new pathways and per-path new activity feeds
 [] Tags for pathways
-[] Update Questions index with question list that deep-links into page IDs
+
 [] Add publish option at pathway level that publishes all steps and activities
 [] Add "hold" status for activities that aren't draft, but shouldn't be
     published (this way you can run above publish all, but still leave things out)
@@ -29,6 +31,8 @@
 [] Add contributor role and then a publishing workflow where contributors must have the work approved by a curator
    [] ceate heirarchy document showing Curator
 
+[x] SEARCH plugin
+[x] Update Questions index with question list that deep-links into page IDs
 [x] Add listjs text filter on claims profile
 [x] Add back in per-step percentage graph
 [x] Change text to "Topic Areas" in all the places

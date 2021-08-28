@@ -52,7 +52,7 @@ trait ProfileTrait
                     'contain' => array_merge((array)$appContain, (array)$socialContain, 
                     ['PathwaysUsers',
                         'PathwaysUsers.Pathways',
-                        'ActivitiesUsers',
+                        'ActivitiesUsers' => ['sort' => ['ActivitiesUsers.created' => 'desc']],
                         'ActivitiesUsers.Activities',
                         'Ministries',
                         'Reports' => ['sort' => ['Reports.created' => 'desc']],
