@@ -129,7 +129,7 @@ This seems to work out, but #TODO investigate optimizing this
 
 </style>
 <div class="container-fluid">
-<div class="row justify-content-md-center">
+<div class="row justify-content-md-center" id="colorful">
 	
 
 	<div class="col-md-10 col-lg-8">
@@ -165,7 +165,7 @@ This seems to work out, but #TODO investigate optimizing this
 </nav> 
 
 <!--<div class=""><a href="/pathways/path/<?= $pathways->id ?>"><i class="fas fa-scroll"></i></a></div>-->
-<h1>
+<h1 class="mb-3">
 	<?= h($pathways->name) ?>
 	<?php //$this->Html->link(h($pathways->name), ['controller' => 'Pathways', 'action' => 'path', $pathways->id]) ?>
 </h1>
@@ -213,12 +213,12 @@ This seems to work out, but #TODO investigate optimizing this
 </div>
 </div>
 
-<div class="container-fluid bg-white">
+<div class="container-fluid bg-light">
 <div class="row justify-content-md-center">
 
 <div class="col-md-3 col-lg-2 order-last">
 <?php if(in_array($uid,$usersonthispathway)): ?>
-<div class="p-3 bg-white mb-3 text-center stickyrings rounded-lg">
+<div class="p-3 bg-white mb-3 mt-3 text-center stickyrings rounded-lg">
 <div class="mb-3 following"></div>
 <canvas id="myChart" width="250" height="250"></canvas>
 </div>
@@ -234,7 +234,7 @@ This seems to work out, but #TODO investigate optimizing this
 <div class="col-md-9 col-lg-6">
 
 
-<div class="bg-light p-3 my-3 rounded-lg shadow-sm">
+<div class="bg-white p-3 my-3 rounded-lg shadow-sm">
 	<div style="font-size: 140%;">
 	<?= $step->description ?>
 	</div>
@@ -264,7 +264,7 @@ This seems to work out, but #TODO investigate optimizing this
 <?php if (!empty($step->activities)) : ?>
 
 <?php foreach ($requiredacts as $activity) : ?>
-
+	<div class="bg-white">
 <div class="p-3 my-3 rounded-lg activity" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
@@ -420,6 +420,7 @@ This seems to work out, but #TODO investigate optimizing this
 
 
 
+	</div>
 	</div>
 	
 

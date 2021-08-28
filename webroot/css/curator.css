@@ -78,7 +78,7 @@ img {
 
 .nav-pills .nav-link.active, 
 .nav-pills .show>.nav-link {
-	background-color: #FFF;
+	background-color: #f8f9fa;
 	color: #333;
 	font-weight: bold;
 }
