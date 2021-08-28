@@ -28,12 +28,14 @@ if ($this->Identity->isLoggedIn()) {
 
 <div class="container-fluid">
 <div class="row justify-content-md-center linear">
-<div class="col-md-6">
-<div class="bg-white rounded-lg p-3 my-3">
-<ul>
+<div class="col-md-3">
+<div class="bg-white rounded-lg p-3 my-3 sticky-top">
+<ul class="nav flex-column">
 <?php foreach ($questions as $question): ?>
 <?php if($question->status_id == 2): ?>
-<li><a href="#<?= h($question->slug) ?>"><?= h($question->title) ?></a></li>
+<li class="nav-item">
+    <a class="nav-link" href="#<?= h($question->slug) ?>"><?= h($question->title) ?></a>
+</li>
 <?php else: ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <li>
@@ -45,6 +47,9 @@ if ($this->Identity->isLoggedIn()) {
 <?php endforeach; ?>
 </ul>
 </div>
+</div>
+<div class="col-md-6">
+
 <?php foreach ($questions as $question): ?>
 <?php if($question->status_id == 2): ?>
 <div class="bg-white rounded-lg p-3 my-3">
