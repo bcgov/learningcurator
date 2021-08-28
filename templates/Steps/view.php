@@ -434,7 +434,7 @@ This seems to work out, but #TODO investigate optimizing this
 
 	<?php foreach ($supplementalacts as $activity): ?>
 
-	<div class="p-3 my-3 bg-light rounded-lg">
+	<div class="p-3 my-3 bg-white rounded-lg">
 
 		<h4>
 			<a href="/activities/view/<?= $activity->id ?>">
@@ -509,8 +509,33 @@ This seems to work out, but #TODO investigate optimizing this
 </div>
 
 <?php endif ?>
-</div>
 
+</div>
+<div class="col-12">
+<nav class="nav justify-content-center nav-pills mt-2 w-100 bg-white" role="navigation">
+<?php $count = 1 ?>
+<?php foreach ($step->pathways as $pathways) : ?>
+<?php foreach($pathways->steps as $s): ?>
+<?php if($s->status_id == 2): ?>
+	<?php $c = '' ?>
+	<?php if($s->id == $step->id) $c = 'active' ?>
+	<li class="nav-item">
+
+	<a class="nav-link <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+		<?php if($s->id == $step->id && $steppercent == 100): ?>
+			<i class="bi bi-check"></i>
+		<?php endif ?>
+			
+		<?= $s->name ?>
+	</a>
+
+	</li>
+	<?php $count++ ?>
+<?php endif; // is published? ?>
+<?php endforeach ?>
+<?php endforeach ?>
+</nav>
+</div>
 </div>
 </div>
 

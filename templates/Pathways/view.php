@@ -61,7 +61,7 @@ This seems to work out, but #TODO investigate optimizing this
 </style>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-8 col-lg-6">
+<div class="col-md-10 col-lg-8">
 <div class="p-3">
 	<?php if($pathway->status_id == 1): ?>
 	<span class="badge badge-warning" title="Edit to set to publish">DRAFT</span>
@@ -140,7 +140,7 @@ This seems to work out, but #TODO investigate optimizing this
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="col-md-2 col-lg-3 order-last">
+<div class="col-md-3 col-lg-2 order-last">
 <div class="bg-white rounded-lg p-3 my-3">
 <a class="" 
 	data-toggle="collapse" 
@@ -163,7 +163,7 @@ This seems to work out, but #TODO investigate optimizing this
 </div>
 </div>
 <?php endif ?>
-<div class="col-6 col-md-4 col-lg-3">
+<div class="col-6 col-md-3 col-lg-2 order-last">
 
 <?php if(in_array($uid,$usersonthispathway)): ?>
 
@@ -293,7 +293,7 @@ if($stepclaimcount > 0) {
 
 		<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
 			<?= h($steps->name) ?> 
-			<i class="fas fa-arrow-circle-right"></i>
+			<i class="bi bi-arrow-right-circle-fill"></i>
 		</a>
 	</h2>
 	

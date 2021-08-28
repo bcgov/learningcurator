@@ -97,7 +97,8 @@ img {
 .nav-pills .show>.nav-link {
 	background-color: #f8f9fa;
 	color: #333;
-	font-weight: bold;
+	font-size: 1.2em;
+	font-weight: 600;
 }
 
 
