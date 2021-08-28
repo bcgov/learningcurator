@@ -25,5 +25,12 @@ $config = ['Users' =>
                                 ]
                         ]
                         ],
+                'Auth' => [
+                        'AuthenticationComponent' => [
+                                'load' => true,
+                                'loginRedirect' => '/profile',
+                                'requireIdentity' => false
+                        ],
+                ]
             ];
 return $config;
