@@ -249,7 +249,8 @@ class ActivitiesController extends AppController
      */
     public function find()
     {
-        $activities = $this->Activities->find('search', ['search' => $this->request->getQuery()]);
+        $activities = $this->Activities->find('search', ['search' => $this->request->getQuery()])
+                                        ->contain(['ActivityTypes','Steps.Pathways']);
         $search = $this->request->getQuery('search');
         $numresults = $activities->count();
         $this->set(compact('activities','search', 'numresults'));

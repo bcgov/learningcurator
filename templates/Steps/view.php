@@ -135,8 +135,6 @@ This seems to work out, but #TODO investigate optimizing this
 	<div class="col-md-10 col-lg-8">
 
 
-
-	
 <?php if (!empty($step->pathways)) : ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="btn-group  mt-3 ml-3">
@@ -152,7 +150,14 @@ This seems to work out, but #TODO investigate optimizing this
  ?>
 </div> <!-- /.btn-group -->
 <?php endif ?>
-
+<?php if(!in_array($uid,$usersonthispathway)): ?>
+<div class="bg-white rounded-lg p-3 shadow-sm mt-3">
+<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
+<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-primary mb-0']) ?>
+<?= $this->Form->end(); ?>
+</div>
+<?php endif ?>
 <?php foreach ($step->pathways as $pathways) : ?>
 <?php $totalsteps = count($pathways->steps) ?>
 
@@ -169,7 +174,6 @@ This seems to work out, but #TODO investigate optimizing this
 	<?= h($pathways->name) ?>
 	<?php //$this->Html->link(h($pathways->name), ['controller' => 'Pathways', 'action' => 'path', $pathways->id]) ?>
 </h1>
-
 
 
 
@@ -204,9 +208,15 @@ This seems to work out, but #TODO investigate optimizing this
 	</li>
 	<?php $count++ ?>
 <?php endif; // is published? ?>
+
+
 <?php endforeach ?>
 <?php endforeach ?>
 </nav>
+
+
+
+
 </div>
 
 
@@ -221,7 +231,13 @@ This seems to work out, but #TODO investigate optimizing this
 <div class="p-3 bg-white mb-3 mt-3 text-center stickyrings rounded-lg">
 <div class="mb-3 following"></div>
 <canvas id="myChart" width="250" height="250"></canvas>
+<?php 
+echo $this->Form->postLink(__('Un-Follow'), 
+								['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], 
+								['class' => 'btn btn-primary mt-4', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really unfollow?')]); 
+?>
 </div>
+
 <?php else: ?>
 <div class="bg-white rounded-lg p-3 shadow-sm mt-3 text-center stickyrings">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
@@ -230,6 +246,8 @@ This seems to work out, but #TODO investigate optimizing this
 <?= $this->Form->end(); ?>
 </div>
 <?php endif ?>
+
+
 </div>
 <div class="col-md-9 col-lg-6">
 
