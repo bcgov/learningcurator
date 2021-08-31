@@ -32,7 +32,10 @@ if ($this->Identity->isLoggedIn()) {
 	</ol>
 	</nav>
 
-<h1><?= h($topic->name) ?></h1>
+<h1>
+    <i class="bi bi-diagram-3-fill"></i>
+    <?= h($topic->name) ?>
+</h1>
 <div class="mb-5">
 <?= h($topic->description) ?>
 </div>
@@ -46,14 +49,20 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach($topic->pathways as $pathway): ?>
 <?php if($pathway->status_id == 2): ?>
     <div class="p-3 my-3 bg-white rounded-lg">
-        <h2><?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?></h2>
+        <h2>
+            <i class="bi bi-pin-map-fill"></i>
+            <?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?>
+        </h2>
         <div><?= h($pathway->description) ?></div>
     </div>
 <?php else: ?>
     <?php if($role == 'curator' || $role == 'superuser'): ?>
     <div class="p-3 my-3 bg-white rounded-lg">
         <div class="badge badge-warning">DRAFT</div>
-        <h2><?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?></h2>
+        <h2>
+            <i class="bi bi-pin-map-fill"></i>
+            <?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?>
+        </h2>
         <div><?= h($pathway->description) ?></div>
     </div>
     <?php endif ?>

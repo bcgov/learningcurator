@@ -34,7 +34,10 @@ $this->assign('title', $pagetitle);
   	</a>
 </div>
 <?php endif; // is curator or admin ?>
-<h1><?= h($category->name) ?></h1>
+<h1>
+	<i class="bi bi-diagram-3-fill"></i>
+	<?= h($category->name) ?>
+</h1>
 <div class="text">
 <?= $this->Text->autoParagraph(h($category->description)); ?>
 </div>
@@ -73,7 +76,7 @@ $this->assign('title', $pagetitle);
 
 <div class="col-md-4 pt-3">
 <h2>
-	<i class="fas fa-sitemap"></i> <!-- topic_id: <?= $topic->id ?> --> 
+	<i class="bi bi-diagram-3-fill"></i> <!-- topic_id: <?= $topic->id ?> --> 
 	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
 	
 </h2>
@@ -86,8 +89,9 @@ $this->assign('title', $pagetitle);
 <?php if($pathway->status_id == 2): // is published ?>
 
 	<h3>
-<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
-</h3>
+		<i class="bi bi-pin-map-fill"></i>
+		<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
+	</h3>
 <div class="mb-3">
 <?= h($pathway->description) ?>
 </div>
@@ -96,9 +100,10 @@ $this->assign('title', $pagetitle);
 	
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <span class="badge badge-warning"><?= $pathway->status->name ?></span>
-<h2>
+<h3>
+	<i class="bi bi-pin-map-fill"></i>
 	<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
-</h2>
+</h3>
 <div class="mb-3">
 <?= h($pathway->objective) ?>
 </div>
@@ -126,6 +131,7 @@ $this->assign('title', $pagetitle);
 <?php if($cat->id == $category->id) continue ?>
 <div class="bg-white p-3 m-2 rounded-3">
 <h4>
+	<i class="bi bi-diagram-3-fill"></i>
 	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
 </h4>
 <div><?= h($cat->description) ?></div>

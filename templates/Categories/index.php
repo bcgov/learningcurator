@@ -22,7 +22,10 @@ $this->assign('title', 'All topic areas');
 <?php foreach ($categories as $category): ?>
 
 <div class="p-3 my-5 bg-white rounded-lg shadow-sm">
-	<h2 class=""><?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?></h2>
+	<h2 class="">
+		<i class="bi bi-diagram-3-fill"></i>
+		<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
+	</h2>
 	<div class="mb-3" style="font-size: 1.2rem">
 	<?= $category->description ?>
 	</div>
@@ -35,7 +38,10 @@ $this->assign('title', 'All topic areas');
 	<?php foreach ($category->topics as $topic): ?>
 	<div class="p-3 my-3 bg-light shadow-sm">
 	
-		<h3><?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?></h3>
+		<h3>
+			<i class="bi bi-diagram-3-fill"></i>
+			<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
+		</h3>
 		<div class="mb-3"><?= h($topic->description) ?></div>
 		<a class="btn btn-primary btn-lg" 
 			data-toggle="collapse" 
@@ -50,7 +56,10 @@ $this->assign('title', 'All topic areas');
 		<?php foreach ($topic->pathways as $path): ?>
 		<?php if($path->status_id === 2): ?>
 		<div class="p-2 my-3 bg-white rounded-lg shadow-sm">
-		<h4><?= $this->Html->link(h($path->name), ['controller' => 'Pathways', 'action' => 'view', $path->slug]) ?></h4>
+		<h4>
+			<i class="bi bi-pin-map-fill"></i>
+			<?= $this->Html->link(h($path->name), ['controller' => 'Pathways', 'action' => 'view', $path->slug]) ?>
+		</h4>
 		<div><?= h($path->description) ?></div>
 		</div>
 		<?php endif ?>
