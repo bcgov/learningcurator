@@ -47,7 +47,7 @@ $this->loadHelper('Authentication.Identity');
 </head>
 <body class="bg-light">
 
-<nav class="navbar navbar-expand-lg sticky-top bg-white shadow-sm">
+<nav class="navbar navbar-expand-lg bg-white shadow-sm">
 	<a class="navbar-brand" href="/">
 		<img alt="Logo" height="50" src="/img/curator-rings-logo.svg" width="50">
 		Learning Curator
@@ -71,6 +71,9 @@ $this->loadHelper('Authentication.Identity');
 	<!-- <li class="nav-item">
 		<a class="nav-link" href="/categories">Topics</a>
 	</li> -->
+	<li class="nav-item">
+		<a class="nav-link" href="/categories/index">Topics</a>
+	</li>
 	<li class="nav-item">
 		<a class="nav-link" href="/questions">FAQ</a>
 	</li>

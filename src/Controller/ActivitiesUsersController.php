@@ -102,7 +102,9 @@ class ActivitiesUsersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $activitiesUser = $this->ActivitiesUsers->get($id);
         if ($this->ActivitiesUsers->delete($activitiesUser)) {
-            echo __('The activities user has been deleted.');
+            //echo __('The activities user has been deleted.');
+            return $this->redirect($this->referer());
+
         } else {
             echo __('The activities user could not be deleted. Please, try again.');
         }

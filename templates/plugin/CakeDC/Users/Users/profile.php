@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
 */
-
+$this->assign('title', 'Your Profile');
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
@@ -19,7 +19,7 @@
 	<?php endif ?>
 	</div>
 	<h1>
-		Welcome <?= h($user->first_name) ?> <?= h($user->last_name) ?> 	
+		Welcome <?= h($user->first_name) ?>
 	</h1>
 
     <div>
@@ -117,11 +117,18 @@
 <?php if (!empty($user->activities_users)) : ?>
 	<div class="col-md-4 col-lg-4">
 	<h2><?= __('Your Claims') ?></h2>
-<?php foreach($user->activities_users as $act): ?>
-    <div class="p-3 mb-2 bg-white rounded-lg">
-    <a href="/activities/view/<?= $act->activity->id ?>"><?= $act->activity->name ?></a>
-</div>
+	<div id="activitylist">
+	<input type="text" name="activityfilter" id="activityfilter" placeholder="Filter" class="search form-control mb-3">
+	<div class="list"> 
+	<?php foreach($user->activities_users as $act): ?>
+		<div class="p-3 mb-2 bg-white rounded-lg">
+		<span class="name">
+			<a href="/activities/view/<?= $act->activity->id ?>"><?= $act->activity->name ?></a>
+		</span>
+		</div>
 <?php endforeach ?>
+</div>
+</div>
 </div>
 <?php endif ?>
 
@@ -158,15 +165,8 @@
 </div>
 </div>
 
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
-	crossorigin="anonymous"></script>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
-	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 	
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 

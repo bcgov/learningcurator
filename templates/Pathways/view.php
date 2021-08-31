@@ -61,7 +61,7 @@ This seems to work out, but #TODO investigate optimizing this
 </style>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-6">
+<div class="col-md-10 col-lg-8">
 <div class="p-3">
 	<?php if($pathway->status_id == 1): ?>
 	<span class="badge badge-warning" title="Edit to set to publish">DRAFT</span>
@@ -140,7 +140,7 @@ This seems to work out, but #TODO investigate optimizing this
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="col-md-2 col-lg-2 order-last">
+<div class="col-md-3 col-lg-2 order-last">
 <div class="bg-white rounded-lg p-3 my-3">
 <a class="" 
 	data-toggle="collapse" 
@@ -163,7 +163,7 @@ This seems to work out, but #TODO investigate optimizing this
 </div>
 </div>
 <?php endif ?>
-<div class="col-6 col-md-3 col-lg-2">
+<div class="col-6 col-md-3 col-lg-2 order-last">
 
 <?php if(in_array($uid,$usersonthispathway)): ?>
 
@@ -206,7 +206,7 @@ accessed from your profile page. Think of it as “bookmarking” learning you w
 </div>
 <?php if (!empty($pathway->steps)) : ?>
 
-<div class="col-md-6 col-lg-4">
+<div class="col-md-8 col-lg-6">
 
 <?php foreach ($pathway->steps as $steps) : ?>
 
@@ -286,14 +286,14 @@ if($stepclaimcount > 0) {
 <?php if($steps->status->name == 'Published'): ?>
 
 <div class="p-3 my-3 bg-white rounded-lg">
-
+	<?php if($role == 'curator' || $role == 'superuser'): ?>
 	<div><span class="badge badge-light"><?= $steps->status->name ?></span></div>
-
+	<?php endif ?>
 	<h2>
 
 		<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
 			<?= h($steps->name) ?> 
-			<i class="fas fa-arrow-circle-right"></i>
+			<i class="bi bi-arrow-right-circle-fill"></i>
 		</a>
 	</h2>
 	
@@ -348,15 +348,8 @@ if($stepclaimcount > 0) {
 </div>
 
 </div>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
-	crossorigin="anonymous"></script>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
-	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
 
 <script type="text/javascript" src="/js/jquery.scrollTo.min.js"></script>

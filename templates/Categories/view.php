@@ -12,14 +12,15 @@ if ($this->Identity->isLoggedIn()) {
 	$role = $this->Identity->get('role');
 	$uid = $this->Identity->get('id');
 }
-
+$pagetitle = $category->name . ' | Topic | ';
+$this->assign('title', $pagetitle);
 ?>
 
 <div class="container-fluid">
 <div class="row justify-content-md-center align-items-center"  id="colorful">
 <div class="col-md-4">
 <div class="py-3">
-<div><?= $this->Html->link(__('All Topic Categories'), ['action' => 'index']) ?></div>
+<div><?= $this->Html->link(__('All Topic Areas'), ['action' => 'index']) ?></div>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right btn-group">
 	<?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id],['class' => 'btn btn-light']) ?>
@@ -33,7 +34,10 @@ if ($this->Identity->isLoggedIn()) {
   	</a>
 </div>
 <?php endif; // is curator or admin ?>
-<h1><?= h($category->name) ?></h1>
+<h1>
+	<i class="bi bi-diagram-3-fill"></i>
+	<?= h($category->name) ?>
+</h1>
 <div class="text">
 <?= $this->Text->autoParagraph(h($category->description)); ?>
 </div>
@@ -72,7 +76,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <div class="col-md-4 pt-3">
 <h2>
-	<i class="fas fa-sitemap"></i> <!-- topic_id: <?= $topic->id ?> --> 
+	<i class="bi bi-diagram-3-fill"></i> <!-- topic_id: <?= $topic->id ?> --> 
 	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
 	
 </h2>
@@ -85,8 +89,9 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($pathway->status_id == 2): // is published ?>
 
 	<h3>
-<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
-</h3>
+		<i class="bi bi-pin-map-fill"></i>
+		<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
+	</h3>
 <div class="mb-3">
 <?= h($pathway->description) ?>
 </div>
@@ -95,9 +100,10 @@ if ($this->Identity->isLoggedIn()) {
 	
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <span class="badge badge-warning"><?= $pathway->status->name ?></span>
-<h2>
+<h3>
+	<i class="bi bi-pin-map-fill"></i>
 	<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
-</h2>
+</h3>
 <div class="mb-3">
 <?= h($pathway->objective) ?>
 </div>
@@ -125,6 +131,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($cat->id == $category->id) continue ?>
 <div class="bg-white p-3 m-2 rounded-3">
 <h4>
+	<i class="bi bi-diagram-3-fill"></i>
 	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
 </h4>
 <div><?= h($cat->description) ?></div>
@@ -136,12 +143,5 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 </div>
 
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
-	crossorigin="anonymous"></script>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
-	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

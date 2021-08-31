@@ -63,6 +63,7 @@ class StepsController extends AppController
         // Loop through the resources and add just the ID to the 
         // array that we will pass into the template
         foreach($useractivities as $uact) {
+            
             array_push($useractivitylist, $uact['activity_id']);
         }
 
@@ -77,11 +78,15 @@ class StepsController extends AppController
         $usersonthispathway = array();
         // Loop through the users that are on this pathway and parse just the 
         // IDs into the array that we just created
+        $followid = 0;
         foreach($step->pathways[0]->users as $pu) {
+            if($pu->id == $user->id) {
+                $followid = $pu->_joinData->id;
+            }
             array_push($usersonthispathway,$pu->id);
         }
 
-        $this->set(compact('step','useractivitylist','usersonthispathway'));
+        $this->set(compact('step','followid','useractivitylist','usersonthispathway'));
     }
 
     /**

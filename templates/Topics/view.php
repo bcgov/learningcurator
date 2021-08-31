@@ -19,9 +19,24 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div><?= $this->Html->link(__('Edit'), ['action' => 'edit', $topic->id],['class' => 'btn btn-primary float-right']) ?></div>
 <?php endif ?>
-<div><?= $this->Html->link(h($topic->categories[0]->name), ['controller' => 'Categories', 'action' => 'view', $topic->categories[0]->id],['class' => '']) ?></div>
-<h1><?= h($topic->name) ?></h1>
-<div>
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb mt-3">
+	
+	<li class="breadcrumb-item">
+    <?= $this->Html->link(__('All Topic Areas'), ['controller' => 'Categories', 'action' => 'index'],['class' => '']) ?>
+    </li>
+	<li class="breadcrumb-item">
+    <?= $this->Html->link(h($topic->categories[0]->name), ['controller' => 'Categories', 'action' => 'view', $topic->categories[0]->id],['class' => '']) ?>
+    </li>
+	
+	</ol>
+	</nav>
+
+<h1>
+    <i class="bi bi-diagram-3-fill"></i>
+    <?= h($topic->name) ?>
+</h1>
+<div class="mb-5">
 <?= h($topic->description) ?>
 </div>
 </div>
@@ -34,14 +49,20 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach($topic->pathways as $pathway): ?>
 <?php if($pathway->status_id == 2): ?>
     <div class="p-3 my-3 bg-white rounded-lg">
-        <h2><?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?></h2>
+        <h2>
+            <i class="bi bi-pin-map-fill"></i>
+            <?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?>
+        </h2>
         <div><?= h($pathway->description) ?></div>
     </div>
 <?php else: ?>
     <?php if($role == 'curator' || $role == 'superuser'): ?>
     <div class="p-3 my-3 bg-white rounded-lg">
         <div class="badge badge-warning">DRAFT</div>
-        <h2><?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?></h2>
+        <h2>
+            <i class="bi bi-pin-map-fill"></i>
+            <?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?>
+        </h2>
         <div><?= h($pathway->description) ?></div>
     </div>
     <?php endif ?>
@@ -73,12 +94,5 @@ if ($this->Identity->isLoggedIn()) {
 <?php endif;  // if curator /admin ?>
 </div>
 </div>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
-	crossorigin="anonymous"></script>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
-	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

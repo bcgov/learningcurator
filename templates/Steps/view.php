@@ -112,38 +112,29 @@ if($stepclaimcount > 0) {
 }
 ?>
 <style>
-.dotactive {
-	color: #000;
-    font-size: 140%;
-}
-.dot {
-	color: #000;
-}
+/* Start desktop-specific code for this page.
+Arbitrarily set to 45em based on sample code from ...somewhere. 
+This seems to work out, but #TODO investigate optimizing this
+*/
+@media (min-width: 45em) {
+
+	.stickyrings {
+
+		position: -webkit-sticky;
+		position: sticky;
+		top: 86px;
+		z-index: 1000;
+	}
+} /* end desktop-specific code */
 
 </style>
 <div class="container-fluid">
-<div class="row justify-content-md-center">
+<div class="row justify-content-md-center" id="colorful">
 	
-	<div class="col-md-3 col-lg-2">
-	<?php if(in_array($uid,$usersonthispathway)): ?>
-<div class="p-3 bg-white mb-3 text-center stickyrings rounded-lg">
-<div class="mb-3 following"></div>
-<canvas id="myChart" width="250" height="250"></canvas>
-</div>
-<?php else: ?>
-<div class="card card-body mt-3 text-center stickyrings">
-<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
-<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-primary mb-0']) ?>
-<?= $this->Form->end(); ?>
-</div>
-<?php endif ?>
-	</div>
-	<div class="col-md-9 col-lg-10">
+
+	<div class="col-md-10 col-lg-8">
 
 
-
-	
 <?php if (!empty($step->pathways)) : ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="btn-group  mt-3 ml-3">
@@ -159,7 +150,14 @@ if($stepclaimcount > 0) {
  ?>
 </div> <!-- /.btn-group -->
 <?php endif ?>
-
+<?php if(!in_array($uid,$usersonthispathway)): ?>
+<div class="bg-white rounded-lg p-3 shadow-sm mt-3">
+<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
+<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-primary mb-0']) ?>
+<?= $this->Form->end(); ?>
+</div>
+<?php endif ?>
 <?php foreach ($step->pathways as $pathways) : ?>
 <?php $totalsteps = count($pathways->steps) ?>
 
@@ -172,29 +170,12 @@ if($stepclaimcount > 0) {
 </nav> 
 
 <!--<div class=""><a href="/pathways/path/<?= $pathways->id ?>"><i class="fas fa-scroll"></i></a></div>-->
-<h1>
+<h1 class="mb-3">
 	<?= h($pathways->name) ?>
 	<?php //$this->Html->link(h($pathways->name), ['controller' => 'Pathways', 'action' => 'path', $pathways->id]) ?>
 </h1>
 
 
-<div class="my-3">
-			<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
-			<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
-			<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
-			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
-				<?= $allreadstepcount ?> to read
-			</span>  
-			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
-				<?= $allwatchstepcount ?> to watch
-			</span>  
-			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
-				<?= $alllistenstepcount ?> to listen to
-			</span>  
-			<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
-				<?= $allparticipatestepcount ?> to participate in
-			</span>  
-		</div>
 
 
 <?php endforeach; ?>
@@ -215,43 +196,93 @@ if($stepclaimcount > 0) {
 	<?php $c = '' ?>
 	<?php if($s->id == $step->id) $c = 'active' ?>
 	<li class="nav-item">
+
 	<a class="nav-link <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-		<!-- <i class="fas fa-dot-circle <?= $c ?>" title="Step <?= $count ?>">&bull;</i> -->
+		<?php if($s->id == $step->id && $steppercent == 100): ?>
+			<i class="bi bi-check"></i>
+		<?php endif ?>
+			
 		<?= $s->name ?>
 	</a>
+
 	</li>
 	<?php $count++ ?>
 <?php endif; // is published? ?>
+
+
 <?php endforeach ?>
 <?php endforeach ?>
 </nav>
+
+
+
+
 </div>
-<!-- 
-<div class="col-md-12">
-<div class="progress progress-bar-striped stickyprogress" style="background-color: #F1F1F1; border-radius: 0; height: 18px;">
-		<div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuetext="This step is <?= $steppercent ?>% done" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
-		This step is <?= $steppercent ?>% done
-	  </div>
-</div>
-</div> -->
+
 
 </div>
 </div>
 
-<div class="container-fluid bg-white">
+<div class="container-fluid bg-light">
 <div class="row justify-content-md-center">
-<div class="col-md-10 col-lg-6">
+
+<div class="col-md-3 col-lg-2 order-last">
+<?php if(in_array($uid,$usersonthispathway)): ?>
+<div class="p-3 bg-white mb-3 mt-3 text-center stickyrings rounded-lg">
+<div class="mb-3 following"></div>
+<canvas id="myChart" width="250" height="250"></canvas>
+<?php 
+echo $this->Form->postLink(__('Un-Follow'), 
+								['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], 
+								['class' => 'btn btn-primary mt-4', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really unfollow?')]); 
+?>
+</div>
+
+<?php else: ?>
+<div class="bg-white rounded-lg p-3 shadow-sm mt-3 text-center stickyrings">
+<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
+<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
+<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-primary mb-0']) ?>
+<?= $this->Form->end(); ?>
+</div>
+<?php endif ?>
 
 
+</div>
+<div class="col-md-9 col-lg-6">
 
-<div class="bg-light p-3 my-3 rounded-lg" style="font-size: 140%;">
-<?= $step->description ?>
+
+<div class="bg-white p-3 my-3 rounded-lg shadow-sm">
+	<div style="font-size: 140%;">
+	<?= $step->description ?>
+	</div>
+	<div class="my-3">
+		<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
+		<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
+		<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
+		<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
+			<?= $allreadstepcount ?> to read
+		</span>  
+		<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
+			<?= $allwatchstepcount ?> to watch
+		</span>  
+		<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
+			<?= $alllistenstepcount ?> to listen to
+		</span>  
+		<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
+			<?= $allparticipatestepcount ?> to participate in
+		</span>  
+	</div>
+	<div class="progress progress-bar-striped stickyprogress mt-3 rounded-lg" style="background-color: #F1F1F1; border-radius: 0; height: 18px;">
+		<div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">	
+		</div>
+	</div>
 </div>
 
 <?php if (!empty($step->activities)) : ?>
 
 <?php foreach ($requiredacts as $activity) : ?>
-
+	<div class="bg-white">
 <div class="p-3 my-3 rounded-lg activity" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
@@ -408,6 +439,7 @@ if($stepclaimcount > 0) {
 
 
 	</div>
+	</div>
 	
 
 	<?php endforeach; // end of activities loop for this step ?>
@@ -420,7 +452,7 @@ if($stepclaimcount > 0) {
 
 	<?php foreach ($supplementalacts as $activity): ?>
 
-	<div class="p-3 my-3 bg-light rounded-lg">
+	<div class="p-3 my-3 bg-white rounded-lg">
 
 		<h4>
 			<a href="/activities/view/<?= $activity->id ?>">
@@ -495,22 +527,40 @@ if($stepclaimcount > 0) {
 </div>
 
 <?php endif ?>
-</div>
 
 </div>
+<div class="col-12">
+<nav class="nav justify-content-center nav-pills mt-2 w-100 bg-white" role="navigation">
+<?php $count = 1 ?>
+<?php foreach ($step->pathways as $pathways) : ?>
+<?php foreach($pathways->steps as $s): ?>
+<?php if($s->status_id == 2): ?>
+	<?php $c = '' ?>
+	<?php if($s->id == $step->id) $c = 'active' ?>
+	<li class="nav-item">
+
+	<a class="nav-link <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+		<?php if($s->id == $step->id && $steppercent == 100): ?>
+			<i class="bi bi-check"></i>
+		<?php endif ?>
+			
+		<?= $s->name ?>
+	</a>
+
+	</li>
+	<?php $count++ ?>
+<?php endif; // is published? ?>
+<?php endforeach ?>
+<?php endforeach ?>
+</nav>
+</div>
+</div>
 </div>
 
 
 
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
-	crossorigin="anonymous"></script>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
-	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
 
 <script type="text/javascript" src="/js/jquery.scrollTo.min.js"></script>

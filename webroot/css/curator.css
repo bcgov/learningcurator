@@ -71,16 +71,34 @@ img {
 #colorful .breadcrumb a {
     text-decoration: underline;
 }
-
+.activity-icon {
+	border-radius: 50%;
+	color: #000;
+	display: inline-block;
+	text-align: center;
+}
+.activity-icon-md {
+	font-size: 140%;
+	height: 60px;
+	padding-top: 8px;
+	width: 60px;
+}
+.activity-icon-lg {
+	font-size: 170%;
+	height: 100px;
+	padding-top: 8px;
+	width: 100px;
+}
 .breadcrumb {
 	background-color: #FFF;
 }
 
 .nav-pills .nav-link.active, 
 .nav-pills .show>.nav-link {
-	background-color: #FFF;
+	background-color: #f8f9fa;
 	color: #333;
-	font-weight: bold;
+	font-size: 1.2em;
+	font-weight: 600;
 }
 
 

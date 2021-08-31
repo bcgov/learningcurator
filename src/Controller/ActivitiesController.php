@@ -92,16 +92,22 @@ class ActivitiesController extends AppController
 
             // convert the results into a simple array so that we can
             // use in_array in the template
-            $useractivities = $useacts->toList();
+            //$useractivities = $useacts->toList();
 
             // Loop through the resources and add just the ID to the 
             // array that we will pass into the template
             // #TODO this is probably really inefficient #refactor
-            foreach($useractivities as $uact) {
+            $claimid = 0;
+            foreach($useacts as $uact) {
+                // Has the current user claimed this activity? If so, then 
+                // we record the activities_users ID number so we can remove
+                // the association (unclaim) if the user clicks the "Unclaim"
+                // button.
+                if($uact->activity_id == $id) {
+                    $claimid = $uact->id;
+                }
                 array_push($useractivitylist, $uact['activity_id']);
             }
-
-
         }
         $activity = $this->Activities->get($id, [
             'contain' => ['Statuses', 
@@ -119,7 +125,7 @@ class ActivitiesController extends AppController
         $pathways = $allpaths->find('all')->contain(['Steps']);
         $allpathways = $pathways->toList();
 
-        $this->set(compact('activity', 'useractivitylist','allpathways'));
+        $this->set(compact('activity', 'useractivitylist','allpathways','claimid'));
     }
 
     /**
@@ -243,7 +249,8 @@ class ActivitiesController extends AppController
      */
     public function find()
     {
-        $activities = $this->Activities->find('search', ['search' => $this->request->getQuery()]);
+        $activities = $this->Activities->find('search', ['search' => $this->request->getQuery()])
+                                        ->contain(['ActivityTypes','Steps.Pathways']);
         $search = $this->request->getQuery('search');
         $numresults = $activities->count();
         $this->set(compact('activities','search', 'numresults'));
