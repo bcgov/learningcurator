@@ -1,6 +1,7 @@
 #TODO
 
 [] Can I create a "Learning Centre" Github organization?
+[] Docker licensing?
 
 [] Add customization/override for users plugin for custom controllers
     https://github.com/CakeDC/users/blob/master/Docs/Documentation/Extending-the-Plugin.md
