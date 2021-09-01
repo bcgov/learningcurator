@@ -20,6 +20,8 @@ BC Public Service learning curators.
 </p>
 <p style="font-size: 1.5rem"><strong>What do you want to learn today?</strong> </p>
 
+<a href="/profile" class="btn btn-primary btn-lg">Your Profile</a>
+
 </div>
 </div>
 </div>
