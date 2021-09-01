@@ -109,7 +109,10 @@ BC Public Service learning curators.
 <?php else: ?>
 	<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
 		
-		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
+		<h3>
+			<i class="bi bi-pin-map-fill"></i>
+			<a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a>
+		</h3>
 		<?= $path->objective ?>
 		<div>
 			
