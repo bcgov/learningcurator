@@ -60,6 +60,29 @@ class ActivitiesController extends AppController
     }
 
     /**
+     * User claims method
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function claims()
+    {
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        //echo $user->id; exit;
+        $activities = $this->Activities->find('all')
+                                        ->contain(['Tags',
+                                                    'Statuses', 
+                                                    'Ministries', 
+                                                    'ActivityTypes',
+                                                    'Steps.Pathways',
+                                                    'Users'])
+                                        ->where(['Activities.Users.id' => $user->id])
+                                        ->order(['Activities.created' => 'DESC'])
+                                        ->limit(100);
+
+        $this->set(compact('activities'));
+    }
+
+    /**
      * View method
      *
      * @param string|null $id Activity id.

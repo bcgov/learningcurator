@@ -176,7 +176,7 @@ return [
         [
             'role' => '*',
             'controller' => 'Activities',
-            'action' => ['index','view','claim','find','like'],
+            'action' => ['index','view','claim','find','like','claims'],
         ],
         [
             'role' => 'curator',
