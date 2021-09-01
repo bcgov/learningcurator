@@ -84,7 +84,10 @@ $this->assign('title', 'Your Profile');
 			<?= $path->pathway->has('category') ? $this->Html->link($path->pathway->category->name, ['controller' => 'Categories', 'action' => 'view', $path->pathway->category->id]) : '' ?>
 		</div>
 		
-    	<h3><a href="/pathways/<?= $path->pathway->slug ?>"><?= $path->pathway->name ?></a></h3>
+    	<h3>
+			<i class="bi bi-pin-map-fill"></i>
+			<a href="/pathways/<?= $path->pathway->slug ?>"><?= $path->pathway->name ?></a>
+		</h3>
 
 		<div><?= h($path->pathway->objective) ?></div>
 
@@ -121,10 +124,26 @@ $this->assign('title', 'Your Profile');
 	<input type="text" name="activityfilter" id="activityfilter" placeholder="Filter" class="search form-control mb-3">
 	<div class="list"> 
 	<?php foreach($user->activities_users as $act): ?>
-		<div class="p-3 mb-2 bg-white rounded-lg">
-		<span class="name">
+		<div class="bg-white">
+		<div class="p-3 mb-2 rounded-lg" 
+				style="background-color: rgba(<?= $act->activity->activity_type->color ?>,.2);">
+
+		<h3 class="name">
+			<i class="<?= $act->activity->activity_type->image_path ?>"></i>
 			<a href="/activities/view/<?= $act->activity->id ?>"><?= $act->activity->name ?></a>
-		</span>
+		</h3>
+		<div class="p-3 my-3" style="background-color: rgba(255,255,255,.4)">
+			<?= $act->activity->description ?>
+		</div>
+		<div class="p-3" style="background-color: rgba(255,255,255,.4)">
+		<?php foreach($act->activity->steps as $s): ?>
+			<i class="bi bi-pin-map-fill"></i>
+			<a href="/pathways/<?= $s->pathways[0]->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+				<?= $s->pathways[0]->name ?> - <?= $s->name ?>
+			</a>
+		<?php endforeach ?>
+		</div>
+		</div>
 		</div>
 <?php endforeach ?>
 </div>

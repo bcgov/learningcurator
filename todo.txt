@@ -4,14 +4,19 @@
 
 [] Add customization/override for users plugin for custom controllers
     https://github.com/CakeDC/users/blob/master/Docs/Documentation/Extending-the-Plugin.md
+    
 [] Add more ministries to mapping in (and consider how to fix this)
     /vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
+
+[] Implement estimated time view
 [] Completely redesign the step page (started)
 
 [] User search for superadmin and curator
 [] User role beside name in index
+[] Add dates to activities and pathways
+[] Add who created/modified paths and activities to curators
 
-[] Implement unclaim 
+[] Finish implementing unclaim
 [] Check that URLs for activities don't already exist
 [] submit pathway follow/unfollow via JS to prevent page reload
 [] When pathway completed update database with date!
