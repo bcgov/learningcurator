@@ -6,7 +6,7 @@ An emerging project from the Learning Centre for the BC Public Service Agency.
 
 ## Features
 
-There are categories of pathways. Pathways have steps; steps have activities; activies are categorized and tagged. A signed in user can follow pathways and claim activites, tracking their own progress via activity rings.
+There are topics which have pathways. Pathways have steps; steps have activities; activies are categorized and tagged. A signed in user can follow pathways and claim activites, tracking their own progress via activity rings.
 
 ## Usage
 Follow pathways and complete the activities; informal, self-directed learning but guided by a structure that makes sense and is timely and curated.
