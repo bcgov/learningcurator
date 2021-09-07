@@ -79,7 +79,7 @@ $this->loadHelper('Authentication.Identity');
 	</li>
 
 
-	<?php if($this->Identity->get('role') == 'superuser'): ?>
+	<?php if($this->Identity->get('role') == 'superuser' || $this->Identity->get('role') == 'curator'): ?>
 	
 	<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="adminDropdown" 

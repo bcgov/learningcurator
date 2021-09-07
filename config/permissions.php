@@ -109,6 +109,12 @@ return [
             'action' => ['profile', 'logout', 'linkSocial', 'callbackLinkSocial'],
         ],
         [
+            'role' => 'curator',
+            'plugin' => 'CakeDC/Users',
+            'controller' => 'Users',
+            'action' => ['index', 'view'],
+        ],
+        [
             'role' => '*',
             'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
