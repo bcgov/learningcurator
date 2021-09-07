@@ -57,7 +57,7 @@ BC Public Service learning curators.
 	<div class="p-3 my-3 bg-light shadow-sm">
 	
 		<h3>
-			<i class="bi bi-diagram-3-fill"></i>
+			<i class="bi bi-bar-chart-steps"></i>
 			<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
 		</h3>
 		<div class="mb-3"><?= h($topic->description) ?></div>
