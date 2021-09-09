@@ -14,7 +14,7 @@
 [] Completely redesign the step page (started)
 [] Implement step sorting
 
-[] Topic manager role 
+[] Topic manager role?
 
 [] User search for superadmin and curator
 [] User role beside name in index
