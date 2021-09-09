@@ -132,9 +132,7 @@ $this->assign('title', 'Your Profile');
 			<i class="<?= $act->activity->activity_type->image_path ?>"></i>
 			<a href="/activities/view/<?= $act->activity->id ?>"><?= $act->activity->name ?></a>
 		</h3>
-		<div class="p-3 my-3" style="background-color: rgba(255,255,255,.4)">
-			<?= $act->activity->description ?>
-		</div>
+
 		<div class="p-3" style="background-color: rgba(255,255,255,.4)">
 		<?php foreach($act->activity->steps as $s): ?>
 			<i class="bi bi-pin-map-fill"></i>
