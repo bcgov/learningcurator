@@ -97,7 +97,14 @@ This seems to work out, but #TODO investigate optimizing this
 	<span class="badge badge-light listentotal"></span>  
 	<span class="badge badge-light participatetotal"></span>  
 	</div>
-
+	<div class="text-muted p-2 mt-2" style="background-color: rgba(255,255,255,.2)">
+		Added on 
+		<?= $this->Time->format($pathway->created,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+		<?php if($role == 'curator' || $role == 'superuser'): ?>
+		by <a href="/users/view/<?= $pathway->createdby ?>">curator</a>
+		<?php endif ?>
+	</div>
+			
 	<?php if($role == 'curator' || $role == 'superuser'): ?>
 
 	<a class="" 

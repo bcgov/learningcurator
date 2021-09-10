@@ -9,7 +9,6 @@
 [] Add more ministries to mapping in (and consider how to fix this)
     /vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
 
-[] Add dates to activities and pathways
 [] Add who created/modified paths and activities to curators
 [] Implement estimated time view
 [] Finish redesign the step page
@@ -39,6 +38,7 @@
    [] ceate heirarchy document showing Curator
 
 
+[x] Add dates to activities and pathways
 [x] Fix profile editing / role updating for superusers
 [x] SEARCH plugin
 [x] Update Questions index with question list that deep-links into page IDs
