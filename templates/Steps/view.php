@@ -298,7 +298,9 @@ echo $this->Form->postLink(__('Un-Follow'),
 				Claim
 		</a>
 	<div class="collapse" id="claimconfirm<?= $activity->id ?>">
-		<p id="claimhelp<?= $activity->id ?>">If you've completed this activity, claim it so it counts against your progress!</p>
+		<div class="p-3 mt-2" style="background-color: rgba(255,255,255,.5)" id="claimhelp<?= $activity->id ?>">
+		If you've completed this activity, claim it so it counts against your progress!
+	</div>
 		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'claim', 'id' => $activity->id]) ?>
 		<?php //$this->Form->hidden('users.0.created', ['value' => date('Y-m-d H:i:s')]); ?>
 		<?= $this->Form->hidden('users.0.id', ['value' => $uid]); ?>
