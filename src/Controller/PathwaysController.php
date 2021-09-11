@@ -16,6 +16,17 @@ use Cake\Utility\Text;
 class PathwaysController extends AppController
 {
     /**
+     * API method outputs JSON of the index listing of newly published pathways
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function rssfeed()
+    {
+        $pathways = $this->Pathways->find('all');
+        //$this->RequestHandler->renderAs($this, 'rss');
+        $this->set(compact('pathways'));
+    }
+    /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view

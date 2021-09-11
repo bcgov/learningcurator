@@ -157,7 +157,7 @@ return [
         [
             'role' => '*',
             'controller' => 'Pathways',
-            'action' => ['index','view','follow','status'],
+            'action' => ['index','view','follow','status','rssfeed'],
         ],
         [
             'role' => 'curator',
