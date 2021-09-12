@@ -202,7 +202,7 @@ return [
         [
             'role' => '*',
             'controller' => 'Reports',
-            'action' => ['add'],
+            'action' => ['add','reports'],
         ],
         [
             'role' => 'curator',

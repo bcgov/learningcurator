@@ -44,7 +44,7 @@ trait ProfileTrait
             // Get access to the apprprioate table
             $cats = TableRegistry::getTableLocator()->get('Categories');
             // Select based on currently logged in person
-            $categories = $cats->find('all');
+            $categories = $cats->find('all')->contain(['Topics']);
 
             $appContain = (array)Configure::read('Auth.authenticate.' . AuthComponent::ALL . '.contain');
             $socialContain = Configure::read('Users.Social.login') ? ['SocialAccounts'] : [];

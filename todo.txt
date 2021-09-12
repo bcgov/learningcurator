@@ -2,9 +2,6 @@
 
 [] Can I create a "Learning Centre" Github organization?
 [] Docker licensing?
-
-[] Add customization/override for users plugin for custom controllers
-    https://github.com/CakeDC/users/blob/master/Docs/Documentation/Extending-the-Plugin.md
     
 [] Add more ministries to mapping in (and consider how to fix this)
     /vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
@@ -38,6 +35,7 @@
    [] ceate heirarchy document showing Curator
 
 
+[x] Split profile into distinct pages for pathways, claims, and reports
 [x] Add dates to activities and pathways
 [x] Fix profile editing / role updating for superusers
 [x] SEARCH plugin
