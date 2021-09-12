@@ -182,7 +182,7 @@ return [
         [
             'role' => '*',
             'controller' => 'Activities',
-            'action' => ['index','view','claim','find','like','claims'],
+            'action' => ['index','view','claim','find','like'],
         ],
         [
             'role' => 'curator',
@@ -197,7 +197,7 @@ return [
         [
             'role' => '*',
             'controller' => 'ActivitiesUsers',
-            'action' => ['delete'],
+            'action' => ['delete','claims'],
         ],
         [
             'role' => '*',
