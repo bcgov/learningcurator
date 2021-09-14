@@ -65,12 +65,18 @@ $this->loadHelper('Authentication.Identity');
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 	<ul class="navbar-nav mr-auto">
-	<li class="nav-item">
-		<a class="nav-link" href="/profile">Your Profile</a>
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Profile
+		</a>
+		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			<a class="dropdown-item" href="/profile">Your Pathways</a>
+			<a class="dropdown-item" href="/profile/claims">Your Claims</a>
+			<a class="dropdown-item" href="/profile/reports">Your Reports</a>
+			<div class="dropdown-divider"></div>
+			<?php echo $this->User->logout('Logout',['class'=>'dropdown-item']) ?>
+		</div>
 	</li>
-	<!-- <li class="nav-item">
-		<a class="nav-link" href="/categories">Topics</a>
-	</li> -->
 	<li class="nav-item">
 		<a class="nav-link" href="/categories/index">Topics</a>
 	</li>
@@ -78,9 +84,7 @@ $this->loadHelper('Authentication.Identity');
 		<a class="nav-link" href="/questions">FAQ</a>
 	</li>
 
-
 	<?php if($this->Identity->get('role') == 'superuser' || $this->Identity->get('role') == 'curator'): ?>
-	
 	<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="adminDropdown" 
 			role="button" 

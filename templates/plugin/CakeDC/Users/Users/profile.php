@@ -15,7 +15,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-6">
 
 <div class="py-5">
-	<?php echo $this->User->logout('Logout',['class'=>'btn btn-warning float-right']) ?>
+	
 	<div class="systemrole">
 	<?php if($user->role == 'curator'): ?>
 		 <span class="badge badge-success">Curator</span>
@@ -33,7 +33,6 @@ if ($this->Identity->isLoggedIn()) {
 	<?= $user->ministry->name ?>
 	</div> -->
 	<?php endif ?>
-	
 
 </div>
 <div class="nav nav-pills justify-content-center">
@@ -47,10 +46,10 @@ if ($this->Identity->isLoggedIn()) {
 <div class="container-fluid pt-3 linear">
 <div class="row justify-content-md-center">
 <div class="col-md-8 col-lg-6">
-
+<h2><?= __('Your Pathways') ?></h2>
 <?php if (!empty($user->pathways_users)) : ?>
 	
-	<h2><?= __('Your Pathways') ?></h2>
+	
 	<?php foreach ($user->pathways_users as $path) : ?>
 	<div class="p-3 mb-2 bg-white rounded-lg">
 	<div class="row">
@@ -114,19 +113,41 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endforeach; ?>
 	
 <?php else: ?>
-	<h2 class="mb-3"><?= _('You\'re not following any pathways yet.') ?></h2>
 	<div class="p-3 mb-2 bg-white rounded-lg">
-	<p class="mb-3">Check out the following topics for pathways aligned with your goals:</p>
+	<div><strong>You're not yet following any pathways.</strong></div>
+	<p>Following means that you can see your progress through the pathway as you claim activities.
+		Check out the topics below to see all the pathways!
+	</p>
+	</div>
+<?php endif ?>
+	<!-- <h3>Search Activities</h3>
+	<div class="p-3 mb-2 bg-white rounded-lg">
+	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
+		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="search">
+		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+	</form>
+	</div> -->
+	<h3>All Topics</h3>
+	
 	<?php foreach($categories as $cat): ?>
-		
+		<?= $cat->name ?>
+		<div class="p-3 mb-2 bg-white rounded-lg">
 		<?php foreach($cat->topics as $t): ?>
-			<h4><a href="/topics/view/<?= $t->id ?>"><?= $cat->name ?> - <?= $t->name ?></a></h4>
+			<h4 class="mb-0 mt-2">
+				<i class="bi bi-diagram-3-fill"></i>
+				<a href="/topics/view/<?= $t->id ?>"><?= $t->name ?></a>
+			</h4>
+			<?php foreach($t->pathways as $p): ?>
+			<span class="bg-light p-2 d-inline-block my-2">
+				<i class="bi bi-pin-map-fill"></i>
+				<a href="/pathways/<?= $p->slug ?>"><?= $p->name ?></a>
+			</span>
+			<?php endforeach ?>
 		<?php endforeach ?>
+			</div>
 	<?php endforeach ?>
 
-</div>
-<?php endif ?>
-
+	
 
 </div>
 </div>

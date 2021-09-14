@@ -10,7 +10,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-6">
 <div class="py-5">
-<?php echo $this->User->logout('Logout',['class'=>'btn btn-warning float-right']) ?>
+
 <div class="systemrole">
 	<?php if($role == 'curator'): ?>
 		 <span class="badge badge-success">Curator</span>
@@ -33,6 +33,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="row justify-content-md-center">
 <div class="col-md-8 col-lg-6">
 <h2><?= __('Your Claims') ?></h2>
+<?php if(!$activities->isEmpty()): ?>
 <?php foreach($activities as $a): ?>
     
 <div class="bg-white">
@@ -58,7 +59,15 @@ if ($this->Identity->isLoggedIn()) {
     </div>
 </div>
 <?php endforeach ?>
+<?php else: ?>
 
+<div class="p-3 mb-2 bg-white rounded-lg">
+    <div><strong>You've not claimed any activities yet!</strong></div>
+    <p>You can claim activities along a pathway. Doing so allows you to see how much of the path you have completed.</p>
+</div>
+<?php endif ?>
 </div>
 </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

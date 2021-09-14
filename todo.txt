@@ -1,6 +1,7 @@
 #TODO
 
 [] Can I create a "Learning Centre" Github organization?
+[] Can we host stuff on GitHub Pages? https://bcgov.github.io/learningcurator ??
 [] Docker licensing?
     
 [] Add more ministries to mapping in (and consider how to fix this)

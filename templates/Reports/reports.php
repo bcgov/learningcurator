@@ -12,7 +12,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-6">
 <div class="py-5">
-<?php echo $this->User->logout('Logout',['class'=>'btn btn-warning float-right']) ?>
+
 <div class="systemrole">
 	<?php if($role == 'curator'): ?>
 		 <span class="badge badge-success">Curator</span>
