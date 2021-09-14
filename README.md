@@ -1,6 +1,6 @@
 # Learning Curator
 
-Content from many different sources curated into loosely structured learning pathways. These pathways have objectives which are divided up into steps. Each step has various activities (which are simply links out to a resource), some of which are required, while others are supplemental. A step might include two in-person courses, an eLearning course, two books, three videos, and a podcast. Users can track which activities they've consumed, and as they do so, their progress is displayed as colorful progress rings.
+Learning Curator Pathways feature informal learning by theme or community. Here you’ll find recommendations for resources to watch, read, listen to, and courses that will help you reach your goals. Pathways are created by BC Public Service learning curators. 
 
 An emerging project from the Learning Centre for the BC Public Service Agency.
 
@@ -9,7 +9,7 @@ An emerging project from the Learning Centre for the BC Public Service Agency.
 There are topics which have pathways. Pathways have steps; steps have activities; activies are categorized and tagged. A signed in user can follow pathways and claim activites, tracking their own progress via activity rings.
 
 ## Usage
-Follow pathways and complete the activities; informal, self-directed learning but guided by a structure that makes sense and is timely and curated.
+Follow pathways and complete the activities; informal, self-directed learning but guided by a curated structure that makes sense and is timely.
 
 ## Requirements
 
@@ -24,13 +24,15 @@ MySQL/MariaDB
 - cp config/tocopy/ProfileTrait.php vendor/cakedc/users/src/Controller/Traits/ProfileTrait.php
 - cp config/tocopy/UsersTable.php vendor/cakedc/users/src/Model/Table/UsersTable.php
 - cp config/tocopy/UserEntities.php vendor/cakedc/users/src/Model/Entity/User.php
-- cp config/toCopy/SocialBehaviour.php vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
+- cp config/tocopy/SocialBehavior.php vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
 
 ## Project Status
 
 Under active development.
 
 ## Goals/Roadmap
+
+- World-class interface for Curator collaborators to create and manage pathways
 
 ## Getting Help or Reporting an Issue
 
