@@ -298,7 +298,9 @@ echo $this->Form->postLink(__('Un-Follow'),
 				Claim
 		</a>
 	<div class="collapse" id="claimconfirm<?= $activity->id ?>">
-		<p id="claimhelp<?= $activity->id ?>">If you've completed this activity, claim it so it counts against your progress!</p>
+		<div class="p-3 mt-2" style="background-color: rgba(255,255,255,.5)" id="claimhelp<?= $activity->id ?>">
+		If you've completed this activity, claim it so it counts against your progress!
+	</div>
 		<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'claim', 'id' => $activity->id]) ?>
 		<?php //$this->Form->hidden('users.0.created', ['value' => date('Y-m-d H:i:s')]); ?>
 		<?= $this->Form->hidden('users.0.id', ['value' => $uid]); ?>
@@ -328,14 +330,21 @@ echo $this->Form->postLink(__('Un-Follow'),
 		</div>
 
 		<?= $activity->description ?>
+		
 		<?php if(!empty($activity->_joinData->stepcontext)): ?>
 		<div class="alert alert-light text-dark mt-3 shadow-sm">
-				<i class="bi bi-person-badge-fill"></i>
-				Curator says:<br>
-				<?= $activity->_joinData->stepcontext ?>
-			</div>
+			<i class="bi bi-person-badge-fill"></i>
+			Curator says:<br>
+			<?= $activity->_joinData->stepcontext ?>
+		</div>
+		<?php endif ?>
+		<div class="text-muted p-2 mt-2" style="background-color: rgba(255,255,255,.2)">
+			Added on 
+			<?= $this->Time->format($activity->created,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+			<?php if($role == 'curator' || $role == 'superuser'): ?>
+			by <a href="/users/view/<?= $activity->createdby_id ?>">curator</a>
 			<?php endif ?>
-
+		</div>
 	</div>
 	
 	<?php if(!empty($activity->tags)): ?>
@@ -434,9 +443,7 @@ echo $this->Form->postLink(__('Un-Follow'),
 	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="bi bi-hand-thumbs-up-fill"></i>
 	</a>
-
-
-
+	
 
 	</div>
 	</div>

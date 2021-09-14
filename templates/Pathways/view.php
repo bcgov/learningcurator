@@ -97,7 +97,14 @@ This seems to work out, but #TODO investigate optimizing this
 	<span class="badge badge-light listentotal"></span>  
 	<span class="badge badge-light participatetotal"></span>  
 	</div>
-
+	<div class="text-muted p-2 mt-2" style="background-color: rgba(255,255,255,.2)">
+		Added on 
+		<?= $this->Time->format($pathway->created,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+		<?php if($role == 'curator' || $role == 'superuser'): ?>
+		by <a href="/users/view/<?= $pathway->createdby ?>">curator</a>
+		<?php endif ?>
+	</div>
+			
 	<?php if($role == 'curator' || $role == 'superuser'): ?>
 
 	<a class="" 
@@ -139,30 +146,7 @@ This seems to work out, but #TODO investigate optimizing this
 </div>
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="col-md-3 col-lg-2 order-last">
-<div class="bg-white rounded-lg p-3 my-3">
-<a class="" 
-	data-toggle="collapse" 
-	href="#followerlist" 
-	role="button" 
-	aria-expanded="false" 
-	aria-controls="collapseExample">
-		<span class="badge badge-pill badge-dark"><?= $totalusers ?></span> 
-		people are following this path
-</a>
-<div class="collapse" id="followerlist">
-<ul class="list-group list-group-flush">
-<?php foreach($followers as $follower): ?>
-<li class="list-group-item">
-	<a href="/users/view/<?= $follower[0] ?>"><?= $follower[1] ?></a>
-</li>
-<?php endforeach ?>
-</ul>
-</div>
-</div>
-</div>
-<?php endif ?>
+
 <div class="col-6 col-md-3 col-lg-2 order-last">
 
 <?php if(in_array($uid,$usersonthispathway)): ?>
@@ -192,12 +176,43 @@ This seems to work out, but #TODO investigate optimizing this
 	
 	Following a pathway allows you to track your progress and pin the pathway to <a href="/profile">your profile</a>.
 
+
+
+
+
 </div>
 <!--When you select to follow a pathway, this pathway will show as a journey you are on and may be 
 accessed from your profile page. Think of it as “bookmarking” learning you want to come back to and track your progress on.-->
 
+
 </div>
 </div>
+
+<?php if($role == 'curator' || $role == 'superuser'): ?>
+<div class="bg-white rounded-lg p-3 my-3">
+<a class="" 
+	data-toggle="collapse" 
+	href="#followerlist" 
+	role="button" 
+	aria-expanded="false" 
+	aria-controls="collapseExample">
+		<span class="badge badge-pill badge-dark"><?= $totalusers ?></span> 
+		people are following this path
+</a>
+<div class="collapse" id="followerlist">
+<ul class="list-group list-group-flush">
+<?php foreach($followers as $follower): ?>
+<li class="list-group-item">
+	<a href="/users/view/<?= $follower[0] ?>"><?= $follower[1] ?></a>
+</li>
+<?php endforeach ?>
+</ul>
+</div>
+</div>
+<?php endif ?>
+
+
+
 <?php endif ?>
 
 <!--<div class="" style="font-size: 12px">Published <?= h(date('D M jS \'y',strtotime($pathway->created))) ?></div>-->

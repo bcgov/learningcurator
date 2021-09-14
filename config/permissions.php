@@ -109,6 +109,12 @@ return [
             'action' => ['profile', 'logout', 'linkSocial', 'callbackLinkSocial'],
         ],
         [
+            'role' => 'curator',
+            'plugin' => 'CakeDC/Users',
+            'controller' => 'Users',
+            'action' => ['index', 'view'],
+        ],
+        [
             'role' => '*',
             'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
@@ -151,7 +157,7 @@ return [
         [
             'role' => '*',
             'controller' => 'Pathways',
-            'action' => ['index','view','follow','status'],
+            'action' => ['index','view','follow','status','rssfeed'],
         ],
         [
             'role' => 'curator',
@@ -191,12 +197,12 @@ return [
         [
             'role' => '*',
             'controller' => 'ActivitiesUsers',
-            'action' => ['delete'],
+            'action' => ['delete','claims'],
         ],
         [
             'role' => '*',
             'controller' => 'Reports',
-            'action' => ['add'],
+            'action' => ['add','reports'],
         ],
         [
             'role' => 'curator',

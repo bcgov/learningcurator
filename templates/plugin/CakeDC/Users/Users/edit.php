@@ -44,10 +44,15 @@ if ($this->Identity->isLoggedIn()) {
                     ['text' => 'Citizen Services', 'value' => 3],
                 ];
         echo $this->Form->control('ministry_id',['options' => $mins]);
-        
+    
         echo $this->Form->control('additional_data', ['label' => __d('cake_d_c/users', 'Additonal Data')]);
         if($role == 'superuser') {
-            echo $this->Form->control('role', ['label' => __d('cake_d_c/users', 'Role')]);
+            $roles = [
+                ['text' => 'Regular User', 'value' => 'user'],
+                ['text' => 'Curator', 'value' => 'curator'],
+                ['text' => 'Super User', 'value' => 'superuser'],
+            ];
+            echo $this->Form->control('role', ['label' => __d('cake_d_c/users', 'Role'), 'options' => $roles]);
             //echo $this->Form->control('is_superuser', ['label' => __d('cake_d_c/users', 'Is Superuser?')]);
         }
         echo $this->Form->control('token', ['label' => __d('cake_d_c/users', 'Token')]);

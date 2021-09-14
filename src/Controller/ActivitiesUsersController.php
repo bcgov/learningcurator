@@ -12,6 +12,25 @@ namespace App\Controller;
 class ActivitiesUsersController extends AppController
 {
     /**
+     * User claims method
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function claims()
+    {
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $activities = $this->ActivitiesUsers->find()
+                                        ->contain(['Users',
+                                                    'Users.Ministries',
+                                                    'Activities',
+                                                    'Activities.ActivityTypes',
+                                                    'Activities.Steps',
+                                                    'Activities.Steps.Pathways'])
+                                        ->where(['user_id' => $user->id])
+                                        ->order(['ActivitiesUsers.created' => 'asc']);
+        $this->set(compact('activities'));
+    }
+    /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view

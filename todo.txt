@@ -1,17 +1,20 @@
 #TODO
 
 [] Can I create a "Learning Centre" Github organization?
-
-[] Add customization/override for users plugin for custom controllers
-    https://github.com/CakeDC/users/blob/master/Docs/Documentation/Extending-the-Plugin.md
+[] Docker licensing?
+    
 [] Add more ministries to mapping in (and consider how to fix this)
     /vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
-[] Completely redesign the step page (started)
 
+[] Add who created/modified paths and activities to curators
+[] Implement estimated time view
+[] Finish redesign the step page
+[] Implement step sorting
+[] Topic manager role?
 [] User search for superadmin and curator
 [] User role beside name in index
 
-[] Implement unclaim 
+[] Finish implementing unclaim
 [] Check that URLs for activities don't already exist
 [] submit pathway follow/unfollow via JS to prevent page reload
 [] When pathway completed update database with date!
@@ -31,6 +34,10 @@
 [] Add contributor role and then a publishing workflow where contributors must have the work approved by a curator
    [] ceate heirarchy document showing Curator
 
+
+[x] Split profile into distinct pages for pathways, claims, and reports
+[x] Add dates to activities and pathways
+[x] Fix profile editing / role updating for superusers
 [x] SEARCH plugin
 [x] Update Questions index with question list that deep-links into page IDs
 [x] Add listjs text filter on claims profile

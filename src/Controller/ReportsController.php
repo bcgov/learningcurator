@@ -12,6 +12,22 @@ namespace App\Controller;
 class ReportsController extends AppController
 {
     /**
+     * Show the user their own reports method
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function reports ()
+    {
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $reports = $this->Reports->find('all')
+                                ->contain(['Activities','Users'])
+                                ->where(['user_id' => $user->id])
+                                ->order(['Reports.created' => 'desc']);
+
+
+        $this->set(compact('reports'));
+    }
+    /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view

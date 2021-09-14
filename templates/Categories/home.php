@@ -20,6 +20,8 @@ BC Public Service learning curators.
 </p>
 <p style="font-size: 1.5rem"><strong>What do you want to learn today?</strong> </p>
 
+<a href="/profile" class="btn btn-primary btn-lg">Your Profile</a>
+
 </div>
 </div>
 </div>
@@ -55,7 +57,7 @@ BC Public Service learning curators.
 	<div class="p-3 my-3 bg-light shadow-sm">
 	
 		<h3>
-			<i class="bi bi-diagram-3-fill"></i>
+			<i class="bi bi-bar-chart-steps"></i>
 			<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
 		</h3>
 		<div class="mb-3"><?= h($topic->description) ?></div>
@@ -109,7 +111,10 @@ BC Public Service learning curators.
 <?php else: ?>
 	<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
 		
-		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
+		<h3>
+			<i class="bi bi-pin-map-fill"></i>
+			<a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a>
+		</h3>
 		<?= $path->objective ?>
 		<div>
 			

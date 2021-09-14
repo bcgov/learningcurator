@@ -3,14 +3,19 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
 */
-$this->assign('title', 'Your Profile');
+$this->assign('title', 'Pathways you follow');
+$this->loadHelper('Authentication.Identity');
+if ($this->Identity->isLoggedIn()) {
+	$role = $this->Identity->get('role');
+	$uid = $this->Identity->get('id');
+}
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-6">
 
 <div class="py-5">
-<?php echo $this->User->logout('Logout',['class'=>'btn btn-warning float-right']) ?>
+	<?php echo $this->User->logout('Logout',['class'=>'btn btn-warning float-right']) ?>
 	<div class="systemrole">
 	<?php if($user->role == 'curator'): ?>
 		 <span class="badge badge-success">Curator</span>
@@ -18,23 +23,30 @@ $this->assign('title', 'Your Profile');
 		<span class="badge badge-success">Super User</span>
 	<?php endif ?>
 	</div>
-	<h1>
+	<h1 class="display-4">
 		Welcome <?= h($user->first_name) ?>
 	</h1>
 
-    <div>
+    
 	<?php if (!empty($user->ministry)) : ?>
+	<!--<div>
 	<?= $user->ministry->name ?>
+	</div> -->
 	<?php endif ?>
-	</div>
+	
 
+</div>
+<div class="nav nav-pills justify-content-center">
+    <a class="nav-link active" href="/profile">Pathways</a> 
+    <a class="nav-link" href="/profile/claims">Claims</a> 
+    <a class="nav-link" href="/profile/reports">Reports</a> 
 </div>
 </div>
 </div>
 </div>
 <div class="container-fluid pt-3 linear">
 <div class="row justify-content-md-center">
-<div class="col-md-4 col-lg-4">
+<div class="col-md-8 col-lg-6">
 
 <?php if (!empty($user->pathways_users)) : ?>
 	
@@ -84,7 +96,10 @@ $this->assign('title', 'Your Profile');
 			<?= $path->pathway->has('category') ? $this->Html->link($path->pathway->category->name, ['controller' => 'Categories', 'action' => 'view', $path->pathway->category->id]) : '' ?>
 		</div>
 		
-    	<h3><a href="/pathways/<?= $path->pathway->slug ?>"><?= $path->pathway->name ?></a></h3>
+    	<h3>
+			<i class="bi bi-pin-map-fill"></i>
+			<a href="/pathways/<?= $path->pathway->slug ?>"><?= $path->pathway->name ?></a>
+		</h3>
 
 		<div><?= h($path->pathway->objective) ?></div>
 
@@ -101,64 +116,16 @@ $this->assign('title', 'Your Profile');
 <?php else: ?>
 	<h2 class="mb-3"><?= _('You\'re not following any pathways yet.') ?></h2>
 	<div class="p-3 mb-2 bg-white rounded-lg">
-	<p class="mb-3">Check out the following topic areas for pathways aligned with your goals:</p>
+	<p class="mb-3">Check out the following topics for pathways aligned with your goals:</p>
 	<?php foreach($categories as $cat): ?>
-		<h3 class="mt-3"><a href="/categories/view/<?= $cat->id ?>"><?= $cat->name ?></a></h3>
-		<div class="p-3 mb-3 bg-light rounded-3 shadow-sm"><?= $cat->description ?></div>
+		
+		<?php foreach($cat->topics as $t): ?>
+			<h4><a href="/topics/view/<?= $t->id ?>"><?= $cat->name ?> - <?= $t->name ?></a></h4>
+		<?php endforeach ?>
 	<?php endforeach ?>
 
 </div>
 <?php endif ?>
-
-</div>
-
-
-
-<?php if (!empty($user->activities_users)) : ?>
-	<div class="col-md-4 col-lg-4">
-	<h2><?= __('Your Claims') ?></h2>
-	<div id="activitylist">
-	<input type="text" name="activityfilter" id="activityfilter" placeholder="Filter" class="search form-control mb-3">
-	<div class="list"> 
-	<?php foreach($user->activities_users as $act): ?>
-		<div class="p-3 mb-2 bg-white rounded-lg">
-		<span class="name">
-			<a href="/activities/view/<?= $act->activity->id ?>"><?= $act->activity->name ?></a>
-		</span>
-		</div>
-<?php endforeach ?>
-</div>
-</div>
-</div>
-<?php endif ?>
-
-
-
-
-	
-
-
-<?php if (!empty($user->reports)) : ?>
-	<div class="col-md-4 col-lg-4">
-	<h2><i class="fas fa-sitemap"></i> <?= __('Your Reports') ?></h2>
-	<?php foreach ($user->reports as $report) : ?>
-	<div class="p-3 mb-2 bg-white rounded-lg">
-		
-		<?= h($report->created) ?><br>
-		<a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a><br>
-		<?= h($report->issue) ?><br>
-		<?php if(!empty($report->response)): ?>
-			<div class="alert alert-success"><?= h($report->response) ?></div>
-		<?php else: ?>
-			<div class="alert alert-primary">No response yet.</div>
-		<?php endif ?>
-		
-
-	</div>
-	<?php endforeach ?>
-	</div>
-<?php endif ?>
-
 
 
 </div>

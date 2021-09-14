@@ -6,7 +6,7 @@ An emerging project from the Learning Centre for the BC Public Service Agency.
 
 ## Features
 
-There are categories of pathways. Pathways have steps; steps have activities; activies are categorized and tagged. A signed in user can follow pathways and claim activites, tracking their own progress via activity rings.
+There are topics which have pathways. Pathways have steps; steps have activities; activies are categorized and tagged. A signed in user can follow pathways and claim activites, tracking their own progress via activity rings.
 
 ## Usage
 Follow pathways and complete the activities; informal, self-directed learning but guided by a structure that makes sense and is timely and curated.
@@ -23,6 +23,7 @@ MySQL/MariaDB
 - cp config/tocopy/AzureMapper.php vendor/cakedc/auth/src/Social/Mapper/Azure.php
 - cp config/tocopy/ProfileTrait.php vendor/cakedc/users/src/Controller/Traits/ProfileTrait.php
 - cp config/tocopy/UsersTable.php vendor/cakedc/users/src/Model/Table/UsersTable.php
+- cp config/tocopy/UserEntities.php vendor/cakedc/users/src/Model/Entity/User.php
 - cp config/toCopy/SocialBehaviour.php vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
 
 ## Project Status
