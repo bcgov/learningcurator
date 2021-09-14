@@ -70,7 +70,7 @@ $this->loadHelper('Authentication.Identity');
 			Profile
 		</a>
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-			<a class="dropdown-item" href="/profile">Your Pathways</a>
+			<a class="dropdown-item" href="/profile/pathways">Your Pathways</a>
 			<a class="dropdown-item" href="/profile/claims">Your Claims</a>
 			<a class="dropdown-item" href="/profile/reports">Your Reports</a>
 			<div class="dropdown-divider"></div>

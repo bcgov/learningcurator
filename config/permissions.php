@@ -167,7 +167,7 @@ return [
         [
             'role' => '*',
             'controller' => 'PathwaysUsers',
-            'action' => ['follow','delete'],
+            'action' => ['follow','delete','pathways'],
         ],
         [
             'role' => '*',

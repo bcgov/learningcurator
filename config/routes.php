@@ -65,6 +65,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/pathways/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
 
     $builder->connect('/profile/claims', ['controller' => 'ActivitiesUsers', 'action' => 'claims']);
+    $builder->connect('/profile/pathways', ['controller' => 'PathwaysUsers', 'action' => 'pathways']);
     $builder->connect('/profile/reports', ['controller' => 'Reports', 'action' => 'reports']);
     /*
      * Connect catchall routes for all controllers.

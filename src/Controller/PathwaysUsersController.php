@@ -12,6 +12,20 @@ namespace App\Controller;
 class PathwaysUsersController extends AppController
 {
     /**
+     * Show which pathways User is following method
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function pathways ()
+    {
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $pathways = $this->PathwaysUsers->find()
+                                        ->contain(['Pathways','Users'])
+                                        ->where(['user_id' => $user->id])
+                                        ->order(['PathwaysUsers.date_start' => 'asc']);
+        $this->set(compact('pathways'));
+    }
+    /**
      * Follow method
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
@@ -24,6 +38,8 @@ class PathwaysUsersController extends AppController
             $pathwaysUser->user_id = $user->id;
             $pid = $this->request->getData()['pathway_id'];
             $pathwaysUser->pathway_id = $pid;
+            $pathwaysUser->date_start = date('Y-m-d H:i:s');
+
             if ($this->PathwaysUsers->save($pathwaysUser)) {
                 return $this->redirect($this->referer());
             }

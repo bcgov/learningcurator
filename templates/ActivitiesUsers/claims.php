@@ -22,7 +22,7 @@ if ($this->Identity->isLoggedIn()) {
 
 </div>
 <div class="nav nav-pills justify-content-center">
-    <a class="nav-link" href="/profile">Pathways</a> 
+    <a class="nav-link" href="/profile/pathways">Pathways</a> 
     <a class="nav-link active" href="/profile/claims">Claims</a> 
     <a class="nav-link" href="/profile/reports">Reports</a> 
 </div>
