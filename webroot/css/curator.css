@@ -51,8 +51,8 @@ img {
 	 * pallet, I'm just setting this BC Gov blue; it doesn't offend me, but 
 	 * there's room for improvement.
 	 */
-	background-color: #003366;
-	border-color: #003366;
+	/* background-color: #003366;
+	border-color: #003366; UUGH IT CLASHES SO BAD*/
 }
 /*
  * #TODO add in accessible colors for other button types like  "success"
