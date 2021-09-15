@@ -192,7 +192,7 @@ return [
         [
             'role' => 'curator',
             'controller' => 'ActivitiesSteps',
-            'action' => ['edit','add','sort','requiredToggle'],
+            'action' => ['edit','add','sort','requiredToggle','delete'],
         ],
         [
             'role' => '*',

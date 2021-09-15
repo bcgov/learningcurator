@@ -19,14 +19,26 @@ label {
 
 <div class="py-4">
     <h1><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $step->name ?></a></h1>
-    <div><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>" class="btn btn-light btn-sm">View Step</a></div>
+    <div class="btn-group">
+        <a href="#" class="btn btn-light" data-toggle="modal" data-target="#showactadd">
+            Add New Activity
+        </a>
+        <a href="#" class="btn btn-light" data-toggle="modal" data-target="#showactfind">
+            Add Existing Activity
+        </a>
+        <a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>" class="btn btn-light">
+            View Step
+        </a>
+    </div>
+
+</div>
 </div>
 </div>
 </div>
 </div>
 <div class="container-fluid linear">
 <div class="row justify-content-md-center pt-3">
-<div class="col-md-3">
+<div class="col-md-4 col-lg-4">
 <h2>Step Details</h2>
 <div class="my-3 p-3 rounded-lg bg-white">
     <?= $this->Form->create($step) ?>
@@ -45,27 +57,7 @@ label {
     </div>
 </div>
 
-<div class="col-md-5">
-    
-
-
-
-
-
-    <a class="btn btn-primary float-right" data-toggle="collapse" href="#showactadd" role="button" aria-expanded="false" aria-controls="showactadd">
-        Add New Activity
-    </a>
-    <h2>Add Existing Activity</h2>
-    <div class="my-3 p-3 rounded-lg bg-white">
-    <form method="get" id="actfind" action="/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
-        <input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
-        <input type="hidden" name="step_id" value="<?= $step->id ?>">
-        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-    </form>
-    <ul class="list-group list-group-flush" id="results">
-    </ul>
-    </div>
-
+<div class="col-md-8 col-lg-8">
 
 
 
@@ -150,7 +142,7 @@ label {
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $a->id]) ?>
             <?= $this->Form->button(__('Unrequire'),['class'=>'btn btn-sm btn-light float-left']) ?>
             <?= $this->Form->end() ?>
-<br>
+            <br>
             <?= $this->Form->create(null,['action' => '/activities-steps/delete/' . $a->_joinData->id, 'class' => '']) ?>
             <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
             <?= $this->Form->button(__('Remove'),['class' => 'btn btn-sm btn-light']) ?>
@@ -201,10 +193,60 @@ label {
 
     </div>
 </div>
-<div class="col-md-4 collapse" id="showactadd">
 
-    <h2>Add New Activity</h2>
+
+
+
+
+
+
+    <div class="modal fade" id="showactfind" tabindex="-1" aria-labelledby="showactfindLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add Existing Activity to this step</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+
     <div class="my-3 p-3 rounded-lg bg-white">
+    <form method="get" id="actfind" action="/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
+        <input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
+        <input type="hidden" name="step_id" value="<?= $step->id ?>">
+        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <ul class="list-group list-group-flush" id="results">
+    </ul>
+    </div>
+
+
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="showactadd" tabindex="-1" aria-labelledby="showactaddLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add New Activity to this step</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+        
     <?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'addtostep']]) ?>
     <?php 
     echo $this->Form->hidden('createdby_id', ['value' => $this->Identity->get('id'), 'class' => 'form-control']);
@@ -222,6 +264,7 @@ label {
     </label>
     <?php //echo $this->Form->control('activity_type_id', ['class' => 'form-control', 'options' => $atypes]); ?>
     <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
+
     <?php echo $this->Form->textarea('description', ['class' => 'form-control summernote']) ?>
     <?php //echo $this->Form->control('stepcontext', ['class' => 'form-control', 'label' => 'Set Context for this step']); ?>
     <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
@@ -254,8 +297,25 @@ label {
     <?php //echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); ?>
     <?= $this->Form->button(__('Save Activity'), ['class' => 'btn btn-block btn-success my-3']) ?>
     <?= $this->Form->end() ?>
-    </div>
+
+
 </div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
 </div>
 </div>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
