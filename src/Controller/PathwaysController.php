@@ -27,6 +27,25 @@ class PathwaysController extends AppController
         $this->set(compact('pathways'));
     }
     /**
+     * Show Curators their own pathways method
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function curator()
+    {
+        
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $paths = TableRegistry::getTableLocator()->get('Pathways');
+        // If the person is a curator or an admin, then return all of their pathways
+        if($user->role == 'curator' || $user->role == 'superuser') {
+            $pathways = $paths->find('all')->contain(['Topics','Statuses'])->where(['Pathways.createdby' => $user->id]);
+        } else {
+            echo 'Not a curator, sorry.';
+        }
+        //$this->paginate($pathways);
+        $this->set(compact('pathways'));
+    }
+    /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view

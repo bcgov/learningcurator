@@ -162,7 +162,7 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Pathways',
-            'action' => ['edit','add'],
+            'action' => ['edit','add','curator'],
         ],
         [
             'role' => '*',
