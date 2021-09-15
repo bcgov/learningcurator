@@ -27,7 +27,7 @@ class ActivitiesUsersController extends AppController
                                                     'Activities.Steps',
                                                     'Activities.Steps.Pathways'])
                                         ->where(['user_id' => $user->id])
-                                        ->order(['ActivitiesUsers.created' => 'asc']);
+                                        ->order(['ActivitiesUsers.created' => 'desc']);
         $this->set(compact('activities'));
     }
     /**

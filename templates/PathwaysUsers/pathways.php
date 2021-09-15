@@ -42,8 +42,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="row justify-content-md-center">
 <div class="col-md-8 col-lg-6">
 <h2><?= __('Your Pathways') ?></h2>
-<?php if (!empty($pathways)) : ?>
-	
+<?php if (!$pathways->isEmpty()) : ?>
 	
 	<?php foreach ($pathways as $path) : ?>
         
@@ -97,9 +96,16 @@ if ($this->Identity->isLoggedIn()) {
 		</h3>
 
 		<div><?= h($path->pathway->objective) ?></div>
+		<div>Followed on:
+		<?= $this->Time->format($path->date_start,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+		</div>
 
 		<div class="p-3 mt-3 bg-light">Overall Progress: <span class="status<?= $path->pathway->id ?>"></span>%</div>
-
+		<?php 
+	echo $this->Form->postLink(__('Un-Follow'), 
+									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $path->id], 
+									['class' => 'btn btn-light', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really unfollow?')]); 
+	?>
 		<?php //echo $this->Form->postLink(__('Unfollow'), ['controller' => 'App\PathwaysUsers','action' => 'delete/'. $path->_joinData->id], ['class' => 'btn btn-primary float-right', 'confirm' => __('Really unfollow?')]) ?>
 	
 	
@@ -116,6 +122,25 @@ if ($this->Identity->isLoggedIn()) {
 	</p>
 	</div>
 <?php endif ?>
+<h3>All Topics</h3>
+	
+	<?php foreach($categories as $cat): ?>
+		<?= $cat->name ?>
+		<div class="p-3 mb-2 bg-white rounded-lg">
+		<?php foreach($cat->topics as $t): ?>
+			<h4 class="mb-0 mt-2">
+				<i class="bi bi-diagram-3-fill"></i>
+				<a href="/topics/view/<?= $t->id ?>"><?= $t->name ?></a>
+			</h4>
+			<?php foreach($t->pathways as $p): ?>
+			<span class="bg-light p-2 d-inline-block my-2">
+				<i class="bi bi-pin-map-fill"></i>
+				<a href="/pathways/<?= $p->slug ?>"><?= $p->name ?></a>
+			</span>
+			<?php endforeach ?>
+		<?php endforeach ?>
+			</div>
+	<?php endforeach ?>
 
 </div>
 </div>

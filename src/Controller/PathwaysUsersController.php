@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+Use Cake\ORM\TableRegistry;
+
 /**
  * PathwaysUsers Controller
  *
@@ -18,12 +20,16 @@ class PathwaysUsersController extends AppController
      */
     public function pathways ()
     {
+        // Get access to the apprprioate table
+        $cats = TableRegistry::getTableLocator()->get('Categories');
+        // Select based on currently logged in person
+        $categories = $cats->find('all')->contain(['Topics','Topics.Pathways']);
         $user = $this->request->getAttribute('authentication')->getIdentity();
         $pathways = $this->PathwaysUsers->find()
                                         ->contain(['Pathways','Users'])
                                         ->where(['user_id' => $user->id])
-                                        ->order(['PathwaysUsers.date_start' => 'asc']);
-        $this->set(compact('pathways'));
+                                        ->order(['PathwaysUsers.date_start' => 'desc']);
+        $this->set(compact('pathways','categories'));
     }
     /**
      * Follow method
