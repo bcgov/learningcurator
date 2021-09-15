@@ -74,7 +74,11 @@ $this->loadHelper('Authentication.Identity');
 			<a class="dropdown-item" href="/profile/claims">Your Claims</a>
 			<a class="dropdown-item" href="/profile/reports">Your Reports</a>
 			<div class="dropdown-divider"></div>
-			<?php echo $this->User->logout('Logout',['class'=>'dropdown-item']) ?>
+			<a class="dropdown-item" href="/logout">
+				Logout
+				<i class="bi bi-box-arrow-right"></i>
+			</a>
+			<?php //echo $this->User->logout('Logout',['class'=>'dropdown-item']) ?>
 		</div>
 	</li>
 	<li class="nav-item">
