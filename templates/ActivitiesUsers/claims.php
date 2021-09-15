@@ -47,9 +47,10 @@ if ($this->Identity->isLoggedIn()) {
             </a>
                 
             </div>
-            <div>
+            <div class="p-3" style="background-color: rgba(255,255,255,.3)">
+            <div>Claimed on: <?= $this->Time->format($a['created'],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?></div>
             <?php foreach($a['activity']['steps'] as $s): ?>
-                <div>
+                <div>Included in 
                     <a href="/pathways/<?= $s->pathways[0]->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
                         <?= $s->pathways[0]->name ?> - <?= $s->name ?>
                     </a>
