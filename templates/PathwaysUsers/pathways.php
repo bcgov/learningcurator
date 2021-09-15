@@ -133,10 +133,12 @@ if ($this->Identity->isLoggedIn()) {
 				<a href="/topics/view/<?= $t->id ?>"><?= $t->name ?></a>
 			</h4>
 			<?php foreach($t->pathways as $p): ?>
+			<?php if($p->status_id == 2): ?>
 			<span class="bg-light p-2 d-inline-block my-2">
 				<i class="bi bi-pin-map-fill"></i>
 				<a href="/pathways/<?= $p->slug ?>"><?= $p->name ?></a>
 			</span>
+			<?php endif ?>
 			<?php endforeach ?>
 		<?php endforeach ?>
 			</div>
