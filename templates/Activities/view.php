@@ -176,39 +176,6 @@ if ($this->Identity->isLoggedIn()) {
 		</div>
 
 		
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-	
-	<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#assignment<?= $activity->id ?>" aria-expanded="false" aria-controls="assignment<?= $activity->id ?>">
-	<i class="fas fa-sitemap"></i> Path Assigment
-	  </button>
-	  
-	<div class="collapse" id="assignment<?= $activity->id ?>">
-	<?php foreach($allpathways as $pathway): ?>
-	<div class="my-1 p-3" style="background-color: rgba(255,255,255,.3)">
-	<button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#steps<?= $pathway->id ?>" aria-expanded="false" aria-controls="steps<?= $pathway->id ?>">
-		Steps
-	  </button>
-	
-	<a href="/pathways/<?= $pathway->slug ?>" target="_blank" rel="noopener"><?= $pathway->name ?></a>
-	
-	<div class="collapse p-3" id="steps<?= $pathway->id ?>">
-	<?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
-	<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id ]) ?>
-	<?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
-	<?php foreach($pathway->steps as $step): ?>
-	<label style="display: inline-block; margin: 0 10px 0 5px;">
-	<input id="step_id_<?= $step->id ?>" type="radio" name="step_id" value="<?= $step->id ?>">
-	<?= $step->name ?>
-	</label>
-	<?php endforeach ?>
-	<?= $this->Form->button(__('Assign'),['class'=>'btn btn-sm btn-light']) ?>
-	<?= $this->Form->end() ?>
-	</div>
-	</div>
-	
-	<?php endforeach ?>
-	</div> <!-- .collapse -->
-<?php endif ?>
 
 </div>
 </div>
