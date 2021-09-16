@@ -27,8 +27,6 @@ if ($this->Identity->isLoggedIn()) {
 		Welcome <?= $this->Identity->get('first_name') ?>
 	</h1>
 
-
-
 </div>
 <div class="nav nav-pills justify-content-center">
     <a class="nav-link active" href="/profile/pathways">Pathways</a> 
@@ -129,10 +127,10 @@ if ($this->Identity->isLoggedIn()) {
 	<div class="p-3 mb-2 bg-white">
 		<a href="/pathways/<?= $p->slug ?>">
 			<i class="bi bi-pin-map-fill"></i> 
-			<?= $p->name ?>
+			<?= h($p->name) ?>
 		</a> 
 		<a href="/topics/view/<?= $p->topic->id ?>" class="badge badge-light">
-		<?= $p->topic->categories[0]->name ?> <?= $p->topic->name ?>
+		<?= h($p->topic->categories[0]->name) ?> <?= h($p->topic->name) ?>
 		</a>
 	</div>
 <?php endforeach ?>
