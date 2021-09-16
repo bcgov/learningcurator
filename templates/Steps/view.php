@@ -252,9 +252,9 @@ echo $this->Form->postLink(__('Un-Follow'),
 <div class="col-md-9 col-lg-6">
 
 
-<div class="bg-white p-3 my-3 rounded-lg shadow-sm">
+<div class="bg-white p-3 my-3 rounded-lg shadow-lg">
 	<div style="font-size: 140%;">
-	<?= $step->description ?>
+	<?= $step->name ?> - <?= $step->description ?>
 	</div>
 	<div class="my-3">
 		<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
@@ -282,7 +282,7 @@ echo $this->Form->postLink(__('Un-Follow'),
 <?php if (!empty($step->activities)) : ?>
 
 <?php foreach ($requiredacts as $activity) : ?>
-	<div class="bg-white">
+	<div class="bg-white rounded-lg">
 <div class="p-3 my-3 rounded-lg activity" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
