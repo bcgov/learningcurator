@@ -20,7 +20,7 @@ BC Public Service learning curators.
 </p>
 <p style="font-size: 1.5rem"><strong>What do you want to learn today?</strong> </p>
 
-<a href="/profile" class="btn btn-primary btn-lg">Your Profile</a>
+<a href="/profile/pathways" class="btn btn-primary btn-lg">Your Profile</a>
 
 </div>
 </div>
@@ -28,32 +28,8 @@ BC Public Service learning curators.
 
 <div class="container-fluid">
 <div class="row justify-content-md-center linear">
-<div class="col-md-10 col-lg-6">
-<h2 class="mt-3">Topic Areas</h2>
 
-
-	
-
-	<?php foreach($categories as $cat): ?>
-		<div class="p-3 mb-3 bg-white rounded-lg">
-		<?php foreach($cat->topics as $t): ?>
-			<h4 class="mb-0 mt-2">
-				<i class="bi bi-diagram-3-fill"></i>
-				<a href="/topics/view/<?= $t->id ?>"><?= $cat->name ?> - <?= $t->name ?></a>
-			</h4>
-			<?php foreach($t->pathways as $p): ?>
-			<span class="bg-light p-2 d-inline-block my-2">
-				<i class="bi bi-pin-map-fill"></i>
-				<a href="/pathways/<?= $p->slug ?>"><?= $p->name ?></a>
-			</span>
-			<?php endforeach ?>
-		<?php endforeach ?>
-			</div>
-	<?php endforeach ?>
-	
-
-</div>
-<div class="col-md-10 col-lg-6">
+<div class="col-md-10 col-lg-6 col-xl-4">
 <h2 class="mt-3">Featured Pathways</h2>
 <div>
 <?php foreach($featuredpathways as $path): ?>
