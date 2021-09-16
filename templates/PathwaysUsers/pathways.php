@@ -122,27 +122,21 @@ if ($this->Identity->isLoggedIn()) {
 	</p>
 	</div>
 <?php endif ?>
-<h3>All Topics</h3>
-	
-	<?php foreach($categories as $cat): ?>
-		<?= $cat->name ?>
-		<div class="p-3 mb-2 bg-white rounded-lg">
-		<?php foreach($cat->topics as $t): ?>
-			<h4 class="mb-0 mt-2">
-				<i class="bi bi-diagram-3-fill"></i>
-				<a href="/topics/view/<?= $t->id ?>"><?= $t->name ?></a>
-			</h4>
-			<?php foreach($t->pathways as $p): ?>
-			<?php if($p->status_id == 2): ?>
-			<span class="bg-light p-2 d-inline-block my-2">
-				<i class="bi bi-pin-map-fill"></i>
-				<a href="/pathways/<?= $p->slug ?>"><?= $p->name ?></a>
-			</span>
-			<?php endif ?>
-			<?php endforeach ?>
-		<?php endforeach ?>
-			</div>
-	<?php endforeach ?>
+<h3>Recent Pathways</h3>
+
+<?php foreach($published as $p): ?>
+	<!-- <pre><?php print_r($p) ?></pre> -->
+	<div class="p-3 mb-2 bg-white">
+		<a href="/pathways/<?= $p->slug ?>">
+			<i class="bi bi-pin-map-fill"></i> 
+			<?= $p->name ?>
+		</a> 
+		<a href="/topics/view/<?= $p->topic->id ?>" class="badge badge-light">
+		<?= $p->topic->categories[0]->name ?> <?= $p->topic->name ?>
+		</a>
+	</div>
+<?php endforeach ?>
+
 
 </div>
 </div>
