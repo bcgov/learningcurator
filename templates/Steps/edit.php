@@ -17,8 +17,15 @@ label {
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-12">
 
-<div class="py-4">
-    <h1><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $step->name ?></a></h1>
+<div class="py-4 text-center">
+    Editing <a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
+        <?= $step->pathways[0]->name ?> <?= $step->name ?>
+        </a>
+    <h1>
+        <a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
+        <?= $step->name ?>
+        </a>
+    </h1>
     <div class="btn-group">
         <a href="#" class="btn btn-light" data-toggle="modal" data-target="#showactadd">
             Add New Activity
