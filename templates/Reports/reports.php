@@ -36,7 +36,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-8 col-lg-6">
 <h2><?= __('Your Reports') ?></h2>
 <div class="my-2 p-3 bg-white rounded-lg">
-<?php if (!empty($reports)) : ?>
+<?php if (!$reports->isEmpty()) : ?>
 	
 	<?php foreach ($reports as $report) : ?>
 	<div class="p-3 mb-2 bg-white rounded-lg">
@@ -78,6 +78,11 @@ if ($this->Identity->isLoggedIn()) {
 
 	</div>
 	<?php endforeach ?>
+<?php else: ?>
+	<p><strong>You've not yet filed any reports.</strong></p>
+	<p>You can file reports against any activity. You might find a dead link, 
+		or encounter a licensing issue; if you do, you can click the report
+		button and tell us what's wrong.</p>
 <?php endif ?>
 
 </div>

@@ -63,7 +63,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php else: ?>
 
 <div class="p-3 mb-2 bg-white rounded-lg">
-    <div><strong>You've not claimed any activities yet!</strong></div>
+    <p><strong>You've not yet claimed any activities.</strong></p>
     <p>You can claim activities along a pathway. Doing so allows you to see how much of the path you have completed.</p>
 </div>
 <?php endif ?>
