@@ -25,6 +25,7 @@ if ($this->Identity->isLoggedIn()) {
     <a class="nav-link" href="/profile/pathways">Pathways</a> 
     <a class="nav-link active" href="/profile/claims">Claims</a> 
     <a class="nav-link" href="/profile/reports">Reports</a> 
+    <a class="nav-link" href="/profile/contributions">Contributions</a> 
 </div>
 </div>
 </div>

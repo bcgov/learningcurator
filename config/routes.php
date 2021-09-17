@@ -61,13 +61,14 @@ $routes->scope('/', function (RouteBuilder $builder) {
     //$builder->connect('/pathways-users/delete', ['controller' => 'PathwaysUsers', 'action' => 'delete']);
     $builder->connect('/pathways/add', ['controller' => 'Pathways', 'action' => 'add']);
     $builder->connect('/pathways/rssfeed', ['controller' => 'Pathways', 'action' => 'rssfeed']);
-    $builder->connect('/pathways/curator', ['controller' => 'Pathways', 'action' => 'curator']);
+    
     $builder->connect('/pathways/{slug}', ['controller' => 'Pathways', 'action' => 'view'])->setPass(['slug']);
     $builder->connect('/pathways/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
 
     $builder->connect('/profile/claims', ['controller' => 'ActivitiesUsers', 'action' => 'claims']);
     $builder->connect('/profile/pathways', ['controller' => 'PathwaysUsers', 'action' => 'pathways']);
     $builder->connect('/profile/reports', ['controller' => 'Reports', 'action' => 'reports']);
+    $builder->connect('/profile/contributions', ['controller' => 'Pathways', 'action' => 'contributions']);
     /*
      * Connect catchall routes for all controllers.
      *
