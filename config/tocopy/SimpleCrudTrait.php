@@ -49,7 +49,8 @@ trait SimpleCrudTrait
         $acts = TableRegistry::getTableLocator()->get('Activities');
         $actsadded = $acts->find('all')->contain(['ActivityTypes','Statuses','Steps','Steps.Pathways'])
                                         ->where(['Activities.createdby_id' => $id]);
-        //$pathways = $this->Pathways->find('all')->contain(['Topics','Statuses'])->where(['Pathways.createdby' => $user->id]);
+        $paths = TableRegistry::getTableLocator()->get('Pathways');
+        $pathsadded = $paths->find('all')->where(['Pathways.createdby' => $id]);
 
         $table = $this->loadModel();
         $tableAlias = $table->getAlias();
@@ -57,13 +58,17 @@ trait SimpleCrudTrait
             'contain' => ['PathwaysUsers',
                             'PathwaysUsers.Pathways',
                             'ActivitiesUsers',
-                            'ActivitiesUsers.Activities'],
+                            'ActivitiesUsers.Activities',
+                            'ActivitiesUsers.Activities.ActivityTypes'],
         ]);
-        $this->set('actsadded');
+        $this->set('actsadded', $actsadded);
+        $this->set('pathsadded', $pathsadded);
         $this->set($tableAlias, $entity);
         $this->set('tableAlias', $tableAlias);
         $this->set('_serialize', [$tableAlias, 'tableAlias']);
     }
+
+
 
     /**
      * Add method
