@@ -10,7 +10,7 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?><div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-6">
+<div class="col-md-10 col-lg-8 col-xl-6">
 <div class="py-5">
 
 <div class="systemrole">
@@ -36,11 +36,11 @@ if ($this->Identity->isLoggedIn()) {
 <div class="row justify-content-md-center">
 <div class="col-md-8 col-lg-6">
 <h2><?= __('Your Reports') ?></h2>
-<div class="my-2 p-3 bg-white rounded-lg">
+<div class="my-2 p-3 bg-white rounded-lg shadow-lg">
 <?php if (!$reports->isEmpty()) : ?>
 	
 	<?php foreach ($reports as $report) : ?>
-	<div class="p-3 mb-2 bg-white rounded-lg">
+	<div class="">
 		
 		<?= h($report->created) ?>
 		<div><strong><a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></strong></div>
@@ -52,6 +52,7 @@ if ($this->Identity->isLoggedIn()) {
 		<?php else: ?>
 			<div class="alert alert-primary">No response yet.</div>
 		<?php endif ?>
+		<?php if($role == 'curator' || $role == 'superuser'): ?>
 		<a href="#curatorresponse<?= $report->id ?>" 
 			style="color:#333;" 
 			class="btn btn-light" 
@@ -76,6 +77,7 @@ if ($this->Identity->isLoggedIn()) {
 		<input type="submit" class="btn btn-primary" value="Submit Response">
 		<?= $this->Form->end() ?>
 		</div> <!-- curatorresponse -->
+		<?php endif ?>
 
 	</div>
 	<?php endforeach ?>

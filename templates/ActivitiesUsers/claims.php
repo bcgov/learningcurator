@@ -8,7 +8,7 @@ if ($this->Identity->isLoggedIn()) {
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-6">
+<div class="col-md-10 col-lg-8 col-xl-6">
 <div class="py-5">
 
 <div class="systemrole">
@@ -63,11 +63,28 @@ if ($this->Identity->isLoggedIn()) {
 <?php endforeach ?>
 <?php else: ?>
 
-<div class="p-3 mb-2 bg-white rounded-lg">
+<div class="p-3 mb-2 bg-white rounded-lg shadow-lg">
     <p><strong>You've not yet claimed any activities.</strong></p>
     <p>You can claim activities along a pathway. Doing so allows you to see how much of the path you have completed.</p>
 </div>
 <?php endif ?>
+
+<h3 class="mt-5">Recent Pathways</h3>
+
+<?php foreach($published as $p): ?>
+	<!-- <pre><?php print_r($p) ?></pre> -->
+	<div class="p-3 mb-2 bg-white">
+		<a href="/pathways/<?= $p->slug ?>">
+			<i class="bi bi-pin-map-fill"></i> 
+			<?= h($p->name) ?>
+		</a> 
+		<a href="/topics/view/<?= $p->topic->id ?>" class="badge badge-light">
+		<?= h($p->topic->categories[0]->name) ?> <?= h($p->topic->name) ?>
+		</a>
+	</div>
+<?php endforeach ?>
+
+
 </div>
 </div>
 </div>

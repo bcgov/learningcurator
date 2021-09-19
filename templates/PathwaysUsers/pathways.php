@@ -12,7 +12,7 @@ if ($this->Identity->isLoggedIn()) {
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-6">
+<div class="col-md-10 col-lg-8 col-xl-6">
 
 <div class="py-5">
 	
@@ -116,14 +116,15 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endforeach; ?>
 	
 <?php else: ?>
-	<div class="p-3 mb-2 bg-white rounded-lg">
+	<div class="p-3 mb-2 bg-white rounded-lg shadow-lg">
 	<p><strong>You're not yet following any pathways.</strong></p>
 	<p>Following means that you can see your progress through the pathway as you claim activities.
 		Check out the topics below to see all the pathways!
 	</p>
 	</div>
 <?php endif ?>
-<h3>Recent Pathways</h3>
+
+<h3 class="mt-5">Recent Pathways</h3>
 
 <?php foreach($published as $p): ?>
 	<!-- <pre><?php print_r($p) ?></pre> -->

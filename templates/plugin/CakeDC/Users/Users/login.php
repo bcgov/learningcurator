@@ -17,7 +17,7 @@ $this->assign('title', 'Learning on demand');
 
 <h1 class="display-4 mt-5">Learning on demand.</h1>
 
-<div class="p-3 rounded-lg mb-5 bg-white shadow-sm">
+<div class="p-3 rounded-lg mb-5 bg-white shadow-lg">
 <p style="font-size: 1.3rem">Learning Curator Pathways feature informal learning by theme or community. 
 Here you’ll find recommendations for resources to watch, read, listen to, and courses that will help 
 you reach your goals. Pathways are created by BC Public Service learning curators.</p>
