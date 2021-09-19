@@ -29,7 +29,7 @@ BC Public Service learning curators.
 <div class="container-fluid">
 <div class="row justify-content-md-center linear">
 
-<div class="col-md-10 col-lg-6 col-xl-4">
+<div class="col-md-10 col-lg-8 col-xl-6">
 <h2 class="mt-3">Featured Pathways</h2>
 <div>
 <?php foreach($featuredpathways as $path): ?>
@@ -47,10 +47,11 @@ BC Public Service learning curators.
 <?php endif ?>
 <?php else: ?>
 	<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
-		
 		<h3>
-			<i class="bi bi-pin-map-fill"></i>
-			<a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a>
+			<a href="/pathways/<?= $path->slug ?>">
+				<i class="bi bi-pin-map-fill"></i>
+				<?= $path->name ?>
+			</a>
 		</h3>
 		<?= $path->objective ?>
 		<div>

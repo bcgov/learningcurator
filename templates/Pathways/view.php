@@ -16,49 +16,7 @@ $totalusers = count($usersonthispathway);
 $this->assign('title', h($pathway->name));
 
 ?>
-<style>
-/* Start desktop-specific code for this page.
-Arbitrarily set to 45em based on sample code from ...somewhere. 
-This seems to work out, but #TODO investigate optimizing this
-*/
-@media (min-width: 45em) {
-	/* probably can be removed as probably not using columns any more */
-    .card-columns {
-        -webkit-column-count:2;
-        -moz-column-count:2;
-        column-count:2;
-    }
-	
-	.stickyrings {
-		align-self: flex-start; 
-		position: -webkit-sticky;
-		position: sticky;
-		
-		top: 86px;
-		z-index: 1000;
-	}
-} /* end desktop-specific code */
 
-.following {
-	font-size: 20px;
-	font-weight: 200;
-	text-align: center;
-}
-.stickynav {
-	align-self: flex-start; 
-	position: -webkit-sticky;
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-}
-#stepnav {
-	box-shadow: 0 0 20px rgba(0,0,0,.05);
-}
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-	background-color: #F1F1F1;
-	color: #333;
-}
-</style>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-10 col-lg-8">
@@ -72,7 +30,7 @@ This seems to work out, but #TODO investigate optimizing this
 	
 	<li class="breadcrumb-item"><?= $this->Html->link($pathway->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $pathway->topic->categories[0]->id]) ?></li>
 		<li class="breadcrumb-item"><?= $pathway->has('topic') ? $this->Html->link($pathway->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id]) : '' ?></li>
-		<li class="breadcrumb-item" aria-current="page"><?= h($pathway->name) ?> </li>
+		<!-- <li class="breadcrumb-item" aria-current="page"><?= h($pathway->name) ?> </li> -->
 	</ol>
 	</nav> 
 

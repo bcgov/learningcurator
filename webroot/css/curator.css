@@ -16,15 +16,30 @@
  /* #TODO update the below link states to make more sense. */
 a {
 	color: #000;
+	text-decoration: underline;
 }
 a:hover {
-	color: #000;
+	color: #333;
+}
+.nav a:hover {
+	color: #333;
+	text-decoration: underline;
 }
 a:active {
-	color: #000;
+	color: #999;
 }
 a:focus {
+	color: #333;
+}
+.navbar a {
 	color: #000;
+	text-decoration: none;
+}
+.navbar a:focus {
+	color: #333;
+}
+.btn {
+	text-decoration: none;
 }
 /* This _can_ be set individually with Bootstrap's 
  * .img-fluid class, but I prefer to set it globally; I can't think of a time
