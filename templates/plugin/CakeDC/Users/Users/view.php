@@ -10,10 +10,18 @@
  */
 
 $Users = ${$tableAlias};
+$usenam = $Users->first_name . ' ' . $Users->last_name . ' profile';
+$this->assign('title', $usenam);
+$this->loadHelper('Authentication.Identity');
+if ($this->Identity->isLoggedIn()) {
+	$role = $this->Identity->get('role');
+	$uid = $this->Identity->get('id');
+}
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center pb-5" id="colorful">
 <div class="col-md-10 col-xl-6">
+<?php if($role == 'superuser'): ?>
 <div class="btn-group float-right mt-5">
 <?= $this->Html->link(__d('cake_d_c/users', 'Edit User'), ['action' => 'edit', $Users->id],['class'=>'btn btn-primary']) ?> 
 <?= $this->Form->postLink(
@@ -23,6 +31,7 @@ $Users = ${$tableAlias};
                 'class' => 'btn btn-light']
             ) ?> 
 </div>
+<?php endif ?>
 <h1 class="display-4 mt-5">
     <?= h($Users->first_name) ?> <?= h($Users->last_name) ?>
 </h1>

@@ -22,6 +22,7 @@ MySQL/MariaDB
 - cp config/tocopy/Azure.php vendor/thenetworg/oauth2-azure/src/Provider/Azure.php
 - cp config/tocopy/AzureMapper.php vendor/cakedc/auth/src/Social/Mapper/Azure.php
 - cp config/tocopy/ProfileTrait.php vendor/cakedc/users/src/Controller/Traits/ProfileTrait.php
+- cp config/tocopy/SimpleCrudTrait.php vendor/cakedc/users/src/Controller/Traits/SimpleCrudTrait.php
 - cp config/tocopy/UsersTable.php vendor/cakedc/users/src/Model/Table/UsersTable.php
 - cp config/tocopy/UserEntities.php vendor/cakedc/users/src/Model/Entity/User.php
 - cp config/tocopy/SocialBehavior.php vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
