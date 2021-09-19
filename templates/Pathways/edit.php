@@ -20,6 +20,9 @@ $this->loadHelper('Authentication.Identity');
 <?php echo $this->Form->control('status_id', ['type' => 'select', 'options' => $statuses, 'class' => 'form-control']) ?>
 
 
+<?php echo $this->Form->control('createdby_id', ['type' => 'select', 'options' => $users, 'class' => 'form-control']) ?>
+
+
 <div>
 <label>Topic:
 <?php echo $this->Form->select(
@@ -31,7 +34,7 @@ $this->loadHelper('Authentication.Identity');
 </div>
 <?php
 echo $this->Form->control('name', ['class' => 'form-control']);
-echo $this->Form->control('slug', ['class' => 'form-control']);
+//echo $this->Form->control('slug', ['class' => 'form-control']);
 echo $this->Form->control('description', ['class' => 'form-control']);
 echo $this->Form->control('estimated_time', ['class' => 'form-control']);
 echo $this->Form->control('objective', ['class' => 'form-control']);
