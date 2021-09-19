@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CakeDC\Users\Controller\Traits;
 
 use Cake\Utility\Inflector;
+Use Cake\ORM\TableRegistry;
 
 /**
  * Covers the baked CRUD actions, note we could use Crud Plugin too
@@ -45,6 +46,11 @@ trait SimpleCrudTrait
      */
     public function view($id = null)
     {
+        $acts = TableRegistry::getTableLocator()->get('Activities');
+        $actsadded = $acts->find('all')->contain(['ActivityTypes','Statuses','Steps','Steps.Pathways'])
+                                        ->where(['Activities.createdby_id' => $id]);
+        //$pathways = $this->Pathways->find('all')->contain(['Topics','Statuses'])->where(['Pathways.createdby' => $user->id]);
+
         $table = $this->loadModel();
         $tableAlias = $table->getAlias();
         $entity = $table->get($id, [
@@ -53,6 +59,7 @@ trait SimpleCrudTrait
                             'ActivitiesUsers',
                             'ActivitiesUsers.Activities'],
         ]);
+        $this->set('actsadded');
         $this->set($tableAlias, $entity);
         $this->set('tableAlias', $tableAlias);
         $this->set('_serialize', [$tableAlias, 'tableAlias']);
