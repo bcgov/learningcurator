@@ -89,10 +89,12 @@ if ($this->Identity->isLoggedIn()) {
 			<?= $path->pathway->has('category') ? $this->Html->link($path->pathway->category->name, ['controller' => 'Categories', 'action' => 'view', $path->pathway->category->id]) : '' ?>
 		</div>
 		
-    	<h3>
+    	<div>
 			<i class="bi bi-pin-map-fill"></i>
-			<a href="/pathways/<?= $path->pathway->slug ?>"><?= $path->pathway->name ?></a>
-		</h3>
+			<a href="/pathways/<?= $path->pathway->slug ?>" class="font-weight-bold">
+				<?= $path->pathway->name ?>
+			</a>
+		</div>
 
 		<div><?= h($path->pathway->objective) ?></div>
 		<div>Followed on:

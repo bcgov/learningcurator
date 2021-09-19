@@ -44,8 +44,9 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <div class="w-100"></div>
 <div class="col-md-6 col-lg-6 col-xl-4">
-<?php if(!$pathways->isEmpty()): ?>
 <h3>Pathways</h3>
+<?php if(!$pathways->isEmpty()): ?>
+
 <?php foreach ($pathways as $pathway): ?>
 <div class="p-3 mb-2 bg-white rounded-lg">
 	

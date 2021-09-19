@@ -101,37 +101,36 @@ class ActivitiesController extends AppController
         // First let's check to see if this person is logged in or not.
         //
 	    $user = $this->request->getAttribute('authentication')->getIdentity();
-        if(!empty($user)) {
         
-            // We need create am empty array first. If nothing gets added to
-            // it, so be it
-            $useractivitylist = array();
+        // We need create am empty array first. If nothing gets added to
+        // it, so be it
+        $useractivitylist = array();
 
-            // Get access to the appropriate table
-            $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
-            
-            // Select all activities that this user has claimed
-            $useacts = $au->find()->where(['user_id = ' => $user->id]);
+        // Get access to the appropriate table
+        $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
+        
+        // Select all activities that this user has claimed
+        $useacts = $au->find()->where(['user_id = ' => $user->id]);
 
-            // convert the results into a simple array so that we can
-            // use in_array in the template
-            //$useractivities = $useacts->toList();
+        // convert the results into a simple array so that we can
+        // use in_array in the template
+        //$useractivities = $useacts->toList();
 
-            // Loop through the resources and add just the ID to the 
-            // array that we will pass into the template
-            // #TODO this is probably really inefficient #refactor
-            $claimid = 0;
-            foreach($useacts as $uact) {
-                // Has the current user claimed this activity? If so, then 
-                // we record the activities_users ID number so we can remove
-                // the association (unclaim) if the user clicks the "Unclaim"
-                // button.
-                if($uact->activity_id == $id) {
-                    $claimid = $uact->id;
-                }
-                array_push($useractivitylist, $uact['activity_id']);
+        // Loop through the resources and add just the ID to the 
+        // array that we will pass into the template
+        // #TODO this is probably really inefficient #refactor
+        $claimid = 0;
+        foreach($useacts as $uact) {
+            // Has the current user claimed this activity? If so, then 
+            // we record the activities_users ID number so we can remove
+            // the association (unclaim) if the user clicks the "Unclaim"
+            // button.
+            if($uact->activity_id == $id) {
+                $claimid = $uact->id;
             }
+            array_push($useractivitylist, $uact['activity_id']);
         }
+    
         $activity = $this->Activities->get($id, [
             'contain' => ['Statuses', 
                             'Ministries', 
@@ -148,7 +147,11 @@ class ActivitiesController extends AppController
         $pathways = $allpaths->find('all')->contain(['Steps']);
         $allpathways = $pathways->toList();
 
-        $this->set(compact('activity', 'useractivitylist','allpathways','claimid'));
+        $curatorinfo = TableRegistry::getTableLocator()->get('Users');
+        $cur = $curatorinfo->find()->where(['id = ' => $activity->createdby_id]);
+        $curator = $cur->toList();
+
+        $this->set(compact('activity', 'useractivitylist','allpathways','claimid','curator'));
     }
 
     /**

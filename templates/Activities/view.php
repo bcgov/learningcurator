@@ -19,7 +19,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-12 col-lg-6">
 <div class="py-5">
 
-	<?php if($role == 2 || $role == 'superuser'): ?>
+	<?php if($role == 'curator' || $role == 'superuser'): ?>
 	<div class="btn-group float-right">
 	<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $activity->id], ['confirm' => __('Really delete?'), 'class' => 'btn btn-sm btn-light']) ?>
 	<?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'btn btn-light btn-sm']) ?>
@@ -64,6 +64,12 @@ if ($this->Identity->isLoggedIn()) {
 			<?php endforeach ?>
 		</div>
 		<?= $activity->description ?>
+		<div class="p-2 text-muted" style="background-color: rgba(255,255,255,.5)">
+			<?= $this->Time->format($activity->created,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+			<?php if($role == 'curator' || $role == 'superuser'): ?>
+				by <a href="/users/view/<?= $activity->createdby_id ?>"><?= $curator[0]->username ?></a>
+			<?php endif ?>
+		</div>
 	</div>
 	<?php if(!empty($activity->tags)): ?>
 	<?php foreach($activity->tags as $tag): ?>
@@ -183,24 +189,19 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
+<?php if(!empty($activity->steps)): ?>
 <div class="col-md-4">
-
 <h3 class="mt-3"><i class="fas fa-sitemap"></i> Pathways</h3>
 
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
 <?php if($path->status_id == 2): ?>
-<div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
 
+<div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
 	<h4><a href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
-	<?php if($role == 'curator' || $role == 'superuser'): ?>
-		<?= $this->Form->create(null,['action' => '/activities-steps/delete/' . $step->_joinData->id, 'class' => 'my-3']) ?>
-		<?= $this->Form->hidden('id', ['value' => $step->_joinData->id]) ?>
-		<?= $this->Form->button(__('Remove from step'),['class' => 'btn btn-sm btn-light']) ?>
-		<?= $this->Form->end() ?>
-	<?php endif ?>
 </div>
+
 <?php else: ?>
 
 <div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
@@ -212,9 +213,8 @@ if ($this->Identity->isLoggedIn()) {
 <?php endif ?>
 <?php endforeach ?>
 <?php endforeach ?>
-
 </div>
-
+<?php endif ?>
 
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <?php if(!empty($activity->users)): ?>
@@ -230,8 +230,6 @@ if ($this->Identity->isLoggedIn()) {
 <?php endif; ?>
 <?php endif; ?>
 
-
-
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <?php if(!empty($allusers)): ?>
 <div class="col-md-4">
@@ -245,7 +243,6 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php endif; ?>
 <?php endif; ?>
-
 
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <?php if(!empty($activity->reports)): ?>
@@ -296,8 +293,6 @@ echo $this->Form->textarea('response',['class' => 'form-control', 'placeholder' 
 <?php endif ?>
 
 
-
-
 </div>
 </div>
 
@@ -312,7 +307,6 @@ echo $this->Form->textarea('response',['class' => 'form-control', 'placeholder' 
 
 
 $(document).ready(function(){
-
 
 	$('.claim').on('submit', function(e){
 		

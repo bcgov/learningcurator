@@ -3,10 +3,8 @@
 [] Can I create a "Learning Centre" Github organization?
 [] Can we host stuff on GitHub Pages? https://bcgov.github.io/learningcurator ??
 [] Docker licensing?
-    
 [] Add more ministries to mapping in (and consider how to fix this)
     /vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
-
 [] Add who created/modified paths and activities to curators
 [] Implement estimated time view
 [] Finish redesign the step page
@@ -14,28 +12,26 @@
 [] Topic manager role?
 [] User search for superadmin and curator
 [] User role beside name in index
-
-[] Finish implementing unclaim
 [] Check that URLs for activities don't already exist
 [] submit pathway follow/unfollow via JS to prevent page reload
 [] When pathway completed update database with date!
 [] TAGGING
 [] RSS feeds for new pathways and per-path new activity feeds
+[] RSS feed for new reports
+[] send email on report submission
 [] Tags for pathways
-
 [] Add publish option at pathway level that publishes all steps and activities
 [] Add "hold" status for activities that aren't draft, but shouldn't be
     published (this way you can run above publish all, but still leave things out)
-[] send email on report submission
 [] Export to browser bookmarks organized by folder Area/Topic/Pathway/Step/https://Activity
 [] Import of browser bookmarks organized by folder
 [] Develop reports dashboard
-[] User report (paths followed, activities claimed)?
+[] User report for curators (paths followed, activities claimed)?
 [] List of Curators and what paths/activities they've authored
 [] Add contributor role and then a publishing workflow where contributors must have the work approved by a curator
    [] ceate heirarchy document showing Curator
 
-
+[x] Finish implementing unclaim
 [x] Split profile into distinct pages for pathways, claims, and reports
 [x] Add dates to activities and pathways
 [x] Fix profile editing / role updating for superusers
