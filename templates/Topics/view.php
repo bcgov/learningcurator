@@ -14,7 +14,7 @@ if ($this->Identity->isLoggedIn()) {
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center align-items-center"  id="colorful">
-<div class="col-md-4">
+<div class="col-md-8 col-xl-6">
 <div class="py-3">
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right">
@@ -50,7 +50,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
-<div class="col-md-4">
+<div class="col-md-8 col-xl-6">
 <?php foreach($topic->pathways as $pathway): ?>
 <?php if($pathway->status_id == 2): ?>
     <div class="p-3 my-3 bg-white rounded-lg">

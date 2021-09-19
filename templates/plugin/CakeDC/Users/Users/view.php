@@ -12,14 +12,9 @@
 $Users = ${$tableAlias};
 ?>
 <div class="container-fluid">
-<div class="row justify-content-md-center" id="colorful">
-<div class="col-6">
-
-<div class="bg-white p-5 my-5">
-
-<div class="row justify-content-end text-right">
-<div class="col-5">
-<div class="btn-group">
+<div class="row justify-content-md-center pb-5" id="colorful">
+<div class="col-md-10 col-xl-6">
+<div class="btn-group float-right mt-5">
 <?= $this->Html->link(__d('cake_d_c/users', 'Edit User'), ['action' => 'edit', $Users->id],['class'=>'btn btn-primary']) ?> 
 <?= $this->Form->postLink(
                 __d('cake_d_c/users', 'Delete User'),
@@ -28,42 +23,66 @@ $Users = ${$tableAlias};
                 'class' => 'btn btn-light']
             ) ?> 
 </div>
-</div>
-</div>
-<?php if($this->Number->format($Users->active) == 1): ?>
-<div>
+<h1 class="display-4 mt-5">
+    <?= h($Users->first_name) ?> <?= h($Users->last_name) ?>
+</h1>
+<div class="mb-3">
+    <?php if($this->Number->format($Users->active) == 1): ?>
     <span class="badge badge-success">Active</span>
+    <?php endif ?>
+    <span class="badge badge-dark"><?= h($Users->role) ?></span>
+    <span class="badge badge-light">
+    <?php if($Users->ministry_id == 2): ?>
+        Public Service Agency
+    <?php elseif($Users->ministry_id == 3): ?>
+        Citizen Services
+    <?php endif ?>
+    </span>
 </div>
+<!-- <div><?= h($Users->username) ?></div> -->
+
+<div>
+    <a href="mailto:<?= h($Users->email) ?>" class="font-weight-bold"><?= h($Users->email) ?></a>
+</div>
+<div class="mt-3">
+    <?= __d('cake_d_c/users', 'Created') ?> 
+    <?= h($Users->created) ?>
+    <?= __d('cake_d_c/users', 'Modified') ?> <?= h($Users->modified) ?>
+</div>
+
+</div>
+</div>
+<div class="container-fluid">
+<div class="row my-5 justify-content-md-center">
+<div class="col-md-6 col-xl-5">
+<h3>Paths Following</h3>
+<?php if(!empty($Users->pathways_users)): ?>
+<?php foreach($Users->pathways_users as $path): ?>
+<div class="bg-white p-3 rounded-lg">
+    <a href="/pathways/<?= $path->pathway->slug ?>">
+        <i class="bi bi-pin-map-fill"></i>
+        <?= $path->pathway->name ?>
+    </a>
+</div>
+<?php endforeach ?>
+<?php else: ?>
+<div class="bg-white p-3 rounded-lg">This person hasn't followed any pathways yet.</div>
 <?php endif ?>
-
-<h2><?= h($Users->username) ?></h2>
-
-<div><?= __d('cake_d_c/users', 'Role') ?>: <?= h($Users->role) ?></p>
-
-<div class="row">
-<div class="col-md-6">
-    <div><?= __d('cake_d_c/users', 'Id') ?></div>
-    <p><?= h($Users->id) ?></p>
-    <div><?= __d('cake_d_c/users', 'BC Gov GUID') ?></div>
-    <p><?= h($Users->additional_data) ?></p>
-    <div><?= __d('cake_d_c/users', 'Ministry') ?></div>
-    <p><?= h($Users->ministry_id) ?></p>
-    <div><?= __d('cake_d_c/users', 'Username') ?></div>
-    <p><?= h($Users->username) ?></p>
-    <div><?= __d('cake_d_c/users', 'Email') ?></div>
-    <p><?= h($Users->email) ?></p>
-    <div><?= __d('cake_d_c/users', 'First Name') ?></div>
-    <p><?= h($Users->first_name) ?></p>
-    <div><?= __d('cake_d_c/users', 'Last Name') ?></div>
-    <p><?= h($Users->last_name) ?></p>
 </div>
-<div class="col-md-6">
-    <div><?= __d('cake_d_c/users', 'Activation Date') ?></div>
-    <p><?= h($Users->activation_date) ?></p>
-    <div><?= __d('cake_d_c/users', 'Created') ?></div>
-    <p><?= h($Users->created) ?></p>
-    <div><?= __d('cake_d_c/users', 'Modified') ?></div>
-    <p><?= h($Users->modified) ?></p>
+<div class="col-md-6 col-xl-5">
+<h3>Activities Claimed</h3>
+<?php if(!empty($Users->activities_users)): ?>
+<?php foreach($Users->activities_users as $act): ?>
+<div class="bg-white p-3 rounded-lg">
+    <a href="/activities/view/<?= $act->activity->id ?>">
+        
+        <?= $act->activity->name ?>
+    </a>
+</div>
+<?php endforeach ?>
+<?php else: ?>
+<div class="bg-white p-3 rounded-lg">This person hasn't claimed any activites yet.</div>
+<?php endif ?>
 </div>
 </div>
 

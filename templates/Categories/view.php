@@ -87,14 +87,13 @@ $this->assign('title', $pagetitle);
 
 <div class="p-3 my-3 bg-white rounded-lg">
 <?php if($pathway->status_id == 2): // is published ?>
-
 	<h3>
 		<i class="bi bi-pin-map-fill"></i>
 		<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
 	</h3>
-<div class="mb-3">
-<?= h($pathway->description) ?>
-</div>
+	<div class="mb-3">
+	<?= h($pathway->description) ?>
+	</div>
 
 <?php else: ?>
 	
