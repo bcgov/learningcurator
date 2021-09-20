@@ -38,7 +38,6 @@ if ($this->Identity->isLoggedIn()) {
 	</nav>
 
 <h1>
-    <i class="bi bi-bar-chart-steps"></i>
     <?= h($topic->name) ?>
 </h1>
 <div class="mb-5">
