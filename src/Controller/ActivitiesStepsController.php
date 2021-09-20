@@ -105,7 +105,7 @@ class ActivitiesStepsController extends AppController
             $this->Flash->error(__('The activities step could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer());
     }
 
     /**
