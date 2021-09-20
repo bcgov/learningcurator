@@ -20,7 +20,7 @@ $this->loadHelper('Authentication.Identity');
 <?php echo $this->Form->control('status_id', ['type' => 'select', 'options' => $statuses, 'class' => 'form-control']) ?>
 
 
-<?php echo $this->Form->control('createdby_id', ['type' => 'select', 'options' => $users, 'class' => 'form-control']) ?>
+<?php echo $this->Form->control('createdby', ['type' => 'select', 'options' => $users, 'class' => 'form-control']) ?>
 
 
 <div>
