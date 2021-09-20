@@ -86,7 +86,10 @@ $this->loadHelper('Authentication.Identity');
 		<a class="nav-link" href="/categories/index">Topics</a>
 	</li>
 	<li class="nav-item">
-		<a class="nav-link" href="/questions">FAQ</a>
+		<a class="nav-link" href="/activities/index">Activities</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="/questions/index">FAQ</a>
 	</li>
 
 	<?php if($this->Identity->get('role') == 'superuser' || $this->Identity->get('role') == 'curator'): ?>
