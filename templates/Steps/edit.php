@@ -184,12 +184,12 @@ label {
             <?php endif ?>
             <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
             <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $supp->id]) ?>
-            <?= $this->Form->button(__('r'),['class'=>'btn btn-sm btn-light float-left']) ?>
+            <?= $this->Form->button(__('Require'),['class'=>'btn btn-sm btn-light float-left']) ?>
             <?= $this->Form->end() ?>
 
             <?= $this->Form->create(null,['action' => '/activities-steps/delete/' . $supp->_joinData->id, 'class' => 'form-inline']) ?>
             <?= $this->Form->hidden('id', ['value' => $supp->_joinData->id]) ?>
-            <?= $this->Form->button(__('x'),['class' => 'btn btn-sm btn-light']) ?>
+            <?= $this->Form->button(__('Remove'),['class' => 'btn btn-sm btn-light']) ?>
             <?= $this->Form->end() ?>
             
             </div>
