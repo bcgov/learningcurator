@@ -15,6 +15,7 @@ namespace CakeDC\Users\Controller\Traits;
 
 use Cake\Utility\Inflector;
 Use Cake\ORM\TableRegistry;
+use Cake\Event\EventInterface;
 
 /**
  * Covers the baked CRUD actions, note we could use Crud Plugin too
@@ -23,6 +24,14 @@ Use Cake\ORM\TableRegistry;
  */
 trait SimpleCrudTrait
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->loadComponent('Search.Search', [
+            'actions' => ['search'],
+        ]);
+    }
     /**
      * Index method
      *
@@ -33,6 +42,28 @@ trait SimpleCrudTrait
         $table = $this->loadModel();
         $tableAlias = $table->getAlias();
         $this->set($tableAlias, $this->paginate($table));
+        $this->set('tableAlias', $tableAlias);
+        $this->set('_serialize', [$tableAlias, 'tableAlias']);
+    }
+
+    /**
+     * Search method
+     *
+     * @return void
+     */
+    public function search()
+    {
+        $table = $this->loadModel();
+
+        $findusers = $table->find('search', ['search' => $this->request->getQuery()]);
+        $q = $this->request->getQuery('q');
+        $numresults = $findusers->count();
+
+        $tableAlias = $table->getAlias();
+        //echo '<pre>'; print_r($tableAlias); exit;
+
+        $this->set($tableAlias, $this->paginate($findusers));
+        $this->set('q', $q);
         $this->set('tableAlias', $tableAlias);
         $this->set('_serialize', [$tableAlias, 'tableAlias']);
     }

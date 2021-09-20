@@ -74,6 +74,7 @@ class UsersTable extends Table
     {
         parent::initialize($config);
 
+
         $this->setTable('users');
         $this->setDisplayField('username');
         $this->setPrimaryKey('id');
@@ -100,6 +101,22 @@ class UsersTable extends Table
         $this->belongsTo('Ministries', [
             'foreignKey' => 'ministry_id',
         ]);
+        $this->addBehavior('Search.Search');
+
+	    $this->searchManager()
+                ->value('first_name')
+                ->value('last_name')
+                ->value('username')
+                ->value('email')
+                ->add('q', 'Search.Like', [ 
+                    'before' => true,
+                    'after' => true,
+                    'fieldMode' => 'OR',
+                    'comparison' => 'LIKE',
+                    'wildcardAny' => '*',
+                    'wildcardOne' => '?',
+                    'fields' => ['username','first_name','last_name','email'],
+                ]);
     }
 
     /**

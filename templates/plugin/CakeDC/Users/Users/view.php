@@ -34,7 +34,8 @@ if ($this->Identity->isLoggedIn()) {
             ) ?> 
 </div>
 <?php endif ?>
-<h1 class="display-4 mt-5">
+<div class="mt-5"><a href="/users/index">All Users</a></div>
+<h1 class="display-4 mt-0">
     <?= h($Users->first_name) ?> <?= h($Users->last_name) ?>
 </h1>
 <div class="mb-3">

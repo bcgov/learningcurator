@@ -112,7 +112,7 @@ return [
             'role' => 'curator',
             'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
-            'action' => ['index', 'view'],
+            'action' => ['index', 'view','search'],
         ],
         [
             'role' => '*',
