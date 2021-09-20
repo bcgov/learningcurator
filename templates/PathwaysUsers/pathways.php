@@ -98,16 +98,23 @@ if ($this->Identity->isLoggedIn()) {
 
 		<div><?= h($path->pathway->objective) ?></div>
 		<div>Followed on:
-		<?= $this->Time->format($path->date_start,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+		<?= $this->Time->format($path->date_start,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?><br>
+		Completed:
+		<?= $this->Time->format($path->date_complete,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
 		</div>
 
 		<div class="p-3 mt-3 bg-light">Overall Progress: <span class="status<?= $path->pathway->id ?>"></span>%</div>
+		
 		<?php 
-	echo $this->Form->postLink(__('Un-Follow'), 
-									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $path->id], 
-									['class' => 'btn btn-light', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really unfollow?')]); 
-	?>
-		<?php //echo $this->Form->postLink(__('Unfollow'), ['controller' => 'App\PathwaysUsers','action' => 'delete/'. $path->_joinData->id], ['class' => 'btn btn-primary float-right', 'confirm' => __('Really unfollow?')]) ?>
+		echo $this->Form->postLink(__('Un-Follow'), 
+										['controller' => 'PathwaysUsers', 'action' => 'delete/'. $path->id], 
+										['class' => 'btn btn-light', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really unfollow?')]); 
+		?>
+		<?php 
+		//echo $this->Form->postLink(__('Complete'), 
+		//								['controller' => 'PathwaysUsers', 'action' => 'complete/'. $path->id], 
+		//								['class' => 'btn btn-light', 'title' => 'Complete this pathway', 'confirm' => __('Really complete?')]); 
+		?>
 	
 	
 	</div>

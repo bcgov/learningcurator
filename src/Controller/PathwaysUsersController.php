@@ -58,6 +58,25 @@ class PathwaysUsersController extends AppController
         print(__('You cannot edit this directly.'));
     }
     /**
+     * Complete a pathway method
+     *
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
+     */
+    public function complete($id = null)
+    {
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        if ($this->request->is('post')) {
+            $pathwaysUser = $this->PathwaysUsers->get($id);
+            $pathwaysUser->date_complete = date('Y-m-d H:i:s');
+            $pathwaysUser = $this->PathwaysUsers->patchEntity($pathwaysUser, $this->request->getData());
+            if ($this->PathwaysUsers->save($pathwaysUser)) {
+                return $this->redirect($this->referer());
+            }
+            print(__('Something went wrong.'));
+        }
+        print(__('You cannot edit this directly.'));
+    }
+    /**
      * Delete method
      *
      * @param string|null $id Pathways User id.

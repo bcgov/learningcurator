@@ -500,8 +500,16 @@ class PathwaysController extends AppController
             $status = $overallp;
             if($overallp == 100) {
                 $status = 'Completed!';
+
                 // #TODO check against current pathways_users status in db and 
                 // write a method to update the pathways_users status if it doesn't match
+
+                
+
+
+
+
+
             }
 
             $chartjs = '{"datasets": [';
