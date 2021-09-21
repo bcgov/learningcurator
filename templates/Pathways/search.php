@@ -31,16 +31,15 @@
 
 <?php foreach ($pathways as $pathway): ?>
 <div class="bg-white p-3 my-2 rounded-lg">
-	<span class="badge badge-light"><?= $pathway->status->name ?></span>
+	
 	<div>
 		<a href="/pathways/<?= h($pathway->slug) ?>">
 			<i class="bi bi-pin-map-fill"></i>
 			<?= h($pathway->name) ?>
 		</a> 
-		<?php 
-		$topicname = h($pathway->topic->categories[0]->name) . ' - ' . h($pathway->topic->name);
-		?>
-		<?= $this->Html->link($topicname, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id],['class' => 'badge badge-light']) ?>
+		<span class=""><?= $pathway->status->name ?></span> in 
+		
+		<?= $this->Html->link($pathway->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id],['class' => '']) ?>
 	</div>
 </div>
 <?php endforeach; ?>

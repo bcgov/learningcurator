@@ -90,7 +90,7 @@ class PathwaysController extends AppController
                                 ->contain(['Topics','Topics.Categories','Statuses']);
         } else {
             $pathways = $paths->find('search', ['search' => $this->request->getQuery()])
-                                ->contain(['Topics','Topics.Categories','Statuses'])
+                                ->contain(['Topics','Topics.Categories','Statuses','Steps'])
                                 ->where(['status_id' => 2]);
         }
         $q = $this->request->getQuery('q');
