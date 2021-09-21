@@ -15,6 +15,14 @@ use Cake\Utility\Text;
  */
 class PathwaysController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->loadComponent('Search.Search', [
+            'actions' => ['search'],
+        ]);
+    }
     /**
      * API method outputs JSON of the index listing of newly published pathways
      *
@@ -63,6 +71,32 @@ class PathwaysController extends AppController
         }
         //$this->paginate($pathways);
         $this->set(compact('pathways'));
+    }
+    /**
+     * Search method
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function search()
+    {
+        
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $paths = TableRegistry::getTableLocator()->get('Pathways');
+        // If the person is a curator or an admin, then return all of the pathways,
+        // regardless of their statuses. Regular users should only ever see 
+        // 'published' pathways.
+        if($user->role == 'curator' || $user->role == 'superuser') {
+            $pathways = $paths->find('search', ['search' => $this->request->getQuery()])
+                                ->contain(['Topics','Topics.Categories','Statuses']);
+        } else {
+            $pathways = $paths->find('search', ['search' => $this->request->getQuery()])
+                                ->contain(['Topics','Topics.Categories','Statuses'])
+                                ->where(['status_id' => 2]);
+        }
+        $q = $this->request->getQuery('q');
+        $numresults = $pathways->count();
+        //$this->paginate($pathways);
+        $this->set(compact('pathways','q','numresults'));
     }
 
     /**

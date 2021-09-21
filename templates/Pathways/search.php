@@ -16,7 +16,8 @@
 					type="search" 
 					placeholder="Pathway Search" 
 					aria-label="Search" 
-					name="q">
+					name="q"
+					value="<?= $q ?>">
 	</label>
 	<button class="btn btn-outline-dark" type="submit">Search</button>
 </form>
@@ -36,7 +37,10 @@
 			<i class="bi bi-pin-map-fill"></i>
 			<?= h($pathway->name) ?>
 		</a> 
-		<?= $this->Html->link($pathway->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id],['class' => 'badge badge-light']) ?>
+		<?php 
+		$topicname = h($pathway->topic->categories[0]->name) . ' - ' . h($pathway->topic->name);
+		?>
+		<?= $this->Html->link($topicname, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id],['class' => 'badge badge-light']) ?>
 	</div>
 </div>
 <?php endforeach; ?>

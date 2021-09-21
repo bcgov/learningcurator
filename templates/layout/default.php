@@ -66,8 +66,16 @@ $this->loadHelper('Authentication.Identity');
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 	<ul class="navbar-nav mr-auto">
 	<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Profile
+		<a class="nav-link dropdown-toggle" 
+			href="#" 
+			id="navbarDropdown" 
+			role="button" 
+			data-toggle="dropdown" 
+			aria-haspopup="true" 
+			aria-expanded="false"
+			title="Your Profile">
+				<i class="bi bi-person-circle"></i>
+				<span class="sr-only">Profile</span>
 		</a>
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 			<a class="dropdown-item" href="/profile/pathways">Your Pathways</a>
@@ -84,6 +92,9 @@ $this->loadHelper('Authentication.Identity');
 	</li>
 	<li class="nav-item">
 		<a class="nav-link" href="/categories/index">Topics</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="/pathways">Pathways</a>
 	</li>
 	<li class="nav-item">
 		<a class="nav-link" href="/activities/index">Activities</a>
