@@ -231,18 +231,13 @@ This seems to work out, but #TODO investigate optimizing this
 <div class="p-3 bg-white mb-3 mt-3 text-center stickyrings rounded-lg">
 <div class="mb-3 following"></div>
 <canvas id="myChart" width="250" height="250"></canvas>
-<?php 
-echo $this->Form->postLink(__('Un-Follow'), 
-								['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], 
-								['class' => 'btn btn-primary mt-4', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really unfollow?')]); 
-?>
 </div>
 
 <?php else: ?>
 <div class="bg-white rounded-lg p-3 shadow-sm mt-3 text-center stickyrings">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-primary mb-0']) ?>
+<?= $this->Form->button(__('Follow Pathway'),['class' => 'btn btn-block btn-primary mb-0']) ?>
 <?= $this->Form->end(); ?>
 </div>
 <?php endif ?>
@@ -654,6 +649,7 @@ $(document).ready(function(){
 			}
 		});
 	});
+	
 	$(window).keydown(function(e) {
 		switch (e.keyCode) {
 			case 37: // left arrow key

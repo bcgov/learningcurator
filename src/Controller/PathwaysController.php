@@ -272,40 +272,6 @@ class PathwaysController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-
-    /**
-     * Follow a pathway. Adds user_id to pathways_users table.
-     *
-     * @param string|null $id Pathway id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function follow ($id = null)
-    {
-        
-        
-        $pathway = $this->Pathways->get($id, [
-            'contain' => ['Users'],
-        ]);
-
-        if ($this->request->is(['patch', 'post', 'put'])) {
-
-            $user = $this->request->getAttribute('authentication')->getIdentity();
-            $pathwaysTable = $this->getTableLocator()->get('Pathways');
-            //$this->request->getData()['users'] = $pathway->users;
-            $newuser = $pathwaysTable->Users->newEmptyEntity();
-            $newuser->id = $user->id;
-            //$pathwaysTable->save($newuser);
-            $pathwaysTable->Users->link($pathway, [$newuser]);
-            //print_r($newuser); exit;
-            //echo '<pre>'; print_r($pathway->users); exit;
-            // $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
-
-            // if ($this->Pathways->save($pathway)) {
-            //     return $this->redirect($this->referer());
-            // }
-        }
-    }
     
    /**
      * Process and return a status for this pathway for the logged in user 
@@ -398,7 +364,6 @@ class PathwaysController extends AppController
             $participatetotal = 0;
             
             foreach ($pathway->steps as $steps) :
-
                 
                 $stepTime = 0;
                 $stepActivityCount = 0;
@@ -533,13 +498,22 @@ class PathwaysController extends AppController
             
             $status = $overallp;
             if($overallp == 100) {
+                
                 $status = 'Completed!';
 
                 // #TODO check against current pathways_users status in db and 
                 // write a method to update the pathways_users status if it doesn't match
 
-                
-
+                // $acts = TableRegistry::getTableLocator()->get('Activities');
+                // $activities = $acts->find('all')->contain(['ActivityTypes','Statuses','Steps','Steps.Pathways'])
+                //                                 ->where(['Activities.createdby_id' => $user->id]);
+                // $pusers = TableRegistry::getTableLocator()->get('PathwaysUsers');
+                // $pathwaysUser = $pusers->get($id);
+                // $pathwaysUser->date_complete = date('Y-m-d H:i:s');
+                // $pathwaysUser = $this->PathwaysUsers->patchEntity($pathwaysUser, $this->request->getData());
+                // if ($this->PathwaysUsers->save($pathwaysUser)) {
+                //     return $this->redirect($this->referer());
+                // }
 
 
 

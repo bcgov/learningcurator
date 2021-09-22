@@ -16,11 +16,28 @@ $totalusers = count($usersonthispathway);
 $this->assign('title', h($pathway->name));
 
 ?>
+<style>
+/* Start desktop-specific code for this page.
+Arbitrarily set to 45em based on sample code from ...somewhere. 
+This seems to work out, but #TODO investigate optimizing this
+*/
+@media (min-width: 45em) {
 
+	.stickyrings {
+
+		position: -webkit-sticky;
+		position: sticky;
+		top: 86px;
+		z-index: 1000;
+	}
+} /* end desktop-specific code */
+
+</style>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-10 col-lg-8">
 <div class="p-3">
+
 	<?php if($pathway->status_id == 1): ?>
 	<span class="badge badge-warning" title="Edit to set to publish">DRAFT</span>
 	<?php endif ?>
@@ -36,6 +53,9 @@ $this->assign('title', h($pathway->name));
 
 	<?php if($role == 'curator' || $role == 'superuser'): ?>
 	<div class="btn-group float-right">
+	<button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModal">
+	<?= $totalusers ?>  following
+	</button>
 	<?= $this->Html->link(__('Edit'), ['action' => 'edit', $pathway->id], ['class' => 'btn btn-light']) ?>
 	<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'btn btn-light']) ?>
 	</div>
@@ -113,11 +133,6 @@ $this->assign('title', h($pathway->name));
 	<div class="bg-white p-3 mt-3 text-center stickyrings">
 	<div>Overall Progress: <span class="mb-3 following"></span>%</div>
 	<canvas id="myChart" width="250" height="250"></canvas>
-	<?php 
-	echo $this->Form->postLink(__('Un-Follow'), 
-									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], 
-									['class' => 'btn btn-primary mt-4', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really unfollow?')]); 
-	?>
 	</div>
 	
 <?php else: ?>
@@ -130,44 +145,12 @@ $this->assign('title', h($pathway->name));
 <?= $this->Form->end() ?>
 
 <div class="py-3">
-<div>
-	
+
 	Following a pathway allows you to track your progress and pin the pathway to <a href="/profile">your profile</a>.
 
 
-
-
-
-</div>
-<!--When you select to follow a pathway, this pathway will show as a journey you are on and may be 
-accessed from your profile page. Think of it as “bookmarking” learning you want to come back to and track your progress on.-->
-
-
-</div>
 </div>
 
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="bg-white rounded-lg p-3 my-3">
-<a class="" 
-	data-toggle="collapse" 
-	href="#followerlist" 
-	role="button" 
-	aria-expanded="false" 
-	aria-controls="collapseExample">
-		<span class="badge badge-pill badge-dark"><?= $totalusers ?></span> 
-		people are following this path
-</a>
-<div class="collapse" id="followerlist">
-<ul class="list-group list-group-flush">
-<?php foreach($followers as $follower): ?>
-<li class="list-group-item">
-	<a href="/users/view/<?= $follower[0] ?>"><?= $follower[1] ?></a>
-</li>
-<?php endforeach ?>
-</ul>
-</div>
-</div>
-<?php endif ?>
 
 
 
@@ -321,6 +304,44 @@ if($stepclaimcount > 0) {
 </div>
 
 </div>
+
+
+
+
+
+
+
+
+<?php if($role == 'curator' || $role == 'superuser'): ?>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel"><span class="badge badge-pill badge-dark"><?= $totalusers ?></span> 
+		people following</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+
+<ul class="list-group list-group-flush">
+<?php foreach($followers as $follower): ?>
+<li class="list-group-item">
+	<a href="/users/view/<?= $follower[0] ?>"><?= $follower[1] ?></a>
+</li>
+<?php endforeach ?>
+</ul>
+
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+<?php endif ?>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
