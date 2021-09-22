@@ -140,19 +140,16 @@ This seems to work out, but #TODO investigate optimizing this
 
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]) ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-block btn-primary mb-0']) ?>
+<?= $this->Form->button(__('Follow Pathway'),['class' => 'btn btn-block btn-primary mb-0']) ?>
 
 <?= $this->Form->end() ?>
 
 <div class="py-3">
-
-	Following a pathway allows you to track your progress and pin the pathway to <a href="/profile">your profile</a>.
-
-
+	Following a pathway allows you to track your progress and pin the pathway to <a href="/profile/pathways">your profile</a>.
 </div>
 
 
-
+</div>
 
 <?php endif ?>
 
