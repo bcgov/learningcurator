@@ -84,6 +84,7 @@ $options = array(
     </div>
     <div class="card mb-3">
     <div class="card-body">
+    <?php echo $this->Form->control('createdby_id', ['type' => 'select', 'options' => $users, 'class' => 'form-control', 'label' => 'Curated By']) ?>
     <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
     <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('description', ['class' => 'form-control summernote']); ?>

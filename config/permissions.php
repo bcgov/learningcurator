@@ -112,7 +112,7 @@ return [
             'role' => 'curator',
             'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
-            'action' => ['index', 'view'],
+            'action' => ['index', 'view','search'],
         ],
         [
             'role' => '*',
@@ -157,17 +157,17 @@ return [
         [
             'role' => '*',
             'controller' => 'Pathways',
-            'action' => ['index','view','follow','status','rssfeed'],
+            'action' => ['index','view','follow','status','rssfeed','contributions','search'],
         ],
         [
             'role' => 'curator',
             'controller' => 'Pathways',
-            'action' => ['edit','add'],
+            'action' => ['edit','add','delete'],
         ],
         [
             'role' => '*',
             'controller' => 'PathwaysUsers',
-            'action' => ['follow','delete'],
+            'action' => ['follow','delete','pathways','complete'],
         ],
         [
             'role' => '*',
@@ -177,7 +177,7 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Steps',
-            'action' => ['edit','add'],
+            'action' => ['edit','add','delete'],
         ],
         [
             'role' => '*',
@@ -187,12 +187,12 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Activities',
-            'action' => ['edit','add','addtostep','stepfind'],
+            'action' => ['edit','delete','add','addtostep','stepfind'],
         ],
         [
             'role' => 'curator',
             'controller' => 'ActivitiesSteps',
-            'action' => ['edit','add','sort','requiredToggle'],
+            'action' => ['edit','add','sort','requiredToggle','delete'],
         ],
         [
             'role' => '*',

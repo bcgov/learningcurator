@@ -16,15 +16,30 @@
  /* #TODO update the below link states to make more sense. */
 a {
 	color: #000;
+	text-decoration: underline;
 }
 a:hover {
-	color: #000;
+	color: #333;
+}
+.nav a:hover {
+	color: #333;
+	text-decoration: underline;
 }
 a:active {
-	color: #000;
+	color: #999;
 }
 a:focus {
+	color: #333;
+}
+.navbar a {
 	color: #000;
+	text-decoration: none;
+}
+.navbar a:focus {
+	color: #333;
+}
+.btn {
+	text-decoration: none;
 }
 /* This _can_ be set individually with Bootstrap's 
  * .img-fluid class, but I prefer to set it globally; I can't think of a time
@@ -51,8 +66,8 @@ img {
 	 * pallet, I'm just setting this BC Gov blue; it doesn't offend me, but 
 	 * there's room for improvement.
 	 */
-	background-color: #003366;
-	border-color: #003366;
+	/* background-color: #003366;
+	border-color: #003366; UUGH IT CLASHES SO BAD*/
 }
 /*
  * #TODO add in accessible colors for other button types like  "success"

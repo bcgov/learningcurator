@@ -16,7 +16,8 @@
 					type="search" 
 					placeholder="Pathway Search" 
 					aria-label="Search" 
-					name="q">
+					name="q"
+					value="<?= $q ?>">
 	</label>
 	<button class="btn btn-outline-dark" type="submit">Search</button>
 </form>

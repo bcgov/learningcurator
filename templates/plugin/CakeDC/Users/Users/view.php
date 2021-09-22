@@ -10,16 +10,21 @@
  */
 
 $Users = ${$tableAlias};
+$usenam = $Users->first_name . ' ' . $Users->last_name . ' profile';
+$this->assign('title', $usenam);
+$this->loadHelper('Authentication.Identity');
+if ($this->Identity->isLoggedIn()) {
+	$role = $this->Identity->get('role');
+	$uid = $this->Identity->get('id');
+}
 ?>
+
 <div class="container-fluid">
-<div class="row justify-content-md-center" id="colorful">
-<div class="col-6">
+<div class="row justify-content-md-center pb-5" id="colorful">
+<div class="col-md-10 col-xl-6">
 
-<div class="bg-white p-5 my-5">
-
-<div class="row justify-content-end text-right">
-<div class="col-5">
-<div class="btn-group">
+<?php if($role == 'superuser'): ?>
+<div class="btn-group float-right mt-5">
 <?= $this->Html->link(__d('cake_d_c/users', 'Edit User'), ['action' => 'edit', $Users->id],['class'=>'btn btn-primary']) ?> 
 <?= $this->Form->postLink(
                 __d('cake_d_c/users', 'Delete User'),
@@ -28,42 +33,111 @@ $Users = ${$tableAlias};
                 'class' => 'btn btn-light']
             ) ?> 
 </div>
-</div>
-</div>
-<?php if($this->Number->format($Users->active) == 1): ?>
-<div>
-    <span class="badge badge-success">Active</span>
-</div>
 <?php endif ?>
-
-<h2><?= h($Users->username) ?></h2>
-
-<div><?= __d('cake_d_c/users', 'Role') ?>: <?= h($Users->role) ?></p>
-
-<div class="row">
-<div class="col-md-6">
-    <div><?= __d('cake_d_c/users', 'Id') ?></div>
-    <p><?= h($Users->id) ?></p>
-    <div><?= __d('cake_d_c/users', 'Ministry') ?></div>
-    <p><?= h($Users->ministry_id) ?></p>
-    <div><?= __d('cake_d_c/users', 'Username') ?></div>
-    <p><?= h($Users->username) ?></p>
-    <div><?= __d('cake_d_c/users', 'Email') ?></div>
-    <p><?= h($Users->email) ?></p>
-    <div><?= __d('cake_d_c/users', 'First Name') ?></div>
-    <p><?= h($Users->first_name) ?></p>
-    <div><?= __d('cake_d_c/users', 'Last Name') ?></div>
-    <p><?= h($Users->last_name) ?></p>
+<div class="mt-5"><a href="/users/index">All Users</a></div>
+<h1 class="display-4 mt-0">
+    <?= h($Users->first_name) ?> <?= h($Users->last_name) ?>
+</h1>
+<div class="mb-3">
+    <?php if($this->Number->format($Users->active) == 1): ?>
+    <span class="badge badge-success">Active</span>
+    <?php endif ?>
+    <span class="badge badge-dark"><?= h($Users->role) ?></span>
+    <span class="badge badge-primary">
+    <?php if($Users->ministry_id == 2): ?>
+        Public Service Agency
+    <?php elseif($Users->ministry_id == 3): ?>
+        Citizen Services
+    <?php endif ?>
+    </span>
 </div>
-<div class="col-md-6">
-    <div><?= __d('cake_d_c/users', 'Activation Date') ?></div>
-    <p><?= h($Users->activation_date) ?></p>
-    <div><?= __d('cake_d_c/users', 'Created') ?></div>
-    <p><?= h($Users->created) ?></p>
-    <div><?= __d('cake_d_c/users', 'Modified') ?></div>
-    <p><?= h($Users->modified) ?></p>
+<!-- <div><?= h($Users->username) ?></div> -->
+
+<div>
+    <a href="mailto:<?= h($Users->email) ?>" class="font-weight-bold"><?= h($Users->email) ?></a>
+</div>
+<div class="mt-3">
+    <?= __d('cake_d_c/users', 'Created') ?> 
+    <?= h($Users->created) ?>
+    <?= __d('cake_d_c/users', 'Modified') ?> <?= h($Users->modified) ?>
+</div>
+
 </div>
 </div>
+<div class="container-fluid">
+<div class="row my-5 justify-content-md-center">
+
+<div class="col-md-4 col-xl-3">
+
+<h3 class="mt-4">Activities Claimed</h3>
+<?php if(!empty($Users->activities_users)): ?>
+<div class="overflow-auto" style="height: 20em">
+<?php foreach($Users->activities_users as $act): ?>
+<div class="bg-white px-3 py-2 rounded-lg">
+    <a href="/activities/view/<?= $act->activity->id ?>">
+    <i class="<?= $act->activity->activity_type->image_path ?>"></i>
+        <?= $act->activity->name ?>
+    </a>
+</div>
+<?php endforeach ?>
+</div>
+<?php else: ?>
+<div class="bg-white p-3 rounded-lg">This person hasn't claimed any activites yet.</div>
+<?php endif ?>
+</div>
+
+<div class="col-md-4 col-xl-3">
+<h3 class="mt-4">Activities Contributed</h3>
+<?php if(!$actsadded->isEmpty()): ?>
+<div class="overflow-auto" style="height: 20em">
+<?php foreach($actsadded as $act): ?>
+<div class="bg-white p-3 rounded-lg">
+    <a href="/activities/view/<?= $act->id ?>">
+        <i class="<?= $act->activity_type->image_path ?>"></i>
+        <?= $act->name ?>
+    </a>
+</div>
+<?php endforeach ?>
+</div>
+<?php else: ?>
+<div class="bg-white p-3 rounded-lg">This person hasn't contributed any activities yet.</div>
+<?php endif ?>
+</div>
+
+
+<div class="col-md-4 col-xl-3">
+<h3 class="mt-4">Paths Following</h3>
+<?php if(!empty($Users->pathways_users)): ?>
+<?php foreach($Users->pathways_users as $path): ?>
+<div class="bg-white p-3 rounded-lg">
+    <a href="/pathways/<?= $path->pathway->slug ?>">
+        <i class="bi bi-pin-map-fill"></i>
+        <?= $path->pathway->name ?>
+    </a>
+</div>
+<?php endforeach ?>
+<?php else: ?>
+<div class="bg-white p-3 rounded-lg">This person hasn't followed any pathways yet.</div>
+<?php endif ?>
+</div>
+
+<div class="col-md-4 col-xl-3">
+<h3 class="mt-4">Pathways Contributed</h3>
+<?php if(!$pathsadded->isEmpty()): ?>
+<?php foreach($pathsadded as $path): ?>
+<div class="bg-white p-3 rounded-lg">
+    <a href="/pathways/<?= $path->slug ?>">
+    <i class="bi bi-pin-map-fill"></i>
+        <?= $path->name ?>
+    </a>
+</div>
+<?php endforeach ?>
+<?php else: ?>
+<div class="bg-white p-3 rounded-lg">This person hasn't contributed any pathways yet.</div>
+<?php endif ?>
+</div>
+
+
 
 
 

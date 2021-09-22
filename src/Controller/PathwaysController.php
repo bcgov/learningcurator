@@ -15,6 +15,14 @@ use Cake\Utility\Text;
  */
 class PathwaysController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->loadComponent('Search.Search', [
+            'actions' => ['search'],
+        ]);
+    }
     /**
      * API method outputs JSON of the index listing of newly published pathways
      *
@@ -25,6 +33,23 @@ class PathwaysController extends AppController
         $pathways = $this->Pathways->find('all');
         //$this->RequestHandler->renderAs($this, 'rss');
         $this->set(compact('pathways'));
+    }
+    /**
+     * Show Curators their own pathways and activities
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function contributions()
+    {
+        
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $acts = TableRegistry::getTableLocator()->get('Activities');
+        $activities = $acts->find('all')->contain(['ActivityTypes','Statuses','Steps','Steps.Pathways'])
+                                        ->where(['Activities.createdby_id' => $user->id]);
+        $pathways = $this->Pathways->find('all')->contain(['Topics','Statuses'])->where(['Pathways.createdby' => $user->id]);
+        
+        //$this->paginate($pathways);
+        $this->set(compact('pathways','activities'));
     }
     /**
      * Index method
@@ -46,6 +71,32 @@ class PathwaysController extends AppController
         }
         //$this->paginate($pathways);
         $this->set(compact('pathways'));
+    }
+    /**
+     * Search method
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function search()
+    {
+        
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $paths = TableRegistry::getTableLocator()->get('Pathways');
+        // If the person is a curator or an admin, then return all of the pathways,
+        // regardless of their statuses. Regular users should only ever see 
+        // 'published' pathways.
+        if($user->role == 'curator' || $user->role == 'superuser') {
+            $pathways = $paths->find('search', ['search' => $this->request->getQuery()])
+                                ->contain(['Topics','Topics.Categories','Statuses']);
+        } else {
+            $pathways = $paths->find('search', ['search' => $this->request->getQuery()])
+                                ->contain(['Topics','Topics.Categories','Statuses','Steps'])
+                                ->where(['status_id' => 2]);
+        }
+        $q = $this->request->getQuery('q');
+        $numresults = $pathways->count();
+        //$this->paginate($pathways);
+        $this->set(compact('pathways','q','numresults'));
     }
 
     /**
@@ -221,40 +272,6 @@ class PathwaysController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-
-    /**
-     * Follow a pathway. Adds user_id to pathways_users table.
-     *
-     * @param string|null $id Pathway id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function follow ($id = null)
-    {
-        
-        
-        $pathway = $this->Pathways->get($id, [
-            'contain' => ['Users'],
-        ]);
-
-        if ($this->request->is(['patch', 'post', 'put'])) {
-
-            $user = $this->request->getAttribute('authentication')->getIdentity();
-            $pathwaysTable = $this->getTableLocator()->get('Pathways');
-            //$this->request->getData()['users'] = $pathway->users;
-            $newuser = $pathwaysTable->Users->newEmptyEntity();
-            $newuser->id = $user->id;
-            //$pathwaysTable->save($newuser);
-            $pathwaysTable->Users->link($pathway, [$newuser]);
-            //print_r($newuser); exit;
-            //echo '<pre>'; print_r($pathway->users); exit;
-            // $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
-
-            // if ($this->Pathways->save($pathway)) {
-            //     return $this->redirect($this->referer());
-            // }
-        }
-    }
     
    /**
      * Process and return a status for this pathway for the logged in user 
@@ -347,7 +364,6 @@ class PathwaysController extends AppController
             $participatetotal = 0;
             
             foreach ($pathway->steps as $steps) :
-
                 
                 $stepTime = 0;
                 $stepActivityCount = 0;
@@ -482,9 +498,26 @@ class PathwaysController extends AppController
             
             $status = $overallp;
             if($overallp == 100) {
+                
                 $status = 'Completed!';
+
                 // #TODO check against current pathways_users status in db and 
                 // write a method to update the pathways_users status if it doesn't match
+
+                // $acts = TableRegistry::getTableLocator()->get('Activities');
+                // $activities = $acts->find('all')->contain(['ActivityTypes','Statuses','Steps','Steps.Pathways'])
+                //                                 ->where(['Activities.createdby_id' => $user->id]);
+                // $pusers = TableRegistry::getTableLocator()->get('PathwaysUsers');
+                // $pathwaysUser = $pusers->get($id);
+                // $pathwaysUser->date_complete = date('Y-m-d H:i:s');
+                // $pathwaysUser = $this->PathwaysUsers->patchEntity($pathwaysUser, $this->request->getData());
+                // if ($this->PathwaysUsers->save($pathwaysUser)) {
+                //     return $this->redirect($this->referer());
+                // }
+
+
+
+
             }
 
             $chartjs = '{"datasets": [';

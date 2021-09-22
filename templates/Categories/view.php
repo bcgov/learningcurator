@@ -18,7 +18,7 @@ $this->assign('title', $pagetitle);
 
 <div class="container-fluid">
 <div class="row justify-content-md-center align-items-center"  id="colorful">
-<div class="col-md-4">
+<div class="col-md-10 col-lg-8 col-xl-6">
 <div class="py-3">
 <div><?= $this->Html->link(__('All Topic Areas'), ['action' => 'index']) ?></div>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
@@ -74,7 +74,8 @@ $this->assign('title', $pagetitle);
 <?php if (!empty($category->topics)) : ?>
 <?php foreach ($category->topics as $topic) : ?>
 
-<div class="col-md-4 pt-3">
+<div class="col-md-6 col-lg-6 pt-3">
+<div class="p-3 my-3 bg-white rounded-lg">
 <h2>
 	<i class="bi bi-diagram-3-fill"></i> <!-- topic_id: <?= $topic->id ?> --> 
 	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
@@ -82,19 +83,19 @@ $this->assign('title', $pagetitle);
 </h2>
 <div class="p-3"><?= $topic->description ?></div>
 
-
 <?php foreach ($topic->pathways as $pathway) : ?>
 
-<div class="p-3 my-3 bg-white rounded-lg">
+<div class="p-3">
 <?php if($pathway->status_id == 2): // is published ?>
-
-	<h3>
-		<i class="bi bi-pin-map-fill"></i>
-		<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
-	</h3>
-<div class="mb-3">
-<?= h($pathway->description) ?>
-</div>
+	<div>
+		<a href="/pathways/<?= h($pathway->slug) ?>" class="font-weight-bold">
+			<i class="bi bi-pin-map-fill"></i>
+			<?= $pathway->name ?>
+		</a>
+	</div>
+	<div class="mb-3">
+	<?= h($pathway->description) ?>
+	</div>
 
 <?php else: ?>
 	
@@ -112,6 +113,7 @@ $this->assign('title', $pagetitle);
 </div>
 <?php endforeach ?>
 
+</div>
 </div>
 <?php endforeach ?>
 </div>

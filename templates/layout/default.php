@@ -65,22 +65,45 @@ $this->loadHelper('Authentication.Identity');
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 	<ul class="navbar-nav mr-auto">
-	<li class="nav-item">
-		<a class="nav-link" href="/profile">Your Profile</a>
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" 
+			href="#" 
+			id="navbarDropdown" 
+			role="button" 
+			data-toggle="dropdown" 
+			aria-haspopup="true" 
+			aria-expanded="false"
+			title="Your Profile">
+				<i class="bi bi-person-circle"></i>
+				<span class="sr-only">Profile</span>
+		</a>
+		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			<a class="dropdown-item" href="/profile/pathways">Your Pathways</a>
+			<a class="dropdown-item" href="/profile/claims">Your Claims</a>
+			<a class="dropdown-item" href="/profile/reports">Your Reports</a>
+			<a class="dropdown-item" href="/profile/contributions">Your Contributions</a>
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/logout">
+				Logout
+				<i class="bi bi-box-arrow-right"></i>
+			</a>
+			<?php //echo $this->User->logout('Logout',['class'=>'dropdown-item']) ?>
+		</div>
 	</li>
-	<!-- <li class="nav-item">
-		<a class="nav-link" href="/categories">Topics</a>
-	</li> -->
 	<li class="nav-item">
 		<a class="nav-link" href="/categories/index">Topics</a>
 	</li>
 	<li class="nav-item">
-		<a class="nav-link" href="/questions">FAQ</a>
+		<a class="nav-link" href="/pathways">Pathways</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="/activities/index">Activities</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="/questions/index">FAQ</a>
 	</li>
 
-
 	<?php if($this->Identity->get('role') == 'superuser' || $this->Identity->get('role') == 'curator'): ?>
-	
 	<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" id="adminDropdown" 
 			role="button" 
@@ -93,14 +116,13 @@ $this->loadHelper('Authentication.Identity');
 			<a class="dropdown-item" href="/reports">All Reports</a>
 			<a class="dropdown-item" href="/users/index">All Users</a>
 			<a class="dropdown-item" href="/pathways">All Pathways</a>
-			<a class="dropdown-item" href="/activity-types">Activity Types</a>
 			<a class="dropdown-item" href="/activities">All Activities</a>
-			<a class="dropdown-item" href="/competencies">All Competencies</a>
-			<a class="dropdown-item" href="/ministries">All Ministries</a>
 			<a class="dropdown-item" href="/categories">All Categories</a>
+			<a class="dropdown-item" href="/activity-types">Activity Types</a>
+			<a class="dropdown-item" href="/ministries">All Ministries</a>
 			<a class="dropdown-item" href="/statuses">All Statuses</a>
+			<a class="dropdown-item" href="/competencies">All Competencies</a>
 			<a class="dropdown-item" href="/tags">All Tags</a>
-			
 		</div>
 		</li>
 		<li class="nav-item dropdown">
@@ -132,17 +154,17 @@ $this->loadHelper('Authentication.Identity');
 
 
 
-<div class="container-fluid bg-white py-3">
-<div class="row mt-3 justify-content-md-center">
-<div class="col-md-8 col-lg-4 mt-3">
+<div class="container-fluid bg-white pb-5 mt-5">
+<div class="row justify-content-md-center">
+<div class="col-lg-8 col-xl-6 mt-3">
 
-	<div class="p-3 m-3 bg-white shadow-sm text-center text-uppercase">
-		<span style="color:#999">Brought to you by</span><br>
+	<div class="p-3 m-3 bg-white text-center text-uppercase">
+		<span>Brought to you by</span><br>
 		<a href="https://learningcentre.gww.gov.bc.ca/" target="_blank" rel="noopener">
 			<img height="100" src="/img/lc-logo-wordmark-300x100.png" width="300" alt="Learning Centre logo">
 		</a>
 	</div>
-	<div class="p-3 m-3 bg-white shadow-sm">
+	<div class="p-3 m-3 bg-white text-center">
 	<div><img height="127" src="/img/BCID_BCPSA_rgb_pos.png" width="400" alt="BC Public Service Agency logo"></div>
 	<p>Your personal information is collected by the BC Public Service Agency in accordance with 
 		section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes 

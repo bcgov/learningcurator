@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+Use Cake\ORM\TableRegistry;
+
 /**
  * PathwaysUsers Controller
  *
@@ -11,6 +13,28 @@ namespace App\Controller;
  */
 class PathwaysUsersController extends AppController
 {
+    /**
+     * Show which pathways User is following method
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function pathways ()
+    {
+
+        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
+        // Select based on currently logged in person
+        $published = $allpaths->find('all')
+                                ->contain(['Topics','Topics.Categories'])
+                                ->where(['Pathways.status_id' => 2])
+                                ->order(['Pathways.created' => 'desc']);
+
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $pathways = $this->PathwaysUsers->find()
+                                        ->contain(['Pathways','Users'])
+                                        ->where(['user_id' => $user->id])
+                                        ->order(['PathwaysUsers.date_start' => 'desc']);
+        $this->set(compact('pathways','published'));
+    }
     /**
      * Follow method
      *
@@ -24,10 +48,31 @@ class PathwaysUsersController extends AppController
             $pathwaysUser->user_id = $user->id;
             $pid = $this->request->getData()['pathway_id'];
             $pathwaysUser->pathway_id = $pid;
+            $pathwaysUser->date_start = date('Y-m-d H:i:s');
+
             if ($this->PathwaysUsers->save($pathwaysUser)) {
                 return $this->redirect($this->referer());
             }
             print(__('Something went wrong and you are not following this pathway. Please, try again.'));
+        }
+        print(__('You cannot edit this directly.'));
+    }
+    /**
+     * Complete a pathway method
+     *
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
+     */
+    public function complete($id = null)
+    {
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        if ($this->request->is('post')) {
+            $pathwaysUser = $this->PathwaysUsers->get($id);
+            $pathwaysUser->date_complete = date('Y-m-d H:i:s');
+            $pathwaysUser = $this->PathwaysUsers->patchEntity($pathwaysUser, $this->request->getData());
+            if ($this->PathwaysUsers->save($pathwaysUser)) {
+                return $this->redirect($this->referer());
+            }
+            print(__('Something went wrong.'));
         }
         print(__('You cannot edit this directly.'));
     }

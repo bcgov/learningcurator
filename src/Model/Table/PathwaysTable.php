@@ -76,6 +76,21 @@ class PathwaysTable extends Table
             'targetForeignKey' => 'user_id',
             'joinTable' => 'pathways_users',
         ]);
+
+        $this->addBehavior('Search.Search');
+
+	    $this->searchManager()
+                ->value('name')
+                ->value('description')
+                ->add('q', 'Search.Like', [ 
+                    'before' => true,
+                    'after' => true,
+                    'fieldMode' => 'OR',
+                    'comparison' => 'LIKE',
+                    'wildcardAny' => '*',
+                    'wildcardOne' => '?',
+                    'fields' => ['name','description'],
+                ]);
     }
 
     /**

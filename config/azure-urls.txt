@@ -1,0 +1,14 @@
+
+
+Two applications
+
+1) Learning Curator 
+- PROD https://learningcurator.ca/auth/azuread
+- PROD https://learningcurator.apps.silver.devops.gov.bc.ca/auth/azuread
+- TEST https://learningcurator-dev.apps.silver.devops.gov.bc.ca/auth/azuread
+
+2) Moodle
+- PROD https://moodle-950003-prod.apps.silver.devops.gov.bc.ca/
+- PROD https://moodle-950003-test.apps.silver.devops.gov.bc.ca/
+
+I think there should be an entry for the Moodle dev environment too, but I can't track that down at the moment.

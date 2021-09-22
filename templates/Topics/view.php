@@ -14,10 +14,15 @@ if ($this->Identity->isLoggedIn()) {
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center align-items-center"  id="colorful">
-<div class="col-md-4">
+<div class="col-md-8 col-xl-6">
 <div class="py-3">
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div><?= $this->Html->link(__('Edit'), ['action' => 'edit', $topic->id],['class' => 'btn btn-primary float-right']) ?></div>
+<div class="float-right">
+    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $topic->id],['class' => 'btn btn-primary']) ?>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newpath">
+        New Pathway
+    </button>
+</div>
 <?php endif ?>
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb mt-3">
@@ -33,7 +38,6 @@ if ($this->Identity->isLoggedIn()) {
 	</nav>
 
 <h1>
-    <i class="bi bi-bar-chart-steps"></i>
     <?= h($topic->name) ?>
 </h1>
 <div class="mb-5">
@@ -45,7 +49,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
-<div class="col-md-4">
+<div class="col-md-8 col-xl-6">
 <?php foreach($topic->pathways as $pathway): ?>
 <?php if($pathway->status_id == 2): ?>
     <div class="p-3 my-3 bg-white rounded-lg">
@@ -70,27 +74,42 @@ if ($this->Identity->isLoggedIn()) {
 <?php endforeach ?>
 </div>
 <?php if($role == 'superuser' || $role == 'curator'): ?>
-<div class="col-md-3">
-<div class="p-3 my-3 bg-white rounded-lg">
-    <?= $this->Form->create(null,['url' => ['controller' => 'Pathways', 'action' => 'add']]) ?>
-    <?php 
-    echo $this->Form->hidden('createdby', ['value' => $this->Identity->get('id')]);
-    echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]); 
-    ?>
-    <fieldset>
+
+<div class="modal fade" id="newpath" tabindex="-1" aria-labelledby="newpathLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New Pathway</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <div class="modal-body">
+        <?= $this->Form->create(null,['url' => ['controller' => 'Pathways', 'action' => 'add']]) ?>
+        <?php 
+        echo $this->Form->hidden('createdby', ['value' => $this->Identity->get('id')]);
+        echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]); 
+        ?>
+        <fieldset>
         <legend><?= __('Add Pathway') ?></legend>
         <?php
-            echo $this->Form->hidden('topic_id', ['value' => $topic->id]);
-            echo $this->Form->hidden('status_id',['value' => 1]);
-            echo $this->Form->control('name',['class' => 'form-control']);
-            echo $this->Form->control('description',['class' => 'form-control']);
-            echo $this->Form->control('objective',['class' => 'form-control']);
+        echo $this->Form->hidden('topic_id', ['value' => $topic->id]);
+        echo $this->Form->hidden('status_id',['value' => 1]);
+        echo $this->Form->control('name',['class' => 'form-control']);
+        echo $this->Form->control('description',['class' => 'form-control']);
+        echo $this->Form->control('objective',['class' => 'form-control']);
         ?>
-    </fieldset>
-    <?= $this->Form->button(__('Add new pathway'),['class' => 'btn btn-block btn-success mt-3']) ?>
-    <?= $this->Form->end() ?>
+        </fieldset>
+        <?= $this->Form->button(__('Add new pathway'),['class' => 'btn btn-block btn-success mt-3']) ?>
+        <?= $this->Form->end() ?>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+    </div>
+    </div>
 </div>
-</div>
+
 <?php endif;  // if curator /admin ?>
 </div>
 </div>

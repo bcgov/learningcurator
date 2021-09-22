@@ -11,7 +11,7 @@ $this->assign('title', 'Learning on demand.');
 
 <h1 class="display-4 mt-5">Learning on demand.</h1>
 
-<div class="p-3 rounded-lg mb-5 bg-white shadow-sm">
+<div class="p-3 rounded-lg mb-5 bg-white shadow-lg">
 <p style="font-size: 1.3rem">Learning Curator Pathways feature informal learning by 
 theme or community. Here you’ll find recommendations for resources to watch, read, 
 listen to, and courses that will help you reach your goals. Pathways are created by 
@@ -20,7 +20,7 @@ BC Public Service learning curators.
 </p>
 <p style="font-size: 1.5rem"><strong>What do you want to learn today?</strong> </p>
 
-<a href="/profile" class="btn btn-primary btn-lg">Your Profile</a>
+<a href="/profile/pathways" class="btn btn-primary btn-lg">Your Profile</a>
 
 </div>
 </div>
@@ -28,71 +28,8 @@ BC Public Service learning curators.
 
 <div class="container-fluid">
 <div class="row justify-content-md-center linear">
-<div class="col-md-10 col-lg-6">
-<h2 class="mt-3">Topic Areas</h2>
-<?php foreach ($categories as $category): ?>
 
-<div class="p-3 mb-5 bg-white rounded-lg shadow-sm">
-	<h3 class="">
-		<i class="bi bi-diagram-3-fill"></i>
-		<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
-	</h3>
-	<div class="mb-3" style="font-size: 1.2rem">
-	<?= $category->description ?>
-	</div>
-	
-	<a class="btn btn-primary btn-lg" 
-		data-toggle="collapse" 
-		href="#topics<?= $category->id ?>" 
-		role="button" 
-		aria-expanded="false" 
-		aria-controls="topics<?= $category->id ?>">
-    		View Topics
-	</a>
-	
-	<div class="collapse" id="topics<?= $category->id ?>">
-
-	<div class="">
-	<?php foreach ($category->topics as $topic): ?>
-	<div class="p-3 my-3 bg-light shadow-sm">
-	
-		<h3>
-			<i class="bi bi-bar-chart-steps"></i>
-			<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
-		</h3>
-		<div class="mb-3"><?= h($topic->description) ?></div>
-		<a class="btn btn-primary btn-lg" 
-			data-toggle="collapse" 
-			href="#paths<?= $topic->id ?>" 
-			role="button" 
-			aria-expanded="false" 
-			aria-controls="paths<?= $topic->id ?>">
-				View Pathways
-		</a>
-		<div class="collapse" id="paths<?= $topic->id ?>">
-		<!-- <h5>Pathways</h5> -->
-		<?php foreach ($topic->pathways as $path): ?>
-		<?php if($path->status_id === 2): ?>
-		<div class="p-2 my-3 bg-white rounded-lg shadow-sm">
-		<h4>
-			<i class="bi bi-pin-map-fill"></i>
-			<?= $this->Html->link(h($path->name), ['controller' => 'Pathways', 'action' => 'view', $path->slug]) ?>
-		</h4>
-		<div><?= h($path->description) ?></div>
-		</div>
-		<?php endif ?>
-		<?php endforeach; ?>
-		</div>
-	</div>
-	<?php endforeach; ?>
-	
-	</div>
-	</div>
-</div>
-<?php endforeach; ?>
-
-</div>
-<div class="col-md-10 col-lg-6">
+<div class="col-md-10 col-lg-8 col-xl-6">
 <h2 class="mt-3">Featured Pathways</h2>
 <div>
 <?php foreach($featuredpathways as $path): ?>
@@ -110,10 +47,11 @@ BC Public Service learning curators.
 <?php endif ?>
 <?php else: ?>
 	<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
-		
 		<h3>
-			<i class="bi bi-pin-map-fill"></i>
-			<a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a>
+			<a href="/pathways/<?= $path->slug ?>">
+				<i class="bi bi-pin-map-fill"></i>
+				<?= $path->name ?>
+			</a>
 		</h3>
 		<?= $path->objective ?>
 		<div>

@@ -21,12 +21,12 @@ $this->assign('title', 'All topic areas');
 
 <?php foreach ($categories as $category): ?>
 
-<div class="p-3 my-5 bg-white rounded-lg shadow-sm">
+<div class="p-3 my-5 bg-white rounded-lg shadow-lg">
 	<h2 class="">
 		<i class="bi bi-diagram-3-fill"></i>
 		<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
 	</h2>
-	<div class="mb-3" style="font-size: 1.2rem">
+	<div class="mb-3">
 	<?= $category->description ?>
 	</div>
 	
@@ -39,7 +39,6 @@ $this->assign('title', 'All topic areas');
 	<div class="p-3 my-3 bg-light shadow-sm">
 	
 		<h3>
-			<i class="bi bi-bar-chart-steps"></i>
 			<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
 		</h3>
 		<div class="mb-3"><?= h($topic->description) ?></div>

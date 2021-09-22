@@ -183,23 +183,22 @@ class SocialBehavior extends BaseTokenBehavior
             // where we have the monstrosity of:
             // 
             // Haggett, Allan PSA:EX
+            //
+            // (middle initial example seems to break, e.g.)
+            // Jewer, David W CITZ:EX
             // 
             // where just splitting by spaces is NOT a good strategy
             // (and resulted in the first/last names being flipped)
             // 
             // Start by splitting on the comma to get the last name
-            // in the [0] position, then split the [1] by the :EX
+            // in the [0] position, then check for ministry info on [1]
             // 
             $name = explode(',', $data['full_name'] ?? '');
-            $first = explode(':EX', $name[1]);
             //
-            // This should result in $first[0] being "Allan PSA"
-            // or "David W CITZ" so, now we explode on known Ministries
-            // PSA and CITZ to start with to see if we can isolate and 
-            // assign.
+            // This should result in $name[1] being "Allan PSA:EX"
+            // or "David W CITZ:EX" next we check for known Ministry shortcodes
+            // PSA and CITZ to start with to see if we can isolate and assign.
             //
-            $psa = explode('PSA', $first[0]);
-            $citz = explode('CITZ', $first[0]);
             // We are of course mapping ministries to our own table
             // completely manually at this point; hopefully, AzureAD
             // will provide this value directly in the future (maybe
@@ -207,21 +206,23 @@ class SocialBehavior extends BaseTokenBehavior
             // and we can ditch this; in the meantime, we start with
             // the imperfect method so that we can at least show that
             // we considered how to do this.
-            if(!empty($psa[0])) {
-                $fn = $psa[0];
+            if(str_contains($name[1],'PSA:EX')) {
+                $psa = explode('PSA:EX', $name[1]);
+                // "Allan PSA:EX" should now be reduced to "Allan " at [0] 
+                $fn = trim($psa[0]);
                 $ministry = 2;
-            } elseif(!empty($citz[0])) {
-                $fn = $citz[0];
+            } elseif(str_contains($name[1],'CITZ:EX')) {
+                $citz = explode('CITZ:EX', $name[1]);
+                // "David W CITZ:EX" becomes "David W "...
+                $fn = trim($citz[0]);
                 $ministry = 3;
             } else {
-                $fn = $first[0];
+                $fn = trim($name[1]);
                 $ministry = 1;
             }
             $userData['first_name'] = $fn;
             $userData['last_name'] = $name[0];
             $userData['ministry_id'] = $ministry;
-                
-            
             $userData['username'] = $data['username'] ?? null;
             $username = $userData['username'] ?? null;
             if (empty($username)) {
@@ -252,7 +253,7 @@ class SocialBehavior extends BaseTokenBehavior
             $userData['gender'] = $data['gender'] ?? null;
             $userData['social_accounts'][] = $accountData;
 
-            $userData['additional_data'] = $data['raw']['oid'];
+            $userData['additional_data'] = $data['raw']['bcgovGUID'];
 
 
             $user = $this->_table->newEntity($userData);

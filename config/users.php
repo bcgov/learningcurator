@@ -28,7 +28,7 @@ $config = ['Users' =>
                 'Auth' => [
                         'AuthenticationComponent' => [
                                 'load' => true,
-                                'loginRedirect' => '/profile',
+                                'loginRedirect' => '/profile/pathways',
                                 'requireIdentity' => false
                         ],
                 ]

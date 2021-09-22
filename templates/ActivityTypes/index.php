@@ -24,7 +24,7 @@ function rgbToHex(r, g, b) {
 <?php $count++ ?>
 	<div class="col-md-6" style="background-color: rgba(<?= $type->color ?>,.2)">
 	<div class="py-4">
-	<div class="pad-sm bg-white rounded-lg mb-2">
+	<div class="m-4 p-4 bg-white rounded-lg">
 	<div class="mb-3">
     <div class="float-right"><?= $this->Html->link(__('Edit'), ['action' => 'edit', $type->id],['class' => 'btn btn-light mt-3']) ?></div>
 		<a href="/activity-types/view/<?= $type->id ?>" class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $type->color ?>,1)">

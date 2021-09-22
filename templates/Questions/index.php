@@ -19,7 +19,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <?= $this->Html->link(__('New Question'), ['action' => 'add'], ['class' => 'btn btn-success float-right']) ?>
 <?php endif ?>
-<h1><?= __('Questions') ?></h1>
+<h1 class="display-4"><?= __('Questions') ?></h1>
 <div>Questions that we find are asked frequently.</div>
 </div>
 </div>

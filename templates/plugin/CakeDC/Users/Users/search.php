@@ -12,14 +12,16 @@
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-10 col-lg-8 col-xl-6">
-<h1 class="mt-5">Users</h1>
+<div class="mt-5"><a href="/users/index">All Users</a></div>
+<h1 class="mt-0">Search Users</h1>
 <form method="get" action="/users/search" class="mb-5">
 <label>Search
 		<input class="form-control" 
                 type="search" 
                 placeholder="Activity Search" 
                 aria-label="Search" 
-                name="q">
+                name="q"
+                value="<?= h($q) ?>">
 </label>
 		<button class="btn btn-outline-dark" type="submit">Search</button>
 	</form>
@@ -29,10 +31,11 @@
 <div class="container-fluid">
 <div class="row justify-content-md-center">
 <div class="col-md-10 col-lg-8 col-xl-6">
+
 <div class="bg-white my-5 p-3 shadow-sm">
 
 <?php foreach (${$tableAlias} as $user) : ?>
-<div class="bg-light mb-3 p-3">
+<div class="">
     <div class="">
     <?= $this->Html->link(__d('cake_d_c/users', h($user->username)), ['action' => 'view', $user->id],['class' => 'font-weight-bold']) ?> 
     <?= h($user->first_name) ?> <?= h($user->last_name) ?> <?= h($user->email) ?>
