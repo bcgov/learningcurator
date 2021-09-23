@@ -6,13 +6,14 @@
 
 [] When pathway completed update database with date!
 [] Implement step sorting
-[] Finish redesign the step page
 [] Develop reports dashboard
 
 ---------------------------------------
 ## PLANNED 
 ---------------------------------------
 
+[] Fix reports on activity page
+[] Include reports on curator view of user profile 
 [] Can I create a "Learning Centre" Github organization?
 [] Can we host stuff on GitHub Pages? https://bcgov.github.io/learningcurator ??
 [] Docker licensing?
@@ -41,6 +42,7 @@
 ## DONE 
 ---------------------------------------
 
+[x] Finish redesign the step page
 [x] User report for curators (paths followed, activities claimed)?
 [x] Add who created/modified paths and activities to curators
 [x] User search for superadmin and curator
