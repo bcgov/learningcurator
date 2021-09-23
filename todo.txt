@@ -12,6 +12,8 @@
 ## PLANNED 
 ---------------------------------------
 
+[] Generate QR codes for pathways
+[] Put a link to the Learning Hub in the footer
 [] Fix reports on activity page
 [] Include reports on curator view of user profile 
 [] Can I create a "Learning Centre" Github organization?
