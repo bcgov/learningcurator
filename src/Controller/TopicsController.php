@@ -91,7 +91,15 @@ class TopicsController extends AppController
             echo __('The topic could not be saved. Please, try again.');
         }
         $users = $this->Topics->Users->find('list', ['limit' => 200]);
-        $categories = $this->Topics->Categories->find('list', ['limit' => 200]);
+        $cats = $this->Topics->Categories->find('all', ['limit' => 200]);
+        //$categories = $cats->combine('id', 'name');
+        $categories = $cats->map(function ($value, $key) {
+            return [
+                'value' => $value->id,
+                'text' => $value->name,
+                'data-created' => $value->created
+            ];
+        });
         $this->set(compact('topic', 'users', 'categories'));
     }
 
