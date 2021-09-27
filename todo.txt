@@ -3,7 +3,10 @@
 ---------------------------------------
 ## In Progress
 ---------------------------------------
-
+[] Category view pathway counts are wrong as they include draft pathways that 
+    are there but not shown
+[] You file a report on an activity you are redirected to the activities index 
+    and not the profile page like they should be
 [] When pathway completed update database with date!
 [] Implement step sorting
 [] Develop reports dashboard
