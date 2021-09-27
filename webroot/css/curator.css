@@ -12,7 +12,19 @@
  * Author: Allan Haggett <allan.haggett@gov.bc.ca>
  *
  */
-
+ 
+/* @media (prefers-color-scheme: dark) {
+	body, html {
+		background: #333;
+		color: #FFF;
+	}
+	.bg-white {
+		background-color: #333;
+	}
+	#colorful {
+		background-color: #333;
+	}
+} */
  /* #TODO update the below link states to make more sense. */
 a {
 	color: #000;
