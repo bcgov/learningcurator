@@ -3,6 +3,9 @@
 ---------------------------------------
 ## In Progress
 ---------------------------------------
+
+[] Verify that "objective" is not a step field and remove it from step edit form
+[] Reports section on activity single view tries to use name but is borked
 [] Category view pathway counts are wrong as they include draft pathways that 
     are there but not shown
 [] You file a report on an activity you are redirected to the activities index 
