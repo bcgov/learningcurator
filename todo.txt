@@ -3,7 +3,7 @@
 ---------------------------------------
 ## In Progress
 ---------------------------------------
-
+[] There's a "new pathway" button on the pathway index page for _everyone_
 [] Verify that "objective" is not a step field and remove it from step edit form
 [] Reports section on activity single view tries to use name but is borked
 [] Category view pathway counts are wrong as they include draft pathways that 
@@ -13,6 +13,8 @@
 [] When pathway completed update database with date!
 [] Implement step sorting
 [] Develop reports dashboard
+[] Edit user template needs love
+[] there's a grey bar under the colorful div when no content; fix that
 
 ---------------------------------------
 ## PLANNED 
