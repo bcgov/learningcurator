@@ -150,14 +150,7 @@ This seems to work out, but #TODO investigate optimizing this
  ?>
 </div> <!-- /.btn-group -->
 <?php endif ?>
-<?php if(!in_array($uid,$usersonthispathway)): ?>
-<div class="bg-white rounded-lg p-3 shadow-sm mt-3">
-<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
-<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
-<?= $this->Form->button(__('Follow this pathway'),['class' => 'btn btn-primary mb-0']) ?>
-<?= $this->Form->end(); ?>
-</div>
-<?php endif ?>
+
 <?php foreach ($step->pathways as $pathways) : ?>
 <?php $totalsteps = count($pathways->steps) ?>
 
@@ -241,9 +234,8 @@ This seems to work out, but #TODO investigate optimizing this
 <?= $this->Form->end(); ?>
 </div>
 <?php endif ?>
-
-
 </div>
+
 <div class="col-md-9 col-lg-6">
 
 

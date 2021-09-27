@@ -76,6 +76,7 @@ class PathwaysUsersController extends AppController
         }
         print(__('You cannot edit this directly.'));
     }
+    
     /**
      * Delete method
      *
@@ -88,12 +89,10 @@ class PathwaysUsersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $pathwaysUser = $this->PathwaysUsers->get($id);
         if ($this->PathwaysUsers->delete($pathwaysUser)) {
-            print(__('The pathways user has been deleted.'));
+            return $this->redirect($this->referer());
+            //print(__('The pathways user has been deleted.'));
         } else {
             print(__('The pathways user could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect($this->referer());
+        }   
     }
-
 }

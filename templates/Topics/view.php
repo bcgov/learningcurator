@@ -52,7 +52,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-8 col-xl-6">
 <?php foreach($topic->pathways as $pathway): ?>
 <?php if($pathway->status_id == 2): ?>
-    <div class="p-3 my-3 bg-white rounded-lg">
+    <div class="p-3 my-3 bg-white rounded-lg shadow-lg">
         <h2>
             <i class="bi bi-pin-map-fill"></i>
             <?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?>

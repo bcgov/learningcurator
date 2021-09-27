@@ -64,7 +64,9 @@ if ($this->Identity->isLoggedIn()) {
 				Respond
 		</a>	
 		<div class="collapse" id="curatorresponse<?= $report->id ?>">
+		<?php if($role == 'superuser'): ?>
 		<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-primary']) ?>
+		<?php endif ?>
 		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'edit', $report->id]]) ?>
 		<fieldset>
 		<legend><?= __('Respond') ?></legend>

@@ -5,16 +5,25 @@
  */
 $this->loadHelper('Authentication.Identity');
 ?>
+<div class="container-fluid">
+<div class="row justify-content-md-center align-items-center"  id="colorful">
+<div class="col-md-10 col-lg-8 col-xl-6">
+    <h1 class="display-4 my-5">
+        Add Topic Area
+    </h1>
+</div>
+</div>
+</div>
 
 <div class="container-fluid">
 <div class="row justify-content-md-center linear">
 <div class="col-md-4">
 
-<div class="mt-5 p-5 bg-white rounded-lg">
+<div class="mt-5 p-5 bg-white rounded-lg shadow-lg">
 
 <?= $this->Form->create($category) ?>
 <fieldset>
-<legend><?= __('Add Category') ?></legend>
+
 <?php
 echo $this->Form->control('name',['class' => 'form-control']);
 echo $this->Form->control('description',['class' => 'form-control']);

@@ -34,7 +34,7 @@ $this->assign('title', $pagetitle);
   	</a>
 </div>
 <?php endif; // is curator or admin ?>
-<h1>
+<h1 class="display-4">
 	<i class="bi bi-diagram-3-fill"></i>
 	<?= h($category->name) ?>
 </h1>
@@ -75,7 +75,7 @@ $this->assign('title', $pagetitle);
 <?php foreach ($category->topics as $topic) : ?>
 
 <div class="col-md-6 col-lg-6 pt-3">
-<div class="p-3 my-3 bg-white rounded-lg">
+<div class="p-3 my-3 bg-white rounded-lg shadow-lg">
 <h2>
 	<i class="bi bi-diagram-3-fill"></i> <!-- topic_id: <?= $topic->id ?> --> 
 	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
@@ -101,10 +101,10 @@ $this->assign('title', $pagetitle);
 	
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <span class="badge badge-warning"><?= $pathway->status->name ?></span>
-<h3>
+<div>
 	<i class="bi bi-pin-map-fill"></i>
 	<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
-</h3>
+</div>
 <div class="mb-3">
 <?= h($pathway->objective) ?>
 </div>
