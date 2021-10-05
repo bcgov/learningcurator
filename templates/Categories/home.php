@@ -3,7 +3,7 @@
 * @var \App\View\AppView $this
 * @var \App\Model\Entity\Category[]|\Cake\Collection\CollectionInterface $categories
 */
-$this->assign('title', 'Learning on demand.');
+$this->assign('title', 'Learning Curator. Learning on demand.');
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
@@ -31,28 +31,16 @@ BC Public Service learning curators.
 
 <div class="col-md-10 col-lg-8 col-xl-6">
 <h2 class="mt-3">Featured Pathways</h2>
-<div>
+
 <?php foreach($featuredpathways as $path): ?>
-	
-<?php if($path->status_id != 2): ?>
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-	<div class="p-3 mb-3 bg-white rounded-lg">
-		<span class="badge badge-warning"><?= $path->status->name ?></span>
-		<h3><a href="/pathways/<?= $path->slug ?>"><?= $path->name ?></a></h3>
-		<div><?= $path->description ?></div>
-		<div><?= $path->topic->category[0]->name ?> <?= $path->topic->name ?></div>
-		
-		<div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div>
-	</div>
-<?php endif ?>
-<?php else: ?>
+
 	<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
-		<h3>
-			<a href="/pathways/<?= $path->slug ?>">
+		<div>
+			<a href="/pathways/<?= $path->slug ?>" class="font-weight-bold">
 				<i class="bi bi-pin-map-fill"></i>
 				<?= $path->name ?>
 			</a>
-		</h3>
+		</div>
 		<?= $path->objective ?>
 		<div>
 			
@@ -61,11 +49,10 @@ BC Public Service learning curators.
 		</div>
 		<!-- <div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div> -->
 	</div>
-<?php endif ?>
+
 
 <?php endforeach ?>
 
-</div>
 </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

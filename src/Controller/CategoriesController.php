@@ -36,6 +36,7 @@ class CategoriesController extends AppController
                                 ->contain(['Statuses','Topics','Topics.Categories'])
                                 ->order(['Pathways.created' => 'desc'])
                                 ->where(['Pathways.featured' => 1])
+                                ->where(['Pathways.status_id' => 2])
                                 ->limit(10);
         $featuredpathways = $pathways->toList();
 

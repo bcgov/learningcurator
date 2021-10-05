@@ -15,11 +15,14 @@
 [] Develop reports dashboard
 [] Edit user template needs love
 [] there's a grey bar under the colorful div when no content; fix that
+[] Float edit button to right on step edit
+[] Fix activity ordering in step edit
 
 ---------------------------------------
 ## PLANNED 
 ---------------------------------------
 
+[] Add in "pathway details" collapsed section showing desc/objective etc on steps
 [] Generate QR codes for pathways
 [] Put a link to the Learning Hub in the footer
 [] Fix reports on activity page
