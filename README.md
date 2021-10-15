@@ -8,6 +8,8 @@ An emerging project from the Learning Centre for the BC Public Service Agency.
 
 There are topics which have pathways. Pathways have steps; steps have activities; activies are categorized and tagged. A signed in user can follow pathways and claim activites, tracking their own progress via activity rings.
 
+Area > Topic > Pathway > Step > Activity 
+
 ## Usage
 Follow pathways and complete the activities; informal, self-directed learning but guided by a curated structure that makes sense and is timely.
 

@@ -239,7 +239,7 @@ This seems to work out, but #TODO investigate optimizing this
 <div class="col-md-9 col-lg-6">
 
 
-<div class="bg-white p-3 my-3 rounded-lg shadow-lg">
+<div class="bg-white p-3 my-3 rounded-lg shadow-sm">
 	<div style="font-size: 140%;">
 	<?= $step->name ?> - <?= $step->description ?>
 	</div>

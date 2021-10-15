@@ -123,7 +123,7 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endforeach; ?>
 	
 <?php else: ?>
-	<div class="p-3 mb-2 bg-white rounded-lg shadow-lg">
+	<div class="p-3 mb-2 bg-white rounded-lg shadow-sm">
 	<p><strong>You're not yet following any pathways.</strong></p>
 	<p>Following means that you can see your progress through the pathway as you claim activities.
 		Check out the topics below to see all the pathways!

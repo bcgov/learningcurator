@@ -75,9 +75,9 @@ $this->assign('title', $pagetitle);
 <?php foreach ($category->topics as $topic) : ?>
 
 <div class="col-md-6 col-lg-6 pt-3">
-<div class="p-3 my-3 bg-white rounded-lg shadow-lg">
+<div class="p-3 my-3 bg-white rounded-lg shadow-sm">
 <h2>
-	<i class="bi bi-diagram-3-fill"></i> <!-- topic_id: <?= $topic->id ?> --> 
+	<!-- topic_id: <?= $topic->id ?> --> 
 	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
 	
 </h2>

@@ -18,7 +18,7 @@
 <div class="container-fluid">
 <div class="row justify-content-md-center align-items-center">
 <div class="col-md-8 col-lg-6 col-xl-4">
-<div class="bg-white p-3 my-5 shadow-lg">
+<div class="bg-white p-3 my-5 shadow-sm">
 <div class="float-right">
 <?= $this->Form->postLink(
 __('Delete'),

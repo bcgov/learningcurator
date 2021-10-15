@@ -21,12 +21,12 @@ $this->assign('title', 'All topic areas');
 
 <?php foreach ($categories as $category): ?>
 
-<div class="p-4 my-5 bg-white rounded-lg shadow-lg">
+<div class="p-3 my-5 bg-white rounded-lg shadow-sm">
 	<h2 class="">
 		<i class="bi bi-diagram-3-fill"></i>
 		<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
 	</h2>
-	<div class="mb-5">
+	<div class="mb-3 p-2">
 	<?= $category->description ?>
 	</div>
 	
@@ -36,35 +36,12 @@ $this->assign('title', 'All topic areas');
 
 	<div class="">
 	<?php foreach ($category->topics as $topic): ?>
-	<div class="mb-5 p-3 bg-white rounded-lg shadow-lg">
-	
+	<div class="mb-3 px-4 bg-white rounded-lg">
 		<h3>
 			<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
 		</h3>
-		<div class="mb-3"><?= h($topic->description) ?></div>
-		<a class="btn btn-primary btn-lg" 
-			data-toggle="collapse" 
-			href="#paths<?= $topic->id ?>" 
-			role="button" 
-			aria-expanded="false" 
-			aria-controls="paths<?= $topic->id ?>">
-				<span class="badge badge-light"><?php echo count($topic->pathways) ?></span> 
-				Pathways
-		</a>
-		<div class="collapse" id="paths<?= $topic->id ?>">
-		<!-- <h5>Pathways</h5> -->
-		<?php foreach ($topic->pathways as $path): ?>
-		<?php if($path->status_id === 2): ?>
-		<div class="p-2 my-3 bg-white rounded-lg shadow-sm">
-		<div class="font-weight-bold">
-			<i class="bi bi-pin-map-fill"></i>
-			<?= $this->Html->link(h($path->name), ['controller' => 'Pathways', 'action' => 'view', $path->slug]) ?>
-		</div>
-		<div><?= h($path->description) ?></div>
-		</div>
-		<?php endif ?>
-		<?php endforeach; ?>
-		</div>
+		<div class="mb-2 py-2"><?= h($topic->description) ?></div>
+		
 	</div>
 	<?php endforeach; ?>
 	
