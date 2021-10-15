@@ -520,6 +520,8 @@ This seems to work out, but #TODO investigate optimizing this
 	<?php endforeach; // end of activities loop for this step ?>
 </div>
 
+<?php else: ?>
+</div>
 <?php endif ?>
 
 </div>
