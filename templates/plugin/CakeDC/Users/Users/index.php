@@ -17,7 +17,7 @@
 <label>Search
 		<input class="form-control" 
                 type="search" 
-                placeholder="Activity Search" 
+                placeholder="User Search" 
                 aria-label="Search" 
                 name="q">
 </label>
