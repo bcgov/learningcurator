@@ -57,8 +57,7 @@ label {
     <?= $this->Form->control('status_id', ['options' => $statuses, 'class' => 'form-control']) ?>
     <?= $this->Form->control('name', ['class' => 'form-control']) ?>
     <?php  //$this->Form->control('slug', ['class' => 'form-control']); ?>
-    <?= $this->Form->control('description', ['class' => 'form-control summernote']) ?>
-    <?= $this->Form->control('objective', ['class' => 'form-control summernote']) ?>
+    <?= $this->Form->control('description', ['class' => 'form-control summernote', 'label' => 'Objective']) ?>
     <?= $this->Form->button(__('Save Step'),['class' => 'btn btn-success btn-block my-3']) ?>
     <?= $this->Form->end() ?>
     </div>
