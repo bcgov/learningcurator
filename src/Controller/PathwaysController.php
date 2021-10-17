@@ -65,9 +65,9 @@ class PathwaysController extends AppController
         // regardless of their statuses. Regular users should only ever see 
         // 'published' pathways.
         if($user->role == 'curator' || $user->role == 'superuser') {
-            $pathways = $paths->find('all')->contain(['Topics','Statuses']);
+            $pathways = $paths->find('all')->contain(['Topics','Topics.Categories','Statuses']);
         } else {
-            $pathways = $paths->find('all')->contain(['Topics','Statuses'])->where(['status_id' => 2]);
+            $pathways = $paths->find('all')->contain(['Topics','Topics.Categories','Statuses'])->where(['status_id' => 2]);
         }
         //$this->paginate($pathways);
         $this->set(compact('pathways'));

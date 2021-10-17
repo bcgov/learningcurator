@@ -42,13 +42,15 @@ if ($this->Identity->isLoggedIn()) {
 <div class="bg-white p-3 my-2 rounded-lg">
 	
 	<div>
-		<a href="/pathways/<?= h($pathway->slug) ?>">
+		<a href="/pathways/<?= h($pathway->slug) ?>" class="font-weight-bold">
 			<i class="bi bi-pin-map-fill"></i>
 			<?= h($pathway->name) ?>
 		</a> 
+	</div>
+	<div>
 		<span class=""><?= $pathway->status->name ?></span> in 
-		
-		<?= $this->Html->link($pathway->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id],['class' => '']) ?>
+		<?php $topiclink = $pathway->topic->categories[0]->name . ', ' . $pathway->topic->name ?>
+		<?= $this->Html->link($topiclink, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id],['class' => '']) ?>
 	</div>
 </div>
 <?php endforeach; ?>
