@@ -75,7 +75,7 @@ $this->loadHelper('Authentication.Identity');
 			aria-expanded="false"
 			title="Your Profile">
 				<i class="bi bi-person-circle"></i>
-				<span class="sr-only">Profile</span>
+				Profile
 		</a>
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 			<a class="dropdown-item" href="/profile/pathways">Your Pathways</a>
