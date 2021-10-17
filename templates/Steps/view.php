@@ -309,7 +309,8 @@ This seems to work out, but #TODO investigate optimizing this
 		<div class="mb-3">
 		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 			<i class="bi bi-clock-history"></i>
-			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
+			<?= h($activity->estimated_time) ?>
+			<?php //echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
 		</span> 
 		<?php foreach($activity->tags as $tag): ?>
 		<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
@@ -457,7 +458,8 @@ This seems to work out, but #TODO investigate optimizing this
 			<div>
 				<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 					<i class="bi bi-clock-history"></i>
-					<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
+					<?= h($activity->estimated_time) ?>
+					<?php //echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
 				</span> 
 			</div>
 			<?= $activity->description ?>

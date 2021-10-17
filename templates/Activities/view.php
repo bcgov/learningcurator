@@ -56,8 +56,9 @@ if ($this->Identity->isLoggedIn()) {
 	<div class="p-3 rounded-lg" style="background: rgba(255,255,255,.3);">
 		<div class="mb-2">
 		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
-			<i class="fas fa-clock"></i>
-			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time], ['class' => 'text-dark']) ?>
+		<i class="bi bi-clock-history"></i>
+			<?= h($activity->estimated_time) ?>
+			<?php //echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time], ['class' => 'text-dark']) ?>
 		</span> 
 			<?php foreach($activity->tags as $tag): ?>
 			<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
