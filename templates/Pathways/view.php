@@ -287,6 +287,24 @@ if($stepclaimcount > 0) {
 		<i class="fas fa-arrow-circle-right"></i>
 	</a>
 </h2>
+<div style="font-size; 130%"><?= $steps->description ?></div>
+<div class="my-3">
+	<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
+	<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
+	<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
+	<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
+		<?= $readstepcount ?> to read
+	</span>  
+	<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
+		<?= $watchstepcount ?> to watch
+	</span>  
+	<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
+		<?= $listenstepcount ?> to listen to
+	</span>  
+	<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
+		<?= $participatestepcount ?> to participate in
+	</span>  
+</div>
 </div>
 <?php endif; // if curator or admin ?>
 <?php endif; // if published ?>
