@@ -3,12 +3,22 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pathway[]|\Cake\Collection\CollectionInterface $pathways
  */
+$this->loadHelper('Authentication.Identity');
+$uid = 0;
+$role = 0;
+if ($this->Identity->isLoggedIn()) {
+	$role = $this->Identity->get('role');
+	$uid = $this->Identity->get('id');
+}
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-10 col-lg-8 col-xl-6">
 
+<?php if($role == 'curator' || $role == 'superuser'): ?>
 <?= $this->Html->link(__('New Pathway'), ['action' => 'add'], ['class' => 'btn btn-light float-right mt-5']) ?>
+<?php endif ?>
+
 <h1 class="display-4 mt-5"><?= __('All Pathways') ?></h1>
 <form method="get" action="/pathways/search" class="mb-5">
 	<label>Search
