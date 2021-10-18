@@ -252,7 +252,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach($activity->reports as $report): ?>
 	
 <div class="my-3 p-3 bg-white rounded-lg">
-<div><a href="/users/view/<?= $report->user->id ?>"><?= $report->user->name ?></a> says:</div>
+<div><a href="/users/view/<?= $report->user_id ?>">Reporter</a> says:</div>
 <div><?= $report->issue ?></div>
 <div class="mt-2" style="font-size: 12px">Added on <?= $report->created ?></div>
 <?php if(empty($report->response)): ?>
@@ -339,7 +339,7 @@ $(document).ready(function(){
 		
 		e.preventDefault();
 		var form = $(this);
-		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/users/reports">View all your reports</a>.').remove();
+		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/profile/reports">View all your reports</a>.').remove();
 		
 		var url = form.attr('action');
 		$.ajax({
