@@ -11,6 +11,15 @@ $this->loadHelper('Authentication.Identity');
 <div class="bg-white p-3 my-5 shadow-sm">
     
             <?= $this->Form->create($pathway) ?>
+            <div>
+<label>Topic:
+<?php echo $this->Form->select(
+    'topic_id',
+    $areas,
+	['class' => 'form-control'],
+);
+?></label>
+</div>
             <?php 
             echo $this->Form->hidden('createdby', ['value' => $this->Identity->get('id')]);
             echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]); 
