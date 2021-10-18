@@ -51,7 +51,8 @@ if ($this->Identity->isLoggedIn()) {
 		<div class="mb-3">
 		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 			<i class="bi bi-clock-history"></i>
-			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
+			<?= h($activity->estimated_time) ?>
+			<?php //echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
 		</span> 
 		<?php foreach($activity->tags as $tag): ?>
 		<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
@@ -195,6 +196,31 @@ $(document).ready(function(){
 			}
 		});
 	});
+
+	$('.reportform').on('submit', function(e){
+		
+		e.preventDefault();
+		var form = $(this);
+		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/profile/reports">View all your reports</a>.').remove();
+		
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/reports/add',
+			data: form.serialize(),
+			success: function(data)
+			{
+				
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
+	
 
 });
 
