@@ -45,7 +45,7 @@ BC Public Service learning curators.
 		<div>
 			
 			<?php $topiclink = $path->topic->categories[0]->name . ' - ' . $path->topic->name ?>
-			<div><?= $this->Html->link(h($topiclink), ['controller' => 'Topics', 'action' => 'view', $path->topic->id],['class' => 'badge badge-light']) ?></div>
+			<div><?= $this->Html->link($topiclink, ['controller' => 'Topics', 'action' => 'view', $path->topic->id],['class' => 'badge badge-light']) ?></div>
 		</div>
 		<!-- <div><span class="badge badge-light">Added: <?= h($path->created) ?></span></div> -->
 	</div>
