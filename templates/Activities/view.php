@@ -65,6 +65,11 @@ if ($this->Identity->isLoggedIn()) {
 			<?php endforeach ?>
 		</div>
 		<?= $activity->description ?>
+		<?php if(!empty($activity->isbn)): ?>
+		<div class="bg-white p-2 my-2 isbn">
+			ISBN: <?= $activity->isbn ?>
+		</div>
+		<?php endif ?>
 		<div class="p-2 text-muted" style="background-color: rgba(255,255,255,.5)">
 			<?= $this->Time->format($activity->created,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
 			<?php if($role == 'curator' || $role == 'superuser'): ?>

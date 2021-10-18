@@ -324,7 +324,11 @@ This seems to work out, but #TODO investigate optimizing this
 		</div>
 
 		<?= $activity->description ?>
-		
+		<?php if(!empty($activity->isbn)): ?>
+		<div class="bg-white p-2 isbn">
+			ISBN: <?= $activity->isbn ?>
+		</div>
+		<?php endif ?>
 		<?php if(!empty($activity->_joinData->stepcontext)): ?>
 		<div class="alert alert-light text-dark mt-3 shadow-sm">
 			<i class="bi bi-person-badge-fill"></i>
