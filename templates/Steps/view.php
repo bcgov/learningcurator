@@ -85,13 +85,18 @@ foreach ($step->activities as $activity) {
 		if(in_array($activity->id,$useractivitylist)) {
 			$stepclaimcount++;
 		}
-		$tmp = array();
+		$reqtmp = array();
+		$suptmp = array();
 		// Loop through the whole list, add steporder to tmp array
 		foreach($requiredacts as $line) {
-			$tmp[] = $line->_joinData->steporder;
+			$reqtmp[] = $line->_joinData->steporder;
+		}
+		foreach($supplementalacts as $line) {
+			$suptmp[] = $line->_joinData->steporder;
 		}
 		// Use the tmp array to sort acts list
-		array_multisort($tmp, SORT_DESC, $requiredacts);
+		array_multisort($reqtmp, SORT_DESC, $requiredacts);
+		array_multisort($suptmp, SORT_DESC, $supplementalacts);
 		//array_multisort($tmp, SORT_DESC, $supplementalacts);
 	}
 }
@@ -137,7 +142,7 @@ This seems to work out, but #TODO investigate optimizing this
 
 <?php if (!empty($step->pathways)) : ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="btn-group  mt-3 ml-3">
+<div class="btn-group float-right mt-3 ml-3">
 <?= $this->Html->link(__('Edit'), 
 						['controller' => 'Steps', 'action' => 'edit', $step->id], 
 						['class' => 'btn btn-light btn-sm']); 
@@ -240,8 +245,9 @@ This seems to work out, but #TODO investigate optimizing this
 
 
 <div class="bg-white p-3 my-3 rounded-lg shadow-sm">
-	<div style="font-size: 140%;">
-	<?= $step->name ?> - <?= $step->description ?>
+	<h2><?= $step->name ?></h2>
+	<div style="font-size: 120%;">
+		<?= $step->description ?>
 	</div>
 	<div class="my-3">
 		<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
@@ -465,8 +471,8 @@ This seems to work out, but #TODO investigate optimizing this
 			<?= $activity->description ?>
 
 			<?php if(!empty($activity->_joinData->stepcontext)): ?>
-		<div class="alert alert-light text-dark mt-3">
-				Curator says:<br>
+			<div class="bg-light shadow-sm p-3 mt-3">
+				<strong>Curator says:</strong><br>
 				<?= $activity->_joinData->stepcontext ?>
 			</div>
 			<?php endif ?>

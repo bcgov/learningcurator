@@ -164,6 +164,25 @@ label {
     <?php foreach($supplementalacts as $supp): ?>
         <li class="list-group-item" id="exac-<?= $supp->id ?>" data-stepid="<?= $supp->_joinData->id ?>">
             <div class="row">
+            <div class="col-1">
+            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $supp->_joinData->id], 'class' => '']) ?>
+            <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $supp->_joinData->steporder]) ?>
+            <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'up']) ?>
+            <?= $this->Form->control('id',['type' => 'hidden', 'value' => $supp->_joinData->id]) ?>
+            <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
+            <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $supp->id]) ?>
+            <button class="btn btn-light"><i class="bi bi-arrow-up-square-fill"></i></button>
+            <?= $this->Form->end() ?>
+            
+            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $supp->_joinData->id], 'class' => '']) ?>
+            <?= $this->Form->control('sortorder',['type' => 'hidden', 'value' => $supp->_joinData->steporder]) ?>
+            <?= $this->Form->control('direction',['type' => 'hidden', 'value' => 'down']) ?>
+            <?= $this->Form->control('id',['type' => 'hidden', 'value' => $supp->_joinData->id]) ?>
+            <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $step->id]) ?>
+            <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $supp->id]) ?>
+            <button class="btn btn-light"><i class="bi bi-arrow-down-square-fill"></i></button>
+            <?= $this->Form->end() ?>
+            </div>
             <div class="col-9">
             <div>
                     <span class="badge bg-dark text-white"><?= $supp->status->name ?></span> 
@@ -171,9 +190,13 @@ label {
                 </div>
                 <?php if($supp->_joinData->required) echo '<span class="badge badge-success">Required</span>' ?> 
                 <a href="/activities/view/<?= $supp->id ?>"><?= $supp->name ?></a> 
-                <div><?= $supp->_joinData->stepcontext ?></div>
+                <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'edit/' . $supp->_joinData->id], 'class' => '']) ?>
+                <?= $this->Form->control('id',['type' => 'hidden', 'value' => $supp->_joinData->id,]) ?>
+                <?= $this->Form->control('stepcontext',['value' => $supp->_joinData->stepcontext,'class' => 'form-control', 'label' => '']) ?>
+                <button class="btn btn-light btn-sm">Save</button>
+                <?= $this->Form->end() ?>
             </div>
-            <div class="col-3">
+            <div class="col-2">
             <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'required-toggle/' . $supp->_joinData->id, 'class' => '']]) ?>
             <?= $this->Form->hidden('id',['type' => 'hidden', 'value' => $supp->_joinData->id]) ?>
             <?php if($supp->_joinData->required == 0): ?>
