@@ -39,7 +39,7 @@ $this->assign('title', $pagetitle);
 	<i class="bi bi-diagram-3-fill"></i>
 	<?= h($category->name) ?>
 </h1>
-<div class="text">
+<div class="text" style="font-size: 120%">
 <?= $this->Text->autoParagraph(h($category->description)); ?>
 </div>
 </div>
@@ -97,11 +97,11 @@ $this->assign('title', $pagetitle);
 	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
 	
 </h2>
-<div class="p-3"><?= $topic->description ?></div>
+<div class="p-2 mb-3" style="font-size: 110%"><?= $topic->description ?></div>
 
 <?php foreach ($topic->pathways as $pathway) : ?>
 
-<div class="p-3">
+<div class="p-2">
 <?php if($pathway->status_id == 2): // is published ?>
 	<div>
 		<a href="/pathways/<?= h($pathway->slug) ?>" class="font-weight-bold">
@@ -126,16 +126,15 @@ $this->assign('title', $pagetitle);
 </div>
 <?php endif; // is curator or admin ?>
 <?php endif; // is published ?>
+</div>
 <?php endforeach ?>
 
 </div>
-</div>
-</div>
 <?php endforeach ?>
-</div>
+
 <?php endif; // topics ?>
 </div>
-
+</div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
