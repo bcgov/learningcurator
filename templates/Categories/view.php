@@ -24,9 +24,10 @@ $this->assign('title', $pagetitle);
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right btn-group">
 	<?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id],['class' => 'btn btn-light']) ?>
-	<a class="btn btn-light" 
-		data-toggle="collapse" 
-		href="#addnewtopic" 
+	<a class="btn btn-primary" 
+		data-toggle="modal" 
+		data-target="#addTopicModal" 
+		href="#addTopicModal" 
 		role="button" 
 		aria-expanded="false" 
 		aria-controls="addnewtopic">
@@ -44,37 +45,52 @@ $this->assign('title', $pagetitle);
 </div>
 </div>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="col-md-3 collapse" id="addnewtopic">
-<div class="p-3 my-3 bg-white rounded-lg">
-<?= $this->Form->create(null,['url' => ['controller' => 'Topics', 'action' => 'add']]) ?>
-<fieldset>
-	<legend><?= __('Add Topic') ?></legend>
-	<?php
-		echo $this->Form->control('name', ['class' => 'form-control']);
-		echo $this->Form->control('description', ['class' => 'form-control']);
-		//echo $this->Form->control('image_path');
-		///echo $this->Form->control('color');
-		//echo $this->Form->control('featured');
-		echo $this->Form->hidden('user_id', ['value' => $uid]);
-		echo $this->Form->hidden('categories.0.id', ['value' => $category->id]);
-	?>
-</fieldset>
-<?= $this->Form->button(__('Add Topic'), ['class' => 'btn btn-primary mt-2']) ?>
-<?= $this->Form->end() ?>
+<div class="modal fade" id="addTopicModal" tabindex="-1" aria-labelledby="addTopicLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="addTopicLabel">Add a New topic</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+		<?= $this->Form->create(null,['url' => ['controller' => 'Topics', 'action' => 'add']]) ?>
+		<fieldset>
+			<?php
+				echo $this->Form->control('name', ['class' => 'form-control']);
+				?>
+				<label for="description">Description</label>
+				<?php
+				echo $this->Form->textarea('description', ['class' => 'form-control', 'id' => 'description']);
+				?>
+				<?php
+				//echo $this->Form->control('image_path');
+				///echo $this->Form->control('color');
+				//echo $this->Form->control('featured');
+				echo $this->Form->hidden('user_id', ['value' => $uid]);
+				echo $this->Form->hidden('categories.0.id', ['value' => $category->id]);
+			?>
+		</fieldset>
+		<?= $this->Form->button(__('Add Topic'), ['class' => 'btn btn-primary mt-2']) ?>
+		<?= $this->Form->end() ?>
+		</div>
+		</div>
+	</div>
 </div>
-</div>
+
 <?php endif;  // curator or admin? ?>
 </div>
 </div>
 
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
-
+<div class="col-md-6 col-lg-6 pt-3">
 
 <?php if (!empty($category->topics)) : ?>
 <?php foreach ($category->topics as $topic) : ?>
 
-<div class="col-md-6 col-lg-6 pt-3">
+
 <div class="p-3 my-3 bg-white rounded-lg shadow-sm">
 <h2>
 	<!-- topic_id: <?= $topic->id ?> --> 
@@ -110,9 +126,9 @@ $this->assign('title', $pagetitle);
 </div>
 <?php endif; // is curator or admin ?>
 <?php endif; // is published ?>
-</div>
 <?php endforeach ?>
 
+</div>
 </div>
 </div>
 <?php endforeach ?>
