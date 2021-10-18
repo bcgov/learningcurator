@@ -30,7 +30,9 @@
 
 <?= $this->Form->create($category) ?>
 <fieldset>
-
+<label>Published?
+<?= $this->Form->checkbox('featured') ?>
+</label>
 <?php
 //echo $this->Form->control('topics._ids', ['options' => $topics]);
 echo $this->Form->control('name',['class' => 'form-control']);
@@ -38,7 +40,7 @@ echo $this->Form->control('name',['class' => 'form-control']);
 echo $this->Form->control('description',['class' => 'form-control']);
 // echo $this->Form->control('image_path');
 // echo $this->Form->control('color');
-// echo $this->Form->control('featured');
+
 //echo $this->Form->control('createdby');
 
 ?>
