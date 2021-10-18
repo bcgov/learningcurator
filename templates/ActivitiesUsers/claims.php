@@ -69,7 +69,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php endif ?>
 
-<h3 class="mt-5">Recent Pathways</h3>
+<h3 class="mt-5">Featured Pathways</h3>
 
 <?php foreach($published as $p): ?>
 	<!-- <pre><?php print_r($p) ?></pre> -->

@@ -56,12 +56,12 @@ class CategoriesController extends AppController
      */
     public function view($id = null)
     {
-        $categories = $this->Categories->find('all');
+        //$categories = $this->Categories->find('all')->where(['Categories.featured' => 1]);
         $category = $this->Categories->get($id, [
             'contain' => ['Topics','Topics.Pathways','Topics.Pathways.Statuses'],
         ]);
 
-        $this->set(compact('category','categories'));
+        $this->set(compact('category'));
     }
 
     /**
