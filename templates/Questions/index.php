@@ -28,7 +28,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <div class="container-fluid">
 <div class="row justify-content-md-center linear">
-<div class="col-md-3">
+<div class="col-md-6">
 <div class="bg-white rounded-lg p-3 my-3">
 <ul class="nav flex-column">
 <?php foreach ($questions as $question): ?>
@@ -48,6 +48,7 @@ if ($this->Identity->isLoggedIn()) {
 </ul>
 </div>
 </div>
+<div class="w-100"></div>
 <div class="col-md-6">
 
 <?php foreach ($questions as $question): ?>
