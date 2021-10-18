@@ -729,7 +729,7 @@ function loadStatus() {
 			if(stepstatus.steppercent == 100) {
 				$('.finish').removeClass('hide').addClass('show');
 			}
-			$('.progress-bar').width(stepstatus.steppercent+'%').html('This step is ' + stepstatus.steppercent + '% completed');
+			$('.progress-bar').width(stepstatus.steppercent+'%').html('' + stepstatus.steppercent + '% done');
 			
 		},
 		statusCode: 
