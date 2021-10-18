@@ -12,7 +12,7 @@ if ($this->Identity->isLoggedIn()) {
 	$role = $this->Identity->get('role');
 	$uid = $this->Identity->get('id');
 }
-$pagetitle = $category->name . ' | Topic | ';
+$pagetitle = $category->name . '';
 $this->assign('title', $pagetitle);
 ?>
 
@@ -89,7 +89,7 @@ $this->assign('title', $pagetitle);
 
 <?php if (!empty($category->topics)) : ?>
 <?php foreach ($category->topics as $topic) : ?>
-
+<?php if($topic->featured == 1): ?>
 
 <div class="p-3 my-3 bg-white rounded-lg shadow-sm">
 <h2>
@@ -130,7 +130,9 @@ $this->assign('title', $pagetitle);
 <?php endforeach ?>
 
 </div>
+<?php endif; // is published ?>
 <?php endforeach ?>
+
 
 <?php endif; // topics ?>
 </div>
