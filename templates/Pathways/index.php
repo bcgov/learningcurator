@@ -48,7 +48,14 @@ if ($this->Identity->isLoggedIn()) {
 		</a> 
 	</div>
 	<div>
-		<span class=""><?= $pathway->status->name ?></span> in 
+		<?php 
+		$stat = 'badge-light'; 
+		if($pathway->status->name == 'Draft') $stat = 'badge-warning';
+		?>
+		<?php if($pathway->featured == 1): ?>
+		<span class="badge badge-success">Featured</span>
+		<?php endif ?>
+		<span class="badge <?= $stat ?>"><?= $pathway->status->name ?></span> in 
 		<?php $topiclink = $pathway->topic->categories[0]->name . ', ' . $pathway->topic->name ?>
 		<?= $this->Html->link($topiclink, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id],['class' => '']) ?>
 	</div>

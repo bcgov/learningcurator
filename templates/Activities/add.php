@@ -5,7 +5,13 @@
  */
 $this->loadHelper('Authentication.Identity');
 ?>
-
+<div class="container-fluid mb-3">
+<div class="row justify-content-md-center" id="colorful">
+<div class="col-md-10 col-lg-8 col-xl-6">
+    <h1 class="display-4 my-5">Add Activity</h1>
+</div>
+</div>
+</div>
 <?= $this->Form->create($activity) ?>
 <?php 
 // echo $this->Form->control('ministry_id', ['class' => 'form-control', 'options' => $ministries, 'empty' => true]);
@@ -18,8 +24,7 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
 <div class="row justify-content-md-center">
 <div class="col-md-6">
 
-    <div class="card mb-3">
-    <div class="card-body">
+    <div class="bg-white p-3">
     <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
     <?php echo $this->Form->control('description', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
@@ -27,12 +32,12 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
     <?php echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('isbn', ['class' => 'form-control']); ?>
-    </div>
+
     </div>
     </div>
     <div class="col-md-3">
-    <div class="card mb-3">
-    <div class="card-body">
+
+    <div class="bg-white p-3">
     <?php echo $this->Form->control('activity_types_id', ['class' => 'form-control', 'options' => $activityTypes]); ?>
     <?php echo $this->Form->control('status_id', ['class' => 'form-control', 'options' => $statuses, 'empty' => true]); ?>
     <?php //echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
@@ -44,21 +49,18 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
         <option>Under 20 mins</option>
         <option>Under 30 mins</option>
         <option>Under 1 hour</option>
-        <option>About an hour</option>
-        <option>A couple of hours</option>
-        <option>A half day</option>
-        <option>About a day</option>
-        <option>A couple of days</option>
-        <option>About a week</option>
-        <option>A week +</option>
+        <option>Half day or less</option> 
+        <option>1 day </option>
+        <option>More than 1 day </option>
+        <option>Variable</option>
     </select>
     </label>
-    <?php echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text', 'label' => 'Tags']); ?>
-    <?php echo $this->Form->control('users._ids', ['class' => 'form-control', 'options' => $users]); ?>
-    <?php echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); ?>
+    <?php //echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text', 'label' => 'Tags']); ?>
+    <?php //echo $this->Form->control('users._ids', ['class' => 'form-control', 'options' => $users]); ?>
+    <?php //echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); ?>
     <?= $this->Form->button(__('Save Activity'), ['class' => 'btn btn-block btn-success my-3']) ?>
     </div>
-    </div>
+
     </div>
 </div>
 </div>

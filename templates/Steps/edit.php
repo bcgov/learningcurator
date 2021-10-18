@@ -306,19 +306,16 @@ label {
     <?php //echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
     <label>Estimated Time
     <select name="estimated_time" id="estimated_time_id" class="form-control">
-        <option>Under 5 mins</option>
+    <option>Under 5 mins</option>
         <option>Under 10 mins</option>
         <option>Under 15 mins </option>
         <option>Under 20 mins</option>
         <option>Under 30 mins</option>
         <option>Under 1 hour</option>
-        <option>About an hour</option>
-        <option>A couple of hours</option>
-        <option>A half day</option>
-        <option>About a day</option>
-        <option>A couple of days</option>
-        <option>About a week</option>
-        <option>A week +</option>
+        <option>Half day or less</option> 
+        <option>1 day </option>
+        <option>More than 1 day </option>
+        <option>Variable</option>
     </select>
     </label>
     <?php //echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text', 'label' => 'Tags']); ?>
