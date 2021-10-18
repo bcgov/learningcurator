@@ -75,6 +75,7 @@ if ($this->Identity->isLoggedIn()) {
 		<?php foreach($activity->steps as $step): ?>
 		Included in 
 		<a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
+			<i class="bi bi-pin-map-fill"></i>
 			<?= $step->pathways[0]->name ?> - 
 			<?= $step->name ?></a>
 		<?php endforeach ?>
