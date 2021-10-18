@@ -530,38 +530,36 @@ This seems to work out, but #TODO investigate optimizing this
 	</div>
 
 	<?php endforeach; // end of activities loop for this step ?>
-</div>
 
-<?php else: ?>
-</div>
 <?php endif ?>
-
-</div>
-<div class="col-12">
-<nav class="nav justify-content-center nav-pills mt-2 w-100 bg-white" role="navigation">
-<?php $count = 1 ?>
-<?php foreach ($step->pathways as $pathways) : ?>
-<?php foreach($pathways->steps as $s): ?>
-<?php if($s->status_id == 2): ?>
-	<?php $c = '' ?>
-	<?php if($s->id == $step->id) $c = 'active' ?>
-	<li class="nav-item">
-
-	<a class="nav-link <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-		<?php if($s->id == $step->id && $steppercent == 100): ?>
-			<i class="bi bi-check"></i>
-		<?php endif ?>
-			
-		<?= $s->name ?>
+<?php if(!empty($defunctacts)): ?>
+	<h4>Defunct Activities</h4>
+	<div class="p-2 bg-white">This step used to have these activities assigned to them, but they are no 
+		longer considered relevant or appropriate for one reason or another. They 
+		are listed here for posterity. <a class="" 
+											data-toggle="collapse" 
+											href="#defunctacts" 
+											aria-expanded="false"
+											aria-controls="defunctacts">View defunct activities</a>.
+	</div>
+	<div class="collapse bg-white p-3" id="defunctacts">
+	<?php foreach ($defunctacts as $activity) : ?>
+	<h5>
+	<a href="/activities/view/<?= $activity->id ?>">
+		<?= $activity->name ?>
 	</a>
-
-	</li>
-	<?php $count++ ?>
-<?php endif; // is published? ?>
-<?php endforeach ?>
-<?php endforeach ?>
-</nav>
+	</h5>
+	<div class="p-2">
+		<?= $activity->description ?>
+	</div>
+	<?php endforeach ?>
+	</div>
+<?php endif ?>
 </div>
+</div>
+</div>
+</div>
+
 </div>
 </div>
 
