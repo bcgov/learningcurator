@@ -12,17 +12,7 @@ use Cake\Utility\Text;
  */
 class CategoriesController extends AppController
 {
-    /**
-     * API method outputs JSON of the index listing of all topics, and the pathways beneath them
-     *
-     * @return \Cake\Http\Response|null
-     */
-    public function api()
-    {
-        $categories = $this->Categories->find()->contain(['Topics','Topics.Pathways']);
 
-        $this->set(compact('categories'));
-    }
     /**
      * Home page method
      *
@@ -50,7 +40,8 @@ class CategoriesController extends AppController
     public function index()
     {
         $categories = $this->Categories->find('all')
-                                        ->contain(['Topics','Topics.Pathways']);
+                                        ->contain(['Topics','Topics.Pathways'])
+                                        ->where(['Categories.featured' => 1]);
 
 
         $this->set(compact('categories'));
