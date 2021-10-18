@@ -111,7 +111,6 @@ class PathwaysController extends AppController
      */
     public function view($slug = null)
     {
-        //$this->Authorization->skipAuthorization();
         // As we loop through the activities for the steps on this pathway, we 
         // need to be able to check to see if the current user has "claimed" 
         // that activity. Here we get the current user id and use it to select 
@@ -119,7 +118,7 @@ class PathwaysController extends AppController
         // just the activity IDs into a simple array. Then, in the template 
         // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
         //
-        // First let's check to see if this person is logged in or not.
+        // First let's get the user details:
         //
 	    $user = $this->request->getAttribute('authentication')->getIdentity();
         if(!empty($user)) {
