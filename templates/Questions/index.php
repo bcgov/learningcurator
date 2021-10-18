@@ -29,7 +29,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="container-fluid">
 <div class="row justify-content-md-center linear">
 <div class="col-md-3">
-<div class="bg-white rounded-lg p-3 my-3 sticky-top">
+<div class="bg-white rounded-lg p-3 my-3">
 <ul class="nav flex-column">
 <?php foreach ($questions as $question): ?>
 <?php if($question->status_id == 2): ?>
