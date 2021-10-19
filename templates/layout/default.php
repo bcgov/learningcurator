@@ -47,7 +47,7 @@ $this->loadHelper('Authentication.Identity');
 </head>
 <body class="bg-light">
 
-<nav class="navbar navbar-expand-lg bg-white shadow-sm">
+<nav class="navbar navbar-expand-lg bg-white shadow-sm" role="banner">
 	<a class="navbar-brand" href="/">
 		<img alt="Logo" height="50" src="/img/curator-rings-logo.svg" width="50">
 		Learning Curator
@@ -75,7 +75,7 @@ $this->loadHelper('Authentication.Identity');
 			aria-expanded="false"
 			title="Your Profile">
 				<i class="bi bi-person-circle"></i>
-				<span class="sr-only">Profile</span>
+				Profile
 		</a>
 		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 			<a class="dropdown-item" href="/profile/pathways">Your Pathways</a>
@@ -131,12 +131,14 @@ $this->loadHelper('Authentication.Identity');
 				New
 		</a>
 		<div class="dropdown-menu" aria-labelledby="adminAddDropdown">
-			<a class="dropdown-item" href="/categories/add">New Topic Area</a>	
+			<a class="dropdown-item" href="/categories/add">New Topic Area</a>
+			<a class="dropdown-item" href="/pathways/add">New Pathway</a>	
+			<a class="dropdown-item" href="/activities/add">New Activity</a>
 		</div>
 		</li>
 		<?php endif ?>
 	</ul>
-	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3">
+	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3" role="search">
 		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="search">
 		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
 	</form>
@@ -151,7 +153,7 @@ $this->loadHelper('Authentication.Identity');
 
 
 
-<div class="container-fluid bg-white pb-5 mt-5">
+<footer class="container-fluid bg-white pb-5 mt-5" role="contentinfo">
 <div class="row justify-content-md-center">
 <div class="col-lg-8 col-xl-6 mt-3">
 
@@ -175,7 +177,7 @@ $this->loadHelper('Authentication.Identity');
 
 </div>
 </div>
-</div>
+</footer>
 
 </body>
 </html>

@@ -26,6 +26,7 @@ class PathwaysUsersController extends AppController
         $published = $allpaths->find('all')
                                 ->contain(['Topics','Topics.Categories'])
                                 ->where(['Pathways.status_id' => 2])
+                                ->where(['Pathways.featured' => 1])
                                 ->order(['Pathways.created' => 'desc']);
 
         $user = $this->request->getAttribute('authentication')->getIdentity();

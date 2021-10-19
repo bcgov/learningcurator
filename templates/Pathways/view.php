@@ -70,6 +70,7 @@ This seems to work out, but #TODO investigate optimizing this
 	<div class="my-2"><em>Estimated time for this pathway: <?= h($pathway->estimated_time) ?></em></div>
 
 	<div class="mb-2">
+	<span class="badge badge-light totaltotal"></span>  
 	<span class="badge badge-light readtotal"></span>  
 	<span class="badge badge-light watchtotal"></span>  
 	<span class="badge badge-light listentotal"></span>  
@@ -272,7 +273,7 @@ if($stepclaimcount > 0) {
 		
 	<div class="progress progress-bar-striped mb-3" style="background-color: #F1F1F1; height: 26px;">
 	  <div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,.8); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
-		<?= $steppercent ?>% completed
+		<?= $steppercent ?>% done
 	  </div>
 	</div>
 	
@@ -287,6 +288,24 @@ if($stepclaimcount > 0) {
 		<i class="fas fa-arrow-circle-right"></i>
 	</a>
 </h2>
+<div style="font-size; 130%"><?= $steps->description ?></div>
+<div class="my-3">
+	<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
+	<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
+	<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
+	<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
+		<?= $readstepcount ?> to read
+	</span>  
+	<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
+		<?= $watchstepcount ?> to watch
+	</span>  
+	<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
+		<?= $listenstepcount ?> to listen to
+	</span>  
+	<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
+		<?= $participatestepcount ?> to participate in
+	</span>  
+</div>
 </div>
 <?php endif; // if curator or admin ?>
 <?php endif; // if published ?>
@@ -405,6 +424,7 @@ function loadStatus() {
 			$('.following').html(pathstatus.status);
 
 			console.log(pathstatus.status);
+			$('.totaltotal').html(pathstatus.typecounts.totaltotal + ' total activities');
 			$('.readtotal').html(pathstatus.typecounts.readtotal + ' to read')
 							.css('backgroundColor','rgba(' + pathstatus.typecolors.readcolor + ',1)');
 			$('.watchtotal').html(pathstatus.typecounts.watchtotal + ' to watch')

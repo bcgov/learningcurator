@@ -65,9 +65,12 @@ class PathwaysController extends AppController
         // regardless of their statuses. Regular users should only ever see 
         // 'published' pathways.
         if($user->role == 'curator' || $user->role == 'superuser') {
-            $pathways = $paths->find('all')->contain(['Topics','Statuses']);
+            $pathways = $paths->find('all')->contain(['Topics','Topics.Categories','Statuses']);
         } else {
-            $pathways = $paths->find('all')->contain(['Topics','Statuses'])->where(['status_id' => 2]);
+            $pathways = $paths->find('all')
+                                ->contain(['Topics','Topics.Categories','Statuses'])
+                                ->where(['Pathways.featured' => 1])
+                                ->where(['status_id' => 2]);
         }
         //$this->paginate($pathways);
         $this->set(compact('pathways'));
@@ -108,7 +111,6 @@ class PathwaysController extends AppController
      */
     public function view($slug = null)
     {
-        //$this->Authorization->skipAuthorization();
         // As we loop through the activities for the steps on this pathway, we 
         // need to be able to check to see if the current user has "claimed" 
         // that activity. Here we get the current user id and use it to select 
@@ -116,7 +118,7 @@ class PathwaysController extends AppController
         // just the activity IDs into a simple array. Then, in the template 
         // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
         //
-        // First let's check to see if this person is logged in or not.
+        // First let's get the user details:
         //
 	    $user = $this->request->getAttribute('authentication')->getIdentity();
         if(!empty($user)) {
@@ -194,14 +196,27 @@ class PathwaysController extends AppController
             }
             $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
         }
-        $categories = $this->Pathways->Topics->Categories->find('list', ['limit' => 200]);
-        $topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
+        
+        $categories = $this->Pathways->Topics->Categories->find('all', ['contain' =>['Topics'], 'limit' => 200]);
+        
+        $areas = [];
+        foreach($categories as $c) {
+            $cat = $c->name;
+            foreach($c->topics as $t) {
+                $top = $t->name;
+                $mergedtitle = $cat . ' - ' . $top;
+                $merged = ['text' => $mergedtitle, 'value' => $t->id];
+                array_push($areas,$merged);
+            }
+        }
+
+        //$topics = $this->Pathways->Topics->find('list', ['limit' => 200]);
         $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
         $statuses = $this->Pathways->Statuses->find('list', ['limit' => 200]);
         $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
         $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'categories', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
+        $this->set(compact('pathway', 'areas', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
     }
 
     /**
@@ -389,53 +404,54 @@ class PathwaysController extends AppController
                         // if it's required
                         if($activity->_joinData->required == 1) {
                             array_push($requiredacts,$activity);
-                            //
-                            // we want to count each type on a per step basis
-                            // as well as adding to the total
-                            //
-                            if($activity->activity_type->name == 'Read') {
-                                $readcolor = $activity->activity_type->color;
-                                $readicon = $activity->activity_type->image_path;
-                                $readcount++;
-                                $readtotal++;
-                                if(in_array($activity->id,$useractivitylist)) {
-                                    $readclaim++;
-                                }
-                            } elseif($activity->activity_type->name == 'Watch') {
-                                $watchcolor = $activity->activity_type->color;
-                                $watchicon = $activity->activity_type->image_path;
-                                $watchcount++;
-                                $watchtotal++;
-                                if(in_array($activity->id,$useractivitylist)) {
-                                    $watchclaim++;
-                                }
-                            } elseif($activity->activity_type->name == 'Listen') {
-                                $listencolor = $activity->activity_type->color;
-                                $listenicon = $activity->activity_type->image_path;
-                                $listencount++;
-                                $listentotal++;
-                                if(in_array($activity->id,$useractivitylist)) {
-                                    $listenclaim++;
-                                }
-                            } elseif($activity->activity_type->name == 'Participate') {
-                                $participatecolor = $activity->activity_type->color;
-                                $participateicon = $activity->activity_type->image_path;
-                                $participatecount++;
-                                $participatetotal++;
-                                if(in_array($activity->id,$useractivitylist)) {
-                                    $participateclaim++;
-                                }
-                            }
-                            $totalActivities++;
-                            $stepTime = $stepTime + $activity->hours;
-                            $totalTime = $totalTime + $activity->hours;
-                            $stepActivityCount++;
+
                         // Otherwise it's supplmentary
                         } else {
                             array_push($tertiaryacts,$activity);
                         }
 
                     }
+                    //
+                    // we want to count each type on a per step basis
+                    // as well as adding to the total
+                    //
+                    if($activity->activity_type->name == 'Read') {
+                        $readcolor = $activity->activity_type->color;
+                        $readicon = $activity->activity_type->image_path;
+                        $readcount++;
+                        $readtotal++;
+                        if(in_array($activity->id,$useractivitylist)) {
+                            $readclaim++;
+                        }
+                    } elseif($activity->activity_type->name == 'Watch') {
+                        $watchcolor = $activity->activity_type->color;
+                        $watchicon = $activity->activity_type->image_path;
+                        $watchcount++;
+                        $watchtotal++;
+                        if(in_array($activity->id,$useractivitylist)) {
+                            $watchclaim++;
+                        }
+                    } elseif($activity->activity_type->name == 'Listen') {
+                        $listencolor = $activity->activity_type->color;
+                        $listenicon = $activity->activity_type->image_path;
+                        $listencount++;
+                        $listentotal++;
+                        if(in_array($activity->id,$useractivitylist)) {
+                            $listenclaim++;
+                        }
+                    } elseif($activity->activity_type->name == 'Participate') {
+                        $participatecolor = $activity->activity_type->color;
+                        $participateicon = $activity->activity_type->image_path;
+                        $participatecount++;
+                        $participatetotal++;
+                        if(in_array($activity->id,$useractivitylist)) {
+                            $participateclaim++;
+                        }
+                    }
+                    $totalActivities++;
+                    $stepTime = $stepTime + $activity->hours;
+                    $totalTime = $totalTime + $activity->hours;
+                    $stepActivityCount++;
                 endforeach; // activities
             endforeach; // steps
 
@@ -452,7 +468,9 @@ class PathwaysController extends AppController
             $typecounts = array('readtotal' => $readtotal, 
                                 'watchtotal' => $watchtotal, 
                                 'listentotal' => $listentotal, 
-                                'participatetotal' => $participatetotal);
+                                'participatetotal' => $participatetotal,
+                                'totaltotal' => $totalActivities,
+                            );
 
             $typecolors = array('readcolor' => $readcolor, 
                                 'watchcolor' => $watchcolor, 

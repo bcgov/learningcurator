@@ -12,17 +12,7 @@ use Cake\Utility\Text;
  */
 class CategoriesController extends AppController
 {
-    /**
-     * API method outputs JSON of the index listing of all topics, and the pathways beneath them
-     *
-     * @return \Cake\Http\Response|null
-     */
-    public function api()
-    {
-        $categories = $this->Categories->find()->contain(['Topics','Topics.Pathways']);
 
-        $this->set(compact('categories'));
-    }
     /**
      * Home page method
      *
@@ -36,6 +26,7 @@ class CategoriesController extends AppController
                                 ->contain(['Statuses','Topics','Topics.Categories'])
                                 ->order(['Pathways.created' => 'desc'])
                                 ->where(['Pathways.featured' => 1])
+                                ->where(['Pathways.status_id' => 2])
                                 ->limit(10);
         $featuredpathways = $pathways->toList();
 
@@ -48,16 +39,11 @@ class CategoriesController extends AppController
      */
     public function index()
     {
-        $categories = $this->Categories->find()->contain(['Topics','Topics.Pathways']);
-        $featuredpaths = TableRegistry::getTableLocator()->get('Pathways');
-        $pathways = $featuredpaths->find('all')
-                                ->contain(['Statuses','Topics','Topics.Categories'])
-                                ->order(['Pathways.created' => 'desc'])
-                                ->where(['Pathways.featured' => 1])
-                                ->limit(10);
-        $featuredpathways = $pathways->toList();
+        $categories = $this->Categories->find('all')
+                                        ->contain(['Topics','Topics.Pathways']);
 
-        $this->set(compact('categories','featuredpathways'));
+
+        $this->set(compact('categories'));
     }
 
     /**
@@ -69,12 +55,12 @@ class CategoriesController extends AppController
      */
     public function view($id = null)
     {
-        $categories = $this->Categories->find('all');
+        //$categories = $this->Categories->find('all')->where(['Categories.featured' => 1]);
         $category = $this->Categories->get($id, [
             'contain' => ['Topics','Topics.Pathways','Topics.Pathways.Statuses'],
         ]);
 
-        $this->set(compact('category','categories'));
+        $this->set(compact('category'));
     }
 
     /**

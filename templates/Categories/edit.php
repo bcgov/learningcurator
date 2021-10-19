@@ -25,12 +25,14 @@
 <div class="container-fluid">
 <div class="row justify-content-md-center align-items-center">
 <div class="col-md-8 col-lg-6 col-xl-4">
-<div class="bg-white p-3 my-5 shadow-lg">
+<div class="bg-white p-3 my-5 shadow-sm">
 
 
 <?= $this->Form->create($category) ?>
 <fieldset>
-
+<label>Published?
+<?= $this->Form->checkbox('featured') ?>
+</label>
 <?php
 //echo $this->Form->control('topics._ids', ['options' => $topics]);
 echo $this->Form->control('name',['class' => 'form-control']);
@@ -38,7 +40,7 @@ echo $this->Form->control('name',['class' => 'form-control']);
 echo $this->Form->control('description',['class' => 'form-control']);
 // echo $this->Form->control('image_path');
 // echo $this->Form->control('color');
-// echo $this->Form->control('featured');
+
 //echo $this->Form->control('createdby');
 
 ?>

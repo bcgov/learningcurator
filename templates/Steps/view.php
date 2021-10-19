@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
  * with is in the same file
  */
 $stepTime = 0;
-$defunctacts = array();
+$archivedacts = array();
 $requiredacts = array();
 $supplementalacts = array();
 $acts = array();
@@ -45,7 +45,7 @@ foreach ($step->activities as $activity) {
 	// and add it the defunctacts array so we can show them
 	// but in a different section
 	if($activity->status_id == 3) {
-		array_push($defunctacts,$activity);
+		array_push($archivedacts,$activity);
 	} elseif($activity->status_id == 2) {
 		// if it's required
 		if($activity->_joinData->required == 1) {
@@ -85,13 +85,18 @@ foreach ($step->activities as $activity) {
 		if(in_array($activity->id,$useractivitylist)) {
 			$stepclaimcount++;
 		}
-		$tmp = array();
+		$reqtmp = array();
+		$suptmp = array();
 		// Loop through the whole list, add steporder to tmp array
 		foreach($requiredacts as $line) {
-			$tmp[] = $line->_joinData->steporder;
+			$reqtmp[] = $line->_joinData->steporder;
+		}
+		foreach($supplementalacts as $line) {
+			$suptmp[] = $line->_joinData->steporder;
 		}
 		// Use the tmp array to sort acts list
-		array_multisort($tmp, SORT_DESC, $requiredacts);
+		array_multisort($reqtmp, SORT_DESC, $requiredacts);
+		array_multisort($suptmp, SORT_DESC, $supplementalacts);
 		//array_multisort($tmp, SORT_DESC, $supplementalacts);
 	}
 }
@@ -137,7 +142,7 @@ This seems to work out, but #TODO investigate optimizing this
 
 <?php if (!empty($step->pathways)) : ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="btn-group  mt-3 ml-3">
+<div class="btn-group float-right mt-3 ml-3">
 <?= $this->Html->link(__('Edit'), 
 						['controller' => 'Steps', 'action' => 'edit', $step->id], 
 						['class' => 'btn btn-light btn-sm']); 
@@ -239,9 +244,10 @@ This seems to work out, but #TODO investigate optimizing this
 <div class="col-md-9 col-lg-6">
 
 
-<div class="bg-white p-3 my-3 rounded-lg shadow-lg">
-	<div style="font-size: 140%;">
-	<?= $step->name ?> - <?= $step->description ?>
+<div class="bg-white p-3 my-3 rounded-lg shadow-sm">
+	<h2><?= $step->name ?></h2>
+	<div style="font-size: 120%;">
+		<?= $step->description ?>
 	</div>
 	<div class="my-3">
 		<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
@@ -309,7 +315,8 @@ This seems to work out, but #TODO investigate optimizing this
 		<div class="mb-3">
 		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 			<i class="bi bi-clock-history"></i>
-			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
+			<?= h($activity->estimated_time) ?>
+			<?php //echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
 		</span> 
 		<?php foreach($activity->tags as $tag): ?>
 		<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
@@ -317,7 +324,11 @@ This seems to work out, but #TODO investigate optimizing this
 		</div>
 
 		<?= $activity->description ?>
-		
+		<?php if(!empty($activity->isbn)): ?>
+		<div class="bg-white p-2 isbn">
+			ISBN: <?= $activity->isbn ?>
+		</div>
+		<?php endif ?>
 		<?php if(!empty($activity->_joinData->stepcontext)): ?>
 		<div class="alert alert-light text-dark mt-3 shadow-sm">
 			<i class="bi bi-person-badge-fill"></i>
@@ -457,14 +468,15 @@ This seems to work out, but #TODO investigate optimizing this
 			<div>
 				<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 					<i class="bi bi-clock-history"></i>
-					<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
+					<?= h($activity->estimated_time) ?>
+					<?php //echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
 				</span> 
 			</div>
 			<?= $activity->description ?>
 
 			<?php if(!empty($activity->_joinData->stepcontext)): ?>
-		<div class="alert alert-light text-dark mt-3">
-				Curator says:<br>
+			<div class="bg-light shadow-sm p-3 mt-3">
+				<strong>Curator says:</strong><br>
 				<?= $activity->_joinData->stepcontext ?>
 			</div>
 			<?php endif ?>
@@ -518,36 +530,37 @@ This seems to work out, but #TODO investigate optimizing this
 	</div>
 
 	<?php endforeach; // end of activities loop for this step ?>
-</div>
 
 <?php endif ?>
-
-</div>
-<div class="col-12">
-<nav class="nav justify-content-center nav-pills mt-2 w-100 bg-white" role="navigation">
-<?php $count = 1 ?>
-<?php foreach ($step->pathways as $pathways) : ?>
-<?php foreach($pathways->steps as $s): ?>
-<?php if($s->status_id == 2): ?>
-	<?php $c = '' ?>
-	<?php if($s->id == $step->id) $c = 'active' ?>
-	<li class="nav-item">
-
-	<a class="nav-link <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-		<?php if($s->id == $step->id && $steppercent == 100): ?>
-			<i class="bi bi-check"></i>
-		<?php endif ?>
-			
-		<?= $s->name ?>
+<?php if(!empty($archivedacts)): ?>
+	<h4>Archived Activities</h4>
+	<div class="p-2 bg-white">This step used to have these activities assigned to them, but they are no 
+		longer considered relevant or appropriate for one reason or another. They 
+		are listed here for posterity. <a class="" 
+											data-toggle="collapse" 
+											href="#defunctacts" 
+											aria-expanded="false"
+											aria-controls="defunctacts">View archived activities</a>.
+	</div>
+	<div class="collapse bg-white p-3" id="defunctacts">
+	<?php foreach ($archivedacts as $activity) : ?>
+	<h5>
+	<a href="/activities/view/<?= $activity->id ?>">
+		<i class="bi <?= $activity->activity_type->image_path ?>"></i>
+		<?= $activity->name ?>
 	</a>
-
-	</li>
-	<?php $count++ ?>
-<?php endif; // is published? ?>
-<?php endforeach ?>
-<?php endforeach ?>
-</nav>
+	</h5>
+	<div class="p-2">
+		<?= $activity->description ?>
+	</div>
+	<?php endforeach ?>
+	</div>
+<?php endif ?>
 </div>
+</div>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -622,7 +635,7 @@ $(document).ready(function(){
 		
 		e.preventDefault();
 		var form = $(this);
-		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/users/reports">View all your reports</a>.').remove();
+		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/profile/reports">View all your reports</a>.').remove();
 		
 		var url = form.attr('action');
 		$.ajax({
@@ -717,7 +730,7 @@ function loadStatus() {
 			if(stepstatus.steppercent == 100) {
 				$('.finish').removeClass('hide').addClass('show');
 			}
-			$('.progress-bar').width(stepstatus.steppercent+'%').html('This step is ' + stepstatus.steppercent + '% completed');
+			$('.progress-bar').width(stepstatus.steppercent+'%').html('' + stepstatus.steppercent + '% done');
 			
 		},
 		statusCode: 

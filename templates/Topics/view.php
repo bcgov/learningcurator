@@ -31,7 +31,7 @@ if ($this->Identity->isLoggedIn()) {
     <?= $this->Html->link(__('All Topic Areas'), ['controller' => 'Categories', 'action' => 'index'],['class' => '']) ?>
     </li>
 	<li class="breadcrumb-item">
-    <?= $this->Html->link(h($topic->categories[0]->name), ['controller' => 'Categories', 'action' => 'view', $topic->categories[0]->id],['class' => '']) ?>
+    <?= $this->Html->link($topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $topic->categories[0]->id],['class' => '']) ?>
     </li>
 	
 	</ol>
@@ -52,10 +52,10 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-8 col-xl-6">
 <?php foreach($topic->pathways as $pathway): ?>
 <?php if($pathway->status_id == 2): ?>
-    <div class="p-3 my-3 bg-white rounded-lg shadow-lg">
+    <div class="p-3 my-3 bg-white rounded-lg shadow-sm">
         <h2>
             <i class="bi bi-pin-map-fill"></i>
-            <?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?>
+            <?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?>
         </h2>
         <div><?= h($pathway->description) ?></div>
     </div>

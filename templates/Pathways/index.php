@@ -3,12 +3,22 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pathway[]|\Cake\Collection\CollectionInterface $pathways
  */
+$this->loadHelper('Authentication.Identity');
+$uid = 0;
+$role = 0;
+if ($this->Identity->isLoggedIn()) {
+	$role = $this->Identity->get('role');
+	$uid = $this->Identity->get('id');
+}
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-10 col-lg-8 col-xl-6">
 
+<?php if($role == 'curator' || $role == 'superuser'): ?>
 <?= $this->Html->link(__('New Pathway'), ['action' => 'add'], ['class' => 'btn btn-light float-right mt-5']) ?>
+<?php endif ?>
+
 <h1 class="display-4 mt-5"><?= __('All Pathways') ?></h1>
 <form method="get" action="/pathways/search" class="mb-5">
 	<label>Search
@@ -32,13 +42,22 @@
 <div class="bg-white p-3 my-2 rounded-lg">
 	
 	<div>
-		<a href="/pathways/<?= h($pathway->slug) ?>">
+		<a href="/pathways/<?= h($pathway->slug) ?>" class="font-weight-bold">
 			<i class="bi bi-pin-map-fill"></i>
 			<?= h($pathway->name) ?>
 		</a> 
-		<span class=""><?= $pathway->status->name ?></span> in 
-		
-		<?= $this->Html->link($pathway->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id],['class' => '']) ?>
+	</div>
+	<div>
+		<?php 
+		$stat = 'badge-light'; 
+		if($pathway->status->name == 'Draft') $stat = 'badge-warning';
+		?>
+		<?php if($pathway->featured == 1): ?>
+		<span class="badge badge-success">Featured</span>
+		<?php endif ?>
+		<span class="badge <?= $stat ?>"><?= $pathway->status->name ?></span> in 
+		<?php $topiclink = $pathway->topic->categories[0]->name . ', ' . $pathway->topic->name ?>
+		<?= $this->Html->link($topiclink, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id],['class' => '']) ?>
 	</div>
 </div>
 <?php endforeach; ?>

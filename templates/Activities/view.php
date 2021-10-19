@@ -56,14 +56,20 @@ if ($this->Identity->isLoggedIn()) {
 	<div class="p-3 rounded-lg" style="background: rgba(255,255,255,.3);">
 		<div class="mb-2">
 		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
-			<i class="fas fa-clock"></i>
-			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time], ['class' => 'text-dark']) ?>
+		<i class="bi bi-clock-history"></i>
+			<?= h($activity->estimated_time) ?>
+			<?php //echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time], ['class' => 'text-dark']) ?>
 		</span> 
 			<?php foreach($activity->tags as $tag): ?>
 			<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
 			<?php endforeach ?>
 		</div>
 		<?= $activity->description ?>
+		<?php if(!empty($activity->isbn)): ?>
+		<div class="bg-white p-2 my-2 isbn">
+			ISBN: <?= $activity->isbn ?>
+		</div>
+		<?php endif ?>
 		<div class="p-2 text-muted" style="background-color: rgba(255,255,255,.5)">
 			<?= $this->Time->format($activity->created,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
 			<?php if($role == 'curator' || $role == 'superuser'): ?>
@@ -71,6 +77,7 @@ if ($this->Identity->isLoggedIn()) {
 			<?php endif ?>
 		</div>
 	</div>
+	<?php if($activity->status_id != 3): ?>
 	<?php if(!empty($activity->tags)): ?>
 	<?php foreach($activity->tags as $tag): ?>
 	<?php if($tag->name == 'Learning System Course'): ?>
@@ -129,6 +136,12 @@ if ($this->Identity->isLoggedIn()) {
 			</a>
 		</div>
 	<?php endif; ?>
+	<?php else: ?>
+		<div class="bg-white p-3 my-3">
+			<div><strong>Archived</strong></div>
+			<p>This activity has been archived.</p>
+		</div>
+	<?php endif ?>
 
 	<div class="my-3">
 		<a href="#newreport" 
@@ -251,7 +264,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach($activity->reports as $report): ?>
 	
 <div class="my-3 p-3 bg-white rounded-lg">
-<div><a href="/users/view/<?= $report->user->id ?>"><?= $report->user->name ?></a> says:</div>
+<div><a href="/users/view/<?= $report->user_id ?>">Reporter</a> says:</div>
 <div><?= $report->issue ?></div>
 <div class="mt-2" style="font-size: 12px">Added on <?= $report->created ?></div>
 <?php if(empty($report->response)): ?>
@@ -338,7 +351,7 @@ $(document).ready(function(){
 		
 		e.preventDefault();
 		var form = $(this);
-		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/users/reports">View all your reports</a>.').remove();
+		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/profile/reports">View all your reports</a>.').remove();
 		
 		var url = form.attr('action');
 		$.ajax({

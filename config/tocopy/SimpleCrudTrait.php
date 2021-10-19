@@ -40,8 +40,9 @@ trait SimpleCrudTrait
     public function index()
     {
         $table = $this->loadModel();
+        $alphabetized = $table->find('all')->order(['last_name' => 'asc']);
         $tableAlias = $table->getAlias();
-        $this->set($tableAlias, $this->paginate($table));
+        $this->set($tableAlias, $this->paginate($alphabetized));
         $this->set('tableAlias', $tableAlias);
         $this->set('_serialize', [$tableAlias, 'tableAlias']);
     }

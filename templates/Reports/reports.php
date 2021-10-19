@@ -36,7 +36,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="row justify-content-md-center">
 <div class="col-md-8 col-lg-6">
 <h2><?= __('Your Reports') ?></h2>
-<div class="my-2 p-3 bg-white rounded-lg shadow-lg">
+<div class="my-2 p-3 bg-white rounded-lg shadow-sm">
 <?php if (!$reports->isEmpty()) : ?>
 	
 	<?php foreach ($reports as $report) : ?>

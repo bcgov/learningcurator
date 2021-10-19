@@ -26,21 +26,6 @@ class ActivitiesStepsController extends AppController
         $this->set(compact('activitiesSteps'));
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Activities Step id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $activitiesStep = $this->ActivitiesSteps->get($id, [
-            'contain' => ['Activities', 'Steps'],
-        ]);
-
-        $this->set(compact('activitiesStep'));
-    }
 
     /**
      * Add method
@@ -77,11 +62,11 @@ class ActivitiesStepsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
             if ($this->ActivitiesSteps->save($activitiesStep)) {
-                $this->Flash->success(__('The activities step has been saved.'));
+                //$this->Flash->success(__('The activities step has been saved.'));
 
                 return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The activities step could not be saved. Please, try again.'));
+            print __('The activities step could not be saved. Please, try again.');
         }
         $activities = $this->ActivitiesSteps->Activities->find('list', ['limit' => 200]);
         $steps = $this->ActivitiesSteps->Steps->find('list', ['limit' => 200]);
@@ -100,12 +85,13 @@ class ActivitiesStepsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $activitiesStep = $this->ActivitiesSteps->get($id);
         if ($this->ActivitiesSteps->delete($activitiesStep)) {
-            $this->Flash->success(__('The activities step has been deleted.'));
-        } else {
-            $this->Flash->error(__('The activities step could not be deleted. Please, try again.'));
+            //print __('The activities step has been deleted.');
+            return $this->redirect($this->referer());
         }
+        print __('The activities step could not be deleted. Please, try again.');
+        
 
-        return $this->redirect($this->referer());
+        
     }
 
     /**
@@ -122,15 +108,13 @@ class ActivitiesStepsController extends AppController
             $activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
             
             if ($this->ActivitiesSteps->save($activitiesStep)) {
-                print(__('The activities step has been saved.'));
+                //print(__('The activities step has been saved.'));
 
                 return $this->redirect($this->referer());
             }
             print(__('The activities step could not be saved. Please, try again.'));
         }
-        $activities = $this->ActivitiesSteps->Activities->find('list', ['limit' => 200]);
-        $steps = $this->ActivitiesSteps->Steps->find('list', ['limit' => 200]);
-        $this->set(compact('activitiesStep', 'activities', 'steps'));
+
         
     }
 

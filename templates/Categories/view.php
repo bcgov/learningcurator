@@ -12,7 +12,7 @@ if ($this->Identity->isLoggedIn()) {
 	$role = $this->Identity->get('role');
 	$uid = $this->Identity->get('id');
 }
-$pagetitle = $category->name . ' | Topic | ';
+$pagetitle = $category->name . '';
 $this->assign('title', $pagetitle);
 ?>
 
@@ -24,9 +24,10 @@ $this->assign('title', $pagetitle);
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right btn-group">
 	<?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id],['class' => 'btn btn-light']) ?>
-	<a class="btn btn-light" 
-		data-toggle="collapse" 
-		href="#addnewtopic" 
+	<a class="btn btn-primary" 
+		data-toggle="modal" 
+		data-target="#addTopicModal" 
+		href="#addTopicModal" 
 		role="button" 
 		aria-expanded="false" 
 		aria-controls="addnewtopic">
@@ -38,54 +39,69 @@ $this->assign('title', $pagetitle);
 	<i class="bi bi-diagram-3-fill"></i>
 	<?= h($category->name) ?>
 </h1>
-<div class="text">
+<div class="text" style="font-size: 120%">
 <?= $this->Text->autoParagraph(h($category->description)); ?>
 </div>
 </div>
 </div>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="col-md-3 collapse" id="addnewtopic">
-<div class="p-3 my-3 bg-white rounded-lg">
-<?= $this->Form->create(null,['url' => ['controller' => 'Topics', 'action' => 'add']]) ?>
-<fieldset>
-	<legend><?= __('Add Topic') ?></legend>
-	<?php
-		echo $this->Form->control('name', ['class' => 'form-control']);
-		echo $this->Form->control('description', ['class' => 'form-control']);
-		//echo $this->Form->control('image_path');
-		///echo $this->Form->control('color');
-		//echo $this->Form->control('featured');
-		echo $this->Form->hidden('user_id', ['value' => $uid]);
-		echo $this->Form->hidden('categories.0.id', ['value' => $category->id]);
-	?>
-</fieldset>
-<?= $this->Form->button(__('Add Topic'), ['class' => 'btn btn-primary mt-2']) ?>
-<?= $this->Form->end() ?>
+<div class="modal fade" id="addTopicModal" tabindex="-1" aria-labelledby="addTopicLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="addTopicLabel">Add a New topic</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+		<?= $this->Form->create(null,['url' => ['controller' => 'Topics', 'action' => 'add']]) ?>
+		<fieldset>
+			<?php
+				echo $this->Form->control('name', ['class' => 'form-control']);
+				?>
+				<label for="description">Description</label>
+				<?php
+				echo $this->Form->textarea('description', ['class' => 'form-control', 'id' => 'description']);
+				?>
+				<?php
+				//echo $this->Form->control('image_path');
+				///echo $this->Form->control('color');
+				//echo $this->Form->control('featured');
+				echo $this->Form->hidden('user_id', ['value' => $uid]);
+				echo $this->Form->hidden('categories.0.id', ['value' => $category->id]);
+			?>
+		</fieldset>
+		<?= $this->Form->button(__('Add Topic'), ['class' => 'btn btn-primary mt-2']) ?>
+		<?= $this->Form->end() ?>
+		</div>
+		</div>
+	</div>
 </div>
-</div>
+
 <?php endif;  // curator or admin? ?>
 </div>
 </div>
 
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
-
+<div class="col-md-6 col-lg-6 pt-3">
 
 <?php if (!empty($category->topics)) : ?>
 <?php foreach ($category->topics as $topic) : ?>
+<?php if($topic->featured == 1): ?>
 
-<div class="col-md-6 col-lg-6 pt-3">
-<div class="p-3 my-3 bg-white rounded-lg shadow-lg">
+<div class="p-3 my-3 bg-white rounded-lg shadow-sm">
 <h2>
-	<i class="bi bi-diagram-3-fill"></i> <!-- topic_id: <?= $topic->id ?> --> 
+	<!-- topic_id: <?= $topic->id ?> --> 
 	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
 	
 </h2>
-<div class="p-3"><?= $topic->description ?></div>
+<div class="p-2 mb-3" style="font-size: 110%"><?= $topic->description ?></div>
 
 <?php foreach ($topic->pathways as $pathway) : ?>
 
-<div class="p-3">
+<div class="p-2">
 <?php if($pathway->status_id == 2): // is published ?>
 	<div>
 		<a href="/pathways/<?= h($pathway->slug) ?>" class="font-weight-bold">
@@ -114,33 +130,11 @@ $this->assign('title', $pagetitle);
 <?php endforeach ?>
 
 </div>
-</div>
+<?php endif; // is published ?>
 <?php endforeach ?>
-</div>
+
+
 <?php endif; // topics ?>
-</div>
-
-</div>
-
-<div class="container-fluid">
-<div class="row justify-content-md-center align-items-center">
-<div class="col-md-6">
-
-
-<h3 class="mt-3">Other Topic Areas</h2>
-<div class="">
-<?php foreach ($categories as $cat) : ?>
-<?php if($cat->id == $category->id) continue ?>
-<div class="bg-white p-3 m-2 rounded-3">
-<h4>
-	<i class="bi bi-diagram-3-fill"></i>
-	<?= $this->Html->link($cat->name, ['controller' => 'Categories', 'action' => 'view', $cat->id]) ?>
-</h4>
-<div><?= h($cat->description) ?></div>
-</div>
-<?php endforeach; ?>
-</div>
-
 </div>
 </div>
 </div>

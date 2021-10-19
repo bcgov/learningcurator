@@ -4,6 +4,14 @@
 * @var \App\Model\Entity\Category[]|\Cake\Collection\CollectionInterface $categories
 */
 $this->assign('title', 'All topic areas');
+$this->loadHelper('Authentication.Identity');
+$uid = 0;
+$role = 0;
+
+if ($this->Identity->isLoggedIn()) {
+	$role = $this->Identity->get('role');
+	$uid = $this->Identity->get('id');
+}
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
@@ -20,57 +28,68 @@ $this->assign('title', 'All topic areas');
 <div class="col-md-10 col-lg-6">
 
 <?php foreach ($categories as $category): ?>
-
-<div class="p-4 my-5 bg-white rounded-lg shadow-lg">
+<?php if($category->featured == 1): ?>
+<div class="p-3 my-5 bg-white rounded-lg shadow-sm">
 	<h2 class="">
 		<i class="bi bi-diagram-3-fill"></i>
 		<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
 	</h2>
-	<div class="mb-5">
+	<div class="mb-3 p-2">
 	<?= $category->description ?>
 	</div>
-	
-
-	
 	<div class="" id="topics<?= $category->id ?>">
-
 	<div class="">
 	<?php foreach ($category->topics as $topic): ?>
-	<div class="mb-5 p-3 bg-white rounded-lg shadow-lg">
-	
+	<?php if($topic->featured == 1): ?>
+	<div class="mb-3 px-4 bg-white rounded-lg">
 		<h3>
 			<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
 		</h3>
-		<div class="mb-3"><?= h($topic->description) ?></div>
-		<a class="btn btn-primary btn-lg" 
-			data-toggle="collapse" 
-			href="#paths<?= $topic->id ?>" 
-			role="button" 
-			aria-expanded="false" 
-			aria-controls="paths<?= $topic->id ?>">
-				<span class="badge badge-light"><?php echo count($topic->pathways) ?></span> 
-				Pathways
-		</a>
-		<div class="collapse" id="paths<?= $topic->id ?>">
-		<!-- <h5>Pathways</h5> -->
-		<?php foreach ($topic->pathways as $path): ?>
-		<?php if($path->status_id === 2): ?>
-		<div class="p-2 my-3 bg-white rounded-lg shadow-sm">
-		<div class="font-weight-bold">
-			<i class="bi bi-pin-map-fill"></i>
-			<?= $this->Html->link(h($path->name), ['controller' => 'Pathways', 'action' => 'view', $path->slug]) ?>
-		</div>
-		<div><?= h($path->description) ?></div>
-		</div>
-		<?php endif ?>
-		<?php endforeach; ?>
-		</div>
+		<div class="mb-2 py-2"><?= h($topic->description) ?></div>
 	</div>
+	<?php else: ?>
+	<?php if($role == 'curator' || $role == 'superuser'): ?>
+	<div class="mb-3 px-4 bg-white rounded-lg">
+	<span class="badge badge-warning">NOT PUBLISHED</span>
+		<h3>
+			<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
+		</h3>
+		<div class="mb-2 py-2"><?= h($topic->description) ?></div>
+	</div>
+	<?php endif ?>
+	<?php endif ?>
 	<?php endforeach; ?>
-	
 	</div>
 	</div>
 </div>
+<?php else: ?>
+	<?php if($role == 'curator' || $role == 'superuser'): ?>
+	<div class="p-3 my-5 bg-white rounded-lg shadow-sm">
+		<span class="badge badge-warning">NOT PUBLISHED</span>
+	<h2 class="">
+		<i class="bi bi-diagram-3-fill"></i>
+		<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
+	</h2>
+	<div class="mb-3 p-2">
+	<?= $category->description ?>
+	</div>
+	<div class="" id="topics<?= $category->id ?>">
+	<div class="">
+	<?php foreach ($category->topics as $topic): ?>
+	
+	<div class="mb-3 px-4 bg-white rounded-lg">
+		<h3>
+			<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
+		</h3>
+		<div class="mb-2 py-2"><?= h($topic->description) ?></div>
+	</div>
+	
+	<?php endforeach; ?>
+	</div>
+	</div>
+</div>
+<?php endif ?>
+<?php endif ?>
 <?php endforeach; ?>
 
 </div>

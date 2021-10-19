@@ -18,7 +18,7 @@
 <div class="container-fluid">
 <div class="row justify-content-md-center align-items-center">
 <div class="col-md-8 col-lg-6 col-xl-4">
-<div class="bg-white p-3 my-5 shadow-lg">
+<div class="bg-white p-3 my-5 shadow-sm">
 <div class="float-right">
 <?= $this->Form->postLink(
 __('Delete'),
@@ -29,6 +29,11 @@ __('Delete'),
 </div>
 <?= $this->Form->create($topic) ?>
 <fieldset>
+<div>
+<label>Published?
+<?= $this->Form->checkbox('featured') ?>
+</label>
+</div>
 <label>Topic Area
 <select name="categories[_ids][]" id="categories" class="form-control">
 <?php foreach($categories as $c): ?>
@@ -40,15 +45,17 @@ __('Delete'),
 <?php endforeach ?>
 </select>
 </label>
+
 <?php 
 // echo $this->Form->radio('categories._ids', $categories);
 //echo $this->Form->control('categories._ids', ['options' => $categories]);
+//echo $this->Form->control('featured');
 echo $this->Form->control('name',['class' => 'form-control']);
 echo $this->Form->hidden('slug');
 echo $this->Form->control('description',['class' => 'form-control']);
 //echo $this->Form->control('image_path');
 //echo $this->Form->control('color');
-//echo $this->Form->control('featured');
+
 //echo $this->Form->control('user_id', ['options' => $users]);
 
 ?>

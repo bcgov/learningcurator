@@ -39,10 +39,9 @@ if ($this->Identity->isLoggedIn()) {
 <div class="col-md-10 col-lg-8 col-xl-6">
 
 <?php foreach ($activities as $activity) : ?>
+	
 	<div class=" activity bg-white">
-<div class="p-3 my-3 rounded-lg" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
-
-
+	<div class="p-3 my-3 rounded-lg" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
 	<h3 class="my-3">
 		<a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
@@ -52,7 +51,8 @@ if ($this->Identity->isLoggedIn()) {
 		<div class="mb-3">
 		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 			<i class="bi bi-clock-history"></i>
-			<?php echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
+			<?= h($activity->estimated_time) ?>
+			<?php //echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
 		</span> 
 		<?php foreach($activity->tags as $tag): ?>
 		<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
@@ -69,23 +69,34 @@ if ($this->Identity->isLoggedIn()) {
 			<?php endif ?>
 
 	</div>
-	
-
+	<?php if(!empty($activity->steps)): ?>
+	<div class="mt-2">
+		<div class="p-3" style="background-color: rgba(255,255,255,.8);">
+		<?php foreach($activity->steps as $step): ?>
+		Included in 
+		<a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
+			<i class="bi bi-pin-map-fill"></i>
+			<?= $step->pathways[0]->name ?> - 
+			<?= $step->name ?></a>
+		<?php endforeach ?>
+		</div>
+	</div>
+	<?php endif ?>
 
 	<a target="_blank" 
 		rel="noopener" 
 		data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
 		href="<?= $activity->hyperlink ?>" 
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
-		class="btn btn-block my-3 text-uppercase btn-lg">
-
+		class="btn btn-block my-2 text-uppercase btn-lg">
 			<i class="bi <?= $activity->activity_type->image_path ?>"></i>
-
 			<?= $activity->activity_type->name ?>
-
 	</a>
-
-
+<div class="my-1">
+	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="bi bi-hand-thumbs-up-fill"></i>
+		</a>
+		
 	<a href="#newreport<?= $activity->id ?>" 
 			style="color:#333;" 
 			class="btn btn-light " 
@@ -112,12 +123,7 @@ if ($this->Identity->isLoggedIn()) {
             <?= $this->Form->end() ?>
 		</div>
 		</div>
-	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-		<span class="lcount"><?= h($activity->recommended) ?></span> <i class="bi bi-hand-thumbs-up-fill"></i>
-	</a>
-
-
-
+	</div>
 
 	</div>
 	</div>
@@ -191,6 +197,31 @@ $(document).ready(function(){
 			}
 		});
 	});
+
+	$('.reportform').on('submit', function(e){
+		
+		e.preventDefault();
+		var form = $(this);
+		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/profile/reports">View all your reports</a>.').remove();
+		
+		var url = form.attr('action');
+		$.ajax({
+			type: "POST",
+			url: '/reports/add',
+			data: form.serialize(),
+			success: function(data)
+			{
+				
+			},
+			statusCode: 
+			{
+				403: function() {
+					form.after('<div class="alert alert-warning">You must be logged in.</div>');
+				}
+			}
+		});
+	});
+	
 
 });
 

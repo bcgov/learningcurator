@@ -19,7 +19,7 @@ $this->loadHelper('Authentication.Identity');
 <div class="row justify-content-md-center linear">
 <div class="col-md-4">
 
-<div class="mt-5 p-5 bg-white rounded-lg shadow-lg">
+<div class="mt-5 p-5 bg-white rounded-lg shadow-sm">
 
 <?= $this->Form->create($category) ?>
 <fieldset>

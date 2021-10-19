@@ -63,13 +63,13 @@ if ($this->Identity->isLoggedIn()) {
 <?php endforeach ?>
 <?php else: ?>
 
-<div class="p-3 mb-2 bg-white rounded-lg shadow-lg">
+<div class="p-3 mb-2 bg-white rounded-lg shadow-sm">
     <p><strong>You've not yet claimed any activities.</strong></p>
     <p>You can claim activities along a pathway. Doing so allows you to see how much of the path you have completed.</p>
 </div>
 <?php endif ?>
 
-<h3 class="mt-5">Recent Pathways</h3>
+<h3 class="mt-5">Featured Pathways</h3>
 
 <?php foreach($published as $p): ?>
 	<!-- <pre><?php print_r($p) ?></pre> -->
