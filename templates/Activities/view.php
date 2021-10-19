@@ -77,6 +77,7 @@ if ($this->Identity->isLoggedIn()) {
 			<?php endif ?>
 		</div>
 	</div>
+	<?php if($activity->status_id != 3): ?>
 	<?php if(!empty($activity->tags)): ?>
 	<?php foreach($activity->tags as $tag): ?>
 	<?php if($tag->name == 'Learning System Course'): ?>
@@ -135,6 +136,12 @@ if ($this->Identity->isLoggedIn()) {
 			</a>
 		</div>
 	<?php endif; ?>
+	<?php else: ?>
+		<div class="bg-white p-3 my-3">
+			<div><strong>Archived</strong></div>
+			<p>This activity has been archived.</p>
+		</div>
+	<?php endif ?>
 
 	<div class="my-3">
 		<a href="#newreport" 
