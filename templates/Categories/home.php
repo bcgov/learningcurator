@@ -7,7 +7,7 @@ $this->assign('title', 'Learning Curator. Learning on demand.');
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-10 col-lg-8 col-xl-6">
+<div class="col-md-10 col-lg-8 col-xl-6" role="main" aria-labelledby="hero">
 
 <h1 class="display-4 mt-5">Learning on demand.</h1>
 
@@ -15,18 +15,16 @@ $this->assign('title', 'Learning Curator. Learning on demand.');
 <p style="font-size: 1.3rem">Learning Curator Pathways feature informal learning by 
 theme or community. Here you’ll find recommendations for resources to watch, read, 
 listen to, and courses that will help you reach your goals. Pathways are created by 
-BC Public Service learning curators.
-
-</p>
+BC Public Service learning curators.</p>
 <p style="font-size: 1.5rem"><strong>What do you want to learn today?</strong> </p>
 
-<a href="/profile/pathways" class="btn btn-primary btn-lg">Your Profile</a>
+<a href="/profile/pathways" class="btn btn-primary btn-lg" role="button">Your Profile</a>
 
 </div>
 </div>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid" role="main" aria-labelledby="featured">
 <div class="row justify-content-md-center linear">
 
 <div class="col-md-10 col-lg-8 col-xl-6">
