@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
  * with is in the same file
  */
 $stepTime = 0;
-$defunctacts = array();
+$archivedacts = array();
 $requiredacts = array();
 $supplementalacts = array();
 $acts = array();
@@ -45,7 +45,7 @@ foreach ($step->activities as $activity) {
 	// and add it the defunctacts array so we can show them
 	// but in a different section
 	if($activity->status_id == 3) {
-		array_push($defunctacts,$activity);
+		array_push($archivedacts,$activity);
 	} elseif($activity->status_id == 2) {
 		// if it's required
 		if($activity->_joinData->required == 1) {
@@ -532,20 +532,21 @@ This seems to work out, but #TODO investigate optimizing this
 	<?php endforeach; // end of activities loop for this step ?>
 
 <?php endif ?>
-<?php if(!empty($defunctacts)): ?>
-	<h4>Defunct Activities</h4>
+<?php if(!empty($archivedacts)): ?>
+	<h4>Archived Activities</h4>
 	<div class="p-2 bg-white">This step used to have these activities assigned to them, but they are no 
 		longer considered relevant or appropriate for one reason or another. They 
 		are listed here for posterity. <a class="" 
 											data-toggle="collapse" 
 											href="#defunctacts" 
 											aria-expanded="false"
-											aria-controls="defunctacts">View defunct activities</a>.
+											aria-controls="defunctacts">View archived activities</a>.
 	</div>
 	<div class="collapse bg-white p-3" id="defunctacts">
-	<?php foreach ($defunctacts as $activity) : ?>
+	<?php foreach ($archivedacts as $activity) : ?>
 	<h5>
 	<a href="/activities/view/<?= $activity->id ?>">
+		<i class="bi <?= $activity->activity_type->image_path ?>"></i>
 		<?= $activity->name ?>
 	</a>
 	</h5>
