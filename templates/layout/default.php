@@ -138,10 +138,7 @@ $this->loadHelper('Authentication.Identity');
 		</li>
 		<?php endif ?>
 	</ul>
-	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3" role="search">
-		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="search">
-		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-	</form>
+
 
 	 </div><!-- /endof .collapse navbar-collapse -->
 	 <?php endif ?>
