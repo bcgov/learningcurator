@@ -367,10 +367,13 @@ class ActivitiesController extends AppController
                     echo '' . $activity->id;
                     exit;
                 }
-                return $this->redirect($this->referer());
+                $return = '/steps/edit/' . $this->request->getData()['step_id'];
+                return $this->redirect($return);
             }
             echo __('The activity could not be saved. Please, try again.');
         }
+        $linktoact = $this->request->getQuery('url');
+        $this->set(compact('linktoact'));
     
     }
     /**

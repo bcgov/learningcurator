@@ -83,6 +83,10 @@ video {
 	/* background-color: #003366;
 	border-color: #003366; UUGH IT CLASHES SO BAD*/
 }
+.chosenstep {
+	font-size: 110%;
+	font-weight: bold;
+}
 /*
  * #TODO add in accessible colors for other button types like  "success"
  */
