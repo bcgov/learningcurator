@@ -283,6 +283,10 @@ label {
     echo $this->Form->hidden('step_id', ['value' => $step->id]);
     //echo $this->Form->hidden('activity_types_id', ['value' => '1']); 
     ?>
+    <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
+    <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg newname']); ?>
+    <label for="description">Description</label>
+    <?php echo $this->Form->textarea('description', ['class' => 'form-control summernote']) ?>
     <label>Activity Type
     <select name="activity_types_id" id="activity_types_id" class="form-control">
         <option value="1">Watch</option>
@@ -292,11 +296,9 @@ label {
     </select>
     </label>
     <?php //echo $this->Form->control('activity_type_id', ['class' => 'form-control', 'options' => $atypes]); ?>
-    <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
 
-    <?php echo $this->Form->textarea('description', ['class' => 'form-control summernote']) ?>
     <?php //echo $this->Form->control('stepcontext', ['class' => 'form-control', 'label' => 'Set Context for this step']); ?>
-    <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
+    
     <?php echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
     
@@ -388,6 +390,8 @@ $(function () {
 });
 </script>-->
 <script>
+
+
 $(function () {
     $('#actfind').on('submit', function(e){
 
@@ -414,7 +418,37 @@ $(function () {
 		});
     });
 
+    $('#hyperlink').on('change', function(e){
+
+        e.preventDefault();
+
+        let urltoscrape = this.value;
+        let url = '/activities/getinfo?url=' + urltoscrape;
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function(data)
+            {
+                let foo = $.parseJSON(data);
+                $('.newname').val(foo.title);
+                $('.note-editable').val(foo.description);
+                console.log(foo.title);
+            },
+            statusCode: 
+            {
+                403: function() {
+                    // oh no
+                }
+            }
+        });
+    });
+
 });
+
+
+
+
 </script>
 
 
