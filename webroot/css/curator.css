@@ -58,7 +58,9 @@ a:focus {
  * when not having the image scale with the rest of the page was a desired
  * behaviour, but YMMV
  */
-img {
+img,
+iframe,
+video {
 	height: auto;
 	max-width: 100%;
 }

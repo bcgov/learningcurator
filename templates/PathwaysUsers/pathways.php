@@ -135,6 +135,29 @@ if ($this->Identity->isLoggedIn()) {
 	</div>
 <?php endif ?>
 
+
+<div class="row justify-content-md-center mt-3">
+	<div class="col-xl-6">
+		<h2>Follow Pathways</h2>
+		<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
+		<video controls loop>
+			<source src="/img/follow.mp4" type="video/mp4">
+			<p>Your browser doesn't support HTML5 video. Here is
+				a <a href="follow.mp4">link to the video</a> instead.</p>
+		</video>
+		</div>
+	</div>
+	<div class="col-xl-6">
+		<h2>Claim Activities</h2>
+		<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
+		<video controls loop>
+			<source src="/img/claim.mp4" type="video/mp4">
+			<p>Your browser doesn't support HTML5 video. Here is
+				a <a href="follow.mp4">link to the video</a> instead.</p>
+		</video>
+		</div>
+	</div>
+</div>
 <h3 class="mt-5">Featured Pathways</h3>
 
 <?php foreach($published as $p): ?>
