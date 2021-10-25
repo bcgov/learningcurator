@@ -346,6 +346,7 @@ label {
 
 </div>
 </div>
+
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
@@ -353,42 +354,7 @@ label {
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
 	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
 	crossorigin="anonymous"></script>
-<!--
-    At some point if this could be made to work, drag-n-drop is a better experience
-    for users; currently cakephp returns a 403 unauthorized upon firing this and I
-    don't know why. 
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
-<script>
-$(function () {
-    $('#requiredactivities').sortable({
-        onEnd: function (/**Event*/evt) {
-            var itemEl = evt.item.id;
-            var sid = evt.item.dataset.stepid;
-            var foo = itemEl.split('-');
-            var formd = {id: sid, activity_id: foo[1], step_id: "<?= $step->id ?>", direction: "down", sortorder: 0};
-            //var formd = 'id='+sid+'&activity_id='+foo[1]+'&step_id=<?= $step->id ?>&direction=down&sortorder=0';
-            var u = '/activities-steps/sort/' + sid;
-            //console.log(sid);
-            $.ajax({
-                type: "POST",
-                url: u,
-                data: formd,
-                success: function(d)
-                {
-                    console.log(d);
-                },
-                statusCode: 
-                {
-                    403: function() {
-                        console.log(formd);
-                    }
-                }
-		    });
-	    },
-    });
-});
-</script>-->
+
 <script>
 
 
@@ -432,7 +398,7 @@ $(function () {
             {
                 let foo = $.parseJSON(data);
                 $('.newname').val(foo.title);
-                $('.note-editable').val(foo.description);
+                $('.note-editable').html(foo.description);
                 console.log(foo.title);
             },
             statusCode: 

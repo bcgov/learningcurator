@@ -33,7 +33,7 @@ BC Public Service learning curators.</p>
 	<div class="col-xl-6">
 		<h2>Follow Pathways</h2>
 		<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
-		<video controls loop>
+		<video controls loop autoplay>
 			<source src="/img/follow.mp4" type="video/mp4">
 			<p>Your browser doesn't support HTML5 video. Here is
 				a <a href="follow.mp4">link to the video</a> instead.</p>
@@ -43,7 +43,7 @@ BC Public Service learning curators.</p>
 	<div class="col-xl-6">
 		<h2>Claim Activities</h2>
 		<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
-		<video controls loop>
+		<video controls loop autoplay>
 			<source src="/img/claim.mp4" type="video/mp4">
 			<p>Your browser doesn't support HTML5 video. Here is
 				a <a href="follow.mp4">link to the video</a> instead.</p>
