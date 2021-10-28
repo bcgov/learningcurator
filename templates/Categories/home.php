@@ -28,8 +28,7 @@ BC Public Service learning curators.</p>
 <div class="container-fluid" role="main" aria-labelledby="featuredpaths">
 <div class="row justify-content-md-center linear">
 <div class="col-md-10 col-lg-8 col-xl-6">
-
-<div class="row justify-content-md-center mt-3">
+<!-- <div class="row justify-content-md-center mt-3">
 	<div class="col-xl-6">
 		<h2>Follow Pathways</h2>
 		<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
@@ -50,7 +49,7 @@ BC Public Service learning curators.</p>
 		</video>
 		</div>
 	</div>
-</div>
+</div> -->
 
 <h2 id="featuredpaths" class="mt-3">Featured Pathways</h2>
 <div class="row">
