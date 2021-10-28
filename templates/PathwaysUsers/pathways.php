@@ -135,7 +135,7 @@ if ($this->Identity->isLoggedIn()) {
 	</div>
 <?php endif ?>
 
-
+<!-- 
 <div class="row justify-content-md-center mt-3">
 	<div class="col-xl-6">
 		<h2>Follow Pathways</h2>
@@ -157,7 +157,7 @@ if ($this->Identity->isLoggedIn()) {
 		</video>
 		</div>
 	</div>
-</div>
+</div> -->
 <h3 class="mt-5">Featured Pathways</h3>
 
 <?php foreach($published as $p): ?>
