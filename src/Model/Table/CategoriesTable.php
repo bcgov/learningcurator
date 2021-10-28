@@ -73,13 +73,13 @@ class CategoriesTable extends Table
 
         $validator
             ->scalar('name')
-            ->maxLength('name', 255)
+            ->maxLength('name', 40)
             ->requirePresence('name', 'create')
             ->notEmptyString('name');
 
         $validator
             ->scalar('slug')
-            ->maxLength('slug', 255)
+            ->maxLength('slug', 40)
             ->requirePresence('slug', 'create')
             ->notEmptyString('slug');
 
@@ -99,7 +99,7 @@ class CategoriesTable extends Table
 
         $validator
             ->scalar('featured')
-            ->maxLength('featured', 255)
+            ->maxLength('featured', 10)
             ->allowEmptyString('featured');
 
         $validator

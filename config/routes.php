@@ -60,6 +60,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
     //$builder->connect('/pathways-users/delete', ['controller' => 'PathwaysUsers', 'action' => 'delete']);
     $builder->connect('/pathways/add', ['controller' => 'Pathways', 'action' => 'add']);
+    $builder->connect('/pathways/find', ['controller' => 'Pathways', 'action' => 'find']);
     $builder->connect('/pathways/rssfeed', ['controller' => 'Pathways', 'action' => 'rssfeed']);
     $builder->connect('/pathways/search', ['controller' => 'Pathways', 'action' => 'search']);
     

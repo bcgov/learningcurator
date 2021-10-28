@@ -17,7 +17,7 @@ $this->assign('title', 'Learning on demand');
 
 <h1 class="display-4 mt-5">Learning on demand.</h1>
 
-<div class="p-3 rounded-lg mb-5 bg-white shadow-sm">
+<div class="p-3 rounded-lg mb-5 bg-white shadow-lg">
 <p style="font-size: 1.3rem">Learning Curator Pathways feature informal learning by theme or community. 
 Here you’ll find recommendations for resources to watch, read, listen to, and courses that will help 
 you reach your goals. Pathways are created by BC Public Service learning curators.</p>
@@ -45,5 +45,34 @@ you reach your goals. Pathways are created by BC Public Service learning curator
 </div>
 </div>
 </div>
+<!-- <div class="container-fluid" role="main" aria-labelledby="followclaim">
+<div class="row justify-content-md-center linear">
+<div class="col-md-10 col-lg-8 col-xl-6">
+
+<div class="row justify-content-md-center mt-3">
+	<div class="col-xl-6">
+		<h2>Follow Pathways</h2>
+		<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
+		<video controls loop>
+			<source src="/img/follow.mp4" type="video/mp4">
+			<p>Your browser doesn't support HTML5 video. Here is
+				a <a href="follow.mp4">link to the video</a> instead.</p>
+		</video>
+		</div>
+	</div>
+	<div class="col-xl-6">
+		<h2>Claim Activities</h2>
+		<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
+		<video controls loop>
+			<source src="/img/claim.mp4" type="video/mp4">
+			<p>Your browser doesn't support HTML5 video. Here is
+				a <a href="follow.mp4">link to the video</a> instead.</p>
+		</video>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+</div> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

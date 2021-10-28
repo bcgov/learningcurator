@@ -187,24 +187,35 @@ This seems to work out, but #TODO investigate optimizing this
 
 <div class="col-md-12 text-center">
 <nav class="nav justify-content-center nav-pills mt-2 w-100" role="navigation">
-<?php $count = 1 ?>
+
 <?php foreach ($step->pathways as $pathways) : ?>
 <?php foreach($pathways->steps as $s): ?>
 <?php if($s->status_id == 2): ?>
 	<?php $c = '' ?>
 	<?php if($s->id == $step->id) $c = 'active' ?>
 	<li class="nav-item">
-
 	<a class="nav-link <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
 		<?php if($s->id == $step->id && $steppercent == 100): ?>
 			<i class="bi bi-check"></i>
 		<?php endif ?>
-			
 		<?= $s->name ?>
 	</a>
-
 	</li>
-	<?php $count++ ?>
+	<?php else: ?>
+	<?php if($role == 'curator' || $role == 'superuser'): ?>
+	
+	<?php $c = '' ?>
+	<?php if($s->id == $step->id) $c = 'active' ?>
+	<li class="nav-item">
+	
+	<a class="nav-link <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+		<?php if($s->id == $step->id && $steppercent == 100): ?>
+			<i class="bi bi-check"></i>
+		<?php endif ?>
+		<span class="badge badge-warning"><?= $s->name ?></span>
+	</a>
+	</li>
+	<?php endif; // are you a curator? ?>
 <?php endif; // is published? ?>
 
 
@@ -245,6 +256,9 @@ This seems to work out, but #TODO investigate optimizing this
 
 
 <div class="bg-white p-3 my-3 rounded-lg shadow-sm">
+	<?php if($step->status_id == 1): ?>
+	<span class="badge badge-warning">DRAFT</span>
+	<?php endif ?>
 	<h2><?= $step->name ?></h2>
 	<div style="font-size: 120%;">
 		<?= $step->description ?>
@@ -357,9 +371,11 @@ This seems to work out, but #TODO investigate optimizing this
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
 
-			<i class="bi <?= $activity->activity_type->image_path ?>"></i>
+			
 
 			<?= $activity->activity_type->name ?>
+
+			<small><i class="bi bi-box-arrow-up-right"></i></small>
 
 	</a>
 
@@ -403,9 +419,9 @@ This seems to work out, but #TODO investigate optimizing this
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
 
-			<i class="bi <?= $activity->activity_type->image_path ?>"></i>
-
 			<?= $activity->activity_type->name ?>
+
+			<i class="bi bi-box-arrow-up-right"></i>
 
 	</a>
 
@@ -488,9 +504,8 @@ This seems to work out, but #TODO investigate optimizing this
 				style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 				class="btn btn-block my-3 text-uppercase btn-lg">
 
-					<i class="bi <?= $activity->activity_type->image_path ?>"></i>
-
 					<?= $activity->activity_type->name ?>
+					<i class="bi bi-box-arrow-up-right"></i>
 
 			</a>
 		</div>

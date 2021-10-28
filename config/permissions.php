@@ -157,7 +157,7 @@ return [
         [
             'role' => '*',
             'controller' => 'Pathways',
-            'action' => ['index','view','follow','status','rssfeed','contributions','search'],
+            'action' => ['index','view','follow','status','rssfeed','contributions','search','find'],
         ],
         [
             'role' => 'curator',
@@ -187,7 +187,7 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Activities',
-            'action' => ['edit','delete','add','addtostep','stepfind'],
+            'action' => ['edit','delete','add','addtostep','stepfind','getinfo'],
         ],
         [
             'role' => 'curator',

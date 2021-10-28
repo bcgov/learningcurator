@@ -367,11 +367,50 @@ class ActivitiesController extends AppController
                     echo '' . $activity->id;
                     exit;
                 }
-                return $this->redirect($this->referer());
+                $return = '/steps/edit/' . $this->request->getData()['step_id'];
+                return $this->redirect($return);
             }
             echo __('The activity could not be saved. Please, try again.');
         }
+        $linktoact = $this->request->getQuery('url');
+        $this->set(compact('linktoact'));
     
+    }
+    /**
+     * Get activity title and description from URL so we can populate that info 
+     * for curators.
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function getinfo()
+    {
+        $linktoact = $this->request->getQuery('url');
+        $fp = file_get_contents($linktoact);
+        if (!$fp) 
+            return null;
+        
+        $doc = new \DOMDocument();
+        @$doc->loadHTML($fp);
+        $nodes = $doc->getElementsByTagName('title');
+
+        $title = $nodes->item(0)->nodeValue;
+        $description = '';
+        $metas = $doc->getElementsByTagName('meta');
+
+        for ($i = 0; $i < $metas->length; $i++)
+        {
+        $meta = $metas->item($i);
+        if($meta->getAttribute('name') == 'description')
+            $description = $meta->getAttribute('content');
+        if($meta->getAttribute('name') == 'keywords')
+            $keywords = $meta->getAttribute('content');
+        if($meta->getAttribute('language') == 'language');
+            $language = $meta->getAttribute('language');
+        }
+
+        $details = array('title' => $title, 'description' => $description);
+
+        $this->set(compact('details'));
     }
     
 }

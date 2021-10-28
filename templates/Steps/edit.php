@@ -283,6 +283,10 @@ label {
     echo $this->Form->hidden('step_id', ['value' => $step->id]);
     //echo $this->Form->hidden('activity_types_id', ['value' => '1']); 
     ?>
+    <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
+    <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg newname']); ?>
+    <label for="description">Description</label>
+    <?php echo $this->Form->textarea('description', ['class' => 'form-control summernote']) ?>
     <label>Activity Type
     <select name="activity_types_id" id="activity_types_id" class="form-control">
         <option value="1">Watch</option>
@@ -292,11 +296,9 @@ label {
     </select>
     </label>
     <?php //echo $this->Form->control('activity_type_id', ['class' => 'form-control', 'options' => $atypes]); ?>
-    <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
 
-    <?php echo $this->Form->textarea('description', ['class' => 'form-control summernote']) ?>
     <?php //echo $this->Form->control('stepcontext', ['class' => 'form-control', 'label' => 'Set Context for this step']); ?>
-    <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
+    
     <?php echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
     
@@ -344,6 +346,7 @@ label {
 
 </div>
 </div>
+
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
@@ -351,43 +354,10 @@ label {
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
 	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
 	crossorigin="anonymous"></script>
-<!--
-    At some point if this could be made to work, drag-n-drop is a better experience
-    for users; currently cakephp returns a 403 unauthorized upon firing this and I
-    don't know why. 
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+
 <script>
-$(function () {
-    $('#requiredactivities').sortable({
-        onEnd: function (/**Event*/evt) {
-            var itemEl = evt.item.id;
-            var sid = evt.item.dataset.stepid;
-            var foo = itemEl.split('-');
-            var formd = {id: sid, activity_id: foo[1], step_id: "<?= $step->id ?>", direction: "down", sortorder: 0};
-            //var formd = 'id='+sid+'&activity_id='+foo[1]+'&step_id=<?= $step->id ?>&direction=down&sortorder=0';
-            var u = '/activities-steps/sort/' + sid;
-            //console.log(sid);
-            $.ajax({
-                type: "POST",
-                url: u,
-                data: formd,
-                success: function(d)
-                {
-                    console.log(d);
-                },
-                statusCode: 
-                {
-                    403: function() {
-                        console.log(formd);
-                    }
-                }
-		    });
-	    },
-    });
-});
-</script>-->
-<script>
+
+
 $(function () {
     $('#actfind').on('submit', function(e){
 
@@ -414,7 +384,37 @@ $(function () {
 		});
     });
 
+    $('#hyperlink').on('change', function(e){
+
+        e.preventDefault();
+
+        let urltoscrape = this.value;
+        let url = '/activities/getinfo?url=' + urltoscrape;
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function(data)
+            {
+                let foo = $.parseJSON(data);
+                $('.newname').val(foo.title);
+                $('.note-editable').html(foo.description);
+                console.log(foo.title);
+            },
+            statusCode: 
+            {
+                403: function() {
+                    // oh no
+                }
+            }
+        });
+    });
+
 });
+
+
+
+
 </script>
 
 

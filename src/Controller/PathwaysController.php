@@ -103,6 +103,22 @@ class PathwaysController extends AppController
     }
 
     /**
+     * Find method for step assignment
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function find()
+    {
+        
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $paths = TableRegistry::getTableLocator()->get('Pathways');
+        $pathways = $paths->find('search', ['search' => $this->request->getQuery()])
+                            ->contain(['Steps']);
+        $this->set(compact('pathways'));
+    }
+
+
+    /**
      * View method
      *
      * @param string|null $id Pathway id.

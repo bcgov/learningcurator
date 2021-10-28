@@ -8,7 +8,10 @@ $this->loadHelper('Authentication.Identity');
 <div class="container-fluid mb-3">
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-10 col-lg-8 col-xl-6">
-    <h1 class="display-4 my-5">Add Activity</h1>
+    <h1 class="display-4 mt-5">Add Activity</h1>
+    <p class="mb-5">Add an activity by itself, not yet assigned to a pathway step. <strong>Beware:</strong> if you add 
+    your activity this way, you will need to use the "Add existing activity" button on the step edit page.
+    It is recommended to add your activities directly to a step, rather than this way.</p>
 </div>
 </div>
 </div>

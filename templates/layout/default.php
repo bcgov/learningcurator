@@ -131,17 +131,16 @@ $this->loadHelper('Authentication.Identity');
 				New
 		</a>
 		<div class="dropdown-menu" aria-labelledby="adminAddDropdown">
-			<a class="dropdown-item" href="/categories/add">New Topic Area</a>
-			<a class="dropdown-item" href="/pathways/add">New Pathway</a>	
+			<a class="dropdown-item" href="/categories/add">New Category</a>
+			<a class="dropdown-item" href="/topics/add">New Topic</a>
+			<a class="dropdown-item" href="/pathways/add">New Pathway</a> 
+			<a class="dropdown-item" href="/activities/addtostep">Add Activity to Step</a>
 			<a class="dropdown-item" href="/activities/add">New Activity</a>
 		</div>
 		</li>
 		<?php endif ?>
 	</ul>
-	<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3" role="search">
-		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="search">
-		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-	</form>
+
 
 	 </div><!-- /endof .collapse navbar-collapse -->
 	 <?php endif ?>
