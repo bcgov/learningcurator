@@ -7,8 +7,8 @@ $this->loadHelper('Authentication.Identity');
 
 <h1 class="display-4 mt-5"><?= __('Add an Activity') ?></h1>
 <p class="">You can add a new activity directly to a pathway step through this form.</p>
-<p class="mb-5">
-    <a href="javascript: (() => {const destination = 'https://learningcurator.ca/activities/addtostep?url=' + window.location.href;window.open(destination);})();">
+<p class="mb-5">EXPERIMENTAL: 
+    <a href="javascript: (() => {const destination = 'https://learningcurator.apps.silver.devops.gov.bc.ca/activities/addtostep?url=' + window.location.href;window.open(destination);})();">
         Add to Curator
     </a> (Drag the bookmarklet to your bookmarks bar, then click on it from any website that you wish to add to a step)</p>
 </div>
