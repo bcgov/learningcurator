@@ -4,6 +4,8 @@ Learning Curator Pathways feature informal learning by theme or community. Here 
 
 An emerging project from the Learning Centre for the BC Public Service Agency.
 
+[![Lifecycle:Maturing](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)](<Redirect-URL>)
+
 ## Features
 
 There are topics which have pathways. Pathways have steps; steps have activities; activies are categorized and tagged. A signed in user can follow pathways and claim activites, tracking their own progress via activity rings.
