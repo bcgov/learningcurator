@@ -371,9 +371,11 @@ This seems to work out, but #TODO investigate optimizing this
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
 
-			<i class="bi <?= $activity->activity_type->image_path ?>"></i>
+			
 
 			<?= $activity->activity_type->name ?>
+
+			<small><i class="bi bi-box-arrow-up-right"></i></small>
 
 	</a>
 
@@ -417,9 +419,9 @@ This seems to work out, but #TODO investigate optimizing this
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 		class="btn btn-block my-3 text-uppercase btn-lg">
 
-			<i class="bi <?= $activity->activity_type->image_path ?>"></i>
-
 			<?= $activity->activity_type->name ?>
+
+			<i class="bi bi-box-arrow-up-right"></i>
 
 	</a>
 
@@ -502,9 +504,8 @@ This seems to work out, but #TODO investigate optimizing this
 				style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
 				class="btn btn-block my-3 text-uppercase btn-lg">
 
-					<i class="bi <?= $activity->activity_type->image_path ?>"></i>
-
 					<?= $activity->activity_type->name ?>
+					<i class="bi bi-box-arrow-up-right"></i>
 
 			</a>
 		</div>
