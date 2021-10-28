@@ -131,7 +131,8 @@ $this->loadHelper('Authentication.Identity');
 				New
 		</a>
 		<div class="dropdown-menu" aria-labelledby="adminAddDropdown">
-			<a class="dropdown-item" href="/categories/add">New Topic Area</a>
+			<a class="dropdown-item" href="/categories/add">New Category</a>
+			<a class="dropdown-item" href="/topics/add">New Topic</a>
 			<a class="dropdown-item" href="/pathways/add">New Pathway</a> 
 			<a class="dropdown-item" href="/activities/addtostep">Add Activity to Step</a>
 			<a class="dropdown-item" href="/activities/add">New Activity</a>
