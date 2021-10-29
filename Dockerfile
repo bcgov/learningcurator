@@ -116,11 +116,14 @@ RUN mkdir -p /var/www/html/vendor/CakeDC/Auth/Social/Mapper
 RUN mkdir -p /var/www/html/vendor/cakedc/users/src/Controller/Traits
 RUN mkdir -p /var/www/html/vendor/cakedc/users/src/Model/Table
 RUN mkdir -p /var/www/html/vendor/cakedc/users/src/Model/Behavior
+RUN mkdir -p /var/www/html/vendor/cakedc/users/src/Model/Entity
 RUN cp /var/www/html/config/tocopy/AzureMapper.php /var/www/html/vendor/cakedc/auth/src/Social/Mapper/Azure.php
 RUN cp /var/www/html/config/tocopy/ProfileTrait.php /var/www/html/vendor/cakedc/users/src/Controller/Traits/ProfileTrait.php
 RUN cp /var/www/html/config/tocopy/Azure.php /var/www/html/vendor/thenetworg/oauth2-azure/src/Provider/Azure.php
 RUN cp /var/www/html/config/tocopy/UsersTable.php /var/www/html/vendor/cakedc/users/src/Model/Table/UsersTable.php
 RUN cp /var/www/html/config/tocopy/SocialBehavior.php /var/www/html/vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
+RUN cp /var/www/html/config/tocopy/SimpleCrudTrait.php /var/www/html/vendor/cakedc/users/src/Controller/Traits/SimpleCrudTrait.php
+RUN cp /var/www/html/config/tocopy/UserEntities.php /var/www/html/vendor/cakedc/users/src/Model/Entity/User.php
 RUN chown -R www-data:www-data *
 
 USER root
