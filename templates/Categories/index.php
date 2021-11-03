@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-10 col-lg-8 col-xl-6">
 
-<h1 class="display-4 my-5">All topic areas</h1>
+<h1 class="display-4 my-5">All Categories</h1>
 
 </div>
 </div>
@@ -29,7 +29,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php foreach ($categories as $category): ?>
 <?php if($category->featured == 1): ?>
-<div class="p-3 my-5 bg-white rounded-lg shadow-sm">
+<div class="p-3 my-3 bg-white rounded-lg shadow-sm">
 	<h2 class="">
 		<i class="bi bi-diagram-3-fill"></i>
 		<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
@@ -37,34 +37,11 @@ if ($this->Identity->isLoggedIn()) {
 	<div class="mb-3 p-2">
 	<?= $category->description ?>
 	</div>
-	<div class="" id="topics<?= $category->id ?>">
-	<div class="">
-	<?php foreach ($category->topics as $topic): ?>
-	<?php if($topic->featured == 1): ?>
-	<div class="mb-3 px-4 bg-white rounded-lg">
-		<h3>
-			<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
-		</h3>
-		<div class="mb-2 py-2"><?= h($topic->description) ?></div>
-	</div>
-	<?php else: ?>
-	<?php if($role == 'curator' || $role == 'superuser'): ?>
-	<div class="mb-3 px-4 bg-white rounded-lg">
-	<span class="badge badge-warning">NOT PUBLISHED</span>
-		<h3>
-			<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
-		</h3>
-		<div class="mb-2 py-2"><?= h($topic->description) ?></div>
-	</div>
-	<?php endif ?>
-	<?php endif ?>
-	<?php endforeach; ?>
-	</div>
-	</div>
+
 </div>
 <?php else: ?>
-	<?php if($role == 'curator' || $role == 'superuser'): ?>
-	<div class="p-3 my-5 bg-white rounded-lg shadow-sm">
+<?php if($role == 'curator' || $role == 'superuser'): ?>
+	<div class="p-3 my-3 bg-white rounded-lg shadow-sm">
 		<span class="badge badge-warning">NOT PUBLISHED</span>
 	<h2 class="">
 		<i class="bi bi-diagram-3-fill"></i>
@@ -73,20 +50,7 @@ if ($this->Identity->isLoggedIn()) {
 	<div class="mb-3 p-2">
 	<?= $category->description ?>
 	</div>
-	<div class="" id="topics<?= $category->id ?>">
-	<div class="">
-	<?php foreach ($category->topics as $topic): ?>
-	
-	<div class="mb-3 px-4 bg-white rounded-lg">
-		<h3>
-			<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
-		</h3>
-		<div class="mb-2 py-2"><?= h($topic->description) ?></div>
-	</div>
-	
-	<?php endforeach; ?>
-	</div>
-	</div>
+
 </div>
 <?php endif ?>
 <?php endif ?>
