@@ -30,6 +30,9 @@ return [
     'Security' => [
         'salt' => env('SECURITY_SALT', '__SALT__'),
     ],
+    'Session' => [
+        'timeout' => 4320 // 3 days
+    ],
 
     /*
      * Connection information used by the ORM to connect
