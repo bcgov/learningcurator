@@ -31,7 +31,11 @@ return [
         'salt' => env('SECURITY_SALT', '__SALT__'),
     ],
     'Session' => [
-        'timeout' => 4320 // 3 days
+        'defaults' => 'cache',
+        'timeout' => 4320, // 3 days
+        'ini' => [
+            'session.cookie_lifetime' => 1209600 // 2 weeks
+        ]
     ],
 
     /*
