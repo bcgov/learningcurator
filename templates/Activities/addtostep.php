@@ -28,7 +28,7 @@ $this->loadHelper('Authentication.Identity');
     </form>
     <div id="results"></div>
     </div>
-    <div class="addform d-none">
+    <div class="addform">
     <div class="mb-3 font-weight-bold">Now fill in the activity details:</div>
     <?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'addtostep']]) ?>
     <?php 

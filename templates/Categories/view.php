@@ -20,7 +20,7 @@ $this->assign('title', $pagetitle);
 <div class="row justify-content-md-center align-items-center"  id="colorful">
 <div class="col-md-10 col-lg-8 col-xl-6">
 <div class="py-3">
-<div><?= $this->Html->link(__('All Topic Areas'), ['action' => 'index']) ?></div>
+<div><?= $this->Html->link(__('Categories'), ['action' => 'index']) ?></div>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right btn-group">
 	<?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id],['class' => 'btn btn-light']) ?>

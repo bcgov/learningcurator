@@ -87,6 +87,10 @@ video {
 	font-size: 110%;
 	font-weight: bold;
 }
+.nextstep,
+.backstep {
+	text-decoration: none;
+}
 /*
  * #TODO add in accessible colors for other button types like  "success"
  */

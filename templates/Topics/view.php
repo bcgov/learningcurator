@@ -28,7 +28,7 @@ if ($this->Identity->isLoggedIn()) {
 	<ol class="breadcrumb mt-3">
 	
 	<li class="breadcrumb-item">
-    <?= $this->Html->link(__('All Topic Areas'), ['controller' => 'Categories', 'action' => 'index'],['class' => '']) ?>
+    <?= $this->Html->link(__('Categories'), ['controller' => 'Categories', 'action' => 'index'],['class' => '']) ?>
     </li>
 	<li class="breadcrumb-item">
     <?= $this->Html->link($topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $topic->categories[0]->id],['class' => '']) ?>

@@ -50,12 +50,16 @@ if ($this->Identity->isLoggedIn()) {
             </div>
             <div class="p-3" style="background-color: rgba(255,255,255,.3)">
             <div>Claimed on: <?= $this->Time->format($a['created'],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?></div>
+
             <?php foreach($a['activity']['steps'] as $s): ?>
+                <?php if(!empty($s->pathways[0]->slug)): ?>
                 <div>Included in 
-                    <a href="/pathways/<?= $s->pathways[0]->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+                    <a href="/pathways/<?= $s->pathways[0]->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>" class="font-weight-bold">
+                        <i class="bi bi-pin-map-fill"></i>
                         <?= $s->pathways[0]->name ?> - <?= $s->name ?>
                     </a>
                 </div>
+                <?php endif ?>
             <?php endforeach ?>
             </div>
     </div>

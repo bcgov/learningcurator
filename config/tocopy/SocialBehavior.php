@@ -206,16 +206,115 @@ class SocialBehavior extends BaseTokenBehavior
             // and we can ditch this; in the meantime, we start with
             // the imperfect method so that we can at least show that
             // we considered how to do this.
+            // Short Code 	Organization Name
+            // AEST 	Advanced Education, Skills & Training
+            // AGRI 	Agriculture
+            // ALC 	Agriculture Land Commission
+            // AG 	Attorney General
+            // MCF 	Children & Family Development
+            // CITZ 	Citizens' Services
+            // DBC 	Destination BC
+            // EMBC 	Emergency Management BC
+            // EAO 	Environmental Assessment Office
+            // EDUC 	Education
+            // EMPR 	Energy, Mines & Petroleum Resources
+            // ENV 	Environment & Climate Change Strategy
+            // FIN 	Finance
+            // FLNR 	Forests, Lands, Natural Resource Operations & Rural Development
+            // HLTH 	Health
+            // IRR 	Indigenous Relations & Reconciliation
+            // JEDC 	Jobs, Economic Development & Competitiveness
+            // LBR 	Labour Policy & Legislation
+            // LDB 	BC Liquor Distribution Branch
+            // MMHA 	Mental Health & Addictions
+            // MAH 	Municipal Affairs & Housing
+            // BCPC 	Pension Corporation
+            // PSA 	Public Service Agency
+            // PSSG 	Public Safety and Solicitor General
+            // SDPR 	Social Development & Poverty Reduction
+            // TCA 	Tourism, Arts & Culture
+            // TRAN 	Transportation & Infrastructure
+            // This list was obtained from the templated repomountie bot issue
+            // on topics; for example:
+            // https://github.com/bcgov/learningcurator/issues/2
             if(str_contains($name[1],'PSA:EX')) {
-                $psa = explode('PSA:EX', $name[1]);
+                $min = explode('PSA:EX', $name[1]);
                 // "Allan PSA:EX" should now be reduced to "Allan " at [0] 
-                $fn = trim($psa[0]);
+                $fn = trim($min[0]);
                 $ministry = 2;
             } elseif(str_contains($name[1],'CITZ:EX')) {
-                $citz = explode('CITZ:EX', $name[1]);
+                $min = explode('CITZ:EX', $name[1]);
                 // "David W CITZ:EX" becomes "David W "...
-                $fn = trim($citz[0]);
+                $fn = trim($min[0]);
                 $ministry = 3;
+            } elseif(str_contains($name[1],'TRAN:EX')) {
+                $min = explode('TRAN:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 4;
+            } elseif(str_contains($name[1],'TCA:EX')) {
+                $min = explode('TCA:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 5;
+            } elseif(str_contains($name[1],'SDPR:EX')) {
+                $min = explode('SDPR:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 6;
+            } elseif(str_contains($name[1],'PSSG:EX')) {
+                $min = explode('PSSG:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 7;
+            } elseif(str_contains($name[1],'BCPC:EX')) {
+                $min = explode('BCPC:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 8;
+            } elseif(str_contains($name[1],'MAH:EX')) {
+                $min = explode('MAH:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 9;
+            } elseif(str_contains($name[1],'MMHA:EX')) {
+                $min = explode('MMHA:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 10;
+            } elseif(str_contains($name[1],'LDB:EX')) {
+                $min = explode('LDB:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 11;
+            } elseif(str_contains($name[1],'LBR:EX')) {
+                $min = explode('LBR:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 12;
+            } elseif(str_contains($name[1],'JEDC:EX')) {
+                $min = explode('JEDC:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 13;
+            } elseif(str_contains($name[1],'IRR:EX')) {
+                $min = explode('IRR:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 14;
+            } elseif(str_contains($name[1],'HLTH:EX')) {
+                $min = explode('HLTH:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 15;
+            } elseif(str_contains($name[1],'FLNR:EX')) {
+                $min = explode('FLNR:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 16;
+            } elseif(str_contains($name[1],'FIN:EX')) {
+                $min = explode('FIN:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 17;
+            } elseif(str_contains($name[1],'ENV:EX')) {
+                $min = explode('ENV:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 18;
+            } elseif(str_contains($name[1],'EMPR:EX')) {
+                $min = explode('EMPR:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 19;
+            } elseif(str_contains($name[1],'EDUC:EX')) {
+                $min = explode('EDUC:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 20;
             } else {
                 $fn = trim($name[1]);
                 $ministry = 1;

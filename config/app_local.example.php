@@ -30,6 +30,13 @@ return [
     'Security' => [
         'salt' => env('SECURITY_SALT', '__SALT__'),
     ],
+    'Session' => [
+        'defaults' => 'cache',
+        'timeout' => 4320, // 3 days
+        'ini' => [
+            'session.cookie_lifetime' => 1209600 // 2 weeks
+        ]
+    ],
 
     /*
      * Connection information used by the ORM to connect

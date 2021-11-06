@@ -3,8 +3,9 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Step $step
  */
-
+//phpinfo(); exit;
 $this->loadHelper('Authentication.Identity');
+
 $uid = '';
 $role = '';
 if ($this->Identity->isLoggedIn()) {
@@ -115,6 +116,28 @@ if($stepclaimcount > 0) {
 } else {
 	$steppercent = 0;
 }
+
+$current = 0;
+$last = 0;
+$previousid = 0;
+$next = 0;
+$nextid = 0;
+foreach ($step->pathways as $pathways) {
+	foreach($pathways->steps as $s) {
+		$next = next($pathways->steps);
+		if($s->id == $step->id) {
+			if($last) {
+				$previousid = $last->id;
+				$previousslug = $last->slug;
+			}
+			if($next) {
+				$upnextid = $next->id;
+				$upnextslug = $next->slug;
+			}
+		}
+		$last = $s;
+	}
+}
 ?>
 <style>
 /* Start desktop-specific code for this page.
@@ -133,16 +156,16 @@ This seems to work out, but #TODO investigate optimizing this
 } /* end desktop-specific code */
 
 </style>
+<?php //echo $this->Session->read('Config.time') ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-	
 
-	<div class="col-md-10 col-lg-8">
+<div class="col-md-9 col-lg-6">
 
+<div class="bg-white p-3 my-3 rounded-lg shadow-sm">
 
-<?php if (!empty($step->pathways)) : ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="btn-group float-right mt-3 ml-3">
+<div class="btn-group float-right ml-3">
 <?= $this->Html->link(__('Edit'), 
 						['controller' => 'Steps', 'action' => 'edit', $step->id], 
 						['class' => 'btn btn-light btn-sm']); 
@@ -156,113 +179,93 @@ This seems to work out, but #TODO investigate optimizing this
 </div> <!-- /.btn-group -->
 <?php endif ?>
 
-<?php foreach ($step->pathways as $pathways) : ?>
-<?php $totalsteps = count($pathways->steps) ?>
-
 <nav aria-label="breadcrumb">
-<ol class="breadcrumb mt-3">
-	<li class="breadcrumb-item"><?= $this->Html->link($pathways->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $pathways->topic->categories[0]->id]) ?></li>
-	<li class="breadcrumb-item"><?= $this->Html->link($pathways->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathways->topic->id]) ?></li>
-	<li class="breadcrumb-item"><?= $this->Html->link($pathways->name, ['controller' => 'Pathways', 'action' => '/' . $pathways->slug]) ?></li>
-</ol>
-</nav> 
+	<ol class="breadcrumb p-0">
+		<li class="breadcrumb-item"><?= $this->Html->link($step->pathways[0]->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $step->pathways[0]->topic->categories[0]->id]) ?></li>
+		<li class="breadcrumb-item"><?= $this->Html->link($step->pathways[0]->topic->name, ['controller' => 'Topics', 'action' => 'view', $step->pathways[0]->topic->id]) ?></li>
+		
+	</ol>
+	</nav> 
+	<div>
+	<i class="bi bi-pin-map-fill"></i>	
+	<?= $this->Html->link($step->pathways[0]->name, ['controller' => 'Pathways', 'action' => '/' . $step->pathways[0]->slug], ['class' => 'font-weight-bold']) ?>
+	</div>
 
-<!--<div class=""><a href="/pathways/path/<?= $pathways->id ?>"><i class="fas fa-scroll"></i></a></div>-->
-<h1 class="mb-3">
-	<?= h($pathways->name) ?>
-	<?php //$this->Html->link(h($pathways->name), ['controller' => 'Pathways', 'action' => 'path', $pathways->id]) ?>
-</h1>
-
-
-
-
-<?php endforeach; ?>
-<?php endif; ?>
-
-
-
-
-
-</div>
-
-<div class="col-md-12 text-center">
-<nav class="nav justify-content-center nav-pills mt-2 w-100" role="navigation">
-
-<?php foreach ($step->pathways as $pathways) : ?>
-<?php foreach($pathways->steps as $s): ?>
-<?php if($s->status_id == 2): ?>
-	<?php $c = '' ?>
-	<?php if($s->id == $step->id) $c = 'active' ?>
-	<li class="nav-item">
-	<a class="nav-link <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-		<?php if($s->id == $step->id && $steppercent == 100): ?>
-			<i class="bi bi-check"></i>
-		<?php endif ?>
-		<?= $s->name ?>
+	<div class="row bg-white mt-2">
+	<div class="col-2 text-center pt-2">
+	<?php if(!empty($previousid)): ?>
+		<a href="/pathways/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" class="backstep">
+			<i class="bi bi-arrow-left-circle-fill" style="font-size: 150%"></i>
+			<br>
+			Back
+		</a>
+	<?php endif ?>
+	</div>
+	<div class="col">
+	<?php if(count($step->pathways[0]->steps) > 1): ?>
+	<div class="mt-4">
+	<a class="btn btn-light btn-block" 
+		data-toggle="collapse" 
+		href="#stepnav" 
+		role="button" 
+		aria-expanded="false" 
+		aria-controls="stepnav">
+			Step Menu
 	</a>
-	</li>
-	<?php else: ?>
-	<?php if($role == 'curator' || $role == 'superuser'): ?>
-	
-	<?php $c = '' ?>
-	<?php if($s->id == $step->id) $c = 'active' ?>
-	<li class="nav-item">
-	
-	<a class="nav-link <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-		<?php if($s->id == $step->id && $steppercent == 100): ?>
-			<i class="bi bi-check"></i>
-		<?php endif ?>
-		<span class="badge badge-warning"><?= $s->name ?></span>
-	</a>
-	</li>
-	<?php endif; // are you a curator? ?>
-<?php endif; // is published? ?>
+	</div>
+	<?php endif ?>
+	</div>
+	<div class="col-2 text-center pt-2">
 
+	<?php if(!empty($upnextid)): ?>
+		<a href="/pathways/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" class="nextstep">
+			<i class="bi bi-arrow-right-circle-fill" style="font-size: 150%"></i>
+			<br>
+			Next
+		</a>
+	<?php endif ?>
+	</div>
+	</div>
+	<div class="collapse" id="stepnav" aria-labelledby="">
+	<?php foreach ($step->pathways as $pathways) : ?>
+		<?php foreach($pathways->steps as $s): ?>
+			<?php if($s->status_id == 2): ?>
+			<?php $c = '' ?>
+			<?php if($s->id == $step->id) $c = 'font-weight-bold' ?>
+			<div class="p-1 my-1 bg-light">
+				<a class=" <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+					<?= $s->name ?> 
+					<i class="bi bi-arrow-right-circle-fill"></i>
+				</a>
+			</div>
+			<?php else: ?>
+			<?php if($role == 'curator' || $role == 'superuser'): ?>
+			<?php $c = '' ?>
+			<?php if($s->id == $step->id) $c = 'font-weight-bold' ?>
+			<div><a class=" <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+				<?php if($s->id == $step->id && $steppercent == 100): ?>
+					<i class="bi bi-check"></i>
+				<?php endif ?>
+				<span class="badge badge-warning">DRAFT</span>
+					<?= $s->name ?>
+			</a></div>
+			<?php endif; // are you a curator? ?>
+			<?php endif; // is published? ?>
+		<?php endforeach ?>
+	<?php endforeach ?>
+	</div>
 
-<?php endforeach ?>
-<?php endforeach ?>
-</nav>
-
-
-
-
-</div>
-
-
-</div>
-</div>
-
-<div class="container-fluid bg-light">
-<div class="row justify-content-md-center">
-
-<div class="col-md-3 col-lg-2 order-last">
-<?php if(in_array($uid,$usersonthispathway)): ?>
-<div class="p-3 bg-white mb-3 mt-3 text-center stickyrings rounded-lg">
-<div class="mb-3 following"></div>
-<canvas id="myChart" width="250" height="250"></canvas>
-</div>
-
-<?php else: ?>
-<div class="bg-white rounded-lg p-3 shadow-sm mt-3 text-center stickyrings">
-<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
-<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
-<?= $this->Form->button(__('Follow Pathway'),['class' => 'btn btn-block btn-primary mb-0']) ?>
-<?= $this->Form->end(); ?>
-</div>
-<?php endif ?>
-</div>
-
-<div class="col-md-9 col-lg-6">
-
-
-<div class="bg-white p-3 my-3 rounded-lg shadow-sm">
+	<h1 class="mt-3"><?= $step->name ?></h1>
 	<?php if($step->status_id == 1): ?>
 	<span class="badge badge-warning">DRAFT</span>
 	<?php endif ?>
-	<h2><?= $step->name ?></h2>
 	<div style="font-size: 120%;">
 		<?= $step->description ?>
 	</div>
+
+
+
+	
 	<div class="my-3">
 		<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
 		<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
@@ -284,7 +287,38 @@ This seems to work out, but #TODO investigate optimizing this
 		<div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">	
 		</div>
 	</div>
+
+
+
+
+
+
+
+
+
 </div>
+</div>
+</div>
+<div class="container-fluid bg-white">
+<div class="row justify-content-md-center">
+<div class="col-md-3 col-lg-2 order-md-last">
+<?php if(in_array($uid,$usersonthispathway)): ?>
+<div class="p-3 bg-white mb-3 mt-3 text-center stickyrings rounded-lg shadow-lg">
+<div class="mb-3 following"></div>
+<canvas id="myChart" width="250" height="250"></canvas>
+</div>
+
+<?php else: ?>
+<div class="bg-white rounded-lg p-3 shadow-sm mt-3 text-center stickyrings shadow-lg">
+<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
+<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
+<?= $this->Form->button(__('Follow Pathway'),['class' => 'btn btn-block btn-primary mb-0']) ?>
+<?= $this->Form->end(); ?>
+</div>
+<?php endif ?>
+</div>
+
+<div class="col-md-9 col-lg-6">
 
 <?php if (!empty($step->activities)) : ?>
 

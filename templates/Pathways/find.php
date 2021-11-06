@@ -31,7 +31,7 @@ $(function () {
         var stepid = $(this).data('stepid');
         $('#step_id').val(stepid);
         $(this).addClass('chosenstep');
-        $('.addform').removeClass('d-none');
+        
     });
 });
 </script>

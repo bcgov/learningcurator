@@ -193,6 +193,64 @@ class PathwaysController extends AppController
     }
 
     /**
+     * Export method
+     *
+     * @param string|null $id Pathway id.
+     * @return \Cake\Http\Response|null|void Renders view
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function export ($slug = null)
+    {
+      
+        $pathway = $this->Pathways->findBySlug($slug)->contain([
+                            'Topics',
+                            'Topics.Categories', 
+                            'Ministries', 
+                            'Steps' => ['sort' => ['Steps.id' => 'asc']],
+                            'Steps.Statuses', 
+                            'Steps.Activities', 
+                            'Steps.Activities.ActivityTypes', 
+                            'Users'])->firstOrFail();
+        
+        $this->RequestHandler->renderAs($this, 'json');
+        // $this->RequestHandler->respondAs('json', [
+        //     // Force download
+        //     'attachment' => true,
+        //     'charset' => 'UTF-8'
+        // ]);
+        $this->set(compact('pathway'));
+
+    }
+
+    /**
+     * Import method
+     *
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
+     */
+    public function import ()
+    {
+        $pathway = $this->Pathways->newEmptyEntity();
+        if ($this->request->is('post')) {
+
+
+            
+            $pathway = $this->Pathways->patchEntity($pathway, );
+
+
+            $sluggedTitle = Text::slug($pathway->name);
+            // trim slug to maximum length defined in schema
+            $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
+            if ($this->Pathways->save($pathway)) {
+                $redir = '/pathways/' . $sluggedTitle;
+                return $this->redirect($redir);
+            }
+            $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
+        }
+        
+        
+    }
+
+    /**
      * Add method
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.

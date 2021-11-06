@@ -84,9 +84,11 @@ if ($this->Identity->isLoggedIn()) {
 	<?= $a->status->name ?>
 	<?php if(!empty($a->steps)): ?> in <?php endif ?>
 	<?php foreach($a->steps as $step): ?>
+	<?php if(!empty($step->pathways[0]->slug)): ?>
 	<a href="/pathways/<?= h($step->pathways[0]->slug) ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
 		<?= h($step->pathways[0]->name) ?> - <?= h($step->name) ?>
 	</a>
+	<?php endif ?>
 	<?php endforeach ?>
 </div>
 <?php endforeach ?>

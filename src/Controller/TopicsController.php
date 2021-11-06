@@ -52,10 +52,12 @@ class TopicsController extends AppController
     {
         $topic = $this->Topics->newEmptyEntity();
         if ($this->request->is('post')) {
+            $user = $this->request->getAttribute('authentication')->getIdentity();
             $topic = $this->Topics->patchEntity($topic, $this->request->getData());
             $sluggedTitle = Text::slug($topic->name);
             // trim slug to maximum length defined in schema
             $topic->slug = strtolower(substr($sluggedTitle, 0, 191));
+            $topic->user_id = $user->id;
             if ($this->Topics->save($topic)) {
 
                 $pathback = '/topics/view/' . $topic->id;

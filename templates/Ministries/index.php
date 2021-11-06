@@ -15,11 +15,11 @@
 </div>
 <div class="container-fluid">
 <div class="row justify-content-md-center">
-<div class="col-md-6">
+<div class="col-md-4">
 
     <?php foreach ($ministries as $ministry): ?>
     <div class="my-3 p-3 bg-white rounded-lg shadow-sm">
-    <?= $this->Html->link(h($ministry->name), ['action' => 'view', $ministry->id]) ?>
+    <?= $this->Html->link($ministry->name, ['action' => 'view', $ministry->id]) ?>
     </div>
     <?php endforeach; ?>
      
