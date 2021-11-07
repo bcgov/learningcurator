@@ -20,7 +20,7 @@ $this->assign('title', $pagetitle);
 <div class="row justify-content-md-center align-items-center"  id="colorful">
 <div class="col-md-10 col-lg-8 col-xl-6">
 <div class="py-3">
-<div><?= $this->Html->link(__('Categories'), ['action' => 'index']) ?></div>
+<div><?= $this->Html->link(__('All Categories'), ['action' => 'index']) ?></div>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right btn-group">
 	<?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id],['class' => 'btn btn-light']) ?>
@@ -36,7 +36,6 @@ $this->assign('title', $pagetitle);
 </div>
 <?php endif; // is curator or admin ?>
 <h1 class="display-4">
-	<i class="bi bi-diagram-3-fill"></i>
 	<?= h($category->name) ?>
 </h1>
 <div class="text" style="font-size: 120%">

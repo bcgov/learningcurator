@@ -31,7 +31,6 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($category->featured == 1): ?>
 <div class="p-3 my-3 bg-white rounded-lg shadow-sm">
 	<h2 class="">
-		<i class="bi bi-diagram-3-fill"></i>
 		<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
 	</h2>
 	<div class="mb-3 p-2">
