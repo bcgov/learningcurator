@@ -28,7 +28,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="py-5">
 
 <h1>Activities</h1>
-<p>The 100 most recently added activities.</p>
+<p>The 30 most recently added activities.</p>
 <form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3" role="search">
 		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="search">
 		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
@@ -77,11 +77,14 @@ if ($this->Identity->isLoggedIn()) {
 	<div class="mt-2">
 		<div class="p-3" style="background-color: rgba(255,255,255,.8);">
 		<?php foreach($activity->steps as $step): ?>
-		Included in 
-		<a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
-			<i class="bi bi-pin-map-fill"></i>
-			<?= $step->pathways[0]->name ?> - 
-			<?= $step->name ?></a>
+			<?php if(!empty($step->pathways[0]->slug)): ?>
+			Included in 
+			<a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
+				<i class="bi bi-pin-map-fill"></i>
+				<?= $step->pathways[0]->name ?> - 
+				<?= $step->name ?>
+			</a>
+			<?php endif ?>
 		<?php endforeach ?>
 		</div>
 	</div>

@@ -49,7 +49,7 @@ class ActivitiesController extends AppController
                                         'Steps.Pathways'])
                             ->where(['Activities.status_id' => 2])
                             ->order(['Activities.created' => 'DESC'])
-                            ->limit(100);
+                            ->limit(30); // including 'Steps.Pathways' appears to be SUPER expensive
         
 		$cats = TableRegistry::getTableLocator()->get('Categories');
         $allcats = $cats->find('all')->contain(['Topics'])->order(['Categories.created' => 'desc']);
