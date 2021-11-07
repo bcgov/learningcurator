@@ -60,7 +60,10 @@ This seems to work out, but #TODO investigate optimizing this
 	<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'btn btn-light']) ?>
 	</div>
 	<?php endif ?>
-	<h1><?= h($pathway->name) ?></h1>
+	<h1>
+		<i class="bi bi-pin-map-fill"></i>
+		<?= h($pathway->name) ?>
+	</h1>
 
 	<!-- totals below updated via JS -->
 
