@@ -29,13 +29,27 @@ class ReportsController extends AppController
         $this->set(compact('reports'));
     }
     /**
-     * Index method
+     * Index method that shows only reports that have NOT BEEN responded to
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
     {
-        $reports = $this->Reports->find('all')
+        $reports = $this->Reports->find('all', array('conditions' => array('Reports.response IS NULL')))
+                                ->contain(['Activities','Users'])
+                                ->order(['Reports.created' => 'desc']);
+
+
+        $this->set(compact('reports'));
+    }
+    /**
+     * Closed method that shows only reports that HAVE BEEN responded to
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function closed()
+    {
+        $reports = $this->Reports->find('all', array('conditions' => array('Reports.response IS NOT NULL')))
                                 ->contain(['Activities','Users'])
                                 ->order(['Reports.created' => 'desc']);
 

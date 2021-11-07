@@ -113,7 +113,7 @@ $this->loadHelper('Authentication.Identity');
 				View
 		</a>
 		<div class="dropdown-menu" aria-labelledby="adminDropdown">
-			<a class="dropdown-item" href="/reports">All Reports</a>
+			<a class="dropdown-item" href="/reports/index">Open Reports</a>
 			<a class="dropdown-item" href="/users/index">All Users</a>
 			<a class="dropdown-item" href="/activity-types">Activity Types</a>
 			<!-- <a class="dropdown-item" href="/ministries">All Ministries</a>
