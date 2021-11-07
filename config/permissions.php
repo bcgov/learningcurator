@@ -210,6 +210,14 @@ return [
             'action' => ['index','edit','add'],
         ],
         [
+            'role' => 'user',
+            'controller' => 'Reports',
+            'action' => ['delete'],
+            'allowed' => new \CakeDC\Auth\Rbac\Rules\Owner(
+                ['ownerForeignKey' => 'user_id']
+            )
+        ],
+        [
             'role' => '*',
             'controller' => 'Tags',
             'action' => ['index','view'],
