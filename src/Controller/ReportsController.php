@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use Cake\Mailer\Mailer;
 
 /**
  * Reports Controller
@@ -69,15 +70,18 @@ class ReportsController extends AppController
         if ($this->request->is('post')) {
             $report = $this->Reports->patchEntity($report, $this->request->getData());
             if ($this->Reports->save($report)) {
-                $this->Flash->success(__('The report has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                echo __('The report has been saved.');
+                $mailer = new Mailer('default');
+                $mailer->setFrom(['learning.curator@gov.bc.ca' => 'Learning Curator'])
+                        ->setTo('allan.haggett@gov.bc.ca')
+                        ->setSubject('Curator Activity Report')
+                        ->deliver('Someone filed an activity report. Go check it out.');
+                //return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The report could not be saved. Please, try again.'));
+            echo __('The report could not be saved. Please, try again.');
         }
-        $activities = $this->Reports->Activities->find('list', ['limit' => 200]);
-        $users = $this->Reports->Users->find('list', ['limit' => 200]);
-        $this->set(compact('report', 'activities', 'users'));
+
+
     }
 
     /**
