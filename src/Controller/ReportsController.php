@@ -72,7 +72,7 @@ class ReportsController extends AppController
             if ($this->Reports->save($report)) {
                 echo __('The report has been saved.');
                 $mailer = new Mailer('default');
-                $mailer->setFrom(['learning.curator@gov.bc.ca' => 'Learning Curator'])
+                $mailer->setFrom(['NO_REPLY@gov.bc.ca' => 'Learning Curator'])
                         ->setTo('allan.haggett@gov.bc.ca')
                         ->setSubject('Curator Activity Report')
                         ->deliver('Someone filed an activity report. Go check it out.');
