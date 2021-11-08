@@ -15,14 +15,39 @@
  
 /* @media (prefers-color-scheme: dark) {
 	body, html {
-		background: #333;
-		color: #FFF;
+		background: #333 !important;
+		color: #FFF !important;
 	}
-	.bg-white {
-		background-color: #333;
+	.bg-white,
+	.bg-light {
+		background-color: #333 !important;
 	}
 	#colorful {
-		background-color: #333;
+		background-color: #333 !important;
+	}
+	a {
+		color: #FFF !important;
+		text-decoration: underline;
+	}
+	a:hover {
+		color: #FFF !important;
+	}
+	.nav a:hover {
+		color: #FFF !important;
+		text-decoration: underline;
+	}
+	a:active {
+		color: #FFF !important;
+	}
+	a:focus {
+		color: #FFF !important;
+	}
+	.navbar a {
+		color: #FFF !important;
+		text-decoration: none;
+	}
+	.navbar a:focus {
+		color: #FFF !important;
 	}
 } */
  /* #TODO update the below link states to make more sense. */
