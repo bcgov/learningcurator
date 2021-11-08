@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use Cake\Mailer\Mailer;
 
 /**
  * Reports Controller
@@ -28,13 +29,27 @@ class ReportsController extends AppController
         $this->set(compact('reports'));
     }
     /**
-     * Index method
+     * Index method that shows only reports that have NOT BEEN responded to
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
     {
-        $reports = $this->Reports->find('all')
+        $reports = $this->Reports->find('all', array('conditions' => array('Reports.response IS NULL')))
+                                ->contain(['Activities','Users'])
+                                ->order(['Reports.created' => 'desc']);
+
+
+        $this->set(compact('reports'));
+    }
+    /**
+     * Closed method that shows only reports that HAVE BEEN responded to
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function closed()
+    {
+        $reports = $this->Reports->find('all', array('conditions' => array('Reports.response IS NOT NULL')))
                                 ->contain(['Activities','Users'])
                                 ->order(['Reports.created' => 'desc']);
 
@@ -69,15 +84,18 @@ class ReportsController extends AppController
         if ($this->request->is('post')) {
             $report = $this->Reports->patchEntity($report, $this->request->getData());
             if ($this->Reports->save($report)) {
-                $this->Flash->success(__('The report has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                echo __('The report has been saved.');
+                $mailer = new Mailer('default');
+                $mailer->setFrom(['NO_REPLY@gov.bc.ca' => 'Learning Curator'])
+                        ->setTo('allan.haggett@gov.bc.ca')
+                        ->setSubject('Curator Activity Report')
+                        ->deliver('Someone filed an activity report. Go check it out.');
+                //return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The report could not be saved. Please, try again.'));
+            echo __('The report could not be saved. Please, try again.');
         }
-        $activities = $this->Reports->Activities->find('list', ['limit' => 200]);
-        $users = $this->Reports->Users->find('list', ['limit' => 200]);
-        $this->set(compact('report', 'activities', 'users'));
+
+
     }
 
     /**

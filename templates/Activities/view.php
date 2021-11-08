@@ -12,6 +12,7 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
+<div style="background-color: #FFF;">
 <div class="container-fluid">
 <div class="row justify-content-md-center"
 		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
@@ -309,6 +310,7 @@ echo $this->Form->textarea('response',['class' => 'form-control', 'placeholder' 
 </div>
 </div>
 
+</div>
 </div>
 </div>
 </div>

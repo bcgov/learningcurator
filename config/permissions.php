@@ -187,7 +187,7 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Activities',
-            'action' => ['edit','delete','add','addtostep','stepfind','getinfo'],
+            'action' => ['edit','delete','add','addtostep','stepfind','getinfo','linkcheck'],
         ],
         [
             'role' => 'curator',
@@ -207,7 +207,15 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Reports',
-            'action' => ['index','edit','add'],
+            'action' => ['index','edit','add','closed'],
+        ],
+        [
+            'role' => 'user',
+            'controller' => 'Reports',
+            'action' => ['delete'],
+            'allowed' => new \CakeDC\Auth\Rbac\Rules\Owner(
+                ['ownerForeignKey' => 'user_id']
+            )
         ],
         [
             'role' => '*',

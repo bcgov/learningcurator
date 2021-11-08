@@ -53,12 +53,14 @@ if ($this->Identity->isLoggedIn()) {
 
             <?php foreach($a['activity']['steps'] as $s): ?>
                 <?php if(!empty($s->pathways[0]->slug)): ?>
-                <div>Included in 
+                <?php if($s->pathways[0]->status_id == 2): ?>
+                <div class="bg-white p-2 my-1">Included in 
                     <a href="/pathways/<?= $s->pathways[0]->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>" class="font-weight-bold">
                         <i class="bi bi-pin-map-fill"></i>
                         <?= $s->pathways[0]->name ?> - <?= $s->name ?>
                     </a>
                 </div>
+                <?php endif ?>
                 <?php endif ?>
             <?php endforeach ?>
             </div>

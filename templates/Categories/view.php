@@ -20,7 +20,7 @@ $this->assign('title', $pagetitle);
 <div class="row justify-content-md-center align-items-center"  id="colorful">
 <div class="col-md-10 col-lg-8 col-xl-6">
 <div class="py-3">
-<div><?= $this->Html->link(__('Categories'), ['action' => 'index']) ?></div>
+<div><?= $this->Html->link(__('All Categories'), ['action' => 'index']) ?></div>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right btn-group">
 	<?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id],['class' => 'btn btn-light']) ?>
@@ -36,7 +36,6 @@ $this->assign('title', $pagetitle);
 </div>
 <?php endif; // is curator or admin ?>
 <h1 class="display-4">
-	<i class="bi bi-diagram-3-fill"></i>
 	<?= h($category->name) ?>
 </h1>
 <div class="text" style="font-size: 120%">
@@ -86,19 +85,18 @@ $this->assign('title', $pagetitle);
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
 <div class="col-md-6 col-lg-6 pt-3">
-
+<div>Topics included within this category:</div>
 <?php if (!empty($category->topics)) : ?>
 <?php foreach ($category->topics as $topic) : ?>
 <?php if($topic->featured == 1): ?>
-
-<div class="p-3 my-3 bg-white rounded-lg shadow-sm">
+<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
 <h2>
 	<!-- topic_id: <?= $topic->id ?> --> 
 	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
 	
 </h2>
-<div class="p-2 mb-3" style="font-size: 110%"><?= $topic->description ?></div>
-
+<div class="py-2 mb-2" style="font-size: 110%"><?= $topic->description ?></div>
+<div>Pathways included in this topic:</div>
 <?php foreach ($topic->pathways as $pathway) : ?>
 
 <div class="p-2">
@@ -114,7 +112,6 @@ $this->assign('title', $pagetitle);
 	</div>
 
 <?php else: ?>
-	
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <span class="badge badge-warning"><?= $pathway->status->name ?></span>
 <div>
@@ -128,8 +125,20 @@ $this->assign('title', $pagetitle);
 <?php endif; // is published ?>
 </div>
 <?php endforeach ?>
-
 </div>
+<?php else: ?>
+	<?php if($role == 'curator' || $role == 'superuser'): ?>
+
+		<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
+		<span class="badge badge-warning">DRAFT</span>
+<h2>
+	<!-- topic_id: <?= $topic->id ?> --> 
+	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
+	
+</h2>
+<div class="py-2 mb-2" style="font-size: 110%"><?= $topic->description ?></div>
+
+	<?php endif; // is curator or admin ?>
 <?php endif; // is published ?>
 <?php endforeach ?>
 

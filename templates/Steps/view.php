@@ -160,7 +160,7 @@ This seems to work out, but #TODO investigate optimizing this
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
 
-<div class="col-md-9 col-lg-6">
+<div class="col-md-12 col-lg-8 col-xl-6">
 
 <div class="bg-white p-3 my-3 rounded-lg shadow-sm">
 
@@ -301,15 +301,15 @@ This seems to work out, but #TODO investigate optimizing this
 </div>
 <div class="container-fluid bg-white">
 <div class="row justify-content-md-center">
-<div class="col-md-3 col-lg-2 order-md-last">
+<div class="col-md-3 col-lg-2 col-xl-2 order-md-last">
 <?php if(in_array($uid,$usersonthispathway)): ?>
-<div class="p-3 bg-white mb-3 mt-3 text-center stickyrings rounded-lg shadow-lg">
+<div class="p-3 bg-white mb-3 mt-3 text-center stickyrings rounded-lg shadow-sm">
 <div class="mb-3 following"></div>
 <canvas id="myChart" width="250" height="250"></canvas>
 </div>
 
 <?php else: ?>
-<div class="bg-white rounded-lg p-3 shadow-sm mt-3 text-center stickyrings shadow-lg">
+<div class="bg-white rounded-lg p-3 shadow-sm mt-3 text-center stickyrings shadow-sm">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
 <?= $this->Form->button(__('Follow Pathway'),['class' => 'btn btn-block btn-primary mb-0']) ?>
@@ -318,7 +318,7 @@ This seems to work out, but #TODO investigate optimizing this
 <?php endif ?>
 </div>
 
-<div class="col-md-9 col-lg-6">
+<div class="col-md-9 col-lg-6 col-xl-4">
 
 <?php if (!empty($step->activities)) : ?>
 

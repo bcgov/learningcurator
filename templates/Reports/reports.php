@@ -41,7 +41,7 @@ if ($this->Identity->isLoggedIn()) {
 	
 	<?php foreach ($reports as $report) : ?>
 	<div class="">
-		
+	<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-primary']) ?>
 		<?= h($report->created) ?>
 		<div><strong><a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></strong></div>
 		<blockquote class="p-3 my-1 bg-light">

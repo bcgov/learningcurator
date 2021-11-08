@@ -13,8 +13,8 @@ $this->loadHelper('Authentication.Identity');
 <?php if (!empty($reports)) : ?>
 	<h2><?= __('Reports') ?></h2>
 	<div class="btn-group">
-		<span class="btn btn-dark">Open Reports</span>
-		<a class="btn btn-light" href="/reports/closed">Closed Reports</a>
+		<a class="btn btn-light" href="/reports/index">Open Reports</a>
+		<span class="btn btn-dark">Closed Reports</span>
 	</div>
 	<?php foreach ($reports as $report) : ?>
 	<div class="p-3 mb-2 bg-white rounded-lg">

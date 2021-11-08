@@ -35,7 +35,7 @@ This seems to work out, but #TODO investigate optimizing this
 </style>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
-<div class="col-md-10 col-lg-8">
+<div class="col-md-12 col-lg-8 col-xl-6">
 <div class="p-3">
 
 	<?php if($pathway->status_id == 1): ?>
@@ -60,7 +60,10 @@ This seems to work out, but #TODO investigate optimizing this
 	<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'btn btn-light']) ?>
 	</div>
 	<?php endif ?>
-	<h1><?= h($pathway->name) ?></h1>
+	<h1>
+		<i class="bi bi-pin-map-fill"></i>
+		<?= h($pathway->name) ?>
+	</h1>
 
 	<!-- totals below updated via JS -->
 
@@ -126,7 +129,7 @@ This seems to work out, but #TODO investigate optimizing this
 <div class="container-fluid linear">
 <div class="row justify-content-md-center">
 
-<div class="col-6 col-md-3 col-lg-2 order-last">
+<div class="col-md-3 col-lg-2 order-last">
 
 <?php if(in_array($uid,$usersonthispathway)): ?>
 
@@ -160,7 +163,7 @@ This seems to work out, but #TODO investigate optimizing this
 </div>
 <?php if (!empty($pathway->steps)) : ?>
 
-<div class="col-md-8 col-lg-6">
+<div class="col-md-8 col-lg-6 col-xl-4">
 
 <?php foreach ($pathway->steps as $steps) : ?>
 

@@ -49,7 +49,7 @@ class ActivitiesController extends AppController
                                         'Steps.Pathways'])
                             ->where(['Activities.status_id' => 2])
                             ->order(['Activities.created' => 'DESC'])
-                            ->limit(100);
+                            ->limit(30); // including 'Steps.Pathways' appears to be SUPER expensive
         
 		$cats = TableRegistry::getTableLocator()->get('Categories');
         $allcats = $cats->find('all')->contain(['Topics'])->order(['Categories.created' => 'desc']);
@@ -280,6 +280,19 @@ class ActivitiesController extends AppController
         $search = $this->request->getQuery('search');
         $numresults = $activities->count();
         $this->set(compact('activities','search', 'numresults'));
+    }
+    /**
+     * Find method for activities; this is super-duper basic and search deserves better thab
+     *
+     * @param string|null $search search pararmeters to lookup activities.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function linkcheck()
+    {
+        $activities = $this->Activities->find('search', ['search' => $this->request->getQuery()]);
+
+        $this->set(compact('activities'));
     }
     /**
      * Find method for activities; intended for use as an auto-complete

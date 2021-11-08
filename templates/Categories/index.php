@@ -17,8 +17,8 @@ if ($this->Identity->isLoggedIn()) {
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-10 col-lg-8 col-xl-6">
 
-<h1 class="display-4 my-5">All Categories</h1>
-
+<h1 class="display-4 mt-5">All Categories</h1>
+<p class="mb-5">Topics are categorized into the following areas:</p>
 </div>
 </div>
 </div>
@@ -31,7 +31,6 @@ if ($this->Identity->isLoggedIn()) {
 <?php if($category->featured == 1): ?>
 <div class="p-3 my-3 bg-white rounded-lg shadow-sm">
 	<h2 class="">
-		<i class="bi bi-diagram-3-fill"></i>
 		<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
 	</h2>
 	<div class="mb-3 p-2">
