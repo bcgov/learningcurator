@@ -282,6 +282,19 @@ class ActivitiesController extends AppController
         $this->set(compact('activities','search', 'numresults'));
     }
     /**
+     * Find method for activities; this is super-duper basic and search deserves better thab
+     *
+     * @param string|null $search search pararmeters to lookup activities.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function linkcheck()
+    {
+        $activities = $this->Activities->find('search', ['search' => $this->request->getQuery()]);
+
+        $this->set(compact('activities'));
+    }
+    /**
      * Find method for activities; intended for use as an auto-complete
      *  search function for adding activities to steps
      *

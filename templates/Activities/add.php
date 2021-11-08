@@ -28,12 +28,18 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
 <div class="col-md-6">
 
     <div class="bg-white p-3">
-    <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg']); ?>
+    <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg newname']); ?>
     <?php echo $this->Form->control('description', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('hyperlink', ['class' => 'form-control']); ?>
+    <div id="linkcheck"></div>
+    <?php 
+    if ($this->Form->isFieldError('hyperlink')) {
+        echo $this->Form->error('hyperlink', 'This link may already exist in the system.');
+    }
+    ?>
     <?php //echo $this->Form->control('steps._ids', ['class' => 'form-control', 'options' => $steps]); ?>
-    <?php echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
-    <?php echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
+    <?php //echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
+    <?php //echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
     <?php echo $this->Form->control('isbn', ['class' => 'form-control']); ?>
 
     </div>
@@ -69,5 +75,72 @@ echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')
 </div>
 <?= $this->Form->end() ?>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+	crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
+	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
+	crossorigin="anonymous"></script>
+
+<script>
+
+
+$(function () {
+
+    $('#hyperlink').on('change', function(e){
+
+        e.preventDefault();
+
+        let urlto = this.value;
+
+        let checkurl = '/activities/linkcheck?search=' + urlto;
+        $.ajax({
+            type: "GET",
+            url: checkurl,
+            success: function(data)
+            {
+                let foo = $.parseJSON(data);
+                if(foo[0]) {
+                if(foo[0].id) {
+                    $('#linkcheck').html('This link already exists in the system.');
+                }
+                } else {
+                    $('#linkcheck').html('');
+                }
+            },
+            statusCode: 
+            {
+                403: function() {
+                    // oh no
+                }
+            }
+        });
+
+
+        let infourl = '/activities/getinfo?url=' + urlto;
+        $.ajax({
+            type: "GET",
+            url: infourl,
+            success: function(data)
+            {
+                let foo = $.parseJSON(data);
+                $('.newname').val(foo.title);
+                $('.note-editable').html(foo.description);
+            },
+            statusCode: 
+            {
+                403: function() {
+                    // oh no
+                }
+            }
+        });
+    });
+
+});
+
+
+
+
+</script>

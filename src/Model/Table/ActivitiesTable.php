@@ -120,7 +120,7 @@ class ActivitiesTable extends Table
                     'comparison' => 'LIKE',
                     'wildcardAny' => '*',
                     'wildcardOne' => '?',
-                    'fields' => ['name','description'],
+                    'fields' => ['name','description','hyperlink'],
                 ]);
 
     }
@@ -146,7 +146,8 @@ class ActivitiesTable extends Table
         $validator
             ->scalar('hyperlink')
             ->maxLength('hyperlink', 255)
-            ->allowEmptyString('hyperlink');
+            ->allowEmptyString('hyperlink')
+            ->add('hyperlink', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('description')
@@ -222,6 +223,7 @@ class ActivitiesTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
+        $rules->add($rules->isUnique(['hyperlink']), ['errorField' => 'hyperlink']);
         $rules->add($rules->existsIn(['status_id'], 'Statuses'), ['errorField' => 'status_id']);
         $rules->add($rules->existsIn(['ministry_id'], 'Ministries'), ['errorField' => 'ministry_id']);
         $rules->add($rules->existsIn(['approvedby_id'], 'Users'), ['errorField' => 'approvedby_id']);
