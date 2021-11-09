@@ -116,8 +116,8 @@ $this->loadHelper('Authentication.Identity');
 			<a class="dropdown-item" href="/reports/index">Open Reports</a>
 			<a class="dropdown-item" href="/users/index">All Users</a>
 			<a class="dropdown-item" href="/activity-types">Activity Types</a>
-			<!-- <a class="dropdown-item" href="/ministries">All Ministries</a>
-			<a class="dropdown-item" href="/statuses">All Statuses</a>
+			<a class="dropdown-item" href="/ministries">All Ministries</a>
+			<!-- <a class="dropdown-item" href="/statuses">All Statuses</a>
 			<a class="dropdown-item" href="/competencies">All Competencies</a>
 			<a class="dropdown-item" href="/tags">All Tags</a> -->
 		</div>
