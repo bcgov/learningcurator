@@ -32,7 +32,7 @@ jobs:
     env:
       BUILD_ID: ${{ github.event.number }}
       BUILD_NAMESPACE: a58ce1-tools
-      BRANCH: main
+      BRANCH: master
       BUILD_TAG: latest
       APP: learningcurator
       #KC_AUTH_URL: https://dev.oidc.gov.bc.ca/auth/
