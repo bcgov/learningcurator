@@ -72,7 +72,7 @@ $this->loadHelper('Authentication.Identity');
     <?php //echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text', 'label' => 'Tags']); ?>
     <?php //echo $this->Form->control('users._ids', ['class' => 'form-control', 'options' => $users]); ?>
     <?php //echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); ?>
-    <?= $this->Form->button(__('Save Activity'), ['class' => 'btn btn-block btn-success my-3']) ?>
+    <?= $this->Form->button(__('Save Activity'), ['class' => 'btn btn-block btn-success my-3 d-none savebut']) ?>
     <?= $this->Form->end() ?>
 </div>
 </div>
@@ -89,8 +89,6 @@ $this->loadHelper('Authentication.Identity');
 	crossorigin="anonymous"></script>
 
 <script>
-
-
 $(function () {
 
 <?php if($linktoact): ?>
@@ -165,10 +163,6 @@ $.ajax({
     });
 
 });
-
-
-
-
 </script>
 
 

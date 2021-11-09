@@ -161,8 +161,8 @@ This seems to work out, but #TODO investigate optimizing this
 <div class="row justify-content-md-center" id="colorful">
 
 <div class="col-md-12 col-lg-8 col-xl-6">
+<div class="p-3">
 
-<div class="bg-white p-3 my-3 rounded-lg shadow-sm">
 
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="btn-group float-right ml-3">
@@ -179,8 +179,8 @@ This seems to work out, but #TODO investigate optimizing this
 </div> <!-- /.btn-group -->
 <?php endif ?>
 
-<nav aria-label="breadcrumb">
-	<ol class="breadcrumb p-0">
+	<nav aria-label="breadcrumb mt-3">
+	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><?= $this->Html->link($step->pathways[0]->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $step->pathways[0]->topic->categories[0]->id]) ?></li>
 		<li class="breadcrumb-item"><?= $this->Html->link($step->pathways[0]->topic->name, ['controller' => 'Topics', 'action' => 'view', $step->pathways[0]->topic->id]) ?></li>
 		
@@ -191,7 +191,47 @@ This seems to work out, but #TODO investigate optimizing this
 	<?= $this->Html->link($step->pathways[0]->name, ['controller' => 'Pathways', 'action' => '/' . $step->pathways[0]->slug], ['class' => 'font-weight-bold']) ?>
 	</div>
 
-	<div class="row bg-white mt-2">
+	
+
+	<h1 class="mt-3"><?= $step->name ?></h1>
+	<?php if($step->status_id == 1): ?>
+	<span class="badge badge-warning">DRAFT</span>
+	<?php endif ?>
+	<div style="font-size: 120%;">
+		<?= $step->description ?>
+	</div>
+
+
+
+	
+	<div class="my-3">
+		<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
+		<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
+		<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
+		<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
+			<?= $allreadstepcount ?> to read
+		</span>  
+		<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
+			<?= $allwatchstepcount ?> to watch
+		</span>  
+		<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
+			<?= $alllistenstepcount ?> to listen to
+		</span>  
+		<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
+			<?= $allparticipatestepcount ?> to participate in
+		</span>  
+	</div>
+	<div class="progress progress-bar-striped stickyprogress mt-3 rounded-lg" style="background-color: #F1F1F1; border-radius: 0; height: 18px;">
+		<div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">	
+		</div>
+	</div>
+
+
+
+
+
+
+	<div class="row mt-2">
 	<div class="col-2 text-center pt-2">
 	<?php if(!empty($previousid)): ?>
 		<a href="/pathways/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" class="backstep">
@@ -232,7 +272,7 @@ This seems to work out, but #TODO investigate optimizing this
 			<?php if($s->status_id == 2): ?>
 			<?php $c = '' ?>
 			<?php if($s->id == $step->id) $c = 'font-weight-bold' ?>
-			<div class="p-1 my-1 bg-light">
+			<div class="px-3 py-1 bg-white">
 				<a class=" <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
 					<?= $s->name ?> 
 					<i class="bi bi-arrow-right-circle-fill"></i>
@@ -255,51 +295,14 @@ This seems to work out, but #TODO investigate optimizing this
 	<?php endforeach ?>
 	</div>
 
-	<h1 class="mt-3"><?= $step->name ?></h1>
-	<?php if($step->status_id == 1): ?>
-	<span class="badge badge-warning">DRAFT</span>
-	<?php endif ?>
-	<div style="font-size: 120%;">
-		<?= $step->description ?>
-	</div>
-
-
-
-	
-	<div class="my-3">
-		<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
-		<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
-		<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
-		<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $readcolor ?>,1)">
-			<?= $allreadstepcount ?> to read
-		</span>  
-		<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $watchcolor ?>,1)">
-			<?= $allwatchstepcount ?> to watch
-		</span>  
-		<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $listencolor ?>,1)">
-			<?= $alllistenstepcount ?> to listen to
-		</span>  
-		<span class="badge badge-pill badge-light" style="background-color: rgba(<?= $participatecolor ?>,1)">
-			<?= $allparticipatestepcount ?> to participate in
-		</span>  
-	</div>
-	<div class="progress progress-bar-striped stickyprogress mt-3 rounded-lg" style="background-color: #F1F1F1; border-radius: 0; height: 18px;">
-		<div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">	
-		</div>
-	</div>
-
-
-
-
-
-
 
 
 
 </div>
 </div>
 </div>
-<div class="container-fluid bg-white">
+</div>
+<div class="container-fluid bg-white pt-3">
 <div class="row justify-content-md-center">
 <div class="col-md-3 col-lg-2 col-xl-2 order-md-last">
 <?php if(in_array($uid,$usersonthispathway)): ?>

@@ -67,7 +67,7 @@ This seems to work out, but #TODO investigate optimizing this
 
 	<!-- totals below updated via JS -->
 
-	<div class="py-3" style="background-color: rgba(255,255,255,.5)">
+	<div class="py-3">
 	<?= $pathway->objective ?> 
 	
 	<div class="my-2"><em>Estimated time for this pathway: <?= h($pathway->estimated_time) ?></em></div>
@@ -79,7 +79,7 @@ This seems to work out, but #TODO investigate optimizing this
 	<span class="badge badge-light listentotal"></span>  
 	<span class="badge badge-light participatetotal"></span>  
 	</div>
-	<div class="text-muted p-2 mt-2" style="background-color: rgba(255,255,255,.2)">
+	<div class="text-muted p-2 mt-2">
 		Added on 
 		<?= $this->Time->format($pathway->created,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
 		<?php if($role == 'curator' || $role == 'superuser'): ?>
@@ -274,7 +274,7 @@ if($stepclaimcount > 0) {
 			</span>  
 		</div>
 		
-	<div class="progress progress-bar-striped mb-3" style="background-color: #F1F1F1; height: 26px;">
+	<div class="progress progress-bar-striped mb-3" style="height: 26px;">
 	  <div class="progress-bar" role="progressbar" style="background-color: rgba(88,174,36,.8); color: #FFF; width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">
 		<?= $steppercent ?>% done
 	  </div>

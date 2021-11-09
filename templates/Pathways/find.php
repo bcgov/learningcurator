@@ -15,6 +15,7 @@
 <?php foreach($path->steps as $step): ?>
 <a class="stepid" 
     data-stepid="<?= $step->id ?>" 
+    data-steptit="<?= $path->name ?> - <?= $step->name ?>" 
     title="<?= strip_tags($step->description) ?>"
     href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
         <?= $step->name ?>
@@ -27,11 +28,13 @@
 $(function () {
     $('.stepid').on('click', function(e){
         e.preventDefault();
+        let stepid = $(this).data('stepid');
+        let savetext = 'Save this activity to ';
+        savetext += $(this).data('steptit');
         $('.stepid').removeClass('chosenstep');
-        var stepid = $(this).data('stepid');
+        $('.savebut').removeClass('d-none').html(savetext);
         $('#step_id').val(stepid);
         $(this).addClass('chosenstep');
-        
     });
 });
 </script>
