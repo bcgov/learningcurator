@@ -19,7 +19,8 @@
 
     <?php foreach ($ministries as $ministry): ?>
     <div class="my-3 p-3 bg-white rounded-lg shadow-sm">
-    <?= $this->Html->link($ministry->name, ['action' => 'view', $ministry->id]) ?>
+    <?= $this->Html->link(h($ministry->name), ['action' => 'view', $ministry->id]) ?> - 
+    <span class="text-uppercase"><?= h($ministry->slug) ?></span>
     </div>
     <?php endforeach; ?>
      
