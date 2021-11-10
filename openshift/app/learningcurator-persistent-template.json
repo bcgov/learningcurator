@@ -147,18 +147,6 @@
                   "name": "${APP_NAME}",
                   "restartPolicy": "Always",
                   "imagePullPolicy": "Always",
-                  "livenessProbe": {
-                    "httpGet": {
-                      "path": "https://${SITE_URL}/admin/cron.php?password=%2B%3DCRONpa33w0rd",
-                      "port": 8080,
-                      "scheme": "HTTP"
-                    },
-                    "initialDelaySeconds": 90,
-                    "periodSeconds": 60,
-                    "timeoutSeconds": 180,
-                    "successThreshold": 1,
-                    "failureThreshold": 3
-                  },
                   "ports": [
                     {
                       "containerPort": 8080
