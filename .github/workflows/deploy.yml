@@ -119,14 +119,15 @@ jobs:
                 -p SITE_NAME=LearningCurator \
                 -p DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
                 -p GIT_PROJECT=learningcurator \
-                -p LEARNINGCURATOR_DATA_PATH="/var/www/html" \
-                -p LEARNINGCURATOR_DATA_MOUNT_PATH="/var/www/html" \
+                -p LEARNINGCURATOR_DATA_PATH="/mnt" \
+                -p LEARNINGCURATOR_DATA_MOUNT_PATH="/mnt" \
                 -p BUILD_NAMESPACE="a58ce1-tools" \
                 -p IMAGE_STREAM_TAG="learningcurator:latest" \
                 -p GIT_URL="https://github.com/bcgov/learningcurator.git" \
                 -p GIT_TAG=openshift \
                 -p GITHUB_AUTH_TOKEN="${{ secrets.AUTH_TOKEN }}" | \
           oc -n ${NAMESPACE} apply -f -
+          sleep 30
           oc rollout latest dc/learningcurator -n ${NAMESPACE}
           # Check deployment rollout status every 10 seconds (max 10 minutes) until complete.
           ATTEMPTS=0
