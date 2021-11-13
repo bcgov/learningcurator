@@ -290,8 +290,8 @@ class ActivitiesController extends AppController
      */
     public function linkcheck()
     {
-        $activities = $this->Activities->find('search', ['search' => $this->request->getQuery()]);
-
+        $activities = $this->Activities->find('search', ['search' => $this->request->getQuery()])->firstOrFail();
+        
         $this->set(compact('activities'));
     }
     /**
@@ -380,10 +380,17 @@ class ActivitiesController extends AppController
                     echo '' . $activity->id;
                     exit;
                 }
-                $return = '/steps/edit/' . $this->request->getData()['step_id'];
-                return $this->redirect($return);
+                $actstep = array(
+                    'activityid' => $activity->id,
+                    'activitystepid' => $activitiesStep->id,
+                    'stepid' => $this->request->getData()['step_id']
+                );
+                echo json_encode($actstep);
+                exit;
+                //$return = '/steps/edit/' . $this->request->getData()['step_id'];
+                //return $this->redirect($return);
             }
-            echo __('The activity could not be saved. Please, try again.');
+  
         }
         $linktoact = $this->request->getQuery('url');
         $this->set(compact('linktoact'));

@@ -5,45 +5,56 @@ $this->loadHelper('Authentication.Identity');
 <div class="row justify-content-md-center" id="colorful">
 <div class="col-md-6">
 
-<h1 class="display-4 mt-5"><?= __('Add an Activity') ?></h1>
-<p class="">You can add a new activity directly to a pathway step through this form.</p>
-<p class="mb-5">EXPERIMENTAL: 
-    <a href="javascript: (() => {const destination = 'https://learningcurator.apps.silver.devops.gov.bc.ca/activities/addtostep?url=' + window.location.href;window.open(destination);})();">
-        Add to Curator
-    </a> (Drag the bookmarklet to your bookmarks bar, then click on it from any website that you wish to add to a step)</p>
-</div>
-</div>
-</div>
 
-<div class="container-fluid">
-<div class="row justify-content-md-center">
-<div class="col-md-12 col-lg-6">
-<div class="mt-5 p-3 bg-white shadow-sm">
-<div class="my-3 rounded-lg bg-white">
-    <div class="mb-3 font-weight-bold">Start by finding a pathway step to add the activity to:</div> 
-    <form method="get" id="pathfind" action="/pathways/find" class="form-inline">
+<div class="mt-3 p-3">
+<div class="p-5 my-3 rounded-lg bg-white shadow-lg">
+    
+    <div id="linkdeets"></div>
+    <div class="my-3 font-weight-bold">Start by finding a pathway step to add the activity to:</div> 
+    <form method="get" id="pathfind" action="/pathways/find" class="form-inline mb-2">
         <label for="q">Find a pathway:</label>
         <input id="q" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
         <button class="btn btn-success" type="submit">Search</button>
     </form>
     <div id="results"></div>
-    </div>
-    <div class="addform">
+    
+    <style>.opacity-25 { opacity: 0.25; }</style>
+    <div class="addform mt-3 opacity-25">
     <div class="mb-3 font-weight-bold">Now fill in the activity details:</div>
-    <?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'addtostep']]) ?>
+    <?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'addtostep'], 'id' => 'addacttostep']) ?>
     <?php 
     echo $this->Form->hidden('createdby_id', ['value' => $this->Identity->get('id'), 'class' => 'form-control']);
     echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'),'class' => 'form-control']);
     echo $this->Form->hidden('step_id', ['value' => 0,'id' => 'step_id']);
     ?>
-    <label>Activity Type
-    <select name="activity_types_id" id="activity_types_id" class="form-control">
-        <option value="1">Watch</option>
-        <option value="2" selected>Read</option>
-        <option value="3">Listen</option>
-        <option value="4">Participate</option>
-    </select>
-    </label>
+    <div class="row my-3 text-center" id="acttypes">
+    <div class="col">
+        <a href="#watch" data-id="1" style="background-color: rgba(193,129,183,.2);">
+            <i class="bi bi-camera-video-fill"></i><br>
+            Watch
+        </a>
+    </div>
+    <div class="col">
+        <a href="#read" data-id="2" style="background-color: rgba(249,145,80,.2);">
+            <i class="bi bi-book-fill"></i><br>
+            Read
+        </a>
+    </div>
+    <div class="col">
+        <a href="#listen" data-id="3" style="background-color: rgba(244,105,115,.2);">
+            <i class="bi bi-headphones"></i><br>
+            Listen
+        </a>
+    </div>
+    <div class="col">
+        <a href="#participate" data-id="4" style="background-color: rgba(255,218,96,.2);">
+            <i class="bi bi-people-fill"></i><br>
+            Participate
+        </a>
+    </div>
+    </div>
+    <input type="hidden" name="activity_types_id" id="activity_types_id" value="2">
+    
     <label>Estimated Time
     <select name="estimated_time" id="estimated_time_id" class="form-control">
     <option>Under 5 mins</option>
@@ -74,8 +85,33 @@ $this->loadHelper('Authentication.Identity');
     <?php //echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); ?>
     <?= $this->Form->button(__('Save Activity'), ['class' => 'btn btn-block btn-success my-3 d-none savebut']) ?>
     <?= $this->Form->end() ?>
+    
+    <div id="scontext" class="opacity-25">
+    <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'edit/'], 'class' => 'contextform']) ?>
+    <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => 1, 'id' => 'actid']) ?>
+    <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => 1]) ?>
+    <?= $this->Form->control('stepcontext',['class' => 'form-control', 'label' => 'Why are you adding this here?']) ?>
+    <div><label>Is this activity required for the step?
+    <?= $this->Form->checkbox('required',['label' => 'Is this activity required for the step?']) ?>
+    </label></div>
+    <button class="btn btn-success addcon d-none">Add context to the activity</button>
+    <?= $this->Form->end() ?>
+    </div>
 </div>
 </div>
+<div>
+        <strong>Bookmarklet:</strong><br>
+        <a class="btn btn-dark" href="javascript: (() => {const destination = 'https://learningcurator.apps.silver.devops.gov.bc.ca/activities/addtostep?url=' + window.location.href;window.open(destination);})();">
+            Add to Curator
+        </a>
+    </div>
+    <div class="">A "bookmarklet" is a special type of bookmark that allows you to take special action when you click it. 
+        In this case, if you click the "Add to Curator" bookmarklet while visiting any website, you will open up this
+        "Add to Step" form, with the link to that page pre-populated, saving you from having to copy the URL and paste 
+        it here manually; furthermore, after you add a link to this page, the system will automatically reach out to that
+        page and attempt to bring in its title and description (based on its meta tags).
+
+    </div>
 </div>
 </div>
 </div>
@@ -93,25 +129,66 @@ $(function () {
 
 <?php if($linktoact): ?>
 
-let geturl = '/activities/getinfo?url=<?= urlencode($linktoact) ?>';
-
+let urlcheck = '/activities/linkcheck?search=<?= urlencode($linktoact) ?>';
 $.ajax({
     type: "GET",
-    url: geturl,
+    url: urlcheck,
     success: function(data)
     {
-        let foo = $.parseJSON(data);
-        $('.newname').val(foo.title);
-        $('.note-editable').html(foo.description);
+        console.log('ALREADY EXISTIS');
+        $('.addform').addClass('d-none');
     },
     statusCode: 
     {
-        403: function() {
-            // oh no
+        // I don't really want to depend on this behavior to set the UI
+        // I am not sure why it's returning 404 and not 500 like it 
+        // does when you run the URL in the browser...
+        // #TODO fix this to be more robust; just because it works here,
+        // this likely isn't sustainable.
+        404: function() {
+            console.log('GOOD TO GO');
+            let geturl = '/activities/getinfo?url=<?= urlencode($linktoact) ?>';
+            $.ajax({
+                type: "GET",
+                url: geturl,
+                success: function(data)
+                {
+                    let deets = $.parseJSON(data);
+                    $('.newname').val(deets.title);
+                    let descr = '';
+                    if(deets.description == '') {
+                        descr = '<em>No description found.</em>';
+                    } else {
+                        descr = deets.description;
+                    }
+                    $('.note-editable').html(descr);
+                    $('#linkdeets').html('<strong>Adding:</strong><br><div class="p-3 bg-light">' + deets.title + '<br>' + descr + '<br>' + '<?= urldecode($linktoact) ?></div>');
+                },
+                statusCode: 
+                {
+                    403: function() {
+                        // oh no
+                    }
+                }
+            });
+
+        },
+        500: function() {
+            console.log('GOOD TO GO');
         }
     }
 });
+
+
 <?php endif ?>
+
+    $('#acttypes a').on('click', function(e){
+        e.preventDefault();
+        let actid = $(this).data('id');
+        $('#activity_types_id').val(actid);
+        $(this).css('background-color','rgba(0,0,0,.5)')
+        $(this).css('color','#FFF')
+    });
 
     $('#pathfind').on('submit', function(e){
 
@@ -135,7 +212,30 @@ $.ajax({
 		});
     });
 
+    $('#addacttostep').on('submit', function(e){
 
+    e.preventDefault();
+    let form = $(this);
+    let url = $(this).attr('action');
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: form.serialize(),
+        success: function(data)
+        {
+            console.log(data);
+            let deets = $.parseJSON(data);
+            console.log(deets.activitystepid);
+            $('.contextform').attr('action', '/activities-steps/edit/' + deets.activitystepid);
+            $('#actid').val(deets.activityid);
+            $('#step-id').val(deets.stepid);
+            $('#scontext').removeClass('opacity-25');
+            $('.addcon').removeClass('d-none');
+            $('.savebut').remove();
+        }
+    });
+    });
 
     $('#hyperlink').on('change', function(e){
 
@@ -151,7 +251,13 @@ $.ajax({
             {
                 let foo = $.parseJSON(data);
                 $('.newname').val(foo.title);
-                $('.note-editable').html(foo.description);
+                let descr = '';
+                if(deets.description == '') {
+                    descr = '<em>No description found.</em>';
+                } else {
+                    descr = deets.description;
+                }
+                $('.note-editable').html(descr);
             },
             statusCode: 
             {

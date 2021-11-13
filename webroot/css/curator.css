@@ -159,6 +159,23 @@ video {
 	padding-top: 8px;
 	width: 100px;
 }
+
+
+
+
+
+#acttypes a {
+	border-radius: .5em;
+	display: block;
+	padding: 1em;
+}
+
+
+
+
+
+
+
 .breadcrumb {
 	background-color: #FFF;
 }
