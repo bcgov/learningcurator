@@ -352,48 +352,58 @@ class ActivitiesController extends AppController
     {
 
 	    $user = $this->request->getAttribute('authentication')->getIdentity();
-        $activity = $this->Activities->newEmptyEntity();
-
-	    if ($this->request->is('post')) {
-
-            //echo '<pre>'; print_r($this->request->getData()); exit;
-
-            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
-            $activity->createdby_id = $user->id;
-            $activity->modifiedby_id = $user->id;
-            $activity->approvedby_id = $user->id;
-            $activity->status_id = 2;
-
-            $sluggedTitle = Text::slug($activity->name);
-            // trim slug to maximum length defined in schema
-            $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
-
-            if ($this->Activities->save($activity)) {
-
-                $asteptable = TableRegistry::getTableLocator()->get('ActivitiesSteps');
-                $activitiesStep = $asteptable->newEmptyEntity();
-                $activitiesStep->step_id = $this->request->getData()['step_id'];
-                $activitiesStep->activity_id = $activity->id;
-
-                if (!$asteptable->save($activitiesStep)) {
-                    echo 'Cannot add to step! Contact an admin. Sorry :)';
-                    echo '' . $activity->id;
-                    exit;
-                }
-                $actstep = array(
-                    'activityid' => $activity->id,
-                    'activitystepid' => $activitiesStep->id,
-                    'stepid' => $this->request->getData()['step_id']
-                );
-                echo json_encode($actstep);
-                exit;
-                //$return = '/steps/edit/' . $this->request->getData()['step_id'];
-                //return $this->redirect($return);
-            }
-  
-        }
         $linktoact = $this->request->getQuery('url');
-        $this->set(compact('linktoact'));
+        if($linktoact) {
+            // If it exists return the one we've already got.
+            $activity = $this->Activities->find()->contain(['ActivityTypes','Tags','Steps.Pathways'])->where(function ($exp, $query) use($linktoact) {
+                return $exp->like('hyperlink', '%'.$linktoact.'%');
+            })->toList();
+            $this->set(compact('activity','linktoact'));
+
+        } else {
+
+            $activity = $this->Activities->newEmptyEntity();
+
+            if ($this->request->is('post')) {
+
+                //echo '<pre>'; print_r($this->request->getData()); exit;
+
+                $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+                $activity->createdby_id = $user->id;
+                $activity->modifiedby_id = $user->id;
+                $activity->approvedby_id = $user->id;
+                $activity->status_id = 2;
+
+                $sluggedTitle = Text::slug($activity->name);
+                // trim slug to maximum length defined in schema
+                $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
+
+                if ($this->Activities->save($activity)) {
+
+                    $asteptable = TableRegistry::getTableLocator()->get('ActivitiesSteps');
+                    $activitiesStep = $asteptable->newEmptyEntity();
+                    $activitiesStep->step_id = $this->request->getData()['step_id'];
+                    $activitiesStep->activity_id = $activity->id;
+
+                    if (!$asteptable->save($activitiesStep)) {
+                        echo 'Cannot add to step! Contact an admin. Sorry :)';
+                        echo '' . $activity->id;
+                        exit;
+                    }
+                    $actstep = array(
+                        'activityid' => $activity->id,
+                        'activitystepid' => $activitiesStep->id,
+                        'stepid' => $this->request->getData()['step_id']
+                    );
+                    echo json_encode($actstep);
+                    exit;
+                    //$return = '/steps/edit/' . $this->request->getData()['step_id'];
+                    //return $this->redirect($return);
+                }
+    
+            } // if POST method used
+        } // endif does the link alreayd exist?
+
     
     }
     /**

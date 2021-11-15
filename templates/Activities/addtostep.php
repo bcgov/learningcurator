@@ -1,5 +1,11 @@
 <?php
 $this->loadHelper('Authentication.Identity');
+$uid = '';
+$role = '';
+if ($this->Identity->isLoggedIn()) {
+	$role = $this->Identity->get('role');
+	$uid = $this->Identity->get('id');
+}
 ?>
 <div class="container-fluid">
 <div class="row justify-content-md-center" id="colorful">
@@ -8,17 +14,120 @@ $this->loadHelper('Authentication.Identity');
 
 <div class="mt-3 p-3">
 <div class="p-5 my-3 rounded-lg bg-white shadow-lg">
+
+
+
+
+
+
+    <?php if(!empty($activity)): ?>
+
+        <div>This activity already exists in the Curator! Let's add that one to your step.</div>
+
+        <div class="bg-white rounded-lg">
+        <div class="p-3 my-3 rounded-lg activity" 
+		    style="background-color: rgba(<?= $activity[0]->activity_type->color ?>,.2);">
+
+            <h3 class="my-3">
+                <a href="/activities/view/<?= $activity[0]->id ?>"><?= $activity[0]->name ?></a>
+                <!--<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity[0]->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
+            </h3>
+            <div class="p-3" style="background: rgba(255,255,255,.3);">
+                <div class="mb-3">
+                <span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity[0]->estimated_time ?> to complete">
+                    <i class="bi bi-clock-history"></i>
+                    <?= h($activity[0]->estimated_time) ?>
+                    <?php //echo $this->Html->link($activity[0]->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity[0]->estimated_time]) ?>
+                </span> 
+                <?php foreach($activity[0]->tags as $tag): ?>
+                <a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
+                <?php endforeach ?>
+                </div>
+
+                <?= $activity[0]->description ?>
+                <?php if(!empty($activity[0]->isbn)): ?>
+                <div class="bg-white p-2 isbn">
+                    ISBN: <?= $activity[0]->isbn ?>
+                </div>
+                <?php endif ?>
+                <?php if(!empty($activity[0]->_joinData->stepcontext)): ?>
+                <div class="alert alert-light text-dark mt-3 shadow-sm">
+                    <i class="bi bi-person-badge-fill"></i>
+                    Curator says:<br>
+                    <?= $activity[0]->_joinData->stepcontext ?>
+                </div>
+                <?php endif ?>
+                <div class="text-muted p-2 mt-2" style="background-color: rgba(255,255,255,.2)">
+                    Added on 
+                    <?= $this->Time->format($activity[0]->created,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+                    <?php if($role == 'curator' || $role == 'superuser'): ?>
+                    by <a href="/users/view/<?= $activity[0]->createdby_id ?>">curator</a>
+                    <?php endif ?>
+                </div>
+                <div class="bg-white p-3">
+                    Included in:
+                    <?php foreach($activity[0]->steps as $step): ?>
+                    <?php if(!empty($step->pathways[0]->slug)): ?>
+                        <div>
+                            <a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
+                                <?= $step->pathways[0]->name ?> - <?= $step->name ?>
+                            </a>
+                        </div>
+                    <?php else: ?>
+                        <div><em>Not currently included on a pathway&hellip;</em></div>
+                    <?php endif ?>
+                    <?php endforeach ?>
+                </div>
+            </div>
+            <a target="_blank" 
+                rel="noopener" 
+                data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
+                href="<?= $activity[0]->hyperlink ?>" 
+                style="background-color: rgba(<?= $activity[0]->activity_type->color ?>,1); color: #000; font-weight: bold;" 
+                class="btn btn-block my-3 text-uppercase btn-lg">
+                    <?= $activity[0]->activity_type->name ?>
+                    <i class="bi bi-box-arrow-up-right"></i>
+            </a>
+        </div>
+        </div>
+
+        <div class="my-3 font-weight-bold">Find a pathway step to add the activity to:</div> 
+        <form method="get" id="pathfind" action="/pathways/find" class="form-inline mb-2">
+            <label for="q">Find a pathway:</label>
+            <input id="q" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+            <button class="btn btn-success" type="submit">Search</button>
+        </form>
+        <div id="results"></div>
+        <div class="bg-light p-3 my-3">
+        <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'disabled' => 'disabled']]) ?>
+        <?php //$this->Form->control('pathway_id',['type' => 'hidden', 'value' => '' ]) ?>
+        <?= $this->Form->hidden('step_id', ['value' => 0,'id' => 'step_id']) ?>
+        <?= $this->Form->hidden('activity_id',['type' => 'hidden', 'value' => $activity[0]->id]) ?>
+        <?= $this->Form->control('stepcontext', ['class' => 'form-control summernote', 'label' => 'Set Context for this step']); ?>
+        <div><label>Is this activity required for the step?
+        <?= $this->Form->checkbox('required',['label' => 'Is this activity required for the step?']) ?>
+        </label></div>
+        <?= $this->Form->button(__('Assign to step'),['class'=>'btn btn-sm btn-success btn-block']) ?>
+        <?= $this->Form->end() ?>
+        </div>
+    <?php else: ?>
     
-    <div id="linkdeets"></div>
-    <div class="my-3 font-weight-bold">Start by finding a pathway step to add the activity to:</div> 
+    <div id="linkdeets">
+        <strong>Hang on&hellip;</strong>
+        <div id="loading">
+        
+            <div class="bg-light p-3">Hang on while I fetch the details of this link for you.</div>
+        </div>
+    </div>
+
+    <div class="my-3 font-weight-bold">Find a pathway step to add the activity to:</div> 
     <form method="get" id="pathfind" action="/pathways/find" class="form-inline mb-2">
         <label for="q">Find a pathway:</label>
         <input id="q" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
         <button class="btn btn-success" type="submit">Search</button>
     </form>
     <div id="results"></div>
-    
-    <style>.opacity-25 { opacity: 0.25; }</style>
+
     <div class="addform mt-3 opacity-25">
     <div class="mb-3 font-weight-bold">Now fill in the activity details:</div>
     <?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'addtostep'], 'id' => 'addacttostep']) ?>
@@ -97,6 +206,8 @@ $this->loadHelper('Authentication.Identity');
     <button class="btn btn-success addcon d-none">Add context to the activity</button>
     <?= $this->Form->end() ?>
     </div>
+    <?php endif ?>
+
 </div>
 </div>
 <div>
@@ -126,6 +237,9 @@ $this->loadHelper('Authentication.Identity');
 
 <script>
 $(function () {
+
+$("#loading").fadeOut(800).fadeIn(800).fadeOut(800).fadeIn(800).fadeOut(800).fadeIn(800);
+//$("#loading").delay(5000).html('<div><strong>There seems to be something wrong. Please proceed and fill in the details yourself.</strong></div>');
 
 <?php if($linktoact): ?>
 
