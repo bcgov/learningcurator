@@ -243,55 +243,31 @@ $("#loading").fadeOut(800).fadeIn(800).fadeOut(800).fadeIn(800).fadeOut(800).fad
 
 <?php if($linktoact): ?>
 
-let urlcheck = '/activities/linkcheck?search=<?= urlencode($linktoact) ?>';
-$.ajax({
-    type: "GET",
-    url: urlcheck,
-    success: function(data)
-    {
-        console.log('ALREADY EXISTIS');
-        $('.addform').addClass('d-none');
-    },
-    statusCode: 
-    {
-        // I don't really want to depend on this behavior to set the UI
-        // I am not sure why it's returning 404 and not 500 like it 
-        // does when you run the URL in the browser...
-        // #TODO fix this to be more robust; just because it works here,
-        // this likely isn't sustainable.
-        404: function() {
-            console.log('GOOD TO GO');
-            let geturl = '/activities/getinfo?url=<?= urlencode($linktoact) ?>';
-            $.ajax({
-                type: "GET",
-                url: geturl,
-                success: function(data)
-                {
-                    let deets = $.parseJSON(data);
-                    $('.newname').val(deets.title);
-                    let descr = '';
-                    if(deets.description == '') {
-                        descr = '<em>No description found.</em>';
-                    } else {
-                        descr = deets.description;
-                    }
-                    $('.note-editable').html(descr);
-                    $('#linkdeets').html('<strong>Adding:</strong><br><div class="p-3 bg-light">' + deets.title + '<br>' + descr + '<br>' + '<?= urldecode($linktoact) ?></div>');
-                },
-                statusCode: 
-                {
-                    403: function() {
-                        // oh no
-                    }
-                }
-            });
-
+    console.log('GOOD TO GO');
+    let geturl = '/activities/getinfo?url=<?= urlencode($linktoact) ?>';
+    $.ajax({
+        type: "GET",
+        url: geturl,
+        success: function(data)
+        {
+            let deets = $.parseJSON(data);
+            $('.newname').val(deets.title);
+            let descr = '';
+            if(deets.description == '') {
+                descr = '<em>No description found.</em>';
+            } else {
+                descr = deets.description;
+            }
+            $('.note-editable').html(descr);
+            $('#linkdeets').html('<strong>Adding:</strong><br><div class="p-3 bg-light">' + deets.title + '<br>' + descr + '<br>' + '<?= urldecode($linktoact) ?></div>');
         },
-        500: function() {
-            console.log('GOOD TO GO');
+        statusCode: 
+        {
+            403: function() {
+                // oh no
+            }
         }
-    }
-});
+    });
 
 
 <?php endif ?>
@@ -328,27 +304,27 @@ $.ajax({
 
     $('#addacttostep').on('submit', function(e){
 
-    e.preventDefault();
-    let form = $(this);
-    let url = $(this).attr('action');
+        e.preventDefault();
+        let form = $(this);
+        let url = $(this).attr('action');
 
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: form.serialize(),
-        success: function(data)
-        {
-            console.log(data);
-            let deets = $.parseJSON(data);
-            console.log(deets.activitystepid);
-            $('.contextform').attr('action', '/activities-steps/edit/' + deets.activitystepid);
-            $('#actid').val(deets.activityid);
-            $('#step-id').val(deets.stepid);
-            $('#scontext').removeClass('opacity-25');
-            $('.addcon').removeClass('d-none');
-            $('.savebut').remove();
-        }
-    });
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function(data)
+            {
+                console.log(data);
+                let deets = $.parseJSON(data);
+                console.log(deets.activitystepid);
+                $('.contextform').attr('action', '/activities-steps/edit/' + deets.activitystepid);
+                $('#actid').val(deets.activityid);
+                $('#step-id').val(deets.stepid);
+                $('#scontext').removeClass('opacity-25');
+                $('.addcon').removeClass('d-none');
+                $('.savebut').remove();
+            }
+        });
     });
 
     $('#hyperlink').on('change', function(e){
@@ -363,8 +339,8 @@ $.ajax({
             url: url,
             success: function(data)
             {
-                let foo = $.parseJSON(data);
-                $('.newname').val(foo.title);
+                let deets = $.parseJSON(data);
+                $('.newname').val(deets.title);
                 let descr = '';
                 if(deets.description == '') {
                     descr = '<em>No description found.</em>';

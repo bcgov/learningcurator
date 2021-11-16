@@ -353,7 +353,14 @@ class ActivitiesController extends AppController
 
 	    $user = $this->request->getAttribute('authentication')->getIdentity();
         $linktoact = $this->request->getQuery('url');
+        $pathway_id = $this->request->getQuery('pathway_id');
+
+        
+        if($pathway_id) {
+            
+        }
         if($linktoact) {
+
             // If it exists return the one we've already got.
             $activity = $this->Activities->find()->contain(['ActivityTypes','Tags','Steps.Pathways'])->where(function ($exp, $query) use($linktoact) {
                 return $exp->like('hyperlink', '%'.$linktoact.'%');

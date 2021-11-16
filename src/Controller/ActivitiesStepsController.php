@@ -63,8 +63,8 @@ class ActivitiesStepsController extends AppController
             $activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
             if ($this->ActivitiesSteps->save($activitiesStep)) {
                 //$this->Flash->success(__('The activities step has been saved.'));
-
-                return $this->redirect($this->referer());
+                $go = '/steps/edit/' . $activitiesStep->step_id;
+                return $this->redirect($go);
             }
             print __('The activities step could not be saved. Please, try again.');
         }
