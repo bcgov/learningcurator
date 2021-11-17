@@ -33,7 +33,7 @@ class MinistriesController extends AppController
     public function view($id = null)
     {
         $ministry = $this->Ministries->get($id, [
-            'contain' => ['Activities', 'Pathways'],
+            'contain' => ['Activities', 'Pathways', 'Users'],
         ]);
 
         $this->set(compact('ministry'));

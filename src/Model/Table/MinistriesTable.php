@@ -50,6 +50,10 @@ class MinistriesTable extends Table
         $this->hasMany('Pathways', [
             'foreignKey' => 'ministry_id',
         ]);
+        $this->hasMany('CakeDC/Users.Users', [
+            'foreignKey' => 'ministry_id',
+        ]);
+
         
     }
 
