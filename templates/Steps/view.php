@@ -326,9 +326,9 @@ This seems to work out, but #TODO investigate optimizing this
 <?php if (!empty($step->activities)) : ?>
 
 <?php foreach ($requiredacts as $activity) : ?>
-	<div class="bg-white rounded-lg">
-<div class="p-3 my-3 rounded-lg activity" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
+	<div class="activity rounded-lg" style="background-color: #FFF !important;">
+	<div class="p-3 my-3 rounded-lg activity" 
+		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); color: #111;">
 
 	<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
 		<a class="btn btn-primary" 
@@ -358,10 +358,10 @@ This seems to work out, but #TODO investigate optimizing this
 	<?php //echo $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-primary', 'confirm' => __('Really delete?')]) ?>
 	<?php endif; // claimed or not ?>
 
-	<h3 class="my-3">
+	<h2 class="my-3">
 		<a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
 		<!--<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
-	</h3>
+	</h2>
 	<div class="p-3" style="background: rgba(255,255,255,.3);">
 		<div class="mb-3">
 		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
