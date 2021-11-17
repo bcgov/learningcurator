@@ -164,20 +164,20 @@ This seems to work out, but #TODO investigate optimizing this
 <div class="p-3">
 
 
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="btn-group float-right ml-3">
-<?= $this->Html->link(__('Edit'), 
-						['controller' => 'Steps', 'action' => 'edit', $step->id], 
-						['class' => 'btn btn-light btn-sm']); 
-?>
-<?= $this->Form->postLink(__('Delete'), 
-							['action' => 'delete', $step->id],
-							['class' => 'btn btn-light btn-sm', 
-								'confirm' => __('Are you sure you want to delete # {0}?', $step->name)
-						]);
- ?>
-</div> <!-- /.btn-group -->
-<?php endif ?>
+	<?php if($role == 'curator' || $role == 'superuser'): ?>
+	<div class="btn-group float-right ml-3">
+	<?= $this->Html->link(__('Edit'), 
+							['controller' => 'Steps', 'action' => 'edit', $step->id], 
+							['class' => 'btn btn-light btn-sm']); 
+	?>
+	<?= $this->Form->postLink(__('Delete'), 
+								['action' => 'delete', $step->id],
+								['class' => 'btn btn-light btn-sm', 
+									'confirm' => __('Are you sure you want to delete # {0}?', $step->name)
+							]);
+	?>
+	</div> <!-- /.btn-group -->
+	<?php endif ?>
 
 	<nav aria-label="breadcrumb mt-3">
 	<ol class="breadcrumb">
@@ -302,7 +302,7 @@ This seems to work out, but #TODO investigate optimizing this
 </div>
 </div>
 </div>
-<div class="container-fluid bg-white pt-3">
+<div class="container-fluid pt-3">
 <div class="row justify-content-md-center">
 <div class="col-md-3 col-lg-2 col-xl-2 order-md-last">
 <?php if(in_array($uid,$usersonthispathway)): ?>
