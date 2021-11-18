@@ -7,7 +7,7 @@
  */
 return [
     'App' => [
-        'fullBaseUrl' => LINK_TO_NAMESPACE_URL_NO_TRAILING_SLASH,
+        'fullBaseUrl' => 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca',
     ],
     /*
      * Debug Level:
