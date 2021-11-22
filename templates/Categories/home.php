@@ -17,8 +17,9 @@ theme or community. Here you’ll find recommendations for resources to watch, r
 listen to, and courses that will help you reach your goals. Pathways are created by 
 BC Public Service learning curators.</p>
 <p style="font-size: 1.5rem"><strong>What do you want to learn today?</strong> </p>
+
 <a href="/categories/index" class="btn btn-primary btn-lg" role="button">All Categories</a>
-<a href="/profile/pathways" class="btn btn-success btn-lg" role="button">
+<a href="/profile/pathways" class="btn btn-dark btn-lg" role="button">
 	<i class="bi bi-person-circle"></i>
 	Your Profile
 </a>
