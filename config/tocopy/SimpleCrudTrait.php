@@ -141,6 +141,9 @@ trait SimpleCrudTrait
      */
     public function edit($id = null)
     {
+        $mins = TableRegistry::getTableLocator()->get('Ministries');
+        $ministries = $mins->find('list');
+
         $table = $this->loadModel();
         $tableAlias = $table->getAlias();
         $entity = $table->get($id, [
@@ -148,6 +151,7 @@ trait SimpleCrudTrait
         ]);
         $this->set($tableAlias, $entity);
         $this->set('tableAlias', $tableAlias);
+        $this->set('ministries', $ministries);
         $this->set('_serialize', [$tableAlias, 'tableAlias']);
         if (!$this->getRequest()->is(['patch', 'post', 'put'])) {
             return;
