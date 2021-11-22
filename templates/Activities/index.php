@@ -44,7 +44,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php foreach ($activities as $activity) : ?>
 	
-	<div class=" activity bg-white">
+	<div class="activity bg-white">
 	<div class="p-3 my-3 rounded-lg" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
 
 	<h3 class="my-3">

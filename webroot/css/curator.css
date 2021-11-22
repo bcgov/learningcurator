@@ -20,13 +20,15 @@
 	}
 	.bg-white,
 	.breadcrumb,
-	.badge-light {
+	.badge-light,
+	.btn-light {
 		background-color: #333 !important;
 	}
 	.bg-light {
 		background-color: #111 !important;
 	}
-	.badge-light {
+	.badge-light,
+	.btn-light {
 		color: #FFF !important;
 	}
 	#colorful {
@@ -55,6 +57,9 @@
 	}
 	.navbar a:focus {
 		color: #FFF !important;
+	}
+	.activity h2 a {
+		color: #111 !important;
 	}
 
 } */
@@ -128,6 +133,9 @@ video {
  * #TODO add in accessible colors for other button types like  "success"
  */
 
+.opacity-25 { 
+	opacity: 0.25; 
+}
 /*
  * This is the main header area with the activity ring logo as the background;
  * NOTE that this is altered slightly by the desktop breakpoint below.
@@ -159,6 +167,23 @@ video {
 	padding-top: 8px;
 	width: 100px;
 }
+
+
+
+
+
+#acttypes a {
+	border-radius: .5em;
+	display: block;
+	padding: 1em;
+}
+
+
+
+
+
+
+
 .breadcrumb {
 	background-color: #FFF;
 }

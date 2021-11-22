@@ -152,17 +152,17 @@ $this->loadHelper('Authentication.Identity');
 
 
 
-<footer class="container-fluid bg-white pb-5 mt-5" role="contentinfo">
+<footer class="container-fluid bg-white py-5 border-top mt-5" role="contentinfo">
 <div class="row justify-content-md-center">
 <div class="col-lg-8 col-xl-6 mt-3">
 
-	<div class="p-3 m-3 bg-white text-center text-uppercase">
+	<div class="p-3 bg-white text-center text-uppercase">
 		<span>Brought to you by</span><br>
 		<a href="https://learningcentre.gww.gov.bc.ca/" target="_blank" rel="noopener">
 			<img height="100" src="/img/lc-logo-wordmark-300x100.png" width="300" alt="Learning Centre logo">
 		</a>
 	</div>
-	<div class="p-3 m-3 bg-white text-center">
+	<div class="p-3 bg-white text-center">
 	<div><img height="127" src="/img/BCID_BCPSA_rgb_pos.png" width="400" alt="BC Public Service Agency logo"></div>
 	<p>Your personal information is collected by the BC Public Service Agency in accordance with 
 		section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes 

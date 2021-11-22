@@ -108,7 +108,7 @@ This seems to work out, but #TODO investigate optimizing this
 	<legend class=""><?= __('Add Step') ?></legend>
 	<?php
 	echo $this->Form->control('name',['class'=>'form-control']);
-	echo $this->Form->control('description',['class' => 'form-control', 'type' => 'textarea']);
+	echo $this->Form->control('description',['class' => 'form-control', 'type' => 'textarea','label'=>'Objective']);
 	echo $this->Form->hidden('createdby', ['value' => $uid]);
 	echo $this->Form->hidden('modifiedby', ['value' => $uid]);
 	echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);

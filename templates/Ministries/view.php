@@ -59,7 +59,14 @@
             <?= $this->Text->autoParagraph(h($ministry->description)); ?>
         </blockquote>
     </div>
-    
+    <?php if(!empty($ministry->users)): ?>
+    <h2>Learners in this ministry</h2>
+    <?php foreach($ministry->users as $user): ?>
+        <div class="px-2 py-1">
+            <a href="/users/view/<?= $user->id ?>"><?= $user->username ?></a>
+        </div>
+    <?php endforeach ?>
+    <?php endif ?>
 </div>
 </div>
 </div>

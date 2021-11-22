@@ -1,6 +1,6 @@
 <?php if(!empty($pathways)): ?>
 <?php foreach($pathways as $path): ?>
-<div class="bg-light px-3 py-1 mb-1">
+<div class="bg-light p-3 mb-1">
 <div>
     <a href="/pathways/<?= $path->slug ?>"
         target="_blank"
@@ -32,6 +32,7 @@ $(function () {
         let savetext = 'Save this activity to ';
         savetext += $(this).data('steptit');
         $('.stepid').removeClass('chosenstep');
+        $('.addform').removeClass('opacity-25');
         $('.savebut').removeClass('d-none').html(savetext);
         $('#step_id').val(stepid);
         $(this).addClass('chosenstep');
