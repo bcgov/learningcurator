@@ -11,68 +11,28 @@
 use Cake\Core\Configure;
 $this->assign('title', 'Learning on demand');
 ?>
-<div class="container-fluid">
-<div class="row justify-content-md-center" id="colorful">
-<div class="col-md-10 col-lg-8 col-xl-6">
 
-<h1 class="display-4 mt-5">Learning on demand.</h1>
+<div class="p-3 mt-6 rounded-lg activity bg-white dark:bg-gray-900 dark:text-white">
 
-<div class="p-3 rounded-lg mb-5 bg-white shadow-lg">
-<p style="font-size: 1.3rem">Learning Curator Pathways feature informal learning by theme or community. 
-Here you’ll find recommendations for resources to watch, read, listen to, and courses that will help 
-you reach your goals. Pathways are created by BC Public Service learning curators.</p>
-<div><a href="/auth/azuread" class="btn btn-lg btn-primary">Sign In  with your.name@gov.bc.ca address to continue</a></div>
-<div class="mt-3">
-<a class="" 
-	data-toggle="collapse" 
-	href="#adminlogin" 
-	role="button" 
-	aria-expanded="false" 
-	aria-controls="adminlogin">
-		&nbsp;&nbsp;&nbsp;
-</a>
-</div>
-<div class="collapse m-4 p-3 bg-light" id="adminlogin">
-<p><em>If you're a curator or an admin:</em></p>
-<?= $this->Form->create() ?>
-<?= $this->Form->control('username', ['label' => __d('cake_d_c/users', 'Username'), 'required' => true, 'class'=>'form-control']) ?>
-<?= $this->Form->control('password', ['label' => __d('cake_d_c/users', 'Password'), 'required' => true, 'class'=>'form-control']) ?>
-<?= $this->Form->button(__d('cake_d_c/users', 'Login as an admin'),['class'=>'btn btn-light mt-2']); ?>
-<?= $this->Form->end() ?>
-</div> <!-- /.p-5 -->
-</div> <!-- /.bgwhite -->
+	<h1 class="text-4xl mt-5">Learning on demand.</h1>
 
-</div>
-</div>
-</div>
-<!-- <div class="container-fluid" role="main" aria-labelledby="followclaim">
-<div class="row justify-content-md-center linear">
-<div class="col-md-10 col-lg-8 col-xl-6">
+	<p style="font-size: 1.3rem">Learning Curator Pathways feature informal learning by theme or community. 
+	Here you’ll find recommendations for resources to watch, read, listen to, and courses that will help 
+	you reach your goals. Pathways are created by BC Public Service learning curators.</p>
 
-<div class="row justify-content-md-center mt-3">
-	<div class="col-xl-6">
-		<h2>Follow Pathways</h2>
-		<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
-		<video controls loop>
-			<source src="/img/follow.mp4" type="video/mp4">
-			<p>Your browser doesn't support HTML5 video. Here is
-				a <a href="follow.mp4">link to the video</a> instead.</p>
-		</video>
-		</div>
+	<div class="my-5">
+		<a href="/auth/azuread" class="block p-3 rounded-lg bg-gray-800">
+			Sign In  with your.name@gov.bc.ca address to continue
+		</a>
 	</div>
-	<div class="col-xl-6">
-		<h2>Claim Activities</h2>
-		<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
-		<video controls loop>
-			<source src="/img/claim.mp4" type="video/mp4">
-			<p>Your browser doesn't support HTML5 video. Here is
-				a <a href="follow.mp4">link to the video</a> instead.</p>
-		</video>
-		</div>
-	</div>
+
+	<div class="" id="adminlogin">
+	<p><em>If you're a curator or an admin:</em></p>
+	<?= $this->Form->create() ?>
+	<?= $this->Form->control('username', ['label' => __d('cake_d_c/users', 'Username'), 'required' => true, 'class'=>'p-1 dark:bg-black dark:text-white']) ?>
+	<?= $this->Form->control('password', ['label' => __d('cake_d_c/users', 'Password'), 'required' => true, 'class'=>'p-1 dark:bg-black dark:text-white']) ?>
+	<?= $this->Form->button(__d('cake_d_c/users', 'Login as an admin'),['class'=>'btn btn-light mt-2']); ?>
+	<?= $this->Form->end() ?>
+	</div> <!-- /.p -->
+
 </div>
-</div>
-</div>
-</div> -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
