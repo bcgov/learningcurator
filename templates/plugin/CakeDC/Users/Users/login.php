@@ -21,7 +21,7 @@ $this->assign('title', 'Learning on demand');
 	you reach your goals. Pathways are created by BC Public Service learning curators.</p>
 
 	<div class="my-5">
-		<a href="/auth/azuread" class="block p-3 rounded-lg bg-gray-800">
+		<a href="/auth/azuread" class="inline-block p-3 rounded-lg bg-gray-900 dark:bg-gray-800 text-white">
 			Sign In  with your.name@gov.bc.ca address to continue
 		</a>
 	</div>

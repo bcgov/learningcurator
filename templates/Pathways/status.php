@@ -1,3 +1,3 @@
 <?php 
 
-echo json_encode(compact(['percentages','status','chartjs','typecounts','typecolors']));
+echo json_encode(compact(['name','requiredacts','totalclaimed','percentage']));
