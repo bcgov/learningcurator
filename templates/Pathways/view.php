@@ -35,7 +35,7 @@ $this->assign('title', h($pathway->name));
 <?= $pathway->objective ?> 
 </div>
 <div class="mt-6">
-<span class="inline-block px-2 bg-black text-white dark:bg-white dark:text-black rounded-full"><?= $requiredacts ?></span> required activities,
+<span class="inline-block px-2 bg-black text-white dark:bg-white dark:text-black rounded-full"><?= $requiredacts ?></span> required activities
 <span class="inline-block px-2 bg-black text-white dark:bg-white dark:text-black rounded-full"><?= $suppacts ?></span> supplemental
 </div>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
@@ -46,7 +46,7 @@ $this->assign('title', h($pathway->name));
 <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'btn btn-light']) ?>
 <?php endif ?>
 <?php if(in_array($uid,$usersonthispathway)): ?>
-<div class="mt-5 bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg" style="width: <?= $percentage ?>%;">
+<div class="mt-6 bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg" style="width: <?= $percentage ?>%;">
 	<?= $percentage ?>% done
 </div>
 <?php else: ?>
@@ -63,7 +63,7 @@ $this->assign('title', h($pathway->name));
 <h2 class="mt-4 text-3xl dark:text-white">Modules</h2>
 <?php if (!empty($pathway->steps)) : ?>
 <?php foreach ($pathway->steps as $steps) : ?>
-<div class="p-3 my-3 rounded-lg bg-white dark:bg-gray-900 dark:text-white">
+<div class="p-3 my-3 rounded-lg bg-slate-200 dark:bg-gray-900 dark:text-white">
 <?php //echo '<pre>'; print_r($steps); continue; ?>
 <?php if($steps->status->name == 'Published'): ?>
 <h3 class="text-2xl">
