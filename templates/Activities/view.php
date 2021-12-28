@@ -12,13 +12,8 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<div style="background-color: #FFF;">
-<div class="container-fluid">
-<div class="row justify-content-md-center"
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,.2); border:0">
 
-<div class="col-md-12 col-lg-6">
-<div class="py-5">
+<div class="py-5 dark:text-white">
 
 	<?php if($role == 'curator' || $role == 'superuser'): ?>
 	<div class="btn-group float-right">
@@ -34,13 +29,7 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endif ?>
 	<?php endif; // role check ?>
 	
-		<div class="row align-items-center">
-		<div class="col-3">
-		<div class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $activity->activity_type->color ?>,1)">
-			<i class="activity-icon activity-icon-lg fas <?= $activity->activity_type->image_path ?>"></i>
-		</div>
-		</div>
-		<div class="col">
+
 		<?php if(in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
 
 		<!-- <div class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">CLAIMED <i class="fas fa-check-circle"></i></div> -->
@@ -49,12 +38,11 @@ if ($this->Identity->isLoggedIn()) {
 		
 		<?php endif ?>
 	
-		</div>
-	</div>
-	<h1 class="my-1">
+
+	<h1 class="text-4xl">
 		<?= $activity->name ?>
 	</h1>
-	<div class="p-3 rounded-lg" style="background: rgba(255,255,255,.3);">
+	<div class="p-3 " >
 		<div class="mb-2">
 		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
 		<i class="bi bi-clock-history"></i>
@@ -67,11 +55,11 @@ if ($this->Identity->isLoggedIn()) {
 		</div>
 		<?= $activity->description ?>
 		<?php if(!empty($activity->isbn)): ?>
-		<div class="bg-white p-2 my-2 isbn">
+		<div class="p-2 my-2 isbn">
 			ISBN: <?= $activity->isbn ?>
 		</div>
 		<?php endif ?>
-		<div class="p-2 text-muted" style="background-color: rgba(255,255,255,.5)">
+		<div class="p-2 text-muted" >
 			<?= $this->Time->format($activity->created,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
 			<?php if($role == 'curator' || $role == 'superuser'): ?>
 				by <a href="/users/view/<?= $activity->createdby_id ?>"><?= $curator[0]->username ?></a>
@@ -89,7 +77,7 @@ if ($this->Identity->isLoggedIn()) {
 		data-placement="bottom" 
 		title="Enrol in this course in the Learning System"
 		href="https://learning.gov.bc.ca/psc/CHIPSPLM_6/EMPLOYEE/ELM/c/LM_OD_EMPLOYEE_FL.LM_FND_LRN_FL.GBL?Page=LM_FND_LRN_RSLT_FL&Action=U&KWRD=<?php echo urlencode($activity->name) ?>" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
+		
 		class="btn btn-block my-3 text-uppercase btn-lg">
 
 			<i class="fas <?= $activity->activity_type->image_path ?>"></i>
@@ -103,7 +91,7 @@ if ($this->Identity->isLoggedIn()) {
 		preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $match);
 		$youtube_id = $match[1];
 		?>
-	<div class="my-3 p-3" style="background-color: rgba(<?= $activity->activity_type->color ?>,1); border-radius: 3px;">
+	<div class="my-3 p-3" >
 		<iframe width="100%" 
 			height="315" 
 			src="https://www.youtube-nocookie.com/embed/<?= $youtube_id ?>/" 
@@ -130,7 +118,7 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endforeach; // tags loop ?>
 
 	<?php else: // there are no tags ?>
-		<div class="my-3 p-3 text-truncate" style="font-size: 130%">
+		<div class="my-3 p-3 text-truncate" >
 			<?= $activity->activity_type->name ?>: 
 			<a href="<?= h($activity->hyperlink) ?>" target="_blank" rel="noopener">
 				<?= h($activity->hyperlink) ?>
@@ -138,7 +126,7 @@ if ($this->Identity->isLoggedIn()) {
 		</div>
 	<?php endif; ?>
 	<?php else: ?>
-		<div class="bg-white p-3 my-3">
+		<div class="p-3 my-3">
 			<div><strong>Archived</strong></div>
 			<p>This activity has been archived.</p>
 		</div>
@@ -146,7 +134,7 @@ if ($this->Identity->isLoggedIn()) {
 
 	<div class="my-3">
 		<a href="#newreport" 
-			style="color:#333;" 
+			
 			class="btn btn-light float-right" 
 			data-toggle="collapse" 
 			title="Report this activity for some reason" 
@@ -156,7 +144,7 @@ if ($this->Identity->isLoggedIn()) {
 				<i class="fas fa-exclamation-triangle"></i> Report
 		</a>	
 		<div class="collapse" id="newreport">
-		<div class="my-3 p-3 bg-white rounded-lg">
+		<div class="my-3 p-3">
 		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add'],'class'=>'reportform']) ?>
             <fieldset>
                 <legend><?= __('Report this activity') ?></legend>
@@ -171,7 +159,7 @@ if ($this->Identity->isLoggedIn()) {
             <?= $this->Form->end() ?>
 		</div>
 		</div>
-		<a href="/activities/like/<?= $activity->id ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
+		<a href="/activities/like/<?= $activity->id ?>" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
 			<i class="fas fa-thumbs-up"></i> <span class="lcount"><?= h($activity->recommended) ?> likes</span>
 		</a>
 
@@ -181,7 +169,7 @@ if ($this->Identity->isLoggedIn()) {
 
 	<?php if($role == 'curator' || $role == 'superuser'): ?>
 	<?php if (!empty($activity->moderator_notes)) : ?>
-	<div class="my-3 p-3 bg-white rounded-lg">
+	<div class="my-3 p-3 ">
 	<h4><?= __('Moderator Notes') ?></h4>
 	<blockquote>
 	<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
@@ -192,33 +180,22 @@ if ($this->Identity->isLoggedIn()) {
 
 
 
-	
-		</div>
-
-		
-
-</div>
-</div>
-</div>
-</div>
-<div class="container-fluid linear">
-<div class="row justify-content-md-center">
 <?php if(!empty($activity->steps)): ?>
-<div class="col-md-4">
+<div class="dark:bg-gray-900 dark:text-white">
 <h3 class="mt-3"><i class="fas fa-sitemap"></i> Pathways</h3>
 
 <?php foreach($activity->steps as $step): ?>
 <?php foreach($step->pathways as $path): ?>
 <?php if($path->status_id == 2): ?>
 
-<div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
+<div class="my-3 p-3" >
 	<h4><a href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
 </div>
 
 <?php else: ?>
 
-<div class="my-3 p-3 bg-white" style="background-color: rgba(255,255,255,.3)">
+<div class="my-3 p-3" >
 <span class="badge badge-warning">DRAFT</span>
 <h4><a href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
 	<div><?= $step->description ?></div>
@@ -234,7 +211,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php if(!empty($activity->users)): ?>
 <div class="col-md-4">
 <h3 class="mt-3">Learners</h3>
-<div class="my-3 p-3 bg-white rounded-lg">
+<div class="my-3 p-3">
 <div><em>These folx have claimed this activity:</em></div>
 <?php foreach($activity->users as $u): ?>
 <a href="/users/view/<?= $u->id ?>"><?= $u->idir ?></a>, 
@@ -248,7 +225,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php if(!empty($allusers)): ?>
 <div class="col-md-4">
 <h3 class="mt-3">Learners</h3>
-<div class="my-3 p-3 bg-white rounded-lg">
+<div class="my-3 p-3">
 <div><em>These folx have claimed this activity:</em></div>
 <?php foreach($allusers as $u): ?>
 <a href="/users/view/<?= $u->user->id ?>"><?= $u->user->idir ?></a>, 
@@ -264,10 +241,10 @@ if ($this->Identity->isLoggedIn()) {
 <h3 class="mt-3"><i class="fas fa-exclamation-triangle"></i> Reports</h3>
 <?php foreach($activity->reports as $report): ?>
 	
-<div class="my-3 p-3 bg-white rounded-lg">
+<div class="my-3 p-3">
 <div><a href="/users/view/<?= $report->user_id ?>">Reporter</a> says:</div>
 <div><?= $report->issue ?></div>
-<div class="mt-2" style="font-size: 12px">Added on <?= $report->created ?></div>
+<div class="mt-2" >Added on <?= $report->created ?></div>
 <?php if(empty($report->response)): ?>
 <div class="my-2 alert alert-warning">No reply yet</div>
 <?php else: ?>
@@ -277,7 +254,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php endif ?>
 <a href="#curatorresponse<?= $report->id ?>" 
-	style="color:#333;" 
+	
 	class="btn btn-light" 
 	data-toggle="collapse" 
 	title="Respond to this report" 
@@ -306,94 +283,3 @@ echo $this->Form->textarea('response',['class' => 'form-control', 'placeholder' 
 <?php endif ?>
 <?php endif ?>
 
-
-</div>
-</div>
-
-</div>
-</div>
-</div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-
-<script>
-
-
-$(document).ready(function(){
-
-	$('.claim').on('submit', function(e){
-		
-		e.preventDefault();
-		var form = $(this);
-		form.children('button').removeClass('btn-light').addClass('btn-primary').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
-		
-		$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
-
-		var url = form.attr('action');
-		$.ajax({
-			type: "POST",
-			url: '/activities-users/claim',
-			data: form.serialize(),
-			success: function(data)
-			{
-				loadStatus();
-			},
-			statusCode: 
-			{
-				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
-				}
-			}
-		});
-	});
-
-	$('.reportform').on('submit', function(e){
-		
-		e.preventDefault();
-		var form = $(this);
-		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/profile/reports">View all your reports</a>.').remove();
-		
-		var url = form.attr('action');
-		$.ajax({
-			type: "POST",
-			url: '/reports/add',
-			data: form.serialize(),
-			success: function(data)
-			{
-				
-			},
-			statusCode: 
-			{
-				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
-				}
-			}
-		});
-	});
-
-	$('[data-toggle="tooltip"]').tooltip();
-
-	$('.likingit').on('click',function(e){
-		var url = $(this).attr('href');
-		$(this).tooltip('dispose').children('.lcount').html('Liked!');
-		e.preventDefault();
-		$.ajax({
-			type: "GET",
-			url: url,
-			data: '',
-			success: function(data)
-			{
-			},
-			statusCode: 
-			{
-				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
-				}
-			}
-		});
-	});
-});
-
-</script>

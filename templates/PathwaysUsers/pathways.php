@@ -24,7 +24,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php endif ?>
 </div>
 
-<div class="dark:text-white">
+<div class="p-3 my-5 dark:text-white dark:bg-gray-600">
     <a class=" active" href="/profile/pathways">My Pathways</a> 
     <a class="" href="/profile/claims">My Activities</a> 
     <a class="" href="/profile/reports">My Issues</a> 
@@ -59,7 +59,22 @@ if ($this->Identity->isLoggedIn()) {
 		<?php endif ?>
 
 		<div class="">Overall Progress: <span class="status<?= $path->pathway->id ?>"></span>%</div>
-		
+		<script>
+			var request<?= $path->pathway->id ?> = new XMLHttpRequest();
+			request<?= $path->pathway->id ?>.open('GET', '/pathways/status/<?= $path->pathway->id ?>', true);
+			request<?= $path->pathway->id ?>.onload = function() {
+				if (this.status >= 200 && this.status < 400) {
+					var data<?= $path->pathway->id ?> = JSON.parse(this.response);
+					document.querySelector('.status<?= $path->pathway->id ?>').innerHTML = data<?= $path->pathway->id ?>.percentage;
+				}
+			};
+			request<?= $path->pathway->id ?>.onerror = function() {
+				// There was a connection error of some sort
+				document.querySelector('.status<?= $path->pathway->id ?>').innerHTML = 'Could not get status';
+			};
+			request<?= $path->pathway->id ?>.send();
+		</script>
+
 		<?php 
 		echo $this->Form->postLink(__('Un-Follow'), 
 										['controller' => 'PathwaysUsers', 'action' => 'delete/'. $path->id], 

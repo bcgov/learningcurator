@@ -32,16 +32,14 @@ if ($this->Identity->isLoggedIn()) {
 		<?= h($topic->description) ?>
 		</div>
 		<?php foreach ($topic->pathways as $path): ?>
-		<div class="mx-3 my-1 p-3 rounded-lg bg-cyan-50 dark:bg-gray-800">
+		<div class="mx-3 my-1 p-3 rounded-lg bg-slate-100 dark:bg-gray-800">
 		<h4 class="text-lg"><a href="/pathways/<?= h($path->slug) ?>"><?= h($path->name) ?></a></h4>
 		<div><?= h($path->description) ?></div>
-
 
 		<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 		<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $path->id]) ?>
 		<?= $this->Form->button(__('Follow Pathway'),['class' => 'my-3 p-3 bg-slate-200 rounded-lg dark:bg-gray-900 dark:text-white']) ?>
 		<?= $this->Form->end() ?>
-
 
 		</div>
 		<?php endforeach ?>

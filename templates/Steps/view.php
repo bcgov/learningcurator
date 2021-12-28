@@ -9,8 +9,8 @@ $this->loadHelper('Authentication.Identity');
 $uid = '';
 $role = '';
 if ($this->Identity->isLoggedIn()) {
-$role = $this->Identity->get('role');
-$uid = $this->Identity->get('id');
+	$role = $this->Identity->get('role');
+	$uid = $this->Identity->get('id');
 }
 /** 
  * Most of the following should be moved into the controller
@@ -27,40 +27,40 @@ $totalacts = count($step->activities);
 $stepclaimcount = 0;
 
 foreach ($step->activities as $activity) {
-$stepname = '';
-//print_r($activity);
-// If this is 'defunct' then we pull it out of the list 
-// and add it the defunctacts array so we can show them
-// but in a different section
-if($activity->status_id == 3) {
-array_push($archivedacts,$activity);
-} elseif($activity->status_id == 2) {
-// if it's required
-if($activity->_joinData->required == 1) {
-array_push($requiredacts,$activity);
-// Otherwise it's teriary
-} else {
-array_push($supplementalacts,$activity);
-}
-array_push($acts,$activity);
+	$stepname = '';
+	//print_r($activity);
+	// If this is 'defunct' then we pull it out of the list 
+	// and add it the defunctacts array so we can show them
+	// but in a different section
+	if($activity->status_id == 3) {
+		array_push($archivedacts,$activity);
+	} elseif($activity->status_id == 2) {
+		// if it's required
+		if($activity->_joinData->required == 1) {
+			array_push($requiredacts,$activity);
+		// Otherwise it's teriary
+		} else {
+			array_push($supplementalacts,$activity);
+		}
+		array_push($acts,$activity);
 
-if(in_array($activity->id,$useractivitylist)) {
-$stepclaimcount++;
-}
-$reqtmp = array();
-$suptmp = array();
-// Loop through the whole list, add steporder to tmp array
-foreach($requiredacts as $line) {
-$reqtmp[] = $line->_joinData->steporder;
-}
-foreach($supplementalacts as $line) {
-$suptmp[] = $line->_joinData->steporder;
-}
-// Use the tmp array to sort acts list
-array_multisort($reqtmp, SORT_DESC, $requiredacts);
-array_multisort($suptmp, SORT_DESC, $supplementalacts);
-//array_multisort($tmp, SORT_DESC, $supplementalacts);
-}
+		if(in_array($activity->id,$useractivitylist)) {
+			$stepclaimcount++;
+		}
+		$reqtmp = array();
+		$suptmp = array();
+		// Loop through the whole list, add steporder to tmp array
+		foreach($requiredacts as $line) {
+			$reqtmp[] = $line->_joinData->steporder;
+		}
+		foreach($supplementalacts as $line) {
+			$suptmp[] = $line->_joinData->steporder;
+		}
+		// Use the tmp array to sort acts list
+		array_multisort($reqtmp, SORT_DESC, $requiredacts);
+		array_multisort($suptmp, SORT_DESC, $supplementalacts);
+		//array_multisort($tmp, SORT_DESC, $supplementalacts);
+	}
 }
 
 $pagetitle = $step->name . ' - ' . $step->pathways[0]->name;
@@ -69,13 +69,13 @@ $stepacts = count($requiredacts);
 $supplmentalcount = count($supplementalacts);
 $completeclass = 'notcompleted'; 
 if($stepclaimcount == $totalacts) {
-$completeclass = 'completed';
+	$completeclass = 'completed';
 }
 
 if($stepclaimcount > 0) {
-$steppercent = ceil(($stepclaimcount * 100) / $stepacts);
+	$steppercent = ceil(($stepclaimcount * 100) / $stepacts);
 } else {
-$steppercent = 0;
+	$steppercent = 0;
 }
 
 $current = 0;
@@ -84,47 +84,65 @@ $previousid = 0;
 $next = 0;
 $nextid = 0;
 foreach ($step->pathways as $pathways) {
-foreach($pathways->steps as $s) {
-$next = next($pathways->steps);
-if($s->id == $step->id) {
-if($last) {
-$previousid = $last->id;
-$previousslug = $last->slug;
-}
-if($next) {
-$upnextid = $next->id;
-$upnextslug = $next->slug;
-}
-}
-$last = $s;
-}
+	foreach($pathways->steps as $s) {
+		$next = next($pathways->steps);
+		if($s->id == $step->id) {
+			if($last) {
+				$previousid = $last->id;
+				$previousslug = $last->slug;
+			}
+			if($next) {
+				$upnextid = $next->id;
+				$upnextslug = $next->slug;
+			}
+		}
+		$last = $s;
+	}
 }
 ?>
 <div class="mt-4 dark:text-white">
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="btn-group float-right ml-3">
 <?= $this->Html->link(__('Edit'), 
-['controller' => 'Steps', 'action' => 'edit', $step->id], 
-['class' => 'btn btn-light btn-sm']); 
+						['controller' => 'Steps', 'action' => 'edit', $step->id], 
+						['class' => 'btn btn-light btn-sm']); 
 ?>
 <?= $this->Form->postLink(__('Delete'), 
-['action' => 'delete', $step->id],
-['class' => 'btn btn-light btn-sm', 
-'confirm' => __('Are you sure you want to delete # {0}?', $step->name)
-]);
+							['action' => 'delete', $step->id],
+							['class' => 'btn btn-light btn-sm', 
+							'confirm' => __('Are you sure you want to delete # {0}?', $step->name)]);
 ?>
 </div> <!-- /.btn-group -->
 <?php endif ?>
 
-<nav class="" aria-label="breadcrumb">
-<a href="/categories/index">Categories</a> / 
-<?= $this->Html->link($step->pathways[0]->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $step->pathways[0]->topic->categories[0]->id]) ?> / 
-<?= $this->Html->link($step->pathways[0]->topic->name, ['controller' => 'Topics', 'action' => 'view', $step->pathways[0]->topic->id]) ?> / 
-<?= $this->Html->link($step->pathways[0]->name, ['controller' => 'Pathways', 'action' => '/' . $step->pathways[0]->slug], ['class' => 'font-weight-bold']) ?> / 
-<?= $step->name ?>
+<nav class="bg-slate-200 dark:bg-gray-600 rounded-lg p-3" aria-label="breadcrumb">
+	<a href="/categories/index">Categories</a> / 
+	<?= $this->Html->link($step->pathways[0]->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $step->pathways[0]->topic->categories[0]->id]) ?> / 
+	<?= $this->Html->link($step->pathways[0]->topic->name, ['controller' => 'Topics', 'action' => 'view', $step->pathways[0]->topic->id]) ?> / 
+	<?= $this->Html->link($step->pathways[0]->name, ['controller' => 'Pathways', 'action' => '/' . $step->pathways[0]->slug], ['class' => 'font-weight-bold']) ?> / 
+	<?= $step->name ?>
 </nav>
-<div class="mt-3 text-xl"><?= $step->pathways[0]->name ?></div>
-<h1 class="text-4xl"><?= $step->name ?></h1>
+
+<div class="mt-3 text-4xl"><?= $step->pathways[0]->name ?></div>
+
+<div class="">Overall Progress: <span class="status<?= $step->pathways[0]->id ?>"></span>%</div>
+<script>
+var request<?= $step->pathways[0]->id ?> = new XMLHttpRequest();
+request<?= $step->pathways[0]->id ?>.open('GET', '/pathways/status/<?= $step->pathways[0]->id ?>', true);
+request<?= $step->pathways[0]->id ?>.onload = function() {
+	if (this.status >= 200 && this.status < 400) {
+		var data<?= $step->pathways[0]->id ?> = JSON.parse(this.response);
+		document.querySelector('.status<?= $step->pathways[0]->id ?>').innerHTML = data<?= $step->pathways[0]->id ?>.percentage;
+	}
+};
+request<?= $step->pathways[0]->id ?>.onerror = function() {
+	// There was a connection error of some sort
+	document.querySelector('.status<?= $step->pathways[0]->id ?>').innerHTML = 'Could not get status';
+};
+request<?= $step->pathways[0]->id ?>.send();
+</script>
+
+<h1 class="text-3xl"><?= $step->name ?></h1>
 <?php if($step->status_id == 1): ?>
 <span class="badge badge-warning">DRAFT</span>
 <?php endif ?>
@@ -132,42 +150,33 @@ $last = $s;
 <?= $step->description ?>
 </div>
 
-<div class="my-3">
-<span class="badge badge-pill badge-light"><?= $totalacts ?> total activities</span> 
-<span class="badge badge-pill badge-light"><?= $stepacts ?> required</span>
-<span class="badge badge-pill badge-light"><?= $supplmentalcount ?> supplemental</span>
-
-</div>
-<div class="progress progress-bar-striped stickyprogress mt-3 rounded-lg">
-<div class="progress-bar bg-success" role="progressbar" style="width: <?= $steppercent ?>%" aria-valuenow="<?= $steppercent ?>" aria-valuemin="0" aria-valuemax="100">	
-</div>
-</div>
-
-
 <?php if(!empty($previousid)): ?>
 <a href="/pathways/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" class="backstep">
-Last Step
+Previous
 </a>
 <?php endif ?>
 
 <?php if(!empty($upnextid)): ?>
 <a href="/pathways/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" class="nextstep">
-Next Step
+Next
 </a>
 <?php endif ?>
 
-<div class="" id="stepnav" aria-labelledby="">
+<div @click.away="open = false" class="relative" x-data="{ open: false }">
+<button @click="open = !open" class="flex flex-row items-center px-4 py-2 mt-2 text-sm font-semibold text-left bg-gray-600 rounded-lg dark:bg-gray-500 dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+<span>Modules</span>
+<svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+</button>
+<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
+<div class="px-2 py-2 bg-white rounded-md shadow dark:bg-gray-800">
 <?php foreach ($step->pathways as $pathways) : ?>
 <?php foreach($pathways->steps as $s): ?>
 <?php if($s->status_id == 2): ?>
 <?php $c = '' ?>
 <?php if($s->id == $step->id) $c = 'font-weight-bold' ?>
-<div class="px-3 py-1 bg-white dark:bg-gray-900 dark:text-white">
-<a class=" <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+<a class="<?= $c ?> block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
 <?= $s->name ?> 
-<i class="bi bi-arrow-right-circle-fill"></i>
 </a>
-</div>
 <?php else: ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <?php $c = '' ?>
@@ -178,11 +187,14 @@ Next Step
 <?php endif ?>
 <span class="badge badge-warning">DRAFT</span>
 <?= $s->name ?>
-</a></div>
+</a>
 <?php endif; // are you a curator? ?>
 <?php endif; // is published? ?>
 <?php endforeach ?>
 <?php endforeach ?>
+
+</div>
+</div>
 </div>
 
 <?php if(in_array($uid,$usersonthispathway)): ?>
@@ -202,7 +214,7 @@ Next Step
 </div>
 
 <?php if (!empty($step->activities)) : ?>
-<h2 class="text-3xl dark:text-white">Required Activities <?= $stepacts ?></h2>
+<h2 class="text-3xl dark:text-white">Required Activities <span class="bg-white text-black rounded-lg text-lg inline-block px-2"><?= $stepacts ?></span></h2>
 <?php foreach ($requiredacts as $activity) : ?>
 
 <div class="p-3 my-3 rounded-lg activity bg-white dark:bg-gray-900 dark:text-white">
@@ -222,7 +234,7 @@ Next Step
 <?php //echo $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-primary', 'confirm' => __('Really delete?')]) ?>
 <?php endif; // claimed or not ?>
 
-<h3 class="my-3 text-3xl">
+<h3 class="my-3 text-2xl">
 <a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
 <!--<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
 </h3>
@@ -261,7 +273,7 @@ Curator says:<br>
 
 <?php if(count($supplementalacts) > 0): ?>
 
-<h3 class="text-2xl dark:text-white">Supplementary Resources <?= $supplmentalcount ?></h3>
+<h3 class="text-2xl dark:text-white">Supplementary Resources <span class="bg-white text-black rounded-lg text-lg inline-block px-2"><?= $supplmentalcount ?></span></h3>
 
 <?php foreach ($supplementalacts as $activity): ?>
 <div class="p-3 my-3 rounded-lg activity bg-white dark:bg-gray-900 dark:text-white">
