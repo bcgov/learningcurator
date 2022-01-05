@@ -20,7 +20,7 @@ Welcome <?= $this->Identity->get('first_name') ?>
 </div>
 
 <div class="dark:text-white">
-<a class=" active" href="/profile/pathways">My Pathways</a> 
+<a class=" active" href="/profile">My Pathways</a> 
 <a class="" href="/profile/claims">My Activities</a> 
 <a class="" href="/profile/reports">My Issues</a> 
 </div>

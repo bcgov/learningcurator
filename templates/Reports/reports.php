@@ -8,11 +8,8 @@ if ($this->Identity->isLoggedIn()) {
 	$role = $this->Identity->get('role');
 	$uid = $this->Identity->get('id');
 }
-?><div class="container-fluid">
-<div class="row justify-content-md-center" id="colorful">
-<div class="col-md-10 col-lg-8 col-xl-6">
-<div class="py-5">
-
+?>
+<div class="dark:text-white">
 <div class="systemrole">
 	<?php if($role == 'curator'): ?>
 		 <span class="badge badge-success">Curator</span>
@@ -22,21 +19,14 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <h1 class="display-4">Welcome <?php echo $this->Identity->get('first_name') ?></h1>
 
-</div>
 <div class="nav nav-pills justify-content-center">
-    <a class="nav-link" href="/profile/pathways">Pathways</a> 
-    <a class="nav-link" href="/profile/claims">Claims</a> 
-    <a class="nav-link active" href="/profile/reports">Reports</a> 
-	<a class="nav-link" href="/profile/contributions">Contributions</a> 
+    <a class="nav-link" href="/profile">My Pathways</a> 
+    <a class="nav-link" href="/profile/claims">My Activities</a> 
+    <a class="nav-link active" href="/profile/reports">My Issues</a> 
 </div>
-</div>
-</div>
-</div>
-<div class="container-fluid pt-3">
-<div class="row justify-content-md-center">
-<div class="col-md-8 col-lg-6">
+
 <h2><?= __('Your Reports') ?></h2>
-<div class="my-2 p-3 bg-white rounded-lg shadow-sm">
+<div class="my-2 p-3 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
 <?php if (!$reports->isEmpty()) : ?>
 	
 	<?php foreach ($reports as $report) : ?>
@@ -91,7 +81,3 @@ if ($this->Identity->isLoggedIn()) {
 <?php endif ?>
 
 </div>
-</div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

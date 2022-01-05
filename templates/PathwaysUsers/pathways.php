@@ -25,7 +25,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 
 <div class="p-3 my-5 dark:text-white dark:bg-gray-600">
-    <a class=" active" href="/profile/pathways">My Pathways</a> 
+    <a class=" active" href="/profile">My Pathways</a> 
     <a class="" href="/profile/claims">My Activities</a> 
     <a class="" href="/profile/reports">My Issues</a> 
 </div>
@@ -58,24 +58,36 @@ if ($this->Identity->isLoggedIn()) {
 		</div>
 		<?php endif ?>
 
-		<div class="status<?= $path->pathway->id ?> mt-3 bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg"></div>
+		<div>
+		<span class="progressbar<?= $path->pathway->id ?> inline-block my-3 bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg"></span>
+		<span class="beginning<?= $path->pathway->id ?> inline-block"></span>
+		</div>
 		<script>
-			var request<?= $path->pathway->id ?> = new XMLHttpRequest();
-			request<?= $path->pathway->id ?>.open('GET', '/pathways/status/<?= $path->pathway->id ?>', true);
-			request<?= $path->pathway->id ?>.onload = function() {
-				if (this.status >= 200 && this.status < 400) {
-					var data<?= $path->pathway->id ?> = JSON.parse(this.response);
+		var request<?= $path->pathway->id ?> = new XMLHttpRequest();
+		request<?= $path->pathway->id ?>.open('GET', '/pathways/status/<?= $path->pathway->id ?>', true);
+		request<?= $path->pathway->id ?>.onload = function() {
+			if (this.status >= 200 && this.status < 400) {
+				var data<?= $path->pathway->id ?> = JSON.parse(this.response);
+				if(data<?= $path->pathway->id ?>.percentage > 0) {
 					let percwid = data<?= $path->pathway->id ?>.percentage;
-					if(percwid < 10) percwid = 20;
-					document.querySelector('.status<?= $path->pathway->id ?>').innerHTML = data<?= $path->pathway->id ?>.percentage + '% complete';
-					document.querySelector('.status<?= $path->pathway->id ?>').style.width = percwid + '%';
+					if(percwid < 10) {
+						document.querySelector('.beginning<?= $path->pathway->id ?>').innerHTML = data<?= $path->pathway->id ?>.percentage + '% complete';
+						document.querySelector('.progressbar<?= $path->pathway->id ?>').innerHTML = '&nbsp;';
+					} else {
+						document.querySelector('.progressbar<?= $path->pathway->id ?>').innerHTML = data<?= $path->pathway->id ?>.percentage + '% complete';
+					}
+					document.querySelector('.progressbar<?= $path->pathway->id ?>').style.width = percwid + '%';
+					
+				} else {
+					document.querySelector('.beginning<?= $path->pathway->id ?>').innerHTML = 'You\'ve not completed any activities yet. Complete an activity to see your progress bar.';
 				}
-			};
-			request<?= $path->pathway->id ?>.onerror = function() {
-				// There was a connection error of some sort
-				document.querySelector('.status<?= $path->pathway->id ?>').innerHTML = 'Could not get status';
-			};
-			request<?= $path->pathway->id ?>.send();
+			}
+		};
+		request<?= $path->pathway->id ?>.onerror = function() {
+			// There was a connection error of some sort
+			document.querySelector('.beginning<?= $path->pathway->id ?>').innerHTML = 'Could not get status :(';
+		};
+		request<?= $path->pathway->id ?>.send();
 		</script>
 
 		<?php 

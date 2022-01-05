@@ -140,9 +140,10 @@ foreach ($step->pathways as $pathways) {
 	</svg>
 	<?= $step->pathways[0]->name ?>
 </h1>
-
-<div class="status<?= $step->pathways[0]->id ?> my-3 bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg"></div>
-
+<div>
+<span class="progressbar<?= $step->pathways[0]->id ?> inline-block my-3 bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg"></span>
+<span class="beginning<?= $step->pathways[0]->id ?> inline-block"></span>
+</div>
 <script>
 var request<?= $step->pathways[0]->id ?> = new XMLHttpRequest();
 request<?= $step->pathways[0]->id ?>.open('GET', '/pathways/status/<?= $step->pathways[0]->id ?>', true);
@@ -150,16 +151,22 @@ request<?= $step->pathways[0]->id ?>.onload = function() {
 	if (this.status >= 200 && this.status < 400) {
 		var data<?= $step->pathways[0]->id ?> = JSON.parse(this.response);
 		if(data<?= $step->pathways[0]->id ?>.percentage > 0) {
-			let percwid = data<?= $step->pathways[0]->is_dir ?>.percentage;
-			if(percwid < 10) percwid = 20;
-			document.querySelector('.status<?= $step->pathways[0]->id ?>').innerHTML = data<?= $step->pathways[0]->id ?>.percentage + '% done';
-			document.querySelector('.status<?= $step->pathways[0]->id ?>').style.width = percwid + '%';
+			let percwid = data<?= $step->pathways[0]->id ?>.percentage;
+			if(percwid < 10) {
+				document.querySelector('.beginning<?= $step->pathways[0]->id ?>').innerHTML = data<?= $step->pathways[0]->id ?>.percentage + '% complete';
+				document.querySelector('.progressbar<?= $step->pathways[0]->id ?>').innerHTML = '&nbsp;';
+			} else {
+				document.querySelector('.progressbar<?= $step->pathways[0]->id ?>').innerHTML = data<?= $step->pathways[0]->id ?>.percentage + '% complete';
+			}
+			document.querySelector('.progressbar<?= $step->pathways[0]->id ?>').style.width = percwid + '%';
+		} else {
+			document.querySelector('.beginning<?= $step->pathways[0]->id ?>').innerHTML = 'You\'ve not completed any activities yet. Complete an activity to see your progress bar.';
 		}
 	}
 };
 request<?= $step->pathways[0]->id ?>.onerror = function() {
 	// There was a connection error of some sort
-	document.querySelector('.status<?= $step->pathways[0]->id ?>').innerHTML = 'Could not get status';
+	document.querySelector('.beginning<?= $step->pathways[0]->id ?>').innerHTML = 'Could not get status :(';
 };
 request<?= $step->pathways[0]->id ?>.send();
 </script>
