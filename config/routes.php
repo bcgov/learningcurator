@@ -48,7 +48,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     /*
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
      * its action called 'display', and we pass a param to select the view file
-     * to use (in this case, templates/Pages/home.php)...
+     * to use 
      */
     $builder->connect('/', ['controller' => 'PathwaysUsers', 'action' => 'pathways']);
 
@@ -69,7 +69,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/pathways/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
 
     $builder->connect('/profile/claims', ['controller' => 'ActivitiesUsers', 'action' => 'claims']);
-    $builder->connect('/profile/pathways', ['controller' => 'PathwaysUsers', 'action' => 'pathways']);
+    $builder->connect('/profile', ['controller' => 'PathwaysUsers', 'action' => 'pathways']);
     $builder->connect('/profile/reports', ['controller' => 'Reports', 'action' => 'reports']);
     $builder->connect('/profile/contributions', ['controller' => 'Pathways', 'action' => 'contributions']);
     /*

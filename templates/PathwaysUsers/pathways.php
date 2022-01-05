@@ -34,7 +34,7 @@ if ($this->Identity->isLoggedIn()) {
 	
 	<?php foreach ($pathways as $path) : ?>
         
-	<div class="p-3 my-3 bg-white dark:bg-gray-900 dark:text-white">
+	<div class="p-3 my-3 bg-slate-100 dark:bg-gray-900 dark:text-white">
 
 		<?php //$this->Form->postLink(__('Unfollow'), ['controller' => 'PathwaysUsers','action' => 'delete/'. $path->pathway->_joinData->id], ['class' => 'btn btn-primary float-right', 'confirm' => __('Really unfollow?')]) ?>
 		<div>
@@ -47,7 +47,7 @@ if ($this->Identity->isLoggedIn()) {
 			</a>
 		</h2>
 
-		<div class="bg-light "><?= h($path->pathway->objective) ?></div>
+		<!-- <div class="bg-light "><?= h($path->pathway->objective) ?></div> -->
 		<div>Followed on:
 		<?= $this->Time->format($path->date_start,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
 		</div>
@@ -58,14 +58,17 @@ if ($this->Identity->isLoggedIn()) {
 		</div>
 		<?php endif ?>
 
-		<div class="">Overall Progress: <span class="status<?= $path->pathway->id ?>"></span>%</div>
+		<div class="status<?= $path->pathway->id ?> mt-3 bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg"></div>
 		<script>
 			var request<?= $path->pathway->id ?> = new XMLHttpRequest();
 			request<?= $path->pathway->id ?>.open('GET', '/pathways/status/<?= $path->pathway->id ?>', true);
 			request<?= $path->pathway->id ?>.onload = function() {
 				if (this.status >= 200 && this.status < 400) {
 					var data<?= $path->pathway->id ?> = JSON.parse(this.response);
-					document.querySelector('.status<?= $path->pathway->id ?>').innerHTML = data<?= $path->pathway->id ?>.percentage;
+					let percwid = data<?= $path->pathway->id ?>.percentage;
+					if(percwid < 10) percwid = 20;
+					document.querySelector('.status<?= $path->pathway->id ?>').innerHTML = data<?= $path->pathway->id ?>.percentage + '% complete';
+					document.querySelector('.status<?= $path->pathway->id ?>').style.width = percwid + '%';
 				}
 			};
 			request<?= $path->pathway->id ?>.onerror = function() {
@@ -80,12 +83,6 @@ if ($this->Identity->isLoggedIn()) {
 										['controller' => 'PathwaysUsers', 'action' => 'delete/'. $path->id], 
 										['class' => 'btn btn-light my-2', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really unfollow?')]); 
 		?>
-		<?php 
-		//echo $this->Form->postLink(__('Complete'), 
-		//								['controller' => 'PathwaysUsers', 'action' => 'complete/'. $path->id], 
-		//								['class' => 'btn btn-light', 'title' => 'Complete this pathway', 'confirm' => __('Really complete?')]); 
-		?>
-	
 
 	</div>
 	<?php endforeach; ?>

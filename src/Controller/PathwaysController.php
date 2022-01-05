@@ -127,54 +127,29 @@ class PathwaysController extends AppController
      */
     public function view($slug = null)
     {
-        // As we loop through the activities for the steps on this pathway, we 
-        // need to be able to check to see if the current user has "claimed" 
-        // that activity. Here we get the current user id and use it to select 
-        // all of the claimed activities assigned to them, and then process out 
-        // just the activity IDs into a simple array. Then, in the template 
-        // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
-        //
-        // First let's get the user details:
-        //
-	    $user = $this->request->getAttribute('authentication')->getIdentity();
-        if(!empty($user)) {
-            // We need create an empty array first. If nothing gets added to
-            // it, so be it
-            $useractivitylist = array();
-            // Get access to the apprprioate table
-            $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
-            // Select based on currently logged in person
-            $useacts = $au->find()->where(['user_id = ' => $user->id]);
-            // convert the results into a simple array so that we can
-            // use in_array in the template
-            $useractivities = $useacts->toList();
-            // Loop through the resources and add just the ID to the 
-            // array that we will pass into the template
-            foreach($useractivities as $uact) {
-                array_push($useractivitylist, $uact['activity_id']);
-            }
+
+        $pathway = $this->Pathways->
+                            findBySlug($slug)->
+                            contain([
+                                'Topics',
+                                'Topics.Categories', 
+                                'Steps' => ['sort' => ['PathwaysSteps.sortorder' => 'desc']],
+                                'Steps.Statuses', 
+                                'Steps.Activities',
+                                'Users'])->firstOrFail();
+        
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        // We need to count how many activities this person has claimed 
+        // from each step (we loop through them below)
+        $useractivitylist = array();
+        // Get access to the appropriate table
+        $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
+        // Select based on currently logged in person
+        $useractivities = $au->find()->where(['user_id = ' => $user->id])->toList();
+        // Loop through the resources and add just the ID to the 
+        foreach($useractivities as $uact) {
+            array_push($useractivitylist, $uact['activity_id']);
         }
-        $pathway = $this->Pathways->findBySlug($slug)->contain([
-                            'Topics',
-                            'Topics.Categories', 
-                            'Ministries', 
-                            'Steps' => ['sort' => ['PathwaysSteps.sortorder' => 'asc']],
-                            'Steps.Statuses', 
-                            'Steps.Activities', 
-                            'Steps.Activities.ActivityTypes', 
-                            'Users'])->firstOrFail();
-        //
-        // we want to be able to tell if the current user is already on this
-        // pathway or not, so we take the same approach as above, parsing all
-        // the users into a single array so that we can perform a simple
-        // in_array($thisuser,$usersonthispathway) check and show the "take
-        // this Pathway" button or "you're on this Pathway" text
-        //
-        // Create the initially empty array that we also pass into the template
-        $usersonthispathway = array();
-        $followers = array();
-        // Loop through the users that are on this pathway and parse just the 
-        // IDs into the array that we just created
         $followid = 0;
         foreach($pathway->users as $pu) {
             // Is the current user following this pathway? If so, then 
@@ -184,17 +159,14 @@ class PathwaysController extends AppController
             if($pu->id == $user->id) {
                 $followid = $pu->_joinData->id;
             }
-            array_push($usersonthispathway,$pu->id);
-            array_push($followers,[$pu->id,$pu->username]);
         }
-
-        if (!empty($pathway->steps)) :
+        if (!empty($pathway->steps)):
             $percentage = 0;
             $totalclaimed = 0;
             $totalacts = 0;
             $requiredacts = 0;
             $suppacts = 0;
-            foreach ($pathway->steps as $steps) :
+            foreach ($pathway->steps as $steps):
                 foreach ($steps->activities as $activity):
                     if($activity->status_id == 2) {
                         $totalacts++;
@@ -211,7 +183,13 @@ class PathwaysController extends AppController
             endforeach; // steps
             $percentage = floor(($totalclaimed / $requiredacts) * 100);
         endif;
-        $this->set(compact('pathway', 'totalacts', 'requiredacts', 'suppacts', 'percentage', 'followid', 'usersonthispathway', 'useractivitylist','followers'));
+        $this->set(compact('pathway', 
+                            'totalacts', 
+                            'requiredacts', 
+                            'suppacts', 
+                            'percentage', 
+                            'followid', 
+                            'useractivitylist'));
 
     }
 
