@@ -12,95 +12,13 @@ if ($this->Identity->isLoggedIn()) {
 	$role = $this->Identity->get('role');
 	$uid = $this->Identity->get('id');
 }
-/** 
- * Most of the following should be moved into the controller
- * I just find it easier to prototype when the logic I'm working
- * with is in the same file
- */
-$stepTime = 0;
-$archivedacts = array();
-$requiredacts = array();
-$supplementalacts = array();
-$acts = array();
-
-$totalacts = count($step->activities);
-$stepclaimcount = 0;
-
-foreach ($step->activities as $activity) {
-	$stepname = '';
-	//print_r($activity);
-	// If this is 'defunct' then we pull it out of the list 
-	// and add it the defunctacts array so we can show them
-	// but in a different section
-	if($activity->status_id == 3) {
-		array_push($archivedacts,$activity);
-	} elseif($activity->status_id == 2) {
-		// if it's required
-		if($activity->_joinData->required == 1) {
-			array_push($requiredacts,$activity);
-		// Otherwise it's teriary
-		} else {
-			array_push($supplementalacts,$activity);
-		}
-		array_push($acts,$activity);
-
-		if(in_array($activity->id,$useractivitylist)) {
-			$stepclaimcount++;
-		}
-		$reqtmp = array();
-		$suptmp = array();
-		// Loop through the whole list, add steporder to tmp array
-		foreach($requiredacts as $line) {
-			$reqtmp[] = $line->_joinData->steporder;
-		}
-		foreach($supplementalacts as $line) {
-			$suptmp[] = $line->_joinData->steporder;
-		}
-		// Use the tmp array to sort acts list
-		array_multisort($reqtmp, SORT_DESC, $requiredacts);
-		array_multisort($suptmp, SORT_DESC, $supplementalacts);
-		//array_multisort($tmp, SORT_DESC, $supplementalacts);
-	}
-}
-
-$pagetitle = $step->name . ' - ' . $step->pathways[0]->name;
 $this->assign('title', h($pagetitle));
 $stepacts = count($requiredacts);
 $supplmentalcount = count($supplementalacts);
-$completeclass = 'notcompleted'; 
-if($stepclaimcount == $totalacts) {
-	$completeclass = 'completed';
-}
 
-if($stepclaimcount > 0) {
-	$steppercent = ceil(($stepclaimcount * 100) / $stepacts);
-} else {
-	$steppercent = 0;
-}
-
-$current = 0;
-$last = 0;
-$previousid = 0;
-$next = 0;
-$nextid = 0;
-foreach ($step->pathways as $pathways) {
-	foreach($pathways->steps as $s) {
-		$next = next($pathways->steps);
-		if($s->id == $step->id) {
-			if($last) {
-				$previousid = $last->id;
-				$previousslug = $last->slug;
-			}
-			if($next) {
-				$upnextid = $next->id;
-				$upnextslug = $next->slug;
-			}
-		}
-		$last = $s;
-	}
-}
 ?>
-<div class="mt-4 dark:text-white">
+<div class="p-6 dark:text-white">
+
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="btn-group float-right ml-3">
 <?= $this->Html->link(__('Edit'), 
@@ -126,10 +44,12 @@ foreach ($step->pathways as $pathways) {
 	<?= $this->Html->link($step->pathways[0]->name, ['controller' => 'Pathways', 'action' => '/' . $step->pathways[0]->slug], ['class' => 'font-weight-bold']) ?> / 
 	<?= $step->name ?>
 </nav>
-<?php if(!in_array($uid,$usersonthispathway)): ?>
+
+
+<?php if(empty($followid)): ?>
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
-<?= $this->Form->button(__('Follow Pathway'),['class' => 'mt-4 bg-white dark:bg-gray-900 rounded-lg p-3 text-center']) ?>
+<?= $this->Form->button(__('Follow Pathway'),['class' => 'mt-4 bg-white dark:bg-slate-900 rounded-lg p-3 text-center']) ?>
 <?= $this->Form->end(); ?>
 <?php endif ?>
 
@@ -140,9 +60,10 @@ foreach ($step->pathways as $pathways) {
 	</svg>
 	<?= $step->pathways[0]->name ?>
 </h1>
-<div>
-<span class="progressbar<?= $step->pathways[0]->id ?> inline-block my-3 bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg"></span>
-<span class="beginning<?= $step->pathways[0]->id ?> inline-block"></span>
+
+<div class="my-3 w-full bg-black rounded-lg">
+	<span class="progressbar<?= $step->pathways[0]->id ?> inline-block bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg"></span>
+	<span class="beginning<?= $step->pathways[0]->id ?> inline-block"></span>
 </div>
 <script>
 var request<?= $step->pathways[0]->id ?> = new XMLHttpRequest();
@@ -208,7 +129,8 @@ request<?= $step->pathways[0]->id ?>.send();
 	</div>
 </div>
 <!-- /end drop-down -->
-<div class="p-3 my-3 rounded-lg activity bg-slate-200 dark:bg-gray-900 dark:text-white">
+
+<div class="p-3 my-3 rounded-lg activity bg-slate-200 dark:bg-slate-900 dark:text-white">
 <h2 class="m4-4 text-3xl">
 <?= $step->name ?>
 </h2>
@@ -218,7 +140,6 @@ request<?= $step->pathways[0]->id ?>.send();
 <div class="my-3 text-lg">
 <?= $step->description ?>
 </div>
-
 
 <?php if (!empty($step->activities)) : ?>
 <h3 class="mt-6 text-2xl dark:text-white">Required Activities <span class="bg-black text-white dark:bg-white dark:text-black rounded-lg text-lg inline-block px-2"><?= $stepacts ?></span></h3>
@@ -286,7 +207,7 @@ Curator says:<br>
 <h3 class="text-2xl dark:text-white">Supplementary Resources <span class="bg-white text-black rounded-lg text-lg inline-block px-2"><?= $supplmentalcount ?></span></h3>
 
 <?php foreach ($supplementalacts as $activity): ?>
-<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-gray-900 dark:text-white">
+<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-900 dark:text-white">
 <h4 class="text-2xl">
 	<a href="/activities/view/<?= $activity->id ?>">
 		<?= $activity->name ?>
@@ -318,6 +239,8 @@ Curator says:<br>
 <?php endforeach; // end of activities loop for this step ?>
 
 <?php endif ?>
+
+
 <?php if(!empty($archivedacts)): ?>
 <h4>Archived Activities</h4>
 <div class="p-2 bg-white">This step used to have these activities assigned to them, but they are no 
@@ -342,4 +265,7 @@ aria-controls="defunctacts">View archived activities</a>.
 <?php endforeach ?>
 </div>
 <?php endif ?>
+
+
+</div>
 </div>

@@ -33,7 +33,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php foreach ($activities as $activity) : ?>
 	
-	<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-gray-900 dark:text-white">
+	<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-900 dark:text-white">
 
 	<h3 class="my-3 text-3xl">
 		<a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>

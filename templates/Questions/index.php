@@ -37,7 +37,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php foreach ($questions as $question): ?>
 <?php if($question->status_id == 2): ?>
-<div class="p-3 my-3 bg-white dark:bg-gray-900 rounded-lg">
+<div class="p-3 my-3 bg-white dark:bg-slate-900 rounded-lg">
 <h2 class="text-2xl" id="<?= h($question->slug) ?>"><?= h($question->title) ?></h2>
 <div><?= $question->content ?></div>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
@@ -49,7 +49,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php else: ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="p-3 my-3 bg-white dark:bg-gray-900 rounded-lg">
+<div class="p-3 my-3 bg-white dark:bg-slate-900 rounded-lg">
     <div><span class="badge badge-warning"><?= h($question->status->name) ?></span></div>
     <h2 class="text-2xl" id="<?= h($question->slug) ?>"><?= h($question->title) ?></h2>
     <div><?= $question->content ?></div>

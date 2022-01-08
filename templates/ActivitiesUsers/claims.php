@@ -28,7 +28,7 @@ Welcome <?= $this->Identity->get('first_name') ?>
 <?php if(!$activities->isEmpty()): ?>
 <?php foreach($activities as $a): ?>
 
-<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-gray-900 dark:text-white">
+<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-900 dark:text-white">
 <h2 class="text-2xl">
 <?= $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $a['id']], ['class' => 'btn btn-light float-right', 'confirm' => __('Unclaim?')]) ?>
 <a href="/activities/view/<?= $a['activity']['id'] ?>" class="font-weight-bold">
@@ -57,7 +57,7 @@ Welcome <?= $this->Identity->get('first_name') ?>
 <?php endforeach ?>
 <?php else: ?>
 
-<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-gray-900 dark:text-white">
+<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-900 dark:text-white">
 <p><strong>You've not yet claimed any activities.</strong></p>
 <p>You can claim activities along a pathway. Doing so allows you to see how much of the path you have completed.</p>
 </div>

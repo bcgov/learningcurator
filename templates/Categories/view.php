@@ -16,7 +16,8 @@ $pagetitle = $category->name . '';
 $this->assign('title', $pagetitle);
 ?>
 
-<div class="mt-6 dark:text-white">
+<div class="px-6 dark:text-white">
+
 <div>
 	<?= $this->Html->link(__('Categories'), ['action' => 'index']) ?> / 
 	<?= h($category->name) ?>
@@ -29,7 +30,7 @@ $this->assign('title', $pagetitle);
 </div>
 
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-
+<div class="hidden">
 		<?= $this->Form->create(null,['url' => ['controller' => 'Topics', 'action' => 'add']]) ?>
 		<fieldset>
 			<?php
@@ -49,26 +50,26 @@ $this->assign('title', $pagetitle);
 		</fieldset>
 		<?= $this->Form->button(__('Add Topic'), ['class' => 'btn btn-primary mt-2']) ?>
 		<?= $this->Form->end() ?>
-
+</div>
 <?php endif;  // curator or admin? ?>
 
 
-<div>Topics included within this category:</div>
-</div>
+<h2 class="text-3xl">Topics</h2>
+
 <?php if (!empty($category->topics)) : ?>
 <?php foreach ($category->topics as $topic) : ?>
 <?php if($topic->featured == 1): ?>
-<div class="p-3 my-3 bg-white rounded-lg shadow-sm dark:bg-gray-900 dark:text-white">
-<h2>
+	
+<div class="p-3 my-3 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
+<h3 class="text-xl">
 	<!-- topic_id: <?= $topic->id ?> --> 
 	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
 	
-</h2>
+</h3>
 <div class="py-2 mb-2"><?= $topic->description ?></div>
-<div>Pathways included in this topic:</div>
+
 <?php foreach ($topic->pathways as $pathway) : ?>
 
-<div class="p-2">
 <?php if($pathway->status_id == 2): // is published ?>
 	<div>
 		<a href="/pathways/<?= h($pathway->slug) ?>" class="font-weight-bold">
@@ -94,22 +95,10 @@ $this->assign('title', $pagetitle);
 <?php endif; // is published ?>
 </div>
 <?php endforeach ?>
-</div>
-<?php else: ?>
-	<?php if($role == 'curator' || $role == 'superuser'): ?>
 
-		<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
-		<span class="badge badge-warning">DRAFT</span>
-<h2>
-	<!-- topic_id: <?= $topic->id ?> --> 
-	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
-	
-</h2>
-<div class="py-2 mb-2" style="font-size: 110%"><?= $topic->description ?></div>
 
-	<?php endif; // is curator or admin ?>
 <?php endif; // is published ?>
 <?php endforeach ?>
-
-
 <?php endif; // topics ?>
+
+</div>

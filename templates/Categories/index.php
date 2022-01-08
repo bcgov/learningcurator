@@ -13,23 +13,26 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<div class="dark:text-white">
+<div class="px-6 dark:text-white">
 <h1 class="my-6 text-4xl">Categories</h1>
 
 <?php foreach ($categories as $category): ?>
 
-<div class="my-2 p-3 bg-slate-100 dark:bg-gray-900 w-full">
+<div class="my-2 p-3 bg-slate-100 dark:bg-slate-900 w-full rounded-lg">
 	<div x-data="{ open: false }">
 		<h2 class="text-3xl">
 			<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
+			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="!open" @click="open = ! open">
+				Show Topics
+			</button>
+			<button class="inline-block p-2 ml-3 text-xs bg-slate-200 hover:bg-slate-300 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-t-lg" x-show="open" @click="open = ! open">
+				Hide Topics
+			</button>
 		</h2>
-	
-		<button @click="open = ! open">Show</button>
-	
-		<div x-show="open" @click.outside="open = false">
+		<div x-show="open" x-transition.duration.500ms @click.outside="open = false">
 		<?php if(!empty($category->topics[0]->pathways[0]->name)): ?>
 		<?php foreach ($category->topics as $topic): ?>
-		<div class="mb-6">
+		<div class="p-3 mb-3 bg-slate-200 dark:bg-[#003366] rounded-lg">
 			<h3 class="text-2xl"><?= $this->Html->link($topic->name, ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?></h3>
 			<?php foreach ($topic->pathways as $path): ?>
 				<div class="my-1">

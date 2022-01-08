@@ -6,18 +6,9 @@
 
 $this->loadHelper('Authentication.Identity');
 ?>
-<style>
-label {
-    display: block;
-    font-size: 16px;
-    font-weight: bold;
-}
-</style>
-<div class="container-fluid">
-<div class="row justify-content-md-center" id="colorful">
-<div class="col-md-12">
+<div class="dark:bg-black dark:text-white">
 
-<div class="py-4 text-center">
+<div class="">
     Editing <a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
         <?= $step->pathways[0]->name ?> <?= $step->name ?>
         </a>
@@ -38,16 +29,9 @@ label {
         </a>
     </div>
 
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="container-fluid linear">
-<div class="row justify-content-md-center pt-3">
-<div class="col-md-4 col-lg-4">
+    
 <h2>Step Details</h2>
-<div class="my-3 p-3 rounded-lg bg-white">
+<div class="my-3 p-3 rounded-lg bg-white dark:bg-slate-900">
     <?= $this->Form->create($step) ?>
     <?= $this->Form->hidden('image_path', ['class' => 'form-control']) ?>
     <?= $this->Form->hidden('featured', ['class' => 'form-control']) ?>
@@ -61,17 +45,13 @@ label {
     <?= $this->Form->button(__('Save Step'),['class' => 'btn btn-success btn-block my-3']) ?>
     <?= $this->Form->end() ?>
     </div>
-</div>
 
-<div class="col-md-8 col-lg-8">
-
+    
 
 
 
 
-
-
-    <div class="my-3 p-3 rounded-lg bg-white">
+    <div class="my-3 p-3 rounded-lg bg-white dark:bg-slate-900">
     <h3>Required Activities</h3>
     <ul class="list-group list-group-flush mb-3" id="requiredactivities">
     <?php  //$this->Form->control('activities._ids', ['options' => $activities]) 
@@ -100,7 +80,7 @@ label {
     
     <?php foreach($requiredacts as $a): ?>
         
-        <li class="list-group-item" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>" style="background-color: rgba(<?= $a->activity_type->color ?>,.2); border: 0;">
+        <li class="bg-slate-900" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
             <div class="row">
             <div class="col-1">
             <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'sort/' . $a->_joinData->id], 'class' => '']) ?>
@@ -220,12 +200,6 @@ label {
     <?php endforeach ?>
     </ul>
 
-    </div>
-</div>
-
-
-
-
 
 
 
@@ -241,7 +215,7 @@ label {
 <div class="modal-body">
 
 
-    <div class="my-3 p-3 rounded-lg bg-white">
+    <div class="my-3 p-3 rounded-lg bg-white dark:bg-slate-900">
     <form method="get" id="actfind" action="/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
         <input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
         <input type="hidden" name="step_id" value="<?= $step->id ?>">
@@ -339,21 +313,15 @@ label {
 
 
 
+            </div> <!-- /.main wrap -->
 
 
-
-
-
-</div>
-</div>
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
 	crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" 
-	integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" 
-	crossorigin="anonymous"></script>
+
 
 <script>
 

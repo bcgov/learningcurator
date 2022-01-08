@@ -26,7 +26,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 
 <h2><?= __('Your Reports') ?></h2>
-<div class="my-2 p-3 bg-white dark:bg-gray-900 rounded-lg shadow-sm">
+<div class="my-2 p-3 bg-white dark:bg-slate-900 rounded-lg shadow-sm">
 <?php if (!$reports->isEmpty()) : ?>
 	
 	<?php foreach ($reports as $report) : ?>

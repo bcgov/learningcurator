@@ -181,7 +181,7 @@ if ($this->Identity->isLoggedIn()) {
 
 
 <?php if(!empty($activity->steps)): ?>
-<div class="dark:bg-gray-900 dark:text-white">
+<div class="dark:bg-slate-900 dark:text-white">
 <h3 class="mt-3"><i class="fas fa-sitemap"></i> Pathways</h3>
 
 <?php foreach($activity->steps as $step): ?>

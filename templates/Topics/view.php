@@ -28,7 +28,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php foreach($topic->pathways as $pathway): ?>
 <?php if($pathway->status_id == 2): ?>
-    <div class="p-3 my-3 bg-white rounded-lg shadow-sm dark:bg-gray-900 dark:text-white">
+    <div class="p-3 my-3 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
         <h2 class="text-2xl">
             <i class="bi bi-pin-map-fill"></i>
             <?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?>
@@ -37,7 +37,7 @@ if ($this->Identity->isLoggedIn()) {
     </div>
 <?php else: ?>
     <?php if($role == 'curator' || $role == 'superuser'): ?>
-        <div class="p-3 my-3 bg-white rounded-lg shadow-sm dark:bg-gray-900 dark:text-white">
+        <div class="p-3 my-3 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
         <div class="badge badge-warning">DRAFT</div>
         <h2 class="text-2xl">
             <i class="bi bi-pin-map-fill"></i>

@@ -34,7 +34,7 @@ $this->assign('title', h($pathway->name));
 <?php if(empty($followid)): ?>
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]) ?>
-<?= $this->Form->button(__('Follow Pathway'),['class' => 'mt-4 bg-white dark:bg-gray-900 rounded-lg p-3 text-center']) ?>
+<?= $this->Form->button(__('Follow Pathway'),['class' => 'mt-4 bg-white dark:bg-slate-900 rounded-lg p-3 text-center']) ?>
 <?= $this->Form->end(); ?>
 <?php endif ?>
 
@@ -78,7 +78,7 @@ $this->assign('title', h($pathway->name));
 <?php foreach($steps->activities as $act): ?>
 <?php if($act->_joinData->required == 1) $requiredacts++; ?>
 <?php endforeach ?>
-<div class="p-3 my-3 rounded-lg bg-slate-200 dark:bg-gray-900 dark:text-white">
+<div class="p-3 my-3 rounded-lg bg-slate-200 dark:bg-slate-900 dark:text-white">
 <?php //echo '<pre>'; print_r($steps); continue; ?>
 <?php if($steps->status->name == 'Published'): ?>
 <h3 class="text-2xl">
