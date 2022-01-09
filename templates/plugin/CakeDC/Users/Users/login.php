@@ -16,12 +16,12 @@ $this->assign('title', 'Learning on demand');
 <div class="p-20 min-h-screen text-white bg-[#003366]/80">
 
 	<h1 class="text-6xl">Learning on demand</h1>
-	<div class="mt-6 p-3 text-3xl bg-[#003366]/50 rounded-lg">Learning Curator Pathways feature informal learning by theme or community. 
+	<div class="mt-6 p-3 text-3xl bg-[#003366]/50 rounded-lg">PSA Curator Pathways feature informal learning by theme or community. 
 	Here you’ll find recommendations for resources to watch, read, listen to, and courses that will help 
-	you reach your goals. Pathways are created by BC Public Service learning curators.</div>
+	you reach your goals. Pathways are created by BC Public Service curators.</div>
 
 	<div class="mt-8">
-		<a href="/auth/azuread" class="font-bold inline-block p-3 rounded-lg bg-gray-900 dark:bg-[#003366] text-lg shadow-lg text-white">
+		<a href="/auth/azuread" class="inline-block p-3 rounded-lg bg-gray-900 dark:bg-[#145693] dark:hover:bg-[#003366] text-xl shadow-lg text-white" x-transition>
 			Sign In  with your.name@gov.bc.ca address to continue
 		</a>
 	</div>

@@ -13,8 +13,8 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<div class="px-6 dark:text-white">
-<h1 class="my-6 text-4xl">Categories</h1>
+<div class="p-6 dark:text-white">
+<h1 class="text-4xl">Categories</h1>
 
 <?php foreach ($categories as $category): ?>
 

@@ -230,11 +230,9 @@ class StepsController extends AppController
      */
     public function status($id = null)
     {
-		$this->viewBuilder()->setLayout('ajax');
         $step = $this->Steps->get($id, [
             'contain' => ['Activities'],
         ]);
-        
         $user = $this->request->getAttribute('authentication')->getIdentity();
         // We need create an empty array first. If nothing gets added to
         // it, so be it
@@ -251,7 +249,6 @@ class StepsController extends AppController
         foreach($useractivities as $uact) {
             array_push($useractivitylist, $uact['activity_id']);
         }
-		
 		$stepTime = 0;
 		$totalacts = count($step->activities);
 		$stepclaimcount = 0;
@@ -268,13 +265,12 @@ class StepsController extends AppController
 				} 
 			}
 		} // endforeach for activities on this step 
-
 		if($stepclaimcount > 0) {
 			$steppercent = ceil(($stepclaimcount * 100) / $requiredacts);
 		} else {
 			$steppercent = 0;
 		}
-
+        $this->viewBuilder()->setLayout('ajax');
         $this->set(compact('totalacts','stepclaimcount','steppercent','requiredacts'));
     }
 }

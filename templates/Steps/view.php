@@ -33,7 +33,7 @@ $supplmentalcount = count($supplementalacts);
 </div> <!-- /.btn-group -->
 <?php endif ?>
 
-<nav class="bg-slate-200 dark:bg-gray-600 rounded-lg p-3" aria-label="breadcrumb">
+<nav class="bg-slate-200 dark:bg-slate-900 rounded-lg p-3" aria-label="breadcrumb">
 	<a href="/categories/index">Categories</a> / 
 	<?= $this->Html->link($step->pathways[0]->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $step->pathways[0]->topic->categories[0]->id]) ?> / 
 	<?= $this->Html->link($step->pathways[0]->topic->name, ['controller' => 'Topics', 'action' => 'view', $step->pathways[0]->topic->id]) ?> / 
@@ -49,7 +49,7 @@ $supplmentalcount = count($supplementalacts);
 <?php if(empty($followid)): ?>
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
-<?= $this->Form->button(__('Follow Pathway'),['class' => 'mt-4 bg-white dark:bg-slate-900 rounded-lg p-3 text-center']) ?>
+<?= $this->Form->button(__('Follow Pathway'),['class' => 'mt-4 bg-green-300 dark:bg-green-700 rounded-lg p-3 text-center']) ?>
 <?= $this->Form->end(); ?>
 <?php endif ?>
 
@@ -61,7 +61,7 @@ $supplmentalcount = count($supplementalacts);
 	<?= $step->pathways[0]->name ?>
 </h1>
 
-<div class="my-3 w-full bg-black rounded-lg">
+<div class="my-3 w-full bg-slate-500 dark:bg-black rounded-lg">
 	<span class="progressbar<?= $step->pathways[0]->id ?> inline-block bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg"></span>
 	<span class="beginning<?= $step->pathways[0]->id ?> inline-block"></span>
 </div>
@@ -91,7 +91,9 @@ request<?= $step->pathways[0]->id ?>.onerror = function() {
 };
 request<?= $step->pathways[0]->id ?>.send();
 </script>
-
+<div class="text-2xl mt-3">
+<?= $step->pathways[0]->objective ?> 
+</div>
 <!-- start drop-down -->
 <div @click.away="open = false" class="relative mb-2" x-data="{ open: false }">
 	<button @click="open = !open" class="flex flex-row items-center px-4 py-2 text-sm font-semibold text-left bg-gray-600 text-white rounded-lg dark:bg-black dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
@@ -145,30 +147,17 @@ request<?= $step->pathways[0]->id ?>.send();
 <h3 class="mt-6 text-2xl dark:text-white">Required Activities <span class="bg-black text-white dark:bg-white dark:text-black rounded-lg text-lg inline-block px-2"><?= $stepacts ?></span></h3>
 <?php foreach ($requiredacts as $activity) : ?>
 
-<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-gray-700 dark:text-white">
-
-<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
-
-<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'claim', 'id' => $activity->id]) ?>
-<?php //$this->Form->hidden('users.0.created', ['value' => date('Y-m-d H:i:s')]); ?>
-<?= $this->Form->hidden('users.0.id', ['value' => $uid]); ?>
-<?= $this->Form->button(__('Complete'),['class'=>'btn btn-primary', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress']) ?>
-<?= $this->Form->end() ?> 
-
-<?php else: // they have claimed it, so show that ?>
-<div class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">Completed! <i class="bi bi-bookmark-check-fill"></i></div>
-<?php //echo $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-primary', 'confirm' => __('Really delete?')]) ?>
-<?php endif; // claimed or not ?>
-<h4 class="my-3 text-2xl">
-<a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
-<!--<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
+<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
+<h4 class="mb-3 text-3xl">
+	<a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
+	<!--<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
 </h4>
-<div class="mb-4">
+<div class="mb-6">
 <?= $activity->description ?>
 </div>
-<div class="mb-4">
+<!-- <div class="mb-4">
 Activity type: <?= $activity->activity_type->name ?>
-</div>
+</div> -->
 <?php if(!empty($activity->isbn)): ?>
 <div class="bg-white p-2 isbn">
 ISBN: <?= $activity->isbn ?>
@@ -188,7 +177,7 @@ Curator says:<br>
 		rel="noopener" 
 		data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
 		href="<?= $activity->hyperlink ?>" 
-		class="block p-3 bg-black rounded-lg text-white text-2xl">
+		class="inline-block p-3 bg-green-700 rounded-lg text-white text-2xl">
 			LAUNCH
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
 				<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
@@ -196,6 +185,20 @@ Curator says:<br>
 			</svg>
 	</a>
 </div>
+
+<?php if(!in_array($activity->id,$useractivitylist)): // if the user hasn't claimed this, then show them claim form ?>
+
+<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'claim/' . $activity->id], 'class' => 'claim', 'id' => $activity->id]) ?>
+<?php //$this->Form->hidden('users.0.created', ['value' => date('Y-m-d H:i:s')]); ?>
+<?= $this->Form->hidden('users.0.id', ['value' => $uid]); ?>
+<?= $this->Form->button(__('Complete'),['class'=>'btn btn-primary', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress']) ?>
+<?= $this->Form->end() ?> 
+
+<?php else: // they have claimed it, so show that ?>
+<div class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">Completed! <i class="bi bi-bookmark-check-fill"></i></div>
+<?php //echo $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $activity->_joinData->id], ['class' => 'btn btn-primary', 'confirm' => __('Really delete?')]) ?>
+<?php endif; // claimed or not ?>
+
 
 </div>
 <?php endforeach; // end of activities loop for this step ?>
