@@ -53,7 +53,7 @@
 
 <div class="dark:bg-[#003366] dark:text-white w-full">
 <?php if(!empty($this->Identity->get('id'))): ?>
-<div class="w-full px-6 py-4 bg-slate-300 dark:bg-[#002850] sticky top-0 z-50">
+<div class="w-full px-6 py-4 bg-slate-300 dark:bg-[#002850]"> <!-- sticky top-0 z-50 -->
 <form method="get" action="/find" class="" role="search">
 		<input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-900 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search"><button class="px-3 py-2 m-0 bg-slate-400 dark:text-white dark:bg-slate-900 dark:hover:bg-slate-800 rounded-r-lg" type="submit">Search</button>
 	</form>
