@@ -188,8 +188,7 @@ class PathwaysController extends AppController
                             'requiredacts', 
                             'suppacts', 
                             'percentage', 
-                            'followid', 
-                            'useractivitylist'));
+                            'followid'));
 
     }
 
