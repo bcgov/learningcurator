@@ -45,15 +45,7 @@ $supplmentalcount = count($supplementalacts);
 	<?= $step->name ?>
 </nav>
 
-
-<?php if(empty($followid)): ?>
-<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
-<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
-<?= $this->Form->button(__('Follow Pathway'),['class' => 'mt-4 bg-green-300 dark:bg-green-700 rounded-lg p-3 text-center']) ?>
-<?= $this->Form->end(); ?>
-<?php endif ?>
-
-<h1 class="mt-4 text-4xl">
+<h1 class="my-6 text-4xl">
 	<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
 		<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
 		<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
@@ -61,55 +53,60 @@ $supplmentalcount = count($supplementalacts);
 	<?= $step->pathways[0]->name ?>
 </h1>
 
-<div class="my-3 w-full bg-slate-500 dark:bg-black rounded-lg">
-	<span class="progressbar<?= $step->pathways[0]->id ?> inline-block bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg"></span>
-	<span class="beginning<?= $step->pathways[0]->id ?> inline-block"></span>
-</div>
-<script>
-var request<?= $step->pathways[0]->id ?> = new XMLHttpRequest();
-request<?= $step->pathways[0]->id ?>.open('GET', '/pathways/status/<?= $step->pathways[0]->id ?>', true);
-request<?= $step->pathways[0]->id ?>.onload = function() {
-	if (this.status >= 200 && this.status < 400) {
-		var data<?= $step->pathways[0]->id ?> = JSON.parse(this.response);
-		if(data<?= $step->pathways[0]->id ?>.percentage > 0) {
-			let percwid = data<?= $step->pathways[0]->id ?>.percentage;
-			if(percwid < 10) {
-				document.querySelector('.beginning<?= $step->pathways[0]->id ?>').innerHTML = data<?= $step->pathways[0]->id ?>.percentage + '% complete';
-				document.querySelector('.progressbar<?= $step->pathways[0]->id ?>').innerHTML = '&nbsp;';
-			} else {
-				document.querySelector('.progressbar<?= $step->pathways[0]->id ?>').innerHTML = data<?= $step->pathways[0]->id ?>.percentage + '% complete';
-			}
-			document.querySelector('.progressbar<?= $step->pathways[0]->id ?>').style.width = percwid + '%';
-		} else {
-			document.querySelector('.beginning<?= $step->pathways[0]->id ?>').innerHTML = 'You\'ve not completed any activities yet. Complete an activity to see your progress bar.';
-		}
-	}
-};
-request<?= $step->pathways[0]->id ?>.onerror = function() {
-	// There was a connection error of some sort
-	document.querySelector('.beginning<?= $step->pathways[0]->id ?>').innerHTML = 'Could not get status :(';
-};
-request<?= $step->pathways[0]->id ?>.send();
-</script>
-<div class="text-2xl mt-3">
+
+
+<div class="px-10">
+
+<div class="mb-6 text-2xl">
 <?= $step->pathways[0]->objective ?> 
 </div>
+
+
+<?php if(empty($followid)): ?>
+<?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
+<?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
+<?= $this->Form->button(__('Follow Pathway'),['class' => 'mt-4 bg-green-300 dark:bg-green-700 rounded-lg p-3 text-center']) ?>
+<?= $this->Form->end(); ?>
+<?php else: ?>
+<div
+    x-cloak
+    x-data="{status: [], 'isLoading': true}"
+    x-init="fetch('/pathways/status/<?= $step->pathways[0]->id ?>')
+            .then(response => response.json())
+            .then(response => { 
+                    status = response; 
+                    isLoading = false; 
+                    //console.log(response); 
+                })"
+>
+<div class="" x-show="isLoading">Loading&hellip;</div>
+<div x-show="!isLoading">
+	<div class="mb-6 w-full bg-slate-500 dark:bg-black rounded-lg">
+		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg">&nbsp;</span>
+		<span x-text="status.percentage + '%'" class="beginning inline-block"></span>
+	</div>
+</div>
+</div>
+<?php endif ?>
+
+</div> <!-- / objective contain -->
+
 <!-- start drop-down -->
-<div @click.away="open = false" class="relative mb-2" x-data="{ open: false }">
-	<button @click="open = !open" class="flex flex-row items-center px-4 py-2 text-sm font-semibold text-left bg-gray-600 text-white rounded-lg dark:bg-black dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-	<span>Modules</span>
-	<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-12 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1">
-		<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-	</svg>
+<div @click.away="open = false" class="relative ml-3" x-data="{ open: false }">
+	<button @click="open = !open" class="px-4 py-2 text-sm font-semibold text-right bg-gray-600 text-white rounded-t-lg dark:bg-slate-900 dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+		<span>Module Menu</span>
+		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
+			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+		</svg>
 	</button>
-	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
-		<div class="px-2 py-2 bg-white rounded-md shadow dark:bg-gray-800">
+	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full origin-top-right shadow-lg">
+		<div class="px-2 py-2 bg-white rounded-md shadow dark:bg-slate-900">
 		<?php foreach ($step->pathways as $pathways) : ?>
 		<?php foreach($pathways->steps as $s): ?>
 		<?php if($s->status_id == 2): ?>
 		<?php $c = '' ?>
-		<?php if($s->id == $step->id) $c = 'font-weight-bold' ?>
-		<a class="<?= $c ?> block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+		<?php if($s->id == $step->id) $c = 'bg-[#003366]' ?>
+		<a class="<?= $c ?> block px-4 py-2 mt-2 text-sm font-semibold rounded-lg dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
 		<?= $s->name ?> 
 		</a>
 		<?php else: ?>
@@ -132,14 +129,14 @@ request<?= $step->pathways[0]->id ?>.send();
 </div>
 <!-- /end drop-down -->
 
-<div class="p-3 my-3 rounded-lg activity bg-slate-200 dark:bg-slate-900 dark:text-white">
-<h2 class="m4-4 text-3xl">
+<div class="p-6 rounded-lg activity bg-slate-200 dark:bg-slate-900 dark:text-white">
+<h2 class="mb-4 text-3xl">
 <?= $step->name ?>
 </h2>
 <?php if($step->status_id == 1): ?>
 <span class="badge badge-warning">DRAFT</span>
 <?php endif ?>
-<div class="my-3 text-lg">
+<div class="mb-4 text-xl">
 <?= $step->description ?>
 </div>
 
@@ -152,7 +149,7 @@ request<?= $step->pathways[0]->id ?>.send();
 	<a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
 	<!--<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
 </h4>
-<div class="mb-6">
+<div class="mb-6 text-lg">
 <?= $activity->description ?>
 </div>
 <!-- <div class="mb-4">
