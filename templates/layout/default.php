@@ -6,7 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title><?= $this->fetch('title') ?> | Learning Curator</title>
-<script src="/js/tailwind.js"></script>
+<!-- <script src="/js/tailwind.js"></script> -->
+<link href="/css/tailwind.css" rel="stylesheet">
 </head>
 <body class="bg-white dark:bg-slate-800">
 <div class="md:flex flex-col md:flex-row md:min-h-screen w-full rounded-br-lg">
@@ -29,7 +30,7 @@
         $currentpage = $_SERVER["REQUEST_URI"];
         $navigation = array(
             ['name'=>'Profile','link' => '/profile'],
-            ['name'=>'Categories','link' => '/categories'],
+            ['name'=>'Categories','link' => '/categories'], 
             ['name'=>'Pathways','link' => '/pathways'],
             ['name'=>'Activities','link' => '/activities'],
             ['name'=>'About','link' => '/questions']
