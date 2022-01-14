@@ -1,3 +1,3 @@
 <?php 
 
-echo json_encode(compact(['name','requiredacts','totalclaimed','percentage']));
+echo json_encode(compact(['name','requiredacts','completed','percentage']));

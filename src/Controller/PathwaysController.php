@@ -394,23 +394,26 @@ class PathwaysController extends AppController
             'contain' => ['Steps', 'Steps.Activities'],
         ]);
         if (!empty($pathway->steps)) :
-            $totalclaimed = 0;
             $requiredacts = 0;
-            foreach ($pathway->steps as $steps) :
-                foreach ($steps->activities as $activity):
+            $completed = 0;
+            foreach ($pathway->steps as $step) :
+                foreach ($step->activities as $activity):
                     if($activity->status_id == 2) {
                         if($activity->_joinData->required == 1) {
                             $requiredacts++;
-                            if(in_array($activity->id, $useractivitylist)) {
-                                $totalclaimed++;
+                            $actlist = array_count_values($useractivitylist); 
+                            foreach($actlist as $k => $v) {
+                                if($k == $activity->id) {
+                                    if($v > 1) $completed++;
+                                }
                             }
                         }
                     }
                 endforeach; // activities
             endforeach; // steps
-            $percentage = floor(($totalclaimed / $requiredacts) * 100);
+            $percentage = floor(($completed / $requiredacts) * 100);
             $name = $pathway->name;
-            $this->set(compact(['name','requiredacts','totalclaimed','percentage']));        
+            $this->set(compact(['name','requiredacts','completed','percentage']));        
         endif; // if steps
 
 

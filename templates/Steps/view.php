@@ -78,7 +78,7 @@ $supplmentalcount = count($supplementalacts);
 <div x-show="!isLoading">
 	<div class="mb-6 h-6 w-full bg-slate-500 dark:bg-black rounded-lg">
 		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg">&nbsp;</span>
-		<span x-text="status.percentage + '%'" class="beginning inline-block"></span>
+		<span x-text="status.percentage + '% - ' + status.completed + ' of ' + status.requiredacts" class="beginning inline-block"></span>
 	</div>
 </div>
 </div>
