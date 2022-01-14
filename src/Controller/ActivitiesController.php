@@ -244,27 +244,6 @@ class ActivitiesController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    /**
-     * Claim an activity
-     *
-     * @param string|null $id Activity id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function claim($id = null)
-    {
-        $activity = $this->Activities->get($id, [
-            'contain' => ['Users'],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
-  
-            if ($this->Activities->save($activity)) {
-                return $this->redirect($this->referer());
-            }
-        }
-
-    }
     
     /**
      * Find method for activities; this is super-duper basic and search deserves better thab

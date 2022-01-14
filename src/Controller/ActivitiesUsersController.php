@@ -71,25 +71,27 @@ class ActivitiesUsersController extends AppController
     }
 
     /**
-     * Add method
+     * Complete an activity by adding an entry here method
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function complete ()
     {
-        $activitiesUser = $this->ActivitiesUsers->newEmptyEntity();
+          
         if ($this->request->is('post')) {
-            $activitiesUser = $this->ActivitiesUsers->patchEntity($activitiesUser, $this->request->getData());
-            if ($this->ActivitiesUsers->save($activitiesUser)) {
-                $this->Flash->success(__('The activities user has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+            $activitiesUser = $this->ActivitiesUsers->newEmptyEntity();
+            $user = $this->request->getAttribute('authentication')->getIdentity();
+            $activitiesUser->user_id = $user->id;
+            $aid = $this->request->getData()['activity_id'];
+            $activitiesUser->activity_id = $aid;
+
+            if ($this->ActivitiesUsers->save($activitiesUser)) {
+                return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The activities user could not be saved. Please, try again.'));
+            print(__('Something went wrong and you not completed this activity yet. Please, try again.'));
         }
-        $activities = $this->ActivitiesUsers->Activities->find('list', ['limit' => 200]);
-        $users = $this->ActivitiesUsers->Users->find('list', ['limit' => 200]);
-        $this->set(compact('activitiesUser', 'activities', 'users'));
+        
     }
 
     /**
