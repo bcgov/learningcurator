@@ -21,20 +21,19 @@ $this->assign('title', 'Learning on demand');
 	you reach your goals. Pathways are created by BC Public Service curators.</div>
 
 	<div class="mt-8">
-		<a href="/auth/azuread" class="inline-block p-3 rounded-lg bg-gray-900 dark:bg-[#145693] dark:hover:bg-[#003366] text-xl shadow-lg text-white" x-transition>
+		<a href="/auth/azuread" class="inline-block p-3 rounded-lg bg-[#145693] hover:bg-[#003366] text-xl shadow-lg text-white" x-transition>
 			Sign In  with your.name@gov.bc.ca address to continue
 		</a>
 	</div>
 
-	<!--
-	<div class="p-3 bg-[#003366]/50" id="adminlogin">
-	<p><em>If you're a curator or an admin:</em></p>
+	
+	<div class="w-64 mt-24 p-3 bg-[#003366]/50 rounded-lg" id="adminlogin">
 	<?= $this->Form->create() ?>
-	<?= $this->Form->control('username', ['label' => __d('cake_d_c/users', 'Username'), 'required' => true, 'class'=>'p-1 dark:bg-black dark:text-white']) ?>
-	<?= $this->Form->control('password', ['label' => __d('cake_d_c/users', 'Password'), 'required' => true, 'class'=>'p-1 dark:bg-black dark:text-white']) ?>
-	<?= $this->Form->button(__d('cake_d_c/users', 'Login as an admin'),['class'=>'btn btn-light mt-2']); ?>
+	<?= $this->Form->control('username', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-[#003366] text-white rounded-lg']) ?>
+	<?= $this->Form->control('password', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-[#003366] text-white rounded-lg']) ?>
+	<?= $this->Form->button(__d('cake_d_c/users', 'Admins Only'),['class'=>'p-3 bg-[#003366] text-sm text-black hover:text-white rounded-lg']); ?>
 	<?= $this->Form->end() ?>
-	</div> -->
+	</div> 
 
 </div>
 </div>

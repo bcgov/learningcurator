@@ -25,15 +25,21 @@ if ($this->Identity->isLoggedIn()) {
 			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="!open" @click="open = ! open">
 				Show Topics
 			</button>
-			<button class="inline-block p-2 ml-3 text-xs bg-slate-200 hover:bg-slate-300 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-t-lg" x-show="open" @click="open = ! open">
+			<button class="inline-block p-2 ml-3 text-xs bg-slate-200 hover:bg-slate-300 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="open" @click="open = ! open">
 				Hide Topics
 			</button>
 		</h2>
 		<div x-show="open" x-transition.duration.500ms @click.outside="open = false">
+		<div class="my-3">
+			<?= h($category->description) ?>
+		</div>
 		<?php if(!empty($category->topics[0]->pathways[0]->name)): ?>
 		<?php foreach ($category->topics as $topic): ?>
 		<div class="p-3 mb-3 bg-slate-200 dark:bg-[#003366] rounded-lg">
 			<h3 class="text-2xl"><?= $this->Html->link($topic->name, ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?></h3>
+			<div class="my-3">
+				<?= h($topic->description) ?>
+			</div>			
 			<?php foreach ($topic->pathways as $path): ?>
 				<div class="my-1">
 				<h4 class="text-xl">

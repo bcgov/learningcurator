@@ -52,7 +52,7 @@
   </div>
 
 
-<div class="dark:bg-[#003366] dark:text-white w-full">
+<div class="bg-[#c3d4e4] dark:bg-[#003366] dark:text-white w-full">
 <?php if(!empty($this->Identity->get('id'))): ?>
 <div class="w-full px-6 py-4 bg-slate-300 dark:bg-[#002850]"> <!-- sticky top-0 z-50 -->
 <form method="get" action="/find" class="" role="search">
@@ -63,10 +63,11 @@
 <?= $this->fetch('content') ?>
 </div>
 </div>
-<div class="py-6 text-center bg-slate-200 dark:bg-slate-900">
+<div class="py-6 bg-slate-200 dark:bg-slate-900">
   <img class="inline-block my-6" src="/img/wiw-white-text.svg" width="380px">
   <img class="my-6 hidden dark:inline-block" src="/img/learning-centre-logo-wordmark-darkmode.svg" height="100px" width="300px">
   <img class="my-6 inline-block dark:hidden" src="/img/learning-centre-logo-wordmark.svg" height="100px" width="300px">
+  <a href="#privacy" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-[#003366] dark:text-white rounded-lg">Privacy Statement</a>
 </div>
 
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>

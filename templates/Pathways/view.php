@@ -50,42 +50,31 @@ $this->assign('title', h($pathway->name));
 </div>
 
 
+<div
+    x-cloak
+    x-data="{status: [], 'isLoading': true}"
+    x-init="fetch('/pathways/status/<?= $pathway->id ?>')
+            .then(response => response.json())
+            .then(response => { 
+                    status = response; 
+                    isLoading = false; 
+                    //console.log(response); 
+                })"
+>
+<div class="" x-show="isLoading">Loading&hellip;</div>
+<div x-show="!isLoading">
+	<div class="mb-6 w-full bg-slate-500 dark:bg-black rounded-lg">
+		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg">&nbsp;</span>
+		<span x-text="status.percentage + '%'" class="beginning inline-block"></span>
+	</div>
+</div>
+</div>
+
 <?php if(empty($followid)): ?>
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]) ?>
-<?= $this->Form->button(__('Follow Pathway'),['class' => 'mt-4 bg-green-300 dark:bg-green-700 rounded-lg p-3 text-center']) ?>
+<?= $this->Form->button(__('Pin to Profile'),['class' => 'mb-4 bg-green-300 dark:bg-green-700 rounded-lg p-3 text-center']) ?>
 <?= $this->Form->end(); ?>
-<?php else: ?>
-<div class="mb-3 p-0 w-full bg-slate-500 dark:bg-black text-sm rounded-lg">
-	<span class="progressbar inline-block bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg"></span>
-	<span class="beginning inline-block"></span>
-</div>
-<script>
-var request = new XMLHttpRequest();
-request.open('GET', '/pathways/status/<?= $pathway->id ?>', true);
-request.onload = function() {
-	if (this.status >= 200 && this.status < 400) {
-		var data = JSON.parse(this.response);
-		if(data.percentage > 0) {
-			let percwid = data.percentage;
-			if(percwid < 40) {
-				document.querySelector('.beginning').innerHTML = data.percentage + '% complete';
-				document.querySelector('.progressbar').innerHTML = '&nbsp;';
-			} else {
-				document.querySelector('.progressbar').innerHTML = data.percentage + '% complete';
-			}
-			document.querySelector('.progressbar').style.width = percwid + '%';
-		} else {
-			document.querySelector('.beginning').innerHTML = 'You\'ve not completed any activities yet. Complete an activity to see your progress bar.';
-		}
-	}
-};
-request.onerror = function() {
-	// There was a connection error of some sort
-	document.querySelector('.beginning').innerHTML = 'Could not get status :(';
-};
-request.send();
-</script>
 <?php endif ?>
 
 </div> <!-- / objective contain -->

@@ -11,17 +11,17 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 
-<div class="px-6">
+<div class="px-6 dark:text-white">
 
-<h1 class="mt-6 text-2xl dark:text-white">
+<h1 class="mt-6 text-2xl">
 	Welcome <?= $this->Identity->get('first_name') ?>
 </h1>
 
 <div class="systemrole">
 <?php if($role == 'curator'): ?>
-<span class="dark:text-white">Curator</span>
+<span class="">You're a Curator!</span>
 <?php elseif($role == 'superuser'): ?>
-<span class="dark:text-white">Super User</span>
+<span class="">Super User</span>
 <?php endif ?>
 </div>
 
@@ -65,37 +65,26 @@ if ($this->Identity->isLoggedIn()) {
 		</div>
 		<?php endif ?>
 
-		<div class="my-3 w-full bg-slate-500 dark:bg-black rounded-lg">
-			<span class="progressbar<?= $path->pathway->id ?> inline-block bg-green-300 dark:bg-green-800 dark:text-white text-center rounded-lg"></span>
-			<span class="beginning<?= $path->pathway->id ?> inline-block"></span>
+
+		<div x-cloak
+			x-data="{status<?= $path->pathway->id ?>: [], 'isLoading': true}"
+			x-init="fetch('/pathways/status/<?= $path->pathway->id ?>')
+					.then(response<?= $path->pathway->id ?> => response<?= $path->pathway->id ?>.json())
+					.then(response<?= $path->pathway->id ?> => { 
+							status<?= $path->pathway->id ?> = response<?= $path->pathway->id ?>; 
+							isLoading = false; 
+							//console.log(response); 
+						})"
+		>
+		<div class="" x-show="isLoading">Loading&hellip;</div>
+		<div x-show="!isLoading">
+			<div class="my-4 h-6 w-full bg-slate-500 dark:bg-black rounded-lg">
+				<span :style="'width:' + status<?= $path->pathway->id ?>.percentage + '%;'" class="progressbar h-6 inline-block bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg">&nbsp;</span>
+				<span x-text="status<?= $path->pathway->id ?>.percentage + '%'" class="beginning inline-block"></span>
+			</div>
 		</div>
-		<script>
-		var request<?= $path->pathway->id ?> = new XMLHttpRequest();
-		request<?= $path->pathway->id ?>.open('GET', '/pathways/status/<?= $path->pathway->id ?>', true);
-		request<?= $path->pathway->id ?>.onload = function() {
-			if (this.status >= 200 && this.status < 400) {
-				var data<?= $path->pathway->id ?> = JSON.parse(this.response);
-				if(data<?= $path->pathway->id ?>.percentage > 0) {
-					let percwid = data<?= $path->pathway->id ?>.percentage;
-					if(percwid < 10) {
-						document.querySelector('.beginning<?= $path->pathway->id ?>').innerHTML = data<?= $path->pathway->id ?>.percentage + '% complete';
-						document.querySelector('.progressbar<?= $path->pathway->id ?>').innerHTML = '&nbsp;';
-					} else {
-						document.querySelector('.progressbar<?= $path->pathway->id ?>').innerHTML = data<?= $path->pathway->id ?>.percentage + '% complete';
-					}
-					document.querySelector('.progressbar<?= $path->pathway->id ?>').style.width = percwid + '%';
-					
-				} else {
-					document.querySelector('.beginning<?= $path->pathway->id ?>').innerHTML = 'You\'ve not completed any activities yet. Complete an activity to see your progress bar.';
-				}
-			}
-		};
-		request<?= $path->pathway->id ?>.onerror = function() {
-			// There was a connection error of some sort
-			document.querySelector('.beginning<?= $path->pathway->id ?>').innerHTML = 'Could not get status :(';
-		};
-		request<?= $path->pathway->id ?>.send();
-		</script>
+		</div>
+
 
 		<?php 
 		echo $this->Form->postLink(__('Un-Follow'), 
@@ -108,11 +97,17 @@ if ($this->Identity->isLoggedIn()) {
 	
 <?php else: ?>
 	<div class="p-3 mb-2 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
-	<p><strong>You're not yet following any pathways.</strong></p>
-	<p>Following means that you can see your progress through the pathway as you claim activities.</p>
-	<a href="/categories" class="inline-block p-3 my-6 bg-slate-300 dark:bg-[#003366] text-lg rounded-lg">
-		View Categories
-	</a>
+
+		<h2 class="mb-3 text-3xl">Get Started</h2>
+		<p class="p-4 bg-[#003366]/50 rounded-lg">Curator pathways are organized into topics and 
+			topics are categorized. You can see all the pathways we have to offer, but you can also 
+			pin a pathway to your profile to access it quickly. Once you're following a pathway 
+			you'll be able to see your progress along it as you complete its activities.</p>
+		
+		<a href="/categories" class="inline-block p-3 my-6 bg-slate-300 dark:bg-green-700 text-lg rounded-lg">
+			View Categories
+		</a>
+
 	</div>
 <?php endif ?>
 
