@@ -11,7 +11,7 @@
 </head>
 <body class="bg-white dark:bg-slate-800">
 <div class="md:flex flex-col md:flex-row md:min-h-screen w-full rounded-br-lg">
-  <div @click.away="open = false" class="flex flex-col w-full md:w-64 text-gray-700 dark:text-gray-200 bg-slate-200 dark:bg-slate-900 flex-shrink-0" x-data="{ open: false }">
+  <div @click.away="open = false" class="flex flex-col w-full md:w-64 text-gray-700 dark:text-gray-200 bg-slate-100 dark:bg-slate-900 flex-shrink-0" x-data="{ open: false }">
     <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
       <span class="leading-3 text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
         <span class="text-xs">Learning</span><br><span class="text-yellow-500">Curator</span>
@@ -54,9 +54,9 @@
 
 <div class="bg-[#c3d4e4] dark:bg-[#003366] dark:text-white w-full">
 <?php if(!empty($this->Identity->get('id'))): ?>
-<div class="w-full px-6 py-4 bg-slate-300 dark:bg-[#002850]"> <!-- sticky top-0 z-50 -->
+<div class="w-full px-6 py-4 bg-slate-200 dark:bg-[#002850]"> <!-- sticky top-0 z-50 -->
 <form method="get" action="/find" class="" role="search">
-		<input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-900 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search"><button class="px-3 py-2 m-0 bg-slate-400 dark:text-white dark:bg-slate-900 dark:hover:bg-slate-800 rounded-r-lg" type="submit">Search</button>
+		<input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-900 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search"><button class="px-3 py-2 m-0 bg-slate-300 dark:text-white dark:bg-slate-900 dark:hover:bg-slate-800 rounded-r-lg" type="submit">Search</button>
 	</form>
 </div>
 <?php endif ?>

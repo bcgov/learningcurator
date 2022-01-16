@@ -52,7 +52,7 @@ if ($this->Identity->isLoggedIn()) {
 		</div>	
 		<div x-show="paths<?= $topic->id ?>" x-transition.duration.500ms>
 			<?php foreach ($topic->pathways as $path): ?>
-				<div class="p-3 my-1 bg-slate-900 rounded-lg">
+				<div class="p-3 my-1 bg-white dark:bg-slate-900 rounded-lg">
 				<h4 class="text-xl">
 					<a href="/pathways/<?= h($path->slug) ?>">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
@@ -62,6 +62,9 @@ if ($this->Identity->isLoggedIn()) {
 					<?= h($path->name) ?>
 					</a>
 				</h4>
+				<div class="my-2 p-3 bg-slate-100 dark:bg-[#003366]/50">
+				<?= h($path->description) ?>
+				</div>
 				</div>
 			<?php endforeach ?>
 		</div> <!-- / paths container -->
