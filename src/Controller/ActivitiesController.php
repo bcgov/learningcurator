@@ -254,14 +254,55 @@ class ActivitiesController extends AppController
      */
     public function find()
     {
+        $search = $this->request->getQuery('search');
+        
         $activities = $this->Activities->find('search', ['search' => $this->request->getQuery()])
                                         ->contain(['ActivityTypes','Steps.Pathways']);
-        $search = $this->request->getQuery('search');
-        $numresults = $activities->count();
-        $this->set(compact('activities','search', 'numresults'));
+        $numacts = $activities->count();
+
+        // We've searched for activities and that's great and all, but we also
+        // want to return results for categories.
+        $allcats = TableRegistry::getTableLocator()->get('Categories');
+        $categories = $allcats->find('all',
+                                    array('conditions' => 
+                                    array('OR' => 
+                                        array(
+                                            'name LIKE' => '%'.$search.'%',
+                                            'description LIKE' => '%'.$search.'%'
+                                        )
+                                )));
+        $numcats = $categories->count();
+
+        // We've searched for activities and categories and that's great and all, but we also
+        // want to return results for pathways. 
+        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
+        // $pathways = $allpaths->find()->where(function ($exp, $query) use($search) {
+        //     return $exp->like('name', '%'.$search.'%');
+        // })->order(['name' => 'ASC']);
+
+        $pathways = $allpaths->find('all',
+                                    array('conditions' => 
+                                    array('OR' => 
+                                        array(
+                                            'name LIKE' => '%'.$search.'%',
+                                            'description LIKE' => '%'.$search.'%'
+                                        )
+                                )));
+        $numpaths = $pathways->count();
+
+
+
+        $this->set(compact('categories', 
+                            'pathways', 
+                            'activities', 
+                            'search', 
+                            'numcats', 
+                            'numacts', 
+                            'numpaths'));
     }
+
     /**
-     * Find method for activities; this is super-duper basic and search deserves better thab
+     * Check for duplicate links in the system
      *
      * @param string|null $search search pararmeters to lookup activities.
      * @return \Cake\Http\Response|null
