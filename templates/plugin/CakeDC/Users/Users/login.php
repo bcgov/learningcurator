@@ -29,7 +29,7 @@ $this->assign('title', 'Learning on demand');
 	
 	<div class="w-64 mt-24 p-3 bg-[#003366]/50 rounded-lg" id="adminlogin">
 	<?= $this->Form->create() ?>
-	<?= $this->Form->control('username', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-[#003366] text-white rounded-lg']) ?>
+	<?= $this->Form->control('username', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-[#003366] active:bg-[#003366] text-white rounded-lg']) ?>
 	<?= $this->Form->control('password', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-[#003366] text-white rounded-lg']) ?>
 	<?= $this->Form->button(__d('cake_d_c/users', 'Admins Only'),['class'=>'p-3 bg-[#003366] text-sm text-black hover:text-white rounded-lg']); ?>
 	<?= $this->Form->end() ?>
