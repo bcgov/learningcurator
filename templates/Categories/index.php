@@ -14,13 +14,12 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 <div class="p-6 dark:text-white">
-<h1 class="text-4xl">Categories</h1>
 
 <?php foreach ($categories as $category): ?>
 
 <div class="my-2 p-3 bg-slate-100 dark:bg-slate-900 w-full rounded-lg">
 	<div x-data="{ topics<?= $category->id ?>: false }">
-		<h2 class="text-3xl">
+		<h1 class="text-3xl">
 			<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
 			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="!topics<?= $category->id ?>" @click="topics<?= $category->id ?> = ! topics<?= $category->id ?>">
 				Show Topics
@@ -28,7 +27,7 @@ if ($this->Identity->isLoggedIn()) {
 			<button class="inline-block p-2 ml-3 text-xs bg-slate-200 hover:bg-slate-300 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="topics<?= $category->id ?>" @click="topics<?= $category->id ?> = ! topics<?= $category->id ?>">
 				Hide Topics
 			</button>
-		</h2>
+		</h1>
 		<div x-show="topics<?= $category->id ?>" x-transition.duration.500ms>
 		<div class="my-3">
 			<?= h($category->description) ?>
@@ -38,7 +37,7 @@ if ($this->Identity->isLoggedIn()) {
 		<div class="p-3 mb-3 bg-slate-200 dark:bg-[#003366] rounded-lg">
 		<div x-data="{ paths<?= $topic->id ?>: false }">
 	
-		<h3 class="text-3xl">
+		<h2 class="text-3xl">
 			<?= $this->Html->link($topic->name, ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
 			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="!paths<?= $topic->id ?>" @click="paths<?= $topic->id ?> = ! paths<?= $topic->id ?>">
 				Show Pathways
@@ -46,7 +45,7 @@ if ($this->Identity->isLoggedIn()) {
 			<button class="inline-block p-2 ml-3 text-xs bg-slate-200 hover:bg-slate-300 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="paths<?= $topic->id ?>" @click="paths<?= $topic->id ?> = ! paths<?= $topic->id ?>">
 				Hide Pathways
 			</button>
-		</h3>
+		</h2>
 		<div class="my-3">
 			<?= h($topic->description) ?>
 		</div>	
