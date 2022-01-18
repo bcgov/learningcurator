@@ -12,28 +12,35 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 
-<div class="dark:text-white">
+<div class="p-6 dark:text-white">
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <?= $this->Html->link(__('New Question'), ['action' => 'add'], ['class' => 'btn btn-success float-right']) ?>
 <?php endif ?>
 <h1 class="text-4xl"><?= __('About') ?></h1>
 <div class="mb-6">The Curator is a project from the Public Service Agency.</div>
 
+
+<div class="md:flex">
+<div class="basis-1/4 p-3">
+<div class="md:sticky top-3 mt-3 bg-[#003366]">
 <?php foreach ($questions as $question): ?>
 <?php if($question->status_id == 2): ?>
-<div class="">
+<div class="p-2 m-1 bg-slate-900 rounded-lg">
     <a class="" href="#<?= h($question->slug) ?>"><?= h($question->title) ?></a>
 </div>
 <?php else: ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div>
+<div class="p-2 my-1 bg-slate-900">
     <a href="#<?= h($question->slug) ?>"><?= h($question->title) ?></a> 
     <span class=""><?= h($question->status->name) ?></span>
 </div>
 <?php endif ?>
 <?php endif ?>
 <?php endforeach; ?>
+</div>
+</div>
 
+<div class="basis-3/4 p-3">
 
 <?php foreach ($questions as $question): ?>
 <?php if($question->status_id == 2): ?>
@@ -61,4 +68,6 @@ if ($this->Identity->isLoggedIn()) {
 <?php endif ?>
 <?php endif ?>
 <?php endforeach; ?>
+</div>
+</div>
 </div>
