@@ -25,13 +25,43 @@ if ($this->Identity->isLoggedIn()) {
 <?php endif ?>
 </div>
 
-<div class="mt-3 ml-6">
-    <a href="/profile" class="inline-block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-t-lg dark:bg-slate-900 dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-		My Pathways
-	</a> 
-    <a href="/profile/claims" class="inline-block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">My Activities</a> 
-    <a href="/profile/reports" class="inline-block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">My Issues</a> 
+
+<div @click.away="open = false" class="relative ml-4 mt-4" x-data="{ open: false }">
+	<button @click="open = !open" class="px-4 py-2 text-sm font-semibold text-right bg-gray-600 text-white rounded-t-lg dark:bg-slate-900 dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+		<span>Profile Menu</span>
+		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
+			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+		</svg>
+	</button>
+	<div x-show="open" 
+			x-transition:enter="transition ease-out duration-100" 
+			x-transition:enter-start="transform opacity-0 scale-95" 
+			x-transition:enter-end="transform opacity-100 scale-100" 
+			x-transition:leave="transition ease-in duration-75" 
+			x-transition:leave-start="transform opacity-100 scale-100" 
+			x-transition:leave-end="transform opacity-0 scale-95" 
+			class="absolute right-0 w-full origin-top-right p-4 bg-slate-800 shadow-lg">
+
+		<a href="/profile" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-slate-900 dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+			My Pathways
+		</a> 
+		<a href="/profile/claims" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+			My Activities
+		</a> 
+		<a href="/profile/reports" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+			My Issues
+		</a> 
+	</div>
 </div>
+
+
+
+
+
+
+
+
+
 <div class="p-3 bg-slate-100 dark:bg-slate-900 dark:text-white rounded-lg">
 <?php if (!$pathways->isEmpty()) : ?>
 	
