@@ -19,7 +19,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="basis-1/3 p-3">
 <h2 class="text-2xl">Found <span class="badge badge-dark"><?= $numcats ?></span> categories</h2>
 <?php foreach($categories as $c): ?>
-<div class="p-3 my-3 bg-slate-900 rounded-lg">
+<div class="p-3 my-3 rounded-lg bg-slate-200 dark:bg-slate-900">
 	<h3 class="text-xl">
 		<a href="/categories/view/<?= $c->id ?>">
 			<?= $c->name ?>
@@ -40,7 +40,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="basis-1/3 p-3">
 <h2 class="text-2xl">Found <span class="badge badge-dark"><?= $numpaths ?></span> pathways</h2>
 <?php foreach($pathways as $p): ?>
-<div class="p-3 my-3 bg-slate-900 rounded-lg">
+<div class="p-3 my-3 rounded-lg bg-slate-200 dark:bg-slate-900">
 	<h3 class="text-xl">
 		<a href="/pathways/<?= $p->slug ?>">
 			<?= $p->name ?>
@@ -71,9 +71,9 @@ if ($this->Identity->isLoggedIn()) {
 		<a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
 		<?php //$this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?>
 	</h3>
-	<div class="py-3 ">
+	<!-- <div class="py-3 ">
 		<?= $activity->description ?>
-	</div>
+	</div> -->
 	<?php if(!empty($activity->steps)): ?>
 	<div class="p-3 mb-3 bg-white dark:bg-slate-800 rounded-lg">This activity is on the following pathways:
 	<?php foreach($activity->steps as $step): ?>
