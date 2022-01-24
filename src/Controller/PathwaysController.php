@@ -404,7 +404,7 @@ class PathwaysController extends AppController
                             $actlist = array_count_values($useractivitylist); 
                             foreach($actlist as $k => $v) {
                                 if($k == $activity->id) {
-                                    if($v > 1) $completed++;
+                                    if($v > 0) $completed++;
                                 }
                             }
                         }

@@ -45,9 +45,7 @@
         <?php endforeach ?>
     </nav>
     
-    <!-- <div class="text-right">
-      <a href="/logout" class="inline-block p-3 m-6 bg-slate-300 dark:bg-slate-700 rounded-lg">Logout</a>
-    </div> -->
+
     <?php endif ?>
   </div>
 

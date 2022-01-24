@@ -150,7 +150,7 @@ $actlist = array_count_values($useractivitylist);
 //print_r($actlist);
 foreach($actlist as $k => $v) {
 	if($k == $activity->id) {
-		if($v > 1) $completed = $v;
+		if($v > 0) $completed = $v;
 	}
 }
 ?>
@@ -209,13 +209,13 @@ Curator says:<br>
 			<?= $activity->hyperlink ?>
 		</div>
 		
-		<div>
+
 
 			<?php if($completed > 0): ?>
 			<div class="p-3 my-6" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">
 				Completed!
 			</div>
-			<?php endif ?>
+			<?php else: ?>
 			<div>
 				Once you've visited this activity, the next time you come back here, you can "complete" 
 				the activity here and record your progress along the pathway.
@@ -224,9 +224,7 @@ Curator says:<br>
 			<?= $this->Form->hidden('activity_id', ['value' => $activity->id]); ?>
 			<?= $this->Form->button(__('Complete'),['class'=>'p-3 bg-green-700 rounded-lg', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress']) ?>
 			<?= $this->Form->end() ?> 
-
-		</div>
-
+			<?php endif ?>
 
 
 
