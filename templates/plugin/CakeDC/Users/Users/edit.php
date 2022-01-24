@@ -9,7 +9,7 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-use Cake\Core\Configure;
+
 $this->loadHelper('Authentication.Identity');
 $Users = ${$tableAlias};
 if ($this->Identity->isLoggedIn()) {
@@ -17,10 +17,8 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<div class="container-fluid" id="colorful">
-<div class="row justify-content-md-center">
-<div class="col-md-6">
-<div class="m-5 p-5 bg-white rounded-lg shadow-sm">
+<div class="p-6 dark:text-white">
+
             <?php
             echo $this->Form->postLink(
                 __d('cake_d_c/users', 'Delete'),
@@ -32,67 +30,53 @@ if ($this->Identity->isLoggedIn()) {
 
     <?= $this->Form->create($Users); ?>
     <fieldset>
-        <legend><?= __d('cake_d_c/users', 'Edit User') ?></legend>
+        <legend class="text-4xl"><?= __d('cake_d_c/users', 'Edit') . ' ' . $Users->first_name ?></legend>
+        <div class="mt-3 p-6 bg-slate-200 dark:bg-slate-900 rounded-lg">
+            Activated on <?= $Users->activation_date ?>
         <?php
-        echo $this->Form->control('username', ['label' => __d('cake_d_c/users', 'Username')]);
-        echo $this->Form->control('email', ['label' => __d('cake_d_c/users', 'Email')]);
-        echo $this->Form->control('first_name', ['label' => __d('cake_d_c/users', 'First name')]);
-        echo $this->Form->control('last_name', ['label' => __d('cake_d_c/users', 'Last name')]);
-
-        echo $this->Form->control('ministry_id',['options' => $ministries]);
-    
-        echo $this->Form->control('additional_data', ['label' => __d('cake_d_c/users', 'Additonal Data')]);
         if($role == 'superuser') {
             $roles = [
                 ['text' => 'Regular User', 'value' => 'user'],
                 ['text' => 'Curator', 'value' => 'curator'],
                 ['text' => 'Super User', 'value' => 'superuser'],
             ];
-            echo $this->Form->control('role', ['label' => __d('cake_d_c/users', 'Role'), 'options' => $roles]);
+            echo $this->Form->control('role', ['label' => __d('cake_d_c/users', 'Role'), 'options' => $roles, 'class' => 'p-2 m-1 dark:bg-slate-800']);
             //echo $this->Form->control('is_superuser', ['label' => __d('cake_d_c/users', 'Is Superuser?')]);
         }
-        echo $this->Form->control('token', ['label' => __d('cake_d_c/users', 'Token')]);
-        echo $this->Form->control('token_expires', [
-            'label' => __d('cake_d_c/users', 'Token expires')
-        ]);
-        echo $this->Form->control('api_token', [
-            'label' => __d('cake_d_c/users', 'API token')
-        ]);
-        echo $this->Form->control('activation_date', [
-            'label' => __d('cake_d_c/users', 'Activation date')
-        ]);
-        echo $this->Form->control('tos_date', [
-            'label' => __d('cake_d_c/users', 'TOS date')
-        ]);
-        echo $this->Form->control('active', [
-            'label' => __d('cake_d_c/users', 'Active')
-        ]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__d('cake_d_c/users', 'Submit'),['class' => 'btn btn-success']) ?>
-    <?= $this->Form->end() ?>
-    <?php if (Configure::read('OneTimePasswordAuthenticator.login')) : ?>
-        <fieldset>
-            <legend>Reset Google Authenticator</legend>
-            <?= $this->Form->postLink(
-                __d('cake_d_c/users', 'Reset Google Authenticator Token'), [
-                'plugin' => 'CakeDC/Users',
-                'controller' => 'Users',
-                'action' => 'resetOneTimePasswordAuthenticator', $Users->id
-            ], [
-                'class' => 'btn btn-danger',
-                'confirm' => __d(
-                    'cake_d_c/users',
-                    'Are you sure you want to reset token for user "{0}"?', $Users->username
-                )
-            ]);
-            ?>
-        </fieldset>
-    <?php endif; ?>
-</div>
-</div>
-</div>
-</div>
+        echo $this->Form->control('first_name', ['label' => __d('cake_d_c/users', 'First name'), 'class' => 'p-2 m-1 dark:bg-slate-800']);
+        echo $this->Form->control('last_name', ['label' => __d('cake_d_c/users', 'Last name'), 'class' => 'p-2 m-1 dark:bg-slate-800']);
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+        echo $this->Form->control('email', ['label' => __d('cake_d_c/users', 'Email'), 'class' => 'p-2 m-1 dark:bg-slate-800']);
+        echo $this->Form->control('username', ['label' => __d('cake_d_c/users', 'Username'), 'class' => 'p-2 m-1 dark:bg-slate-800']);
+        echo $this->Form->control('ministry_id',['options' => $ministries, 'class' => 'p-2 m-1 dark:bg-slate-800']);
+    
+        
+        // echo $this->Form->control('activation_date', [
+        //     'label' => __d('cake_d_c/users', 'Activation date'), 'class' => 'p-2 m-1 dark:bg-slate-800'
+        // ]);
+
+        // echo $this->Form->control('additional_data', ['label' => __d('cake_d_c/users', 'BC Gov GUID'), 'class' => 'p-2 m-1 dark:bg-slate-800']);
+        // echo $this->Form->control('token', ['label' => __d('cake_d_c/users', 'Token'), 'class' => 'p-2 m-1 dark:bg-slate-800']);
+        // echo $this->Form->control('token_expires', [
+        //     'label' => __d('cake_d_c/users', 'Token expires'), 'class' => 'p-2 m-1 dark:bg-slate-800'
+        // ]);
+        // echo $this->Form->control('api_token', [
+        //     'label' => __d('cake_d_c/users', 'API token'), 'class' => 'p-2 m-1 dark:bg-slate-800'
+        // ]);
+
+        // echo $this->Form->control('tos_date', [
+        //     'label' => __d('cake_d_c/users', 'TOS date'), 'class' => 'p-2 m-1 dark:bg-slate-800'
+        // ]);
+        // echo $this->Form->control('active', [
+        //     'label' => __d('cake_d_c/users', 'Active'), 'class' => 'p-2 m-1 dark:bg-slate-800'
+        // ]);
+        ?>
+        <?= $this->Form->button(__d('cake_d_c/users', 'Save User Info'),['class' => 'p-3 my-1 text-xl dark:bg-green-700 rounded-lg']) ?>
+        </div>
+        
+    </fieldset>
+    
+    <?= $this->Form->end() ?>
+    
+</div>

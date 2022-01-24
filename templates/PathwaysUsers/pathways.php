@@ -13,18 +13,6 @@ if ($this->Identity->isLoggedIn()) {
 
 <div class="px-6 dark:text-white">
 
-<h1 class="mt-6 text-2xl">
-	Welcome <?= $this->Identity->get('first_name') ?>
-</h1>
-
-<div class="systemrole">
-<?php if($role == 'curator'): ?>
-<span class="">You're a Curator!</span>
-<?php elseif($role == 'superuser'): ?>
-<span class="">Super User</span>
-<?php endif ?>
-</div>
-
 
 <div @click.away="open = false" class="relative ml-4 mt-4" x-data="{ open: false }">
 	<button @click="open = !open" class="px-4 py-2 text-sm font-semibold text-right bg-gray-600 text-white rounded-t-lg dark:bg-slate-900 dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
@@ -43,13 +31,13 @@ if ($this->Identity->isLoggedIn()) {
 			class="absolute right-0 w-full origin-top-right p-4 bg-slate-800 shadow-lg">
 
 		<a href="/profile" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-slate-900 dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-			My Pathways
+			Pinned Pathways
 		</a> 
 		<a href="/profile/claims" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-			My Activities
+			Completed Activities
 		</a> 
 		<a href="/profile/reports" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-			My Issues
+			Issues Reported
 		</a> 
 	</div>
 </div>
@@ -69,7 +57,6 @@ if ($this->Identity->isLoggedIn()) {
         
 	<div class="p-3 mb-3 bg-slate-200 dark:bg-slate-800 rounded-lg">
 
-		<?php //$this->Form->postLink(__('Unfollow'), ['controller' => 'PathwaysUsers','action' => 'delete/'. $path->pathway->_joinData->id], ['class' => 'btn btn-primary float-right', 'confirm' => __('Really unfollow?')]) ?>
 		<div>
 			<?= $path->pathway->has('category') ? $this->Html->link($path->pathway->category->name, ['controller' => 'Categories', 'action' => 'view', $path->pathway->category->id]) : '' ?>
 		</div>
@@ -106,7 +93,7 @@ if ($this->Identity->isLoggedIn()) {
 							//console.log(response); 
 						})"
 		>
-		<div class="" x-show="isLoading">Loading&hellip;</div>
+		<div class="" x-show="isLoading">Loading your progress on this pathway&hellip;</div>
 		<div x-show="!isLoading">
 			<div class="my-4 h-6 w-full bg-slate-500 dark:bg-black rounded-lg">
 				<span :style="'width:' + status<?= $path->pathway->id ?>.percentage + '%;'" class="progressbar h-6 inline-block bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg">&nbsp;</span>
@@ -116,29 +103,35 @@ if ($this->Identity->isLoggedIn()) {
 		</div>
 
 
-		<?php 
-		echo $this->Form->postLink(__('Un-Follow'), 
-										['controller' => 'PathwaysUsers', 'action' => 'delete/'. $path->id], 
-										['class' => 'btn btn-light my-2', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really unfollow?')]); 
-		?>
+<?php 
+echo $this->Form->postLink(__('Un-Pin'), 
+								['controller' => 'PathwaysUsers', 'action' => 'delete/'. $path->id], 
+								['class' => 'inline-block p-3 bg-[#003366] rounded-lg', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really un-pin?')]); 
+?>
 
 	</div>
 	<?php endforeach; ?>
 	
 <?php else: ?>
+
+
 	<div class="p-3 mb-2 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
 
 		<h2 class="mb-3 text-3xl">Get Started</h2>
-		<p class="p-4 bg-[#003366]/50 rounded-lg">Curator pathways are organized into topics and 
+		<div class="p-4 bg-[#003366]/50 rounded-lg">
+			<p>Curator pathways are organized into topics and 
 			topics are categorized. You can see all the pathways we have to offer, but you can also 
-			pin a pathway to your profile to access it quickly. Once you're following a pathway 
-			you'll be able to see your progress along it as you complete its activities.</p>
+			pin a pathway to your profile to access it quickly.</p>
+			<p>As you complete activities contained in a pathway you'll be able to see your progress here too.</p>
+		</div>
 		
 		<a href="/categories" class="inline-block p-3 my-6 bg-slate-300 dark:bg-green-700 text-lg rounded-lg">
 			View Categories
 		</a>
 
 	</div>
+
+
 <?php endif ?>
 
 </div>
