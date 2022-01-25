@@ -32,15 +32,8 @@ class ActivitiesController extends AppController
      */
     public function index()
     {
-        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
-        $pathways = $allpaths->find('all')
-                                ->contain(['Steps','Statuses'])
-                                ->order(['Pathways.created' => 'desc'])
-                                ->where(['Pathways.featured' => 1])
-                                ->limit(10);
-        $allpathways = $pathways->toList();
-       
-        $activities = $this->Activities
+
+        $activities = $this->paginate($this->Activities
                             ->find('all')
                             ->contain(['Tags',
                                         'Statuses', 
@@ -48,39 +41,13 @@ class ActivitiesController extends AppController
                                         'ActivityTypes',
                                         'Steps.Pathways'])
                             ->where(['Activities.status_id' => 2])
-                            ->order(['Activities.created' => 'DESC'])
-                            ->limit(30); // including 'Steps.Pathways' appears to be SUPER expensive
-        
-		$cats = TableRegistry::getTableLocator()->get('Categories');
-        $allcats = $cats->find('all')->contain(['Topics'])->order(['Categories.created' => 'desc']);
-        
+                            ->order(['Activities.created' => 'DESC'])); // including 'Steps.Pathways' appears to be SUPER expensive    
 
-
-        $this->set(compact('activities','allpathways','allcats'));
-    }
-
-    /**
-     * User claims method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function claims()
-    {
-        $user = $this->request->getAttribute('authentication')->getIdentity();
-        //echo $user->id; exit;
-        $activities = $this->Activities->find('all')
-                                        ->contain(['Tags',
-                                                    'Statuses', 
-                                                    'Ministries', 
-                                                    'ActivityTypes',
-                                                    'Steps.Pathways',
-                                                    'Users'])
-                                        ->where(['Activities.Users.id' => $user->id])
-                                        ->order(['Activities.created' => 'DESC'])
-                                        ->limit(100);
 
         $this->set(compact('activities'));
     }
+
+
 
     /**
      * View method

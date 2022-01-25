@@ -39,5 +39,6 @@ class AppView extends View
     {
         parent::initialize();
         $this->loadHelper('CakeDC/Users.User');
+        $this->loadHelper('Paginator', ['templates' => 'paginator-templates']);
     }
 }

@@ -24,7 +24,16 @@ if ($this->Identity->isLoggedIn()) {
 </style>
 <div class="p-6 dark:text-white">
 <h1 class="text-4xl">Activities</h1>
-
+<div class="paginator sticky top-0 z-50 p-3 bg-[#003366]">
+	<?= $this->Paginator->first('<< ' . __('first')) ?>
+	<?= $this->Paginator->prev('< ' . __('previous')) ?>
+	<?php //$this->Paginator->numbers() ?>
+	<?= $this->Paginator->next(__('next') . ' >') ?>
+	<?= $this->Paginator->last(__('last') . ' >>') ?>
+	<div>
+		<?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+	</div>
+</div>
 <?php foreach ($activities as $activity) : ?>
 	
 	<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-900 dark:text-white">
@@ -81,11 +90,11 @@ if ($this->Identity->isLoggedIn()) {
 		
 
 	<?php if(!empty($activity->steps)): ?>
-	<div class="mt-2 p-3 bg-[#003366] rounded-lg">
+	<div class="mt-2 p-3 bg-slate-200 dark:bg-slate-800 rounded-lg">
 
 		<?php foreach($activity->steps as $step): ?>
 			<?php if(!empty($step->pathways[0]->slug)): ?>
-			Pathways in: 
+			Included in pathways:<br> 
 			<a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
 				<i class="bi bi-pin-map-fill"></i>
 				<?= $step->pathways[0]->name ?> - 

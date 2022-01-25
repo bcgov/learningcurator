@@ -9,12 +9,12 @@
 <!-- <script src="/js/tailwind.js"></script> -->
 <link href="/css/tailwind.css" rel="stylesheet">
 </head>
-<body class="bg-white dark:bg-slate-800">
+<body class="bg-slate-100 dark:bg-slate-800">
 <div class="md:flex flex-col md:flex-row md:min-h-screen w-full rounded-br-lg">
-  <div @click.away="open = false" class="flex flex-col w-full md:w-64 text-gray-700 dark:text-gray-200 bg-slate-100 dark:bg-slate-900 flex-shrink-0" x-data="{ open: false }">
+  <div @click.away="open = false" class="flex flex-col w-full md:w-56 text-gray-700 dark:text-gray-200 bg-slate-100 dark:bg-slate-900 flex-shrink-0" x-data="{ open: false }">
     <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 "> <!-- sticky top-0 bg-slate-200 dark:bg-[#002850]-->
       <span class="leading-3 text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
-        <span class="text-xs">Learning</span><br><span class="dark:text-yellow-500">Curator</span>
+        <span class="text-xs">Learning</span><br><span class="text-[#003366] dark:text-yellow-500">Curator</span>
       </span>
       <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
         <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
@@ -50,7 +50,7 @@
   </div>
 
 
-<div class="bg-[#c3d4e4] dark:bg-[#003366] dark:text-white w-full">
+<div class="bg-[#c3d4e4] dark:bg-[#003366] dark:text-white w-full 2xl:w-2/3">
 <?php if(!empty($this->Identity->get('id'))): ?>
 <div class="flex h-16 w-full px-6 pt-3 bg-slate-200 dark:bg-[#002850]"> <!-- sticky top-0 z-50 -->
 
@@ -70,11 +70,13 @@
 	</form>
 </div>
 <?php endif ?>
+
 <?= $this->fetch('content') ?>
 </div>
 </div>
 <div class="py-6 bg-slate-200 dark:bg-slate-900">
-  <img class="inline-block my-6" src="/img/wiw-white-text.svg" width="380px">
+  <img class="my-6 hidden dark:inline-block" src="/img/wiw-white-text.svg" width="380px">
+  <img class="my-6 inline-block dark:hidden" src="/img/wiw-dark-text.svg" width="380px">
   <img class="my-6 hidden dark:inline-block" src="/img/learning-centre-logo-wordmark-darkmode.svg" height="100px" width="300px">
   <img class="my-6 inline-block dark:hidden" src="/img/learning-centre-logo-wordmark.svg" height="100px" width="300px">
   <a href="#privacy" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-[#003366] dark:text-white rounded-lg">Privacy Statement</a>
