@@ -24,15 +24,16 @@ if ($this->Identity->isLoggedIn()) {
 </style>
 <div class="p-6 dark:text-white">
 <h1 class="text-4xl">Activities</h1>
-<div class="paginator sticky top-0 z-50 p-3 bg-[#003366]">
+<div class="paginator sticky top-0 z-50 py-3 bg-[#003366]">
+	<div class="mb-3">
+		<?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+	</div>
 	<?= $this->Paginator->first('<< ' . __('first')) ?>
 	<?= $this->Paginator->prev('< ' . __('previous')) ?>
 	<?php //$this->Paginator->numbers() ?>
 	<?= $this->Paginator->next(__('next') . ' >') ?>
 	<?= $this->Paginator->last(__('last') . ' >>') ?>
-	<div>
-		<?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
-	</div>
+
 </div>
 <?php foreach ($activities as $activity) : ?>
 	
