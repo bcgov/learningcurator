@@ -95,7 +95,7 @@ $this->assign('title', h($pathway->name));
 <?php foreach($steps->activities as $act): ?>
 <?php if($act->_joinData->required == 1) $requiredacts++; ?>
 <?php endforeach ?>
-<div class="p-6 my-3 rounded-lg bg-slate-200 dark:bg-slate-900 dark:text-white">
+<div class="p-6 my-3 rounded-lg bg-white dark:bg-slate-900 dark:text-white">
 <?php //echo '<pre>'; print_r($steps); continue; ?>
 <?php if($steps->status->name == 'Published'): ?>
 <h3 class="text-2xl">

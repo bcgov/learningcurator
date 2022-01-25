@@ -55,7 +55,7 @@ $supplmentalcount = count($supplementalacts);
 
 
 
-<div class="px-10">
+<div class="px-8">
 
 <div class="mb-6 text-2xl">
 <?= $step->pathways[0]->objective ?> 
@@ -93,20 +93,20 @@ $supplmentalcount = count($supplementalacts);
 </div> <!-- / objective contain -->
 
 <!-- start drop-down -->
-<div @click.away="open = false" class="relative ml-3" x-data="{ open: false }">
-	<button @click="open = !open" class="px-4 py-2 text-sm font-semibold text-right bg-gray-600 text-white rounded-t-lg dark:bg-slate-900 dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+<div @click.away="open = false" class="relative ml-8" x-data="{ open: false }">
+	<button @click="open = !open" class="px-4 py-2 text-sm font-semibold text-right bg-slate-200 rounded-t-lg dark:bg-slate-900 dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
 		<span>Module Menu</span>
 		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
 			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
 		</svg>
 	</button>
 	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full origin-top-right shadow-lg">
-		<div class="px-2 py-2 bg-white rounded-md shadow dark:bg-slate-900">
+		<div class="-ml-8 p-6 bg-white rounded-md shadow dark:bg-slate-900">
 		<?php foreach ($step->pathways as $pathways) : ?>
 		<?php foreach($pathways->steps as $s): ?>
 		<?php if($s->status_id == 2): ?>
 		<?php $c = '' ?>
-		<?php if($s->id == $step->id) $c = 'bg-[#003366]' ?>
+		<?php if($s->id == $step->id) $c = 'bg-slate-300 dark:bg-[#003366]' ?>
 		<a class="<?= $c ?> block px-4 py-2 mt-2 text-sm font-semibold rounded-lg dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
 		<?= $s->name ?> 
 		</a>
@@ -154,7 +154,10 @@ foreach($actlist as $k => $v) {
 	}
 }
 ?>
-<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
+<div class="relative p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
+<?php if($completed > 0): ?>
+	<div class="w-32 bg-slate-200 text-black text-center uppercase rounded-lg">Complete</div>
+<?php endif ?>
 <h4 class="mb-3 text-3xl">
 	<a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
 	<!--<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
