@@ -85,7 +85,7 @@ $this->assign('title', h($pathway->name));
 <?php endif ?>
 
 
-<h2 class="mt-6 text-3xl dark:text-white">
+<h2 class="text-3xl dark:text-white">
 	Modules
 	<span class="inline-block px-2 bg-slate-500 dark:bg-black text-white text-sm rounded-full"><?= $requiredacts ?> activities</span>
 </h2>
@@ -112,7 +112,9 @@ $this->assign('title', h($pathway->name));
 <?php endif ?>
 
 
-<div class="mt-3 text-xl"><?= $steps->description ?></div>
+<div class="mt-3 p-3 bg-slate-200 dark:bg-[#002850] text-xl rounded-lg">
+	<?= $steps->description ?>
+</div>
 
 
 <?php else: ?>
