@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* 
 input:-webkit-autofill {
     -webkit-text-fill-color: #000;
     -webkit-box-shadow: 0 0 0px 1000px #003366 inset;
@@ -34,4 +34,4 @@ input:focus:-o-autofill {
 input:focus:-khtml-autofill {
     -khtml-text-fill-color: #000;
     -khtml-box-shadow: 0 0 0px 1000px #003366 inset;
-}
+} */
