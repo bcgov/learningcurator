@@ -538,6 +538,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   right: 0px;
 }
 
+.-right-3 {
+  right: -0.75rem;
+}
+
 .top-3 {
   top: 0.75rem;
 }
@@ -1314,6 +1318,11 @@ input:focus:-khtml-autofill {
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
+.focus\:bg-gray-900:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}
+
 .focus\:text-gray-900:focus {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
@@ -1368,9 +1377,9 @@ input:focus:-khtml-autofill {
     background-color: rgb(0 51 102 / 0.5);
   }
 
-  .dark\:bg-blue-900 {
+  .dark\:bg-\[\#002850\] {
     --tw-bg-opacity: 1;
-    background-color: rgb(30 58 138 / var(--tw-bg-opacity));
+    background-color: rgb(0 40 80 / var(--tw-bg-opacity));
   }
 
   .dark\:bg-slate-700 {
@@ -1391,11 +1400,6 @@ input:focus:-khtml-autofill {
   .dark\:bg-gray-800 {
     --tw-bg-opacity: 1;
     background-color: rgb(31 41 55 / var(--tw-bg-opacity));
-  }
-
-  .dark\:bg-\[\#002850\] {
-    --tw-bg-opacity: 1;
-    background-color: rgb(0 40 80 / var(--tw-bg-opacity));
   }
 
   .dark\:text-white {
@@ -1451,6 +1455,16 @@ input:focus:-khtml-autofill {
   .dark\:focus\:bg-gray-600:focus {
     --tw-bg-opacity: 1;
     background-color: rgb(75 85 99 / var(--tw-bg-opacity));
+  }
+
+  .dark\:focus\:bg-gray-800:focus {
+    --tw-bg-opacity: 1;
+    background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+  }
+
+  .dark\:focus\:bg-gray-900:focus {
+    --tw-bg-opacity: 1;
+    background-color: rgb(17 24 39 / var(--tw-bg-opacity));
   }
 
   .dark\:focus\:text-white:focus {
