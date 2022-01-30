@@ -970,6 +970,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(30 58 138 / 0.5);
 }
 
+.bg-green-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(22 163 74 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
@@ -1337,6 +1342,11 @@ input:focus:-khtml-autofill {
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
+.focus\:bg-slate-200:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+}
+
 .focus\:text-gray-900:focus {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
@@ -1428,6 +1438,11 @@ input:focus:-khtml-autofill {
 
   .dark\:bg-blue-900\/50 {
     background-color: rgb(30 58 138 / 0.5);
+  }
+
+  .dark\:bg-green-600 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(22 163 74 / var(--tw-bg-opacity));
   }
 
   .dark\:text-white {

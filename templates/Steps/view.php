@@ -77,8 +77,8 @@ $supplmentalcount = count($supplementalacts);
 <div class="" x-show="isLoading">Loading&hellip;</div>
 <div x-show="!isLoading">
 	<div class="mb-6 h-6 w-full bg-slate-500 dark:bg-black rounded-lg">
-		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg">&nbsp;</span>
-		<span x-text="status.percentage + '% - ' + status.completed + ' of ' + status.requiredacts" class="beginning inline-block"></span>
+		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-green-600 dark:bg-green-600 text-white text-center rounded-lg">&nbsp;</span>
+		<span x-text="status.percentage + '% - ' + status.completed + ' of ' + status.requiredacts" class="beginning inline-block text-white"></span>
 	</div>
 </div>
 </div>
@@ -86,7 +86,7 @@ $supplmentalcount = count($supplementalacts);
 <?php if(empty($followid)): ?>
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
-<?= $this->Form->button(__('Pin to Profile'),['class' => 'mb-4 bg-green-300 dark:bg-green-700 rounded-lg p-3 text-center']) ?>
+<?= $this->Form->button(__('Pin to Profile'),['class' => 'mb-4 bg-green-300 dark:bg-green-600 rounded-lg p-3 text-center']) ?>
 <?= $this->Form->end(); ?>
 <?php endif ?>
 
@@ -160,7 +160,7 @@ foreach($actlist as $k => $v) {
 <?php endif ?>
 <h4 class="mb-3 text-3xl">
 	<?= $activity->name ?>
-	<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>">></a>
+	<a class="text-sm" href="/activities/view/<?= $activity->id ?>">#</a>
 </h4>
 <div class="mb-6 text-lg">
 <?= $activity->description ?>
@@ -185,21 +185,21 @@ Curator says:<br>
 
 
 <div @click.away="open = false" class="relative" x-data="{ open: false }">
-	<button @click="open = !open" class="px-4 py-2 text-lg font-semibold text-right bg-green-700 text-white rounded-lg dark:bg-green-700 dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+	<button @click="open = !open" class="px-4 py-2 text-lg font-semibold text-right bg-green-600 text-white rounded-lg dark:bg-green-600 dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline">
 		<span>Launch</span>
 		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
 			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
 		</svg>
 	</button>
-	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute z-50 right-0 w-full origin-top-right shadow-lg">
-		<div class="p-4 bg-white rounded-md shadow dark:bg-slate-900">
+	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
+		<div class="p-4 bg-slate-200 rounded-md dark:bg-slate-900">
 
 		<div>
 			<a target="_blank" 
 				rel="noopener" 
 				data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
 				href="<?= $activity->hyperlink ?>" 
-				class="inline-block mb-3 p-3 bg-green-700 rounded-lg text-white text-2xl">
+				class="inline-block mb-3 p-3 bg-green-600 rounded-lg text-white text-2xl">
 					Open Activity in new window
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
 						<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
@@ -225,7 +225,7 @@ Curator says:<br>
 			</div>
 			<?= $this->Form->create(null,['url' => ['controller' => 'ActivitiesUsers', 'action' => 'complete'], 'class' => 'my-6']) ?>
 			<?= $this->Form->hidden('activity_id', ['value' => $activity->id]); ?>
-			<?= $this->Form->button(__('Complete'),['class'=>'p-3 bg-green-700 rounded-lg', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress']) ?>
+			<?= $this->Form->button(__('Complete'),['class'=>'p-3 bg-green-600 rounded-lg', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress']) ?>
 			<?= $this->Form->end() ?> 
 			<?php endif ?>
 
