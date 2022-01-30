@@ -914,9 +914,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(100 116 139 / var(--tw-bg-opacity));
 }
 
-.bg-blue-900 {
+.bg-sky-900 {
   --tw-bg-opacity: 1;
-  background-color: rgb(30 58 138 / var(--tw-bg-opacity));
+  background-color: rgb(12 74 110 / var(--tw-bg-opacity));
 }
 
 .bg-slate-900 {
@@ -940,6 +940,21 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bg-white\/80 {
   background-color: rgb(255 255 255 / 0.8);
+}
+
+.bg-blue-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 58 138 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#003366\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 51 102 / var(--tw-bg-opacity));
+}
+
+.bg-emerald-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(4 120 87 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-50 {
@@ -1344,9 +1359,9 @@ input:focus:-khtml-autofill {
     background-color: rgb(30 41 59 / var(--tw-bg-opacity));
   }
 
-  .dark\:bg-blue-900 {
+  .dark\:bg-sky-900 {
     --tw-bg-opacity: 1;
-    background-color: rgb(30 58 138 / var(--tw-bg-opacity));
+    background-color: rgb(12 74 110 / var(--tw-bg-opacity));
   }
 
   .dark\:bg-green-600 {
@@ -1354,8 +1369,8 @@ input:focus:-khtml-autofill {
     background-color: rgb(22 163 74 / var(--tw-bg-opacity));
   }
 
-  .dark\:bg-blue-900\/50 {
-    background-color: rgb(30 58 138 / 0.5);
+  .dark\:bg-sky-900\/50 {
+    background-color: rgb(12 74 110 / 0.5);
   }
 
   .dark\:bg-\[\#002850\] {
@@ -1383,8 +1398,8 @@ input:focus:-khtml-autofill {
     background-color: rgb(31 41 55 / var(--tw-bg-opacity));
   }
 
-  .dark\:bg-blue-900\/80 {
-    background-color: rgb(30 58 138 / 0.8);
+  .dark\:bg-sky-900\/80 {
+    background-color: rgb(12 74 110 / 0.8);
   }
 
   .dark\:bg-blue-800 {
@@ -1392,8 +1407,47 @@ input:focus:-khtml-autofill {
     background-color: rgb(30 64 175 / var(--tw-bg-opacity));
   }
 
+  .dark\:bg-sky-900\/40 {
+    background-color: rgb(12 74 110 / 0.4);
+  }
+
+  .dark\:bg-blue-900 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(30 58 138 / var(--tw-bg-opacity));
+  }
+
+  .dark\:bg-blue-900\/80 {
+    background-color: rgb(30 58 138 / 0.8);
+  }
+
+  .dark\:bg-blue-900\/50 {
+    background-color: rgb(30 58 138 / 0.5);
+  }
+
   .dark\:bg-blue-900\/40 {
     background-color: rgb(30 58 138 / 0.4);
+  }
+
+  .dark\:bg-\[\#003366\]\/80 {
+    background-color: rgb(0 51 102 / 0.8);
+  }
+
+  .dark\:bg-\[\#003366\]\/50 {
+    background-color: rgb(0 51 102 / 0.5);
+  }
+
+  .dark\:bg-\[\#003366\]\/40 {
+    background-color: rgb(0 51 102 / 0.4);
+  }
+
+  .dark\:bg-\[\#003366\] {
+    --tw-bg-opacity: 1;
+    background-color: rgb(0 51 102 / var(--tw-bg-opacity));
+  }
+
+  .dark\:bg-emerald-700 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(4 120 87 / var(--tw-bg-opacity));
   }
 
   .dark\:text-white {
@@ -1421,9 +1475,9 @@ input:focus:-khtml-autofill {
     background-color: rgb(15 23 42 / var(--tw-bg-opacity));
   }
 
-  .dark\:hover\:bg-blue-900:hover {
+  .dark\:hover\:bg-sky-900:hover {
     --tw-bg-opacity: 1;
-    background-color: rgb(30 58 138 / var(--tw-bg-opacity));
+    background-color: rgb(12 74 110 / var(--tw-bg-opacity));
   }
 
   .dark\:hover\:bg-gray-700:hover {
@@ -1439,6 +1493,16 @@ input:focus:-khtml-autofill {
   .dark\:hover\:bg-slate-800:hover {
     --tw-bg-opacity: 1;
     background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+  }
+
+  .dark\:hover\:bg-blue-900:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(30 58 138 / var(--tw-bg-opacity));
+  }
+
+  .dark\:hover\:bg-\[\#003366\]:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(0 51 102 / var(--tw-bg-opacity));
   }
 
   .dark\:hover\:text-white:hover {
@@ -1519,6 +1583,10 @@ input:focus:-khtml-autofill {
 
   .md\:overflow-y-auto {
     overflow-y: auto;
+  }
+
+  .md\:p-6 {
+    padding: 1.5rem;
   }
 
   .md\:pb-0 {

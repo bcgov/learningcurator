@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php foreach ($categories as $category): ?>
 
-<div class="my-2 p-3 bg-white dark:bg-slate-900 w-full rounded-lg">
+<div class="my-2 p-3 md:p-6 bg-white dark:bg-slate-900 w-full rounded-lg">
 	<div x-data="{ topics<?= $category->id ?>: false }">
 		<h1 class="text-3xl">
 			<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
@@ -28,10 +28,11 @@ if ($this->Identity->isLoggedIn()) {
 				Hide Topics
 			</button>
 		</h1>
-		<div x-show="topics<?= $category->id ?>" x-transition.duration.500ms>
 		<div class="my-3">
 			<?= h($category->description) ?>
 		</div>
+		<div x-show="topics<?= $category->id ?>" x-transition.duration.500ms>
+
 		<?php if(!empty($category->topics[0]->pathways[0]->name)): ?>
 		<?php foreach ($category->topics as $topic): ?>
 		<div class="p-3 mb-3 bg-slate-200 dark:bg-blue-900 rounded-lg">

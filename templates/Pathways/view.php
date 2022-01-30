@@ -70,7 +70,7 @@ $this->assign('title', h($pathway->name));
 <div class="" x-show="isLoading">Loading&hellip;</div>
 <div x-show="!isLoading">
 	<div class="mb-6 w-full bg-slate-500 dark:bg-black rounded-lg">
-		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-green-600 dark:bg-green-600 text-white text-center rounded-lg">&nbsp;</span>
+		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-emerald-700 dark:bg-emerald-700 text-white text-center rounded-lg">&nbsp;</span>
 		<span x-text="status.percentage + '%'" class="beginning inline-block text-white"></span>
 	</div>
 </div>
@@ -79,7 +79,7 @@ $this->assign('title', h($pathway->name));
 <?php if(empty($followid)): ?>
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]) ?>
-<?= $this->Form->button(__('Pin to Profile'),['class' => 'mb-4 p-3 bg-blue-900 dark:bg-green-600 rounded-lg text-white text-center']) ?>
+<?= $this->Form->button(__('Pin to Profile'),['class' => 'mb-4 p-3 bg-blue-900 dark:bg-emerald-700 rounded-lg text-white text-center']) ?>
 <?= $this->Form->end(); ?>
 <?php endif ?>
 

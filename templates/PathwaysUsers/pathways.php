@@ -91,7 +91,7 @@ if ($this->Identity->isLoggedIn()) {
 		<div class="" x-show="isLoading">Loading your progress on this pathway&hellip;</div>
 		<div x-show="!isLoading">
 			<div class="my-4 h-6 w-full bg-slate-300 dark:bg-black rounded-lg ">
-				<span :style="'width:' + status<?= $path->pathway->id ?>.percentage + '%;'" class="progressbar h-6 inline-block bg-green-600 dark:bg-green-600 dark:text-white text-center rounded-lg">&nbsp;</span>
+				<span :style="'width:' + status<?= $path->pathway->id ?>.percentage + '%;'" class="progressbar h-6 inline-block bg-emerald-700 dark:bg-emerald-700 dark:text-white text-center rounded-lg">&nbsp;</span>
 				<span x-text="status<?= $path->pathway->id ?>.percentage + '%'" class="beginning inline-block"></span>
 			</div>
 		</div>
@@ -107,7 +107,7 @@ if ($this->Identity->isLoggedIn()) {
 	<div class="p-3 mb-2 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
 
 		<h2 class="mb-3 text-3xl">Get Started</h2>
-		<div class="p-4 bg-slate-200 rounded-lg">
+		<div class="p-4 bg-slate-200 dark:bg-slate-800 rounded-lg">
 			<p class="mb-3">Curator pathways are organized into topics and 
 			topics are categorized. You can see all the pathways we have to 
 			offer and when you see one you like, you can pin it here to your profile
@@ -115,7 +115,7 @@ if ($this->Identity->isLoggedIn()) {
 			<p>As you complete activities contained in a pathway you'll be able to see your progress here too.</p>
 		</div>
 		
-		<a href="/categories" class="inline-block p-3 mt-4 bg-blue-900 dark:bg-green-600 text-white text-lg no-underline rounded-lg">
+		<a href="/categories" class="inline-block p-3 mt-4 bg-blue-900 dark:bg-emerald-700 text-white text-lg no-underline rounded-lg">
 			View Categories
 		</a>
 

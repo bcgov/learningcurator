@@ -72,7 +72,7 @@ if ($this->Identity->isLoggedIn()) {
         //     'label' => __d('cake_d_c/users', 'Active'), 'class' => 'p-2 m-1 dark:bg-slate-800'
         // ]);
         ?>
-        <?= $this->Form->button(__d('cake_d_c/users', 'Save User Info'),['class' => 'p-3 my-1 text-xl dark:bg-green-600 rounded-lg']) ?>
+        <?= $this->Form->button(__d('cake_d_c/users', 'Save User Info'),['class' => 'p-3 my-1 text-xl dark:bg-emerald-700 rounded-lg']) ?>
         </div>
         
     </fieldset>

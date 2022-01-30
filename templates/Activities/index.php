@@ -57,7 +57,7 @@ if ($this->Identity->isLoggedIn()) {
 
 
 	<div @click.away="open = false" class="relative" x-data="{ open: false }">
-	<button @click="open = !open" class="px-4 py-2 text-lg font-semibold text-right bg-green-600 text-white rounded-lg dark:bg-green-600 dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+	<button @click="open = !open" class="px-4 py-2 text-lg font-semibold text-right bg-emerald-700 text-white rounded-lg dark:bg-emerald-700 dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
 		<span>Launch</span>
 		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
 			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -71,7 +71,7 @@ if ($this->Identity->isLoggedIn()) {
 					rel="noopener" 
 					data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
 					href="<?= $activity->hyperlink ?>" 
-					class="inline-block mb-3 p-3 bg-green-600 rounded-lg text-white text-2xl">
+					class="inline-block mb-3 p-3 bg-emerald-700 rounded-lg text-white text-2xl">
 						Open Activity in new window
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
 							<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
