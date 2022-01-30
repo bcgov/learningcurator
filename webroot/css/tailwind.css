@@ -1166,6 +1166,11 @@ Ensure the default browser behavior of the `hidden` attribute.
           text-decoration-line: underline;
 }
 
+.no-underline {
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
+}
+
 .opacity-25 {
   opacity: 0.25;
 }
@@ -1228,6 +1233,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .ease-in {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+
+a {
+  text-decoration: underline;
 }
 
 /* 

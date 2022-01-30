@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+a {
+    text-decoration: underline;
+}
 /* 
 input:-webkit-autofill {
     -webkit-text-fill-color: #000;
