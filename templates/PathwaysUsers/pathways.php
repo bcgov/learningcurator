@@ -108,14 +108,14 @@ if ($this->Identity->isLoggedIn()) {
 
 		<h2 class="mb-3 text-3xl">Get Started</h2>
 		<div class="p-4 bg-slate-200 dark:bg-slate-800 rounded-lg">
-			<p class="mb-3">Curator pathways are organized into topics and 
+			<p class="mb-3 text-xl">Curator pathways are organized into topics and 
 			topics are categorized. You can see all the pathways we have to 
 			offer and when you see one you like, you can pin it here to your profile
 			and get to it fast when you visit again.</p>
-			<p>As you complete activities contained in a pathway you'll be able to see your progress here too.</p>
+			<p class="text-lg">As you complete activities contained in a pathway you'll be able to see your progress here too.</p>
 		</div>
 		
-		<a href="/categories" class="inline-block p-3 mt-4 bg-[#003366] dark:bg-emerald-700 text-white text-lg no-underline rounded-lg">
+		<a href="/categories" class="inline-block p-3 mt-4 bg-emerald-700 dark:bg-emerald-700 text-white text-lg no-underline rounded-lg">
 			View Categories
 		</a>
 

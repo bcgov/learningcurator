@@ -928,11 +928,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(15 23 42 / var(--tw-bg-opacity));
 }
 
-.bg-green-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(134 239 172 / var(--tw-bg-opacity));
-}
-
 .bg-gray-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
@@ -962,16 +957,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding: 0.75rem;
 }
 
-.p-5 {
-  padding: 1.25rem;
+.p-6 {
+  padding: 1.5rem;
 }
 
 .p-2 {
   padding: 0.5rem;
-}
-
-.p-6 {
-  padding: 1.5rem;
 }
 
 .p-4 {
@@ -980,6 +971,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .p-8 {
   padding: 2rem;
+}
+
+.p-5 {
+  padding: 1.25rem;
 }
 
 .p-20 {
@@ -1030,14 +1025,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-right: 2.5rem;
 }
 
-.px-8 {
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .px-3 {
@@ -1177,15 +1172,15 @@ Ensure the default browser behavior of the `hidden` attribute.
   opacity: 1;
 }
 
-.shadow-lg {
-  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
 .shadow-sm {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-lg {
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -1231,42 +1226,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 a {
   text-decoration: underline;
+  text-decoration-thickness: 1px;
 }
-
-/* 
-input:-webkit-autofill {
-    -webkit-text-fill-color: #000;
-    -webkit-box-shadow: 0 0 0px 1000px #003366 inset;
-}
-input:-moz-autofill {
-    -moz-text-fill-color: #000;
-    -moz-box-shadow: 0 0 0px 1000px #003366 inset;
-}
-input:-o-autofill {
-    -o-text-fill-color: #000;
-    -o-box-shadow: 0 0 0px 1000px #003366 inset;
-}
-input:-khtml-autofill {
-    -khtml-text-fill-color: #000;
-    -khtml-box-shadow: 0 0 0px 1000px #003366 inset;
-}
-
-input:focus:-webkit-autofill {
-    -webkit-text-fill-color: #000;
-    -webkit-box-shadow: 0 0 0px 1000px #003366 inset;
-}
-input:focus:-moz-autofill {
-    -moz-text-fill-color: #000;
-    -moz-box-shadow: 0 0 0px 1000px #003366 inset;
-}
-input:focus:-o-autofill {
-    -o-text-fill-color: #000;
-    -o-box-shadow: 0 0 0px 1000px #003366 inset;
-}
-input:focus:-khtml-autofill {
-    -khtml-text-fill-color: #000;
-    -khtml-box-shadow: 0 0 0px 1000px #003366 inset;
-} */
 
 .hover\:bg-gray-200:hover {
   --tw-bg-opacity: 1;
@@ -1288,6 +1249,11 @@ input:focus:-khtml-autofill {
   background-color: rgb(203 213 225 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-slate-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-blue-800:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(30 64 175 / var(--tw-bg-opacity));
@@ -1306,6 +1272,11 @@ input:focus:-khtml-autofill {
 .focus\:bg-gray-200:focus {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+.focus\:bg-white:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .focus\:bg-slate-200:focus {
@@ -1338,6 +1309,11 @@ input:focus:-khtml-autofill {
     display: none;
   }
 
+  .dark\:bg-\[\#003366\] {
+    --tw-bg-opacity: 1;
+    background-color: rgb(0 51 102 / var(--tw-bg-opacity));
+  }
+
   .dark\:bg-slate-900 {
     --tw-bg-opacity: 1;
     background-color: rgb(15 23 42 / var(--tw-bg-opacity));
@@ -1346,11 +1322,6 @@ input:focus:-khtml-autofill {
   .dark\:bg-slate-800 {
     --tw-bg-opacity: 1;
     background-color: rgb(30 41 59 / var(--tw-bg-opacity));
-  }
-
-  .dark\:bg-\[\#003366\] {
-    --tw-bg-opacity: 1;
-    background-color: rgb(0 51 102 / var(--tw-bg-opacity));
   }
 
   .dark\:bg-emerald-700 {
@@ -1458,6 +1429,11 @@ input:focus:-khtml-autofill {
   .dark\:focus\:bg-gray-900:focus {
     --tw-bg-opacity: 1;
     background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+  }
+
+  .dark\:focus\:bg-slate-600:focus {
+    --tw-bg-opacity: 1;
+    background-color: rgb(71 85 105 / var(--tw-bg-opacity));
   }
 
   .dark\:focus\:text-white:focus {
