@@ -88,7 +88,7 @@ $this->assign('title', h($pathway->name));
 
 
 
-<h2 class="text-3xl dark:text-white">
+<h2 class="ml-10 text-3xl dark:text-white">
 	Modules
 	<span class="inline-block px-2 bg-slate-500 dark:bg-black text-white text-sm rounded-full"><?= $requiredacts ?> activities</span>
 </h2>
