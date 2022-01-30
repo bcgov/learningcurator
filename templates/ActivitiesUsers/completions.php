@@ -20,7 +20,7 @@ $uid = $this->Identity->get('id');
 		<a href="/profile" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-slate-900 dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
 			Pinned Pathways
 		</a> 
-		<a href="/profile/claims" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-[#003366] dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+		<a href="/profile/completions" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-[#003366] dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
 			Completed Activities
 		</a> 
 		<a href="/profile/reports" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
@@ -34,17 +34,16 @@ $uid = $this->Identity->get('id');
 	</div>
 	</div>
 </div>
-<div class="p-6 rounded-lg activity bg-white dark:bg-slate-900 dark:text-white">
+<div class="p-6 rounded-lg activity bg-slate-200 dark:bg-slate-900 dark:text-white">
 <h1 class="mb-3 text-lg">Completed Activities</h1>
 <?php if(!$activities->isEmpty()): ?>
 <?php foreach($activities as $a): ?>
 
-<div class="p-3 mb-3 bg-slate-300 dark:bg-slate-800 rounded-lg">
+<div class="p-3 mb-3 bg-white dark:bg-slate-800 rounded-lg">
+<?= $this->Form->postLink(__('Un-complete'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $a['id']], ['class' => 'float-right p-3 ml-3 bg-slate-300 no-underline rounded-lg', 'confirm' => __('Unclaim?')]) ?>
 <h2 class="text-2xl">
-<?= $this->Form->postLink(__('Unclaim'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $a['id']], ['class' => 'btn btn-light float-right', 'confirm' => __('Unclaim?')]) ?>
 <a href="/activities/view/<?= $a['activity']['id'] ?>" class="font-weight-bold">
-<i class="bi <?= $a['activity']['activity_type']['image_path'] ?>"></i>
-<?= $a['activity']['name'] ?>
+	<?= $a['activity']['name'] ?>
 </a>
 </h2>
 <div class="">

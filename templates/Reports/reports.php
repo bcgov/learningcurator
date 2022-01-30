@@ -22,7 +22,7 @@ if ($this->Identity->isLoggedIn()) {
 		<a href="/profile" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-slate-900 dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
 			Pinned Pathways
 		</a> 
-		<a href="/profile/claims" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+		<a href="/profile/completions" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
 			Completed Activities
 		</a> 
 		<a href="/profile/reports" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-[#003366] dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
@@ -37,12 +37,12 @@ if ($this->Identity->isLoggedIn()) {
 	</div>
 </div>
 
-<div class="p-6 bg-white dark:bg-slate-900 rounded-lg">
+<div class="p-6 bg-slate-200 dark:bg-slate-900 rounded-lg">
 <h1 class="mb-3 text-lg">Issues Reported</h1>
 <?php if (!$reports->isEmpty()) : ?>
 	
 	<?php foreach ($reports as $report) : ?>
-	<div class="p-6 bg-slate-300 dark:bg-slate-800 rounded-lg">
+	<div class="p-6 bg-white dark:bg-slate-800 rounded-lg">
 	<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-primary']) ?>
 		<?= h($report->created) ?>
 		<div><strong><a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></strong></div>

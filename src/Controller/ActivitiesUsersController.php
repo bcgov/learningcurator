@@ -13,11 +13,11 @@ Use Cake\ORM\TableRegistry;
 class ActivitiesUsersController extends AppController
 {
     /**
-     * User claims method
+     * User completions method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function claims()
+    public function completions()
     {
         $user = $this->request->getAttribute('authentication')->getIdentity();
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');

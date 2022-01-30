@@ -197,7 +197,7 @@ return [
         [
             'role' => '*',
             'controller' => 'ActivitiesUsers',
-            'action' => ['delete','claims','complete'],
+            'action' => ['delete','completions','complete'],
         ],
         [
             'role' => '*',
