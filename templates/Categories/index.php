@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php foreach ($categories as $category): ?>
 
-<div class="my-2 p-3 bg-slate-100 dark:bg-slate-900 w-full rounded-lg">
+<div class="my-2 p-3 bg-white dark:bg-slate-900 w-full rounded-lg">
 	<div x-data="{ topics<?= $category->id ?>: false }">
 		<h1 class="text-3xl">
 			<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
