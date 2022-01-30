@@ -21,10 +21,10 @@ if ($this->Identity->isLoggedIn()) {
 	<div x-data="{ topics<?= $category->id ?>: false }">
 		<h1 class="text-3xl">
 			<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
-			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="!topics<?= $category->id ?>" @click="topics<?= $category->id ?> = ! topics<?= $category->id ?>">
+			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-blue-900 dark:hover:bg-gray-700 rounded-lg" x-show="!topics<?= $category->id ?>" @click="topics<?= $category->id ?> = ! topics<?= $category->id ?>">
 				Show Topics
 			</button>
-			<button class="inline-block p-2 ml-3 text-xs bg-slate-200 hover:bg-slate-300 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="topics<?= $category->id ?>" @click="topics<?= $category->id ?> = ! topics<?= $category->id ?>">
+			<button class="inline-block p-2 ml-3 text-xs bg-slate-200 hover:bg-slate-300 dark:bg-blue-900 dark:hover:bg-gray-700 rounded-lg" x-show="topics<?= $category->id ?>" @click="topics<?= $category->id ?> = ! topics<?= $category->id ?>">
 				Hide Topics
 			</button>
 		</h1>
@@ -34,15 +34,15 @@ if ($this->Identity->isLoggedIn()) {
 		</div>
 		<?php if(!empty($category->topics[0]->pathways[0]->name)): ?>
 		<?php foreach ($category->topics as $topic): ?>
-		<div class="p-3 mb-3 bg-slate-200 dark:bg-[#003366] rounded-lg">
+		<div class="p-3 mb-3 bg-slate-200 dark:bg-blue-900 rounded-lg">
 		<div x-data="{ paths<?= $topic->id ?>: false }">
 	
 		<h2 class="text-3xl">
 			<?= $this->Html->link($topic->name, ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
-			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="!paths<?= $topic->id ?>" @click="paths<?= $topic->id ?> = ! paths<?= $topic->id ?>">
+			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-blue-900 dark:hover:bg-gray-700 rounded-lg" x-show="!paths<?= $topic->id ?>" @click="paths<?= $topic->id ?> = ! paths<?= $topic->id ?>">
 				Show Pathways
 			</button>
-			<button class="inline-block p-2 ml-3 text-xs bg-slate-200 hover:bg-slate-300 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="paths<?= $topic->id ?>" @click="paths<?= $topic->id ?> = ! paths<?= $topic->id ?>">
+			<button class="inline-block p-2 ml-3 text-xs bg-slate-200 hover:bg-slate-300 dark:bg-blue-900 dark:hover:bg-gray-700 rounded-lg" x-show="paths<?= $topic->id ?>" @click="paths<?= $topic->id ?> = ! paths<?= $topic->id ?>">
 				Hide Pathways
 			</button>
 		</h2>
@@ -61,7 +61,7 @@ if ($this->Identity->isLoggedIn()) {
 					<?= h($path->name) ?>
 					</a>
 				</h4>
-				<div class="my-2 p-3 bg-slate-100 dark:bg-[#003366]/50">
+				<div class="my-2 p-3 bg-slate-100 dark:bg-blue-900/50">
 				<?= h($path->description) ?>
 				</div>
 				</div>

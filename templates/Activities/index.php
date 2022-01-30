@@ -24,7 +24,7 @@ if ($this->Identity->isLoggedIn()) {
 </style>
 <div class="p-6 dark:text-white">
 <h1 class="text-4xl">Activities</h1>
-<div class="paginator sticky top-0 z-50 py-3 bg-[#c3d4e4] dark:bg-[#003366]">
+<div class="paginator sticky top-0 z-50 py-3 bg-[#c3d4e4] dark:bg-blue-900">
 	<div class="mb-3">
 		<?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
 	</div>

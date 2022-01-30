@@ -106,7 +106,7 @@ $supplmentalcount = count($supplementalacts);
 		<?php foreach($pathways->steps as $s): ?>
 		<?php if($s->status_id == 2): ?>
 		<?php $c = '' ?>
-		<?php if($s->id == $step->id) $c = 'bg-slate-300 dark:bg-[#003366]' ?>
+		<?php if($s->id == $step->id) $c = 'bg-slate-300 dark:bg-blue-900' ?>
 		<a class="<?= $c ?> block px-4 py-2 mt-2 text-sm font-semibold rounded-lg dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
 		<?= $s->name ?> 
 		</a>
@@ -154,7 +154,7 @@ foreach($actlist as $k => $v) {
 	}
 }
 ?>
-<div class="relative p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
+<div class="relative p-3 my-3 rounded-lg activity bg-white dark:bg-blue-900 dark:text-white">
 <?php if($completed > 0): ?>
 	<div class="w-32 bg-slate-200 text-black text-center uppercase rounded-lg">Complete</div>
 <?php endif ?>

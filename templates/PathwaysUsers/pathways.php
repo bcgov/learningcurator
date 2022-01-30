@@ -21,17 +21,17 @@ if ($this->Identity->isLoggedIn()) {
 	</button>
 	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full origin-top-right shadow-lg">
 	<div class="-ml-8 p-6 bg-white rounded-md shadow dark:bg-slate-900">
-		<a href="/profile" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-[#003366] dark:bg-slate-900 dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+		<a href="/profile" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-blue-900 dark:bg-slate-900 dark:hover:bg-blue-900 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
 			Pinned Pathways
 		</a> 
-		<a href="/profile/completions" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+		<a href="/profile/completions" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-blue-900 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
 			Completed Activities
 		</a> 
-		<a href="/profile/reports" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+		<a href="/profile/reports" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-blue-900 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
 			Issues Reported
 		</a> 
 		    
-    	<a href="/logout" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+    	<a href="/logout" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-blue-900 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
 			Logout
 		</a>
     
@@ -54,7 +54,11 @@ if ($this->Identity->isLoggedIn()) {
 	<?php foreach ($pathways as $path) : ?>
         
 	<div class="p-3 mb-3 bg-white dark:bg-slate-800 rounded-lg">
-
+	<?php 
+	echo $this->Form->postLink(__('Un-Pin'), 
+									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $path->id], 
+									['class' => 'float-right inline-block p-3 bg-blue-900 dark:bg-blue-900 text-white no-underline rounded-lg', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really un-pin?')]); 
+	?>
 		<div>
 			<?= $path->pathway->has('category') ? $this->Html->link($path->pathway->category->name, ['controller' => 'Categories', 'action' => 'view', $path->pathway->category->id]) : '' ?>
 		</div>
@@ -101,12 +105,6 @@ if ($this->Identity->isLoggedIn()) {
 		</div>
 
 
-<?php 
-echo $this->Form->postLink(__('Un-Pin'), 
-								['controller' => 'PathwaysUsers', 'action' => 'delete/'. $path->id], 
-								['class' => 'inline-block p-3 bg-slate-300 dark:bg-[#003366] rounded-lg', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really un-pin?')]); 
-?>
-
 	</div>
 	<?php endforeach; ?>
 	
@@ -116,7 +114,7 @@ echo $this->Form->postLink(__('Un-Pin'),
 	<div class="p-3 mb-2 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
 
 		<h2 class="mb-3 text-3xl">Get Started</h2>
-		<div class="p-4 bg-[#003366]/50 rounded-lg">
+		<div class="p-4 bg-slate-200 rounded-lg">
 			<p class="mb-3">Curator pathways are organized into topics and 
 			topics are categorized. You can see all the pathways we have to 
 			offer and when you see one you like, you can pin it here to your profile
@@ -124,7 +122,7 @@ echo $this->Form->postLink(__('Un-Pin'),
 			<p>As you complete activities contained in a pathway you'll be able to see your progress here too.</p>
 		</div>
 		
-		<a href="/categories" class="inline-block p-3 my-6 bg-slate-300 dark:bg-green-700 text-lg rounded-lg">
+		<a href="/categories" class="inline-block p-3 mt-4 bg-blue-900 dark:bg-green-700 text-white text-lg no-underline rounded-lg">
 			View Categories
 		</a>
 

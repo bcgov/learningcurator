@@ -32,6 +32,12 @@ $this->assign('title', h($pathway->name));
 	</svg> <?= h($pathway->name) ?>
 </nav> 
 
+<?php if($role == 'curator' || $role == 'superuser'): ?>
+<div class="float-right ml-3 mt-1">
+<?= $this->Html->link(__('Edit'), ['action' => 'edit', $pathway->id], ['class' => 'p-3 bg-slate-100 no-underline rounded-lg']) ?>
+<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'p-3 bg-slate-100 no-underline rounded-lg']) ?>
+</div>
+<?php endif ?>
 
 <h1 class="text-4xl">
 <!-- <?= h($pathway->id) ?>.  -->
@@ -64,8 +70,8 @@ $this->assign('title', h($pathway->name));
 <div class="" x-show="isLoading">Loading&hellip;</div>
 <div x-show="!isLoading">
 	<div class="mb-6 w-full bg-slate-500 dark:bg-black rounded-lg">
-		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-green-300 dark:bg-green-700 dark:text-white text-center rounded-lg">&nbsp;</span>
-		<span x-text="status.percentage + '%'" class="beginning inline-block"></span>
+		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-green-700 dark:bg-green-700 text-white text-center rounded-lg">&nbsp;</span>
+		<span x-text="status.percentage + '%'" class="beginning inline-block text-white"></span>
 	</div>
 </div>
 </div>
@@ -73,16 +79,13 @@ $this->assign('title', h($pathway->name));
 <?php if(empty($followid)): ?>
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]) ?>
-<?= $this->Form->button(__('Pin to Profile'),['class' => 'mb-4 bg-green-300 dark:bg-green-700 rounded-lg p-3 text-center']) ?>
+<?= $this->Form->button(__('Pin to Profile'),['class' => 'mb-4 p-3 bg-blue-900 dark:bg-green-700 rounded-lg text-white text-center']) ?>
 <?= $this->Form->end(); ?>
 <?php endif ?>
 
 </div> <!-- / objective contain -->
 
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-<?= $this->Html->link(__('Edit'), ['action' => 'edit', $pathway->id], ['class' => 'btn btn-light']) ?>
-<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'btn btn-light']) ?>
-<?php endif ?>
+
 
 
 <h2 class="text-3xl dark:text-white">
@@ -102,14 +105,13 @@ $this->assign('title', h($pathway->name));
 	<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
 		<?= h($steps->name) ?> 
 	</a>
-	<span class="inline-block px-2 bg-slate-500 dark:bg-black text-white text-sm rounded-full">
+	<?php if($role == 'curator' || $role == 'superuser'): ?>
+	<span class="text-xs px-4 bg-slate-100 rounded-lg"><?= $steps->status->name ?></span>
+	<?php endif ?>
+	<span class="inline-block px-2 bg-slate-500 dark:bg-black text-white text-xs rounded-full">
 		<?= $requiredacts ?> activities
 	</span>
 </h3>
-
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-<div><?= $steps->status->name ?></span></div>
-<?php endif ?>
 
 
 <div class="mt-3 p-3 bg-slate-200 dark:bg-[#002850] text-xl rounded-lg">
