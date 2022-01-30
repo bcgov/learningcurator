@@ -26,6 +26,7 @@
     <?php if(!empty($this->Identity->get('id'))): ?>
     <nav :class="{'block': open, 'hidden': !open}" class="flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">
         <?php 
+        #TODO re-write all of this
         $active = '';
         $currentpage = $_SERVER["REQUEST_URI"];
         $navigation = array(
@@ -37,6 +38,7 @@
         );
         foreach($navigation as $page): ?>
         <?php if(strpos($currentpage,$page['link']) !== false) $active = 'bg-[#c3d4e4] dark:bg-blue-900'; ?>
+        <?php if($currentpage == '/' && $page['link'] == '/profile') $active = 'bg-[#c3d4e4] dark:bg-blue-900'; ?>
         <a class="no-underline block px-4 py-2 mt-2 text-sm font-semibold <?= $active ?> text-gray-900 rounded-lg dark:hover:bg-blue-900 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
             href="<?= $page['link'] ?>">
         <?= $page['name'] ?>
