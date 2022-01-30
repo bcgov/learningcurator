@@ -40,13 +40,6 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 
 
-
-
-
-
-
-
-
 <div class="p-6 bg-slate-200 dark:bg-slate-900 dark:text-white rounded-lg">
 <h1 class="mb-3 text-lg">Pinned Pathways</h1>
 <?php if (!$pathways->isEmpty()) : ?>
