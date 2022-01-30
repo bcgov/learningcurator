@@ -74,12 +74,12 @@
 <?= $this->fetch('content') ?>
 </div>
 </div>
-<div class="py-6 bg-slate-200 dark:bg-slate-900">
+<div class="py-6 bg-white dark:bg-slate-900">
   <img class="my-6 hidden dark:inline-block" src="/img/wiw-white-text.svg" width="380px">
   <img class="my-6 inline-block dark:hidden" src="/img/wiw-dark-text.svg" width="380px">
   <img class="my-6 hidden dark:inline-block" src="/img/learning-centre-logo-wordmark-darkmode.svg" height="100px" width="300px">
   <img class="my-6 inline-block dark:hidden" src="/img/learning-centre-logo-wordmark.svg" height="100px" width="300px">
-  <a href="#privacy" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-blue-900 dark:text-white rounded-lg">Privacy Statement</a>
+  <a href="#privacy" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-blue-900 dark:text-white no-underline rounded-lg">Privacy Statement</a>
 </div>
 
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
