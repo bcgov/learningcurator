@@ -159,8 +159,8 @@ foreach($actlist as $k => $v) {
 	<div class="w-32 bg-slate-200 text-black text-center uppercase rounded-lg">Complete</div>
 <?php endif ?>
 <h4 class="mb-3 text-3xl">
-	<a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
-	<!--<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
+	<?= $activity->name ?>
+	<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>">></a>
 </h4>
 <div class="mb-6 text-lg">
 <?= $activity->description ?>
