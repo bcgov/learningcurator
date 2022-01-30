@@ -22,7 +22,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <div class="md:flex">
 <div class="basis-1/4 p-3">
-<div class="md:sticky top-3 mt-3 bg-blue-900">
+<div class="md:sticky top-3 mt-3 bg-[#003366]">
 <?php foreach ($questions as $question): ?>
 <?php if($question->status_id == 2): ?>
 <div class="p-2 m-1 bg-slate-900 rounded-lg">

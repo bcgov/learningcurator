@@ -40,9 +40,9 @@
     ['name'=>'About','link' => '/questions']
   );
   foreach($navigation as $page): ?>
-  <?php if(strpos($currentpage,$page['link']) !== false) $active = 'bg-[#c3d4e4] dark:bg-blue-900'; ?>
-  <?php if($currentpage == '/' && $page['link'] == '/profile') $active = 'bg-[#c3d4e4] dark:bg-blue-900'; ?>
-  <a class="no-underline block px-4 py-2 mt-2 text-sm font-semibold <?= $active ?> text-gray-900 rounded-lg dark:hover:bg-blue-900 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+  <?php if(strpos($currentpage,$page['link']) !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366]'; ?>
+  <?php if($currentpage == '/' && $page['link'] == '/profile') $active = 'bg-[#c3d4e4] dark:bg-[#003366]'; ?>
+  <a class="no-underline block px-4 py-2 mt-2 text-sm font-semibold <?= $active ?> text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
     href="<?= $page['link'] ?>">
       <?= $page['name'] ?>
   </a>
@@ -52,7 +52,7 @@
   <?php endif ?>
 </div>
 
-<div class="bg-[#c3d4e4] dark:bg-blue-900 dark:text-white w-full 2xl:w-2/3">
+<div class="bg-[#c3d4e4] dark:bg-[#003366] dark:text-white w-full 2xl:w-2/3">
 
   <?php if(!empty($this->Identity->get('id'))): ?>
   <div class="flex h-16 w-full px-6 pt-3 bg-slate-200 dark:bg-[#002850]"> <!-- sticky top-0 z-50 -->
@@ -60,9 +60,9 @@
     <div class="p-2 mr-6 w-50 hidden md:block">
       Welcome <a href="/profile" ><?= $this->Identity->get('first_name') ?></a>
       <?php if($this->Identity->get('role') == 'curator'): ?>
-      <span class="px-3 text-xs bg-blue-900 text-white rounded-lg">Curator</span>
+      <span class="px-3 text-xs bg-[#003366] text-white rounded-lg">Curator</span>
       <?php elseif($this->Identity->get('role') == 'superuser'): ?>
-      <span class="px-3 text-xs bg-blue-900 rounded-lg">Super</span>
+      <span class="px-3 text-xs bg-[#003366] rounded-lg">Super</span>
       <?php endif ?>
     </div>
 
@@ -83,7 +83,7 @@
   <img class="my-6 inline-block dark:hidden" src="/img/wiw-dark-text.svg" height="110" width="380px" alt="Where Ideas Work logo">
   <img class="my-6 hidden dark:inline-block" src="/img/learning-centre-logo-wordmark-darkmode.svg" height="100px" width="300px" alt="Learning Centre Logo">
   <img class="my-6 inline-block dark:hidden" src="/img/learning-centre-logo-wordmark.svg" height="100px" width="300px" alt="Learning Centre Logo">
-  <a href="#privacy" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-blue-900 dark:text-white no-underline rounded-lg">
+  <a href="#privacy" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-[#003366] dark:text-white no-underline rounded-lg">
     Privacy Statement
   </a>
 </div>

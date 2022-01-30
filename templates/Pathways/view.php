@@ -79,7 +79,7 @@ $this->assign('title', h($pathway->name));
 <?php if(empty($followid)): ?>
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]) ?>
-<?= $this->Form->button(__('Pin to Profile'),['class' => 'mb-4 p-3 bg-blue-900 dark:bg-emerald-700 rounded-lg text-white text-center']) ?>
+<?= $this->Form->button(__('Pin to Profile'),['class' => 'mb-4 p-3 bg-[#003366] dark:bg-emerald-700 rounded-lg text-white text-center']) ?>
 <?= $this->Form->end(); ?>
 <?php endif ?>
 
