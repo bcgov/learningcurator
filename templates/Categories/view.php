@@ -69,39 +69,8 @@ $this->assign('title', $pagetitle);
 </h2>
 <div class="py-2 mb-2"><?= $topic->description ?></div>
 
-<?php foreach ($topic->pathways as $pathway) : ?>
 
-<?php if($pathway->status_id == 2): // is published ?>
-	<div class="p-3 bg-slate-200 dark:bg-[#003366] rounded-lg">
-		<a href="/pathways/<?= h($pathway->slug) ?>" class="text-2xl">
-			<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
-				<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-				<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
-			</svg>
-			<?= $pathway->name ?>
-		</a>
-		<div class="mt-2 p-3 bg-slate-200 dark:bg-[#002850] rounded-lg">
-		<?= h($pathway->description) ?>
-		</div>
-	</div>
-
-
-<?php else: ?>
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-<span class="badge badge-warning"><?= $pathway->status->name ?></span>
-<div>
-	<i class="bi bi-pin-map-fill"></i>
-	<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
 </div>
-<div class="mb-3">
-<?= h($pathway->objective) ?>
-</div>
-<?php endif; // is curator or admin ?>
-<?php endif; // is published ?>
-</div>
-<?php endforeach ?>
-
-
 <?php endif; // is published ?>
 <?php endforeach ?>
 <?php endif; // topics ?>
