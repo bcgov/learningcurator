@@ -36,8 +36,8 @@
             ['name'=>'About','link' => '/questions']
         );
         foreach($navigation as $page): ?>
-        <?php if(strpos($currentpage,$page['link']) !== false) $active = 'bg-gray-300 dark:bg-[#003366]'; ?>
-        <a class="block px-4 py-2 mt-2 text-sm font-semibold <?= $active ?> text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+        <?php if(strpos($currentpage,$page['link']) !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366]'; ?>
+        <a class="no-underline block px-4 py-2 mt-2 text-sm font-semibold <?= $active ?> text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
             href="<?= $page['link'] ?>">
         <?= $page['name'] ?>
         </a>
