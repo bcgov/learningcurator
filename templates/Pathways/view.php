@@ -34,8 +34,8 @@ $this->assign('title', h($pathway->name));
 
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right ml-3 mt-1">
-<?= $this->Html->link(__('Edit'), ['action' => 'edit', $pathway->id], ['class' => 'p-3 bg-slate-100 no-underline rounded-lg']) ?>
-<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'p-3 bg-slate-100 no-underline rounded-lg']) ?>
+<?= $this->Html->link(__('Edit'), ['action' => 'edit', $pathway->id], ['class' => 'p-3 bg-slate-100 dark:bg-black no-underline rounded-lg']) ?>
+<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'p-3 bg-slate-100 dark:bg-black no-underline rounded-lg']) ?>
 </div>
 <?php endif ?>
 
@@ -106,7 +106,7 @@ $this->assign('title', h($pathway->name));
 		<?= h($steps->name) ?> 
 	</a>
 	<?php if($role == 'curator' || $role == 'superuser'): ?>
-	<span class="text-xs px-4 bg-slate-100 rounded-lg"><?= $steps->status->name ?></span>
+	<span class="text-xs px-4 bg-slate-100 dark:bg-black rounded-lg"><?= $steps->status->name ?></span>
 	<?php endif ?>
 	<span class="inline-block px-2 bg-slate-500 dark:bg-black text-white text-xs rounded-full">
 		<?= $requiredacts ?> activities
