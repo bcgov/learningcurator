@@ -5,10 +5,9 @@
  */
 $this->loadHelper('Authentication.Identity');
 ?>
-<div class="container-fluid">
-<div class="row justify-content-md-center">
-<div class="col-md-10 col-lg-8 col-xl-5">
-<div class="bg-white p-3 my-5">
+
+<div class="p-6 dark:text-white">
+<div class="p-6 bg-slate-200 dark:bg-slate-900 rounded-lg">
 
 <?= $this->Form->create($pathway) ?>
 
@@ -17,10 +16,10 @@ $this->loadHelper('Authentication.Identity');
 <?php echo $this->Form->hidden('modifiedby',['value' => $this->Identity->get('id')]) ?>
 
 
-<?php echo $this->Form->control('status_id', ['type' => 'select', 'options' => $statuses, 'class' => 'form-control']) ?>
+<?php echo $this->Form->control('status_id', ['type' => 'select', 'options' => $statuses, 'class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']) ?>
 
 
-<?php echo $this->Form->control('createdby', ['type' => 'select', 'options' => $users, 'class' => 'form-control']) ?>
+<?php echo $this->Form->control('createdby', ['type' => 'select', 'options' => $users, 'class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']) ?>
 
 
 <div>
@@ -28,18 +27,18 @@ $this->loadHelper('Authentication.Identity');
 <?php echo $this->Form->select(
     'topic_id',
     $areas,
-	['class' => 'form-control'],
+	['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg'],
 );
 ?></label>
 </div>
 <?php
-echo $this->Form->control('name', ['class' => 'form-control']);
-//echo $this->Form->control('slug', ['class' => 'form-control']);
-echo $this->Form->control('description', ['class' => 'form-control']);
-echo $this->Form->control('estimated_time', ['class' => 'form-control']);
-echo $this->Form->control('objective', ['class' => 'form-control']);
-//echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true, 'class' => 'form-control']);
-//echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true, 'class' => 'form-control']);
+echo $this->Form->control('name', ['class' => 'w-full p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']);
+//echo $this->Form->control('slug', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']);
+echo $this->Form->control('description', ['class' => 'w-full p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']);
+//echo $this->Form->control('estimated_time', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']);
+echo $this->Form->control('objective', ['class' => 'w-full p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']);
+//echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true, 'class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']);
+//echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true, 'class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']);
 //echo $this->Form->control('color');
 //echo $this->Form->control('file_path');
 //echo $this->Form->control('image_path');
@@ -50,8 +49,3 @@ echo $this->Form->control('objective', ['class' => 'form-control']);
 <?= $this->Form->end() ?>
 </div>
 </div>
-</div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
