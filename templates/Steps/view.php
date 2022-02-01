@@ -154,7 +154,7 @@ foreach($actlist as $k => $v) {
 	}
 }
 ?>
-<div class="relative p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
+<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
 <?php if($completed > 0): ?>
 	<div class="w-32 bg-slate-200 text-black text-center uppercase rounded-lg">Complete</div>
 <?php endif ?>
@@ -169,12 +169,12 @@ foreach($actlist as $k => $v) {
 Activity type: <?= $activity->activity_type->name ?>
 </div> -->
 <?php if(!empty($activity->isbn)): ?>
-<div class="bg-white p-2 isbn">
+<div class="p-2 isbn bg-white dark:bg-slate-800">
 ISBN: <?= $activity->isbn ?>
 </div>
 <?php endif ?>
 <?php if(!empty($activity->_joinData->stepcontext)): ?>
-<div class="my-4 p-3 bg-slate-100 dark:bg-gray-800 rounded-lg">
+<div class="my-4 p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
 <i class="bi bi-person-badge-fill"></i>
 Curator says:<br>
 <?= $activity->_joinData->stepcontext ?>
@@ -249,31 +249,35 @@ Curator says:<br>
 <h3 class="text-2xl dark:text-white">Supplementary Resources <span class="bg-white text-black rounded-lg text-lg inline-block px-2"><?= $supplmentalcount ?></span></h3>
 
 <?php foreach ($supplementalacts as $activity): ?>
-<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-900 dark:text-white">
-<h4 class="text-2xl">
-	<a href="/activities/view/<?= $activity->id ?>">
-		<?= $activity->name ?>
-	</a>
+<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
+<h4 class="mb-3 text-3xl">
+	<?= $activity->name ?>
+	<a class="text-sm" href="/activities/view/<?= $activity->id ?>">#</a>
 </h4>
 
 <?= $activity->description ?>
 
 <?php if(!empty($activity->_joinData->stepcontext)): ?>
-<div class="my-3 p-3 bg-slate-100">
+<div class="my-3 p-3 bg-slate-100 dark:bg-slate-800">
 	<strong>Curator says:</strong><br>
 	<?= $activity->_joinData->stepcontext ?>
 </div>
 <?php endif ?>
+
 <div class="">
 <a target="_blank" 
 	rel="noopener" 
 	data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
 	href="<?= $activity->hyperlink ?>" 
-	class="block my-5 p-3 bg-gray-700 rounded-lg text-white text-xl">
-		LAUNCH
+	class="inline-block my-3 p-3 bg-emerald-700 rounded-lg text-white text-xl no-underline">
+		Open in a new window 
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+			<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+			<path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+		</svg>
 </a>
 </div>
-
+<?= $activity->hyperlink ?>
 
 
 
