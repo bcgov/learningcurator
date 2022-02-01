@@ -32,15 +32,8 @@ class ActivitiesController extends AppController
      */
     public function index()
     {
-        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
-        $pathways = $allpaths->find('all')
-                                ->contain(['Steps','Statuses'])
-                                ->order(['Pathways.created' => 'desc'])
-                                ->where(['Pathways.featured' => 1])
-                                ->limit(10);
-        $allpathways = $pathways->toList();
-       
-        $activities = $this->Activities
+
+        $activities = $this->paginate($this->Activities
                             ->find('all')
                             ->contain(['Tags',
                                         'Statuses', 
@@ -48,39 +41,13 @@ class ActivitiesController extends AppController
                                         'ActivityTypes',
                                         'Steps.Pathways'])
                             ->where(['Activities.status_id' => 2])
-                            ->order(['Activities.created' => 'DESC'])
-                            ->limit(30); // including 'Steps.Pathways' appears to be SUPER expensive
-        
-		$cats = TableRegistry::getTableLocator()->get('Categories');
-        $allcats = $cats->find('all')->contain(['Topics'])->order(['Categories.created' => 'desc']);
-        
+                            ->order(['Activities.created' => 'DESC'])); // including 'Steps.Pathways' appears to be SUPER expensive    
 
-
-        $this->set(compact('activities','allpathways','allcats'));
-    }
-
-    /**
-     * User claims method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function claims()
-    {
-        $user = $this->request->getAttribute('authentication')->getIdentity();
-        //echo $user->id; exit;
-        $activities = $this->Activities->find('all')
-                                        ->contain(['Tags',
-                                                    'Statuses', 
-                                                    'Ministries', 
-                                                    'ActivityTypes',
-                                                    'Steps.Pathways',
-                                                    'Users'])
-                                        ->where(['Activities.Users.id' => $user->id])
-                                        ->order(['Activities.created' => 'DESC'])
-                                        ->limit(100);
 
         $this->set(compact('activities'));
     }
+
+
 
     /**
      * View method
@@ -244,27 +211,6 @@ class ActivitiesController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    /**
-     * Claim an activity
-     *
-     * @param string|null $id Activity id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function claim($id = null)
-    {
-        $activity = $this->Activities->get($id, [
-            'contain' => ['Users'],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
-  
-            if ($this->Activities->save($activity)) {
-                return $this->redirect($this->referer());
-            }
-        }
-
-    }
     
     /**
      * Find method for activities; this is super-duper basic and search deserves better thab
@@ -275,14 +221,55 @@ class ActivitiesController extends AppController
      */
     public function find()
     {
+        $search = $this->request->getQuery('search');
+        
         $activities = $this->Activities->find('search', ['search' => $this->request->getQuery()])
                                         ->contain(['ActivityTypes','Steps.Pathways']);
-        $search = $this->request->getQuery('search');
-        $numresults = $activities->count();
-        $this->set(compact('activities','search', 'numresults'));
+        $numacts = $activities->count();
+
+        // We've searched for activities and that's great and all, but we also
+        // want to return results for categories.
+        $allcats = TableRegistry::getTableLocator()->get('Categories');
+        $categories = $allcats->find('all',
+                                    array('conditions' => 
+                                    array('OR' => 
+                                        array(
+                                            'name LIKE' => '%'.$search.'%',
+                                            'description LIKE' => '%'.$search.'%'
+                                        )
+                                )));
+        $numcats = $categories->count();
+
+        // We've searched for activities and categories and that's great and all, but we also
+        // want to return results for pathways. 
+        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
+        // $pathways = $allpaths->find()->where(function ($exp, $query) use($search) {
+        //     return $exp->like('name', '%'.$search.'%');
+        // })->order(['name' => 'ASC']);
+
+        $pathways = $allpaths->find('all',
+                                    array('conditions' => 
+                                    array('OR' => 
+                                        array(
+                                            'name LIKE' => '%'.$search.'%',
+                                            'description LIKE' => '%'.$search.'%'
+                                        )
+                                )));
+        $numpaths = $pathways->count();
+
+
+
+        $this->set(compact('categories', 
+                            'pathways', 
+                            'activities', 
+                            'search', 
+                            'numcats', 
+                            'numacts', 
+                            'numpaths'));
     }
+
     /**
-     * Find method for activities; this is super-duper basic and search deserves better thab
+     * Check for duplicate links in the system
      *
      * @param string|null $search search pararmeters to lookup activities.
      * @return \Cake\Http\Response|null

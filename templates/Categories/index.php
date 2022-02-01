@@ -13,52 +13,68 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<div class="container-fluid">
-<div class="row justify-content-md-center" id="colorful">
-<div class="col-md-10 col-lg-8 col-xl-6">
-
-<h1 class="display-4 mt-5">All Categories</h1>
-<p class="mb-5">Topics are categorized into the following areas:</p>
-</div>
-</div>
-</div>
-
-<div class="container-fluid">
-<div class="row justify-content-md-center linear">
-<div class="col-md-10 col-lg-6">
+<div class="p-6 dark:text-white">
 
 <?php foreach ($categories as $category): ?>
-<?php if($category->featured == 1): ?>
-<div class="p-3 my-3 bg-white rounded-lg shadow-sm">
-	<h2 class="">
-		<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
-	</h2>
-	<div class="mb-3 p-2">
-	<?= $category->description ?>
-	</div>
 
-</div>
-<?php else: ?>
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-	<div class="p-3 my-3 bg-white rounded-lg shadow-sm">
-		<span class="badge badge-warning">NOT PUBLISHED</span>
-	<h2 class="">
-		<i class="bi bi-diagram-3-fill"></i>
-		<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
-	</h2>
-	<div class="mb-3 p-2">
-	<?= $category->description ?>
-	</div>
+<div class="my-2 p-3 md:p-6 bg-white dark:bg-slate-900 w-full rounded-lg">
+	<div x-data="{ topics<?= $category->id ?>: false }">
+		<h1 class="text-3xl">
+			<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
+			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="!topics<?= $category->id ?>" @click="topics<?= $category->id ?> = ! topics<?= $category->id ?>">
+				Show Topics
+			</button>
+			<button class="inline-block p-2 ml-3 text-xs bg-slate-200 hover:bg-slate-300 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="topics<?= $category->id ?>" @click="topics<?= $category->id ?> = ! topics<?= $category->id ?>">
+				Hide Topics
+			</button>
+		</h1>
 
-</div>
-<?php endif ?>
-<?php endif ?>
+		<div x-show="topics<?= $category->id ?>" x-transition.duration.500ms>
+		<div class="my-3">
+			<?= h($category->description) ?>
+		</div>
+		<?php if(!empty($category->topics[0]->pathways[0]->name)): ?>
+		<?php foreach ($category->topics as $topic): ?>
+		<div class="p-3 md:p-6 mb-3 bg-slate-200 dark:bg-[#003366] rounded-lg">
+		<div x-data="{ paths<?= $topic->id ?>: false }">
+	
+		<h2 class="text-3xl">
+			<?= $this->Html->link($topic->name, ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
+			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="!paths<?= $topic->id ?>" @click="paths<?= $topic->id ?> = ! paths<?= $topic->id ?>">
+				Show Pathways
+			</button>
+			<button class="inline-block p-2 ml-3 text-xs bg-slate-200 hover:bg-slate-300 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="paths<?= $topic->id ?>" @click="paths<?= $topic->id ?> = ! paths<?= $topic->id ?>">
+				Hide Pathways
+			</button>
+		</h2>
+		<div class="my-3">
+			<?= h($topic->description) ?>
+		</div>
+		<div x-show="paths<?= $topic->id ?>" x-transition.duration.500ms>
+			<?php foreach ($topic->pathways as $path): ?>
+				<div class="p-3 md:p-6 my-1 bg-white dark:bg-slate-900 rounded-lg">
+				<h4 class="text-xl">
+					<a href="/pathways/<?= h($path->slug) ?>">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
+						<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+						<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
+					</svg>
+					<?= h($path->name) ?>
+					</a>
+				</h4>
+				<div class="my-2 p-3 bg-slate-100 dark:bg-[#003366]/50">
+				<?= h($path->description) ?>
+				</div>
+				</div>
+			<?php endforeach ?>
+		</div> <!-- / paths container -->
+		</div> <!-- / parent container -->
+		</div> <!-- / formatting container -->
+		<?php endforeach ?>
+		<?php endif ?>
+		</div> <!-- / topics container -->
+	</div> <!-- parent container -->
+</div> <!-- formatting container -->
 <?php endforeach; ?>
 
-</div>
-
-
-</div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+</div><!-- formatting container -->

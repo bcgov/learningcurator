@@ -22,63 +22,80 @@ if ($this->Identity->isLoggedIn()) {
 	color; #FFF;
 }
 </style>
-<div class="container-fluid">
-<div class="row justify-content-md-center" id="colorful">
-<div class="col-md-6">
-<div class="py-5">
+<div class="p-6 dark:text-white">
+<h1 class="text-4xl">Activities</h1>
+<div class="paginator sticky top-0 z-50 py-3 bg-[#c3d4e4] dark:bg-[#003366]">
+	<div class="mb-3">
+		<?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+	</div>
+	<?= $this->Paginator->first('<< ' . __('first')) ?>
+	<?= $this->Paginator->prev('< ' . __('previous')) ?>
+	<?php //$this->Paginator->numbers() ?>
+	<?= $this->Paginator->next(__('next') . ' >') ?>
+	<?= $this->Paginator->last(__('last') . ' >>') ?>
 
-<h1>Activities</h1>
-<p>The 30 most recently added activities.</p>
-<form method="get" action="/activities/find" class="form-inline my-2 my-lg-0 mr-3" role="search">
-		<input class="form-control mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="search">
-		<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-	</form>
 </div>
-</div>
-</div>
-<div class="container-fluid linear">
-<div class="row justify-content-md-center">
-
-
-<div class="col-md-10 col-lg-8 col-xl-6">
-
 <?php foreach ($activities as $activity) : ?>
 	
-	<div class="activity bg-white">
-	<div class="p-3 my-3 rounded-lg" style="background-color: rgba(<?= $activity->activity_type->color ?>,.2);">
+	<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-900 dark:text-white">
 
-	<h3 class="my-3">
+	<h2 class="my-3 text-3xl">
 		<a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
 		<!--<a class="btn btn-sm btn-light" href="/activities/view/<?= $activity->id ?>"><i class="fas fa-angle-double-right"></i></a>-->
-	</h3>
-	<div class="p-3" style="background: rgba(255,255,255,.3);">
-		<div class="mb-3">
-		<span class="badge badge-light" data-toggle="tooltip" data-placement="bottom" title="This activity should take <?= $activity->estimated_time ?> to complete">
-			<i class="bi bi-clock-history"></i>
-			<?= h($activity->estimated_time) ?>
-			<?php //echo $this->Html->link($activity->estimated_time, ['controller' => 'Activities', 'action' => 'estimatedtime', $activity->estimated_time]) ?>
-		</span> 
-		<?php foreach($activity->tags as $tag): ?>
-		<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
-		<?php endforeach ?>
-		</div>
+	</h2>
+
+
 
 		<?= $activity->description ?>
+
 		<?php if(!empty($activity->_joinData->stepcontext)): ?>
-		<div class="alert alert-light text-dark mt-3 shadow-sm">
-				<i class="bi bi-person-badge-fill"></i>
+		<div class="">
 				Curator says:<br>
 				<?= $activity->_joinData->stepcontext ?>
 			</div>
 			<?php endif ?>
 
+
+	<div @click.away="open = false" class="relative" x-data="{ open: false }">
+	<button @click="open = !open" class="px-4 py-2 text-lg font-semibold text-right bg-emerald-700 text-white rounded-lg dark:bg-emerald-700 dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+		<span>Launch</span>
+		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
+			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+		</svg>
+	</button>
+	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute z-50 right-0 w-full origin-top-right shadow-lg">
+		<div class="p-4 bg-white rounded-md shadow dark:bg-slate-900">
+
+			<div>
+				<a target="_blank" 
+					rel="noopener" 
+					data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
+					href="<?= $activity->hyperlink ?>" 
+					class="inline-block mb-3 p-3 bg-emerald-700 rounded-lg text-white text-2xl">
+						Open Activity in new window
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+							<path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+						</svg>
+				</a>
+			</div>
+			<div class="my-4">
+				<?= $activity->hyperlink ?>
+			</div>
+
+		</div>
 	</div>
+	</div>
+		
+
+		
+
 	<?php if(!empty($activity->steps)): ?>
-	<div class="mt-2">
-		<div class="p-3" style="background-color: rgba(255,255,255,.8);">
+	<div class="mt-2 p-3 bg-slate-200 dark:bg-slate-800 rounded-lg">
+
 		<?php foreach($activity->steps as $step): ?>
 			<?php if(!empty($step->pathways[0]->slug)): ?>
-			Included in 
+			Included in pathways:<br> 
 			<a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
 				<i class="bi bi-pin-map-fill"></i>
 				<?= $step->pathways[0]->name ?> - 
@@ -86,150 +103,14 @@ if ($this->Identity->isLoggedIn()) {
 			</a>
 			<?php endif ?>
 		<?php endforeach ?>
-		</div>
+
 	</div>
 	<?php endif ?>
 
-	<a target="_blank" 
-		rel="noopener" 
-		data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
-		href="<?= $activity->hyperlink ?>" 
-		style="background-color: rgba(<?= $activity->activity_type->color ?>,1); color: #000; font-weight: bold;" 
-		class="btn btn-block my-2 text-uppercase btn-lg">
-			<i class="bi <?= $activity->activity_type->image_path ?>"></i>
-			<?= $activity->activity_type->name ?>
-	</a>
-<div class="my-1">
-	<a href="/activities/like/<?= h($activity->id) ?>" style="color:#333;" class="likingit btn btn-light float-left mr-1" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-			<span class="lcount"><?= h($activity->recommended) ?></span> <i class="bi bi-hand-thumbs-up-fill"></i>
-		</a>
-		
-	<a href="#newreport<?= $activity->id ?>" 
-			style="color:#333;" 
-			class="btn btn-light " 
-			data-toggle="collapse" 
-			title="Report this activity for some reason" 
-			data-target="#newreport<?= $activity->id ?>" 
-			aria-expanded="false" 
-			aria-controls="newreport<?= $activity->id ?>">
-				<i class="bi bi-exclamation-triangle-fill"></i> Report
-		</a>	
-		<div class="collapse" id="newreport<?= $activity->id ?>">
-		<div class="my-3 p-3 bg-white rounded-lg">
-		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'add'],'class'=>'reportform']) ?>
-            <fieldset>
-                <legend><?= __('Report this activity') ?></legend>
-				<p>Is there something wrong with this activity? Tell us about it!</p>
-                <?php
-                    echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
-                    echo $this->Form->hidden('user_id', ['value' => $uid]);
-                    echo $this->Form->textarea('issue',['class' => 'form-control', 'placeholder' => 'Type here ...']);
-                ?>
-            </fieldset>
-            <input type="submit" class="btn btn-primary" value="Submit Report">
-            <?= $this->Form->end() ?>
-		</div>
-		</div>
-	</div>
 
 	</div>
-	</div>
-	
+
 
 	<?php endforeach; // end of activities loop for this step ?>
 
-
-
-
-
 </div>
-
-
-</div>
-</div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-
-	<script>
-
-$(document).ready(function(){
-
-
-	$('.claim').on('submit', function(e){
-		
-		e.preventDefault();
-		var form = $(this);
-		form.children('button').removeClass('btn-light').addClass('btn-primary').html('CLAIMED! <span class="fas fa-check-circle"></span>').tooltip('dispose').attr('title','Good job!');
-		
-		$(this).parent('.activity').css('box-shadow','0 0 10px rgba(0,0,0,.4)'); // css('border','2px solid #000')
-
-		var url = form.attr('action');
-		$.ajax({
-			type: "POST",
-			url: '/activities-users/claim',
-			data: form.serialize(),
-			success: function(data)
-			{
-				loadStatus();
-			},
-			statusCode: 
-			{
-				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
-				}
-			}
-		});
-	});
-
-	$('[data-toggle="tooltip"]').tooltip();
-
-	$('.likingit').on('click',function(e){
-		var url = $(this).attr('href');
-		$(this).children('.lcount').html('Liked!');
-		e.preventDefault();
-		$.ajax({
-			type: "GET",
-			url: url,
-			data: '',
-			success: function(data)
-			{
-			},
-			statusCode: 
-			{
-				403: function() {
-					let alert = 'You must be logged in.</div>';
-					console.log(alert);
-				}
-			}
-		});
-	});
-
-	$('.reportform').on('submit', function(e){
-		
-		e.preventDefault();
-		var form = $(this);
-		form.after('<div class="alert alert-success">Thank you for your report. A curator will respond. <a href="/profile/reports">View all your reports</a>.').remove();
-		
-		var url = form.attr('action');
-		$.ajax({
-			type: "POST",
-			url: '/reports/add',
-			data: form.serialize(),
-			success: function(data)
-			{
-				
-			},
-			statusCode: 
-			{
-				403: function() {
-					form.after('<div class="alert alert-warning">You must be logged in.</div>');
-				}
-			}
-		});
-	});
-	
-
-});
-
-</script>

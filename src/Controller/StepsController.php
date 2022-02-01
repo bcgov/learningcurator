@@ -54,39 +54,81 @@ class StepsController extends AppController
         $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
 
         // Select based on currently logged in person
+        // #TODO the next lines are not good. 
+        // change the query to only select the ID to begin with instead
+        // of selecting all and parsing it out? 
         $useacts = $au->find()->where(['user_id = ' => $user->id]);
 
         // convert the results into a simple array so that we can
         // use in_array in the template
         $useractivities = $useacts->toList();
-
         // Loop through the resources and add just the ID to the 
         // array that we will pass into the template
         foreach($useractivities as $uact) {
-            
             array_push($useractivitylist, $uact['activity_id']);
         }
-
-        //
         // we want to be able to tell if the current user is already on this
-        // pathway or not, so we take the same approach as above, parsing all
-        // the users into a single array so that we can perform a simple
-        // in_array($thisuser,$usersonthispathway) check and show the "take
-        // this Pathway" button or "you're on this Pathway" text
-        //
-        // Create the initially empty array that we also pass into the template
-        $usersonthispathway = array();
-        // Loop through the users that are on this pathway and parse just the 
-        // IDs into the array that we just created
+        // pathway or not so we loop through the users that are on this 
+        // pathway record the ID of pathways_users entry if we find a match.
         $followid = 0;
         foreach($step->pathways[0]->users as $pu) {
             if($pu->id == $user->id) {
                 $followid = $pu->_joinData->id;
             }
-            array_push($usersonthispathway,$pu->id);
         }
 
-        $this->set(compact('step','followid','useractivitylist','usersonthispathway'));
+        /**
+         * Loop through the activities on this step and process them into
+         * ordered lists for required, supplemental, and archived 
+         */
+        $stepTime = 0;
+        $archivedacts = array();
+        $requiredacts = array();
+        $supplementalacts = array();
+        $acts = array();
+
+        $totalacts = count($step->activities);
+        $stepclaimcount = 0;
+
+        foreach ($step->activities as $activity) {
+            $stepname = '';
+            // If this is 'defunct' then we pull it out of the list 
+            // and add it the defunctacts array so we can show them
+            // but in a different section
+            if($activity->status_id == 3) {
+                array_push($archivedacts,$activity);
+            } elseif($activity->status_id == 2) {
+                // if it's required
+                if($activity->_joinData->required == 1) {
+                    array_push($requiredacts,$activity);
+                // Otherwise it's teriary
+                } else {
+                    array_push($supplementalacts,$activity);
+                }
+                array_push($acts,$activity);
+
+                if(in_array($activity->id,$useractivitylist)) {
+                    $stepclaimcount++;
+                }
+                $reqtmp = array();
+                $suptmp = array();
+                // Loop through the whole list, add steporder to tmp array
+                foreach($requiredacts as $line) {
+                    $reqtmp[] = $line->_joinData->steporder;
+                }
+                foreach($supplementalacts as $line) {
+                    $suptmp[] = $line->_joinData->steporder;
+                }
+                // Use the tmp array to sort acts list
+                array_multisort($reqtmp, SORT_DESC, $requiredacts);
+                array_multisort($suptmp, SORT_DESC, $supplementalacts);
+                //array_multisort($tmp, SORT_DESC, $supplementalacts);
+            }
+        }
+
+        $pagetitle = $step->name . ' - ' . $step->pathways[0]->name;
+        
+        $this->set(compact('step','pagetitle','requiredacts','supplementalacts','archivedacts','totalacts','followid','useractivitylist'));
     }
 
     /**
@@ -188,11 +230,9 @@ class StepsController extends AppController
      */
     public function status($id = null)
     {
-		$this->viewBuilder()->setLayout('ajax');
         $step = $this->Steps->get($id, [
             'contain' => ['Activities'],
         ]);
-        
         $user = $this->request->getAttribute('authentication')->getIdentity();
         // We need create an empty array first. If nothing gets added to
         // it, so be it
@@ -209,71 +249,28 @@ class StepsController extends AppController
         foreach($useractivities as $uact) {
             array_push($useractivitylist, $uact['activity_id']);
         }
-		
 		$stepTime = 0;
-		$defunctacts = array();
-		$requiredacts = array();
-		$tertiaryacts = array();
-		$acts = array();
-
-		$readstepcount = 0;
-		$watchstepcount = 0;
-		$listenstepcount = 0;
-		$participatestepcount = 0;
-
 		$totalacts = count($step->activities);
 		$stepclaimcount = 0;
-
+        $requiredacts = 0;
 		foreach ($step->activities as $activity) {
-			//print_r($activity);
-			// If this is 'defunct' then we pull it out of the list 
-            // entirely
-			if($activity->status_id == 3) {
-				array_push($defunctacts,$activity);
-            // otherwise, if it's published then we add it
-			} elseif($activity->status_id == 2) {
+            // if it's published
+			if($activity->status_id == 2) {
 				// if it's required
 				if($activity->_joinData->required == 1) {
-                    array_push($requiredacts,$activity);
-                    if($activity->activity_types_id == 1) {
-                        $watchstepcount++;
-                    } elseif($activity->activity_types_id == 2) {
-                        $readstepcount++;
-                    } elseif($activity->activity_types_id == 3) {
-                        $listenstepcount++;
-                    } elseif($activity->activity_types_id == 4) {
-                        $participatestepcount++;
-                    }
+                    $requiredacts++;
                     if(in_array($activity->id,$useractivitylist)) {
                         $stepclaimcount++;
                     }
-				//Otherwise it's supplemental
-				} else {
-					array_push($tertiaryacts,$activity);
-				}
-				// Loop through the whole list, add steporder to tmp array
-                $tmp = array();
-				foreach($requiredacts as $line) {
-					$tmp[] = $line->_joinData->steporder;
-				}
-				// Use the tmp array to sort acts list
-				array_multisort($tmp, SORT_DESC, $requiredacts);
+				} 
 			}
 		} // endforeach for activities on this step 
-
-		$stepacts = count($requiredacts);
-		$completeclass = 'notcompleted'; 
-		if($stepclaimcount == $totalacts) {
-			$completeclass = 'completed';
-		}
-
 		if($stepclaimcount > 0) {
-			$steppercent = ceil(($stepclaimcount * 100) / $stepacts);
+			$steppercent = ceil(($stepclaimcount * 100) / $requiredacts);
 		} else {
 			$steppercent = 0;
-		}		
-		
-
-        $this->set(compact('step','steppercent','stepacts'));
+		}
+        $this->viewBuilder()->setLayout('ajax');
+        $this->set(compact('totalacts','stepclaimcount','steppercent','requiredacts'));
     }
 }

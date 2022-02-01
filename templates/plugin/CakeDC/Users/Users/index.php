@@ -9,9 +9,8 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 ?>
-<div class="container-fluid">
-<div class="row justify-content-md-center" id="colorful">
-<div class="col-md-10 col-lg-8 col-xl-6">
+<div class="p-6 dark:text-white">
+
 <h1 class="mt-5">Users</h1>
 <form method="get" action="/users/search" class="mb-5">
 <label>Search
@@ -23,13 +22,9 @@
 </label>
 		<button class="btn btn-outline-dark" type="submit">Search</button>
 	</form>
-</div>
-</div>
-</div>
-<div class="container-fluid">
-<div class="row justify-content-md-center">
-<div class="col-md-10 col-lg-8 col-xl-6">
-<div class="bg-white my-5 p-3 shadow-sm">
+
+    
+<div class="my-5 p-3 bg-white dark:bg-slate-900">
 
 <?php foreach (${$tableAlias} as $user) : ?>
 <div class="bg-light mb-3 p-3">

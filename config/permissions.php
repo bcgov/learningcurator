@@ -112,7 +112,7 @@ return [
             'role' => 'curator',
             'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
-            'action' => ['index', 'view','search'],
+            'action' => ['index', 'view','api','search'],
         ],
         [
             'role' => '*',
@@ -197,7 +197,7 @@ return [
         [
             'role' => '*',
             'controller' => 'ActivitiesUsers',
-            'action' => ['delete','claims'],
+            'action' => ['delete','completions','complete'],
         ],
         [
             'role' => '*',

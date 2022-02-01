@@ -12,60 +12,46 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<div class="container-fluid">
-<div class="row justify-content-md-center align-items-center"  id="colorful">
-<div class="col-md-8 col-xl-6">
-<div class="py-3">
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="float-right">
-    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $topic->id],['class' => 'btn btn-primary']) ?>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newpath">
-        New Pathway
-    </button>
-</div>
-<?php endif ?>
-<nav aria-label="breadcrumb">
-	<ol class="breadcrumb mt-3">
-	
-	<li class="breadcrumb-item">
-    <?= $this->Html->link(__('Categories'), ['controller' => 'Categories', 'action' => 'index'],['class' => '']) ?>
-    </li>
-	<li class="breadcrumb-item">
-    <?= $this->Html->link($topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $topic->categories[0]->id],['class' => '']) ?>
-    </li>
-	
-	</ol>
-	</nav>
+<div class="p-6 dark:text-white">
+<nav class="bg-slate-200 dark:bg-slate-900 rounded-lg p-3" aria-label="breadcrumb">
+    <?= $this->Html->link(__('Categories'), ['controller' => 'Categories', 'action' => 'index'],['class' => '']) ?> / 
+    <?= $this->Html->link($topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $topic->categories[0]->id],['class' => '']) ?> / 
+    <?= h($topic->name) ?>
+</nav>
 
-<h1>
+<h1 class="text-3xl mt-4">
     <?= h($topic->name) ?>
 </h1>
 <div class="mb-5">
 <?= h($topic->description) ?>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="container-fluid linear">
-<div class="row justify-content-md-center">
-<div class="col-md-8 col-xl-6">
+
 <?php foreach($topic->pathways as $pathway): ?>
 <?php if($pathway->status_id == 2): ?>
-    <div class="p-3 my-3 bg-white rounded-lg shadow-sm">
-        <h2>
-            <i class="bi bi-pin-map-fill"></i>
-            <?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?>
+    <div class="p-3 my-3 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
+    <h2 class="text-2xl">
+            <a href="/pathways/<?= h($pathway->slug) ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
+                    <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                    <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
+                </svg>
+                <?= h($pathway->name) ?>
+            </a>
         </h2>
         <div><?= h($pathway->description) ?></div>
     </div>
 <?php else: ?>
     <?php if($role == 'curator' || $role == 'superuser'): ?>
-    <div class="p-3 my-3 bg-white rounded-lg">
+        <div class="p-3 my-3 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
         <div class="badge badge-warning">DRAFT</div>
-        <h2>
-            <i class="bi bi-pin-map-fill"></i>
-            <?= $this->Html->link(h($pathway->name), ['controller' => 'Pathways', 'action' => 'view', $pathway->slug],['class' => '']) ?>
+        <h2 class="text-2xl">
+            <a href="/pathways/<?= h($pathway->slug) ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
+                    <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                    <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
+                </svg>
+                <?= h($pathway->name) ?>
+            </a>
         </h2>
         <div><?= h($pathway->description) ?></div>
     </div>
@@ -73,45 +59,3 @@ if ($this->Identity->isLoggedIn()) {
 <?php endif ?>
 <?php endforeach ?>
 </div>
-<?php if($role == 'superuser' || $role == 'curator'): ?>
-
-<div class="modal fade" id="newpath" tabindex="-1" aria-labelledby="newpathLabel" aria-hidden="true">
-    <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">New Pathway</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    <div class="modal-body">
-        <?= $this->Form->create(null,['url' => ['controller' => 'Pathways', 'action' => 'add']]) ?>
-        <?php 
-        echo $this->Form->hidden('createdby', ['value' => $this->Identity->get('id')]);
-        echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]); 
-        ?>
-        <fieldset>
-        <legend><?= __('Add Pathway') ?></legend>
-        <?php
-        echo $this->Form->hidden('topic_id', ['value' => $topic->id]);
-        echo $this->Form->hidden('status_id',['value' => 1]);
-        echo $this->Form->control('name',['class' => 'form-control']);
-        echo $this->Form->control('description',['class' => 'form-control']);
-        echo $this->Form->control('objective',['class' => 'form-control']);
-        ?>
-        </fieldset>
-        <?= $this->Form->button(__('Add new pathway'),['class' => 'btn btn-block btn-success mt-3']) ?>
-        <?= $this->Form->end() ?>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    </div>
-    </div>
-    </div>
-</div>
-
-<?php endif;  // if curator /admin ?>
-</div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

@@ -1,182 +1,94 @@
-<?php
-$this->loadHelper('Authentication.Identity');
-?>
+<?php $this->loadHelper('Authentication.Identity') ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <?= $this->Html->charset() ?>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
 <title><?= $this->fetch('title') ?> | Learning Curator</title>
-	
-<link rel="stylesheet" 
-		href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
-		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
-		crossorigin="anonymous">
-
-<link href="/css/curator.css" rel="stylesheet"> 
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-
-
-<!-- ****** faviconit.com favicons ****** -->
-<link rel="shortcut icon" href="/favicon/favicon.ico">
-<link rel="icon" sizes="16x16 32x32 64x64" href="/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="196x196" href="/favicon/favicon-192.png">
-<link rel="icon" type="image/png" sizes="160x160" href="/favicon/favicon-160.png">
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96.png">
-<link rel="icon" type="image/png" sizes="64x64" href="/favicon/favicon-64.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16.png">
-<link rel="apple-touch-icon" href="/favicon/favicon-57.png">
-<link rel="apple-touch-icon" sizes="114x114" href="/favicon/favicon-114.png">
-<link rel="apple-touch-icon" sizes="72x72" href="/favicon/favicon-72.png">
-<link rel="apple-touch-icon" sizes="144x144" href="/favicon/favicon-144.png">
-<link rel="apple-touch-icon" sizes="60x60" href="/favicon/favicon-60.png">
-<link rel="apple-touch-icon" sizes="120x120" href="/favicon/favicon-120.png">
-<link rel="apple-touch-icon" sizes="76x76" href="/favicon/favicon-76.png">
-<link rel="apple-touch-icon" sizes="152x152" href="/favicon/favicon-152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/favicon/favicon-180.png">
-<meta name="msapplication-TileColor" content="#FFFFFF">
-<meta name="msapplication-TileImage" content="/favicon/favicon-144.png">
-<meta name="msapplication-config" content="/browserconfig.xml">
-<!-- ****** faviconit.com favicons ****** -->
-
-
+<link href="/css/tailwind.css" rel="stylesheet">
 </head>
-<body class="bg-light">
+<body class="bg-slate-100 dark:bg-slate-800">
+<div class="md:flex flex-col md:flex-row md:min-h-screen w-full rounded-br-lg">
+<div @click.away="open = false" class="flex flex-col w-full md:w-56 text-gray-700 dark:text-gray-200 bg-slate-100 dark:bg-slate-900 flex-shrink-0" x-data="{ open: false }">
+  <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 "> <!-- sticky top-0 bg-slate-200 dark:bg-[#002850]-->
+    <span class="leading-3 text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
+      <span class="text-xs">Learning</span>
+      <br>
+      <span class="text-[#003366] dark:text-yellow-500">Curator</span>
+    </span>
+    <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open" aria-label="Menu Toggle">
+      <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+        <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+        <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+      </svg>
+    </button>
+  </div>
 
-<nav class="navbar navbar-expand-lg bg-white shadow-sm" role="banner">
-	<a class="navbar-brand" href="/">
-		<img alt="Logo" height="50" src="/img/curator-rings-logo.svg" width="50">
-		Learning Curator
-	</a>
-	<?php if(!empty($active)): ?>
-	<button class="navbar-toggler " 
-		type="button" 
-		data-toggle="collapse" 
-		data-target="#navbarSupportedContent" 
-		aria-controls="navbarSupportedContent" 
-		aria-expanded="false" 
-		aria-label="Toggle navigation">
-			<i class="bi bi-justify"></i>
-	</button>
-
-	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-	<ul class="navbar-nav mr-auto">
-	<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" 
-			href="#" 
-			id="navbarDropdown" 
-			role="button" 
-			data-toggle="dropdown" 
-			aria-haspopup="true" 
-			aria-expanded="false"
-			title="Your Profile">
-				<i class="bi bi-person-circle"></i>
-				Profile
-		</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-			<a class="dropdown-item" href="/profile/pathways">Your Pathways</a>
-			<a class="dropdown-item" href="/profile/claims">Your Claims</a>
-			<a class="dropdown-item" href="/profile/reports">Your Reports</a>
-			<a class="dropdown-item" href="/profile/contributions">Your Contributions</a>
-			<div class="dropdown-divider"></div>
-			<a class="dropdown-item" href="/logout">
-				Logout
-				<i class="bi bi-box-arrow-right"></i>
-			</a>
-			<?php //echo $this->User->logout('Logout',['class'=>'dropdown-item']) ?>
-		</div>
-	</li>
-	<li class="nav-item">
-		<a class="nav-link" href="/categories/index">Topics</a>
-	</li>
-	<li class="nav-item">
-		<a class="nav-link" href="/pathways">Pathways</a>
-	</li>
-	<li class="nav-item">
-		<a class="nav-link" href="/activities/index">Activities</a>
-	</li>
-	<li class="nav-item">
-		<a class="nav-link" href="/questions/index">FAQ</a>
-	</li>
-
-	<?php if($this->Identity->get('role') == 'superuser' || $this->Identity->get('role') == 'curator'): ?>
-	<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="adminDropdown" 
-			role="button" 
-			data-toggle="dropdown" 
-			aria-haspopup="true" 
-			aria-expanded="false">
-				View
-		</a>
-		<div class="dropdown-menu" aria-labelledby="adminDropdown">
-			<a class="dropdown-item" href="/reports/index">Open Reports</a>
-			<a class="dropdown-item" href="/users/index">All Users</a>
-			<a class="dropdown-item" href="/activity-types">Activity Types</a>
-			<a class="dropdown-item" href="/ministries">All Ministries</a>
-			<!-- <a class="dropdown-item" href="/statuses">All Statuses</a>
-			<a class="dropdown-item" href="/competencies">All Competencies</a>
-			<a class="dropdown-item" href="/tags">All Tags</a> -->
-		</div>
-		</li>
-		<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="adminAddDropdown" 
-			role="button" 
-			data-toggle="dropdown" 
-			aria-haspopup="true" 
-			aria-expanded="false">
-				New
-		</a>
-		<div class="dropdown-menu" aria-labelledby="adminAddDropdown">
-			<a class="dropdown-item" href="/categories/add">New Category</a>
-			<a class="dropdown-item" href="/topics/add">New Topic</a>
-			<a class="dropdown-item" href="/pathways/add">New Pathway</a> 
-			<a class="dropdown-item" href="/activities/addtostep">Add Activity to Step</a>
-			<a class="dropdown-item" href="/activities/add">New Activity</a>
-		</div>
-		</li>
-		<?php endif ?>
-	</ul>
-
-
-	 </div><!-- /endof .collapse navbar-collapse -->
-	 <?php endif ?>
-</nav>
-
-
-<?= $this->fetch('content') ?>
-
-
-
-
-<footer class="container-fluid bg-white py-5 border-top mt-5" role="contentinfo">
-<div class="row justify-content-md-center">
-<div class="col-lg-8 col-xl-6 mt-3">
-
-	<div class="p-3 bg-white text-center text-uppercase">
-		<span>Brought to you by</span><br>
-		<a href="https://learningcentre.gww.gov.bc.ca/" target="_blank" rel="noopener">
-			<img height="100" src="/img/lc-logo-wordmark-300x100.png" width="300" alt="Learning Centre logo">
-		</a>
-	</div>
-	<div class="p-3 bg-white text-center">
-	<div><img height="127" src="/img/BCID_BCPSA_rgb_pos.png" width="400" alt="BC Public Service Agency logo"></div>
-	<p>Your personal information is collected by the BC Public Service Agency in accordance with 
-		section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes 
-		of managing and administering employee development and training. If you have any questions, 
-		submit an AskMyHR request at 
-			<a href="https://www.gov.bc.ca/myhr/contact" target="_blank" rel="noopener">
-				www.gov.bc.ca/myhr/contact
-			</a> 
-		or call 250-952-6000.</p>
-	</div>
-
+  <?php if(!empty($this->Identity->get('id'))): ?>
+  <nav :class="{'block': open, 'hidden': !open}" class="flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">
+  <?php 
+  #TODO re-write all of this
+  $active = '';
+  $currentpage = $_SERVER["REQUEST_URI"];
+  $navigation = array(
+    ['name'=>'Profile','link' => '/profile'],
+    ['name'=>'Categories','link' => '/categories'], 
+    ['name'=>'Pathways','link' => '/pathways'],
+    ['name'=>'Activities','link' => '/activities'],
+    ['name'=>'About','link' => '/questions']
+  );
+  foreach($navigation as $page): ?>
+  <?php if(strpos($currentpage,$page['link']) !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366]'; ?>
+  <?php if($currentpage == '/' && $page['link'] == '/profile') $active = 'bg-[#c3d4e4] dark:bg-[#003366]'; ?>
+  <a class="no-underline block px-4 py-2 mt-2 text-sm font-semibold <?= $active ?> text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+    href="<?= $page['link'] ?>">
+      <?= $page['name'] ?>
+  </a>
+  <?php $active = ''; ?>
+  <?php endforeach ?>
+  </nav>
+  <?php endif ?>
 </div>
+
+<div class="bg-[#c3d4e4] dark:bg-[#003366] dark:text-white w-full 2xl:w-2/3">
+
+  <?php if(!empty($this->Identity->get('id'))): ?>
+  <div class="flex h-16 w-full px-6 pt-3 bg-slate-200 dark:bg-[#002850]"> <!-- sticky top-0 z-50 -->
+
+    <div class="p-2 mr-6 w-50 hidden md:block">
+      Welcome <a href="/profile" ><?= $this->Identity->get('first_name') ?></a>
+      <?php if($this->Identity->get('role') == 'curator'): ?>
+      <span class="px-3 text-xs bg-[#003366] text-white rounded-lg">Curator</span>
+      <?php elseif($this->Identity->get('role') == 'superuser'): ?>
+      <span class="px-3 text-xs bg-[#003366] rounded-lg">Super</span>
+      <?php endif ?>
+    </div>
+
+    <form method="get" action="/find" class="w-50" role="search">
+    <input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-900 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search"><button class="px-3 py-2 m-0 bg-slate-300 dark:text-white dark:bg-slate-900 dark:hover:bg-slate-800 rounded-r-lg" type="submit">Search</button>
+    </form>
+
+  </div>
+  <?php endif ?>
+
+  <?= $this->fetch('content') ?>
+
+  </div>
 </div>
-</footer>
+
+<div class="py-6 bg-white dark:bg-slate-900">
+  <img class="my-6 hidden dark:inline-block" src="/img/wiw-white-text.svg" height="110" width="380px" alt="Where Ideas Work logo">
+  <img class="my-6 inline-block dark:hidden" src="/img/wiw-dark-text.svg" height="110" width="380px" alt="Where Ideas Work logo">
+  <img class="my-6 hidden dark:inline-block" src="/img/learning-centre-logo-wordmark-darkmode.svg" height="100px" width="300px" alt="Learning Centre Logo">
+  <img class="my-6 inline-block dark:hidden" src="/img/learning-centre-logo-wordmark.svg" height="100px" width="300px" alt="Learning Centre Logo">
+  <a href="#privacy" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-[#003366] dark:text-white no-underline rounded-lg">
+    Privacy Statement
+  </a>
+</div>
+
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 </body>
 </html>

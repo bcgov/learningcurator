@@ -12,49 +12,40 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 
-<div class="container-fluid">
-<div class="row justify-content-md-center" id="colorful">
-<div class="col-md-6">
-<div class="py-5">
+<div class="p-6 dark:text-white">
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <?= $this->Html->link(__('New Question'), ['action' => 'add'], ['class' => 'btn btn-success float-right']) ?>
 <?php endif ?>
-<h1 class="display-4"><?= __('Questions') ?></h1>
-<div>Questions that we find are asked frequently.</div>
-</div>
-</div>
-</div>
-</div>
+<h1 class="text-4xl"><?= __('About') ?></h1>
+<div class="mb-6">The Curator is a project from the Public Service Agency.</div>
 
-<div class="container-fluid">
-<div class="row justify-content-md-center linear">
-<div class="col-md-6">
-<div class="bg-white rounded-lg p-3 my-3">
-<ul class="nav flex-column">
+
+<div class="md:flex">
+<div class="basis-1/4 p-3">
+<div class="md:sticky top-3 mt-3 bg-[#003366]">
 <?php foreach ($questions as $question): ?>
 <?php if($question->status_id == 2): ?>
-<li class="nav-item">
-    <a class="nav-link" href="#<?= h($question->slug) ?>"><?= h($question->title) ?></a>
-</li>
+<div class="p-2 m-1 bg-slate-900 rounded-lg">
+    <a class="" href="#<?= h($question->slug) ?>"><?= h($question->title) ?></a>
+</div>
 <?php else: ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<li>
+<div class="p-2 my-1 bg-slate-900">
     <a href="#<?= h($question->slug) ?>"><?= h($question->title) ?></a> 
-    <span class="badge badge-warning"><?= h($question->status->name) ?></span>
-</li>
+    <span class=""><?= h($question->status->name) ?></span>
+</div>
 <?php endif ?>
 <?php endif ?>
 <?php endforeach; ?>
-</ul>
 </div>
 </div>
-<div class="w-100"></div>
-<div class="col-md-6">
+
+<div class="basis-3/4 p-3">
 
 <?php foreach ($questions as $question): ?>
 <?php if($question->status_id == 2): ?>
-<div class="bg-white rounded-lg p-3 my-3">
-<h2 id="<?= h($question->slug) ?>"><?= h($question->title) ?></h2>
+<div class="p-3 my-3 bg-white dark:bg-slate-900 rounded-lg">
+<h2 class="text-2xl" id="<?= h($question->slug) ?>"><?= h($question->title) ?></h2>
 <div><?= $question->content ?></div>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
     <div class="btn-group mt-3">
@@ -65,9 +56,9 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php else: ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="bg-white rounded-lg p-3 my-3">
+<div class="p-3 my-3 bg-white dark:bg-slate-900 rounded-lg">
     <div><span class="badge badge-warning"><?= h($question->status->name) ?></span></div>
-    <h2 id="<?= h($question->slug) ?>"><?= h($question->title) ?></h2>
+    <h2 class="text-2xl" id="<?= h($question->slug) ?>"><?= h($question->title) ?></h2>
     <div><?= $question->content ?></div>
     <div class="btn-group mt-3">
     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id],['class'=>'btn btn-primary']) ?>
@@ -80,6 +71,3 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 </div>
 </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

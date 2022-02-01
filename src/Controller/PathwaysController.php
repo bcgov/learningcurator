@@ -127,54 +127,29 @@ class PathwaysController extends AppController
      */
     public function view($slug = null)
     {
-        // As we loop through the activities for the steps on this pathway, we 
-        // need to be able to check to see if the current user has "claimed" 
-        // that activity. Here we get the current user id and use it to select 
-        // all of the claimed activities assigned to them, and then process out 
-        // just the activity IDs into a simple array. Then, in the template 
-        // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
-        //
-        // First let's get the user details:
-        //
-	    $user = $this->request->getAttribute('authentication')->getIdentity();
-        if(!empty($user)) {
-            // We need create an empty array first. If nothing gets added to
-            // it, so be it
-            $useractivitylist = array();
-            // Get access to the apprprioate table
-            $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
-            // Select based on currently logged in person
-            $useacts = $au->find()->where(['user_id = ' => $user->id]);
-            // convert the results into a simple array so that we can
-            // use in_array in the template
-            $useractivities = $useacts->toList();
-            // Loop through the resources and add just the ID to the 
-            // array that we will pass into the template
-            foreach($useractivities as $uact) {
-                array_push($useractivitylist, $uact['activity_id']);
-            }
+
+        $pathway = $this->Pathways->
+                            findBySlug($slug)->
+                            contain([
+                                'Topics',
+                                'Topics.Categories', 
+                                'Steps' => ['sort' => ['PathwaysSteps.sortorder' => 'desc']],
+                                'Steps.Statuses', 
+                                'Steps.Activities',
+                                'Users'])->firstOrFail();
+        
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        // We need to count how many activities this person has claimed 
+        // from each step (we loop through them below)
+        $useractivitylist = array();
+        // Get access to the appropriate table
+        $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
+        // Select based on currently logged in person
+        $useractivities = $au->find()->where(['user_id = ' => $user->id])->toList();
+        // Loop through the resources and add just the ID to the 
+        foreach($useractivities as $uact) {
+            array_push($useractivitylist, $uact['activity_id']);
         }
-        $pathway = $this->Pathways->findBySlug($slug)->contain([
-                            'Topics',
-                            'Topics.Categories', 
-                            'Ministries', 
-                            'Steps' => ['sort' => ['Steps.id' => 'asc']],
-                            'Steps.Statuses', 
-                            'Steps.Activities', 
-                            'Steps.Activities.ActivityTypes', 
-                            'Users'])->firstOrFail();
-        //
-        // we want to be able to tell if the current user is already on this
-        // pathway or not, so we take the same approach as above, parsing all
-        // the users into a single array so that we can perform a simple
-        // in_array($thisuser,$usersonthispathway) check and show the "take
-        // this Pathway" button or "you're on this Pathway" text
-        //
-        // Create the initially empty array that we also pass into the template
-        $usersonthispathway = array();
-        $followers = array();
-        // Loop through the users that are on this pathway and parse just the 
-        // IDs into the array that we just created
         $followid = 0;
         foreach($pathway->users as $pu) {
             // Is the current user following this pathway? If so, then 
@@ -184,11 +159,36 @@ class PathwaysController extends AppController
             if($pu->id == $user->id) {
                 $followid = $pu->_joinData->id;
             }
-            array_push($usersonthispathway,$pu->id);
-            array_push($followers,[$pu->id,$pu->username]);
         }
-
-        $this->set(compact('pathway', 'followid', 'usersonthispathway', 'useractivitylist','followers'));
+        if (!empty($pathway->steps)):
+            $percentage = 0;
+            $totalclaimed = 0;
+            $totalacts = 0;
+            $requiredacts = 0;
+            $suppacts = 0;
+            foreach ($pathway->steps as $steps):
+                foreach ($steps->activities as $activity):
+                    if($activity->status_id == 2) {
+                        $totalacts++;
+                        if($activity->_joinData->required == 1) {
+                            $requiredacts++;
+                            if(in_array($activity->id, $useractivitylist)) {
+                                $totalclaimed++;
+                            }
+                        } else {
+                            $suppacts++;
+                        }
+                    }
+                endforeach; // activities
+            endforeach; // steps
+            $percentage = floor(($totalclaimed / $requiredacts) * 100);
+        endif;
+        $this->set(compact('pathway', 
+                            'totalacts', 
+                            'requiredacts', 
+                            'suppacts', 
+                            'percentage', 
+                            'followid'));
 
     }
 
@@ -375,261 +375,45 @@ class PathwaysController extends AppController
         $this->viewBuilder()->setLayout('ajax');
         // As we loop through the activities for the steps on this pathway, we 
         // need to be able to check to see if the current user has "claimed" 
-        // that activity. Here we get the current user id and use it to select 
-        // all of the claimed activities assigned to them, and then process out 
-        // just the activity IDs into a simple array. Then, in the template 
-        // code, we can simply  if(in_array($rj->activity->id,$useractivitylist
-        //
-        // First let's check to see if this person is logged in or not.
-        //
+        // that activity.
 	    $user = $this->request->getAttribute('authentication')->getIdentity();
-        if(!empty($user)) {
-            // We need create an empty array first. If nothing gets added to
-            // it, so be it
-            $useractivitylist = array();
-            // Get access to the apprprioate table
-            $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
-            // Select based on currently logged in person
-            $useacts = $au->find()->where(['user_id = ' => $user->id]);
-            // convert the results into a simple array so that we can
-            // use in_array in the template
-            $useractivities = $useacts->toList();
-            // Loop through the resources and add just the ID to the 
-            // array that we will pass into the template
-            foreach($useractivities as $uact) {
-                array_push($useractivitylist, $uact['activity_id']);
-            }
+        $useractivitylist = array();
+        // Get access to the apprprioate table
+        $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
+        // Select based on currently logged in person
+        $useacts = $au->find()->where(['user_id = ' => $user->id]);
+        // convert the results into a simple array so that we can
+        // use in_array in the template
+        $useractivities = $useacts->toList();
+        // Loop through the resources and add just the ID to the 
+        // array that we will pass into the template
+        foreach($useractivities as $uact) {
+            array_push($useractivitylist, $uact['activity_id']);
         }
-
         $pathway = $this->Pathways->get($id, [
-            'contain' => ['Topics', 
-                            'Ministries', 
-                            'Competencies', 
-                            'Steps', 
-                            'Steps.Activities', 
-                            'Steps.Activities.ActivityTypes', 
-                            'Steps.Activities.Users', 
-                            'Steps.Activities.Tags', 
-                            'Users'],
+            'contain' => ['Steps', 'Steps.Activities'],
         ]);
-        //
-        // we want to be able to tell if the current user is already on this
-        // pathway or not, so we take the same approach as above, parsing all
-        // the users into a single array so that we can perform a simple
-        // in_array($thisuser,$usersonthispathway) check and show the "take
-        // this Pathway" button or "you're on this Pathway" text
-        //
-        // Create the initially empty array that we also pass into the template
-        $usersonthispathway = array();
-        // Loop through the users that are on this pathway and parse just the 
-        // IDs into the array that we just created
-        foreach($pathway->users as $pu) {
-            array_push($usersonthispathway,$pu->id);
-        }
-
-
         if (!empty($pathway->steps)) :
-
-            $totalActivities = 0;
-            $totalTime = 0;
-            $claimedcount = 0;
-            $readclaim = 0;
-            $watchclaim = 0;
-            $listenclaim = 0;
-            $participateclaim = 0;
-            $readtimetotal = 0;
-            $watchtimetotal = 0;
-            $listentimetotal = 0;
-            $participatetimetotal = 0;
-            
-            $readcolor = '255,255,255';
-            $watchcolor = '255,255,255';
-            $listencolor = '255,255,255';
-            $participatecolor = '255,255,255';
-
-            $readtotal = 0;
-            $watchtotal = 0;
-            $listentotal = 0;
-            $participatetotal = 0;
-            
-            foreach ($pathway->steps as $steps) :
-                
-                $stepTime = 0;
-                $stepActivityCount = 0;
-                $readtime = 0;
-                $watchtime = 0;
-                $listentime = 0;
-                $participatetime = 0;
-                
-                $defunctacts = array();
-                $requiredacts = array();
-                $tertiaryacts = array();
-                
-                $readcount = 0;
-                $watchcount = 0;
-                $listencount = 0;
-                $participatecount = 0;
-
-                foreach ($steps->activities as $activity):
-                    // If this is 'defunct' then we pull it out of the list 
-                    if($activity->status_id == 3) {
-                        array_push($defunctacts,$activity);
-                    } else {
-                        // if it's required
+            $requiredacts = 0;
+            $completed = 0;
+            foreach ($pathway->steps as $step) :
+                foreach ($step->activities as $activity):
+                    if($activity->status_id == 2) {
                         if($activity->_joinData->required == 1) {
-                            array_push($requiredacts,$activity);
-
-                        // Otherwise it's supplmentary
-                        } else {
-                            array_push($tertiaryacts,$activity);
-                        }
-
-                    }
-                    //
-                    // we want to count each type on a per step basis
-                    // as well as adding to the total
-                    //
-                    if($activity->activity_type->name == 'Read') {
-                        $readcolor = $activity->activity_type->color;
-                        $readicon = $activity->activity_type->image_path;
-                        $readcount++;
-                        $readtotal++;
-                        if(in_array($activity->id,$useractivitylist)) {
-                            $readclaim++;
-                        }
-                    } elseif($activity->activity_type->name == 'Watch') {
-                        $watchcolor = $activity->activity_type->color;
-                        $watchicon = $activity->activity_type->image_path;
-                        $watchcount++;
-                        $watchtotal++;
-                        if(in_array($activity->id,$useractivitylist)) {
-                            $watchclaim++;
-                        }
-                    } elseif($activity->activity_type->name == 'Listen') {
-                        $listencolor = $activity->activity_type->color;
-                        $listenicon = $activity->activity_type->image_path;
-                        $listencount++;
-                        $listentotal++;
-                        if(in_array($activity->id,$useractivitylist)) {
-                            $listenclaim++;
-                        }
-                    } elseif($activity->activity_type->name == 'Participate') {
-                        $participatecolor = $activity->activity_type->color;
-                        $participateicon = $activity->activity_type->image_path;
-                        $participatecount++;
-                        $participatetotal++;
-                        if(in_array($activity->id,$useractivitylist)) {
-                            $participateclaim++;
+                            $requiredacts++;
+                            $actlist = array_count_values($useractivitylist); 
+                            foreach($actlist as $k => $v) {
+                                if($k == $activity->id) {
+                                    if($v > 0) $completed++;
+                                }
+                            }
                         }
                     }
-                    $totalActivities++;
-                    $stepTime = $stepTime + $activity->hours;
-                    $totalTime = $totalTime + $activity->hours;
-                    $stepActivityCount++;
                 endforeach; // activities
             endforeach; // steps
-
-            $overallp = floor((($readclaim + $watchclaim + $listenclaim + $participateclaim) / $totalActivities) * 100);
-            $readp = floor(($readcount / $stepActivityCount) * 100);
-            $watchp = floor(($watchcount / $stepActivityCount) * 100);
-            $listenp = floor(($listencount / $stepActivityCount) * 100);
-            $pp = floor(($participatecount / $stepActivityCount) * 100);
-
-            //$readtotal = 0;
-            //$watchtotal = 0;
-            //$listentotal = 0;
-            //$participatetotal = 0;
-            $typecounts = array('readtotal' => $readtotal, 
-                                'watchtotal' => $watchtotal, 
-                                'listentotal' => $listentotal, 
-                                'participatetotal' => $participatetotal,
-                                'totaltotal' => $totalActivities,
-                            );
-
-            $typecolors = array('readcolor' => $readcolor, 
-                                'watchcolor' => $watchcolor, 
-                                'listencolor' => $listencolor, 
-                                'participatecolor' => $participatecolor);
-
-            if(!empty($readclaim) && $readtotal > 0) {
-                $readpercent = floor(($readclaim / $readtotal) * 100);
-                $readpercentleft = 100 - $readpercent;
-            } else {
-                $readpercent = 0;
-                $readpercentleft = 100;       
-            }
-            if(!empty($watchclaim) && $watchtotal > 0) {
-                $watchpercent = floor(($watchclaim / $watchtotal) * 100);
-                $watchpercentleft = 100 - $watchpercent;
-            } else {
-                $watchpercent = 0;
-                $watchpercentleft = 100;
-            }
-            if(!empty($listenclaim) && $listentotal > 0) {
-                $listenpercent = floor(($listenclaim / $listentotal) * 100);
-                $listenpercentleft = 100 - $listenpercent;
-            } else {
-                $listenpercent = 0;
-                $listenpercentleft = 100;
-            }
-            if(!empty($participateclaim) && $participatetotal > 0) {
-                $participatepercent = floor(($participateclaim / $participatetotal) * 100);
-                $participatepercentleft = 100 - $participatepercent;
-            } else {
-                $participatepercent = 0;
-                $participatepercentleft = 100;
-            }
-
-
-            $percentages = array(
-                    array($readpercent,$readpercentleft,$readcolor),
-                    array($watchpercent,$watchpercentleft,$watchcolor),
-                    array($listenpercent,$listenpercentleft,$listencolor),
-                    array($participatepercent,$participatepercentleft,$participatecolor)
-            );
-            
-            $status = $overallp;
-            if($overallp == 100) {
-                
-                $status = 'Completed!';
-
-                // #TODO check against current pathways_users status in db and 
-                // write a method to update the pathways_users status if it doesn't match
-
-                // $acts = TableRegistry::getTableLocator()->get('Activities');
-                // $activities = $acts->find('all')->contain(['ActivityTypes','Statuses','Steps','Steps.Pathways'])
-                //                                 ->where(['Activities.createdby_id' => $user->id]);
-                // $pusers = TableRegistry::getTableLocator()->get('PathwaysUsers');
-                // $pathwaysUser = $pusers->get($id);
-                // $pathwaysUser->date_complete = date('Y-m-d H:i:s');
-                // $pathwaysUser = $this->PathwaysUsers->patchEntity($pathwaysUser, $this->request->getData());
-                // if ($this->PathwaysUsers->save($pathwaysUser)) {
-                //     return $this->redirect($this->referer());
-                // }
-
-
-
-
-            }
-
-            $chartjs = '{"datasets": [';
-            foreach($percentages as $ring) {
-                $chartjs .= '{"data": [' . $ring[0] . ',' . $ring[1] . '],';
-                $chartjs .= '"labels": ["all the same","not all"],';
-                $chartjs .= '"backgroundColor": ["rgba(' . $ring[2] . ',1)","rgba(' . $ring[2] . ',.2)"]';
-                $chartjs .= '},';
-            }
-            $chartjs = rtrim($chartjs, ',');
-			$chartjs .= '],"labels": ["Completed %","In progress %"]';
-        
-            $chartjs .= '}';
-            
-            $this->set(compact(['percentages','status','chartjs','typecounts','typecolors']));
-                
-        else:
-
-            // There are no steps
-
+            $percentage = floor(($completed / $requiredacts) * 100);
+            $name = $pathway->name;
+            $this->set(compact(['name','requiredacts','completed','percentage']));        
         endif; // if steps
 
 

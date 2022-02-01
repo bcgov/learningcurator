@@ -19,9 +19,8 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 
-<div class="container-fluid">
-<div class="row justify-content-md-center pb-5" id="colorful">
-<div class="col-md-10 col-xl-6">
+<div class="p-6 dark:text-white">
+
 
 <?php if($role == 'superuser'): ?>
 <div class="btn-group float-right mt-5">
@@ -34,6 +33,7 @@ if ($this->Identity->isLoggedIn()) {
             ) ?> 
 </div>
 <?php endif ?>
+
 <div class="mt-5"><a href="/users/index">All Users</a></div>
 <h1 class="display-4 mt-0">
     <?= h($Users->first_name) ?> <?= h($Users->last_name) ?>
@@ -62,18 +62,14 @@ if ($this->Identity->isLoggedIn()) {
     <?= __d('cake_d_c/users', 'Modified') ?> <?= h($Users->modified) ?>
 </div>
 
-</div>
-</div>
-<div class="container-fluid">
-<div class="row my-5 justify-content-md-center">
 
-<div class="col-md-4 col-xl-3">
+
 
 <h3 class="mt-4">Activities Claimed</h3>
 <?php if(!empty($Users->activities_users)): ?>
 <div class="overflow-auto" style="height: 20em">
 <?php foreach($Users->activities_users as $act): ?>
-<div class="bg-white px-3 py-2 rounded-lg">
+<div class="dark:bg-slate-900 px-3 py-2 rounded-lg">
     <a href="/activities/view/<?= $act->activity->id ?>">
     <i class="<?= $act->activity->activity_type->image_path ?>"></i>
         <?= $act->activity->name ?>
@@ -82,7 +78,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php endforeach ?>
 </div>
 <?php else: ?>
-<div class="bg-white p-3 rounded-lg">This person hasn't claimed any activites yet.</div>
+<div class="dark:bg-slate-900 p-3 rounded-lg">This person hasn't claimed any activites yet.</div>
 <?php endif ?>
 </div>
 
@@ -91,7 +87,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php if(!$actsadded->isEmpty()): ?>
 <div class="overflow-auto" style="height: 20em">
 <?php foreach($actsadded as $act): ?>
-<div class="bg-white p-3 rounded-lg">
+<div class="dark:bg-slate-900 p-3 rounded-lg">
     <a href="/activities/view/<?= $act->id ?>">
         <i class="<?= $act->activity_type->image_path ?>"></i>
         <?= $act->name ?>
@@ -100,7 +96,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php endforeach ?>
 </div>
 <?php else: ?>
-<div class="bg-white p-3 rounded-lg">This person hasn't contributed any activities yet.</div>
+<div class="dark:bg-slate-900 p-3 rounded-lg">This person hasn't contributed any activities yet.</div>
 <?php endif ?>
 </div>
 
@@ -109,7 +105,7 @@ if ($this->Identity->isLoggedIn()) {
 <h3 class="mt-4">Paths Following</h3>
 <?php if(!empty($Users->pathways_users)): ?>
 <?php foreach($Users->pathways_users as $path): ?>
-<div class="bg-white p-3 rounded-lg">
+<div class="dark:bg-slate-900 p-3 rounded-lg">
     <a href="/pathways/<?= $path->pathway->slug ?>">
         <i class="bi bi-pin-map-fill"></i>
         <?= $path->pathway->name ?>
@@ -117,7 +113,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php endforeach ?>
 <?php else: ?>
-<div class="bg-white p-3 rounded-lg">This person hasn't followed any pathways yet.</div>
+<div class="dark:bg-slate-900 p-3 rounded-lg">This person hasn't followed any pathways yet.</div>
 <?php endif ?>
 </div>
 
@@ -125,7 +121,7 @@ if ($this->Identity->isLoggedIn()) {
 <h3 class="mt-4">Pathways Contributed</h3>
 <?php if(!$pathsadded->isEmpty()): ?>
 <?php foreach($pathsadded as $path): ?>
-<div class="bg-white p-3 rounded-lg">
+<div class="dark:bg-slate-900 p-3 rounded-lg">
     <a href="/pathways/<?= $path->slug ?>">
     <i class="bi bi-pin-map-fill"></i>
         <?= $path->name ?>
@@ -133,7 +129,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php endforeach ?>
 <?php else: ?>
-<div class="bg-white p-3 rounded-lg">This person hasn't contributed any pathways yet.</div>
+<div class="dark:bg-slate-900 p-3 rounded-lg">This person hasn't contributed any pathways yet.</div>
 <?php endif ?>
 </div>
 

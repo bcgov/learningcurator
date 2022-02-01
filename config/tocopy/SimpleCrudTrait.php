@@ -99,6 +99,39 @@ trait SimpleCrudTrait
         $this->set('tableAlias', $tableAlias);
         $this->set('_serialize', [$tableAlias, 'tableAlias']);
     }
+    
+   /**
+     * API method
+     *
+     * @param string|null $id User id.
+     * @return void
+     * @throws \Cake\Http\Exception\NotFoundException When record not found.
+     */
+    public function api()
+    {
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+
+        $table = $this->loadModel();
+        $tableAlias = $table->getAlias();
+        $entity = $table->get($user->id, [
+            'contain' => ['PathwaysUsers',
+                            'PathwaysUsers.Pathways',
+                            'ActivitiesUsers',
+                            'ActivitiesUsers.Activities'],
+        ]);
+        $completed = [];
+        foreach($entity->activities_users as $act) {
+                array_push($completed,$act->activity_id);
+        }
+        $pathspinned = [];
+        foreach($entity->pathways_users as $path) {
+            array_push($pathspinned,$path->pathway_id);
+        }
+        $this->viewBuilder()->setLayout('ajax');
+        $this->set('ActivitiesCompleted', $completed);
+        $this->set('PathwaysPinned', $pathspinned);
+
+    }
 
 
 

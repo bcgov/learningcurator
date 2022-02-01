@@ -1,3 +1,3 @@
 <?php 
 
-echo json_encode(compact(['step','steppercent','stepacts']));
+echo json_encode(compact(['totalacts','stepclaimcount','requiredacts','steppercent']));

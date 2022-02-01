@@ -48,15 +48,16 @@ $routes->scope('/', function (RouteBuilder $builder) {
     /*
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
      * its action called 'display', and we pass a param to select the view file
-     * to use (in this case, templates/Pages/home.php)...
+     * to use 
      */
-    $builder->connect('/', ['controller' => 'Categories', 'action' => 'home']);
+    $builder->connect('/', ['controller' => 'PathwaysUsers', 'action' => 'pathways']);
 
     /*
      * ...and connect the rest of 'Pages' controller's URLs.
      */
     $builder->connect('/pages/*', 'Pages::display');
 
+    $builder->connect('/find', ['controller' => 'Activities', 'action' => 'find'])->setPass(['search']);
 
     //$builder->connect('/pathways-users/delete', ['controller' => 'PathwaysUsers', 'action' => 'delete']);
     $builder->connect('/pathways/add', ['controller' => 'Pathways', 'action' => 'add']);
@@ -68,8 +69,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/pathways/{slug}/export', ['controller' => 'Pathways', 'action' => 'export'])->setPass(['slug']);
     $builder->connect('/pathways/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
 
-    $builder->connect('/profile/claims', ['controller' => 'ActivitiesUsers', 'action' => 'claims']);
-    $builder->connect('/profile/pathways', ['controller' => 'PathwaysUsers', 'action' => 'pathways']);
+    $builder->connect('/profile/completions', ['controller' => 'ActivitiesUsers', 'action' => 'completions']);
+    $builder->connect('/profile', ['controller' => 'PathwaysUsers', 'action' => 'pathways']);
     $builder->connect('/profile/reports', ['controller' => 'Reports', 'action' => 'reports']);
     $builder->connect('/profile/contributions', ['controller' => 'Pathways', 'action' => 'contributions']);
     /*
