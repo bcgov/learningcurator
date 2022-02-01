@@ -11,68 +11,29 @@
 use Cake\Core\Configure;
 $this->assign('title', 'Learning on demand');
 ?>
-<div class="container-fluid">
-<div class="row justify-content-md-center" id="colorful">
-<div class="col-md-10 col-lg-8 col-xl-6">
 
-<h1 class="display-4 mt-5">Learning on demand.</h1>
+<div class="bg-cover bg-center min-h-full" style="background-image: url('/img/courses2.jpg')">
+<div class="p-20 min-h-screen bg-white/50 dark:bg-[#003366]/80 dark:text-white">
 
-<div class="p-3 rounded-lg mb-5 bg-white shadow-lg">
-<p style="font-size: 1.3rem">Learning Curator Pathways feature informal learning by theme or community. 
-Here you’ll find recommendations for resources to watch, read, listen to, and courses that will help 
-you reach your goals. Pathways are created by BC Public Service learning curators.</p>
-<div><a href="/auth/azuread" class="btn btn-lg btn-primary">Sign In  with your.name@gov.bc.ca address to continue</a></div>
-<div class="mt-3">
-<a class="" 
-	data-toggle="collapse" 
-	href="#adminlogin" 
-	role="button" 
-	aria-expanded="false" 
-	aria-controls="adminlogin">
-		&nbsp;&nbsp;&nbsp;
-</a>
-</div>
-<div class="collapse m-4 p-3 bg-light" id="adminlogin">
-<p><em>If you're a curator or an admin:</em></p>
-<?= $this->Form->create() ?>
-<?= $this->Form->control('username', ['label' => __d('cake_d_c/users', 'Username'), 'required' => true, 'class'=>'form-control']) ?>
-<?= $this->Form->control('password', ['label' => __d('cake_d_c/users', 'Password'), 'required' => true, 'class'=>'form-control']) ?>
-<?= $this->Form->button(__d('cake_d_c/users', 'Login as an admin'),['class'=>'btn btn-light mt-2']); ?>
-<?= $this->Form->end() ?>
-</div> <!-- /.p-5 -->
-</div> <!-- /.bgwhite -->
+	<h1 class="text-6xl">Learning on demand</h1>
+	<div class="mt-6 p-3 text-3xl bg-white/80 dark:bg-[#003366]/50 rounded-lg">PSA Curator Pathways feature informal learning by theme or community. 
+	Here you’ll find recommendations for resources to watch, read, listen to, and courses that will help 
+	you reach your goals. Pathways are created by BC Public Service curators.</div>
 
-</div>
-</div>
-</div>
-<!-- <div class="container-fluid" role="main" aria-labelledby="followclaim">
-<div class="row justify-content-md-center linear">
-<div class="col-md-10 col-lg-8 col-xl-6">
-
-<div class="row justify-content-md-center mt-3">
-	<div class="col-xl-6">
-		<h2>Follow Pathways</h2>
-		<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
-		<video controls loop>
-			<source src="/img/follow.mp4" type="video/mp4">
-			<p>Your browser doesn't support HTML5 video. Here is
-				a <a href="follow.mp4">link to the video</a> instead.</p>
-		</video>
-		</div>
+	<div class="mt-8">
+		<a href="/auth/azuread" class="inline-block p-3 rounded-lg bg-[#003366] hover:bg-blue-800 dark:bg-blue-800 dark:hover:bg-[#003366] text-xl shadow-lg no-underline text-white" x-transition>
+			Sign In  with your.name@gov.bc.ca address to continue
+		</a>
 	</div>
-	<div class="col-xl-6">
-		<h2>Claim Activities</h2>
-		<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
-		<video controls loop>
-			<source src="/img/claim.mp4" type="video/mp4">
-			<p>Your browser doesn't support HTML5 video. Here is
-				a <a href="follow.mp4">link to the video</a> instead.</p>
-		</video>
-		</div>
-	</div>
+
+	
+	<div class="w-64 mt-24 p-3 bg-white/50 dark:bg-[#003366]/40 dark:text-white rounded-lg" id="adminlogin">
+	<?= $this->Form->create() ?>
+	<?= $this->Form->control('username', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-white text-black dark:bg-[#003366] dark:text-white rounded-lg']) ?>
+	<?= $this->Form->control('password', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-white text-black dark:bg-[#003366] dark:text-white rounded-lg']) ?>
+	<?= $this->Form->button(__d('cake_d_c/users', 'Admins Only'),['class'=>'p-3 bg-white dark:bg-[#003366] dark:text-white text-sm text-black hover:text-gray-500 rounded-lg']); ?>
+	<?= $this->Form->end() ?>
+	</div> 
+
 </div>
 </div>
-</div>
-</div> -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

@@ -16,44 +16,23 @@ $pagetitle = $category->name . '';
 $this->assign('title', $pagetitle);
 ?>
 
-<div class="container-fluid">
-<div class="row justify-content-md-center align-items-center"  id="colorful">
-<div class="col-md-10 col-lg-8 col-xl-6">
-<div class="py-3">
-<div><?= $this->Html->link(__('All Categories'), ['action' => 'index']) ?></div>
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="float-right btn-group">
-	<?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id],['class' => 'btn btn-light']) ?>
-	<a class="btn btn-primary" 
-		data-toggle="modal" 
-		data-target="#addTopicModal" 
-		href="#addTopicModal" 
-		role="button" 
-		aria-expanded="false" 
-		aria-controls="addnewtopic">
-    		New Topic
-  	</a>
-</div>
-<?php endif; // is curator or admin ?>
-<h1 class="display-4">
+<div class="p-6 dark:text-white">
+
+<nav class="bg-slate-200 dark:bg-slate-900 rounded-lg p-3" aria-label="breadcrumb">
+	<?= $this->Html->link(__('Categories'), ['action' => 'index']) ?> / 
+	<?= h($category->name) ?>
+</nav>
+
+<h1 class="text-4xl my-3">
 	<?= h($category->name) ?>
 </h1>
-<div class="text" style="font-size: 120%">
+
+<div class="p-3 bg-slate-200 dark:bg-[#002850] rounded-lg">
 <?= $this->Text->autoParagraph(h($category->description)); ?>
 </div>
-</div>
-</div>
+
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="modal fade" id="addTopicModal" tabindex="-1" aria-labelledby="addTopicLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-		<div class="modal-header">
-			<h5 class="modal-title" id="addTopicLabel">Add a New topic</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-		<div class="modal-body">
+<div class="hidden">
 		<?= $this->Form->create(null,['url' => ['controller' => 'Topics', 'action' => 'add']]) ?>
 		<fieldset>
 			<?php
@@ -73,80 +52,27 @@ $this->assign('title', $pagetitle);
 		</fieldset>
 		<?= $this->Form->button(__('Add Topic'), ['class' => 'btn btn-primary mt-2']) ?>
 		<?= $this->Form->end() ?>
-		</div>
-		</div>
-	</div>
 </div>
-
 <?php endif;  // curator or admin? ?>
-</div>
-</div>
 
-<div class="container-fluid linear">
-<div class="row justify-content-md-center">
-<div class="col-md-6 col-lg-6 pt-3">
-<div>Topics included within this category:</div>
+
+
 <?php if (!empty($category->topics)) : ?>
 <?php foreach ($category->topics as $topic) : ?>
 <?php if($topic->featured == 1): ?>
-<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
-<h2>
+	
+<div class="p-3 my-3 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
+<h2 class="text-3xl">
 	<!-- topic_id: <?= $topic->id ?> --> 
 	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
 	
 </h2>
-<div class="py-2 mb-2" style="font-size: 110%"><?= $topic->description ?></div>
-<div>Pathways included in this topic:</div>
-<?php foreach ($topic->pathways as $pathway) : ?>
+<div class="py-2 mb-2"><?= $topic->description ?></div>
 
-<div class="p-2">
-<?php if($pathway->status_id == 2): // is published ?>
-	<div>
-		<a href="/pathways/<?= h($pathway->slug) ?>" class="font-weight-bold">
-			<i class="bi bi-pin-map-fill"></i>
-			<?= $pathway->name ?>
-		</a>
-	</div>
-	<div class="mb-3">
-	<?= h($pathway->description) ?>
-	</div>
 
-<?php else: ?>
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-<span class="badge badge-warning"><?= $pathway->status->name ?></span>
-<div>
-	<i class="bi bi-pin-map-fill"></i>
-	<?= $this->Html->link($pathway->name, ['controller' => 'Pathways', 'action' => 'view', $pathway->slug]) ?>
 </div>
-<div class="mb-3">
-<?= h($pathway->objective) ?>
-</div>
-<?php endif; // is curator or admin ?>
-<?php endif; // is published ?>
-</div>
-<?php endforeach ?>
-</div>
-<?php else: ?>
-	<?php if($role == 'curator' || $role == 'superuser'): ?>
-
-		<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
-		<span class="badge badge-warning">DRAFT</span>
-<h2>
-	<!-- topic_id: <?= $topic->id ?> --> 
-	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
-	
-</h2>
-<div class="py-2 mb-2" style="font-size: 110%"><?= $topic->description ?></div>
-
-	<?php endif; // is curator or admin ?>
 <?php endif; // is published ?>
 <?php endforeach ?>
-
-
 <?php endif; // topics ?>
-</div>
-</div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+</div>
