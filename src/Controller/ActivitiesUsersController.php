@@ -70,6 +70,30 @@ class ActivitiesUsersController extends AppController
         $this->set(compact('activitiesUser'));
     }
 
+
+
+
+    /**
+     * Launch an activity and mark it complete at the same time
+     *
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
+     */
+    public function launch ()
+    {
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $aid = $this->request->getQuery('activity_id');
+        $activitiesUser = $this->ActivitiesUsers->newEmptyEntity();
+        $activitiesUser->user_id = $user->id;
+        $activitiesUser->activity_id = $aid;
+        if ($this->ActivitiesUsers->save($activitiesUser)) {
+            $act = TableRegistry::getTableLocator()->get('Activities');
+            $activity = $act->get($aid);
+            return $this->redirect($activity->hyperlink);
+        }
+        print(__('Something went wrong!'));      
+    }
+
+
     /**
      * Complete an activity by adding an entry here method
      *
