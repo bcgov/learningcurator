@@ -1,4 +1,9 @@
 <IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REQUEST_URI} ^/?(docs)/(.*)$
+RewriteRule ^.*$ - [L]
+</IfModule>
+<IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
