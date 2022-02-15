@@ -40,14 +40,17 @@ $uid = $this->Identity->get('id');
 <?php foreach($activities as $a): ?>
 
 <div class="p-3 mb-3 bg-white dark:bg-slate-800 rounded-lg">
-<?= $this->Form->postLink(__('Un-complete'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $a['id']], ['class' => 'float-right p-3 ml-3 bg-slate-300 no-underline rounded-lg', 'confirm' => __('Unclaim?')]) ?>
+<?= $this->Form->postLink(__('Remove'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $a['id']], ['class' => 'float-right p-3 ml-3 bg-slate-300 dark:bg-slate-900 no-underline rounded-lg', 'confirm' => __('Unclaim?')]) ?>
 <h2 class="text-2xl">
-<a href="/activities/view/<?= $a['activity']['id'] ?>" class="font-weight-bold">
-	<?= $a['activity']['name'] ?>
-</a>
+	<a href="/activities/view/<?= $a['activity']['id'] ?>" class="font-weight-bold">
+		<?= $a['activity']['name'] ?>
+	</a>
 </h2>
 <div class="">
-<div>Claimed on: <?= $this->Time->format($a['created'],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?></div>
+	
+	<div class="my-2 tex-lg">
+		Launched on: <?= $this->Time->format($a['created'],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+	</div>
 
 <?php foreach($a['activity']['steps'] as $s): ?>
 <?php if(!empty($s->pathways[0]->slug)): ?>
