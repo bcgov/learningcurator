@@ -672,12 +672,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-right: 0.75rem;
 }
 
-.mt-6 {
-  margin-top: 1.5rem;
-}
-
 .ml-6 {
   margin-left: 1.5rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
 }
 
 .mr-6 {
@@ -756,8 +756,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 100%;
 }
 
-.w-32 {
-  width: 8rem;
+.w-24 {
+  width: 6rem;
 }
 
 .w-6 {
@@ -766,10 +766,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-64 {
   width: 16rem;
-}
-
-.w-24 {
-  width: 6rem;
 }
 
 .max-w-2xl {
@@ -829,10 +825,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .snap-y {
   -ms-scroll-snap-type: y var(--tw-scroll-snap-strictness);
       scroll-snap-type: y var(--tw-scroll-snap-strictness);
-}
-
-.snap-center {
-  scroll-snap-align: center;
 }
 
 .grid-cols-3 {
@@ -970,9 +962,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(15 23 42 / var(--tw-bg-opacity));
 }
 
-.bg-sky-700 {
+.bg-white\/30 {
+  background-color: rgb(255 255 255 / 0.3);
+}
+
+.bg-sky-600 {
   --tw-bg-opacity: 1;
-  background-color: rgb(3 105 161 / var(--tw-bg-opacity));
+  background-color: rgb(2 132 199 / var(--tw-bg-opacity));
 }
 
 .bg-slate-700 {
@@ -986,28 +982,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bg-white\/80 {
   background-color: rgb(255 255 255 / 0.8);
-}
-
-.bg-sky-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(14 165 233 / var(--tw-bg-opacity));
-}
-
-.bg-sky-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(2 132 199 / var(--tw-bg-opacity));
-}
-
-.bg-white\/70 {
-  background-color: rgb(255 255 255 / 0.7);
-}
-
-.bg-white\/40 {
-  background-color: rgb(255 255 255 / 0.4);
-}
-
-.bg-white\/30 {
-  background-color: rgb(255 255 255 / 0.3);
 }
 
 .bg-black\/30 {
@@ -1430,9 +1404,13 @@ a {
     background-color: rgb(0 0 0 / var(--tw-bg-opacity));
   }
 
-  .dark\:bg-sky-700 {
+  .dark\:bg-black\/30 {
+    background-color: rgb(0 0 0 / 0.3);
+  }
+
+  .dark\:bg-sky-600 {
     --tw-bg-opacity: 1;
-    background-color: rgb(3 105 161 / var(--tw-bg-opacity));
+    background-color: rgb(2 132 199 / var(--tw-bg-opacity));
   }
 
   .dark\:bg-white {
@@ -1451,20 +1429,6 @@ a {
 
   .dark\:bg-\[\#003366\]\/40 {
     background-color: rgb(0 51 102 / 0.4);
-  }
-
-  .dark\:bg-sky-500 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(14 165 233 / var(--tw-bg-opacity));
-  }
-
-  .dark\:bg-sky-600 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(2 132 199 / var(--tw-bg-opacity));
-  }
-
-  .dark\:bg-black\/30 {
-    background-color: rgb(0 0 0 / 0.3);
   }
 
   .dark\:bg-black\/40 {
