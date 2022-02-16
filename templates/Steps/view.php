@@ -137,7 +137,7 @@ $supplmentalcount = count($supplementalacts);
 <?php if($step->status_id == 1): ?>
 <span class="badge badge-warning">DRAFT</span>
 <?php endif ?>
-<div class="mb-4 text-xl">
+<div class="mb-4 p-3 text-xl bg-white/50 dark:bg-black/40 rounded-lg">
 <?= $step->description ?>
 </div>
 <div class="">
@@ -158,7 +158,7 @@ foreach($actlist as $k => $v) {
 <div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
 
 	<?php if($completed > 0): ?>
-	<div class="w-24 bg-slate-700 text-white text-sm text-center uppercase rounded-lg">Launched</div>
+	<div class="w-24 bg-slate-200 text-[#003366] dark:bg-slate-900 dark:text-yellow-500 text-sm text-center uppercase rounded-lg">Launched</div>
 	<?php endif ?>
 
 	<h4 class="mb-3 text-4xl">
@@ -177,7 +177,7 @@ foreach($actlist as $k => $v) {
 
 	<?php if(!empty($activity->_joinData->stepcontext)): ?>
 	<div class="p-3 lg:p-6 mb-2 bg-slate-100 dark:bg-slate-900 rounded-b-lg">
-		Curator says:<br>
+		<em>Curator says:</em><br>
 		<?= $activity->_joinData->stepcontext ?>
 	</div>
 	<?php endif ?>
@@ -188,7 +188,7 @@ foreach($actlist as $k => $v) {
 	</div>
 	<?php endif ?>
 
-	<div class="mb-2">
+	<div class="my-2">
 		<a target="_blank" 
 			rel="noopener" 
 			data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
@@ -207,7 +207,7 @@ foreach($actlist as $k => $v) {
 	</div>
 
 	<div @click.away="open = false" class="relative" x-data="{ open: false }">
-	<button @click="open = !open" class="px-4 py-2 text-lg font-semibold text-right bg-slate-700 text-white rounded-lg dark:bg-[#002850] dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline">
+	<button @click="open = !open" class="px-4 py-2 text-lg font-semibold text-right bg-slate-200 dark:text-white dark:bg-[#002850] dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline rounded-lg">
 		<span>More info</span>
 		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
 			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>

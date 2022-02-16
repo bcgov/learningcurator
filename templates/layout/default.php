@@ -78,7 +78,7 @@
   </div>
 </div>
 
-<div class="py-6 bg-white dark:bg-slate-900">
+<div class="py-6 bg-slate-100 dark:bg-slate-900">
   <img class="my-6 hidden dark:inline-block" src="/img/wiw-white-text.svg" height="110" width="380px" alt="Where Ideas Work logo">
   <img class="my-6 inline-block dark:hidden" src="/img/wiw-dark-text.svg" height="110" width="380px" alt="Where Ideas Work logo">
   <img class="my-6 hidden dark:inline-block" src="/img/learning-centre-logo-wordmark-darkmode.svg" height="100px" width="300px" alt="Learning Centre Logo">
