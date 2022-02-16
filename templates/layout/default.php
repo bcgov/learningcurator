@@ -1,6 +1,6 @@
 <?php $this->loadHelper('Authentication.Identity') ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
 <?= $this->Html->charset() ?>
 
