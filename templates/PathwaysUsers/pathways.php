@@ -91,7 +91,7 @@ if ($this->Identity->isLoggedIn()) {
 		<div class="" x-show="isLoading">Loading your progress on this pathway&hellip;</div>
 		<div x-show="!isLoading">
 			<div class="my-4 h-6 w-full bg-slate-300 dark:bg-black rounded-lg ">
-				<span :style="'width:' + status<?= $path->pathway->id ?>.percentage + '%;'" class="progressbar h-6 inline-block bg-emerald-700 dark:bg-emerald-700 dark:text-white text-center rounded-lg">&nbsp;</span>
+				<span :style="'width:' + status<?= $path->pathway->id ?>.percentage + '%;'" class="progressbar h-6 inline-block bg-sky-600 dark:bg-sky-600 dark:text-white text-center rounded-lg">&nbsp;</span>
 				<span x-text="status<?= $path->pathway->id ?>.percentage + '%'" class="beginning inline-block"></span>
 			</div>
 		</div>
@@ -115,7 +115,7 @@ if ($this->Identity->isLoggedIn()) {
 			<p class="text-lg">As you complete activities contained in a pathway you'll be able to see your progress here too.</p>
 		</div>
 		
-		<a href="/categories" class="inline-block p-3 mt-4 bg-emerald-700 dark:bg-emerald-700 text-white text-lg no-underline rounded-lg">
+		<a href="/categories" class="inline-block p-3 mt-4 bg-sky-600 dark:bg-sky-600 text-white text-lg no-underline rounded-lg">
 			View Categories
 		</a>
 
