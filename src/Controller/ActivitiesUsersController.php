@@ -28,10 +28,21 @@ class ActivitiesUsersController extends AppController
                                                     'Activities.Steps',
                                                     'Activities.Steps.Pathways'])
                                         ->where(['user_id' => $user->id])
-                                        ->order(['ActivitiesUsers.created' => 'desc']);
-
+                                        ->order(['Activities.name' => 'asc']);
+        //echo '<pre>'; print_r($activities->toList(); exit;
+        // $last = '';
+        // $completed = [];
+        // foreach($activities as $a) {
+        //     if($last == $a->activity->name) {
+        //         $t = [$a->activity->name, $a->created];
+        //     }
+        //     $last  = $a->activity->name;
+        // }
+        // exit;
         $this->set(compact('activities'));
+
     }
+
     /**
      * Index method
      *
