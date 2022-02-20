@@ -16,7 +16,7 @@ $this->assign('title', 'Learning on demand');
 <div class="p-20 min-h-screen bg-white/50 dark:bg-[#003366]/80 dark:text-white">
 
 	<h1 class="text-6xl">Learning on demand</h1>
-	<div class="mt-6 p-3 text-3xl bg-white/80 dark:bg-[#003366]/50 rounded-lg">PSA Curator Pathways feature informal learning by theme or community. 
+	<div class="mt-6 p-3 text-3xl bg-white/80 dark:bg-[#003366]/50 rounded-lg">Learning Curator Pathways feature informal learning by theme or community. 
 	Here you’ll find recommendations for resources to watch, read, listen to, and courses that will help 
 	you reach your goals. Pathways are created by BC Public Service curators.</div>
 
