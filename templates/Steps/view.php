@@ -206,7 +206,7 @@ foreach($actlist as $k => $v) {
 		</a>
 	</div>
 
-	<div @click.away="open = false" class="relative" x-data="{ open: false }">
+	<div class="relative" x-data="{ open: false }">
 	<button @click="open = !open" class="px-4 py-2 text-lg font-semibold text-right bg-slate-200 dark:text-white dark:bg-[#002850] dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline rounded-lg">
 		<span>More info</span>
 		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
@@ -226,13 +226,19 @@ foreach($actlist as $k => $v) {
 		<div class="mb-4">
 			Activity type: <?= $activity->activity_type->name ?>
 		</div>
-
+		<?php 
+		echo $this->Html->scriptBlock(sprintf(
+			'var csrfToken = %s;',
+			json_encode($this->request->getAttribute('csrfToken'))
+		)); 
+		?>
 		<script>
+		
 		var message = '';
 		function report<?= $activity->id ?>Form() {
 			return {
 				form<?= $activity->id ?>Data: {
-					_csrfToken: '',
+					csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
 					activity_id: '',
 					user_id: '',
 					issue: ''
