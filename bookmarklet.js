@@ -1,1 +1,1 @@
-javascript: (() => {const destination = "https://learningcurator.ca/activities/addtostep?url=" + window.location.href;window.open(destination);})();
+javascript: (() => {const destination = "https://learningcurator.ca/activities/addtostep?url=" + window.location.href + '&' + window.document.title; window.open(destination);})();
