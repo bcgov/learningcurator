@@ -8,6 +8,10 @@
 	.st2{fill:#9BCC58;}
 	.st3{fill:#16AA4B;}
 	.st4{fill:#4A636A;}
+	@media (prefers-color-scheme: dark) {
+		.st0, .st4 {fill:#FFF;}
+		
+	}
 </style>
 <g id="Layer_1">
 	<g>

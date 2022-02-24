@@ -4,7 +4,10 @@
 	 viewBox="0 0 712.4 209.6" style="enable-background:new 0 0 712.4 209.6;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#ECB72B;}
-	.st1{fill:#FFFFFF;}
+	.st1{fill:#003366;}
+	@media (prefers-color-scheme: dark) {
+		.st1{fill:#FFF;}
+	}
 	.st2{fill:none;}
 	.st3{fill:#E3A82B;}
 	.st4{fill:url(#SVGID_1_);}

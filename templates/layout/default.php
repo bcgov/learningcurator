@@ -13,7 +13,7 @@
 <div class="md:flex flex-col md:flex-row md:min-h-screen w-full rounded-br-lg">
 <div @click.away="open = false" class="flex flex-col w-full md:w-56 text-gray-700 dark:text-gray-200 bg-slate-100 dark:bg-slate-900 flex-shrink-0" x-data="{ open: false }">
   <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 "> <!-- sticky top-0 bg-slate-200 dark:bg-[#002850]-->
-    <span class="leading-3 text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
+    <span class="leading-3 text-xl font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
       <span class="text-xs">Learning</span>
       <br>
       <span class="text-[#003366] dark:text-yellow-500">Curator</span>
@@ -79,13 +79,15 @@
 </div>
 
 <div class="py-6 bg-slate-100 dark:bg-slate-900">
-  <img class="my-6 hidden dark:inline-block" src="/img/wiw-white-text.svg" height="110" width="380px" alt="Where Ideas Work logo">
-  <img class="my-6 inline-block dark:hidden" src="/img/wiw-dark-text.svg" height="110" width="380px" alt="Where Ideas Work logo">
-  <img class="my-6 hidden dark:inline-block" src="/img/learning-centre-logo-wordmark-darkmode.svg" height="100px" width="300px" alt="Learning Centre Logo">
-  <img class="my-6 inline-block dark:hidden" src="/img/learning-centre-logo-wordmark.svg" height="100px" width="300px" alt="Learning Centre Logo">
+
+  <img class="my-6 inline-block" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
+  
+  <img class="my-6 inline-block" src="/img/learning-centre-logo-wordmark.svg" height="100px" width="300px" alt="Learning Centre Logo">
+  
   <a href="#privacy" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-[#003366] dark:text-white no-underline rounded-lg">
     Privacy Statement
   </a>
+
 </div>
 
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
