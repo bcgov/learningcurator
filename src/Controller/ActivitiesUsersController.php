@@ -20,14 +20,6 @@ class ActivitiesUsersController extends AppController
     public function completions()
     {
         $user = $this->request->getAttribute('authentication')->getIdentity();
-        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
-        // Select based on currently logged in person
-        $published = $allpaths->find('all')
-                                ->contain(['Topics','Topics.Categories'])
-                                ->where(['Pathways.status_id' => 2])
-                                ->where(['Pathways.featured' => 1])
-                                ->order(['Pathways.created' => 'desc']);
-
         $activities = $this->ActivitiesUsers->find()
                                         ->contain(['Users',
                                                     'Users.Ministries',
@@ -36,9 +28,21 @@ class ActivitiesUsersController extends AppController
                                                     'Activities.Steps',
                                                     'Activities.Steps.Pathways'])
                                         ->where(['user_id' => $user->id])
-                                        ->order(['ActivitiesUsers.created' => 'desc']);
-        $this->set(compact('activities','published'));
+                                        ->order(['Activities.name' => 'asc']);
+        //echo '<pre>'; print_r($activities->toList(); exit;
+        // $last = '';
+        // $completed = [];
+        // foreach($activities as $a) {
+        //     if($last == $a->activity->name) {
+        //         $t = [$a->activity->name, $a->created];
+        //     }
+        //     $last  = $a->activity->name;
+        // }
+        // exit;
+        $this->set(compact('activities'));
+
     }
+
     /**
      * Index method
      *
@@ -69,6 +73,30 @@ class ActivitiesUsersController extends AppController
 
         $this->set(compact('activitiesUser'));
     }
+
+
+
+
+    /**
+     * Launch an activity and mark it complete at the same time
+     *
+     * @return \Cake\Http\Response|null|void Redirects on successful add, prints error otherwise.
+     */
+    public function launch ()
+    {
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $aid = $this->request->getQuery('activity_id');
+        $activitiesUser = $this->ActivitiesUsers->newEmptyEntity();
+        $activitiesUser->user_id = $user->id;
+        $activitiesUser->activity_id = $aid;
+        if ($this->ActivitiesUsers->save($activitiesUser)) {
+            $act = TableRegistry::getTableLocator()->get('Activities');
+            $activity = $act->get($aid);
+            return $this->redirect($activity->hyperlink);
+        }
+        print(__('Something went wrong!'));      
+    }
+
 
     /**
      * Complete an activity by adding an entry here method

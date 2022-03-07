@@ -289,6 +289,7 @@ class ActivitiesController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
+
     public function stepfind()
     {
         $search = $this->request->getQuery('q');
@@ -400,6 +401,7 @@ class ActivitiesController extends AppController
 
     
     }
+
     /**
      * Get activity title and description from URL so we can populate that info 
      * for curators.
@@ -437,4 +439,128 @@ class ActivitiesController extends AppController
         $this->set(compact('details'));
     }
     
+
+    /**
+    * Standard Activities file upload.
+    * 
+    * Takes a standard CSV file of activities and uploads it into the webroot/files
+    * directory and redirects to activityImport
+    * 
+    *
+    *
+    * @return \Cake\Http\Response|null Redirects to activityImport for processing.
+    * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found. #TODO what does it really say?
+    *
+    */
+    public function activityImportUpload () 
+    {
+        $fileobject = $this->request->getData('standardimportfile');
+        $destination = '/home/allankh/learningagent/webroot/files/standard-import.csv';
+
+        // Existing files with the same name will be replaced.
+        $fileobject->moveTo($destination);
+        return $this->redirect(['action' => 'activityImport']);
+    }
+
+    /**
+    * Standard Activities Import process.
+    * 
+    * Takes a standard CSV file of activities (headers below; sample file in repo)
+    * and imports them into the database.
+    *
+    * #TODO should this be implemented at the Model/Table layer? probs...
+    *
+    * 0-Pathway,1-Step,2-Activity Type,3-Name,4-Hyperlink,5-Description,6-Required,
+    * 7-Competencies,8-Time,9-Tags,10-Licensing,11-ISBN,12-Curator
+    *
+    * ___Does NOT currently support importing pathways or steps.___ It will only 
+    * import activities. Curators then still need to create pathways and steps and 
+    * manually associate the activities. It's on the backlog to support this, but 
+    * not for MVP
+    *
+    * @return \Cake\Http\Response|null Redirects to courses index.
+    * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+    *
+    */
+    public function activityImport ()
+    {
+        // #TODO check to see if standard-import.csv already exists,
+        // make a copy of it if it does (better yet give it a unique
+        // file name on upload and pass it in here)
+        // #TODO Use a constant for the file path
+        //
+        // "Pathway","Step","2-Activity Type","Name","4-Hyperlink",
+        // "Description","6-Required","Competencies","8-Time","Tags","10-Licensing","ISBN","Curator"
+        //
+        if (($handle = fopen("/home/allankh/learningagent/webroot/files/standard-import.csv", "r")) !== FALSE) {
+            // pop the headers off so we're starting with actual data
+            fgetcsv($handle);
+           
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+
+                $lic = $data[10] ?? '';
+                // #TODO Should we check for existing activities before proceding? 
+                $activity = $this->Activities->newEmptyEntity();
+                $this->Authorization->authorize($activity);
+                // Get started
+                $activity->name = utf8_encode($data[3]);
+                $activity->description = utf8_encode($data[5]);
+                // #TODO url encode this?
+                $activity->hyperlink = $data[4];
+
+                // This is for a comment on a moderation action
+                // #TODO this should probably be split out into separate
+                // feature that ties into user flag reports
+                // (create a moderation table for each report; add a mod_comments
+                //   table for discussion of the reports)
+                $activity->moderator_notes = '';
+
+                $activity->licensing = utf8_encode($lic);
+
+                // #TODO maybe remove? automate fetch of external metadata?
+                $activity->meta_description = '';
+
+                // Default to active (1) #TODO support adding inactive? why?
+                $activity->status_id = 1;
+
+                // #TODO do a lookup here and get the proper ID based on the person's
+                // name (don't require a number here)
+                $activity->modifiedby_id = utf8_encode($data[12]);
+                $activity->createdby_id = utf8_encode($data[12]);
+                $activity->approvedby_id =  utf8_encode($data[12]);
+                // #TODO change this to minutes instead of hours
+                $activity->hours = 0; //utf8_encode($data[8]);
+                // Is it required?
+                $reqd = 0;
+                if($data[6] == 'y') $reqd = 1;
+                $activity->required = $reqd;
+
+                // Competencies 
+                // #TODO implement lookup and new if not exists
+
+                // Tags
+                // #TODO implement lookup and new if not exists
+                // https://book.cakephp.org/4/en/tutorials-and-examples/cms/tags-and-users.html
+
+                // 1-watch,2-read,3-listen,4-participate
+                $actid = 1;
+                if($data[2] == 'Watch') $actid = 1;
+                if($data[2] == 'Read') $actid = 2;
+                if($data[2] == 'Listen') $actid = 3;
+                if($data[2] == 'Participate') $actid = 4;
+                $activity->activity_types_id = $actid;
+                
+                if ($this->Activities->save($activity)) {
+                    // do nothing, move to the next activity
+                } else {
+                    print_r($data);
+                    echo 'Did not import ' . $data[4] . '. Something\'s wrong!<br>';
+                }
+            
+            } // endwhile
+        
+            //return $this->redirect(['action' => 'index']);
+        }
+    }
+
 }

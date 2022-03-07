@@ -39,7 +39,7 @@ $this->assign('title', h($pathway->name));
 </div>
 <?php endif ?>
 
-<h1 class="text-4xl">
+<h1 class="my-6 text-4xl">
 <!-- <?= h($pathway->id) ?>.  -->
 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
 	<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
@@ -49,7 +49,7 @@ $this->assign('title', h($pathway->name));
 </h1>
 
 
-<div class="mt-3 py-4 px-10">
+<div class="mt-3 py-4">
 
 <div class="mb-6 text-2xl">
 <?= $pathway->objective ?> 
@@ -70,7 +70,7 @@ $this->assign('title', h($pathway->name));
 <div class="" x-show="isLoading">Loading&hellip;</div>
 <div x-show="!isLoading">
 	<div class="mb-6 w-full bg-slate-500 dark:bg-black rounded-lg">
-		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-emerald-700 dark:bg-emerald-700 text-white text-center rounded-lg">&nbsp;</span>
+		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-sky-600 dark:bg-sky-600 text-white text-center rounded-lg">&nbsp;</span>
 		<span x-text="status.percentage + '%'" class="beginning inline-block text-white"></span>
 	</div>
 </div>
@@ -79,7 +79,7 @@ $this->assign('title', h($pathway->name));
 <?php if(empty($followid)): ?>
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]) ?>
-<?= $this->Form->button(__('Pin to Profile'),['class' => 'mb-4 p-3 bg-emerald-700 dark:bg-emerald-700 rounded-lg text-white text-center']) ?>
+<?= $this->Form->button(__('Pin to Profile'),['class' => 'mb-4 p-3 bg-sky-600 dark:bg-sky-600 rounded-lg text-white text-center']) ?>
 <?= $this->Form->end(); ?>
 <?php endif ?>
 
@@ -88,7 +88,7 @@ $this->assign('title', h($pathway->name));
 
 
 
-<h2 class="ml-10 text-3xl dark:text-white">
+<h2 class="text-3xl dark:text-white">
 	Modules
 	<span class="inline-block px-2 bg-slate-500 dark:bg-black text-white text-sm rounded-full"><?= $requiredacts ?> activities</span>
 </h2>

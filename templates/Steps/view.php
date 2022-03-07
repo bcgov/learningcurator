@@ -33,8 +33,8 @@ $supplmentalcount = count($supplementalacts);
 </div> <!-- /.btn-group -->
 <?php endif ?>
 
-<nav class="bg-slate-100 dark:bg-slate-900 rounded-lg p-3" aria-label="breadcrumb">
-	<a href="/categories/index">Categories</a> / 
+<nav class="bg-slate-100 dark:bg-slate-900 rounded-lg p-3 mb-3" aria-label="breadcrumb">
+	<!-- <a href="/categories/index">Categories</a> /  -->
 	<?= $this->Html->link($step->pathways[0]->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $step->pathways[0]->topic->categories[0]->id]) ?> / 
 	<?= $this->Html->link($step->pathways[0]->topic->name, ['controller' => 'Topics', 'action' => 'view', $step->pathways[0]->topic->id]) ?> / 
 	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
@@ -55,9 +55,9 @@ $supplmentalcount = count($supplementalacts);
 
 
 
-<div class="px-8">
+<div class="">
 
-<div class="mb-6 text-2xl">
+<div class="mb-6 p-4 text-2xl bg-white/30 dark:bg-black/30 rounded-lg">
 <?= $step->pathways[0]->objective ?> 
 </div>
 
@@ -77,7 +77,7 @@ $supplmentalcount = count($supplementalacts);
 <div class="" x-show="isLoading">Loading&hellip;</div>
 <div x-show="!isLoading">
 	<div class="mb-6 h-6 w-full bg-slate-500 dark:bg-black rounded-lg">
-		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-emerald-700 dark:bg-emerald-700 text-white text-center rounded-lg">&nbsp;</span>
+		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-sky-600 dark:bg-sky-600 text-white text-center rounded-lg">&nbsp;</span>
 		<span x-text="status.percentage + '% - ' + status.completed + ' of ' + status.requiredacts" class="beginning inline-block text-white"></span>
 	</div>
 </div>
@@ -86,28 +86,28 @@ $supplmentalcount = count($supplementalacts);
 <?php if(empty($followid)): ?>
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
-<?= $this->Form->button(__('Pin to Profile'),['class' => 'mb-4 p-3 bg-emerald-700 dark:bg-emerald-700 text-white rounded-lg text-center']) ?>
+<?= $this->Form->button(__('Pin to Profile'),['class' => 'mb-4 p-3 bg-sky-600 dark:bg-sky-600 text-white rounded-lg text-center']) ?>
 <?= $this->Form->end(); ?>
 <?php endif ?>
 
 </div> <!-- / objective contain -->
 
 <!-- start drop-down -->
-<div @click.away="open = false" class="relative ml-8" x-data="{ open: false }">
-	<button @click="open = !open" class="px-4 py-2 text-sm font-semibold text-right bg-slate-200 rounded-t-lg dark:bg-slate-900 dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-slate-100 focus:bg-white focus:outline-none focus:shadow-outline">
+<div @click.away="open = false" class="relative ml-6" x-data="{ open: false }">
+	<button @click="open = !open" class="px-4 py-2 text-sm font-semibold text-right bg-slate-200 rounded-t-lg dark:bg-slate-900 dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900 dark:hover:bg-slate-900 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-100 focus:bg-white focus:outline-none focus:shadow-outline">
 		<span>Module Menu</span>
 		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
 			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
 		</svg>
 	</button>
 	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="z-50 absolute right-0 w-full origin-top-right shadow-lg">
-		<div class="-ml-8 p-6 bg-white rounded-md shadow dark:bg-slate-900">
+		<div class="-ml-6 p-6 bg-white rounded-md shadow dark:bg-slate-900">
 		<?php foreach ($step->pathways as $pathways) : ?>
 		<?php foreach($pathways->steps as $s): ?>
 		<?php if($s->status_id == 2): ?>
 		<?php $c = '' ?>
 		<?php if($s->id == $step->id) $c = 'bg-slate-300 dark:bg-[#003366]' ?>
-		<a class="<?= $c ?> block px-4 py-2 mt-2 text-sm font-semibold rounded-lg dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline no-underline" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+		<a class="<?= $c ?> block px-4 py-2 mt-2 text-sm font-semibold rounded-lg dark:hover:bg-slate-600 dark:focus:bg-slate-600 dark:focus:text-white dark:hover:text-white dark:text-slate-200 md:mt-0 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline no-underline" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
 		<?= $s->name ?> 
 		</a>
 		<?php else: ?>
@@ -137,17 +137,18 @@ $supplmentalcount = count($supplementalacts);
 <?php if($step->status_id == 1): ?>
 <span class="badge badge-warning">DRAFT</span>
 <?php endif ?>
-<div class="mb-4 text-xl">
+<div class="mb-4 p-3 text-xl bg-white/50 dark:bg-black/40 rounded-lg">
 <?= $step->description ?>
 </div>
-
-<?php if (!empty($step->activities)) : ?>
+<div class="">
+<?php if (!empty($requiredacts)) : ?>
 <h3 class="mt-6 text-2xl dark:text-white">Required Activities <span class="bg-black text-white dark:bg-white dark:text-black rounded-lg text-lg inline-block px-2"><?= $stepacts ?></span></h3>
 <?php foreach ($requiredacts as $activity) : ?>
 <?php 
+// #TODO move this back into the controller and simplify
+// this was an attempt at requiring two launches to satify a complete
 $completed = 0;
 $actlist = array_count_values($useractivitylist); 
-//print_r($actlist);
 foreach($actlist as $k => $v) {
 	if($k == $activity->id) {
 		if($v > 0) $completed = $v;
@@ -155,38 +156,59 @@ foreach($actlist as $k => $v) {
 }
 ?>
 <div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
-<?php if($completed > 0): ?>
-	<div class="w-32 bg-slate-200 text-black text-center uppercase rounded-lg">Complete</div>
-<?php endif ?>
-<h4 class="mb-3 text-3xl">
-	<?= $activity->name ?>
-	<a class="text-sm" href="/activities/view/<?= $activity->id ?>">#</a>
-</h4>
-<div class="mb-6 text-lg">
-<?= $activity->description ?>
-</div>
-<!-- <div class="mb-4">
-Activity type: <?= $activity->activity_type->name ?>
-</div> -->
-<?php if(!empty($activity->isbn)): ?>
-<div class="p-2 isbn bg-white dark:bg-slate-800">
-ISBN: <?= $activity->isbn ?>
-</div>
-<?php endif ?>
-<?php if(!empty($activity->_joinData->stepcontext)): ?>
-<div class="my-4 p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-<i class="bi bi-person-badge-fill"></i>
-Curator says:<br>
-<?= $activity->_joinData->stepcontext ?>
-</div>
-<?php endif ?>
 
+	<?php if($completed > 0): ?>
+	<div class="w-24 bg-slate-200 text-[#003366] dark:bg-slate-900 dark:text-yellow-500 text-sm text-center uppercase rounded-lg">Launched</div>
+	<?php endif ?>
 
+	<h4 class="mb-3 text-4xl">
+		<?= $activity->name ?>
+	</h4>
 
+	<?php if(!empty($activity->description)): ?>
+	<div class="p-3 lg:p-6 text-lg bg-slate-200 dark:bg-[#002850] rounded-t-lg">
+	<?= $activity->description ?>
+	</div>
+	<?php else: ?>
+	<div class="p-3 lg:p-6 text-lg bg-slate-200 dark:bg-[#002850] rounded-t-lg">
+		<em>No description provided&hellip;</em>
+	</div>
+	<?php endif ?>
 
-<div @click.away="open = false" class="relative" x-data="{ open: false }">
-	<button @click="open = !open" class="px-4 py-2 text-lg font-semibold text-right bg-emerald-700 text-white rounded-lg dark:bg-emerald-700 dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline">
-		<span>Launch</span>
+	<?php if(!empty($activity->_joinData->stepcontext)): ?>
+	<div class="p-3 lg:p-6 mb-2 bg-slate-100 dark:bg-slate-900 rounded-b-lg">
+		<em>Curator says:</em><br>
+		<?= $activity->_joinData->stepcontext ?>
+	</div>
+	<?php endif ?>
+
+	<?php if(!empty($activity->isbn)): ?>
+	<div class="p-2 isbn bg-white dark:bg-slate-800">
+	ISBN: <?= $activity->isbn ?>
+	</div>
+	<?php endif ?>
+
+	<div class="my-2">
+		<a target="_blank" 
+			rel="noopener" 
+			data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
+			<?php if($completed > 0): ?>
+			href="/activities-users/launch?activity_id=<?= $activity->id ?>"  
+			<?php else: ?>
+			href="/activities-users/launch?activity_id=<?= $activity->id ?>"  
+			<?php endif ?>
+			class="inline-block p-3 bg-sky-600 rounded-lg text-white text-2xl no-underline">
+				Launch in a new window
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+					<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+					<path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+				</svg>
+		</a>
+	</div>
+
+	<div x-data="{ open: false }">
+	<button @click="open = !open" class="px-4 py-2 text-lg font-semibold text-right bg-slate-200 dark:text-white dark:bg-[#002850] dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900 dark:hover:bg-slate-900 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline rounded-lg">
+		<span>More info</span>
 		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
 			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
 		</svg>
@@ -194,44 +216,70 @@ Curator says:<br>
 	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
 		<div class="p-4 bg-slate-200 rounded-md dark:bg-slate-900">
 
-		<div>
-			<a target="_blank" 
-				rel="noopener" 
-				data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
-				href="<?= $activity->hyperlink ?>" 
-				class="inline-block mb-3 p-3 bg-emerald-700 rounded-lg text-white text-2xl">
-					Open Activity in new window
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-						<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-						<path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
-					</svg>
+		<div class="mb-3 p-3 bg-slate-800 rounded-lg">
+			<a class="text-lg" href="/activities/view/<?= $activity->id ?>">
+				View Activity Record
 			</a>
 		</div>
-
-		<div class="my-4">
-			<?= $activity->hyperlink ?>
+		<div class="mb-3 p-3 bg-slate-800 rounded-lg">
+			<strong>Hyperlink:</strong> <?= $activity->hyperlink ?>
 		</div>
+		<!-- <div class="mb-3 p-3 bg-slate-800 rounded-lg">
+			<strong>Activity type:</strong> <?= $activity->activity_type->name ?>
+		</div> -->
+
+		<div class="p-3 bg-slate-800 rounded-lg">
+		<script>
 		
+		var message = '';
+		function report<?= $activity->id ?>Form() {
+			return {
+				form<?= $activity->id ?>Data: {
+					_csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
+					activity_id: '<?= $activity->id ?>',
+					user_id: '<?= $uid ?>',
+					issue: ''
+				},
+				message: '',
+        
+				submitData() {
+					this.message = ''
 
+					fetch('/reports/add', {
+						method: 'POST',
+						//headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify(this.formData)
+					})
+					.then(() => {
+						this.message = 'Form sucessfully submitted!'
+					})
+					.catch(() => {
+						this.message = 'Ooops! Something went wrong!'
+					})
+				}
+		}
+		}
+		</script>
+		<?= $this->Form->create(null,
+								['url' => 
+									['controller' => 'reports','action' => 'add'],
+									'class'=>'',
+									'x-data' => 'report' . $activity->id . 'Form()',
+									'@submit.prevent' => 'submitData'
+								]) ?>
 
-			<?php if($completed > 0): ?>
-			<div class="p-3 my-6" data-toggle="tooltip" data-placement="bottom" title="You have completed this activity. Great work!">
-				Completed!
-			</div>
-			<?php else: ?>
-			<div>
-				Once you've visited this activity, the next time you come back here, you can "complete" 
-				the activity here and record your progress along the pathway.
-			</div>
-			<?= $this->Form->create(null,['url' => ['controller' => 'ActivitiesUsers', 'action' => 'complete'], 'class' => 'my-6']) ?>
-			<?= $this->Form->hidden('activity_id', ['value' => $activity->id]); ?>
-			<?= $this->Form->button(__('Complete'),['class'=>'p-3 bg-emerald-700 rounded-lg', 'title' => 'If you\'ve completed this activity, claim it so it counts against your progress']) ?>
-			<?= $this->Form->end() ?> 
-			<?php endif ?>
+			<p>Is there something wrong with this activity? Report it!</p>
+			<?php
+			echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
+			echo $this->Form->hidden('user_id', ['value' => $uid]);
+			echo $this->Form->textarea('issue',['class' => 'w-full p-6 dark:bg-slate-700 dark:text-white rounded-lg', 'x-model' => 'form'.$activity->id.'Data.issue', 'placeholder' => 'Type here ...']);
+			?>
+            
+            <input type="submit" class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" value="Submit Report">
+        <?= $this->Form->end() ?>
+		<p x-text="message"></p>
 
-
-
-
+		</div>
 		</div>
 	</div>
 </div>
@@ -239,9 +287,11 @@ Curator says:<br>
 
 
 
+
+
 </div>
 <?php endforeach; // end of activities loop for this step ?>
-
+</div> <!-- /.snap-y -->
 <?php endif; ?>
 
 <?php if(count($supplementalacts) > 0): ?>
@@ -265,21 +315,94 @@ Curator says:<br>
 <?php endif ?>
 
 <div class="">
-<a target="_blank" 
-	rel="noopener" 
-	data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
-	href="<?= $activity->hyperlink ?>" 
-	class="inline-block my-3 p-3 bg-emerald-700 rounded-lg text-white text-xl no-underline">
-		Open in a new window 
-		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-			<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-			<path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
-		</svg>
-</a>
+	<a target="_blank" 
+		rel="noopener" 
+		data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
+		href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
+		class="inline-block my-3 p-3 bg-sky-600 rounded-lg text-white text-xl no-underline">
+			Open in a new window 
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+				<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+				<path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+			</svg>
+	</a>
 </div>
-<?= $activity->hyperlink ?>
+<div x-data="{ open: false }">
+	<button @click="open = !open" class="px-4 py-2 text-lg font-semibold text-right bg-slate-200 dark:text-white dark:bg-[#002850] dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900 dark:hover:bg-slate-900 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline focus:rounded-b-none rounded-lg">
+		<span>More info</span>
+		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
+			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+		</svg>
+	</button>
+	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
+		<div class="p-4 bg-slate-200 rounded-lg rounded-tl-none dark:bg-slate-900">
 
+		<div class="mb-3 p-3 bg-slate-800 rounded-lg">
+			<a class="text-lg" href="/activities/view/<?= $activity->id ?>">
+				View Activity Record
+			</a>
+		</div>
+		<div class="mb-3 p-3 bg-slate-800 rounded-lg">
+			<strong>Hyperlink:</strong> <?= $activity->hyperlink ?>
+		</div>
+		<!-- <div class="mb-3 p-3 bg-slate-800 rounded-lg">
+			<strong>Activity type:</strong> <?= $activity->activity_type->name ?>
+		</div> -->
 
+		<div class="p-3 bg-slate-800 rounded-lg">
+		<script>
+		
+		var message = '';
+		function report<?= $activity->id ?>Form() {
+			return {
+				form<?= $activity->id ?>Data: {
+					_csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
+					activity_id: '<?= $activity->id ?>',
+					user_id: '<?= $uid ?>',
+					issue: ''
+				},
+				message: '',
+        
+				submitData() {
+					this.message = ''
+
+					fetch('/reports/add', {
+						method: 'POST',
+						//headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify(this.formData)
+					})
+					.then(() => {
+						this.message = 'Form sucessfully submitted!'
+					})
+					.catch(() => {
+						this.message = 'Ooops! Something went wrong!'
+					})
+				}
+		}
+		}
+		</script>
+		<?= $this->Form->create(null,
+								['url' => 
+									['controller' => 'reports','action' => 'add'],
+									'class'=>'',
+									'x-data' => 'report' . $activity->id . 'Form()',
+									'@submit.prevent' => 'submitData'
+								]) ?>
+
+			<p>Is there something wrong with this activity? Report it!</p>
+			<?php
+			echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
+			echo $this->Form->hidden('user_id', ['value' => $uid]);
+			echo $this->Form->textarea('issue',['class' => 'w-full p-6 dark:bg-slate-700 dark:text-white rounded-lg', 'x-model' => 'form'.$activity->id.'Data.issue', 'placeholder' => 'Type here ...']);
+			?>
+            
+            <input type="submit" class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" value="Submit Report">
+        <?= $this->Form->end() ?>
+		<p x-text="message"></p>
+
+		</div>
+		</div>
+	</div>
 
 
 
