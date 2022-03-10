@@ -218,19 +218,19 @@ foreach($actlist as $k => $v) {
 	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
 		<div class="p-4 bg-slate-200 rounded-md dark:bg-slate-900">
 
-		<div class="mb-3 p-3 bg-slate-800 rounded-lg">
+		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
 			<a class="text-lg" href="/activities/view/<?= $activity->id ?>">
 				View Activity Record
 			</a>
 		</div>
-		<div class="mb-3 p-3 bg-slate-800 rounded-lg">
+		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
 			<strong>Hyperlink:</strong> <?= $activity->hyperlink ?>
 		</div>
-		<!-- <div class="mb-3 p-3 bg-slate-800 rounded-lg">
+		<!-- <div class="mb-3 p-3bg-white dark:bg-slate-800 rounded-lg">
 			<strong>Activity type:</strong> <?= $activity->activity_type->name ?>
 		</div> -->
 
-		<div class="p-3 bg-slate-800 rounded-lg">
+		<div class="p-3 bg-white dark:bg-slate-800 rounded-lg">
 
 		<script>
 		
@@ -271,9 +271,12 @@ foreach($actlist as $k => $v) {
 		}
 		</script>
 		<?= $this->Form->create(null,
-								['url' => 
-									['controller' => 'reports','action' => 'add'],
-									'class'=>'',
+								[
+									'url' => [
+										'controller' => 'reports',
+										'action' => 'add'
+									],
+									'class' => '',
 									'x-data' => 'report' . $activity->id . 'Form()',
 									'@submit.prevent' => 'submitData'
 								]) ?>
@@ -282,7 +285,7 @@ foreach($actlist as $k => $v) {
 			<?php
 			echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
 			echo $this->Form->hidden('user_id', ['value' => $uid]);
-			echo $this->Form->textarea('issue',['class' => 'w-full p-6 dark:bg-slate-700 dark:text-white rounded-lg', 'x-model' => 'form'.$activity->id.'Data.issue', 'placeholder' => 'Type here ...']);
+			echo $this->Form->textarea('issue',['class' => 'w-full p-6 bg-slate-200 dark:bg-slate-700 dark:text-white rounded-lg', 'x-model' => 'form'.$activity->id.'Data.issue', 'placeholder' => 'Type here ...']);
 			?>
             
             <input type="submit" class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" value="Submit Report">
@@ -313,18 +316,25 @@ foreach($actlist as $k => $v) {
 
 <?php foreach ($supplementalacts as $activity): ?>
 <div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
-<h4 class="mb-3 text-2xl">
-	<?= $activity->name ?>
-</h4>
+	<h4 class="mb-3 text-2xl">
+		<?= $activity->name ?>
+	</h4>
+	<?php if(!empty($activity->description)): ?>
+	<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-t-lg">
+	<?= $activity->description ?>
+	</div>
+	<?php else: ?>
+	<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-t-lg">
+		<em>No description provided&hellip;</em>
+	</div>
+	<?php endif ?>
 
-<?= $activity->description ?>
-
-<?php if(!empty($activity->_joinData->stepcontext)): ?>
-<div class="my-3 p-3 bg-slate-100 dark:bg-slate-800">
-	<strong>Curator says:</strong><br>
-	<?= $activity->_joinData->stepcontext ?>
-</div>
-<?php endif ?>
+	<?php if(!empty($activity->_joinData->stepcontext)): ?>
+	<div class="p-3 lg:p-4 mb-2 bg-slate-100 dark:bg-slate-900 rounded-b-lg">
+		<em>Curator says:</em><br>
+		<?= $activity->_joinData->stepcontext ?>
+	</div>
+	<?php endif ?>
 
 <div class="">
 	<a target="_blank" 
@@ -349,19 +359,19 @@ foreach($actlist as $k => $v) {
 	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
 		<div class="p-4 bg-slate-200 rounded-lg rounded-tl-none dark:bg-slate-900">
 
-		<div class="mb-3 p-3 bg-slate-800 rounded-lg">
+		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
 			<a class="text-lg" href="/activities/view/<?= $activity->id ?>">
 				View Activity Record
 			</a>
 		</div>
-		<div class="mb-3 p-3 bg-slate-800 rounded-lg">
+		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
 			<strong>Hyperlink:</strong> <?= $activity->hyperlink ?>
 		</div>
 		<!-- <div class="mb-3 p-3 bg-slate-800 rounded-lg">
 			<strong>Activity type:</strong> <?= $activity->activity_type->name ?>
 		</div> -->
 
-		<div class="p-3 bg-slate-800 rounded-lg">
+		<div class="p-3 bg-white dark:bg-slate-800 rounded-lg">
 		<script>
 		
 		var message = '';
@@ -407,7 +417,7 @@ foreach($actlist as $k => $v) {
 			<?php
 			echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
 			echo $this->Form->hidden('user_id', ['value' => $uid]);
-			echo $this->Form->textarea('issue',['class' => 'w-full p-6 dark:bg-slate-700 dark:text-white rounded-lg', 'x-model' => 'form'.$activity->id.'Data.issue', 'placeholder' => 'Type here ...']);
+			echo $this->Form->textarea('issue',['class' => 'w-full p-6 bg-slate-200 dark:bg-slate-700 dark:text-white rounded-lg', 'x-model' => 'form'.$activity->id.'Data.issue', 'placeholder' => 'Type here ...']);
 			?>
             
             <input type="submit" class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" value="Submit Report">
