@@ -397,6 +397,8 @@ foreach($actlist as $k => $v) {
 					})
 					.then(() => {
 						this.message = 'Report sucessfully submitted!';
+						this.form<?= $activity->id ?>Data.issue = '';
+						this.form<?= $activity->id ?>Data.submit = '';
 					})
 					.catch(() => {
 						this.message = 'Ooops! Something went wrong!';
@@ -417,10 +419,18 @@ foreach($actlist as $k => $v) {
 			<?php
 			echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
 			echo $this->Form->hidden('user_id', ['value' => $uid]);
-			echo $this->Form->textarea('issue',['class' => 'w-full p-6 bg-slate-200 dark:bg-slate-700 dark:text-white rounded-lg', 'x-model' => 'form'.$activity->id.'Data.issue', 'placeholder' => 'Type here ...']);
+			echo $this->Form->textarea('issue',['class' => 
+													'w-full p-6 bg-slate-200 dark:bg-slate-700 dark:text-white rounded-lg', 
+													'x-model' => 'form'.$activity->id.'Data.issue', 
+													'placeholder' => 'Type here ...']);
 			?>
             
-            <input type="submit" class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" value="Submit Report">
+            <input type="submit"  value="Submit Report">
+			
+<!--
+<button class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" :disabled="formLoading" x-text="buttonText"></button>
+-->
+
 			<span x-text="message"></span> <a href="/profile/reports">See all your reports</a>
 
         <?= $this->Form->end() ?>
