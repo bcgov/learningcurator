@@ -680,6 +680,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 1.5rem;
 }
 
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
 .mr-6 {
   margin-right: 1.5rem;
 }
@@ -1568,10 +1572,6 @@ a {
 }
 
 @media (min-width: 1024px) {
-  .lg\:p-6 {
-    padding: 1.5rem;
-  }
-
   .lg\:p-4 {
     padding: 1rem;
   }

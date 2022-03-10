@@ -231,16 +231,18 @@ foreach($actlist as $k => $v) {
 		</div> -->
 
 		<div class="p-3 bg-slate-800 rounded-lg">
+
 		<script>
 		
 		var message = '';
+		
 		function report<?= $activity->id ?>Form() {
 			return {
 				form<?= $activity->id ?>Data: {
-					_csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
 					activity_id: '<?= $activity->id ?>',
 					user_id: '<?= $uid ?>',
-					issue: ''
+					issue: '',
+					csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
 				},
 				message: '',
         
@@ -249,14 +251,20 @@ foreach($actlist as $k => $v) {
 
 					fetch('/reports/add', {
 						method: 'POST',
-						//headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify(this.formData)
+						headers: { 
+							'Content-Type': 'application/json', 
+							'X-CSRF-Token': <?php echo json_encode($this->request->getAttribute('csrfToken')); ?> 
+						},
+						body: JSON.stringify(this.form<?= $activity->id ?>Data)
 					})
 					.then(() => {
-						this.message = 'Form sucessfully submitted!'
+						this.message = 'Report sucessfully submitted!';
+						// #TODO reset the issue field 
+						// form<?= $activity->id ?>Data.issue = '';
+						// doesn't work for scoping issue I think
 					})
 					.catch(() => {
-						this.message = 'Ooops! Something went wrong!'
+						this.message = 'Ooops! Something went wrong!';
 					})
 				}
 		}
@@ -278,8 +286,11 @@ foreach($actlist as $k => $v) {
 			?>
             
             <input type="submit" class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" value="Submit Report">
+			<span x-text="message"></span> <a href="/profile/reports">See all your reports</a>
+
         <?= $this->Form->end() ?>
-		<p x-text="message"></p>
+
+		
 
 		</div>
 		</div>
@@ -298,7 +309,7 @@ foreach($actlist as $k => $v) {
 
 <?php if(count($supplementalacts) > 0): ?>
 
-<h3 class="text-2xl dark:text-white">Supplementary Resources <span class="bg-white text-black rounded-lg text-lg inline-block px-2"><?= $supplmentalcount ?></span></h3>
+<h3 class="mt-10 text-2xl dark:text-white">Supplementary Resources <span class="bg-white text-black rounded-lg text-lg inline-block px-2"><?= $supplmentalcount ?></span></h3>
 
 <?php foreach ($supplementalacts as $activity): ?>
 <div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
@@ -357,26 +368,28 @@ foreach($actlist as $k => $v) {
 		function report<?= $activity->id ?>Form() {
 			return {
 				form<?= $activity->id ?>Data: {
-					_csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
 					activity_id: '<?= $activity->id ?>',
 					user_id: '<?= $uid ?>',
-					issue: ''
+					issue: '',
+					csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
 				},
 				message: '',
         
 				submitData() {
-					this.message = ''
-
+					this.message = '';
 					fetch('/reports/add', {
 						method: 'POST',
-						//headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify(this.formData)
+						headers: { 
+							'Content-Type': 'application/json', 
+							'X-CSRF-Token': <?php echo json_encode($this->request->getAttribute('csrfToken')); ?> 
+						},
+						body: JSON.stringify(this.form<?= $activity->id ?>Data)
 					})
 					.then(() => {
-						this.message = 'Form sucessfully submitted!'
+						this.message = 'Report sucessfully submitted!';
 					})
 					.catch(() => {
-						this.message = 'Ooops! Something went wrong!'
+						this.message = 'Ooops! Something went wrong!';
 					})
 				}
 		}
@@ -398,8 +411,9 @@ foreach($actlist as $k => $v) {
 			?>
             
             <input type="submit" class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" value="Submit Report">
+			<span x-text="message"></span> <a href="/profile/reports">See all your reports</a>
+
         <?= $this->Form->end() ?>
-		<p x-text="message"></p>
 
 		</div>
 		</div>

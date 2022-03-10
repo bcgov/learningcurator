@@ -82,7 +82,9 @@ class ReportsController extends AppController
     {
         $report = $this->Reports->newEmptyEntity();
         if ($this->request->is('post')) {
+            //print_r($this->request->getData()); exit;
             $report = $this->Reports->patchEntity($report, $this->request->getData());
+
             if ($this->Reports->save($report)) {
                 echo __('The report has been saved.');
                 $mailer = new Mailer('default');
@@ -90,7 +92,9 @@ class ReportsController extends AppController
                         ->setTo('allan.haggett@gov.bc.ca')
                         ->setSubject('Curator Activity Report')
                         ->deliver('Someone filed an activity report. Go check it out.');
-                //return $this->redirect($this->referer());
+                
+                exit;
+            
             }
             echo __('The report could not be saved. Please, try again.');
         }
