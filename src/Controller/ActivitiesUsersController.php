@@ -28,8 +28,8 @@ class ActivitiesUsersController extends AppController
                                                     'Activities.Steps',
                                                     'Activities.Steps.Pathways'])
                                         ->where(['user_id' => $user->id])
-                                        ->order(['Activities.name' => 'asc']);
-        //echo '<pre>'; print_r($activities->toList(); exit;
+                                        ->order(['ActivitiesUsers.created' => 'desc']);
+        // echo '<pre>'; print_r($activities->toList(); exit;
         // $last = '';
         // $completed = [];
         // foreach($activities as $a) {

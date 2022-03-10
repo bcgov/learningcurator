@@ -158,25 +158,27 @@ foreach($actlist as $k => $v) {
 <div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
 
 	<?php if($completed > 0): ?>
-	<div class="w-24 bg-slate-200 text-[#003366] dark:bg-slate-900 dark:text-yellow-500 text-sm text-center uppercase rounded-lg">Launched</div>
+	<div class="w-24 bg-slate-200 text-[#003366] dark:bg-slate-900 dark:text-yellow-500 text-sm text-center uppercase rounded-lg">
+		Launched <!--<?= $completed ?> times -->
+	</div>
 	<?php endif ?>
 
-	<h4 class="mb-3 text-4xl">
+	<h4 class="mb-3 text-2xl">
 		<?= $activity->name ?>
 	</h4>
 
 	<?php if(!empty($activity->description)): ?>
-	<div class="p-3 lg:p-6 text-lg bg-slate-200 dark:bg-[#002850] rounded-t-lg">
+	<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-t-lg">
 	<?= $activity->description ?>
 	</div>
 	<?php else: ?>
-	<div class="p-3 lg:p-6 text-lg bg-slate-200 dark:bg-[#002850] rounded-t-lg">
+	<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-t-lg">
 		<em>No description provided&hellip;</em>
 	</div>
 	<?php endif ?>
 
 	<?php if(!empty($activity->_joinData->stepcontext)): ?>
-	<div class="p-3 lg:p-6 mb-2 bg-slate-100 dark:bg-slate-900 rounded-b-lg">
+	<div class="p-3 lg:p-4 mb-2 bg-slate-100 dark:bg-slate-900 rounded-b-lg">
 		<em>Curator says:</em><br>
 		<?= $activity->_joinData->stepcontext ?>
 	</div>
@@ -197,8 +199,8 @@ foreach($actlist as $k => $v) {
 			<?php else: ?>
 			href="/activities-users/launch?activity_id=<?= $activity->id ?>"  
 			<?php endif ?>
-			class="inline-block p-3 bg-sky-600 rounded-lg text-white text-2xl no-underline">
-				Launch in a new window
+			class="inline-block p-3 bg-sky-600 rounded-lg text-white text-xl no-underline">
+				Launch Activity
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
 					<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
 					<path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
@@ -207,7 +209,7 @@ foreach($actlist as $k => $v) {
 	</div>
 
 	<div x-data="{ open: false }">
-	<button @click="open = !open" class="px-4 py-2 text-lg font-semibold text-right bg-slate-200 dark:text-white dark:bg-[#002850] dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900 dark:hover:bg-slate-900 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline rounded-lg">
+	<button @click="open = !open" class="px-4 py-2 text-md font-semibold text-right bg-slate-200 dark:text-white dark:bg-[#002850] dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900 dark:hover:bg-slate-900 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline rounded-lg">
 		<span>More info</span>
 		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
 			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -216,29 +218,31 @@ foreach($actlist as $k => $v) {
 	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
 		<div class="p-4 bg-slate-200 rounded-md dark:bg-slate-900">
 
-		<div class="mb-3 p-3 bg-slate-800 rounded-lg">
+		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
 			<a class="text-lg" href="/activities/view/<?= $activity->id ?>">
 				View Activity Record
 			</a>
 		</div>
-		<div class="mb-3 p-3 bg-slate-800 rounded-lg">
+		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
 			<strong>Hyperlink:</strong> <?= $activity->hyperlink ?>
 		</div>
-		<!-- <div class="mb-3 p-3 bg-slate-800 rounded-lg">
+		<!-- <div class="mb-3 p-3bg-white dark:bg-slate-800 rounded-lg">
 			<strong>Activity type:</strong> <?= $activity->activity_type->name ?>
 		</div> -->
 
-		<div class="p-3 bg-slate-800 rounded-lg">
+		<div class="p-3 bg-white dark:bg-slate-800 rounded-lg">
+
 		<script>
 		
 		var message = '';
+		
 		function report<?= $activity->id ?>Form() {
 			return {
 				form<?= $activity->id ?>Data: {
-					_csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
 					activity_id: '<?= $activity->id ?>',
 					user_id: '<?= $uid ?>',
-					issue: ''
+					issue: '',
+					csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
 				},
 				message: '',
         
@@ -247,23 +251,32 @@ foreach($actlist as $k => $v) {
 
 					fetch('/reports/add', {
 						method: 'POST',
-						//headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify(this.formData)
+						headers: { 
+							'Content-Type': 'application/json', 
+							'X-CSRF-Token': <?php echo json_encode($this->request->getAttribute('csrfToken')); ?> 
+						},
+						body: JSON.stringify(this.form<?= $activity->id ?>Data)
 					})
 					.then(() => {
-						this.message = 'Form sucessfully submitted!'
+						this.message = 'Report sucessfully submitted!';
+						// #TODO reset the issue field 
+						// form<?= $activity->id ?>Data.issue = '';
+						// doesn't work for scoping issue I think
 					})
 					.catch(() => {
-						this.message = 'Ooops! Something went wrong!'
+						this.message = 'Ooops! Something went wrong!';
 					})
 				}
 		}
 		}
 		</script>
 		<?= $this->Form->create(null,
-								['url' => 
-									['controller' => 'reports','action' => 'add'],
-									'class'=>'',
+								[
+									'url' => [
+										'controller' => 'reports',
+										'action' => 'add'
+									],
+									'class' => '',
 									'x-data' => 'report' . $activity->id . 'Form()',
 									'@submit.prevent' => 'submitData'
 								]) ?>
@@ -272,12 +285,15 @@ foreach($actlist as $k => $v) {
 			<?php
 			echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
 			echo $this->Form->hidden('user_id', ['value' => $uid]);
-			echo $this->Form->textarea('issue',['class' => 'w-full p-6 dark:bg-slate-700 dark:text-white rounded-lg', 'x-model' => 'form'.$activity->id.'Data.issue', 'placeholder' => 'Type here ...']);
+			echo $this->Form->textarea('issue',['class' => 'w-full p-6 bg-slate-200 dark:bg-slate-700 dark:text-white rounded-lg', 'x-model' => 'form'.$activity->id.'Data.issue', 'placeholder' => 'Type here ...']);
 			?>
             
             <input type="submit" class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" value="Submit Report">
+			<span x-text="message"></span> <a href="/profile/reports">See all your reports</a>
+
         <?= $this->Form->end() ?>
-		<p x-text="message"></p>
+
+		
 
 		</div>
 		</div>
@@ -296,23 +312,29 @@ foreach($actlist as $k => $v) {
 
 <?php if(count($supplementalacts) > 0): ?>
 
-<h3 class="text-2xl dark:text-white">Supplementary Resources <span class="bg-white text-black rounded-lg text-lg inline-block px-2"><?= $supplmentalcount ?></span></h3>
+<h3 class="mt-10 text-2xl dark:text-white">Supplementary Resources <span class="bg-white text-black rounded-lg text-lg inline-block px-2"><?= $supplmentalcount ?></span></h3>
 
 <?php foreach ($supplementalacts as $activity): ?>
 <div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
-<h4 class="mb-3 text-3xl">
-	<?= $activity->name ?>
-	<a class="text-sm" href="/activities/view/<?= $activity->id ?>">#</a>
-</h4>
+	<h4 class="mb-3 text-2xl">
+		<?= $activity->name ?>
+	</h4>
+	<?php if(!empty($activity->description)): ?>
+	<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-t-lg">
+	<?= $activity->description ?>
+	</div>
+	<?php else: ?>
+	<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-t-lg">
+		<em>No description provided&hellip;</em>
+	</div>
+	<?php endif ?>
 
-<?= $activity->description ?>
-
-<?php if(!empty($activity->_joinData->stepcontext)): ?>
-<div class="my-3 p-3 bg-slate-100 dark:bg-slate-800">
-	<strong>Curator says:</strong><br>
-	<?= $activity->_joinData->stepcontext ?>
-</div>
-<?php endif ?>
+	<?php if(!empty($activity->_joinData->stepcontext)): ?>
+	<div class="p-3 lg:p-4 mb-2 bg-slate-100 dark:bg-slate-900 rounded-b-lg">
+		<em>Curator says:</em><br>
+		<?= $activity->_joinData->stepcontext ?>
+	</div>
+	<?php endif ?>
 
 <div class="">
 	<a target="_blank" 
@@ -320,7 +342,7 @@ foreach($actlist as $k => $v) {
 		data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
 		href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
 		class="inline-block my-3 p-3 bg-sky-600 rounded-lg text-white text-xl no-underline">
-			Open in a new window 
+			Launch Activity 
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
 				<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
 				<path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
@@ -337,45 +359,49 @@ foreach($actlist as $k => $v) {
 	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
 		<div class="p-4 bg-slate-200 rounded-lg rounded-tl-none dark:bg-slate-900">
 
-		<div class="mb-3 p-3 bg-slate-800 rounded-lg">
+		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
 			<a class="text-lg" href="/activities/view/<?= $activity->id ?>">
 				View Activity Record
 			</a>
 		</div>
-		<div class="mb-3 p-3 bg-slate-800 rounded-lg">
+		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
 			<strong>Hyperlink:</strong> <?= $activity->hyperlink ?>
 		</div>
 		<!-- <div class="mb-3 p-3 bg-slate-800 rounded-lg">
 			<strong>Activity type:</strong> <?= $activity->activity_type->name ?>
 		</div> -->
 
-		<div class="p-3 bg-slate-800 rounded-lg">
+		<div class="p-3 bg-white dark:bg-slate-800 rounded-lg">
 		<script>
 		
 		var message = '';
 		function report<?= $activity->id ?>Form() {
 			return {
 				form<?= $activity->id ?>Data: {
-					_csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
 					activity_id: '<?= $activity->id ?>',
 					user_id: '<?= $uid ?>',
-					issue: ''
+					issue: '',
+					csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
 				},
 				message: '',
         
 				submitData() {
-					this.message = ''
-
+					this.message = '';
 					fetch('/reports/add', {
 						method: 'POST',
-						//headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify(this.formData)
+						headers: { 
+							'Content-Type': 'application/json', 
+							'X-CSRF-Token': <?php echo json_encode($this->request->getAttribute('csrfToken')); ?> 
+						},
+						body: JSON.stringify(this.form<?= $activity->id ?>Data)
 					})
 					.then(() => {
-						this.message = 'Form sucessfully submitted!'
+						this.message = 'Report sucessfully submitted!';
+						this.form<?= $activity->id ?>Data.issue = '';
+						this.form<?= $activity->id ?>Data.submit = '';
 					})
 					.catch(() => {
-						this.message = 'Ooops! Something went wrong!'
+						this.message = 'Ooops! Something went wrong!';
 					})
 				}
 		}
@@ -393,15 +419,25 @@ foreach($actlist as $k => $v) {
 			<?php
 			echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
 			echo $this->Form->hidden('user_id', ['value' => $uid]);
-			echo $this->Form->textarea('issue',['class' => 'w-full p-6 dark:bg-slate-700 dark:text-white rounded-lg', 'x-model' => 'form'.$activity->id.'Data.issue', 'placeholder' => 'Type here ...']);
+			echo $this->Form->textarea('issue',['class' => 
+													'w-full p-6 bg-slate-200 dark:bg-slate-700 dark:text-white rounded-lg', 
+													'x-model' => 'form'.$activity->id.'Data.issue', 
+													'placeholder' => 'Type here ...']);
 			?>
             
-            <input type="submit" class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" value="Submit Report">
+            <input type="submit"  value="Submit Report">
+			
+<!--
+<button class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" :disabled="formLoading" x-text="buttonText"></button>
+-->
+
+			<span x-text="message"></span> <a href="/profile/reports">See all your reports</a>
+
         <?= $this->Form->end() ?>
-		<p x-text="message"></p>
 
 		</div>
 		</div>
+	</div>
 	</div>
 
 

@@ -672,8 +672,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: 1.5rem;
 }
 
+.-ml-6 {
+  margin-left: -1.5rem;
+}
+
 .mt-6 {
   margin-top: 1.5rem;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
 }
 
 .mr-6 {
@@ -690,14 +698,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .mt-0 {
   margin-top: 0px;
-}
-
-.-ml-7 {
-  margin-left: -1.75rem;
-}
-
-.-ml-6 {
-  margin-left: -1.5rem;
 }
 
 .block {
@@ -903,12 +903,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-bottom-right-radius: 0.5rem;
 }
 
-.rounded-br-lg {
-  border-bottom-right-radius: 0.5rem;
-}
-
 .rounded-tl-none {
   border-top-left-radius: 0px;
+}
+
+.rounded-br-lg {
+  border-bottom-right-radius: 0.5rem;
 }
 
 .border {
@@ -978,18 +978,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(255 255 255 / 0.5);
 }
 
-.bg-\[\#114477\] {
+.bg-slate-800 {
   --tw-bg-opacity: 1;
-  background-color: rgb(17 68 119 / var(--tw-bg-opacity));
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
 .bg-white\/80 {
   background-color: rgb(255 255 255 / 0.8);
-}
-
-.bg-slate-800 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-50 {
@@ -1275,11 +1270,6 @@ a {
   text-decoration-thickness: 1px;
 }
 
-.hover\:rounded-b-none:hover {
-  border-bottom-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
-
 .hover\:bg-gray-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
@@ -1315,23 +1305,19 @@ a {
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
-.hover\:text-gray-500:hover {
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
-}
-
 .hover\:text-slate-900:hover {
   --tw-text-opacity: 1;
   color: rgb(15 23 42 / var(--tw-text-opacity));
 }
 
+.hover\:text-gray-500:hover {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+
 .focus\:rounded-b-none:focus {
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
-}
-
-.focus\:rounded-br-none:focus {
-  border-bottom-right-radius: 0px;
 }
 
 .focus\:bg-gray-200:focus {
@@ -1371,14 +1357,6 @@ a {
 }
 
 @media (prefers-color-scheme: dark) {
-  .dark\:inline-block {
-    display: inline-block;
-  }
-
-  .dark\:hidden {
-    display: none;
-  }
-
   .dark\:bg-slate-900 {
     --tw-bg-opacity: 1;
     background-color: rgb(15 23 42 / var(--tw-bg-opacity));
@@ -1454,6 +1432,11 @@ a {
     color: rgb(229 231 235 / var(--tw-text-opacity));
   }
 
+  .dark\:text-slate-200 {
+    --tw-text-opacity: 1;
+    color: rgb(226 232 240 / var(--tw-text-opacity));
+  }
+
   .dark\:text-black {
     --tw-text-opacity: 1;
     color: rgb(0 0 0 / var(--tw-text-opacity));
@@ -1462,11 +1445,6 @@ a {
   .dark\:text-yellow-500 {
     --tw-text-opacity: 1;
     color: rgb(234 179 8 / var(--tw-text-opacity));
-  }
-
-  .dark\:text-slate-200 {
-    --tw-text-opacity: 1;
-    color: rgb(226 232 240 / var(--tw-text-opacity));
   }
 
   .dark\:hover\:bg-slate-900:hover {
@@ -1484,19 +1462,14 @@ a {
     background-color: rgb(55 65 81 / var(--tw-bg-opacity));
   }
 
-  .dark\:hover\:bg-gray-600:hover {
+  .dark\:hover\:bg-slate-600:hover {
     --tw-bg-opacity: 1;
-    background-color: rgb(75 85 99 / var(--tw-bg-opacity));
+    background-color: rgb(71 85 105 / var(--tw-bg-opacity));
   }
 
   .dark\:hover\:bg-slate-800:hover {
     --tw-bg-opacity: 1;
     background-color: rgb(30 41 59 / var(--tw-bg-opacity));
-  }
-
-  .dark\:hover\:bg-slate-600:hover {
-    --tw-bg-opacity: 1;
-    background-color: rgb(71 85 105 / var(--tw-bg-opacity));
   }
 
   .dark\:hover\:text-white:hover {
@@ -1514,14 +1487,14 @@ a {
     background-color: rgb(17 24 39 / var(--tw-bg-opacity));
   }
 
-  .dark\:focus\:bg-slate-600:focus {
-    --tw-bg-opacity: 1;
-    background-color: rgb(71 85 105 / var(--tw-bg-opacity));
-  }
-
   .dark\:focus\:bg-slate-900:focus {
     --tw-bg-opacity: 1;
     background-color: rgb(15 23 42 / var(--tw-bg-opacity));
+  }
+
+  .dark\:focus\:bg-slate-600:focus {
+    --tw-bg-opacity: 1;
+    background-color: rgb(71 85 105 / var(--tw-bg-opacity));
   }
 
   .dark\:focus\:text-white:focus {
@@ -1599,8 +1572,8 @@ a {
 }
 
 @media (min-width: 1024px) {
-  .lg\:p-6 {
-    padding: 1.5rem;
+  .lg\:p-4 {
+    padding: 1rem;
   }
 }
 
