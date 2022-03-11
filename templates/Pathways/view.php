@@ -49,12 +49,11 @@ $this->assign('title', h($pathway->name));
 </h1>
 
 
-<div class="mt-3 py-4">
+<div class="">
 
-<div class="mb-6 text-2xl">
+<div class="mb-6 p-4 text-2xl bg-white/30 dark:bg-black/30 rounded-lg">
 <?= $pathway->objective ?> 
 </div>
-
 
 <div
     x-cloak
