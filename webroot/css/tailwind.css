@@ -1282,6 +1282,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 a {
   text-decoration: underline;
   text-decoration-thickness: 1px;
+  -webkit-text-decoration-color: #FFF;
+          text-decoration-color: #FFF;
+  text-underline-offset: 8px;
 }
 
 .hover\:bg-gray-200:hover {

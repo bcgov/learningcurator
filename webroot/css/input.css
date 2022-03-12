@@ -4,4 +4,6 @@
 a {
     text-decoration: underline;
     text-decoration-thickness: 1px;
+    text-decoration-color: #FFF;
+    text-underline-offset: 8px;
 }
