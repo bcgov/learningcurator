@@ -903,6 +903,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-bottom-right-radius: 0.5rem;
 }
 
+.rounded-bl-lg {
+  border-bottom-left-radius: 0.5rem;
+}
+
 .rounded-tl-none {
   border-top-left-radius: 0px;
 }
@@ -924,14 +928,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 
-.border-white {
+.border-slate-400 {
   --tw-border-opacity: 1;
-  border-color: rgb(255 255 255 / var(--tw-border-opacity));
+  border-color: rgb(148 163 184 / var(--tw-border-opacity));
 }
 
-.border-slate-800 {
+.border-\[\#003366\] {
   --tw-border-opacity: 1;
-  border-color: rgb(30 41 59 / var(--tw-border-opacity));
+  border-color: rgb(0 51 102 / var(--tw-border-opacity));
 }
 
 .bg-white {
@@ -1200,9 +1204,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
-.text-gray-700 {
+.text-slate-700 {
   --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity));
+  color: rgb(51 65 85 / var(--tw-text-opacity));
+}
+
+.text-slate-900 {
+  --tw-text-opacity: 1;
+  color: rgb(15 23 42 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1284,7 +1293,9 @@ a {
   text-decoration-thickness: 1px;
   -webkit-text-decoration-color: #FFF;
           text-decoration-color: #FFF;
-  text-underline-offset: 8px;
+  text-underline-offset: 6px;
+  -webkit-text-decoration-style: wavy;
+          text-decoration-style: wavy;
 }
 
 .hover\:bg-gray-200:hover {
@@ -1332,6 +1343,11 @@ a {
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
+.hover\:underline:hover {
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+}
+
 .focus\:rounded-b-none:focus {
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
@@ -1374,6 +1390,16 @@ a {
 }
 
 @media (prefers-color-scheme: dark) {
+  .dark\:border-slate-800 {
+    --tw-border-opacity: 1;
+    border-color: rgb(30 41 59 / var(--tw-border-opacity));
+  }
+
+  .dark\:border-white {
+    --tw-border-opacity: 1;
+    border-color: rgb(255 255 255 / var(--tw-border-opacity));
+  }
+
   .dark\:bg-slate-900 {
     --tw-bg-opacity: 1;
     background-color: rgb(15 23 42 / var(--tw-bg-opacity));
@@ -1517,6 +1543,11 @@ a {
   .dark\:focus\:bg-slate-600:focus {
     --tw-bg-opacity: 1;
     background-color: rgb(71 85 105 / var(--tw-bg-opacity));
+  }
+
+  .dark\:focus\:bg-black:focus {
+    --tw-bg-opacity: 1;
+    background-color: rgb(0 0 0 / var(--tw-bg-opacity));
   }
 
   .dark\:focus\:text-white:focus {
