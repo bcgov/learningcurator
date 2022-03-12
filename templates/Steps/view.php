@@ -57,7 +57,7 @@ $supplmentalcount = count($supplementalacts);
 
 <div class="">
 
-<div class="mb-6 p-4 text-2xl bg-white/30 dark:bg-black/30 rounded-lg">
+<div class="p-4 text-2xl bg-white/30 dark:bg-black/30 rounded-t-lg">
 <?= $step->pathways[0]->objective ?> 
 </div>
 
@@ -76,8 +76,8 @@ $supplmentalcount = count($supplementalacts);
 >
 <div class="" x-show="isLoading">Loading&hellip;</div>
 <div x-show="!isLoading">
-	<div class="mb-6 h-6 w-full bg-slate-500 dark:bg-black rounded-lg">
-		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-sky-600 dark:bg-sky-600 text-white text-center rounded-lg">&nbsp;</span>
+	<div class="mb-6 h-6 w-full bg-slate-500 dark:bg-black rounded-b-lg">
+		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-sky-600 dark:bg-sky-600 text-white text-center rounded-bl-lg">&nbsp;</span>
 		<span x-text="status.percentage + '% - ' + status.completed + ' of ' + status.requiredacts" class="beginning inline-block text-white"></span>
 	</div>
 </div>
@@ -107,7 +107,7 @@ $supplmentalcount = count($supplementalacts);
 		<?php if($s->status_id == 2): ?>
 		<?php $c = '' ?>
 		<?php if($s->id == $step->id) $c = 'bg-slate-300 dark:bg-[#003366]' ?>
-		<a class="<?= $c ?> block px-4 py-2 mt-2 text-sm font-semibold rounded-lg dark:hover:bg-slate-600 dark:focus:bg-slate-600 dark:focus:text-white dark:hover:text-white dark:text-slate-200 md:mt-0 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline no-underline" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+		<a class="<?= $c ?> block px-4 py-2 mt-2 text-sm font-semibold rounded-lg dark:hover:bg-slate-600 dark:focus:bg-slate-600 dark:focus:text-white dark:hover:text-white dark:text-slate-200 md:mt-0 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
 		<?= $s->name ?> 
 		</a>
 		<?php else: ?>
@@ -199,7 +199,7 @@ foreach($actlist as $k => $v) {
 			<?php else: ?>
 			href="/activities-users/launch?activity_id=<?= $activity->id ?>"  
 			<?php endif ?>
-			class="inline-block p-3 bg-sky-600 rounded-lg text-white text-xl no-underline">
+			class="inline-block p-3 bg-sky-600 rounded-lg text-white text-xl hover:no-underline">
 				Launch Activity
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
 					<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
@@ -341,7 +341,7 @@ foreach($actlist as $k => $v) {
 		rel="noopener" 
 		data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
 		href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
-		class="inline-block my-3 p-3 bg-sky-600 rounded-lg text-white text-xl no-underline">
+		class="inline-block my-3 p-3 bg-sky-600 rounded-lg text-white text-xl hover:no-underline">
 			Launch Activity 
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
 				<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>

@@ -1219,11 +1219,6 @@ Ensure the default browser behavior of the `hidden` attribute.
           text-decoration-line: underline;
 }
 
-.no-underline {
-  -webkit-text-decoration-line: none;
-          text-decoration-line: none;
-}
-
 .opacity-25 {
   opacity: 0.25;
 }
@@ -1288,11 +1283,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 
-a {
+a:hover {
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  -webkit-text-decoration-color: #FFF;
-          text-decoration-color: #FFF;
   text-underline-offset: 6px;
   -webkit-text-decoration-style: wavy;
           text-decoration-style: wavy;
@@ -1346,6 +1339,11 @@ a {
 .hover\:underline:hover {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
+}
+
+.hover\:no-underline:hover {
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
 }
 
 .focus\:rounded-b-none:focus {

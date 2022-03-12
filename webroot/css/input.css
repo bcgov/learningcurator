@@ -1,10 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-a {
+a:hover {
     text-decoration: underline;
     text-decoration-thickness: 1px;
-    text-decoration-color: #FFF;
     text-underline-offset: 6px;
     text-decoration-style: wavy;
 }
