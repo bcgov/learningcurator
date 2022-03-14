@@ -76,7 +76,7 @@ foreach ($step->pathways as $pathways) {
 </h1>
 
 <div class="p-4 lg:text-2xl bg-white/30 dark:bg-[#002850] rounded-t-lg">
-<?= $step->pathways[0]->objective ?> 
+	<?= $step->pathways[0]->objective ?> 
 </div>
 
 <div
@@ -174,7 +174,7 @@ foreach($actlist as $k => $v) {
 ?>
 <div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
 
-	<div x-data="{ count: <?= $completed ?> }">
+	<div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
 		
 		<a href="/profile/completions" 
 			class="inline-block w-24 bg-slate-200 text-[#003366] dark:bg-slate-900 dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
@@ -209,6 +209,11 @@ foreach($actlist as $k => $v) {
 		<?php endif ?>
 
 
+		<!-- <form @submit.prevent="" action="/activities/like/<?= $activity->id ?>"
+				x-on:click="liked++">
+			<button><span x-text="liked"></span> likes</button>
+		</form> -->
+
 		<a target="_blank" 
 			x-on:click="count++;"
 			rel="noopener" 
@@ -221,6 +226,8 @@ foreach($actlist as $k => $v) {
 					<path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
 				</svg>
 		</a>
+
+
 
 	</div> <!-- click count increment container -->
 
@@ -318,7 +325,6 @@ foreach($actlist as $k => $v) {
 		</div>
 	</div>
 </div>
-
 
 
 
@@ -519,7 +525,8 @@ aria-controls="defunctacts">View archived activities</a>.
 </div>
 <?php endif ?>
 
-<div class="flex justify-center p-3 bg-white rounded-lg">
+<?php if(!empty($previousid) || !empty($upnextid)): ?>
+<div class="flex justify-center p-3 bg-white dark:bg-slate-900 rounded-lg">
 <?php if(!empty($previousid)): ?>
 	<a href="/pathways/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" 
 		class="inline-block m-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
@@ -534,6 +541,7 @@ aria-controls="defunctacts">View archived activities</a>.
 	</a>
 <?php endif ?>
 </div>
+<?php endif ?>
 
 </div>
 </div>
