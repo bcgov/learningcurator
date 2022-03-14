@@ -195,7 +195,7 @@ foreach($actlist as $k => $v) {
 				<?php else: ?>
 				href="/activities-users/launch?activity_id=<?= $activity->id ?>"  
 				<?php endif ?>
-				class="inline-block p-3 bg-sky-600 rounded-lg text-white text-xl hover:no-underline">
+				class="inline-block p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 					Launch Activity
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
 						<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
@@ -282,13 +282,13 @@ foreach($actlist as $k => $v) {
 			echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
 			echo $this->Form->hidden('user_id', ['value' => $uid]);
 			echo $this->Form->textarea('issue',
-							['class' => 'w-full p-6 bg-slate-200 dark:bg-slate-700 dark:text-white rounded-lg', 
+							['class' => 'w-full h-20 p-6 bg-slate-200 dark:bg-slate-700 dark:text-white rounded-lg', 
 							'x-model' => 'form'.$activity->id.'Data.issue', 
 							'placeholder' => 'Type here ...',
 							'required' => 'required']);
 			?>
             
-            <input type="submit" class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" value="Submit Report">
+            <input type="submit" class="mt-1 mb-4 px-4 py-2 bg-sky-600 hover:bg-sky-800 rounded-lg" value="Submit Report">
 			<span x-text="message"></span> <a href="/profile/reports">See all your reports</a>
 
         <?= $this->Form->end() ?>
@@ -440,7 +440,7 @@ foreach($actlist as $k => $v) {
 			echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
 			echo $this->Form->hidden('user_id', ['value' => $uid]);
 			echo $this->Form->textarea('issue',['class' => 
-													'w-full p-6 bg-slate-200 dark:bg-slate-700 dark:text-white rounded-lg', 
+													'w-full h-20 bg-slate-200 dark:bg-slate-700 dark:text-white rounded-lg', 
 													'x-model' => 'form'.$activity->id.'Data.issue', 
 													'placeholder' => 'Type here ...',
 													'required' => 'required']);
