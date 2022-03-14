@@ -31,7 +31,7 @@
   </div>
 
   <?php if(!empty($this->Identity->get('id'))): ?>
-  <nav :class="{'block': open, 'hidden': !open}" class="flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto">
+  <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto">
   <?php 
   #TODO re-write all of this
   $active = 'border-slate-400 dark:border-slate-800';
