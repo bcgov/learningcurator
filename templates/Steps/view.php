@@ -16,6 +16,28 @@ $this->assign('title', h($pagetitle));
 $stepacts = count($requiredacts);
 $supplmentalcount = count($supplementalacts);
 
+
+#TODO move this into the controller
+$last = 0;
+$previousid = 0;
+$next = 0;
+$nextid = 0;
+foreach ($step->pathways as $pathways) {
+	foreach($pathways->steps as $s) {
+		$next = next($pathways->steps);
+		if($s->id == $step->id) {
+			if($last) {
+				$previousid = $last->id;
+				$previousslug = $last->slug;
+			}
+			if($next) {
+				$upnextid = $next->id;
+				$upnextslug = $next->slug;
+			}
+		}
+		$last = $s;
+	}
+}
 ?>
 <div class="p-6 dark:text-white">
 
@@ -83,6 +105,7 @@ $supplmentalcount = count($supplementalacts);
 <?= $this->Form->button(__('Pin to Profile'),['class' => 'mb-4 p-3 bg-sky-600 dark:bg-sky-600 text-white rounded-lg text-center']) ?>
 <?= $this->Form->end(); ?>
 <?php endif ?>
+
 
 
 
@@ -185,24 +208,20 @@ foreach($actlist as $k => $v) {
 		</div>
 		<?php endif ?>
 
-		<div class="my-2">
-			<a target="_blank" 
-				x-on:click="count++;"
-				rel="noopener" 
-				data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
-				<?php if($completed > 0): ?>
-				href="/activities-users/launch?activity_id=<?= $activity->id ?>"  
-				<?php else: ?>
-				href="/activities-users/launch?activity_id=<?= $activity->id ?>"  
-				<?php endif ?>
-				class="inline-block p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
-					Launch Activity
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-						<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-						<path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
-					</svg>
-			</a>
-		</div>
+
+		<a target="_blank" 
+			x-on:click="count++;"
+			rel="noopener" 
+			title="Launch this activity"
+			href="/activities-users/launch?activity_id=<?= $activity->id ?>"  
+			class="inline-block my-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+				Launch Activity
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+					<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+					<path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+				</svg>
+		</a>
+
 	</div> <!-- click count increment container -->
 
 	<div x-data="{ open: false }">
@@ -282,13 +301,13 @@ foreach($actlist as $k => $v) {
 			echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
 			echo $this->Form->hidden('user_id', ['value' => $uid]);
 			echo $this->Form->textarea('issue',
-							['class' => 'w-full h-20 p-6 bg-slate-200 dark:bg-slate-700 dark:text-white rounded-lg', 
+							['class' => 'w-full h-20 p-6 bg-slate-200 dark:bg-slate-700 text-white rounded-lg', 
 							'x-model' => 'form'.$activity->id.'Data.issue', 
 							'placeholder' => 'Type here ...',
 							'required' => 'required']);
 			?>
             
-            <input type="submit" class="mt-1 mb-4 px-4 py-2 bg-sky-600 hover:bg-sky-800 rounded-lg" value="Submit Report">
+            <input type="submit" class="mt-1 mb-4 px-4 py-2 text-white bg-sky-600 hover:bg-sky-800 rounded-lg" value="Submit Report">
 			<span x-text="message"></span> <a href="/profile/reports">See all your reports</a>
 
         <?= $this->Form->end() ?>
@@ -308,11 +327,17 @@ foreach($actlist as $k => $v) {
 </div>
 <?php endforeach; // end of activities loop for this step ?>
 </div> <!-- /.snap-y -->
+
 <?php endif; ?>
 
 <?php if(count($supplementalacts) > 0): ?>
-
-<h3 class="mt-10 text-2xl dark:text-white">Supplementary Resources <span class="bg-white text-black rounded-lg text-lg inline-block px-2"><?= $supplmentalcount ?></span></h3>
+<p class="text-center text-sm italic">End of required activities for this module.</p>
+<h3 class="mt-20 text-2xl dark:text-white">
+	Supplementary Resources 
+	<span class="bg-white text-black rounded-lg text-lg inline-block px-2">
+		<?= $supplmentalcount ?>
+	</span>
+</h3>
 
 <?php foreach ($supplementalacts as $activity): ?>
 	<?php 
@@ -362,7 +387,7 @@ foreach($actlist as $k => $v) {
 			rel="noopener" 
 			data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
 			href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
-			class="inline-block my-3 p-3 bg-sky-600 rounded-lg text-white text-xl hover:no-underline">
+			class="inline-block my-2 p-3 bg-sky-600 rounded-lg text-white text-xl hover:no-underline">
 				Launch Activity 
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
 					<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
@@ -440,13 +465,13 @@ foreach($actlist as $k => $v) {
 			echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
 			echo $this->Form->hidden('user_id', ['value' => $uid]);
 			echo $this->Form->textarea('issue',['class' => 
-													'w-full h-20 bg-slate-200 dark:bg-slate-700 dark:text-white rounded-lg', 
+													'w-full h-20 bg-slate-200 dark:bg-slate-700 text-white rounded-lg', 
 													'x-model' => 'form'.$activity->id.'Data.issue', 
 													'placeholder' => 'Type here ...',
 													'required' => 'required']);
 			?>
             
-            <input type="submit" class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" value="Submit Report">
+            <input type="submit" class="mt-1 mb-4 px-4 py-2 text-white bg-sky-600 rounded-lg" value="Submit Report">
 			
 <!--
 <button class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" :disabled="formLoading" x-text="buttonText"></button>
@@ -494,6 +519,21 @@ aria-controls="defunctacts">View archived activities</a>.
 </div>
 <?php endif ?>
 
+<div class="flex justify-center p-3 bg-white rounded-lg">
+<?php if(!empty($previousid)): ?>
+	<a href="/pathways/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" 
+		class="inline-block m-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
+			Previous Module
+	</a>
+<?php endif ?>
+
+<?php if(!empty($upnextid)): ?>
+	<a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" 
+		class="inline-block m-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
+			Next Module
+	</a>
+<?php endif ?>
+</div>
 
 </div>
 </div>
