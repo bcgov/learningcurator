@@ -1626,6 +1626,11 @@ a:hover {
   .lg\:p-4 {
     padding: 1rem;
   }
+
+  .lg\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
 }
 
 @media (min-width: 1536px) {
