@@ -71,7 +71,12 @@ foreach ($step->pathways as $pathways) {
 	<div class="mt-2 float-right">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
-<?= $this->Form->button(__('Pin to Profile'),['class' => 'p-3 bg-sky-600 dark:bg-sky-600 text-white rounded-lg text-center']) ?>
+<button class="p-3 bg-sky-600 dark:bg-sky-600 text-white rounded-lg text-center">
+<svg class="inline-block" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pin-fill" viewBox="0 0 16 16">
+  <path d="M4.146.146A.5.5 0 0 1 4.5 0h7a.5.5 0 0 1 .5.5c0 .68-.342 1.174-.646 1.479-.126.125-.25.224-.354.298v4.431l.078.048c.203.127.476.314.751.555C12.36 7.775 13 8.527 13 9.5a.5.5 0 0 1-.5.5h-4v4.5c0 .276-.224 1.5-.5 1.5s-.5-1.224-.5-1.5V10h-4a.5.5 0 0 1-.5-.5c0-.973.64-1.725 1.17-2.189A5.921 5.921 0 0 1 5 6.708V2.277a2.77 2.77 0 0 1-.354-.298C4.342 1.674 4 1.179 4 .5a.5.5 0 0 1 .146-.354z"/>
+</svg> Pin to Profile
+</button>
+
 <?= $this->Form->end(); ?>
 </div>
 <?php endif ?>
@@ -112,7 +117,7 @@ foreach ($step->pathways as $pathways) {
 
 
 <!-- start drop-down -->
-<div @click.away="open = false" class="relative ml-6" x-data="{ open: false }">
+<div x-cloak @click.away="open = false" class="relative ml-6" x-data="{ open: false }">
 	<button @click="open = !open" class="px-4 py-2 text-sm font-semibold text-right bg-slate-200 rounded-t-lg dark:bg-slate-900 dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900 dark:hover:bg-slate-900 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-100 focus:bg-white focus:outline-none focus:shadow-outline">
 		<span>Module Menu</span>
 		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
@@ -240,7 +245,7 @@ foreach($actlist as $k => $v) {
 			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
 		</svg>
 	</button>
-	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
+	<div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
 		<div class="p-4 bg-slate-200 rounded-md dark:bg-slate-900">
 
 		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
