@@ -85,10 +85,10 @@ if ($this->Identity->isLoggedIn()) {
 		</div>
 		<?php endif ?>
 		<div class="my-4">
-			<strong>Hyperlink:</strong> <?= $activity->hyperlink ?>
+			<strong>Hyperlink:</strong><br> <?= $activity->hyperlink ?>
 		</div>
-		<div class="py-3 text-muted" >
-			Added on <?= $this->Time->format($activity->created,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+		<div class="py-3 italic" >
+			This activity was added on <?= $this->Time->format($activity->created,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
 			<?php if($role == 'curator' || $role == 'superuser'): ?>
 				by <a href="/users/view/<?= $activity->createdby_id ?>"><?= $curator[0]->username ?></a>
 			<?php endif ?>
@@ -98,15 +98,64 @@ if ($this->Identity->isLoggedIn()) {
 
 		
 
-
+		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
+			You launched this activity: 
 		<?php foreach($activitylaunches as $u): ?>
-		<div class="my-2 bg-slate-200 text-[#003366] dark:bg-slate-900 dark:text-yellow-500 rounded-lg">
-			Launched: <?= $this->Time->format($u,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+		<div class="my-2 dark:text-yellow-500">
+			<?= $this->Time->format($u[1],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+			<?= $this->Form->postLink(__('Remove'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $u[0]], ['class' => 'px-2 bg-white text-black dark:bg-black dark:text-white hover:no-underline rounded-lg', 'confirm' => __('Remove?')]) ?>
 		</div>
 		<?php endforeach ?>
 
+		</div>
 
 
+
+
+		<?php if($role == 'curator' || $role == 'superuser'): ?>
+		<?php if (!empty($activity->moderator_notes)) : ?>
+		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
+		<h4><?= __('Moderator Notes') ?></h4>
+		<blockquote>
+		<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
+		</blockquote>
+		</div>
+		<?php endif ?>
+		<?php endif; ?>
+		
+		<?php if(!empty($activity->steps)): ?>
+		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
+		<h3 class="text-lg">
+			This activity is included in the following pathways:
+		</h3>
+
+		<?php foreach($activity->steps as $step): ?>
+		<?php foreach($step->pathways as $path): ?>
+		<?php if($path->status_id == 2): ?>
+
+		<div class="mb-3 p-3 bg-white dark:bg-slate-900 rounded-lg">
+			<h4 class="text-xl">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
+					<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+					<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
+				</svg>
+				<a href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
+			<div class="p-3"><?= $step->description ?></div>
+		</div>
+
+		<?php else: ?>
+
+		<div class="my-3 p-3" >
+		<span class="badge badge-warning">DRAFT</span>
+		<h4><a href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
+			<div><?= $step->description ?></div>
+		</div>
+
+		<?php endif ?>
+		<?php endforeach ?>
+		<?php endforeach ?>
+		</div>
+		<?php endif ?>
 
 
 	<div class="p-3 bg-white dark:bg-slate-800 rounded-lg">
@@ -178,50 +227,6 @@ if ($this->Identity->isLoggedIn()) {
 
 
 		</div>
-
-
-
-
-	
-
-
-		<?php if($role == 'curator' || $role == 'superuser'): ?>
-		<?php if (!empty($activity->moderator_notes)) : ?>
-		<div class="my-3 p-3 ">
-		<h4><?= __('Moderator Notes') ?></h4>
-		<blockquote>
-		<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
-		</blockquote>
-		</div>
-		<?php endif ?>
-		<?php endif; ?>
-
-		<?php if(!empty($activity->steps)): ?>
-		<div class="dark:bg-slate-900 dark:text-white">
-		<h3 class="mt-3"><i class="fas fa-sitemap"></i> Pathways</h3>
-
-		<?php foreach($activity->steps as $step): ?>
-		<?php foreach($step->pathways as $path): ?>
-		<?php if($path->status_id == 2): ?>
-
-		<div class="my-3 p-3" >
-			<h4><a href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
-			<div><?= $step->description ?></div>
-		</div>
-
-		<?php else: ?>
-
-		<div class="my-3 p-3" >
-		<span class="badge badge-warning">DRAFT</span>
-		<h4><a href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
-			<div><?= $step->description ?></div>
-		</div>
-
-		<?php endif ?>
-		<?php endforeach ?>
-		<?php endforeach ?>
-		</div>
-		<?php endif ?>
 
 
 

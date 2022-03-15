@@ -95,7 +95,7 @@ class ActivitiesController extends AppController
             // button.
             if($uact->activity_id == $id) {
                 $claimid = $uact->id;
-                array_push($activitylaunches, $uact['created']);
+                array_push($activitylaunches, [$uact['id'],$uact['created']]);
             }
         }
     
