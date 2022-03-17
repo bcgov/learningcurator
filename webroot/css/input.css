@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+[x-cloak] { display: none !important; }
 a:hover {
     text-decoration: underline;
     text-decoration-thickness: 1px;
