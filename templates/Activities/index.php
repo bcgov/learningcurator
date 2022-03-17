@@ -51,7 +51,7 @@ foreach($actlist as $k => $v) {
 
 <div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
 	
-	<a href="/profile/completions" 
+	<a href="/profile/launches" 
 		x-cloak 
 		class="inline-block w-24 bg-slate-200 text-[#003366] dark:bg-slate-900 dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
 		:class="[count > '0' ? 'show' : 'hidden']">

@@ -22,7 +22,7 @@ if ($this->Identity->isLoggedIn()) {
 <h1 class="text-3xl mt-4">
     <?= h($topic->name) ?>
 </h1>
-<div class="mb-5">
+<div class="p-4 text-2xl bg-slate-100 dark:bg-slate-800 rounded-lg">
 <?= h($topic->description) ?>
 </div>
 
@@ -38,7 +38,13 @@ if ($this->Identity->isLoggedIn()) {
                 <?= h($pathway->name) ?>
             </a>
         </h2>
-        <div><?= h($pathway->description) ?></div>
+        <div class="p-4 text-lg bg-white dark:bg-black rounded-lg">
+            <?= h($pathway->description) ?>
+        </div>
+        <a href="/pathways/<?= h($pathway->slug) ?>" 
+            class="inline-block my-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+                Launch Pathway
+        </a>
     </div>
 <?php else: ?>
     <?php if($role == 'curator' || $role == 'superuser'): ?>
@@ -54,6 +60,10 @@ if ($this->Identity->isLoggedIn()) {
             </a>
         </h2>
         <div><?= h($pathway->description) ?></div>
+        <a href="/pathways/<?= h($pathway->slug) ?>" 
+            class="inline-block my-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+                Launch Pathway
+        </a>
     </div>
     <?php endif ?>
 <?php endif ?>
