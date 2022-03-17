@@ -59,6 +59,7 @@ class ActivitiesController extends AppController
     public function view($id = null)
     {
      //
+        // #TODO the below is WRONG update 
         // Check to see if the current user has "claimed" 
         // this activity. Here we get the current user id and use it to select 
         // all of the claimed activities assigned to them, and then process out 
@@ -71,7 +72,7 @@ class ActivitiesController extends AppController
         
         // We need create am empty array first. If nothing gets added to
         // it, so be it
-        $useractivitylist = array();
+        $activitylaunches = array();
 
         // Get access to the appropriate table
         $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
@@ -94,8 +95,8 @@ class ActivitiesController extends AppController
             // button.
             if($uact->activity_id == $id) {
                 $claimid = $uact->id;
+                array_push($activitylaunches, [$uact['id'],$uact['created']]);
             }
-            array_push($useractivitylist, $uact['activity_id']);
         }
     
         $activity = $this->Activities->get($id, [
@@ -118,7 +119,7 @@ class ActivitiesController extends AppController
         $cur = $curatorinfo->find()->where(['id = ' => $activity->createdby_id]);
         $curator = $cur->toList();
 
-        $this->set(compact('activity', 'useractivitylist','allpathways','claimid','curator'));
+        $this->set(compact('activity', 'activitylaunches','allpathways','claimid','curator'));
     }
 
     /**
