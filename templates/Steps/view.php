@@ -103,7 +103,7 @@ foreach ($step->pathways as $pathways) {
                     isLoading = false; 
                     console.log(response); 
                 })"
-	class="">
+	class="sticky top-0 z-50">
 <div class="" x-show="isLoading">Loading&hellip;</div>
 <div x-show="!isLoading" class="">
 	<div class="mb-6 h-6 w-full bg-slate-500 dark:bg-black rounded-b-lg">
