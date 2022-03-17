@@ -17,11 +17,11 @@ if ($this->Identity->isLoggedIn()) {
 <?= $this->Html->link(__('New Pathway'), ['action' => 'add'], ['class' => 'mt-5']) ?>
 <?php endif ?>
 
-<h1 class="text-3xl"><?= __('All Pathways') ?></h1>
+<h1 class="text-3xl"><?= __('Pathways') ?></h1>
 
-<div class="md:grid md:grid-cols-2 md:gap-4 mt-3">
+<div class="my-3">
 <?php foreach ($pathways as $pathway): ?>
-<div class="p-3 my-3 md:my-0 bg-white dark:bg-slate-900 rounded-lg">
+<div class="p-3 my-3 bg-white dark:bg-slate-900 rounded-lg">
 	
 	<h2 class="mb-2 text-2xl">
 		<a href="/pathways/<?= h($pathway->slug) ?>" class="font-weight-bold">
@@ -35,6 +35,10 @@ if ($this->Identity->isLoggedIn()) {
 	<div class="bg-slate-200 dark:bg-slate-800 p-3">
 		<?= h($pathway->description) ?>
 	</div>
+	<a href="/pathways/<?= h($pathway->slug) ?>" 
+		class="inline-block my-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+			Launch Pathway
+	</a>
 	<div class="bg-slate-200 dark:bg-slate-700 p-3">
 		<?php 
 		$stat = 'badge-light'; 
