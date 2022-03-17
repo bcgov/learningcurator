@@ -339,8 +339,8 @@ class ActivitiesController extends AppController
         if ($this->request->is(['get'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
             if ($this->Activities->save($activity)) {
-                echo 'Liked!';
-                //return $this->redirect($this->referer());
+                //echo 'Liked!';
+                return $this->redirect($this->referer());
             } else {
                 //print(__('The activity could not be saved. Please, try again.'));
             }
