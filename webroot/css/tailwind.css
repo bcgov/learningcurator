@@ -573,11 +573,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 0.5rem;
 }
 
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
 .my-1 {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
@@ -591,6 +586,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+}
+
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .mb-3 {
@@ -629,6 +629,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 1rem;
 }
 
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.ml-6 {
+  margin-left: 1.5rem;
+}
+
 .ml-8 {
   margin-left: 2rem;
 }
@@ -641,10 +649,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: 0.75rem;
 }
 
-.mb-1 {
-  margin-bottom: 0.25rem;
-}
-
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -655,10 +659,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .mr-3 {
   margin-right: 0.75rem;
-}
-
-.ml-6 {
-  margin-left: 1.5rem;
 }
 
 .-ml-6 {
@@ -934,6 +934,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(2 132 199 / var(--tw-bg-opacity));
 }
 
+.bg-slate-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+}
+
 .bg-slate-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(203 213 225 / var(--tw-bg-opacity));
@@ -965,11 +970,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
-}
-
-.bg-slate-800 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
 .bg-white\/80 {
@@ -1567,6 +1567,10 @@ a:hover {
 }
 
 @media (min-width: 1024px) {
+  .lg\:w-1\/2 {
+    width: 50%;
+  }
+
   .lg\:p-4 {
     padding: 1rem;
   }

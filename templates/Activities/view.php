@@ -29,27 +29,31 @@ if ($this->Identity->isLoggedIn()) {
 	<?php endif ?>
 	<?php endif; // role check ?>	
 
-	<h1 class="text-4xl">
+	<h1 class="text-4xl mb-3">
 		<?= $activity->name ?>
 	</h1>
 
 	<div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
+		
 		<div class="mb-2">
-
 			<?php foreach($activity->tags as $tag): ?>
 			<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
 			<?php endforeach ?>
 		</div>
 
+		<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-lg">
 		<?php if(!empty($activity->description)): ?>
-		<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-lg">
-		<?= $activity->description ?>
-		</div>
+			<?= $activity->description ?>
 		<?php else: ?>
-		<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-lg">
 			<em>No description provided&hellip;</em>
-		</div>
 		<?php endif ?>
+			<div class="mt-3 italic text-sm" >
+				This activity was added on <?= $this->Time->format($activity->created,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+				<?php if($role == 'curator' || $role == 'superuser'): ?>
+					by <a href="/users/view/<?= $activity->createdby_id ?>"><?= $curator[0]->username ?></a>
+				<?php endif ?>
+			</div>
+		</div>
 
 		<?php if(!empty($activity->isbn)): ?>
 		<div class="p-2 isbn bg-white dark:bg-slate-800">
@@ -71,8 +75,11 @@ if ($this->Identity->isLoggedIn()) {
 					</svg>
 			</a>
 			
-			<a href="/activities/like/<?= $activity->id ?>" class="" data-toggle="tooltip" data-placement="bottom" title="Like this activity">
-				<i class="fas fa-thumbs-up"></i> <span class="lcount"><?= h($activity->recommended) ?> likes</span>
+			<a href="/activities/like/<?= $activity->id ?>" class="inline-block ml-6" title="Like this activity">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline-block bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
+					<path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
+				</svg>
+				<span class="lcount"><?= h($activity->recommended) ?> likes</span>
 			</a>
 
 		</div>
@@ -84,38 +91,38 @@ if ($this->Identity->isLoggedIn()) {
 			</p>
 		</div>
 		<?php endif ?>
-		<div class="my-4">
-			<strong>Hyperlink:</strong><br> <?= $activity->hyperlink ?>
+
 		</div>
-		<div class="py-3 italic" >
-			This activity was added on <?= $this->Time->format($activity->created,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
-			<?php if($role == 'curator' || $role == 'superuser'): ?>
-				by <a href="/users/view/<?= $activity->createdby_id ?>"><?= $curator[0]->username ?></a>
-			<?php endif ?>
+
+		<div class="my-3 p-3 bg-white dark:bg-slate-900 rounded-lg">
+			<strong>Hyperlink:</strong>
+			<div class="p-2 bg-white dark:bg-black text-xl">
+				<?= $activity->hyperlink ?>
+			</div>
 		</div>
 
 
 
 		
-
-		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
+		<?php if(count($activitylaunches) > 0): ?>
+		<div class="mb-3 p-3 bg-white dark:bg-slate-900 rounded-lg">
 			You launched this activity: 
 		<?php foreach($activitylaunches as $u): ?>
-		<div class="my-2 dark:text-yellow-500">
+		<div class="p-2 my-2 bg-slate-800 dark:text-yellow-500 rounded-lg">
 			<?= $this->Time->format($u[1],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
 			<?= $this->Form->postLink(__('Remove'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $u[0]], ['class' => 'px-2 bg-white text-black dark:bg-black dark:text-white hover:no-underline rounded-lg', 'confirm' => __('Remove?')]) ?>
 		</div>
 		<?php endforeach ?>
-
 		</div>
+		<?php endif ?>
 
 
 
 
 		<?php if($role == 'curator' || $role == 'superuser'): ?>
 		<?php if (!empty($activity->moderator_notes)) : ?>
-		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
-		<h4><?= __('Moderator Notes') ?></h4>
+		<div class="my-3 p-3 bg-white dark:bg-slate-900 rounded-lg">
+		<h3 class="text-lg"><?= __('Moderator Notes') ?></h3>
 		<blockquote>
 		<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
 		</blockquote>
@@ -124,7 +131,7 @@ if ($this->Identity->isLoggedIn()) {
 		<?php endif; ?>
 		
 		<?php if(!empty($activity->steps)): ?>
-		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
+		<div class="my-3 p-3 bg-white dark:bg-slate-900 rounded-lg">
 		<h3 class="text-lg">
 			This activity is included in the following pathways:
 		</h3>
@@ -133,14 +140,14 @@ if ($this->Identity->isLoggedIn()) {
 		<?php foreach($step->pathways as $path): ?>
 		<?php if($path->status_id == 2): ?>
 
-		<div class="mb-3 p-3 bg-white dark:bg-slate-900 rounded-lg">
+		<div class="my-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
 			<h4 class="text-xl">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
 					<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
 					<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
 				</svg>
 				<a href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a></h4>
-			<div class="p-3"><?= $step->description ?></div>
+		
 		</div>
 
 		<?php else: ?>
@@ -158,8 +165,8 @@ if ($this->Identity->isLoggedIn()) {
 		<?php endif ?>
 
 
-	<div class="p-3 bg-white dark:bg-slate-800 rounded-lg">
-
+	<div class="p-3 bg-white dark:bg-slate-900 rounded-lg">
+		<p class="mb-1 text-lg">Is there something wrong with this activity? Report it!</p>
 		<script>
 
 		var message = '';
@@ -203,24 +210,25 @@ if ($this->Identity->isLoggedIn()) {
 										'controller' => 'reports',
 										'action' => 'add'
 									],
-									'class' => '',
+									'class' => 'block w-full lg:w-1/2 p-3 bg-white dark:bg-black rounded-lg',
 									'x-data' => 'report' . $activity->id . 'Form()',
 									'@submit.prevent' => 'submitData'
 								]) ?>
 
-			<p>Is there something wrong with this activity? Report it!</p>
+			
 			<?php
 			echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
 			echo $this->Form->hidden('user_id', ['value' => $uid]);
 			echo $this->Form->textarea('issue',
-							['class' => 'w-full h-20 p-6 bg-slate-200 dark:bg-slate-700 text-white rounded-lg', 
+							['class' => 'block w-full h-20 p-6 bg-slate-200 dark:bg-slate-700 text-white rounded-lg', 
 							'x-model' => 'form'.$activity->id.'Data.issue', 
-							'placeholder' => 'Type here ...',
+							'placeholder' => 'Type your issue here ...',
 							'required' => 'required']);
 			?>
 			
-			<input type="submit" class="mt-1 mb-4 px-4 py-2 text-white bg-sky-600 hover:bg-sky-800 rounded-lg" value="Submit Report">
-			<span x-text="message"></span> <a href="/profile/reports">See all your reports</a>
+			<input type="submit" class="mt-1 px-4 py-2 text-white bg-sky-600 hover:bg-sky-800 rounded-lg" value="Report Issue">
+			<span x-text="message"></span> 
+			<a class="inline-block ml-6" href="/profile/reports">See all your reports</a>
 
 		<?= $this->Form->end() ?>
 
