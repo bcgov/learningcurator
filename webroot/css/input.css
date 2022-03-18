@@ -1,9 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+[x-cloak] { display: none !important; }
 a:hover {
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 6px;
     text-decoration-style: wavy;
+}
+p {
+    margin-bottom: 1em;
 }

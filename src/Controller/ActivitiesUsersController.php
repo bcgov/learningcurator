@@ -17,7 +17,7 @@ class ActivitiesUsersController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function completions()
+    public function launches ()
     {
         $user = $this->request->getAttribute('authentication')->getIdentity();
         $activities = $this->ActivitiesUsers->find()

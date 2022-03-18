@@ -20,8 +20,8 @@ $uid = $this->Identity->get('id');
 		<a href="/profile" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-slate-900 dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline hover:no-underline">
 			Pinned Pathways
 		</a> 
-		<a href="/profile/completions" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-[#003366] dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline hover:no-underline">
-			Completed Activities
+		<a href="/profile/launches" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-[#003366] dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline hover:no-underline">
+			Launched Activities
 		</a> 
 		<a href="/profile/reports" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline hover:no-underline">
 			Issues Reported
@@ -35,7 +35,7 @@ $uid = $this->Identity->get('id');
 	</div>
 </div>
 <div class="p-6 rounded-lg activity bg-slate-200 dark:bg-slate-900 dark:text-white">
-<h1 class="mb-3 text-lg">Completed Activities</h1>
+<h1 class="mb-3 text-lg">Launched Activities</h1>
 <?php if(!$activities->isEmpty()): ?>
 <?php foreach($activities as $a): ?>
 
@@ -71,8 +71,12 @@ $uid = $this->Identity->get('id');
 <?php else: ?>
 
 <div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-900 dark:text-white">
-<p><strong>You've not yet claimed any activities.</strong></p>
-<p>You can claim activities along a pathway. Doing so allows you to see how much of the path you have completed.</p>
+<p><strong>You've not yet lanuched any activities.</strong></p>
+<p>As you launch activities on a pathway, they will be recorded here 
+	along with the date and time that you clicked the launch button.</p>
+<p>Pathway modules have one or more required activities. When you launch
+	a required activity, that action counts towards your pathway progress,
+	indicated by the progress bar.</p> 
 </div>
 <?php endif ?>
 </div>

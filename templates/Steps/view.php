@@ -101,9 +101,9 @@ foreach ($step->pathways as $pathways) {
             .then(response => { 
                     status = response; 
                     isLoading = false; 
-                    //console.log(response); 
+                    console.log(response); 
                 })"
-	class="">
+	class="sticky top-0 z-50">
 <div class="" x-show="isLoading">Loading&hellip;</div>
 <div x-show="!isLoading" class="">
 	<div class="mb-6 h-6 w-full bg-slate-500 dark:bg-black rounded-b-lg">
@@ -183,7 +183,7 @@ foreach($actlist as $k => $v) {
 
 	<div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
 		
-		<a href="/profile/completions" 
+		<a href="/profile/launches" 
 			class="inline-block w-24 bg-slate-200 text-[#003366] dark:bg-slate-900 dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
 			:class="[count > '0' ? 'show' : 'hidden']">
 				Launched
@@ -216,10 +216,12 @@ foreach($actlist as $k => $v) {
 		<?php endif ?>
 
 
-		<!-- <form @submit.prevent="" action="/activities/like/<?= $activity->id ?>"
-				x-on:click="liked++">
+		<!-- <form action="/activities/like/<?= $activity->id ?>"
+				x-on:click="liked++"
+				@submit.prevent="submitData">
 			<button><span x-text="liked"></span> likes</button>
 		</form> -->
+
 
 		<a target="_blank" 
 			x-on:click="count++;"
@@ -351,7 +353,7 @@ foreach($actlist as $k => $v) {
 		<?= $supplmentalcount ?>
 	</span>
 </h3>
-
+<p><em>Launching these activities does not count towards your progress along this pathway.</em></p>
 <?php foreach ($supplementalacts as $activity): ?>
 	<?php 
 // #TODO move this back into the controller and simplify
@@ -368,7 +370,7 @@ foreach($actlist as $k => $v) {
 
 	<div x-data="{ count: <?= $completed ?> }">	
 
-		<a href="/profile/completions" 
+		<a href="/profile/launches" 
 			class="inline-block w-24 bg-slate-200 text-[#003366] dark:bg-slate-900 dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
 			:class="[count > '0' ? 'show' : 'hidden']">
 				Launched
