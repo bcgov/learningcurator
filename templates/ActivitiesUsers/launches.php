@@ -71,8 +71,12 @@ $uid = $this->Identity->get('id');
 <?php else: ?>
 
 <div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-900 dark:text-white">
-<p><strong>You've not yet claimed any activities.</strong></p>
-<p>You can claim activities along a pathway. Doing so allows you to see how much of the path you have completed.</p>
+<p><strong>You've not yet lanuched any activities.</strong></p>
+<p>As you launch activities on a pathway, they will be recorded here 
+	along with the date and time that you clicked the launch button.</p>
+<p>Pathway modules have one or more required activities. When you launch
+	a required activity, that action counts towards your pathway progress,
+	indicated by the progress bar.</p> 
 </div>
 <?php endif ?>
 </div>
