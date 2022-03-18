@@ -629,12 +629,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 1rem;
 }
 
-.mb-1 {
-  margin-bottom: 0.25rem;
-}
-
 .ml-6 {
   margin-left: 1.5rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
 }
 
 .ml-8 {
@@ -1256,6 +1256,10 @@ a:hover {
   text-underline-offset: 6px;
   -webkit-text-decoration-style: wavy;
           text-decoration-style: wavy;
+}
+
+p {
+  margin-bottom: 1em;
 }
 
 .hover\:bg-sky-800:hover {
