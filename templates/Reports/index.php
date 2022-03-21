@@ -5,11 +5,8 @@
  */
 $this->loadHelper('Authentication.Identity');
 ?>
-<div class="container-fluid">
-<div class="row justify-content-md-center linear">
-<div class="col-md-6">
 
-<div class="my-5 p-3 bg-white rounded-lg">
+<div class="p-6">
 <?php if (!empty($reports)) : ?>
 	<h2><?= __('Reports') ?></h2>
 	<div class="btn-group">
@@ -17,7 +14,7 @@ $this->loadHelper('Authentication.Identity');
 		<a class="btn btn-light" href="/reports/closed">Closed Reports</a>
 	</div>
 	<?php foreach ($reports as $report) : ?>
-	<div class="p-3 mb-2 bg-white rounded-lg">
+	<div class="p-3 mb-2 bg-white dark:bg-slate-900 rounded-lg">
 		
 		<?= h($report->created) ?>
 		<div><strong><a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></strong></div>
@@ -59,7 +56,3 @@ $this->loadHelper('Authentication.Identity');
 <?php endif ?>
 
 </div>
-</div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
