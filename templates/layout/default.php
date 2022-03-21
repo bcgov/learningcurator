@@ -33,9 +33,22 @@
   <?php if(!empty($this->Identity->get('id'))): ?>
   <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto">
   <?php 
-  #TODO re-write all of this
+    $active = 'border-slate-400 dark:border-slate-800';
+    $currentpage = $_SERVER["REQUEST_URI"];
+   ?>
+  <?php if($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'superuser'): ?>
+    <?php if(strpos($currentpage,'/users') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
+  <a class="hover:no-underline block px-4 py-2 mt-2 text-sm font-semibold text-slate-900 border-l-4 dark:hover:border-white dark:hover:bg-[#003366] dark:focus:bg-black dark:focus:text-white dark:hover:text-white dark:text-slate-200 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-300 focus:bg-slate-200 focus:outline-none focus:shadow-outline <?= $active ?>"
+      href="/users/index">
+    Curator Dashboard
+  </a>
+  <?php 
+  // reset state
   $active = 'border-slate-400 dark:border-slate-800';
-  $currentpage = $_SERVER["REQUEST_URI"];
+  endif; 
+  ?>
+  <?php 
+  #TODO re-write all of this
   $navigation = array(
     ['name'=>'Profile','link' => '/profile'],
     ['name'=>'Categories','link' => '/categories'], 
