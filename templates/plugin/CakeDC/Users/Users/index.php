@@ -11,6 +11,20 @@
 ?>
 <div class="p-6 dark:text-white">
 
+<!-- Admin menu -->
+<div>
+    <a class="inline-block p-3 my-3 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/reports/index">Open Reports</a>
+    <a class="inline-block p-3 my-3 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/activity-types">Activity Types</a>
+    <a class="inline-block p-3 my-3 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/ministries">All Ministries</a>
+    <a class="inline-block p-3 my-3 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/categories/add">New Category</a>
+    <a class="inline-block p-3 my-3 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/topics/add">New Topic</a>
+    <a class="inline-block p-3 my-3 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/pathways/add">New Pathway</a> 
+    <a class="inline-block p-3 my-3 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/activities/add">New Activity</a>
+    <!-- <a class="inline-block p-3 my-3 bg-slate-200 dark:bg-sky-700" href="/activities/addtostep">Add Activity to Step</a> -->
+</div>
+
+
+
 <h1 class="mt-5">Users</h1>
 <form method="get" action="/users/search" class="mb-5">
 <label>Search
