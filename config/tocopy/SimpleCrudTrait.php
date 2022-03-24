@@ -79,7 +79,9 @@ trait SimpleCrudTrait
                     // #TODO shouldn't be doing formatting here but when I build an array
                     // the array_unique call below breaks and it took me so long to get to
                     // this point that I'm just rolling with it for now.
-                    $link = '<a href="/activities/view/' . $id . '">' . $val['actname'] . '</a> <span class="inline-block px-2 py-1 text-xs bg-white dark:bg-black rounded-lg">' . $count . ' launches</span><br>';
+                    $link = '<a href="/activities/view/' . $id . '">' . $val['actname'] . '</a> ';
+                    $link .= '<span class="inline-block px-2 py-1 text-xs bg-white dark:bg-black rounded-lg">';
+                    $link .= $count . ' launches</span><br>';
                     array_push($links, $link);
                 }
             }
