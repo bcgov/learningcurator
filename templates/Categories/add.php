@@ -5,35 +5,29 @@
  */
 $this->loadHelper('Authentication.Identity');
 ?>
-<div class="container-fluid">
-<div class="row justify-content-md-center align-items-center"  id="colorful">
-<div class="col-md-10 col-lg-8 col-xl-6">
-    <h1 class="display-4 my-5">
-        Add Topic Area
+<div class="p-6">
+
+    <h1 class="text-2xl">
+        Add Category
     </h1>
-</div>
-</div>
-</div>
 
-<div class="container-fluid">
-<div class="row justify-content-md-center linear">
-<div class="col-md-4">
+    
 
-<div class="mt-5 p-5 bg-white rounded-lg shadow-sm">
+<div class="mt-5 p-5 bg-white dark:bg-slate-900 rounded-lg shadow-sm">
 
 <?= $this->Form->create($category) ?>
 <fieldset>
 
 <?php
-echo $this->Form->control('name',['class' => 'form-control']);
-echo $this->Form->control('description',['class' => 'form-control']);
+echo $this->Form->control('name',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']);
+echo $this->Form->control('description',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']);
 //echo $this->Form->control('image_path');
 //echo $this->Form->control('color');
 //echo $this->Form->control('featured');
 echo $this->Form->hidden('createdby',['value' => $this->Identity->get('id')]);
 ?>
 </fieldset>
-<?= $this->Form->button(__('Add new Topic Category'),['class' => 'btn btn-success mt-3']) ?>
+<?= $this->Form->button(__('Add New Category'),['class' => 'inline-block my-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline']) ?>
 <?= $this->Form->end() ?>
 </div>
 </div>
