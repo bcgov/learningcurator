@@ -42,9 +42,20 @@ trait SimpleCrudTrait
         $table = $this->loadModel();
         $alphabetized = $table->find('all')->order(['last_name' => 'asc']);
         $tableAlias = $table->getAlias();
+        
+        $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
+        $uselaunches = $au->find('all');
+        $launchcount = $uselaunches->count();
+
+        $pu = TableRegistry::getTableLocator()->get('PathwaysUsers');
+        $pathpins = $pu->find('all');
+        $ppincount = $pathpins->count();
+
         $this->set($tableAlias, $this->paginate($alphabetized));
         $this->set('tableAlias', $tableAlias);
         $this->set('_serialize', [$tableAlias, 'tableAlias']);
+        $this->set('ppincount', $ppincount);
+        $this->set('launchcount', $launchcount);
     }
 
     /**
