@@ -11,13 +11,17 @@
 ?>
 <div class="p-6 dark:text-white">
 
+<div class="text-3xl mb-3">
+    <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-black"><?= $ppincount ?></span> Pathway Pins 
+    <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-black"><?= $launchcount ?></span> Activity Launches
+</div>
 
 <div class="mb-3">
     <a class="inline-block p-3 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/reports/index">View Open Reports</a>
     <a class="inline-block p-3 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/activity-types">View Activity Types</a>
     <a class="inline-block p-3 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/ministries">View Ministries</a>
 </div>
-<div>
+<div class="mb-3">
     <a class="inline-block p-3 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/categories/add">New Category</a>
     <a class="inline-block p-3 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/topics/add">New Topic</a>
     <a class="inline-block p-3 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/pathways/add">New Pathway</a> 
@@ -25,25 +29,20 @@
     <!-- <a class="inline-block p-3 my-3 bg-slate-200 dark:bg-sky-700" href="/activities/addtostep">Add Activity to Step</a> -->
 </div>
 
-
-
-<h1 class="mt-5">Users</h1>
-<form method="get" action="/users/search" class="mb-5">
-<label>Search
-		<input class="form-control" 
+<form method="get" action="/users/search" class="mt-5">
+<label class="">Search for a user:
+		<input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-900 rounded-l-lg" 
                 type="search" 
-                placeholder="User Search" 
+                placeholder="first or last name ..." 
                 aria-label="Search" 
-                name="q">
-</label>
-		<button class="btn btn-outline-dark" type="submit">Search</button>
+                name="q"></label><button class="px-3 py-2 m-0 bg-slate-300 dark:text-white dark:bg-slate-900 dark:hover:bg-slate-800 rounded-r-lg" type="submit">Search</button>
 	</form>
 
     
-<div class="my-5 p-3 bg-white dark:bg-slate-900">
+<div class="mt-1 p-3 bg-white dark:bg-slate-900 rounded-lg">
 
 <?php foreach (${$tableAlias} as $user) : ?>
-<div class="bg-light mb-3 p-3">
+<div class="bg-white dark:bg-black mb-3 p-3">
     <div class="">
     <?= $this->Html->link(__d('cake_d_c/users', h($user->username)), ['action' => 'view', $user->id],['class' => 'font-weight-bold']) ?> 
     <?= h($user->first_name) ?> <?= h($user->last_name) ?> <?= h($user->email) ?>
