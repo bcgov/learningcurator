@@ -12,8 +12,8 @@ use Cake\Core\Configure;
 $this->assign('title', 'Learning on demand');
 ?>
 
-<div class="bg-cover bg-center min-h-full" style="background-image: url('/img/courses2.jpg')">
-<div class="p-20 min-h-screen bg-white/50 dark:bg-[#003366]/80 dark:text-white">
+<div class="bg-cover bg-center min-h-full" style="background-image: url('/img/cape-scott-trail-n-r-t-on-flckr.jpg')">
+<div class="p-20 min-h-screen bg-white/50 dark:bg-[#003366]/60 dark:text-white">
 
 	<h1 class="text-6xl">Learning on demand</h1>
 	<div class="mt-6 p-3 text-3xl bg-white/80 dark:bg-[#003366]/50 rounded-lg">Learning Curator Pathways feature informal learning by theme or community. 
@@ -27,13 +27,6 @@ $this->assign('title', 'Learning on demand');
 	</div>
 
 	
-	<div class="w-64 mt-24 p-3 bg-white/50 dark:bg-[#003366]/40 dark:text-white rounded-lg" id="adminlogin">
-	<?= $this->Form->create() ?>
-	<?= $this->Form->control('username', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-white text-black dark:bg-[#003366] dark:text-white rounded-lg']) ?>
-	<?= $this->Form->control('password', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-white text-black dark:bg-[#003366] dark:text-white rounded-lg']) ?>
-	<?= $this->Form->button(__d('cake_d_c/users', 'Admins Only'),['class'=>'p-3 bg-white dark:bg-[#003366] dark:text-white text-sm text-black hover:text-gray-500 rounded-lg']); ?>
-	<?= $this->Form->end() ?>
-	</div> 
 
 </div>
 </div>

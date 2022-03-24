@@ -1445,8 +1445,8 @@ p {
     background-color: rgb(3 105 161 / var(--tw-bg-opacity));
   }
 
-  .dark\:bg-\[\#003366\]\/80 {
-    background-color: rgb(0 51 102 / 0.8);
+  .dark\:bg-\[\#003366\]\/60 {
+    background-color: rgb(0 51 102 / 0.6);
   }
 
   .dark\:bg-blue-800 {
