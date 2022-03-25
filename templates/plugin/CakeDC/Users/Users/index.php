@@ -32,11 +32,12 @@
 <h2 class="mt-4 text-2xl">Top 5 Launched Activities</h2>
 <div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
 <ol class="pl-10">
-<?php // these links are templated/built within the controller for noted reasons there
+<?php 
+// these links are templated/built within the controller for noted reasons there
 $count = 4;
 ?>
 <?php foreach($top5links as $link): ?>
-    <li class="p-2 list-decimal text-<?= $count ?>xl"><?= $link ?></li>
+    <li class="p-2 list-decimal text-xl"><?= $link ?></li>
     <?php $count-- ?>
 <?php endforeach ?>
 </ol>
