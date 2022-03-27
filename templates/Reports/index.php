@@ -15,7 +15,6 @@ $this->loadHelper('Authentication.Identity');
 	</div>
 	<?php foreach ($reports as $report) : ?>
 	<div class="p-3 mb-2 bg-white dark:bg-slate-900 rounded-lg">
-		
 		<?= h($report->created) ?>
 		<div><strong><a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></strong></div>
 		<blockquote class="p-3 my-1 bg-light">

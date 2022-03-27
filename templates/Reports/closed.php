@@ -5,52 +5,47 @@
  */
 $this->loadHelper('Authentication.Identity');
 ?>
-<div class="container-fluid">
-<div class="row justify-content-md-center linear">
-<div class="col-md-6">
+<div class="p-6">
 
-<div class="my-5 p-3 bg-white rounded-lg">
+<div class="p-3 bg-white dark:bg-slate-900 rounded-lg">
 <?php if (!empty($reports)) : ?>
+	
 	<h2><?= __('Reports') ?></h2>
 	<div class="btn-group">
 		<a class="btn btn-light" href="/reports/index">Open Reports</a>
 		<span class="btn btn-dark">Closed Reports</span>
 	</div>
 	<?php foreach ($reports as $report) : ?>
-	<div class="p-3 mb-2 bg-white rounded-lg">
+	<div class="p-3 mb-2 bg-slate-200 dark:bg-slate-800 rounded-lg">
 		
-		<?= h($report->created) ?>
+		<?= $report->id ?>. <?= h($report->created) ?>
 		<div><strong><a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></strong></div>
-		<blockquote class="p-3 my-1 bg-light">
+		<blockquote class="p-3 my-1 bg-white dark:bg-slate-700">
 			<?= h($report->issue) ?>
 		</blockquote>
 		<?php if(!empty($report->response)): ?>
-			<div class="alert alert-success"><?= h($report->response) ?></div>
+			<div class="p-3 my-1 bg-white dark:bg-[#003366]"><?= h($report->response) ?></div>
 		<?php else: ?>
-			<div class="alert alert-primary">No response yet.</div>
+			<div class="p-3 my-1 bg-white dark:bg-[#003366]">No response yet.</div>
 		<?php endif ?>
-		<a href="#curatorresponse<?= $report->id ?>" 
-			style="color:#333;" 
-			class="btn btn-light" 
-			data-toggle="collapse" 
-			title="Respond to this report" 
-			data-target="#curatorresponse<?= $report->id ?>" 
-			aria-expanded="false" 
-			aria-controls="curatorresponse<?= $report->id ?>">
-				Respond
-		</a>	
-		<div class="collapse" id="curatorresponse<?= $report->id ?>">
-		<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-primary']) ?>
+	
+		<div class="" id="curatorresponse<?= $report->id ?>">
+
+		<?php if($this->Identity->get('role') == 'superuser'): ?>
+		<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => '']) ?>
+		<?php endif ?>
+
 		<?= $this->Form->create(null,['url' => ['controller' => 'reports','action' => 'edit', $report->id]]) ?>
 		<fieldset>
-		<legend><?= __('Respond') ?></legend>
+		<legend><?= __('Update Comment') ?></legend>
+
 		<?php
 		echo $this->Form->hidden('id', ['value' => $report->id]);
 		echo $this->Form->hidden('curator_id', ['value' =>  $this->Identity->get('id')]);
-		echo $this->Form->textarea('response',['class' => 'form-control', 'placeholder' => 'Type here ...']);
+		echo $this->Form->textarea('response',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-700 rounded-lg', 'placeholder' => 'Type here ...']);
 		?>
 		</fieldset>
-		<input type="submit" class="btn btn-primary" value="Submit Response">
+		<input type="submit" class="inline-block my-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline" value="Submit Response">
 		<?= $this->Form->end() ?>
 		</div> <!-- curatorresponse -->
 
@@ -60,6 +55,3 @@ $this->loadHelper('Authentication.Identity');
 
 </div>
 </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

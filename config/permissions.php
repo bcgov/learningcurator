@@ -207,7 +207,7 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Reports',
-            'action' => ['index','edit','add','closed'],
+            'action' => ['index','edit','add','closed','view'],
         ],
         [
             'role' => 'user',

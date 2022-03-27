@@ -16,13 +16,13 @@
     <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-black"><?= $launchcount ?></span> Activity Launches
 </div>
 
-<form method="get" action="/users/search" class="pt-3">
+<form method="get" action="/users/search" class="p-3 mb-2 bg-slate-200 dark:bg-slate-900 rounded-lg">
 <label class="">Search for a user:
-<input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-900 rounded-l-lg" 
+<input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-l-lg" 
         type="search" 
         placeholder="first or last name ..." 
         aria-label="User Search" 
-        name="q"></label><button class="px-3 py-2 m-0 bg-slate-300 dark:text-white dark:bg-slate-900 dark:hover:bg-slate-800 rounded-r-lg" type="submit">User Search</button>
+        name="q"></label><button class="px-3 py-2 m-0 bg-slate-300 dark:text-white dark:bg-slate-800 dark:hover:bg-slate-700 rounded-r-lg" type="submit">User Search</button>
 </form>
 
 <div class="mt-6 mb-2">
@@ -40,6 +40,40 @@
     <!-- <a class="inline-block p-3 my-3 bg-slate-200 dark:bg-sky-700" href="/activities/addtostep">Add Activity to Step</a> -->
 </div>
 
+<div class="grid grid-cols-2 gap-4">
+<div>
+<h2 class="mt-4 text-2xl">Open Reports</h2>
+<div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
+<?php 
+// these links are templated/built within the controller for noted reasons there
+
+?>
+<?php foreach($noresponses as $report): ?>
+	<div class="p-3 mb-2 bg-slate-200 dark:bg-slate-800 rounded-lg">
+		
+		<?= h($report->created) ?>
+		<div><strong><a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></strong></div>
+		<blockquote class="p-3 my-1 bg-white dark:bg-slate-700 rounded-lg">
+			<?= h($report->issue) ?>
+		</blockquote>
+		<?php if(!empty($report->response)): ?>
+			<div class="p-3 my-1 bg-white dark:bg-[#003366] rounded-lg"><?= h($report->response) ?></div>
+		<?php else: ?>
+			<div class="p-3 my-1 bg-white dark:bg-[#003366] rounded-lg">No response yet.</div>
+		<?php endif ?>
+        <a target="_blank" 
+			title="View this report"
+			href="/reports/view/<?= $report->id ?>"  
+			class="inline-block mt-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+				View Report
+		</a> 
+	</div> 
+<?php endforeach ?>
+</div>
+
+
+</div> <!-- grid-col -->
+<div>
 
 
 <h2 class="mt-4 text-2xl">Top 5 Followed Pathways</h2>
@@ -68,6 +102,9 @@
 <?php endforeach ?>
 </ol>
 </div>
+
+</div>
+</div> <!-- /.grid -->
 
 
 </div>

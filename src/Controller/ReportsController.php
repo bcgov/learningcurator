@@ -39,7 +39,6 @@ class ReportsController extends AppController
                                 ->contain(['Activities','Users'])
                                 ->order(['Reports.created' => 'desc']);
 
-
         $this->set(compact('reports'));
     }
     /**
