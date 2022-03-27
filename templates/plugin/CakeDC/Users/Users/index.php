@@ -16,7 +16,7 @@
     <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-slate-900"><?= $launchcount ?></span> Activity Launches
 </div>
 
-<form method="get" action="/users/search" class="p-3 mb-2 bg-slate-200 dark:bg-slate-900 rounded-lg">
+<form method="get" action="/users/search" class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
 <label class="">Search for a user:
 <input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-l-lg" 
         type="search" 
@@ -25,13 +25,13 @@
         name="q"></label><button class="px-3 py-2 m-0 bg-slate-300 dark:text-white dark:bg-slate-800 dark:hover:bg-slate-700 rounded-r-lg" type="submit">User Search</button>
 </form>
 
-<div class="mt-6 mb-2">
+<!-- <div class="mt-6 mb-2">
     View: 
     <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/reports/index">Reports</a>
     <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/activity-types">Activity Types</a>
     <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/ministries">Ministries</a>
-</div>
-<div class="mb-4">
+</div> -->
+<div class="my-4">
     Create new: 
     <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/categories/add">Category</a>
     <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/topics/add">Topic</a>
