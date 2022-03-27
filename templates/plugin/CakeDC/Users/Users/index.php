@@ -61,8 +61,7 @@
 		<?php else: ?>
 			<div class="p-3 my-1 bg-white dark:bg-[#003366] rounded-lg">No response yet.</div>
 		<?php endif ?>
-        <a target="_blank" 
-			title="View this report"
+        <a title="View this report"
 			href="/reports/view/<?= $report->id ?>"  
 			class="inline-block mt-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 				View Report
