@@ -12,8 +12,8 @@
 <div class="p-6 dark:text-white">
 
 <div class="text-3xl mb-3">
-    <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-black"><?= $totalfollowcount ?></span> Pathway Pins 
-    <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-black"><?= $launchcount ?></span> Activity Launches
+    <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-slate-900"><?= $totalfollowcount ?></span> Pathway Pins 
+    <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-slate-900"><?= $launchcount ?></span> Activity Launches
 </div>
 
 <form method="get" action="/users/search" class="p-3 mb-2 bg-slate-200 dark:bg-slate-900 rounded-lg">
@@ -40,7 +40,7 @@
     <!-- <a class="inline-block p-3 my-3 bg-slate-200 dark:bg-sky-700" href="/activities/addtostep">Add Activity to Step</a> -->
 </div>
 
-<div class="grid grid-cols-2 gap-4">
+<div class="md:grid md:grid-cols-2 md:gap-4">
 <div>
 <h2 class="mt-4 text-2xl">Open Reports</h2>
 <div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
