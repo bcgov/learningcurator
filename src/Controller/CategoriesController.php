@@ -41,7 +41,8 @@ class CategoriesController extends AppController
     {
         $categories = $this->Categories->find('all')
                                         ->contain(['Topics','Topics.Pathways'])
-                                        ->where(['Categories.featured' => 1]);
+                                        ->where(['Categories.featured' => 1])
+                                        ->order(['name' => 'asc']);
 
 
         $this->set(compact('categories'));
