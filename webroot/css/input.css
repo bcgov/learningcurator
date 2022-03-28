@@ -9,5 +9,6 @@ a:hover {
     text-decoration-style: wavy;
 }
 p {
+    line-height: 1.5;
     margin-bottom: 1em;
 }

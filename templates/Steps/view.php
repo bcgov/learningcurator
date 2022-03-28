@@ -316,13 +316,16 @@ foreach($actlist as $k => $v) {
 			<?php
 			echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
 			echo $this->Form->hidden('user_id', ['value' => $uid]);
+			?>
+			<label>Your Issue
+			<?php
 			echo $this->Form->textarea('issue',
 							['class' => 'w-full h-20 p-6 bg-slate-200 dark:bg-slate-700 text-white rounded-lg', 
 							'x-model' => 'form'.$activity->id.'Data.issue', 
 							'placeholder' => 'Type here ...',
 							'required' => 'required']);
 			?>
-            
+            </label>
             <input type="submit" class="mt-1 mb-4 px-4 py-2 text-white bg-sky-700 hover:bg-sky-800 rounded-lg" value="Submit Report">
 			<span x-text="message"></span> <a href="/profile/reports">See all your reports</a>
 
@@ -346,7 +349,7 @@ foreach($actlist as $k => $v) {
 <?php endif; ?>
 
 <?php if(count($supplementalacts) > 0): ?>
-<p class="text-center text-sm italic">End of required activities for this module.</p>
+<div class="my-3 text-center text-sm">End of required activities for this module.</div>
 <h3 class="mt-20 text-2xl dark:text-white">
 	Supplementary Resources 
 	<span class="bg-white text-black rounded-lg text-lg inline-block px-2">
@@ -479,13 +482,16 @@ foreach($actlist as $k => $v) {
 			<?php
 			echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
 			echo $this->Form->hidden('user_id', ['value' => $uid]);
+			?>
+			<label>Your Issue
+			<?php
 			echo $this->Form->textarea('issue',['class' => 
 													'w-full h-20 bg-slate-200 dark:bg-slate-700 text-white rounded-lg', 
 													'x-model' => 'form'.$activity->id.'Data.issue', 
 													'placeholder' => 'Type here ...',
 													'required' => 'required']);
 			?>
-            
+            </label>
             <input type="submit" class="mt-1 mb-4 px-4 py-2 text-white bg-sky-700 rounded-lg" value="Submit Report">
 			
 <!--
