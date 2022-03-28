@@ -22,7 +22,7 @@ if ($this->Identity->isLoggedIn()) {
 	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full origin-top-right shadow-lg">
 	<div class="-ml-8 p-6 bg-white rounded-md shadow dark:bg-slate-900">
 		<a href="/profile" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-[#003366] dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline hover:no-underline">
-			Pinned Pathways
+			Followed Pathways
 		</a> 
 		<a href="/profile/launches" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline hover:no-underline">
 			Launched Activities
@@ -41,16 +41,16 @@ if ($this->Identity->isLoggedIn()) {
 
 
 <div class="p-6 bg-slate-200 dark:bg-slate-900 dark:text-white rounded-lg">
-<h1 class="mb-3 text-lg">Pinned Pathways</h1>
+<h1 class="mb-3 text-lg">Followed Pathways</h1>
 <?php if (!$pathways->isEmpty()) : ?>
 	
 	<?php foreach ($pathways as $path) : ?>
         
 	<div class="p-3 mb-3 bg-white dark:bg-slate-800 rounded-lg">
 	<?php 
-	echo $this->Form->postLink(__('Un-Pin'), 
+	echo $this->Form->postLink(__('Un-Follow'), 
 									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $path->id], 
-									['class' => 'float-right inline-block p-3 bg-[#003366] dark:bg-[#003366] text-white hover:no-underline rounded-lg', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really un-pin?')]); 
+									['class' => 'float-right inline-block p-3 bg-sky-700 hover:bg-sky-800 text-white hover:no-underline rounded-lg', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really un-pin?')]); 
 	?>
 		<div>
 			<?= $path->pathway->has('category') ? $this->Html->link($path->pathway->category->name, ['controller' => 'Categories', 'action' => 'view', $path->pathway->category->id]) : '' ?>
@@ -91,7 +91,7 @@ if ($this->Identity->isLoggedIn()) {
 		<div class="" x-show="isLoading">Loading your progress on this pathway&hellip;</div>
 		<div x-show="!isLoading">
 			<div class="my-4 h-6 w-full bg-slate-300 dark:bg-black rounded-lg ">
-				<span :style="'width:' + status<?= $path->pathway->id ?>.percentage + '%;'" class="progressbar h-6 inline-block bg-sky-600 dark:bg-sky-600 dark:text-white text-center rounded-lg">&nbsp;</span>
+				<span :style="'width:' + status<?= $path->pathway->id ?>.percentage + '%;'" class="progressbar h-6 inline-block bg-sky-700 dark:bg-sky-700 dark:text-white text-center rounded-lg">&nbsp;</span>
 				<span x-text="status<?= $path->pathway->id ?>.percentage + '%'" class="beginning inline-block"></span>
 			</div>
 		</div>
@@ -115,7 +115,7 @@ if ($this->Identity->isLoggedIn()) {
 			<p class="text-lg">As you complete activities contained in a pathway you'll be able to see your progress here too.</p>
 		</div>
 		
-		<a href="/categories" class="inline-block p-3 mt-4 bg-sky-600 dark:bg-sky-600 text-white text-lg hover:no-underline rounded-lg">
+		<a href="/categories" class="inline-block p-3 mt-4 bg-sky-700 dark:bg-sky-700 text-white text-lg hover:no-underline rounded-lg">
 			View Categories
 		</a>
 

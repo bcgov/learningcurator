@@ -18,7 +18,7 @@ $this->loadHelper('Authentication.Identity');
 <h1 class="text-3xl">
     Editing <?= h($category->name) ?>
 </h1>
-<a class="inline-block my-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline" 
+<a class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline" 
     href="/categories/view/<?= $category->id ?>">
         View <?= h($category->name) ?>
 </a>
@@ -40,7 +40,7 @@ echo $this->Form->control('description',['class' => 'block w-full px-3 py-2 m-0 
 
 ?>
 </fieldset>
-<?= $this->Form->button(__('Update Category'),['class' => 'inline-block my-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline']) ?>
+<?= $this->Form->button(__('Update Category'),['class' => 'inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline']) ?>
 <?= $this->Form->end() ?>
 </div>
 </div>

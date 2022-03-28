@@ -45,7 +45,7 @@ $this->loadHelper('Authentication.Identity');
 		echo $this->Form->textarea('response',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-700 rounded-lg', 'placeholder' => 'Type here ...']);
 		?>
 		</fieldset>
-		<input type="submit" class="inline-block my-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline" value="Submit Response">
+		<input type="submit" class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline" value="Submit Response">
 		<?= $this->Form->end() ?>
 		</div> <!-- curatorresponse -->
 

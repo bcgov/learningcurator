@@ -12,7 +12,7 @@
 <div class="p-6 dark:text-white">
 
 <div class="text-3xl mb-3">
-    <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-slate-900"><?= $totalfollowcount ?></span> Pathway Pins 
+    <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-slate-900"><?= $totalfollowcount ?></span> Pathway Follows 
     <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-slate-900"><?= $launchcount ?></span> Activity Launches
 </div>
 
@@ -63,7 +63,7 @@
 		<?php endif ?>
         <a title="View this report"
 			href="/reports/view/<?= $report->id ?>"  
-			class="inline-block mt-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+			class="inline-block mt-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 				View Report
 		</a> 
 	</div> 

@@ -36,7 +36,7 @@ if ($this->Identity->isLoggedIn()) {
 		<?= h($pathway->description) ?>
 	</div>
 	<a href="/pathways/<?= h($pathway->slug) ?>" 
-		class="inline-block my-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+		class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 			Launch Pathway
 	</a>
 	<div class="bg-slate-200 dark:bg-slate-700 p-3">

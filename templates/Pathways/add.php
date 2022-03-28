@@ -39,7 +39,7 @@ echo $this->Form->hidden('status_id',['value' => 1]);
 //echo $this->Form->control('users._ids', ['options' => $users]);
 ?>
 </fieldset>
-<?= $this->Form->button(__('Add new pathway'),['class' => 'inline-block my-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline']) ?>
+<?= $this->Form->button(__('Add new pathway'),['class' => 'inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline']) ?>
 <?= $this->Form->end() ?>
 </div>
 </div>

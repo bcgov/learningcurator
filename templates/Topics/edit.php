@@ -48,7 +48,7 @@ echo $this->Form->hidden('slug');
 echo $this->Form->control('description',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']);
 ?>
 </fieldset>
-<?= $this->Form->button(__('Save Topic'),['class' => 'inline-block my-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline']) ?>
+<?= $this->Form->button(__('Save Topic'),['class' => 'inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline']) ?>
 <?= $this->Form->end() ?>
 </div>
 </div>

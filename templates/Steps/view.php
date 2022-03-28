@@ -71,7 +71,7 @@ foreach ($step->pathways as $pathways) {
 	<div class="mt-2 float-right">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
-<button class="p-3 bg-sky-600 dark:bg-sky-600 text-white rounded-lg text-center">
+<button class="p-3 bg-sky-700 dark:bg-sky-700 text-white rounded-lg text-center">
 <svg class="inline-block" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pin-fill" viewBox="0 0 16 16">
   <path d="M4.146.146A.5.5 0 0 1 4.5 0h7a.5.5 0 0 1 .5.5c0 .68-.342 1.174-.646 1.479-.126.125-.25.224-.354.298v4.431l.078.048c.203.127.476.314.751.555C12.36 7.775 13 8.527 13 9.5a.5.5 0 0 1-.5.5h-4v4.5c0 .276-.224 1.5-.5 1.5s-.5-1.224-.5-1.5V10h-4a.5.5 0 0 1-.5-.5c0-.973.64-1.725 1.17-2.189A5.921 5.921 0 0 1 5 6.708V2.277a2.77 2.77 0 0 1-.354-.298C4.342 1.674 4 1.179 4 .5a.5.5 0 0 1 .146-.354z"/>
 </svg> Pin to Profile
@@ -107,7 +107,7 @@ foreach ($step->pathways as $pathways) {
 <div class="" x-show="isLoading">Loading&hellip;</div>
 <div x-show="!isLoading" class="">
 	<div class="mb-6 h-6 w-full bg-slate-500 dark:bg-black rounded-b-lg">
-		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-sky-600 dark:bg-sky-600 text-white text-center rounded-bl-lg">&nbsp;</span>
+		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-sky-700 dark:bg-sky-700 text-white text-center rounded-bl-lg">&nbsp;</span>
 		<span x-text="status.percentage + '% - ' + status.completed + ' of ' + status.requiredacts" class="beginning inline-block text-white"></span>
 	</div>
 </div>
@@ -228,7 +228,7 @@ foreach($actlist as $k => $v) {
 			rel="noopener" 
 			title="Launch this activity"
 			href="/activities-users/launch?activity_id=<?= $activity->id ?>"  
-			class="inline-block my-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+			class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 				Launch Activity
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
 					<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
@@ -323,7 +323,7 @@ foreach($actlist as $k => $v) {
 							'required' => 'required']);
 			?>
             
-            <input type="submit" class="mt-1 mb-4 px-4 py-2 text-white bg-sky-600 hover:bg-sky-800 rounded-lg" value="Submit Report">
+            <input type="submit" class="mt-1 mb-4 px-4 py-2 text-white bg-sky-700 hover:bg-sky-800 rounded-lg" value="Submit Report">
 			<span x-text="message"></span> <a href="/profile/reports">See all your reports</a>
 
         <?= $this->Form->end() ?>
@@ -402,7 +402,7 @@ foreach($actlist as $k => $v) {
 			rel="noopener" 
 			data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
 			href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
-			class="inline-block my-2 p-3 bg-sky-600 rounded-lg text-white text-xl hover:no-underline">
+			class="inline-block my-2 p-3 bg-sky-700 rounded-lg text-white text-xl hover:no-underline">
 				Launch Activity 
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
 					<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
@@ -486,10 +486,10 @@ foreach($actlist as $k => $v) {
 													'required' => 'required']);
 			?>
             
-            <input type="submit" class="mt-1 mb-4 px-4 py-2 text-white bg-sky-600 rounded-lg" value="Submit Report">
+            <input type="submit" class="mt-1 mb-4 px-4 py-2 text-white bg-sky-700 rounded-lg" value="Submit Report">
 			
 <!--
-<button class="mt-1 mb-4 px-4 py-2 bg-sky-600 rounded-lg" :disabled="formLoading" x-text="buttonText"></button>
+<button class="mt-1 mb-4 px-4 py-2 bg-sky-700 rounded-lg" :disabled="formLoading" x-text="buttonText"></button>
 -->
 
 			<span x-text="message"></span> <a href="/profile/reports">See all your reports</a>
@@ -538,14 +538,14 @@ aria-controls="defunctacts">View archived activities</a>.
 <div class="flex justify-center p-3 bg-white dark:bg-slate-900 rounded-lg">
 <?php if(!empty($previousid)): ?>
 	<a href="/pathways/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" 
-		class="inline-block m-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
+		class="inline-block m-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
 			Previous Module
 	</a>
 <?php endif ?>
 
 <?php if(!empty($upnextid)): ?>
 	<a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" 
-		class="inline-block m-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
+		class="inline-block m-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
 			Next Module
 	</a>
 <?php endif ?>

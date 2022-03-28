@@ -44,7 +44,7 @@ $this->assign('title', h($pathway->name));
 	<div class="mt-2 float-right">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]) ?>
-<button class="p-3 bg-sky-600 dark:bg-sky-600 text-white rounded-lg text-center">
+<button class="p-3 bg-sky-700 dark:bg-sky-700 text-white rounded-lg text-center">
 <svg class="inline-block" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pin-fill" viewBox="0 0 16 16">
   <path d="M4.146.146A.5.5 0 0 1 4.5 0h7a.5.5 0 0 1 .5.5c0 .68-.342 1.174-.646 1.479-.126.125-.25.224-.354.298v4.431l.078.048c.203.127.476.314.751.555C12.36 7.775 13 8.527 13 9.5a.5.5 0 0 1-.5.5h-4v4.5c0 .276-.224 1.5-.5 1.5s-.5-1.224-.5-1.5V10h-4a.5.5 0 0 1-.5-.5c0-.973.64-1.725 1.17-2.189A5.921 5.921 0 0 1 5 6.708V2.277a2.77 2.77 0 0 1-.354-.298C4.342 1.674 4 1.179 4 .5a.5.5 0 0 1 .146-.354z"/>
 </svg> Follow Pathway
@@ -82,7 +82,7 @@ $this->assign('title', h($pathway->name));
 <div class="" x-show="isLoading">Loading&hellip;</div>
 <div x-show="!isLoading">
 	<div class="mb-6 w-full bg-slate-500 dark:bg-black rounded-b-lg">
-		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-sky-600 dark:bg-sky-600 text-white text-center rounded-bl-lg">&nbsp;</span>
+		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-sky-700 dark:bg-sky-700 text-white text-center rounded-bl-lg">&nbsp;</span>
 		<span x-text="status.percentage + '% - ' + status.completed + ' of ' + status.requiredacts" class="beginning inline-block text-white"></span>
 	</div>
 </div>
@@ -124,7 +124,7 @@ $this->assign('title', h($pathway->name));
 </div>
 
 <a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>"
-	class="inline-block p-3 bg-sky-600 rounded-lg text-white text-xl hover:no-underline">
+	class="inline-block p-3 bg-sky-700 rounded-lg text-white text-xl hover:no-underline">
 	Launch Module
 </a>
 

@@ -36,7 +36,7 @@ function rgbToHex(r, g, b) {
 		</div>
     <a title="View this activity type"
 			href="/activity-types/view/<?= $type->id ?>"  
-			class="inline-block mt-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+			class="inline-block mt-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 				View Activities
 		</a>
     <!-- <div>

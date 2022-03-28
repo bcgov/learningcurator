@@ -52,7 +52,7 @@ $this->assign('title', $pagetitle);
 <div class="p-3 mb-2 bg-slate-300 dark:bg-slate-800">
 	<?= $topic->description ?>
 </div>
-<a href="/topics/view/<?= $topic->id ?>" class="inline-block my-2 p-3 bg-sky-600 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+<a href="/topics/view/<?= $topic->id ?>" class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 	Launch Topic
 </a>
 
