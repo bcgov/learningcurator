@@ -12,11 +12,10 @@
 
 <body class="bg-slate-100 dark:bg-slate-800">
 
-<div class="md:flex flex-col md:flex-row md:min-h-screen w-full rounded-br-lg ">
-
+<div class="md:flex flex-col md:flex-row md:min-h-screen w-full rounded-br-lg" >
 <div @click.away="open = false" class="flex flex-col flex-shrink-0 w-full md:w-56 text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-900" x-data="{ open: false }">
 <div class="sticky top-0">
-  <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 "> <!-- sticky top-0 bg-slate-200 dark:bg-[#002850]-->
+  <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 " role="banner"> <!-- sticky top-0 bg-slate-200 dark:bg-[#002850]-->
     <span class="leading-3 text-xl font-semibold tracking-widest text-slate-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
       <span class="text-xs">Learning</span>
       <br>
@@ -31,7 +30,7 @@
   </div>
 
   <?php if(!empty($this->Identity->get('id'))): ?>
-  <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto">
+  <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto" role="navigation">
   <?php 
     $active = 'border-slate-400 dark:border-slate-800';
     $currentpage = $_SERVER["REQUEST_URI"];
@@ -72,7 +71,7 @@
 </div>
 </div>
 
-<div class="bg-[#c3d4e4] dark:bg-[#003366] dark:text-white w-full 2xl:w-2/3">
+<div class="bg-[#c3d4e4] dark:bg-[#003366] dark:text-white w-full 2xl:w-2/3" role="main">
 
   <?php if(!empty($this->Identity->get('id'))): ?>
   <div class="flex h-16 w-full px-6 pt-3 bg-slate-200 dark:bg-[#002850]"> <!-- sticky top-0 z-50 -->
@@ -98,7 +97,7 @@
   </div>
 </div>
 
-<div class="py-6 bg-slate-100 dark:bg-slate-900">
+<div class="py-6 bg-slate-100 dark:bg-slate-900" role="contentinfo">
 
   <img class="my-6 inline-block" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
   
