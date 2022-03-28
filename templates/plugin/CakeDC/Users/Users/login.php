@@ -25,13 +25,13 @@ $this->assign('title', 'Learning on demand');
 			Sign In  with your.name@gov.bc.ca address to continue
 		</a>
 	</div>
-<!--
+
 	<?= $this->Form->create() ?>
 	<?= $this->Form->control('username', ['label' => '', 'required' => true, 'class'=>'p-1 mt-20 mb-1 bg-white text-black dark:bg-blue-900 dark:text-white rounded-lg']) ?>
 	<?= $this->Form->control('password', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-white text-black dark:bg-blue-900 dark:text-white rounded-lg']) ?>
 	<?= $this->Form->button(__d('cake_d_c/users', 'Admin Login'),['class'=>'p-3 bg-white dark:bg-blue-900 dark:text-white text-sm text-black hover:text-gray-500 rounded-lg']); ?>
 	<?= $this->Form->end() ?>
--->
+
 
 </div>
 </div>
