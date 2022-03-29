@@ -40,9 +40,9 @@ if ($this->Identity->isLoggedIn()) {
 
 
 <div class="p-6 bg-slate-200 dark:bg-slate-900 dark:text-white rounded-lg">
-<h1 class="mb-3 text-lg">Followed Pathways</h1>
+
 <?php if (!$pathways->isEmpty()) : ?>
-	
+	<h1 class="mb-3 text-lg">Followed Pathways</h1>	
 	<?php foreach ($pathways as $path) : ?>
         
 	<div class="p-3 mb-3 bg-white dark:bg-slate-800 rounded-lg">
@@ -103,19 +103,24 @@ if ($this->Identity->isLoggedIn()) {
 <?php else: ?>
 
 
-	<div class="p-3 mb-2 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
+	<div class="p-3 mb-2 bg-slate-100 rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
 
 		<h2 class="mb-3 text-3xl">Get Started</h2>
-		<div class="p-4 bg-slate-200 dark:bg-slate-800 rounded-lg">
-			<p class="mb-3 text-xl">Curator pathways are organized into topics and 
-			topics are categorized. You can see all the pathways we have to 
-			offer and when you see one you like, you can pin it here to your profile
-			and get to it fast when you visit again.</p>
-			<p class="text-lg">As you complete activities contained in a pathway you'll be able to see your progress here too.</p>
+		<div class="p-4 bg-white dark:bg-slate-800 rounded-lg">
+			<p class="mb-3 text-xl">
+				Curator pathways are organized into 
+				<a href="/categories" class="underline">categories</a> and then topics.
+				You can explore 
+				<a href="/pathways" class="underline">all the pathways</a>
+				we have to offer and when you see one you like, you can 
+				follow it. When you follow a pathway, it will be listed 
+				here, so the next time you login, you can jump right to it.
+			</p>
+			<p class="text-lg">As you launch activities contained in a pathway you'll be able to see your progress here too.</p>
 		</div>
 		
-		<a href="/categories" class="inline-block p-3 mt-4 bg-sky-700 dark:bg-sky-700 text-white text-lg hover:no-underline rounded-lg">
-			View Categories
+		<a href="/categories" class="inline-block p-3 mt-4 bg-sky-700 dark:bg-sky-700 text-white text-2xl hover:no-underline rounded-lg">
+			Explore Categories
 		</a>
 
 	</div>

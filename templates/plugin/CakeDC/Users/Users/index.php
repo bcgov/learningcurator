@@ -12,8 +12,8 @@
 <div class="p-6 dark:text-white">
 
 <div class="text-3xl mb-3">
-    <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-slate-900"><?= $totalfollowcount ?></span> Pathway Follows 
-    <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-slate-900"><?= $launchcount ?></span> Activity Launches
+    <span class="inline-block p-3 rounded-full bg-white dark:bg-slate-900"><?= $totalfollowcount ?></span> Pathway Follows 
+    <span class="inline-block p-3 rounded-full bg-white dark:bg-slate-900"><?= $launchcount ?></span> Activity Launches
 </div>
 
 <form method="get" action="/users/search" class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
