@@ -33,7 +33,7 @@ if ($this->Identity->isLoggedIn()) {
 		<?= $activity->name ?>
 	</h1>
 
-	<div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
+	<div class="p-3 bg-white dark:bg-slate-900 rounded-lg">
 		
 		<div class="mb-2">
 			<?php foreach($activity->tags as $tag): ?>
@@ -41,7 +41,7 @@ if ($this->Identity->isLoggedIn()) {
 			<?php endforeach ?>
 		</div>
 
-		<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-lg">
+		<div class="p-2 lg:p-4 text-lg bg-slate-100 dark:bg-[#002850] rounded-lg">
 		<?php if(!empty($activity->description)): ?>
 			<?= $activity->description ?>
 		<?php else: ?>
@@ -106,7 +106,7 @@ if ($this->Identity->isLoggedIn()) {
 		
 		<?php if(count($activitylaunches) > 0): ?>
 		<div class="mb-3 p-3 bg-white dark:bg-slate-900 rounded-lg">
-		<h3 class="text-lg">You launched this activity:</h3>
+		<h2 class="text-lg">You launched this activity:</h2>
 		<?php foreach($activitylaunches as $u): ?>
 		<div class="p-2 my-2 bg-slate-100 dark:bg-slate-800 dark:text-yellow-500 rounded-lg">
 			<?= $this->Time->format($u[1],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
