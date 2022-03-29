@@ -39,6 +39,7 @@ class ActivitiesUsersController extends AppController
         $actids = array_unique($justactids);
         // OK now loop through the reduced IDs and as we go we then loop 
         // through the entire big list and parse out the info we want 
+        // #TODO there's a more elegant/efficient way of doing this, to be sure
         $alllaunches = [];
         foreach($actids as $id) {
             $name = '';
