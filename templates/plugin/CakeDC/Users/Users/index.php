@@ -53,13 +53,13 @@
 		
 		<?= h($report->created) ?>
 		<div><strong><a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></strong></div>
-		<blockquote class="p-3 my-1 bg-white dark:bg-slate-700 rounded-lg">
+		<blockquote class="p-3 mt-1 bg-white dark:bg-slate-700 rounded-t-lg">
 			<?= h($report->issue) ?>
 		</blockquote>
 		<?php if(!empty($report->response)): ?>
-			<div class="p-3 my-1 bg-white dark:bg-[#003366] rounded-lg"><?= h($report->response) ?></div>
+			<div class="p-3 mb-1 bg-white dark:bg-[#003366] rounded-b-lg"><?= h($report->response) ?></div>
 		<?php else: ?>
-			<div class="p-3 my-1 bg-white dark:bg-[#003366] rounded-lg">No response yet.</div>
+			<div class="p-3 mb-1 bg-white dark:bg-[#003366] rounded-b-lg">No response yet.</div>
 		<?php endif ?>
         <a title="View this report"
 			href="/reports/view/<?= $report->id ?>"  
