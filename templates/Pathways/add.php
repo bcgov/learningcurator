@@ -6,7 +6,7 @@
 $this->loadHelper('Authentication.Identity');
 ?>
 <div class="p-6">
-<div class="mt-5 p-5 bg-white dark:bg-slate-900 rounded-lg">
+<div class="mt-5 p-5 bg-slate-100 dark:bg-slate-900 rounded-lg">
 <?= $this->Form->create($pathway) ?>
 <fieldset>
 <legend><?= __('Add Pathway') ?></legend>

@@ -13,13 +13,15 @@ if ($this->Identity->isLoggedIn()) {
 ?>
 <div class="p-6 dark:text-white">
 
+<div class="p-3 mb-2 bg-slate-100 dark:bg-slate-900 dark:text-white rounded-lg">
+
+
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <?= $this->Html->link(__('New Pathway'), ['action' => 'add'], ['class' => 'mt-5']) ?>
 <?php endif ?>
 
-<h1 class="text-3xl"><?= __('Pathways') ?></h1>
 
-<div class="my-3">
+
 <?php foreach ($pathways as $pathway): ?>
 <div class="p-3 my-3 bg-white dark:bg-slate-900 rounded-lg">
 	
@@ -53,6 +55,7 @@ if ($this->Identity->isLoggedIn()) {
 	</div>
 </div>
 <?php endforeach; ?>
+
 
 </div>
 </div>

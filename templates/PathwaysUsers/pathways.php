@@ -14,10 +14,8 @@ if ($this->Identity->isLoggedIn()) {
 <div class="p-6 dark:text-white">
 
 
-
-<div class="p-6 bg-slate-100 dark:bg-slate-900 dark:text-white rounded-lg">
-
 <?php if (!$pathways->isEmpty()) : ?>
+	<div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg">
 	<h1 class="mb-3 text-lg sr-only">Followed Pathways</h1>	
 	<?php foreach ($pathways as $path) : ?>
         
@@ -75,11 +73,11 @@ if ($this->Identity->isLoggedIn()) {
 
 	</div>
 	<?php endforeach; ?>
-	
+	</div>
 <?php else: ?>
 
 
-	<div class="p-3 mb-2 bg-slate-100 rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
+	<div class="p-3 mb-2 bg-slate-100 dark:bg-slate-900 dark:text-white rounded-lg">
 
 		<h2 class="mb-3 text-3xl">Get Started</h2>
 		<div class="p-4 bg-white dark:bg-slate-800 rounded-lg">
@@ -104,5 +102,5 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php endif ?>
 
-</div>
+
 </div>

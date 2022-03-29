@@ -22,11 +22,11 @@ if ($this->Identity->isLoggedIn()) {
 	color; #FFF;
 }
 </style>
-<div class="p-6 dark:text-white">
-<h1 class="text-4xl">Activities</h1>
+<div class="p-6">
+
 <div class="paginator sticky top-0 z-50 py-3 bg-[#c3d4e4] dark:bg-[#003366]">
 	<div class="mb-3">
-		<?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+		<?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} activities out of {{count}} total')) ?>
 	</div>
 	<?= $this->Paginator->first('<< ' . __('first')) ?>
 	<?= $this->Paginator->prev('< ' . __('previous')) ?>
@@ -35,6 +35,7 @@ if ($this->Identity->isLoggedIn()) {
 	<?= $this->Paginator->last(__('last') . ' >>') ?>
 
 </div>
+<div class="p-3 mb-2 bg-slate-100 dark:bg-slate-900 dark:text-white rounded-lg">
 <?php foreach ($activities as $activity) : ?>
 <?php 
 // #TODO move this back into the controller and simplify
@@ -216,4 +217,5 @@ foreach($actlist as $k => $v) {
 </div>
 <?php endforeach; // end of activities loop for this step ?>
 
+</div>
 </div>

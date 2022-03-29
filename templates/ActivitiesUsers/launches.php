@@ -9,10 +9,7 @@ $uid = $this->Identity->get('id');
 
 <div class="p-6 dark:text-white">
 
-<div class="p-3 rounded-lg activity bg-slate-100 dark:bg-slate-900 dark:text-white">
-
-
-
+<div class="p-3 mb-2 bg-slate-100 dark:bg-slate-900 dark:text-white rounded-lg">
 <?php if(!empty($alllaunches)): ?>
 <?php foreach($alllaunches as $a): ?>
 
@@ -37,15 +34,27 @@ $uid = $this->Identity->get('id');
 </div>
 <?php endforeach ?>
 <?php else: ?>
+	<div class="p-3 mb-2 bg-slate-100 dark:bg-slate-900 dark:text-white rounded-lg">
 
-<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-900 dark:text-white">
-<p><strong>You've not yet lanuched any activities.</strong></p>
-<p>As you launch activities on a pathway, they will be recorded here 
-	along with the date and time that you clicked the launch button.</p>
-<p>Pathway modules have one or more required activities. When you launch
-	a required activity, that action counts towards your pathway progress,
-	indicated by the progress bar.</p> 
-</div>
+		<h2 class="mb-3 text-3xl">You've not yet launched any activities</h2>
+		<div class="p-4 bg-white dark:bg-slate-800 rounded-lg">
+		<p>As you launch activities on a pathway, they will be recorded here 
+			along with the date and time that you clicked the launch button.</p>
+		<p>Pathway modules have one or more required activities. When you launch
+			a required activity, that action counts towards your pathway progress,
+			indicated by the progress bar.</p> 
+		</div>
+		
+		<a href="/categories" class="inline-block p-3 mt-4 bg-sky-700 dark:bg-sky-700 text-white text-2xl hover:no-underline rounded-lg">
+			Explore Categories
+		</a>
+
+	</div>
+
+
+
+
 <?php endif ?>
+</div>
 </div>
 </div>

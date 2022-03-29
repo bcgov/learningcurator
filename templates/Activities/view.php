@@ -13,7 +13,7 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 
-<div class="p-6 dark:text-white">
+<div class="p-6">
 
 	<?php if($role == 'curator' || $role == 'superuser'): ?>
 	<div class="btn-group float-right">
@@ -33,7 +33,7 @@ if ($this->Identity->isLoggedIn()) {
 		<?= $activity->name ?>
 	</h1>
 
-	<div class="p-3 bg-white dark:bg-slate-900 rounded-lg">
+	<div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg">
 		
 		<div class="mb-2">
 			<?php foreach($activity->tags as $tag): ?>
@@ -41,7 +41,7 @@ if ($this->Identity->isLoggedIn()) {
 			<?php endforeach ?>
 		</div>
 
-		<div class="p-2 lg:p-4 text-lg bg-slate-100 dark:bg-[#002850] rounded-lg">
+		<div class="p-2 lg:p-4 text-lg bg-white dark:bg-[#002850] rounded-lg">
 		<?php if(!empty($activity->description)): ?>
 			<?= $activity->description ?>
 		<?php else: ?>
