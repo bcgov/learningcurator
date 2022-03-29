@@ -35,35 +35,29 @@ $uid = $this->Identity->get('id');
 	</div>
 </div>
 <div class="p-6 rounded-lg activity bg-slate-200 dark:bg-slate-900 dark:text-white">
+
 <h1 class="mb-3 text-lg">Launched Activities</h1>
-<?php if(!$activities->isEmpty()): ?>
-<?php foreach($activities as $a): ?>
+
+
+<?php if(!empty($alllaunches)): ?>
+<?php foreach($alllaunches as $a): ?>
 
 <div class="p-3 mb-3 bg-white dark:bg-slate-800 rounded-lg">
-<?= $this->Form->postLink(__('Remove'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $a['id']], ['class' => 'float-right p-3 ml-3 bg-slate-300 dark:bg-slate-900 hover:no-underline rounded-lg', 'confirm' => __('Unclaim?')]) ?>
 <h2 class="text-2xl">
-	<a href="/activities/view/<?= $a['activity']['id'] ?>" class="font-weight-bold">
-		<?= $a['activity']['name'] ?>
+	<a href="/activities/view/<?= $a['id'] ?>" class="font-weight-bold">
+		<?= $a['name'] ?>
 	</a>
 </h2>
-<div class="">
-	
-	<div class="my-2 tex-lg">
-		Launched on: <?= $this->Time->format($a['created'],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+<div class="mt-3">
+	<div class="inline-block w-24 bg-slate-900 text-white text-sm text-center uppercase rounded-lg">
+		Launched
 	</div>
+	<?php foreach($a['launches'] as $ls): ?>
+	<span class="inline-block px-3 py-0 mb-2 tex-lg bg-slate-200 dark:bg-slate-700 text-sm rounded-lg">
+		<?= $this->Time->format($ls['date'],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+	</span>
+	<?php endforeach ?>
 
-<?php foreach($a['activity']['steps'] as $s): ?>
-<?php if(!empty($s->pathways[0]->slug)): ?>
-<?php if($s->pathways[0]->status_id == 2): ?>
-<div class="my-1">Included in 
-<a href="/pathways/<?= $s->pathways[0]->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>" class="font-weight-bold">
-<i class="bi bi-pin-map-fill"></i>
-<?= $s->pathways[0]->name ?> - <?= $s->name ?>
-</a>
-</div>
-<?php endif ?>
-<?php endif ?>
-<?php endforeach ?>
 </div>
 
 </div>
