@@ -13,7 +13,8 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<div class="p-6 dark:text-white">
+<div class="p-6">
+<div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg">
 
 <?php foreach ($categories as $category): ?>
 
@@ -77,4 +78,5 @@ if ($this->Identity->isLoggedIn()) {
 </div> <!-- formatting container -->
 <?php endforeach; ?>
 
+</div><!--  -->
 </div><!-- formatting container -->

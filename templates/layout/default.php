@@ -50,7 +50,8 @@
   <?php 
   #TODO re-write all of this
   $navigation = array(
-    ['name'=>'Profile','link' => '/profile'],
+    ['name'=>'Followed Pathways','link' => '/profile/follows'],
+    ['name'=>'Launched Activities','link' => '/profile/launches'],
     ['name'=>'Categories','link' => '/categories'], 
     ['name'=>'Pathways','link' => '/pathways'],
     ['name'=>'Activities','link' => '/activities'],
@@ -58,7 +59,6 @@
   );
   foreach($navigation as $page): ?>
   <?php if(strpos($currentpage,$page['link']) !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
-  <?php if($currentpage == '/' && $page['link'] == '/profile') $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
   <a class="hover:no-underline block px-4 py-2 mt-2 text-sm font-semibold text-slate-900 border-l-4 dark:hover:border-white dark:hover:bg-[#003366] dark:focus:bg-black dark:focus:text-white dark:hover:text-white dark:text-slate-200 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-300 focus:bg-slate-200 focus:outline-none focus:shadow-outline <?= $active ?>"
     href="<?= $page['link'] ?>">
       <?= $page['name'] ?>

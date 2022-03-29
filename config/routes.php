@@ -70,7 +70,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/pathways/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
 
     $builder->connect('/profile/launches', ['controller' => 'ActivitiesUsers', 'action' => 'launches']);
-    $builder->connect('/profile', ['controller' => 'PathwaysUsers', 'action' => 'pathways']);
+    $builder->connect('/profile/follows', ['controller' => 'PathwaysUsers', 'action' => 'pathways']);
     $builder->connect('/profile/reports', ['controller' => 'Reports', 'action' => 'reports']);
     $builder->connect('/profile/contributions', ['controller' => 'Pathways', 'action' => 'contributions']);
     /*
