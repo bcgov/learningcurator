@@ -31,12 +31,12 @@
     <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/activity-types">Activity Types</a>
     <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/ministries">Ministries</a>
 </div> -->
-<div class="my-4">
+<div class="p-3 my-4 bg-slate-200 dark:bg-slate-800 rounded-lg">
     Create new: 
-    <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/categories/add">Category</a>
-    <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/topics/add">Topic</a>
-    <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/pathways/add">Pathway</a> 
-    <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/activities/add">Activity</a>
+    <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/categories/add">Category</a>
+    <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/topics/add">Topic</a>
+    <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/pathways/add">Pathway</a> 
+    <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/activities/add">Activity</a>
     <!-- <a class="inline-block p-3 my-3 bg-slate-200 dark:bg-sky-700" href="/activities/addtostep">Add Activity to Step</a> -->
 </div>
 
@@ -59,7 +59,7 @@
 		<?php if(!empty($report->response)): ?>
 			<div class="p-3 mb-1 bg-white dark:bg-[#003366] rounded-b-lg"><?= h($report->response) ?></div>
 		<?php else: ?>
-			<div class="p-3 mb-1 bg-white dark:bg-[#003366] rounded-b-lg">No response yet.</div>
+			<div class="p-3 mb-1 bg-slate-100 dark:bg-[#003366] rounded-b-lg">No response yet.</div>
 		<?php endif ?>
         <a title="View this report"
 			href="/reports/view/<?= $report->id ?>"  
@@ -77,13 +77,13 @@
 
 <h2 class="mt-4 text-2xl">Top 5 Followed Pathways</h2>
 <div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
-<ol class="pl-10">
+<ol class="pl-8">
 <?php 
 // these links are templated/built within the controller for noted reasons there
 
 ?>
 <?php foreach($top5follows as $link): ?>
-    <li class="p-2 list-decimal text-xl"><?= $link ?></li>
+    <li class="my-1 p-1 px-2 list-decimal text-xl bg-white dark:bg-slate-900 rounded-lg"><?= $link ?></li>
 <?php endforeach ?>
 </ol>
 </div>
@@ -91,13 +91,13 @@
 
 <h2 class="mt-4 text-2xl">Top 5 Launched Activities</h2>
 <div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
-<ol class="pl-10">
+<ol class="pl-8">
 <?php 
 // these links are templated/built within the controller for noted reasons there
 
 ?>
 <?php foreach($top5links as $link): ?>
-    <li class="p-2 list-decimal text-xl"><?= $link ?></li>
+    <li class="my-1 p-1 px-2 list-decimal text-xl bg-white dark:bg-slate-900 rounded-lg"><?= $link ?></li>
 <?php endforeach ?>
 </ol>
 </div>
