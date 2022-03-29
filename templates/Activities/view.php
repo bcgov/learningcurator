@@ -106,9 +106,9 @@ if ($this->Identity->isLoggedIn()) {
 		
 		<?php if(count($activitylaunches) > 0): ?>
 		<div class="mb-3 p-3 bg-white dark:bg-slate-900 rounded-lg">
-			You launched this activity: 
+		<h3 class="text-lg">You launched this activity:</h3>
 		<?php foreach($activitylaunches as $u): ?>
-		<div class="p-2 my-2 bg-slate-800 dark:text-yellow-500 rounded-lg">
+		<div class="p-2 my-2 bg-slate-100 dark:bg-slate-800 dark:text-yellow-500 rounded-lg">
 			<?= $this->Time->format($u[1],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
 			<?= $this->Form->postLink(__('Remove'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $u[0]], ['class' => 'px-2 bg-white text-black dark:bg-black dark:text-white hover:no-underline rounded-lg', 'confirm' => __('Remove?')]) ?>
 		</div>
