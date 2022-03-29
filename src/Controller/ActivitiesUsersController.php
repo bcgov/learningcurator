@@ -45,7 +45,7 @@ class ActivitiesUsersController extends AppController
             $thisone = [];
             $launches = [];
             foreach($acts as $aid) {
-                if($id == $aid->activity->id) {
+                if($aid->activity->id == $id) {
                     $name = $aid->activity->name;
                     array_push($launches,['date' => $aid['created']]);
                 }
