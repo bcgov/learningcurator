@@ -23,7 +23,7 @@ if ($this->Identity->isLoggedIn()) {
 
 
 <?php foreach ($pathways as $pathway): ?>
-<div class="p-3 my-3 bg-white dark:bg-slate-900 rounded-lg">
+<div class="p-3 my-3 bg-white dark:bg-slate-800 rounded-lg">
 	
 	<h2 class="mb-2 text-2xl">
 		<a href="/pathways/<?= h($pathway->slug) ?>" class="font-weight-bold">

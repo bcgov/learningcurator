@@ -48,7 +48,7 @@ foreach($actlist as $k => $v) {
 	}
 }
 ?>
-<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-900 dark:text-white">
+<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-800 dark:text-white">
 
 <div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
 	
