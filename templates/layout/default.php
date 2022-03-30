@@ -79,7 +79,7 @@
   <div class="flex h-16 w-full px-6 pt-3 bg-slate-200 dark:bg-[#002850]"> <!-- sticky top-0 z-50 -->
 
     <div class="p-2 mr-6 w-50 hidden md:block">
-      Welcome <a href="/profile" ><?= $this->Identity->get('first_name') ?></a>
+      Welcome <?= $this->Identity->get('first_name') ?>
       <?php if($this->Identity->get('role') == 'curator'): ?>
       <span class="px-3 text-xs bg-[#003366] text-white rounded-lg">Curator</span>
       <?php elseif($this->Identity->get('role') == 'superuser'): ?>
