@@ -41,7 +41,7 @@ $this->assign('title', h($pathway->name));
 
 
 <?php if(empty($followid)): ?>
-	<div class="mt-2 float-right">
+<div class="mt-2 float-right">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $pathway->id]) ?>
 <button class="p-3 bg-sky-700 dark:bg-sky-700 text-white rounded-lg text-center">
@@ -51,6 +51,14 @@ $this->assign('title', h($pathway->name));
 </button>
 <?= $this->Form->end(); ?>
 </div>
+<?php else: ?>
+	<?php 
+	echo $this->Form->postLink(__('Un-Follow Pathway'), 
+									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], 
+									['class' => 'mt-2 float-right inline-block p-3 bg-sky-700 dark:bg-sky-700 text-white rounded-lg text-center',
+									 'title' => 'Stop seeing your progress on this pathway', 
+									 'confirm' => '']); 
+	?>
 <?php endif ?>
 
 
