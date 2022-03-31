@@ -55,7 +55,7 @@ $this->assign('title', h($pathway->name));
 	<?php 
 	echo $this->Form->postLink(__('Un-Follow Pathway'), 
 									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], 
-									['class' => 'mt-2 float-right inline-block p-3 bg-sky-700 dark:bg-sky-700 text-white rounded-lg text-center',
+									['class' => 'mt-2 float-right inline-block p-3 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline',
 									 'title' => 'Stop seeing this pathway on your profile', 
 									 'confirm' => '']); 
 	?>
@@ -127,12 +127,12 @@ $this->assign('title', h($pathway->name));
 </h3>
 
 
-<div class="my-3 p-3 bg-slate-200 dark:bg-[#002850] text-xl rounded-lg">
+<div class="my-3 p-3 bg-slate-100 dark:bg-[#002850] text-xl rounded-lg">
 	<?= $steps->description ?>
 </div>
 
 <a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>"
-	class="inline-block p-3 bg-sky-700 rounded-lg text-white text-xl hover:no-underline">
+	class="inline-block p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 	View Step
 </a>
 

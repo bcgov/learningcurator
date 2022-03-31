@@ -32,6 +32,12 @@
     <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/ministries">Ministries</a>
 </div> -->
 <div class="p-3 my-4 bg-slate-200 dark:bg-slate-800 rounded-lg">
+    View: 
+    <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/profile/contributions">
+        Your Contributions
+    </a>
+</div>
+<div class="p-3 my-4 bg-slate-200 dark:bg-slate-800 rounded-lg">
     Create new: 
     <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/categories/add">Category</a>
     <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/topics/add">Topic</a>
