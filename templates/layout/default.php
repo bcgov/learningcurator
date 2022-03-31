@@ -71,27 +71,29 @@
   </nav>
   <?php endif ?>
   
-</div>
-</div>
 
+
+</div>
+</div>
 <div class="bg-[#c3d4e4] dark:bg-[#003366] dark:text-white w-full 2xl:w-2/3" role="main">
 
   <?php if(!empty($this->Identity->get('id'))): ?>
   <div class="flex h-16 w-full px-6 pt-3 bg-slate-200 dark:bg-[#002850]"> <!-- sticky top-0 z-50 -->
 
-    <div class="p-2 mr-6 w-50 hidden md:block">
-      Welcome <?= $this->Identity->get('first_name') ?>
-      <?php if($this->Identity->get('role') == 'curator'): ?>
-      <span class="px-3 text-xs bg-[#003366] text-white rounded-lg">Curator</span>
-      <?php elseif($this->Identity->get('role') == 'superuser'): ?>
-      <span class="px-3 text-xs bg-[#003366] text-white rounded-lg">Super</span>
-      <?php endif ?>
-    </div>
+  <div class="p-2 mr-6 w-60 hidden md:block">
+    Welcome <?= $this->Identity->get('first_name') ?>
+    <?php if($this->Identity->get('role') == 'curator'): ?>
+    <span class="px-3 text-xs bg-[#003366] text-white rounded-lg">Curator</span>
+    <?php elseif($this->Identity->get('role') == 'superuser'): ?>
+    <span class="px-3 text-xs bg-[#003366] text-white rounded-lg">Super</span>
+    <?php endif ?>
+  </div>
 
-    <form method="get" action="/find" class="w-50" role="search">
+  <form method="get" action="/find" class="w-1/2" role="search">
     <label for="search" class="sr-only">Search</label>
     <input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-900 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search" id="search"><button class="px-3 py-2 m-0 bg-slate-300 dark:text-white dark:bg-slate-900 dark:hover:bg-slate-800 rounded-r-lg" type="submit">Search</button>
-    </form>
+  </form>
+
 
   </div>
   <?php endif ?>

@@ -14,7 +14,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <div class="p-6">
 	
-<div class="p-3 mb-2 bg-slate-200 dark:bg-slate-800 rounded-lg">
+<div class="p-3 mb-2 bg-slate-200 dark:bg-slate-900 rounded-lg">
 
 <h2><?= __('Your Contributions') ?></h2>
 
@@ -26,7 +26,7 @@ if ($this->Identity->isLoggedIn()) {
 <div>
 <h3>Pathways</h3>
 <?php foreach ($pathways as $pathway): ?>
-<div class="p-3 mb-2 bg-white rounded-lg">
+<div class="p-3 mb-2 bg-white dark:bg-slate-800 rounded-lg">
 	
 	<div>
 		<a href="/pathways/<?= h($pathway->slug) ?>" class="font-weight-bold">
@@ -42,7 +42,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php endforeach ?>
 </div>
 <?php else: ?>
-<div class="p-3 mb-2 bg-white rounded-lg">
+<div class="p-3 mb-2 bg-white dark:bg-slate-800 rounded-lg">
 	<p><strong>You have yet to contribute any pathways.</strong></p>
 	<p>If you want to work with us, we're always looking for help!</p>
 </div>
@@ -53,7 +53,7 @@ if ($this->Identity->isLoggedIn()) {
 <h3>Activities</h3>
 <div class="overflow-auto h-96">
 <?php foreach ($activities as $a): ?>
-<div class="p-3 mb-2 bg-white rounded-lg">
+<div class="p-3 mb-2 bg-white dark:bg-slate-800 rounded-lg">
 	<div>
 		<i class="bi <?= $a->activity_type->image_path ?>"></i>
 		<a href="/activities/view/<?= $a->id ?>" class="font-weight-bold"><?= h($a->name) ?></a>
@@ -71,7 +71,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php endforeach ?>
 </div>
 <?php else: ?>
-	<div class="p-3 mb-2 bg-white rounded-lg">
+	<div class="p-3 mb-2 bg-white dark:bg-slate-800 rounded-lg">
 	<p><strong>You have yet to contribute any activities.</strong></p>
 	<p>If you want to work with us, we're always looking for help!</p>
 	</p>

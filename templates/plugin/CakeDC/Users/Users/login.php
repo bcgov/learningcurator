@@ -26,7 +26,7 @@ $this->assign('title', 'Learning on demand');
 
 <body class="bg-cover bg-center min-h-full" style="background-image: url('/img/cape-scott-trail-n-r-t-on-flckr.jpg')">
 	
-<div class="bg-white/95 dark:bg-slate-900/95 flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 " role="banner">
+<div class="p-3 pl-10 bg-white/95 dark:bg-slate-900/95" role="banner">
 <span class="leading-3 text-xl font-semibold tracking-widest text-slate-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
       <span class="text-xs">Learning</span>
       <br>
@@ -34,12 +34,13 @@ $this->assign('title', 'Learning on demand');
     </span>
 </div>
 
-<div class="p-3 md:p-20 min-h-screen bg-white/30 dark:bg-[#003366]/50 dark:text-white">
+<div class="w-full lg:w-1/2 px-3 py-10 lg:p-20 min-h-screen dark:text-white">
 
-	
-	<div class="p-6 md:p-10 text-3xl bg-white/80 dark:bg-[#003366]/40 rounded-lg">
+	<div class="p-6 lg:p-10 text-2xl bg-white/80 dark:bg-[#003366]/80 rounded-lg">
 
-		<h1 class="mb-6 text-6xl text-[#003366] dark:text-white">Learning on demand</h1>
+		<h1 class="mb-6 text-4xl text-[#003366] dark:text-white">
+			Learning on demand
+		</h1>
 		
 		<div>
 			A web site where BC Public Service curators collect readings, courses, activities
