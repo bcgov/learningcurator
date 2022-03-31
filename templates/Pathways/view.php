@@ -22,7 +22,7 @@ $this->assign('title', h($pathway->name));
 <span class="badge badge-warning" title="Edit to set to publish">DRAFT</span>
 <?php endif ?>
 
-<nav class="mb-3 bg-slate-200 dark:bg-slate-900 rounded-lg p-3" aria-label="breadcrumb">
+<nav class="mb-3 bg-slate-100 dark:bg-slate-900 rounded-lg p-3" aria-label="breadcrumb">
 	<a href="/categories/index" class="hover:no-underline hover:underline">Categories</a> / 
 	<?= $this->Html->link($pathway->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $pathway->topic->categories[0]->id],['class' => 'hover:no-underline hover:underline']) ?> / 
 	<?= $pathway->has('topic') ? $this->Html->link($pathway->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id],['class' => 'hover:no-underline hover:underline']) : '' ?> / 
@@ -56,7 +56,7 @@ $this->assign('title', h($pathway->name));
 	echo $this->Form->postLink(__('Un-Follow Pathway'), 
 									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], 
 									['class' => 'mt-2 float-right inline-block p-3 bg-sky-700 dark:bg-sky-700 text-white rounded-lg text-center',
-									 'title' => 'Stop seeing your progress on this pathway', 
+									 'title' => 'Stop seeing this pathway on your profile', 
 									 'confirm' => '']); 
 	?>
 <?php endif ?>
@@ -72,7 +72,7 @@ $this->assign('title', h($pathway->name));
 </h1>
 
 
-<div class="p-4 text-2xl bg-white/30 dark:bg-black/30 rounded-t-lg">
+<div class="p-4 text-2xl bg-slate-100 dark:bg-slate-800 rounded-t-lg">
 	<?= $pathway->objective ?> 
 </div>
 
@@ -102,7 +102,7 @@ $this->assign('title', h($pathway->name));
 
 
 <h2 class="text-3xl dark:text-white">
-	Modules
+	Steps along this pathway
 	<span class="inline-block px-2 bg-slate-500 dark:bg-black text-white text-sm rounded-full"><?= $requiredacts ?> activities</span>
 </h2>
 <?php if (!empty($pathway->steps)) : ?>
@@ -133,7 +133,7 @@ $this->assign('title', h($pathway->name));
 
 <a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>"
 	class="inline-block p-3 bg-sky-700 rounded-lg text-white text-xl hover:no-underline">
-	Launch Module
+	View Step
 </a>
 
 <?php else: ?>

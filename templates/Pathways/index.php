@@ -34,14 +34,14 @@ if ($this->Identity->isLoggedIn()) {
 			<?= h($pathway->name) ?>
 		</a> 
 	</h2>
-	<div class="bg-slate-200 dark:bg-slate-800 p-3">
+	<div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
 		<?= h($pathway->description) ?>
 	</div>
 	<a href="/pathways/<?= h($pathway->slug) ?>" 
 		class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
-			Launch Pathway
+			View Pathway
 	</a>
-	<div class="bg-slate-200 dark:bg-slate-700 p-3">
+	<div class="p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
 		<?php 
 		$stat = 'badge-light'; 
 		if($pathway->status->name == 'Draft') $stat = 'badge-warning';

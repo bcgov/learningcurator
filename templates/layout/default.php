@@ -83,7 +83,7 @@
       <?php if($this->Identity->get('role') == 'curator'): ?>
       <span class="px-3 text-xs bg-[#003366] text-white rounded-lg">Curator</span>
       <?php elseif($this->Identity->get('role') == 'superuser'): ?>
-      <span class="px-3 text-xs bg-[#003366] rounded-lg">Super</span>
+      <span class="px-3 text-xs bg-[#003366] text-white rounded-lg">Super</span>
       <?php endif ?>
     </div>
 

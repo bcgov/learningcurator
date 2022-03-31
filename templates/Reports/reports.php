@@ -12,12 +12,12 @@ if ($this->Identity->isLoggedIn()) {
 <div class="p-6 dark:text-white">
 
 
-<div class="p-6 bg-slate-100 dark:bg-slate-900 rounded-lg">
+<div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg">
 
 <?php if (!$reports->isEmpty()) : ?>
 	
 	<?php foreach ($reports as $report) : ?>
-	<div class="mb-3 p-6 bg-white dark:bg-slate-800 rounded-lg">
+	<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
 	<?= $this->Form->postLink(__('Delete'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right btn btn-primary']) ?>
 		<?= h($report->created) ?>
 		<div><strong><a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></strong></div>
