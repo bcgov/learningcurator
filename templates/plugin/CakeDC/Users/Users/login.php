@@ -44,8 +44,8 @@ $this->assign('title', 'Learning on demand');
 		
 		<div>
 			A web site where BC Public Service curators collect readings, courses, activities
-			and media, and shape pathways to learning goals. Where the public service learns 
-			on their own time, at their own pace. 
+			and media, and shape pathways to learning goals. Where public service employees 
+			learn on their own time, at their own pace. 
 		</div>
 
 		<div class="mt-8">
