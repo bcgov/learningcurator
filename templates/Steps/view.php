@@ -562,18 +562,19 @@ aria-controls="defunctacts">View archived activities</a>.
 <?php if(!empty($previousid)): ?>
 	<a href="/pathways/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" 
 		class="inline-block m-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
-			Previous Module
+			Previous Step
 	</a>
 <?php endif ?>
 
 <?php if(!empty($upnextid)): ?>
 	<a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" 
 		class="inline-block m-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
-			Next Module
+			Next Step
 	</a>
 <?php endif ?>
 </div>
 <?php endif ?>
 
+</div>
 </div>
 </div>
