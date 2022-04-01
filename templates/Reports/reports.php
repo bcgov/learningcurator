@@ -61,10 +61,20 @@ if ($this->Identity->isLoggedIn()) {
 	</div>
 	<?php endforeach ?>
 <?php else: ?>
-	<p><strong>You've not yet filed any reports.</strong></p>
-	<p>You can file reports against any activity. You might find a dead link, 
-		or encounter a licensing issue; if you do, you can click the report
-		button and tell us what's wrong.</p>
+	<h2 class="mb-3 text-3xl">You've not yet filed any reports</h2>
+		<div class="p-4 bg-white dark:bg-slate-800 rounded-lg">
+			<p class="mb-3 text-xl">
+			You can file reports against any activity. You might find a dead link, 
+			or encounter a licensing issue; if you do, you can click the report
+			button and tell us what's wrong.
+			</p>
+			
+		</div>
+		
+		<a href="/categories" class="inline-block p-3 mt-4 bg-sky-700 dark:bg-sky-700 text-white text-2xl hover:no-underline rounded-lg">
+			Explore Categories
+		</a>
+
 <?php endif ?>
 
 </div>
