@@ -105,6 +105,54 @@ $this->assign('title', h($pathway->name));
 	Steps along this pathway
 	<span class="inline-block px-2 bg-slate-500 dark:bg-black text-white text-sm rounded-full"><?= $requiredacts ?> activities</span>
 </h2>
+
+
+
+
+<?php if($role == 'curator' || $role == 'superuser'): ?>
+
+<a class="" 
+	data-toggle="collapse" 
+	href="#addstepform" 
+	role="button" 
+	aria-expanded="false" 
+	aria-controls="addstepform">
+		<span>+</span> Add a step
+</a>
+<div class="collapse" id="addstepform">
+<div class="card my-3">
+<div class="card-body">
+<?= $this->Form->create(null, ['url' => [
+		'controller' => 'Steps',
+		'action' => 'add'
+]]) ?>
+<fieldset>
+<legend class=""><?= __('Add Step') ?></legend>
+<?php
+echo $this->Form->control('name',['class'=>'form-control']);
+echo $this->Form->control('description',['class' => 'form-control', 'type' => 'textarea','label'=>'Objective']);
+echo $this->Form->hidden('createdby', ['value' => $uid]);
+echo $this->Form->hidden('modifiedby', ['value' => $uid]);
+echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
+?>
+</fieldset>
+<?= $this->Form->button(__('Add Step'), ['class'=>'btn btn-block btn-primary']) ?>
+<?= $this->Form->end() ?>
+</div>
+</div>
+</div>
+
+<?php endif ?>
+
+
+
+
+
+
+
+
+
+
 <?php if (!empty($pathway->steps)) : ?>
 <?php foreach ($pathway->steps as $steps): ?>
 <?php $requiredacts = 0; ?>
