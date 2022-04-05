@@ -66,12 +66,14 @@ class PathwaysController extends AppController
         // regardless of their statuses. Regular users should only ever see 
         // 'published' pathways.
         if($user->role == 'curator' || $user->role == 'superuser') {
-            $pathways = $paths->find('all')->contain(['Topics','Topics.Categories','Statuses']);
+            $pathways = $paths->find('all')->contain(['Topics','Topics.Categories','Statuses'])
+                                            ->order(['Pathways.created' => 'desc']);
         } else {
             $pathways = $paths->find('all')
                                 ->contain(['Topics','Topics.Categories','Statuses'])
                                 ->where(['Pathways.featured' => 1])
-                                ->where(['status_id' => 2]);
+                                ->where(['status_id' => 2])
+                                ->order(['Pathways.created' => 'desc']);
         }
         //$this->paginate($pathways);
         $this->set(compact('pathways'));
@@ -182,7 +184,11 @@ class PathwaysController extends AppController
                     }
                 endforeach; // activities
             endforeach; // steps
-            $percentage = floor(($totalclaimed / $requiredacts) * 100);
+            if($totalclaimed > 0) {
+                $percentage = floor(($totalclaimed / $requiredacts) * 100);
+            } else {
+                $percentage = 0;
+            }
         endif;
         $this->set(compact('pathway', 
                             'totalacts', 
@@ -229,9 +235,29 @@ class PathwaysController extends AppController
      */
     public function import ()
     {
+        $user = $this->request->getAttribute('authentication')->getIdentity();
         $feed = file_get_contents('https://learningcurator.ca/imports/pathway-edi-the-basics.json');
         $path = json_decode($feed);
-        $this->set(compact('path'));
+        $pathdeets = [
+            'status_id' => 1,
+            'topic_id' => 33,
+            'name' => $path->name,
+            'description' => $path->description,
+            'objective' => $path->objective,
+            'slug' => $path->slug,
+            'createdby' => $user->id,
+            'modifiedby' => $user->id
+        ];
+        $pathway = $this->Pathways->newEmptyEntity();
+        $pathway = $this->Pathways->patchEntity($pathway, $pathdeets);
+        if ($this->Pathways->save($pathway)) {
+            $pathid = $pathway->id;
+            $this->set(compact('path','pathid'));
+        } else {
+            echo 'Eeh';
+            exit;
+        }
+        
     }
 
     /**
@@ -241,13 +267,14 @@ class PathwaysController extends AppController
      */
     public function add()
     {
+        
         $pathway = $this->Pathways->newEmptyEntity();
         if ($this->request->is('post')) {
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
             $sluggedTitle = Text::slug($pathway->name);
             // trim slug to maximum length defined in schema
             $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
-
+            //echo '<pre>'; print_r($this->request->getData()); exit;
             if ($this->Pathways->save($pathway)) {
                 $this->Flash->success(__('The pathway has been saved.'));
                 $redir = '/pathways/' . $sluggedTitle;

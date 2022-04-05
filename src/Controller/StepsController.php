@@ -147,9 +147,15 @@ class StepsController extends AppController
             $step->slug = strtolower(substr($sluggedTitle, 0, 191));
             //echo '<pre>'; print_r($step); exit;  
             if ($this->Steps->save($step)) {
+                if($this->request->getData()['fromimport']) {
+                    
+                    return $step->id;
+
+                } else {
+                    $redir = '/steps/edit/' . $step->id;
+                    return $this->redirect($redir);
+                }
                 
-                $redir = '/steps/edit/' . $step->id;
-                return $this->redirect($redir);
             }
             $this->Flash->error(__('The step could not be saved. Please, try again.'));
         }
