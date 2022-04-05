@@ -571,10 +571,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin: 0.25rem;
 }
 
-.m-6 {
-  margin: 1.5rem;
-}
-
 .my-3 {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
@@ -681,10 +677,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 5rem;
 }
 
-.mr-6 {
-  margin-right: 1.5rem;
-}
-
 .mt-8 {
   margin-top: 2rem;
 }
@@ -773,20 +765,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 1.5rem;
 }
 
-.w-60 {
-  width: 15rem;
-}
-
 .flex-shrink-0 {
   flex-shrink: 0;
 }
 
 .flex-grow {
   flex-grow: 1;
-}
-
-.basis-1\/3 {
-  flex-basis: 33.333333%;
 }
 
 .origin-top-left {
@@ -989,17 +973,17 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
-.bg-\[\#003366\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 51 102 / var(--tw-bg-opacity));
-}
-
 .bg-white\/95 {
   background-color: rgb(255 255 255 / 0.95);
 }
 
 .bg-white\/80 {
   background-color: rgb(255 255 255 / 0.8);
+}
+
+.bg-\[\#003366\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 51 102 / var(--tw-bg-opacity));
 }
 
 .bg-cover {
@@ -1486,6 +1470,11 @@ p {
     background-color: rgb(30 41 59 / var(--tw-bg-opacity));
   }
 
+  .dark\:hover\:bg-sky-800:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(7 89 133 / var(--tw-bg-opacity));
+  }
+
   .dark\:hover\:bg-slate-700:hover {
     --tw-bg-opacity: 1;
     background-color: rgb(51 65 85 / var(--tw-bg-opacity));
@@ -1552,6 +1541,10 @@ p {
 
   .md\:w-56 {
     width: 14rem;
+  }
+
+  .md\:w-1\/2 {
+    width: 50%;
   }
 
   .md\:grid-cols-2 {

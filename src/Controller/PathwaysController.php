@@ -6,6 +6,7 @@ namespace App\Controller;
 
 Use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
+use Cake\I18n\FrozenTime;
 
 /**
  * Pathways Controller
@@ -228,67 +229,9 @@ class PathwaysController extends AppController
      */
     public function import ()
     {
-
-        $this->viewBuilder()->setLayout('ajax');
         $feed = file_get_contents('https://learningcurator.ca/imports/pathway-edi-the-basics.json');
         $path = json_decode($feed);
-        //echo '<pre>';print_r($path);exit;
-
-        // "name": "The Basics",
-        // "color": null,
-        // "description": "This collection of pathways focuses on the foundations \u2014 a strong baseline can help build confidence. Here you will define what equity, diversity and inclusion mean in a public service context, understand unconscious stereotypes and biases, learn to question your thinking and see the world through a different lens.",
-        // "objective": "Grow your knowledge of equity, diversity and inclusion by understanding intersectionality, uncovering unconscious bias and honouring diversity through language choices. (More steps and resources to come!)",
-        // "file_path": null,
-        // "image_path": null,
-        // "featured": 0,
-        // "topic_id": 27,
-        // "ministry_id": null,
-        // "created": "2021-10-27T21:56:02+00:00",
-        // "createdby": "adac83c2-3560-4ec7-90f4-7e93d610964c",
-        // "modified": "2021-10-28T16:23:03+00:00",
-        // "modifiedby": "5940a20f-0fba-4c6d-9058-0493cab458e6",
-        // "status_id": 2,
-        // "slug": "the-basics",
-        // "estimated_time": "",
-        // "sortorder": 0,
-
-        $pathdata = [
-            'status_id' => 1,
-            'topic_id' => 33,
-            'ministry_id' => null,
-            'slug' => $path->slug,
-            'name' => $path->name,
-            'description' => $path->description,
-            'objective' => $path->objective
-        ];
-
-        $pathway = $this->Pathways->newEmptyEntity();
-        $pathway = $this->Pathways->patchEntity($pathway, $pathdata);
-
-        if ($this->Pathways->save($pathway)) {
-            echo __('The pathway has been saved.');
-            //$redir = '/pathways/' . $slug;
-            //return $this->redirect($redir);
-        } else {
-            echo __('The pathway has NOT been saved.');
-        }
-
-        foreach($path->steps as $s) {
-            
-            
-            echo '<strong>' . $s->name . '</strong><br>';
-            echo '' . $s->description . '<br>';
-
-
-
-            foreach($s->activities as $a) {
-                echo '- ' . $a->name . '<br>';
-            }
-            echo '<hr>';
-        }
-        
-        
-        
+        $this->set(compact('path'));
     }
 
     /**
@@ -304,6 +247,7 @@ class PathwaysController extends AppController
             $sluggedTitle = Text::slug($pathway->name);
             // trim slug to maximum length defined in schema
             $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
+
             if ($this->Pathways->save($pathway)) {
                 $this->Flash->success(__('The pathway has been saved.'));
                 $redir = '/pathways/' . $sluggedTitle;

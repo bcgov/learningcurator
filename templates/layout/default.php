@@ -96,15 +96,22 @@
   </div>
 </div>
 
-<div class="py-6 bg-slate-100 dark:bg-slate-900" role="contentinfo">
+<div class="py-6 bg-slate-100 dark:bg-slate-900 dark:text-white" role="contentinfo">
+  <div x-data="{ open: false }">
+    <button @click="open = ! open" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-sky-700 dark:hover:bg-sky-800 dark:text-white hover:no-underline rounded-lg">Privacy Statement</button>
+    <div x-show="open" @click.outside="open = false" class="w-full md:w-1/2 p-6 my-3 rounded-lg bg-white dark:bg-slate-900 dark:text-white">
+      Your personal information is collected by the BC Public Service Agency
+      in accordance with section 26(c) of the Freedom of Information and 
+      Protection of Privacy Act for the purposes of managing and administering 
+      employee development and training. If you have any questions, submit an 
+      AskMyHR request at www.gov.bc.ca/myhr/contact or call 250-952-6000. 
+    </div>
+  </div>
 
   <img class="my-6 inline-block" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
   
   <img class="my-6 inline-block" src="/img/learning-centre-logo-wordmark.svg" height="100px" width="300px" alt="Learning Centre Logo">
-  
-  <a href="#privacy" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-[#003366] dark:text-white hover:no-underline rounded-lg">
-    Privacy Statement
-  </a>
+
 
 </div>
 

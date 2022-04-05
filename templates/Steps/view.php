@@ -144,6 +144,7 @@ foreach ($step->pathways as $pathways) {
 			<h3 class="mb-3 text-2xl">Steps along this pathway</h3>
 		<?php foreach ($step->pathways as $pathways) : ?>
 		<?php foreach($pathways->steps as $s): ?>
+		<div>
 		<?php if($s->status_id == 2): ?>
 		<?php $c = '' ?>
 		<?php if($s->id == $step->id) $c = 'bg-slate-300 dark:bg-[#003366]' ?>
@@ -153,17 +154,12 @@ foreach ($step->pathways as $pathways) {
 		</a>
 		<?php else: ?>
 		<?php if($role == 'curator' || $role == 'superuser'): ?>
-		<?php $c = '' ?>
-		<?php if($s->id == $step->id) $c = 'font-weight-bold' ?>
-		<div><a class=" <?= $c ?>" href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-		<?php if($s->id == $step->id && $steppercent == 100): ?>
-		<i class="bi bi-check"></i>
-		<?php endif ?>
 		<span class="badge badge-warning">DRAFT</span>
 		<?= $s->name ?>
 		</a>
 		<?php endif; // are you a curator? ?>
 		<?php endif; // is published? ?>
+		</div>
 		<?php endforeach ?>
 		<?php endforeach ?>
 		</div>

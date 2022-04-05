@@ -110,7 +110,7 @@ $this->assign('title', h($pathway->name));
 
 
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-
+<div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg" id="addstepform">
 <a class="" 
 	data-toggle="collapse" 
 	href="#addstepform" 
@@ -120,25 +120,22 @@ $this->assign('title', h($pathway->name));
 		<span>+</span> Add a step
 </a>
 <div class="collapse" id="addstepform">
-<div class="card my-3">
-<div class="card-body">
 <?= $this->Form->create(null, ['url' => [
 		'controller' => 'Steps',
 		'action' => 'add'
 ]]) ?>
-<fieldset>
-<legend class=""><?= __('Add Step') ?></legend>
+
 <?php
-echo $this->Form->control('name',['class'=>'form-control']);
-echo $this->Form->control('description',['class' => 'form-control', 'type' => 'textarea','label'=>'Objective']);
+echo $this->Form->control('name',['class'=>'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']);
+echo $this->Form->control('description',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg', 'type' => 'textarea','label'=>'Objective']);
 echo $this->Form->hidden('createdby', ['value' => $uid]);
 echo $this->Form->hidden('modifiedby', ['value' => $uid]);
-echo $this->Form->hidden('pathways.1.id', ['value' => $pathway->id]);
+echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
 ?>
-</fieldset>
-<?= $this->Form->button(__('Add Step'), ['class'=>'btn btn-block btn-primary']) ?>
+
+<?= $this->Form->button(__('Add Step'), ['class'=>'inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline']) ?>
 <?= $this->Form->end() ?>
-</div>
+
 </div>
 </div>
 
