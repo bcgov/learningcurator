@@ -406,10 +406,10 @@ class ActivitiesController extends AppController
                         'activitystepid' => $activitiesStep->id,
                         'stepid' => $this->request->getData()['step_id']
                     );
-                    echo json_encode($actstep);
-                    exit;
-                    //$return = '/steps/edit/' . $this->request->getData()['step_id'];
-                    //return $this->redirect($return);
+                    // echo json_encode($actstep);
+                    // exit;
+                    $return = '/steps/edit/' . $this->request->getData()['step_id'];
+                    return $this->redirect($return);
                 }
     
             } // if POST method used
