@@ -96,10 +96,16 @@
   </div>
 </div>
 
-<div class="py-6 bg-slate-100 dark:bg-slate-900 dark:text-white" role="contentinfo">
+<div class="py-6 bg-slate-100 dark:bg-slate-900 dark:text-white text-center" role="contentinfo">
+
+<div class="mx-auto mb-10 p-6 md:w-2/3 lg:w-1/4 bg-white dark:bg-slate-800 dark:text-slate-300 text-lg rounded-lg text-slate-700 text-center">
+  We acknowledge with respect that the Learning Curator operates throughout B.C.
+   on the traditional lands of Indigenous peoples.
+</div>
+
   <div x-data="{ open: false }">
     <button @click="open = ! open" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-sky-700 dark:hover:bg-sky-800 dark:text-white hover:no-underline rounded-lg">Privacy Statement</button>
-    <div x-show="open" @click.outside="open = false" class="w-full md:w-1/2 p-6 my-3 rounded-lg bg-white dark:bg-slate-900 dark:text-white">
+    <div x-show="open" @click.outside="open = false" class="md:w-2/3 p-6 my-3 mx-auto rounded-lg bg-white dark:bg-slate-800 dark:text-white">
       Your personal information is collected by the BC Public Service Agency
       in accordance with section 26(c) of the Freedom of Information and 
       Protection of Privacy Act for the purposes of managing and administering 
