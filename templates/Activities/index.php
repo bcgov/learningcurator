@@ -197,15 +197,16 @@ foreach($actlist as $k => $v) {
 </div>
 <?php if(!empty($activity->steps)): ?>
 	<div class="mt-2 p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-
+		Included in pathways:<br> 
 		<?php foreach($activity->steps as $step): ?>
 			<?php if(!empty($step->pathways[0]->slug)): ?>
-			Included in pathways:<br> 
+			<div class="p-2 mb-1 bg-slate-100 dark:bg-[#002850] rounded-lg">
 			<a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
 				<i class="bi bi-pin-map-fill"></i>
 				<?= $step->pathways[0]->name ?> - 
 				<?= $step->name ?>
 			</a>
+			</div>
 			<?php endif ?>
 		<?php endforeach ?>
 
