@@ -32,12 +32,7 @@ $this->assign('title', h($pathway->name));
 	</svg> <?= h($pathway->name) ?>
 </nav> 
 
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="float-right ml-3 mt-1">
-<?= $this->Html->link(__('Edit'), ['action' => 'edit', $pathway->id], ['class' => 'p-3 bg-slate-100 dark:bg-black hover:no-underline hover:underline rounded-lg']) ?>
-<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'p-3 bg-slate-100 dark:bg-black hover:no-underline hover:underline rounded-lg']) ?>
-</div>
-<?php endif ?>
+
 
 
 <?php if(empty($followid)): ?>
@@ -71,6 +66,12 @@ $this->assign('title', h($pathway->name));
 	<?= h($pathway->name) ?>
 </h1>
 
+<?php if($role == 'curator' || $role == 'superuser'): ?>
+<div class="float-right ml-3 mt-1">
+<?= $this->Html->link(__('Edit Pathway'), ['action' => 'edit', $pathway->id], ['class' => 'p-3 bg-slate-100 dark:bg-black hover:no-underline hover:underline rounded-lg']) ?>
+<?= $this->Form->postLink(__('Delete Pathway'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'p-3 bg-slate-100 dark:bg-black hover:no-underline hover:underline rounded-lg']) ?>
+</div>
+<?php endif ?>
 
 <div class="p-4 text-2xl bg-slate-100 dark:bg-slate-800 rounded-t-lg">
 	<?= $pathway->objective ?> 
@@ -110,32 +111,34 @@ $this->assign('title', h($pathway->name));
 
 
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg" id="addstepform">
-<a class="" 
-	data-toggle="collapse" 
-	href="#addstepform" 
-	role="button" 
-	aria-expanded="false" 
-	aria-controls="addstepform">
-		<span>+</span> Add a step
-</a>
-<div class="collapse" id="addstepform">
-<?= $this->Form->create(null, ['url' => [
-		'controller' => 'Steps',
-		'action' => 'add'
-]]) ?>
-<?php
-echo $this->Form->control('name',['class'=>'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']);
-echo $this->Form->control('description',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg', 'type' => 'textarea','label'=>'Objective']);
-echo $this->Form->hidden('createdby', ['value' => $uid]);
-echo $this->Form->hidden('modifiedby', ['value' => $uid]);
-echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
-?>
-<?= $this->Form->button(__('Add Step'), ['class'=>'inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline']) ?>
-<?= $this->Form->end() ?>
 
-</div>
-</div>
+
+
+
+    <div x-data="{ open: false }">
+    <button @click="open = ! open" class="inline-block p-3 mb-1 ml-3 bg-slate-200 dark:bg-sky-700 dark:hover:bg-sky-800 dark:text-white hover:no-underline rounded-lg">
+        Add a Step
+    </button>
+    <div xcloak x-show="open" class="p-6 my-3 rounded-lg bg-white dark:bg-slate-800 dark:text-white">
+
+		<?= $this->Form->create(null, ['url' => [
+			'controller' => 'Steps',
+			'action' => 'add'
+	]]) ?>
+		<?php
+		echo $this->Form->control('name',['class'=>'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']);
+		echo $this->Form->control('description',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg', 'type' => 'textarea','label'=>'Objective']);
+		echo $this->Form->hidden('createdby', ['value' => $uid]);
+		echo $this->Form->hidden('modifiedby', ['value' => $uid]);
+		echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
+		?>
+		<?= $this->Form->button(__('Add Step'), ['class'=>'inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline']) ?>
+		<?= $this->Form->end() ?>
+    </div>
+  </div>
+
+
+
 
 <?php endif ?>
 

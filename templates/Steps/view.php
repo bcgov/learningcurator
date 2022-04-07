@@ -41,20 +41,6 @@ foreach ($step->pathways as $pathways) {
 ?>
 <div class="p-6 dark:text-white">
 
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="btn-group float-right ml-3">
-<?= $this->Html->link(__('Edit'), 
-						['controller' => 'Steps', 'action' => 'edit', $step->id], 
-						['class' => 'btn btn-light btn-sm']); 
-?>
-<?= $this->Form->postLink(__('Delete'), 
-							['action' => 'delete', $step->id],
-							['class' => 'btn btn-light btn-sm', 
-							'confirm' => __('Are you sure you want to delete # {0}?', $step->name)]);
-?>
-</div> <!-- /.btn-group -->
-<?php endif ?>
-
 <nav class="bg-slate-100 dark:bg-slate-900 rounded-lg p-3 mb-3" aria-label="breadcrumb">
 	<!-- <a href="/categories/index">Categories</a> /  -->
 	<?= $this->Html->link($step->pathways[0]->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $step->pathways[0]->topic->categories[0]->id]) ?> / 
@@ -71,7 +57,7 @@ foreach ($step->pathways as $pathways) {
 <div class="mt-2 float-right">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
-<button class="p-3 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline">
+<button class="p-3 ml-3 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline">
 <svg class="inline-block" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pin-fill" viewBox="0 0 16 16">
   <path d="M4.146.146A.5.5 0 0 1 4.5 0h7a.5.5 0 0 1 .5.5c0 .68-.342 1.174-.646 1.479-.126.125-.25.224-.354.298v4.431l.078.048c.203.127.476.314.751.555C12.36 7.775 13 8.527 13 9.5a.5.5 0 0 1-.5.5h-4v4.5c0 .276-.224 1.5-.5 1.5s-.5-1.224-.5-1.5V10h-4a.5.5 0 0 1-.5-.5c0-.973.64-1.725 1.17-2.189A5.921 5.921 0 0 1 5 6.708V2.277a2.77 2.77 0 0 1-.354-.298C4.342 1.674 4 1.179 4 .5a.5.5 0 0 1 .146-.354z"/>
 </svg> Follow Pathway
@@ -82,11 +68,12 @@ foreach ($step->pathways as $pathways) {
 	<?php 
 	echo $this->Form->postLink(__('Un-Follow Pathway'), 
 									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], 
-									['class' => 'mt-2 float-right inline-block p-3 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline',
+									['class' => 'mt-2 ml-3 float-right inline-block p-3 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline',
 									 'title' => 'Stop seeing your progress on this pathway', 
 									 'confirm' => '']); 
 	?>
 <?php endif ?>
+
 
 <h1 class="my-6 text-4xl">
 	<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
@@ -121,7 +108,19 @@ foreach ($step->pathways as $pathways) {
 </div> <!-- / progress contain -->
 
 
-
+<?php if($role == 'curator' || $role == 'superuser'): ?>
+<div class="float-right ml-3">
+<?= $this->Html->link(__('Edit Step'), 
+						['controller' => 'Steps', 'action' => 'edit', $step->id], 
+						['class' => 'mt-2 inline-block p-3 bg-black hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline']); 
+?>
+<?= $this->Form->postLink(__('Delete Step'), 
+							['action' => 'delete', $step->id],
+							['class' => 'mt-2 inline-block p-3 bg-black hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline', 
+							'confirm' => __('Are you sure you want to delete # {0}?', $step->name)]);
+?>
+</div> <!-- /.btn-group -->
+<?php endif ?>
 
 <!-- start drop-down -->
 <div x-cloak @click.away="open = false" class="relative ml-16" x-data="{ open: false }">

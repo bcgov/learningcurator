@@ -18,9 +18,10 @@ $this->loadHelper('Authentication.Identity');
     </h1>
 
 
+<div class="md:grid md:grid-cols-2 md:gap-4">
 <div class="my-3 p-3 rounded-lg bg-white dark:bg-slate-900">
     <?= $this->Form->create($step) ?>
-    <?= $this->Form->hidden('image_path', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']) ?>
+    <?= $this->Form->hidden('image_path', ['class' => 'p-3 bg-slate-300 dar k:bg-slate-800 rounded-lg']) ?>
     <?= $this->Form->hidden('featured', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']) ?>
     <?= $this->Form->hidden('modifiedby') ?>
     <?= $this->Form->hidden('pathway_id', ['value' => $step->pathway_id]) ?>
@@ -34,83 +35,61 @@ $this->loadHelper('Authentication.Identity');
 </div>
 
 <div class="my-3 p-3 rounded-lg bg-white dark:bg-slate-900">
-        <a href="#" class="inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline" data-toggle="modal" data-target="#showactadd">
-            Add New Activity
-        </a>
-        <a href="#" class="inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline" data-toggle="modal" data-target="#showactfind">
-            Add Existing Activity
-        </a>
-
-    </div>
-    
 
 
 
-    <div class="my-3 p-3 rounded-lg bg-white dark:bg-slate-900 hidden">
+
+    <div x-data="{ open: false }">
+    <button @click="open = ! open" class="inline-block p-3 mb-1 ml-3 bg-slate-200 dark:bg-sky-700 dark:hover:bg-sky-800 dark:text-white hover:no-underline rounded-lg">
+        Add Existing Activity
+    </button>
+    <div xcloak x-show="open" class="p-6 my-3 rounded-lg bg-white dark:bg-slate-800 dark:text-white">
     Add Existing Activity to this step
     <form method="get" id="actfind" action="/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
-        <input class="p-3 bg-slate-300 dark:bg-slate-800 rounded-lg mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
+        <input class="p-3 bg-slate-300 dark:bg-slate-900 rounded-lg mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
         <input type="hidden" name="step_id" value="<?= $step->id ?>">
         <button class="inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline" type="submit">Search</button>
     </form>
     <ul class="list-group list-group-flush" id="results">
     </ul>
     </div>
+  </div>
 
-    <div class="my-3 p-3 dark:bg-slate-900 rounded-lg hidden">
-Add New Activity to this Step
 
-    <?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'addtostep']]) ?>
-    <?php 
-    echo $this->Form->hidden('createdby_id', ['value' => $this->Identity->get('id')]);
-    echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')]);
-    echo $this->Form->hidden('step_id', ['value' => $step->id]);
-    //echo $this->Form->hidden('activity_types_id', ['value' => '1']); 
-    ?>
-    <?php echo $this->Form->control('hyperlink', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-800 rounded-lg']); ?>
-    <?php echo $this->Form->control('name', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-800 rounded-lg']); ?>
-    <label for="description">Description</label>
-    <?php echo $this->Form->textarea('description', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-800 rounded-lg']) ?>
-    <!-- <label>Activity Type
-    <select name="activity_types_id" id="activity_types_id" class="p-3 bg-slate-300 dark:bg-slate-800 rounded-lg">
-        <option value="1">Watch</option>
-        <option value="2">Read</option>
-        <option value="3">Listen</option>
-        <option value="4">Participate</option>
-    </select>
-    </label> -->
-    <?php //echo $this->Form->control('activity_type_id', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg', 'options' => $atypes]); ?>
 
-    <?php //echo $this->Form->control('stepcontext', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg', 'label' => 'Set Context for this step']); ?>
+  <div x-data="{ open: false }">
+    <button @click="open = ! open" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-sky-700 dark:hover:bg-sky-800 dark:text-white hover:no-underline rounded-lg">
+        Add New Activity
+    </button>
+    <div x-show="open" class="p-6 my-3 mx-auto rounded-lg bg-white dark:bg-slate-800 dark:text-white">
+    Add New Activity to this Step
+
+<?= $this->Form->create(null,['url' => ['controller' => 'Activities', 'action' => 'addtostep']]) ?>
+<?php 
+echo $this->Form->hidden('createdby_id', ['value' => $this->Identity->get('id')]);
+echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')]);
+echo $this->Form->hidden('step_id', ['value' => $step->id]);
+?>
+<?php echo $this->Form->control('hyperlink', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900 rounded-lg']); ?>
+<?php echo $this->Form->control('name', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900 rounded-lg']); ?>
+<label for="description">Description</label>
+<?php echo $this->Form->textarea('description', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900 rounded-lg']) ?>
+<?= $this->Form->button(__('Save Activity'), ['class' => 'inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline']) ?>
+<?= $this->Form->end() ?>
+
+
+    </div>
+  </div>
+
+ 
+
+
+
+
+
+    </div>
+    </div>
     
-    <?php //echo $this->Form->control('licensing', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']); ?>
-    <?php //echo $this->Form->control('moderator_notes', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']); ?>
-    
-    <?php //echo $this->Form->control('isbn', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']); ?>
-    
-    <?php //echo $this->Form->control('status_id', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg', 'options' => $statuses, 'empty' => true]); ?>
-    <?php //echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']); ?>
-    <!-- <label>Estimated Time
-    <select name="estimated_time" id="estimated_time_id" class="p-3 bg-slate-300 dark:bg-slate-800 rounded-lg">
-    <option>Under 5 mins</option>
-        <option>Under 10 mins</option>
-        <option>Under 15 mins </option>
-        <option>Under 20 mins</option>
-        <option>Under 30 mins</option>
-        <option>Under 1 hour</option>
-        <option>Half day or less</option> 
-        <option>1 day </option>
-        <option>More than 1 day </option>
-        <option>Variable</option>
-    </select>
-    </label> -->
-    <?php //echo $this->Form->control('tag_string', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg', 'type' => 'text', 'label' => 'Tags']); ?>
-    <?php //echo $this->Form->control('users._ids', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg', 'options' => $users]); ?>
-    <?php //echo $this->Form->control('competencies._ids', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg', 'options' => $competencies]); ?>
-    <?= $this->Form->button(__('Save Activity'), ['class' => 'inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline']) ?>
-    <?= $this->Form->end() ?>
-
-</div>
 
 
 
