@@ -163,12 +163,13 @@ class PathwaysController extends AppController
                 $followid = $pu->_joinData->id;
             }
         }
+        $percentage = 0;
+        $totalclaimed = 0;
+        $totalacts = 0;
+        $requiredacts = 0;
+        $suppacts = 0;
         if (!empty($pathway->steps)):
-            $percentage = 0;
-            $totalclaimed = 0;
-            $totalacts = 0;
-            $requiredacts = 0;
-            $suppacts = 0;
+
             foreach ($pathway->steps as $steps):
                 foreach ($steps->activities as $activity):
                     if($activity->status_id == 2) {
@@ -233,14 +234,18 @@ class PathwaysController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function import ()
+    public function import ($topicid = 0)
     {
+        $this->viewBuilder()->setLayout('ajax');
         $user = $this->request->getAttribute('authentication')->getIdentity();
-        $feed = file_get_contents('https://learningcurator.ca/imports/pathway-edi-the-basics.json');
+        $feed = file_get_contents('https://learningcurator.ca/imports/accessibility-at-work.json');
         $path = json_decode($feed);
+
+        $pathway = $this->Pathways->newEmptyEntity();
+        
         $pathdeets = [
             'status_id' => 1,
-            'topic_id' => 33,
+            'topic_id' => $topicid, //33,
             'name' => $path->name,
             'description' => $path->description,
             'objective' => $path->objective,
@@ -248,15 +253,110 @@ class PathwaysController extends AppController
             'createdby' => $user->id,
             'modifiedby' => $user->id
         ];
-        $pathway = $this->Pathways->newEmptyEntity();
+        //echo '<pre>'; print_r($pathdeets); exit;
+        
         $pathway = $this->Pathways->patchEntity($pathway, $pathdeets);
         if ($this->Pathways->save($pathway)) {
+            //echo 'Pathway created.<br>';
             $pathid = $pathway->id;
-            $this->set(compact('path','pathid'));
+            $st = TableRegistry::getTableLocator()->get('Steps');
+            $act = TableRegistry::getTableLocator()->get('Activities');
+            $asteptable = TableRegistry::getTableLocator()->get('ActivitiesSteps');
+            foreach($path->steps as $step) {
+
+                $newstep = $st->newEmptyEntity();
+                $stepdeets = [
+                    'pathways' => [['id' => $pathid]],
+                    'name' => $step->name,
+                    'slug' => $step->slug,
+                    'description' => $step->description,
+                    'createdby' => $user->id,
+                    'modifiedby' => $user->id
+                ];
+                
+                $newstep = $st->patchEntity($newstep,$stepdeets, [
+                    'associated' => [
+                        'Pathways'
+                    ]
+                ]);
+                if ($st->save($newstep)) {
+                    //echo '<br><br>' . $step->name . ' created <br>';
+
+                    foreach ($step->activities as $a) {
+                        
+                        $linktocheck = $a->hyperlink;
+                        $check = $act->find()->where(function ($exp, $query) use($linktocheck) {
+                                                        return $exp->like('Activities.hyperlink', '%'.$linktocheck.'%');
+                                                    })->toList();
+                        if(empty($check)) {
+                            
+                            $newact = $act->newEmptyEntity();
+                            $actdeets = [
+                                'steps' => [['id' => $newstep->id]],
+                                'status_id' => 2,
+                                'activity_types_id' => 2,
+                                'hyperlink' => $a->hyperlink,
+                                'name' => $a->name,
+                                'slug' => $a->slug,
+                                'description' => $a->description,
+                                'createdby_id' => $user->id,
+                                'approvedby_id' => $user->id,
+                                'modifiedby_id' => $user->id
+                            ];
+                            
+                            $newact = $act->patchEntity($newact,$actdeets, [
+                                'associated' => [
+                                    'Steps'
+                                ]
+                            ]);
+                            if ($act->save($newact)) {
+                                //echo $a->name . ' created and added to new step<br>';
+                            }
+
+                        } else {
+
+                            
+                            $activitiesStep = $asteptable->newEmptyEntity();
+                            $context = $a->_joinData->stepcontext ?? '';
+                            $req = $a->_joinData->required ?? 0;
+                            $actstdeets = [
+                                'step_id' => $newstep->id,
+                                'activity_id' => $check[0]->id,
+                                'steporder' => 0,
+                                'stepcontext' => $context,
+                                'required' => $req
+                            ];
+                            $activitiesStep = $asteptable->patchEntity($activitiesStep,$actstdeets);
+
+                            if (!$asteptable->save($activitiesStep)) {
+                                echo 'Cannot add to step!';
+                                echo '' . $check[0]->id;
+                                //exit;
+                            }
+                            //echo $check[0]->id . ' exists already ... adding!<br>';
+
+                        }
+
+                    }
+
+
+
+                    
+                } else {
+                    echo 'Step NOT created<br>';
+                }
+
+            }
+
+            //$this->set(compact('path','pathid'));
+            $redir = '/pathways/' . $path->slug;
+            return $this->redirect($redir);
+
         } else {
-            echo 'Eeh';
+            echo 'Something went wrong importing this pathway.';
             exit;
         }
+        
         
     }
 
@@ -276,7 +376,7 @@ class PathwaysController extends AppController
             $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
             //echo '<pre>'; print_r($this->request->getData()); exit;
             if ($this->Pathways->save($pathway)) {
-                $this->Flash->success(__('The pathway has been saved.'));
+                //$this->Flash->success(__('The pathway has been saved.'));
                 $redir = '/pathways/' . $sluggedTitle;
                 return $this->redirect($redir);
             }

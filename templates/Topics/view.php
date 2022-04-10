@@ -25,7 +25,9 @@ if ($this->Identity->isLoggedIn()) {
 <div class="p-4 text-2xl bg-slate-100 dark:bg-slate-800 rounded-lg">
 <?= h($topic->description) ?>
 </div>
-
+<?php if($role == 'curator' || $role == 'superuser'): ?>
+    <a href="/pathways/import/<?= $topic->id ?>">Import a Pathway</a>
+<?php endif ?>
 <?php foreach($topic->pathways as $pathway): ?>
 <?php if($pathway->status_id == 2): ?>
     <div class="p-3 my-3 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
