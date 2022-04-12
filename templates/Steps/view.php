@@ -84,6 +84,7 @@ foreach ($step->pathways as $pathways) {
 </h1>
 
 <div class="p-4 lg:text-2xl bg-slate-100 dark:bg-slate-800 rounded-t-lg">
+	<div class="text-xs">Objective</div>
 	<?= $step->pathways[0]->objective ?> 
 </div>
 
@@ -174,11 +175,13 @@ foreach ($step->pathways as $pathways) {
 <span class="badge badge-warning">DRAFT</span>
 <?php endif ?>
 <div class="mb-4 p-3 text-xl bg-slate-100 dark:bg-slate-800 rounded-lg">
+	<div class="text-xs">Objective</div>
 <?= $step->description ?>
 </div>
 <div class="">
 <?php if (!empty($requiredacts)) : ?>
 <h3 class="mt-6 text-2xl dark:text-white">Required Activities <span class="bg-black text-white dark:bg-white dark:text-black rounded-lg text-lg inline-block px-2"><?= $stepacts ?></span></h3>
+<div><em>Launch these activities and fill in your progress bar.</em></div>
 <?php foreach ($requiredacts as $activity) : ?>
 <?php 
 // #TODO move this back into the controller and simplify
@@ -196,7 +199,7 @@ foreach($actlist as $k => $v) {
 	<div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
 		
 		<a href="/profile/launches" 
-			class="inline-block w-24 bg-slate-200 text-[#003366] dark:bg-slate-900 dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
+			class="inline-block w-24 bg-sky-700 dark:bg-slate-900 text-white dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
 			:class="[count > '0' ? 'show' : 'hidden']">
 				Launched
 		</a>
@@ -234,7 +237,22 @@ foreach($actlist as $k => $v) {
 			<button><span x-text="liked"></span> likes</button>
 		</form> -->
 
-
+<?php 
+preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $youtube);
+if(!empty($youtube[1])):
+?>
+<img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
+<!-- <div x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
+<iframe 
+	width="560" 
+	height="315" 
+	src="https://www.youtube.com/embed/<?= $youtube[1] ?>" 
+	title="YouTube video player" 
+	frameborder="0" 
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+	allowfullscreen></iframe>
+</div> -->
+<?php endif ?>
 		<a target="_blank" 
 			x-on:click="count++;"
 			rel="noopener" 
