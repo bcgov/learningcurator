@@ -8,7 +8,7 @@ $this->loadHelper('Authentication.Identity');
 
 <div class="p-6 dark:text-white">
 <div class="p-6 bg-slate-200 dark:bg-slate-900 rounded-lg">
-
+<?= $this->Form->postLink(__('Delete Pathway'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'float-right p-3 bg-red-100 dark:bg-red-900 hover:no-underline hover:underline rounded-lg']) ?>
 <?= $this->Form->create($pathway) ?>
 
 <label><?php echo $this->Form->checkbox('featured'); ?> Featured?</label>

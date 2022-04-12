@@ -219,13 +219,23 @@ class PathwaysController extends AppController
                             'Steps.Activities', 
                             'Steps.Activities.ActivityTypes'])->firstOrFail();
         
-        $this->RequestHandler->renderAs($this, 'json');
-        // $this->RequestHandler->respondAs('json', [
-        //     // Force download
-        //     'attachment' => true,
-        //     'charset' => 'UTF-8'
-        // ]);
-        $this->set(compact('pathway'));
+        //$this->RequestHandler->renderAs($this, 'json');
+
+        $p = json_encode($pathway);
+        $response = $this->response;
+    
+        // Inject string content into response body
+        $response = $response->withStringBody($p);
+    
+        $response = $response->withType('text/json');
+        $filename = $pathway->slug . '.json';
+        // Optionally force file download
+        $response = $response->withDownload($filename);
+    
+        // Return response object to prevent controller from trying to render
+        // a view.
+        return $response;
+
 
     }
 

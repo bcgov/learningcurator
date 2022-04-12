@@ -68,8 +68,8 @@ $this->assign('title', h($pathway->name));
 
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right ml-3 mt-1">
-<?= $this->Html->link(__('Edit Pathway'), ['action' => 'edit', $pathway->id], ['class' => 'p-3 bg-slate-100 dark:bg-black hover:no-underline hover:underline rounded-lg']) ?>
-<?= $this->Form->postLink(__('Delete Pathway'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'p-3 bg-slate-100 dark:bg-black hover:no-underline hover:underline rounded-lg']) ?>
+<?= $this->Html->link(__('Edit Pathway'), ['action' => 'edit', $pathway->id], ['class' => 'p-3 bg-slate-100 dark:bg-black hover:no-underline rounded-lg']) ?>
+<a href="/pathways/<?= $pathway->slug ?>/export" class="p-3 bg-slate-100 dark:bg-black hover:no-underline rounded-lg">Export Pathway</a>
 </div>
 <?php endif ?>
 
