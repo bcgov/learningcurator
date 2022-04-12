@@ -236,9 +236,12 @@ class PathwaysController extends AppController
      */
     public function import ($topicid = 0)
     {
+        // #TODO sanitize this somehow and perhaps only accept urls from a 
+        // whitelist
+        $importfile = $this->request->getQuery('pathimportfile');
         $this->viewBuilder()->setLayout('ajax');
         $user = $this->request->getAttribute('authentication')->getIdentity();
-        $feed = file_get_contents('https://learningcurator.ca/imports/accessibility-at-work.json');
+        $feed = file_get_contents($importfile);
         $path = json_decode($feed);
 
         $pathway = $this->Pathways->newEmptyEntity();
@@ -292,7 +295,6 @@ class PathwaysController extends AppController
                             
                             $newact = $act->newEmptyEntity();
                             $actdeets = [
-                                'steps' => [['id' => $newstep->id]],
                                 'status_id' => 2,
                                 'activity_types_id' => 2,
                                 'hyperlink' => $a->hyperlink,
@@ -304,13 +306,35 @@ class PathwaysController extends AppController
                                 'modifiedby_id' => $user->id
                             ];
                             
-                            $newact = $act->patchEntity($newact,$actdeets, [
-                                'associated' => [
-                                    'Steps'
-                                ]
-                            ]);
+                            $newact = $act->patchEntity($newact,$actdeets);
                             if ($act->save($newact)) {
                                 //echo $a->name . ' created and added to new step<br>';
+
+
+                                $activitiesStep = $asteptable->newEmptyEntity();
+                                $context = $a->_joinData->stepcontext ?? '';
+                                $req = $a->_joinData->required ?? 0;
+                                $order = $a->_joinData->steporder ?? 0;
+                                $actstdeets = [
+                                    'step_id' => $newstep->id,
+                                    'activity_id' => $newact->id,
+                                    'steporder' => $order,
+                                    'stepcontext' => $context,
+                                    'required' => $req
+                                ];
+                                $activitiesStep = $asteptable->patchEntity($activitiesStep,$actstdeets);
+    
+                                if (!$asteptable->save($activitiesStep)) {
+                                    echo 'Cannot add to step!';
+                                    echo '' . $check[0]->id;
+                                    //exit;
+                                }
+
+
+
+
+                            } else {
+                                echo 'Activity could NOT be created.';
                             }
 
                         } else {
@@ -319,10 +343,11 @@ class PathwaysController extends AppController
                             $activitiesStep = $asteptable->newEmptyEntity();
                             $context = $a->_joinData->stepcontext ?? '';
                             $req = $a->_joinData->required ?? 0;
+                            $order = $a->_joinData->steporder ?? 0;
                             $actstdeets = [
                                 'step_id' => $newstep->id,
                                 'activity_id' => $check[0]->id,
-                                'steporder' => 0,
+                                'steporder' => $order,
                                 'stepcontext' => $context,
                                 'required' => $req
                             ];

@@ -19,15 +19,28 @@ if ($this->Identity->isLoggedIn()) {
     <?= h($topic->name) ?>
 </nav>
 
+
+
 <h1 class="text-3xl mt-4">
     <?= h($topic->name) ?>
 </h1>
 <div class="p-4 text-2xl bg-slate-100 dark:bg-slate-800 rounded-lg">
 <?= h($topic->description) ?>
 </div>
+
+
+
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-    <a href="/pathways/import/<?= $topic->id ?>">Import a Pathway</a>
+    <?= $this->Html->link(__('Edit Topic'), ['action' => 'edit', $topic->id], ['class' => 'inline-block px-4 py-2 text-md bg-sky-700 text-white dark:bg-sky-700 dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900 dark:hover:bg-slate-900 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
+    <!-- <a href="/pathways/import/<?= $topic->id ?>">Import a Pathway</a> -->
+    <form method="GET" action="/pathways/import/<?= $topic->id ?>" class="p-3 m-3 bg-white dark:bg-slate-900">
+    <input type="text" name="pathimportfile" id="pathimportfile" class="block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg">
+    <input type="submit" value="Import Pathway">
+    </form>
 <?php endif ?>
+
+
+
 <?php foreach($topic->pathways as $pathway): ?>
 <?php if($pathway->status_id == 2): ?>
     <div class="p-3 my-3 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
