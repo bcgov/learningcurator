@@ -72,6 +72,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/pathways/{slug}', ['controller' => 'Pathways', 'action' => 'view'])->setPass(['slug']);
     $builder->connect('/pathways/{slug}/export', ['controller' => 'Pathways', 'action' => 'export'])->setPass(['slug']);
     $builder->connect('/pathways/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
+    $builder->connect('/{categoryslug}/topic/{topicslug}/pathway/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
 
     $builder->connect('/profile/launches', ['controller' => 'ActivitiesUsers', 'action' => 'launches']);
     $builder->connect('/profile/follows', ['controller' => 'PathwaysUsers', 'action' => 'pathways']);

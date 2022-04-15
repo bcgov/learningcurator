@@ -282,10 +282,10 @@ class StepsController extends AppController
     }
 
 
-        /**
-     * Set the order of an activity within a step
+    /**
+     * If the step is published, unpublish it and vice versa
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful update, renders view otherwise.
      */
     public function publishtoggle($id = null)
     {

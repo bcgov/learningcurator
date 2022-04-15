@@ -174,7 +174,7 @@ $this->assign('title', h($pathway->name));
 	<?= $steps->description ?>
 </div>
 
-<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>"
+<a href="/<?= h($pathway->topic->categories[0]->slug) ?>/topic/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>"
 	class="inline-block p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 	View Step
 </a>
