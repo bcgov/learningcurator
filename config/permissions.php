@@ -177,7 +177,7 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Steps',
-            'action' => ['edit','add','delete'],
+            'action' => ['edit','add','delete','publishtoggle'],
         ],
         [
             'role' => '*',
