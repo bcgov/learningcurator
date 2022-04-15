@@ -30,15 +30,13 @@ class TopicsController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Topic id.
+     * @param string|null $slug Topic slug.
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($slug = null)
     {
-        $topic = $this->Topics->get($id, [
-            'contain' => ['Users', 'Categories', 'Pathways'],
-        ]);
+        $topic = $this->Topics->findBySlug($slug)->contain(['Users', 'Categories', 'Pathways'])->firstOrFail();
 
         $this->set(compact('topic'));
     }

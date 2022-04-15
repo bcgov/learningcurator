@@ -30,14 +30,32 @@ if ($this->Identity->isLoggedIn()) {
 
 
 
+
+
+
+
 <?php if($role == 'curator' || $role == 'superuser'): ?>
     <?= $this->Html->link(__('Edit Topic'), ['action' => 'edit', $topic->id], ['class' => 'inline-block px-4 py-2 text-md bg-sky-700 text-white dark:bg-sky-700 dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900 dark:hover:bg-slate-900 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
     <!-- <a href="/pathways/import/<?= $topic->id ?>">Import a Pathway</a> -->
+
+
+
     <form method="GET" action="/pathways/import/<?= $topic->id ?>" class="p-3 m-3 bg-white dark:bg-slate-900">
-    <input type="text" name="pathimportfile" id="pathimportfile" class="block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg">
+    <input type="text" 
+            name="pathimportfile" 
+            id="pathimportfile" 
+            class="block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg">
     <input type="submit" value="Import Pathway">
     </form>
+
+
+
 <?php endif ?>
+
+
+
+
+
 
 
 
@@ -74,7 +92,9 @@ if ($this->Identity->isLoggedIn()) {
                 <?= h($pathway->name) ?>
             </a>
         </h2>
-        <div><?= h($pathway->description) ?></div>
+        <div class="p-4 text-lg bg-slate-100 dark:bg-black rounded-lg">
+            <?= h($pathway->description) ?>
+        </div>
         <a href="/pathways/<?= h($pathway->slug) ?>" 
             class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
                 Launch Pathway

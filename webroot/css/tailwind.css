@@ -993,6 +993,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(100 116 139 / var(--tw-bg-opacity));
 }
 
+.bg-yellow-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(161 98 7 / var(--tw-bg-opacity));
+}
+
+.bg-red-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(127 29 29 / var(--tw-bg-opacity));
+}
+
 .bg-emerald-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(4 120 87 / var(--tw-bg-opacity));
@@ -1435,6 +1445,11 @@ p {
   .dark\:bg-red-900 {
     --tw-bg-opacity: 1;
     background-color: rgb(127 29 29 / var(--tw-bg-opacity));
+  }
+
+  .dark\:bg-emerald-700 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(4 120 87 / var(--tw-bg-opacity));
   }
 
   .dark\:bg-white {

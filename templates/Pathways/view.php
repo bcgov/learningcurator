@@ -25,15 +25,12 @@ $this->assign('title', h($pathway->name));
 <nav class="mb-3 bg-slate-100 dark:bg-slate-900 rounded-lg p-3" aria-label="breadcrumb">
 	<a href="/categories/index" class="hover:no-underline hover:underline">Categories</a> / 
 	<?= $this->Html->link($pathway->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $pathway->topic->categories[0]->id],['class' => 'hover:no-underline hover:underline']) ?> / 
-	<?= $pathway->has('topic') ? $this->Html->link($pathway->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id],['class' => 'hover:no-underline hover:underline']) : '' ?> / 
+	<?= $pathway->has('topic') ? $this->Html->link($pathway->topic->name, ['controller' => 'Topics', 'action' => $pathway->topic->categories[0]->slug . '/topic/' . $pathway->topic->slug],['class' => 'hover:no-underline hover:underline']) : '' ?> / 
 	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
 		<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
 		<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
 	</svg> <?= h($pathway->name) ?>
 </nav> 
-
-
-
 
 <?php if(empty($followid)): ?>
 <div class="mt-2 float-right">
@@ -165,7 +162,7 @@ $this->assign('title', h($pathway->name));
 		<?= h($steps->name) ?> 
 	</a>
 	<?php if($role == 'curator' || $role == 'superuser'): ?>
-	<span class="text-xs px-4 bg-slate-100 dark:bg-black rounded-lg"><?= $steps->status->name ?></span>
+	<span class="text-xs px-4 bg-slate-100 dark:bg-emerald-700 rounded-lg"><?= $steps->status->name ?></span>
 	<?php endif ?>
 	<span class="inline-block px-2 bg-slate-500 dark:bg-black text-white text-xs rounded-full">
 		<?= $requiredacts ?> activities
@@ -184,12 +181,33 @@ $this->assign('title', h($pathway->name));
 
 <?php else: ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div><span class="badge badge-warning"><?= $steps->status->name ?></span></div>
-<h2>
-<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
-<?= h($steps->name) ?> 
+
+<h3 class="text-2xl">
+	<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
+		<?= h($steps->name) ?> 
+	</a>
+	<?php if($role == 'curator' || $role == 'superuser'): ?>
+
+	<span class="text-xs px-4  bg-yellow-700 text-white rounded-lg"><?= $steps->status->name ?></span>
+
+	<?php endif ?>
+	<span class="inline-block px-2 bg-slate-500 dark:bg-black text-white text-xs rounded-full">
+		<?= $requiredacts ?> activities
+	</span>
+</h3>
+
+
+<div class="my-3 p-3 bg-slate-100 dark:bg-[#002850] text-xl rounded-lg">
+	<?= $steps->description ?>
+</div>
+
+<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>"
+	class="inline-block p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+	View Draft Step
 </a>
-</h2>
+
+	<a href="/steps/publishtoggle/<?= $steps->id ?>">Publish Step</a>
+
 <?php endif; // if curator or admin ?>
 <?php endif; // if published ?>
 </div>

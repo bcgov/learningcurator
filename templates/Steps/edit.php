@@ -81,10 +81,12 @@ echo $this->Form->hidden('step_id', ['value' => $step->id]);
     </div>
   </div>
 
- 
-
-
-
+  <?= $this->Form->postLink(__('Delete Step'), 
+						['action' => 'delete', $step->id],
+						['class' => 'mt-2 inline-block p-3 bg-red-900 hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline', 
+						'confirm' => __('Are you sure you want to delete # {0}?', $step->name)]);
+		
+?>
 
 
     </div>

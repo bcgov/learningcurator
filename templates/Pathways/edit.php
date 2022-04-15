@@ -24,10 +24,9 @@ $this->loadHelper('Authentication.Identity');
 
 <div>
 <label>Topic:
-<?php echo $this->Form->select(
-    'topic_id',
-    $areas,
-	['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg'],
+<?php echo $this->Form->select('topic_id',
+                                $areas,
+                                ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg'],
 );
 ?></label>
 </div>
@@ -40,11 +39,14 @@ echo $this->Form->control('objective', ['class' => 'w-full p-3 bg-slate-300 dark
 //echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true, 'class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']);
 //echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true, 'class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']);
 //echo $this->Form->control('color');
-//echo $this->Form->control('file_path');
+//echo $this->Form->control('file_path', ['class' => 'w-full p-3 bg-slate-300 dark:bg-slate-800 rounded-lg','label' => 'Import history']);
 //echo $this->Form->control('image_path');
 //echo $this->Form->control('ministry_id', ['options' => $ministries, 'empty' => true]);
 //echo $this->Form->control('competencies._ids', ['options' => $competencies]);
 ?>
+<?php if(!empty($pathway->file_path)): ?>
+<div class="p-3 bg-white dark:bg-black text-sm italic rounded-lg"><?= $pathway->file_path ?></div>
+<?php endif ?>
 <?= $this->Form->button(__('Save Pathway'), ['class' => 'btn btn-block btn-success mt-3']) ?>
 <?= $this->Form->end() ?>
 </div>

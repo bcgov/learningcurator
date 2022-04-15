@@ -59,6 +59,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
     $builder->connect('/find', ['controller' => 'Activities', 'action' => 'find'])->setPass(['search']);
 
+    $builder->connect('/{categoryslug}/topic/{slug}', ['controller' => 'Topics', 'action' => 'view'])->setPass(['slug']);
+
     //$builder->connect('/pathways-users/delete', ['controller' => 'PathwaysUsers', 'action' => 'delete']);
     $builder->connect('/pathways/add', ['controller' => 'Pathways', 'action' => 'add']);
     $builder->connect('/pathways/find', ['controller' => 'Pathways', 'action' => 'find']);
@@ -66,6 +68,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/pathways/search', ['controller' => 'Pathways', 'action' => 'search']);
     $builder->connect('/pathways/import/{topicid}', ['controller' => 'Pathways', 'action' => 'import'])->setPass(['topicid']);
     
+    $builder->connect('/{categoryslug}/topic/{topicslug}/pathway/{slug}', ['controller' => 'Pathways', 'action' => 'view'])->setPass(['slug']);
     $builder->connect('/pathways/{slug}', ['controller' => 'Pathways', 'action' => 'view'])->setPass(['slug']);
     $builder->connect('/pathways/{slug}/export', ['controller' => 'Pathways', 'action' => 'export'])->setPass(['slug']);
     $builder->connect('/pathways/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);

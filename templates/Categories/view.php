@@ -46,13 +46,13 @@ $this->assign('title', $pagetitle);
 <div class="p-3 my-3 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
 <h2 class="text-3xl">
 	<!-- topic_id: <?= $topic->id ?> --> 
-	<?= $this->Html->link(h($topic->name), ['controller' => 'Topics', 'action' => 'view', $topic->id]) ?>
+	<a href="/topics/<?= $topic->slug ?>"><?= $topic->name ?></a>
 </h2>
 
 <div class="p-3 mb-2 bg-slate-100 dark:bg-slate-800">
 	<?= $topic->description ?>
 </div>
-<a href="/topics/view/<?= $topic->id ?>" class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+<a href="/topics/<?= $topic->slug ?>" class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 	View Topic
 </a>
 

@@ -44,7 +44,7 @@ foreach ($step->pathways as $pathways) {
 <nav class="bg-slate-100 dark:bg-slate-900 rounded-lg p-3 mb-3" aria-label="breadcrumb">
 	<!-- <a href="/categories/index">Categories</a> /  -->
 	<?= $this->Html->link($step->pathways[0]->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $step->pathways[0]->topic->categories[0]->id]) ?> / 
-	<?= $this->Html->link($step->pathways[0]->topic->name, ['controller' => 'Topics', 'action' => 'view', $step->pathways[0]->topic->id]) ?> / 
+	<?= $this->Html->link($step->pathways[0]->topic->name, ['controller' => 'Topics', 'action' => 'view', $step->pathways[0]->topic->slug]) ?> / 
 	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
 		<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
 		<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
@@ -111,14 +111,15 @@ foreach ($step->pathways as $pathways) {
 
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right ml-3">
+	<?php 
+	$pornot = 'Publish Step';
+	if($step->status_id == 2) $pornot = 'Unpublish Step'; 
+	?>
+	<a href="/steps/publishtoggle/<?= $step->id ?>"><?= $pornot ?></a>
+
 <?= $this->Html->link(__('Edit Step'), 
 						['controller' => 'Steps', 'action' => 'edit', $step->id], 
 						['class' => 'mt-2 inline-block p-3 bg-black hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline']); 
-?>
-<?= $this->Form->postLink(__('Delete Step'), 
-							['action' => 'delete', $step->id],
-							['class' => 'mt-2 inline-block p-3 bg-black hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline', 
-							'confirm' => __('Are you sure you want to delete # {0}?', $step->name)]);
 ?>
 </div> <!-- /.btn-group -->
 <?php endif ?>
@@ -241,8 +242,8 @@ foreach($actlist as $k => $v) {
 preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $youtube);
 if(!empty($youtube[1])):
 ?>
-<img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
-<!-- <div x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
+<!-- <img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')"> -->
+<div class="w-full h-auto bg-black/50" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
 <iframe 
 	width="560" 
 	height="315" 
@@ -251,7 +252,7 @@ if(!empty($youtube[1])):
 	frameborder="0" 
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 	allowfullscreen></iframe>
-</div> -->
+</div>
 <?php endif ?>
 		<a target="_blank" 
 			x-on:click="count++;"
