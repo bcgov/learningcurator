@@ -21,7 +21,8 @@ if ($this->Identity->isLoggedIn()) {
 <div class="my-2 p-3 md:p-6 bg-white dark:bg-slate-800 w-full rounded-lg">
 	<div x-data="{ topics<?= $category->id ?>: false }" x-cloak>
 		<h1 class="text-3xl">
-			<?= $this->Html->link($category->name, ['action' => 'view', $category->id]) ?>
+			<?= $this->Html->link($category->name, ['action' => 'view', $category->slug]) ?>
+
 			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="!topics<?= $category->id ?>" @click="topics<?= $category->id ?> = ! topics<?= $category->id ?>">
 				Show Topics
 			</button>

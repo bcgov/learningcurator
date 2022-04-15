@@ -30,7 +30,6 @@ $this->assign('title', $pagetitle);
 </div>
 <?php endif;  // curator or admin? ?>
 
-
 <h1 class="text-4xl my-3">
 	<?= h($category->name) ?>
 </h1>

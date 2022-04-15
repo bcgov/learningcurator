@@ -24,13 +24,13 @@ $this->assign('title', h($pathway->name));
 
 <nav class="mb-3 bg-slate-100 dark:bg-slate-900 rounded-lg p-3" aria-label="breadcrumb">
 	<a href="/categories/index" class="hover:underline">Categories</a> / 
-	<a href="/categories/view/<?= h($pathway->topic->categories[0]->id) ?>" class="hover:underline"><?= h($pathway->topic->categories[0]->name) ?></a> / 
+	<a href="/category/<?= h($pathway->topic->categories[0]->slug) ?>" class="hover:underline"><?= h($pathway->topic->categories[0]->name) ?></a> / 
 	<a href="/<?= h($pathway->topic->categories[0]->slug) ?>/topic/<?= h($pathway->topic->slug) ?>" class="hover:underline"><?= h($pathway->topic->name) ?></a> / 
 	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
 		<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
 		<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
 	</svg> <?= h($pathway->name) ?>
-</nav> 
+</nav>
 
 <?php if(empty($followid)): ?>
 <div class="mt-2 float-right">
@@ -154,11 +154,12 @@ $this->assign('title', h($pathway->name));
 <?php foreach($steps->activities as $act): ?>
 <?php if($act->_joinData->required == 1) $requiredacts++; ?>
 <?php endforeach ?>
-<div class="p-6 my-3 rounded-lg bg-white dark:bg-slate-900 dark:text-white">
+
 <?php //echo '<pre>'; print_r($steps); continue; ?>
 <?php if($steps->status->name == 'Published'): ?>
+<div class="p-6 my-3 rounded-lg bg-white dark:bg-slate-900 dark:text-white">
 <h3 class="text-2xl">
-	<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
+<a href="/<?= h($pathway->topic->categories[0]->slug) ?>/topic/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
 		<?= h($steps->name) ?> 
 	</a>
 	<?php if($role == 'curator' || $role == 'superuser'): ?>
@@ -178,10 +179,10 @@ $this->assign('title', h($pathway->name));
 	class="inline-block p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 	View Step
 </a>
-
+</div>
 <?php else: ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-
+	<div class="p-6 my-3 rounded-lg bg-white dark:bg-slate-900 dark:text-white">
 <h3 class="text-2xl">
 	<a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
 		<?= h($steps->name) ?> 
@@ -207,10 +208,10 @@ $this->assign('title', h($pathway->name));
 </a>
 
 	<a href="/steps/publishtoggle/<?= $steps->id ?>">Publish Step</a>
-
+</div>
 <?php endif; // if curator or admin ?>
 <?php endif; // if published ?>
-</div>
+
 <?php endforeach ?>
 <?php else: ?>
 <div>There don't appear to be any steps assigned to this pathway yet.</div>

@@ -43,7 +43,7 @@ foreach ($step->pathways as $pathways) {
 
 <nav class="bg-slate-100 dark:bg-slate-900 rounded-lg p-3 mb-3" aria-label="breadcrumb">
 	<!-- <a href="/categories/index">Categories</a> /  -->
-	<a href="/categories/view/<?= h($step->pathways[0]->topic->categories[0]->id) ?>"><?= h($step->pathways[0]->topic->categories[0]->name) ?></a> / 
+	<a href="/category/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>"><?= h($step->pathways[0]->topic->categories[0]->name) ?></a> / 
 	<a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/topic/<?= h($step->pathways[0]->topic->slug) ?>"><?= h($step->pathways[0]->topic->name) ?></a> /
 	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
 		<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>

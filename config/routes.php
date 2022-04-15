@@ -59,6 +59,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
     $builder->connect('/find', ['controller' => 'Activities', 'action' => 'find'])->setPass(['search']);
 
+    $builder->connect('/category/{slug}', ['controller' => 'Categories', 'action' => 'view'])->setPass(['slug']);
+
     $builder->connect('/{categoryslug}/topic/{slug}', ['controller' => 'Topics', 'action' => 'view'])->setPass(['slug']);
 
     //$builder->connect('/pathways-users/delete', ['controller' => 'PathwaysUsers', 'action' => 'delete']);
