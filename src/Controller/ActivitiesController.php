@@ -39,7 +39,9 @@ class ActivitiesController extends AppController
                                         'Statuses', 
                                         'Ministries', 
                                         'ActivityTypes',
-                                        'Steps.Pathways'])
+                                        'Steps.Pathways',
+                                        'Steps.Pathways.Topics',
+                                        'Steps.Pathways.Topics.Categories'])
                             ->where(['Activities.status_id' => 2])
                             ->order(['Activities.created' => 'DESC'])); // including 'Steps.Pathways' appears to be SUPER expensive    
 
