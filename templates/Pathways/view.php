@@ -23,9 +23,9 @@ $this->assign('title', h($pathway->name));
 <?php endif ?>
 
 <nav class="mb-3 bg-slate-100 dark:bg-slate-900 rounded-lg p-3" aria-label="breadcrumb">
-	<a href="/categories/index" class="hover:no-underline hover:underline">Categories</a> / 
-	<?= $this->Html->link($pathway->topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $pathway->topic->categories[0]->id],['class' => 'hover:no-underline hover:underline']) ?> / 
-	<?= $pathway->has('topic') ? $this->Html->link($pathway->topic->name, ['controller' => 'Topics', 'action' => $pathway->topic->categories[0]->slug . '/topic/' . $pathway->topic->slug],['class' => 'hover:no-underline hover:underline']) : '' ?> / 
+	<a href="/categories/index" class="hover:underline">Categories</a> / 
+	<a href="/categories/view/<?= h($pathway->topic->categories[0]->id) ?>" class="hover:underline"><?= h($pathway->topic->categories[0]->name) ?></a> / 
+	<a href="/<?= h($pathway->topic->categories[0]->slug) ?>/topic/<?= h($pathway->topic->slug) ?>" class="hover:underline"><?= h($pathway->topic->name) ?></a> / 
 	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
 		<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
 		<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
