@@ -239,6 +239,9 @@ class PathwaysController extends AppController
 
     }
 
+
+
+
     /**
      * Import method
      *
@@ -254,15 +257,33 @@ class PathwaysController extends AppController
         $feed = file_get_contents($importfile);
         $path = json_decode($feed);
 
+        $pathpast = $path->file_path . '';
+        $pathpast .= 'Imported pathway originally created by ' . $path->createdby . ' ';
+        $pathpast .= 'on ' . $path->created . '. Last modified by ' . $path->modifiedby . ' ';
+        $pathpast .= 'on ' . $path->modified;
+
+        $pathslugtocheck = $path->slug;
+        $namecheck = $this->Pathways->find()->where(function ($exp, $query) use($pathslugtocheck) {
+                                        return $exp->like('Pathways.slug', '%'.$pathslugtocheck.'%');
+                                    })->toList();
+        $pathname = $path->name;
+        $pathslug = $path->slug;
+        if(!empty($namecheck)) {
+            $pathname = $path->name . ' - ' . FrozenTime::now();
+            $sluggedtitle = Text::slug($pathname);
+            $pathslug = strtolower(substr($sluggedtitle, 0, 191));
+        }
+
         $pathway = $this->Pathways->newEmptyEntity();
         
         $pathdeets = [
             'status_id' => 1,
             'topic_id' => $topicid, //33,
-            'name' => $path->name,
+            'name' => $pathname,
+            'file_path' => $pathpast, // we are repurposing file_path here to create a log mostly because Allan is afraid of database migrations
             'description' => $path->description,
             'objective' => $path->objective,
-            'slug' => $path->slug,
+            'slug' => $pathslug,
             'createdby' => $user->id,
             'modifiedby' => $user->id
         ];
@@ -270,11 +291,11 @@ class PathwaysController extends AppController
         
         $pathway = $this->Pathways->patchEntity($pathway, $pathdeets);
         if ($this->Pathways->save($pathway)) {
-            //echo 'Pathway created.<br>';
+            
             $pathid = $pathway->id;
             $st = TableRegistry::getTableLocator()->get('Steps');
             $act = TableRegistry::getTableLocator()->get('Activities');
-            $asteptable = TableRegistry::getTableLocator()->get('ActivitiesSteps');
+            $asteptable = TableRegistry::getTableLocator()->get('ActivitiesSteps'); 
             foreach($path->steps as $step) {
 
                 $newstep = $st->newEmptyEntity();
@@ -293,7 +314,6 @@ class PathwaysController extends AppController
                     ]
                 ]);
                 if ($st->save($newstep)) {
-                    //echo '<br><br>' . $step->name . ' created <br>';
 
                     foreach ($step->activities as $a) {
                         
@@ -318,9 +338,6 @@ class PathwaysController extends AppController
                             
                             $newact = $act->patchEntity($newact,$actdeets);
                             if ($act->save($newact)) {
-                                //echo $a->name . ' created and added to new step<br>';
-
-
                                 $activitiesStep = $asteptable->newEmptyEntity();
                                 $context = $a->_joinData->stepcontext ?? '';
                                 $req = $a->_joinData->required ?? 0;
@@ -335,13 +352,8 @@ class PathwaysController extends AppController
                                 $activitiesStep = $asteptable->patchEntity($activitiesStep,$actstdeets);
     
                                 if (!$asteptable->save($activitiesStep)) {
-                                    echo 'Cannot add to step!';
-                                    echo '' . $check[0]->id;
-                                    //exit;
+                                    echo 'Cannot add to step!' . $check[0]->id;
                                 }
-
-
-
 
                             } else {
                                 echo 'Activity could NOT be created.';
@@ -349,7 +361,6 @@ class PathwaysController extends AppController
 
                         } else {
 
-                            
                             $activitiesStep = $asteptable->newEmptyEntity();
                             $context = $a->_joinData->stepcontext ?? '';
                             $req = $a->_joinData->required ?? 0;
@@ -364,26 +375,19 @@ class PathwaysController extends AppController
                             $activitiesStep = $asteptable->patchEntity($activitiesStep,$actstdeets);
 
                             if (!$asteptable->save($activitiesStep)) {
-                                echo 'Cannot add to step!';
-                                echo '' . $check[0]->id;
-                                //exit;
+                                echo 'Cannot add to step!' . $check[0]->id;
                             }
-                            //echo $check[0]->id . ' exists already ... adding!<br>';
 
                         }
 
                     }
 
-
-
-                    
                 } else {
                     echo 'Step NOT created<br>';
                 }
 
             }
 
-            //$this->set(compact('path','pathid'));
             $redir = '/pathways/' . $path->slug;
             return $this->redirect($redir);
 
@@ -391,7 +395,7 @@ class PathwaysController extends AppController
             echo 'Something went wrong importing this pathway.';
             exit;
         }
-        
+            
         
     }
 
