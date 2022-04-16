@@ -91,7 +91,7 @@ foreach ($step->pathways as $pathways) {
 <div
     x-cloak
     x-data="{status: [], 'isLoading': true}"
-    x-init="fetch('/pathways/status/<?= $step->pathways[0]->id ?>')
+    x-effect="fetch('/pathways/status/<?= $step->pathways[0]->id ?>')
             .then(response => response.json())
             .then(response => { 
                     status = response; 
@@ -107,6 +107,10 @@ foreach ($step->pathways as $pathways) {
 	</div>
 </div>
 </div> <!-- / progress contain -->
+
+
+
+
 
 
 <?php if($role == 'curator' || $role == 'superuser'): ?>
@@ -254,6 +258,9 @@ if(!empty($youtube[1])):
 	allowfullscreen></iframe>
 </div>
 <?php endif ?>
+
+
+
 		<a target="_blank" 
 			x-on:click="count++;"
 			rel="noopener" 

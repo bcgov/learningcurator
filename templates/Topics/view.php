@@ -15,7 +15,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="p-6 dark:text-white">
 <nav class="bg-slate-200 dark:bg-slate-900 rounded-lg p-3" aria-label="breadcrumb">
     <?= $this->Html->link(__('Categories'), ['controller' => 'Categories', 'action' => 'index'],['class' => '']) ?> / 
-    <?= $this->Html->link($topic->categories[0]->name, ['controller' => 'Categories', 'action' => 'view', $topic->categories[0]->id],['class' => '']) ?> / 
+    <a href="/category/<?= h($topic->categories[0]->slug) ?>"><?= h($topic->categories[0]->name) ?></a> / 
     <?= h($topic->name) ?>
 </nav>
 
