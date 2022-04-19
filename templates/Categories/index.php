@@ -19,9 +19,14 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach ($categories as $category): ?>
 
 <div class="my-2 p-3 md:p-6 bg-white dark:bg-slate-800 w-full rounded-lg">
-	<div x-data="{ topics<?= $category->id ?>: false }" x-cloak>
+	<div x-data="{ topics<?= $category->id ?>: false }" x-cloak>			
+		<?php if(empty($category->featured)): ?>
+			<span class="inline-block py-0 px-2 bg-yellow-600 text-white text-xs rounded-lg" title="Edit to set to publish">DRAFT</span>
+		<?php endif ?>
+
 		<h1 class="text-3xl">
-			<?= $this->Html->link($category->name, ['action' => 'view', $category->slug]) ?>
+
+			<a href="/category/<?= $category->id ?>/<?= h($category->slug) ?>"><?= h($category->name) ?></a>
 
 			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="!topics<?= $category->id ?>" @click="topics<?= $category->id ?> = ! topics<?= $category->id ?>">
 				Show Topics
@@ -41,7 +46,7 @@ if ($this->Identity->isLoggedIn()) {
 		<div x-data="{ paths<?= $topic->id ?>: false }">
 	
 		<h2 class="text-3xl">
-			<a href="/<?= h($category->topics[0]->pathways[0]->slug) ?>/topic/<?= h($topic->slug) ?>"><?= h($topic->name) ?></a>
+			<a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= h($topic->id) ?>/<?= h($topic->slug) ?>"><?= h($topic->name) ?></a>
 			
 			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="!paths<?= $topic->id ?>" @click="paths<?= $topic->id ?> = ! paths<?= $topic->id ?>">
 				Show Pathways
@@ -57,7 +62,8 @@ if ($this->Identity->isLoggedIn()) {
 			<?php foreach ($topic->pathways as $path): ?>
 				<div class="p-3 md:p-6 my-1 bg-white dark:bg-slate-900 rounded-lg">
 				<h4 class="text-xl">
-					<a href="/<?= h($category->topics[0]->pathways[0]->slug) ?>/topic/<?= h($topic->slug) ?>/pathway/<?= h($path->slug) ?>">
+					<a href="/<?= h($category->slug) ?>/<?= h($topic->slug) ?>/pathway/<?= h($path->slug) ?>">
+					
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
 						<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
 						<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
@@ -66,7 +72,7 @@ if ($this->Identity->isLoggedIn()) {
 					</a>
 				</h4>
 				<div class="my-2 p-3 bg-slate-100 dark:bg-[#003366]/50">
-				<?= h($path->description) ?>
+					<?= h($path->description) ?>
 				</div>
 				</div>
 			<?php endforeach ?>

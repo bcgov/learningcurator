@@ -45,13 +45,13 @@ $this->assign('title', $pagetitle);
 <div class="p-3 my-3 bg-white rounded-lg shadow-sm dark:bg-slate-900 dark:text-white">
 <h2 class="text-3xl">
 	<!-- topic_id: <?= $topic->id ?> --> 
-	<a href="/<?= h($category->slug) ?>/topic/<?= $topic->slug ?>"><?= $topic->name ?></a>
+	<a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>"><?= $topic->name ?></a>
 </h2>
 
 <div class="p-3 mb-2 bg-slate-100 dark:bg-slate-800">
 	<?= $topic->description ?>
 </div>
-<a href="/<?= h($category->slug) ?>/topic/<?= $topic->slug ?>" class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+<a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 	View Topic
 </a>
 

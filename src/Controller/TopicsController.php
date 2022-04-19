@@ -34,9 +34,12 @@ class TopicsController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($slug = null)
+    public function view($id = null)
     {
-        $topic = $this->Topics->findBySlug($slug)->contain(['Users', 'Categories', 'Pathways'])->firstOrFail();
+        //$topic = $this->Topics->findBySlug($slug)->contain(['Users', 'Categories', 'Pathways'])->firstOrFail();
+        $topic = $this->Topics->get($id, [
+            'contain' => ['Users', 'Categories', 'Pathways'],
+        ]);
 
         $this->set(compact('topic'));
     }
@@ -57,8 +60,7 @@ class TopicsController extends AppController
             $topic->slug = strtolower(substr($sluggedTitle, 0, 191));
             $topic->user_id = $user->id;
             if ($this->Topics->save($topic)) {
-
-                $pathback = '/topics/view/' . $topic->id;
+                $pathback = '/topic/' . $topic->id . '/' . $topic->slug;
                 return $this->redirect($pathback);
             }
             $this->Flash->error(__('The topic could not be saved. Please, try again.'));
@@ -84,7 +86,7 @@ class TopicsController extends AppController
             $topic = $this->Topics->patchEntity($topic, $this->request->getData());
             if ($this->Topics->save($topic)) {
 
-                $redirect = '/topics/view/' . $topic->id;
+                $redirect = '/category/' . $topic->categories[0]->id . '/' . $topic->categories[0]->slug . '/topic/' . $topic->id . '/' . $topic->slug;
                 return $this->redirect($redirect);
                 
             }

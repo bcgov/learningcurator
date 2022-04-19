@@ -43,13 +43,13 @@ foreach ($step->pathways as $pathways) {
 
 <nav class="bg-slate-100 dark:bg-slate-900 rounded-lg p-3 mb-3" aria-label="breadcrumb">
 	<!-- <a href="/categories/index">Categories</a> /  -->
-	<a href="/category/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>"><?= h($step->pathways[0]->topic->categories[0]->name) ?></a> / 
-	<a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/topic/<?= h($step->pathways[0]->topic->slug) ?>"><?= h($step->pathways[0]->topic->name) ?></a> /
+	<a href="/category/<?= h($step->pathways[0]->topic->categories[0]->id) ?>/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>"><?= h($step->pathways[0]->topic->categories[0]->name) ?></a> / 
+	<a href="/category/<?= h($step->pathways[0]->topic->categories[0]->id) ?>/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/topic/<?= h($step->pathways[0]->topic->id) ?>/<?= h($step->pathways[0]->topic->slug) ?>"><?= h($step->pathways[0]->topic->name) ?></a> /
 	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
 		<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
 		<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
 	</svg>
-	<a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/topic/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= h($step->pathways[0]->slug) ?>"><?= h($step->pathways[0]->name) ?></a> /
+	<a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= h($step->pathways[0]->slug) ?>"><?= h($step->pathways[0]->name) ?></a> /
 	<?= $step->name ?>
 </nav>
 
@@ -146,17 +146,21 @@ foreach ($step->pathways as $pathways) {
 			class="z-50 absolute left-0 w-full md:w-3/4 lg:w-1/2 origin-top-left -ml-6 bg-white dark:bg-[#003366] shadow-lg rounded-lg"
 	>
 		<div class="p-6">
-			<h3 class="mb-3 text-2xl">Steps along this pathway</h3>
+		
+		
+		<h3 class="mb-3 text-2xl">Steps along this pathway</h3>
+		<div class="grid grid-cols-2 gap-4">
 		<?php foreach ($step->pathways as $pathways) : ?>
 		<?php foreach($pathways->steps as $s): ?>
-		<div>
+		<div class="">
 		<?php if($s->status_id == 2): ?>
 		<?php $c = '' ?>
 		<?php if($s->id == $step->id) $c = 'bg-slate-300 dark:bg-[#003366]' ?>
 		<a class="<?= $c ?> block px-4 py-2 mt-2 text-sm font-semibold rounded-lg dark:hover:bg-sky-700 dark:focus:bg-sky-800 dark:focus:text-white dark:hover:text-white dark:text-slate-200 md:mt-0 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline" 
-			href="/pathways/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-				<?= $s->name ?> 
+			href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+				<?= h($s->name) ?> 
 		</a>
+		<!--<?= h($s->description) ?> -->
 		<?php else: ?>
 		<?php if($role == 'curator' || $role == 'superuser'): ?>
 		<span class="badge badge-warning">DRAFT</span>
@@ -167,6 +171,27 @@ foreach ($step->pathways as $pathways) {
 		</div>
 		<?php endforeach ?>
 		<?php endforeach ?>
+		</div>
+	
+		<?php if(!empty($previousid) || !empty($upnextid)): ?>
+		<div class="flex justify-center p-3 bg-white dark:bg-slate-900 rounded-lg">
+		<?php if(!empty($previousid)): ?>
+			<a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" 
+				class="inline-block m-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
+					Previous Step
+			</a>
+		<?php endif ?>
+
+		<?php if(!empty($upnextid)): ?>
+			<a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" 
+				class="inline-block m-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
+					Next Step
+			</a>
+		<?php endif ?>
+		</div>
+		<?php endif ?>
+
+	
 		</div>
 	</div>
 </div>
@@ -581,14 +606,14 @@ aria-controls="defunctacts">View archived activities</a>.
 <?php if(!empty($previousid) || !empty($upnextid)): ?>
 <div class="flex justify-center p-3 bg-white dark:bg-slate-900 rounded-lg">
 <?php if(!empty($previousid)): ?>
-	<a href="/pathways/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" 
+	<a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" 
 		class="inline-block m-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
 			Previous Step
 	</a>
 <?php endif ?>
 
 <?php if(!empty($upnextid)): ?>
-	<a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" 
+	<a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" 
 		class="inline-block m-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
 			Next Step
 	</a>

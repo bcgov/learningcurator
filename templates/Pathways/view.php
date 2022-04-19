@@ -23,9 +23,9 @@ $this->assign('title', h($pathway->name));
 <?php endif ?>
 
 <nav class="mb-3 bg-slate-100 dark:bg-slate-900 rounded-lg p-3" aria-label="breadcrumb">
-	<a href="/categories/index" class="hover:underline">Categories</a> / 
-	<a href="/category/<?= h($pathway->topic->categories[0]->slug) ?>" class="hover:underline"><?= h($pathway->topic->categories[0]->name) ?></a> / 
-	<a href="/<?= h($pathway->topic->categories[0]->slug) ?>/topic/<?= h($pathway->topic->slug) ?>" class="hover:underline"><?= h($pathway->topic->name) ?></a> / 
+	<a href="/categories" class="hover:underline">Categories</a> / 
+	<a href="/category/<?= h($pathway->topic->categories[0]->id) ?>/<?= h($pathway->topic->categories[0]->slug) ?>" class="hover:underline"><?= h($pathway->topic->categories[0]->name) ?></a> / 
+	<a href="/category/<?= h($pathway->topic->categories[0]->id) ?>/<?= h($pathway->topic->categories[0]->slug) ?>/topic/<?= h($pathway->topic->slug) ?>" class="hover:underline"><?= h($pathway->topic->name) ?></a> / 
 	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
 		<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
 		<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
@@ -123,8 +123,8 @@ $this->assign('title', h($pathway->name));
 			'action' => 'add'
 	]]) ?>
 		<?php
-		echo $this->Form->control('name',['class'=>'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']);
-		echo $this->Form->control('description',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg', 'type' => 'textarea','label'=>'Objective']);
+		echo $this->Form->control('name',['class'=>'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-900 rounded-lg']);
+		echo $this->Form->control('description',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-900 rounded-lg', 'type' => 'textarea','label'=>'Objective']);
 		echo $this->Form->hidden('createdby', ['value' => $uid]);
 		echo $this->Form->hidden('modifiedby', ['value' => $uid]);
 		echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
@@ -159,7 +159,7 @@ $this->assign('title', h($pathway->name));
 <?php if($steps->status->name == 'Published'): ?>
 <div class="p-6 my-3 rounded-lg bg-white dark:bg-slate-900 dark:text-white">
 <h3 class="text-2xl">
-<a href="/<?= h($pathway->topic->categories[0]->slug) ?>/topic/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
+<a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
 		<?= h($steps->name) ?> 
 	</a>
 	<?php if($role == 'curator' || $role == 'superuser'): ?>
@@ -175,7 +175,7 @@ $this->assign('title', h($pathway->name));
 	<?= $steps->description ?>
 </div>
 
-<a href="/<?= h($pathway->topic->categories[0]->slug) ?>/topic/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>"
+<a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>"
 	class="inline-block p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 	View Step
 </a>

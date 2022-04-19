@@ -34,6 +34,7 @@ echo $this->Form->control('name',['class' => 'block w-full px-3 py-2 m-0 dark:te
 //echo $this->Form->control('slug');
 echo $this->Form->control('description',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']);
 // echo $this->Form->control('image_path');
+echo $this->Form->control('sortorder',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']);
 // echo $this->Form->control('color');
 
 //echo $this->Form->control('createdby');
