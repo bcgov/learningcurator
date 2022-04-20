@@ -60,8 +60,8 @@ class TopicsController extends AppController
             $topic->slug = strtolower(substr($sluggedTitle, 0, 191));
             $topic->user_id = $user->id;
             if ($this->Topics->save($topic)) {
-                $pathback = '/topic/' . $topic->id . '/' . $topic->slug;
-                return $this->redirect($pathback);
+                $redirect = '/category/' . $topic->categories[0]->id . '/' . $topic->categories[0]->slug . '/topic/' . $topic->id . '/' . $topic->slug;
+                return $this->redirect($redirect);
             }
             $this->Flash->error(__('The topic could not be saved. Please, try again.'));
         }
