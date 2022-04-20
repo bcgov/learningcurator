@@ -12,11 +12,10 @@
 
 <body class="bg-slate-100 dark:bg-slate-800">
 
-<div class="md:flex flex-col md:flex-row md:min-h-screen w-full rounded-br-lg ">
-
+<div class="md:flex flex-col md:flex-row md:min-h-screen w-full rounded-br-lg" >
 <div @click.away="open = false" class="flex flex-col flex-shrink-0 w-full md:w-56 text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-900" x-data="{ open: false }">
 <div class="sticky top-0">
-  <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 "> <!-- sticky top-0 bg-slate-200 dark:bg-[#002850]-->
+  <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 " role="banner"> <!-- sticky top-0 bg-slate-200 dark:bg-[#002850]-->
     <span class="leading-3 text-xl font-semibold tracking-widest text-slate-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
       <span class="text-xs">Learning</span>
       <br>
@@ -31,14 +30,15 @@
   </div>
 
   <?php if(!empty($this->Identity->get('id'))): ?>
-  <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto">
+  <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto" role="navigation">
   <?php 
     $active = 'border-slate-400 dark:border-slate-800';
     $currentpage = $_SERVER["REQUEST_URI"];
    ?>
   <?php if($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'superuser'): ?>
     <?php if(strpos($currentpage,'/users') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
-    <?php if(strpos($currentpage,'/reports/index') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
+    <?php if(strpos($currentpage,'/reports') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
+    <?php if(strpos($currentpage,'/profile/contributions') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
   <a class="hover:no-underline block px-4 py-2 mt-2 text-sm font-semibold text-slate-900 border-l-4 dark:hover:border-white dark:hover:bg-[#003366] dark:focus:bg-black dark:focus:text-white dark:hover:text-white dark:text-slate-200 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-300 focus:bg-slate-200 focus:outline-none focus:shadow-outline <?= $active ?>"
       href="/users/index">
     Curator Dashboard
@@ -51,15 +51,18 @@
   <?php 
   #TODO re-write all of this
   $navigation = array(
-    ['name'=>'Profile','link' => '/profile'],
     ['name'=>'Categories','link' => '/categories'], 
     ['name'=>'Pathways','link' => '/pathways'],
     ['name'=>'Activities','link' => '/activities'],
-    ['name'=>'About','link' => '/questions']
+    ['name'=>'Followed Pathways','link' => '/profile/follows'],
+    ['name'=>'Launched Activities','link' => '/profile/launches'],
+    ['name'=>'Issues Reported','link' => '/profile/reports'],
+    ['name'=>'About','link' => '/questions'],
+    ['name'=>'Logout','link' => '/logout']
   );
   foreach($navigation as $page): ?>
   <?php if(strpos($currentpage,$page['link']) !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
-  <?php if($currentpage == '/' && $page['link'] == '/profile') $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
+  <?php if(strpos($currentpage,'/topics') !== false && $page['name'] == 'Categories') $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
   <a class="hover:no-underline block px-4 py-2 mt-2 text-sm font-semibold text-slate-900 border-l-4 dark:hover:border-white dark:hover:bg-[#003366] dark:focus:bg-black dark:focus:text-white dark:hover:text-white dark:text-slate-200 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-300 focus:bg-slate-200 focus:outline-none focus:shadow-outline <?= $active ?>"
     href="<?= $page['link'] ?>">
       <?= $page['name'] ?>
@@ -69,26 +72,21 @@
   </nav>
   <?php endif ?>
   
-</div>
-</div>
 
-<div class="bg-[#c3d4e4] dark:bg-[#003366] dark:text-white w-full 2xl:w-2/3">
+
+</div>
+</div>
+<div class="bg-[#c3d4e4] dark:bg-[#003366] dark:text-white w-full 2xl:w-2/3" role="main">
 
   <?php if(!empty($this->Identity->get('id'))): ?>
   <div class="flex h-16 w-full px-6 pt-3 bg-slate-200 dark:bg-[#002850]"> <!-- sticky top-0 z-50 -->
 
-    <div class="p-2 mr-6 w-50 hidden md:block">
-      Welcome <a href="/profile" ><?= $this->Identity->get('first_name') ?></a>
-      <?php if($this->Identity->get('role') == 'curator'): ?>
-      <span class="px-3 text-xs bg-[#003366] text-white rounded-lg">Curator</span>
-      <?php elseif($this->Identity->get('role') == 'superuser'): ?>
-      <span class="px-3 text-xs bg-[#003366] rounded-lg">Super</span>
-      <?php endif ?>
-    </div>
 
-    <form method="get" action="/find" class="w-50" role="search">
-    <input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-900 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search"><button class="px-3 py-2 m-0 bg-slate-300 dark:text-white dark:bg-slate-900 dark:hover:bg-slate-800 rounded-r-lg" type="submit">Search</button>
-    </form>
+  <form method="get" action="/find" class="w-full" role="search">
+    <label for="search" class="sr-only">Search</label>
+    <input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-900 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search" id="search"><button class="px-3 py-2 m-0 bg-slate-300 dark:text-white dark:bg-slate-900 dark:hover:bg-slate-800 rounded-r-lg" type="submit">Search</button>
+  </form>
+
 
   </div>
   <?php endif ?>
@@ -98,15 +96,28 @@
   </div>
 </div>
 
-<div class="py-6 bg-slate-100 dark:bg-slate-900">
+<div class="py-6 bg-slate-100 dark:bg-slate-900 dark:text-white text-center" role="contentinfo">
+
+<div class="mx-auto mb-10 p-6 md:w-2/3 lg:w-1/4 bg-white dark:bg-slate-800 dark:text-slate-300 text-lg rounded-lg text-slate-700 text-center">
+  We acknowledge with respect that the Learning Curator operates throughout B.C.
+   on the traditional lands of Indigenous peoples.
+</div>
+
+  <div x-data="{ open: false }">
+    <button @click="open = ! open" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-sky-700 dark:hover:bg-sky-800 dark:text-white hover:no-underline rounded-lg">Privacy Statement</button>
+    <div x-show="open" @click.outside="open = false" class="md:w-2/3 p-6 my-3 mx-auto rounded-lg bg-white dark:bg-slate-800 dark:text-white">
+      Your personal information is collected by the BC Public Service Agency
+      in accordance with section 26(c) of the Freedom of Information and 
+      Protection of Privacy Act for the purposes of managing and administering 
+      employee development and training. If you have any questions, submit an 
+      AskMyHR request at www.gov.bc.ca/myhr/contact or call 250-952-6000. 
+    </div>
+  </div>
 
   <img class="my-6 inline-block" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
   
   <img class="my-6 inline-block" src="/img/learning-centre-logo-wordmark.svg" height="100px" width="300px" alt="Learning Centre Logo">
-  
-  <a href="#privacy" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-[#003366] dark:text-white hover:no-underline rounded-lg">
-    Privacy Statement
-  </a>
+
 
 </div>
 

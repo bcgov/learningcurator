@@ -162,7 +162,7 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Pathways',
-            'action' => ['edit','add','delete','export'],
+            'action' => ['edit','add','delete','export','import'],
         ],
         [
             'role' => '*',
@@ -177,7 +177,7 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Steps',
-            'action' => ['edit','add','delete'],
+            'action' => ['edit','add','delete','publishtoggle'],
         ],
         [
             'role' => '*',
@@ -207,7 +207,7 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Reports',
-            'action' => ['index','edit','add','closed'],
+            'action' => ['index','edit','add','closed','view'],
         ],
         [
             'role' => 'user',

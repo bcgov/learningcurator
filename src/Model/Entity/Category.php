@@ -40,6 +40,7 @@ class Category extends Entity
         'featured' => true,
         'created' => true,
         'createdby' => true,
+        'sortorder' => true,
         'topics' => true,
     ];
 }

@@ -13,7 +13,8 @@ Use Cake\ORM\TableRegistry;
 class ActivitiesUsersController extends AppController
 {
     /**
-     * User completions method
+     * Activities which the current user has launched, and the dates
+     * on which they launched them
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
@@ -21,25 +22,39 @@ class ActivitiesUsersController extends AppController
     {
         $user = $this->request->getAttribute('authentication')->getIdentity();
         $activities = $this->ActivitiesUsers->find()
-                                        ->contain(['Users',
-                                                    'Users.Ministries',
-                                                    'Activities',
-                                                    'Activities.ActivityTypes',
-                                                    'Activities.Steps',
-                                                    'Activities.Steps.Pathways'])
+                                        ->contain(['Activities'])
                                         ->where(['user_id' => $user->id])
-                                        ->order(['ActivitiesUsers.created' => 'desc']);
-        // echo '<pre>'; print_r($activities->toList(); exit;
-        // $last = '';
-        // $completed = [];
-        // foreach($activities as $a) {
-        //     if($last == $a->activity->name) {
-        //         $t = [$a->activity->name, $a->created];
-        //     }
-        //     $last  = $a->activity->name;
-        // }
-        // exit;
-        $this->set(compact('activities'));
+                                       ->order(['ActivitiesUsers.id' => 'desc']);
+        // This returns a list of activities, but there's one activity
+        // listed for each launch, rather than one activity and then the list 
+        // of launches; so, we need to make it that way since having an 
+        // activity listed a bunch of times doesn't make sense. 
+        // I like working with arrays ...
+        $acts = $activities->toList();
+        // Parse out a list of just the activity IDs so that we can reduce it
+        $justactids = [];
+        foreach($acts as $a) {
+            array_push($justactids,$a->activity->id);
+        }
+        $actids = array_unique($justactids);
+        // OK now loop through the reduced IDs and as we go we then loop 
+        // through the entire big list and parse out the info we want 
+        // #TODO there's a more elegant/efficient way of doing this, to be sure
+        $alllaunches = [];
+        foreach($actids as $id) {
+            $name = '';
+            $thisone = [];
+            $launches = [];
+            foreach($acts as $aid) {
+                if($aid->activity->id == $id) {
+                    $name = $aid->activity->name;
+                    array_push($launches,['date' => $aid['created']]);
+                }
+            }
+            $thisone = ['id' => $id, 'name' => $name, 'launches' => $launches];
+            array_push($alllaunches, $thisone);
+        }
+        $this->set(compact('alllaunches'));
 
     }
 

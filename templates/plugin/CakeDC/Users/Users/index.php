@@ -12,78 +12,104 @@
 <div class="p-6 dark:text-white">
 
 <div class="text-3xl mb-3">
-    <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-black"><?= $ppincount ?></span> Pathway Pins 
-    <span class="inline-block p-3 rounded-full bg-slate-300 dark:bg-black"><?= $launchcount ?></span> Activity Launches
+    <span class="inline-block p-3 rounded-full bg-white dark:bg-slate-900"><?= $totalfollowcount ?></span> Pathway Follows 
+    <span class="inline-block p-3 rounded-full bg-white dark:bg-slate-900"><?= $launchcount ?></span> Activity Launches
 </div>
 
-<div class="mt-6 mb-2">
+<form method="get" action="/users/search" class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
+<label class="">Search for a user:
+<input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-l-lg" 
+        type="search" 
+        placeholder="first or last name ..." 
+        aria-label="User Search" 
+        name="q"></label><button class="px-3 py-2 m-0 bg-slate-300 dark:text-white dark:bg-slate-800 dark:hover:bg-slate-700 rounded-r-lg" type="submit">User Search</button>
+</form>
+
+<!-- <div class="mt-6 mb-2">
+    View: 
     <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/reports/index">Reports</a>
     <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/activity-types">Activity Types</a>
     <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/ministries">Ministries</a>
+</div> -->
+<div class="p-3 my-4 bg-slate-200 dark:bg-slate-800 rounded-lg">
+    View: 
+    <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/profile/contributions">
+        Your Contributions
+    </a>
 </div>
-<div class="mb-4">
-    <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/categories/add">New Category</a>
-    <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/topics/add">New Topic</a>
-    <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/pathways/add">New Pathway</a> 
-    <a class="inline-block p-3 mr-1 bg-slate-200 dark:bg-sky-700 hover:no-underline hover:bg-sky-800 rounded-lg" href="/activities/add">New Activity</a>
+<div class="p-3 my-4 bg-slate-200 dark:bg-slate-800 rounded-lg">
+    Create new: 
+    <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/categories/add">Category</a>
+    <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/topics/add">Topic</a>
+    <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/pathways/add">Pathway</a> 
+    <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/activities/add">Activity</a>
     <!-- <a class="inline-block p-3 my-3 bg-slate-200 dark:bg-sky-700" href="/activities/addtostep">Add Activity to Step</a> -->
 </div>
 
-<h2 class="mt-4 text-2xl">Top 5 Launched Activities</h2>
+<div class="md:grid md:grid-cols-2 md:gap-4">
+<div>
+<h2 class="mt-4 text-2xl">Open Reports</h2>
 <div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
-<ol class="pl-10">
-<?php // these links are templated/built within the controller for noted reasons there
-$count = 4;
+<?php 
+// these links are templated/built within the controller for noted reasons there
+
 ?>
-<?php foreach($top5links as $link): ?>
-    <li class="p-2 list-decimal text-<?= $count ?>xl"><?= $link ?></li>
-    <?php $count-- ?>
+<?php foreach($noresponses as $report): ?>
+	<div class="p-3 mb-2 bg-slate-200 dark:bg-slate-800 rounded-lg">
+		
+		<?= h($report->created) ?>
+		<div><strong><a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></strong></div>
+		<blockquote class="p-3 mt-1 bg-white dark:bg-slate-700 rounded-t-lg">
+			<?= h($report->issue) ?>
+		</blockquote>
+		<?php if(!empty($report->response)): ?>
+			<div class="p-3 mb-1 bg-white dark:bg-[#003366] rounded-b-lg"><?= h($report->response) ?></div>
+		<?php else: ?>
+			<div class="p-3 mb-1 bg-slate-100 dark:bg-[#003366] rounded-b-lg">No response yet.</div>
+		<?php endif ?>
+        <a title="View this report"
+			href="/reports/view/<?= $report->id ?>"  
+			class="inline-block mt-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+				View Report
+		</a> 
+	</div> 
+<?php endforeach ?>
+</div>
+
+
+</div> <!-- grid-col -->
+<div>
+
+
+<h2 class="mt-4 text-2xl">Top 5 Followed Pathways</h2>
+<div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
+<ol class="pl-8">
+<?php 
+// these links are templated/built within the controller for noted reasons there
+
+?>
+<?php foreach($top5follows as $link): ?>
+    <li class="my-1 p-1 px-2 list-decimal text-xl bg-white dark:bg-slate-900 rounded-lg"><?= $link ?></li>
 <?php endforeach ?>
 </ol>
 </div>
 
 
-<form method="get" action="/users/search" class="pt-6">
-<label class="">Search for a user:
-<input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-900 rounded-l-lg" 
-        type="search" 
-        placeholder="first or last name ..." 
-        aria-label="Search" 
-        name="q"></label><button class="px-3 py-2 m-0 bg-slate-300 dark:text-white dark:bg-slate-900 dark:hover:bg-slate-800 rounded-r-lg" type="submit">Search</button>
-</form>
-<div class="mt-1 p-3 bg-white dark:bg-slate-900 rounded-lg">
-<table class="w-full">
-    <tr class="bg-slate-200 dark:bg-slate-800">
-        <th>User name</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Email</th>
-    </tr>  
-<?php foreach (${$tableAlias} as $user) : ?>
-<tr class="bg-white dark:bg-black mb-3 p-3">
-    <td class="px-3 py-1">
-        <?= $this->Html->link(__d('cake_d_c/users', h($user->username)), ['action' => 'view', $user->id],['class' => 'font-bold']) ?> 
-    </td>
-    <td>
-        <?= h($user->first_name) ?> 
-    </td>
-    <td>
-        <?= h($user->last_name) ?>
-    </td>
-    <td>
-        <?= h($user->email) ?>
-    </td>
-    </div>
-</tr>
-<?php endforeach; ?>
-</table>
-<div class="paginator m-3 p-3 bg-slate-200 dark:bg-slate-800 rounded-lg">
-<div class="pagination">
-<?= $this->Paginator->prev('< ' . __d('cake_d_c/users', 'previous')) ?>
-<?= $this->Paginator->numbers() ?>
-<?= $this->Paginator->next(__d('cake_d_c/users', 'next') . ' >') ?>
+<h2 class="mt-4 text-2xl">Top 5 Launched Activities</h2>
+<div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
+<ol class="pl-8">
+<?php 
+// these links are templated/built within the controller for noted reasons there
+
+?>
+<?php foreach($top5links as $link): ?>
+    <li class="my-1 p-1 px-2 list-decimal text-xl bg-white dark:bg-slate-900 rounded-lg"><?= $link ?></li>
+<?php endforeach ?>
+</ol>
 </div>
-<div><?= $this->Paginator->counter() ?></div>
+
 </div>
-</div>
+</div> <!-- /.grid -->
+
+
 </div>

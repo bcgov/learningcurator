@@ -140,15 +140,22 @@ class StepsController extends AppController
     {
         $step = $this->Steps->newEmptyEntity();
         if ($this->request->is('post')) {
+            //echo '<pre>'; print_r($this->request->getData()); exit;
             $step = $this->Steps->patchEntity($step, $this->request->getData());
             $sluggedTitle = Text::slug($step->name);
             // trim slug to maximum length defined in schema
             $step->slug = strtolower(substr($sluggedTitle, 0, 191));
-
+            //echo '<pre>'; print_r($step); exit;  
             if ($this->Steps->save($step)) {
+                if($this->request->getData()['fromimport']) {
+                    
+                    return $step->id;
+
+                } else {
+                    $redir = '/steps/edit/' . $step->id;
+                    return $this->redirect($redir);
+                }
                 
-                $redir = '/steps/edit/' . $step->id;
-                return $this->redirect($redir);
             }
             $this->Flash->error(__('The step could not be saved. Please, try again.'));
         }
@@ -272,5 +279,24 @@ class StepsController extends AppController
 		}
         $this->viewBuilder()->setLayout('ajax');
         $this->set(compact('totalacts','stepclaimcount','steppercent','requiredacts'));
+    }
+
+
+    /**
+     * If the step is published, unpublish it and vice versa
+     *
+     * @return \Cake\Http\Response|null Redirects on successful update, renders view otherwise.
+     */
+    public function publishtoggle($id = null)
+    {
+        $step = $this->Steps->get($id);
+        if($step->status_id == 2) {
+            $step->status_id = 1;
+        } else {
+            $step->status_id = 2;
+        }
+        if ($this->Steps->save($step)) {
+            return $this->redirect($this->referer());
+        }
     }
 }

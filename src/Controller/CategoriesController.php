@@ -39,9 +39,17 @@ class CategoriesController extends AppController
      */
     public function index()
     {
-        $categories = $this->Categories->find('all')
-                                        ->contain(['Topics','Topics.Pathways'])
-                                        ->where(['Categories.featured' => 1]);
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        if($user->role == 'curator' || $user->role == 'superadmin') {
+            $categories = $this->Categories->find('all')
+                                            ->contain(['Topics','Topics.Pathways'])
+                                            ->order(['sortorder' => 'desc']);    
+        } else {
+            $categories = $this->Categories->find('all')
+                                            ->contain(['Topics','Topics.Pathways'])
+                                            ->where(['Categories.featured' => 1])
+                                            ->order(['sortorder' => 'desc']);
+        }
 
 
         $this->set(compact('categories'));
@@ -57,6 +65,7 @@ class CategoriesController extends AppController
     public function view($id = null)
     {
         //$categories = $this->Categories->find('all')->where(['Categories.featured' => 1]);
+        //$category = $this->Categories->findBySlug($slug)->contain(['Topics','Topics.Pathways','Topics.Pathways.Statuses'])->firstOrFail();
         $category = $this->Categories->get($id, [
             'contain' => ['Topics','Topics.Pathways','Topics.Pathways.Statuses'],
         ]);
@@ -78,7 +87,7 @@ class CategoriesController extends AppController
             // trim slug to maximum length defined in schema
             $category->slug = strtolower(substr($sluggedTitle, 0, 191));
             if ($this->Categories->save($category)) {
-                $redir = '/categories/view/' . $category->id;
+                $redir = '/category/' . $category->id . '/' . $category->slug;
                 return $this->redirect($redir);
             }
             echo __('The category could not be saved. Please, try again.');

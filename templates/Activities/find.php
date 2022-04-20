@@ -13,10 +13,10 @@ if ($this->Identity->isLoggedIn()) {
 <div class="p-6 dark:text-white">
 <h1 class="text-3xl">Searching for &quot;<?= $search ?>&quot;</h1>
 
-<div class="flex flex-row">
+<div class="">
 
 <?php if($numcats > 0): ?>
-<div class="basis-1/3 p-3">
+<div class="p-3">
 <h2 class="text-2xl">Found <span class="badge badge-dark"><?= $numcats ?></span> categories</h2>
 <?php foreach($categories as $c): ?>
 <div class="p-3 my-3 rounded-lg bg-slate-200 dark:bg-slate-900">
@@ -25,9 +25,6 @@ if ($this->Identity->isLoggedIn()) {
 			<?= $c->name ?>
 		</a>
 	</h3>
-	<div>
-		<?= $c->description ?>
-	</div>
 </div>
 <?php endforeach ?>
 </div>
@@ -37,7 +34,7 @@ if ($this->Identity->isLoggedIn()) {
 
 
 <?php if($numpaths > 0): ?>
-<div class="basis-1/3 p-3">
+<div class="p-3">
 <h2 class="text-2xl">Found <span class="badge badge-dark"><?= $numpaths ?></span> pathways</h2>
 <?php foreach($pathways as $p): ?>
 <div class="p-3 my-3 rounded-lg bg-slate-200 dark:bg-slate-900">
@@ -46,9 +43,6 @@ if ($this->Identity->isLoggedIn()) {
 			<?= $p->name ?>
 		</a>
 	</h3>
-	<div>
-		<?= $p->description ?>
-	</div>
 </div>
 <?php endforeach ?>
 </div>
@@ -58,7 +52,7 @@ if ($this->Identity->isLoggedIn()) {
 
 
 <?php if($numacts > 0): ?>
-<div class="basis-1/3 p-3">
+<div class="p-3">
 	<h2 class="text-2xl">Found <span class="badge badge-dark"><?= $numacts ?></span> activities</h2>
 	<?php 
 	//echo '<pre>';
@@ -74,15 +68,7 @@ if ($this->Identity->isLoggedIn()) {
 	<!-- <div class="py-3 ">
 		<?= $activity->description ?>
 	</div> -->
-	<?php if(!empty($activity->steps)): ?>
-	<div class="p-3 mb-3 bg-white dark:bg-slate-800 rounded-lg">This activity is on the following pathways:
-	<?php foreach($activity->steps as $step): ?>
-	<?php foreach($step->pathways as $path): ?>
-	<span class="badge badge-light"><a href="/steps/view/<?= $step->id ?>"><?= $path->name ?> - <?= $step->name ?></a></span>
-	<?php endforeach ?>
-	<?php endforeach ?>
-	</div>
-	<?php endif ?>
+
 	</div>
 	<?php endforeach; ?>
 </div>

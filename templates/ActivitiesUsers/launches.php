@@ -8,76 +8,59 @@ $uid = $this->Identity->get('id');
 ?>
 
 <div class="p-6 dark:text-white">
-<div @click.away="open = false" class="relative ml-8" x-data="{ open: false }">
-	<button @click="open = !open" class="px-4 py-2 text-sm font-semibold text-right bg-slate-200 rounded-t-lg dark:bg-slate-900 dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-900 dark:hover:bg-slate-900 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-		<span>Profile Menu</span>
-		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
-			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-		</svg>
-	</button>
-	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full origin-top-right shadow-lg">
-	<div class="-ml-8 p-6 bg-white rounded-md shadow dark:bg-slate-900">
-		<a href="/profile" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-slate-900 dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline hover:no-underline">
-			Pinned Pathways
-		</a> 
-		<a href="/profile/launches" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:bg-[#003366] dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline hover:no-underline">
-			Launched Activities
-		</a> 
-		<a href="/profile/reports" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline hover:no-underline">
-			Issues Reported
-		</a> 
-		    
-    	<a href="/logout" class="block p-3 text-sm font-semibold text-gray-900 rounded-lg dark:hover:bg-[#003366] dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none focus:shadow-outline hover:no-underline">
-			Logout
-		</a>
-    
-	</div>
-	</div>
-</div>
-<div class="p-6 rounded-lg activity bg-slate-200 dark:bg-slate-900 dark:text-white">
-<h1 class="mb-3 text-lg">Launched Activities</h1>
-<?php if(!$activities->isEmpty()): ?>
-<?php foreach($activities as $a): ?>
+
+<div class="p-3 mb-2 bg-slate-100 dark:bg-slate-900 dark:text-white rounded-lg">
+<?php if(!empty($alllaunches)): ?>
+<?php foreach($alllaunches as $a): ?>
 
 <div class="p-3 mb-3 bg-white dark:bg-slate-800 rounded-lg">
-<?= $this->Form->postLink(__('Remove'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $a['id']], ['class' => 'float-right p-3 ml-3 bg-slate-300 dark:bg-slate-900 hover:no-underline rounded-lg', 'confirm' => __('Unclaim?')]) ?>
 <h2 class="text-2xl">
-	<a href="/activities/view/<?= $a['activity']['id'] ?>" class="font-weight-bold">
-		<?= $a['activity']['name'] ?>
+	<a href="/activities/view/<?= $a['id'] ?>" class="font-weight-bold">
+		<?= $a['name'] ?>
 	</a>
 </h2>
-<div class="">
-	
-	<div class="my-2 tex-lg">
-		Launched on: <?= $this->Time->format($a['created'],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+<div class="mt-3">
+	<div class="inline-block w-24 bg-slate-900 text-white text-sm text-center uppercase rounded-lg">
+		Launched
 	</div>
+	<?php foreach($a['launches'] as $ls): ?>
+	<span class="inline-block px-3 py-0 mb-2 tex-lg bg-slate-200 dark:bg-slate-700 text-sm rounded-lg">
+		<?= $this->Time->format($ls['date'],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
+	</span>
+	<?php endforeach ?>
 
-<?php foreach($a['activity']['steps'] as $s): ?>
-<?php if(!empty($s->pathways[0]->slug)): ?>
-<?php if($s->pathways[0]->status_id == 2): ?>
-<div class="my-1">Included in 
-<a href="/pathways/<?= $s->pathways[0]->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>" class="font-weight-bold">
-<i class="bi bi-pin-map-fill"></i>
-<?= $s->pathways[0]->name ?> - <?= $s->name ?>
+</div>
+<a target="_blank" 
+	rel="noopener" 
+	data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
+	href="/activities-users/launch?activity_id=<?= $a['id'] ?>" 
+	class="inline-block my-2 p-3 bg-sky-700 rounded-lg text-white text-xl hover:no-underline">
+		Launch Activity 
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+			<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+			<path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+		</svg>
 </a>
-</div>
-<?php endif ?>
-<?php endif ?>
-<?php endforeach ?>
-</div>
 
 </div>
 <?php endforeach ?>
 <?php else: ?>
 
-<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-900 dark:text-white">
-<p><strong>You've not yet lanuched any activities.</strong></p>
-<p>As you launch activities on a pathway, they will be recorded here 
-	along with the date and time that you clicked the launch button.</p>
-<p>Pathway modules have one or more required activities. When you launch
-	a required activity, that action counts towards your pathway progress,
-	indicated by the progress bar.</p> 
-</div>
+	<h2 class="mb-3 text-3xl">You've not yet launched any activities</h2>
+	<div class="p-4 bg-white dark:bg-slate-800 rounded-lg">
+	<p class="text-xl">As you launch activities on a pathway, they will be recorded here 
+		along with the date and time that you clicked the launch button.</p>
+	<p class="text-lg">Pathway modules have one or more required activities. When you launch
+		a required activity, that action counts towards your pathway progress,
+		indicated by the progress bar.</p> 
+	</div>
+	
+	<a href="/categories" class="inline-block p-3 mt-4 bg-sky-700 dark:bg-sky-700 text-white text-2xl hover:no-underline rounded-lg">
+		Explore Categories
+	</a>
+
+
 <?php endif ?>
+</div>
 </div>
 </div>

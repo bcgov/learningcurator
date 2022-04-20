@@ -7,13 +7,10 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<div class="container-fluid">
-<div class="row justify-content-md-center" id="colorful">
-<div class="col-md-6">
 
 
-<div class="mt-3 p-3">
-<div class="p-5 my-3 rounded-lg bg-white shadow-lg">
+<div class="p-6">
+<div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg">
 
 
 
@@ -24,7 +21,7 @@ if ($this->Identity->isLoggedIn()) {
 
         <div>This activity already exists in the Curator! Let's add that one to your step.</div>
 
-        <div class="bg-white rounded-lg">
+        <div class="bg-white dark:bg-slate-900 rounded-lg">
         <div class="p-3 my-3 rounded-lg activity" 
 		    style="background-color: rgba(<?= $activity[0]->activity_type->color ?>,.2);">
 
@@ -224,8 +221,7 @@ if ($this->Identity->isLoggedIn()) {
 
     </div>
 </div>
-</div>
-</div>
+
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
@@ -362,35 +358,3 @@ $("#loading").fadeOut(800).fadeIn(800).fadeOut(800).fadeIn(800).fadeOut(800).fad
 </script>
 
 
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src="/js/summernote-cleaner.js"></script>
-
-<script>
-$(document).ready(function() {
-    $('.summernote').summernote({
-        toolbar:[
-            ['style',['style']],
-            ['font',['bold','italic','underline','clear']],
-            ['para',['ul','ol','paragraph']],
-            ['table',['table']],
-            ['insert',['media','link','hr']],
-            ['cleaner',['cleaner']]
-        ],
-        cleaner:{
-            action: 'both', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
-            newline: '<br>', // Summernote's default is to use '<p><br></p>'
-            notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
-            icon: '<i class="fas fa-broom"></i>',
-            keepHtml: false, // Remove all Html formats
-            keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'], // If keepHtml is true, remove all tags except these
-            keepClasses: false, // Remove Classes
-            badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], // Remove full tags with contents
-            badAttributes: ['style', 'start'], // Remove attributes from remaining tags
-            limitChars: false, // 0/false|# 0/false disables option
-            limitDisplay: 'both', // text|html|both
-            limitStop: false // true/false
-        }
-    });
-});
-</script>

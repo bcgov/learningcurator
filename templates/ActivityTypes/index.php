@@ -18,49 +18,36 @@ function rgbToHex(r, g, b) {
 //alert(rgbToHex(0, 51, 255)); // #0033ff
 </script>
 
-<div class="container-fluid">
-<div class="row justify-content-md-center bg-white" id="activitytypes">
+<div class="p-6">
+<h1 class="mb-6 text-3xl">Activity Types</h1>
+<div class="grid grid-cols-2 gap-4">
+
 <?php foreach($activityTypes as $type): ?>
-<?php $count++ ?>
-	<div class="col-md-6" style="background-color: rgba(<?= $type->color ?>,.2)">
-	<div class="py-4">
-	<div class="m-4 p-4 bg-white rounded-lg">
+	<div class="p-4 bg-white dark:bg-slate-900 rounded-lg">
 	<div class="mb-3">
     <div class="float-right"><?= $this->Html->link(__('Edit'), ['action' => 'edit', $type->id],['class' => 'btn btn-light mt-3']) ?></div>
-		<a href="/activity-types/view/<?= $type->id ?>" class="activity-icon activity-icon-lg" style="background-color: rgba(<?= $type->color ?>,1)">
-			<i class="activity-icon activity-icon-lg fas <?= $type->image_path ?>"></i>
-		</a>
-		<a href="/activity-types/view/<?= $type->id ?>" class="" style="color: #333; font-size: 230%">
+
+		<a href="/activity-types/view/<?= $type->id ?>" class="text-2xl">
 			<?= h($type->name) ?>
 		</a>
 	</div>
-		<div class="mb-3" style="font-size: 120%;">
+		<div class="p-3 bg-slate-200 dark:bg-slate-800 text-lg rounded-lg">
 		<?= $type->description ?>
 		</div>
-        <div>
+    <a title="View this activity type"
+			href="/activity-types/view/<?= $type->id ?>"  
+			class="inline-block mt-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+				View Activities
+		</a>
+    <!-- <div>
         RGB: <?= h($type->color) ?><br>
-        Hex: <span class="text-uppercase hexx<?= $count ?>"></span>
-        <script> 
-        var hoo<?= $count ?> = rgbToHex(<?= h($type->color) ?>);
-        console.log(hoo<?= $count ?>);
-        document.querySelector('.hexx<?= $count ?>').innerHTML = hoo<?= $count ?>;
-        </script>
-        
     </div>
     <div>
-    <a href="https://fontawesome.com/icons?d=gallery&m=free" target="_blank" rel="noopener">
-        FontAwesome Icon</a>: <?= h($type->image_path) ?>
-    </div>
+        Icon: <?= h($type->image_path) ?>
+    </div> -->
 
-    
-	</div>
-	</div>
 	</div>
 <?php endforeach ?>
 </div>
 </div>
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 

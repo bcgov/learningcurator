@@ -6,6 +6,7 @@ namespace App\Controller;
 
 Use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
+use Cake\I18n\FrozenTime;
 
 /**
  * Pathways Controller
@@ -65,12 +66,14 @@ class PathwaysController extends AppController
         // regardless of their statuses. Regular users should only ever see 
         // 'published' pathways.
         if($user->role == 'curator' || $user->role == 'superuser') {
-            $pathways = $paths->find('all')->contain(['Topics','Topics.Categories','Statuses']);
+            $pathways = $paths->find('all')->contain(['Topics','Topics.Categories','Statuses'])
+                                            ->order(['Pathways.created' => 'desc']);
         } else {
             $pathways = $paths->find('all')
                                 ->contain(['Topics','Topics.Categories','Statuses'])
                                 ->where(['Pathways.featured' => 1])
-                                ->where(['status_id' => 2]);
+                                ->where(['status_id' => 2])
+                                ->order(['Pathways.created' => 'desc']);
         }
         //$this->paginate($pathways);
         $this->set(compact('pathways'));
@@ -160,12 +163,13 @@ class PathwaysController extends AppController
                 $followid = $pu->_joinData->id;
             }
         }
+        $percentage = 0;
+        $totalclaimed = 0;
+        $totalacts = 0;
+        $requiredacts = 0;
+        $suppacts = 0;
         if (!empty($pathway->steps)):
-            $percentage = 0;
-            $totalclaimed = 0;
-            $totalacts = 0;
-            $requiredacts = 0;
-            $suppacts = 0;
+
             foreach ($pathway->steps as $steps):
                 foreach ($steps->activities as $activity):
                     if($activity->status_id == 2) {
@@ -181,7 +185,11 @@ class PathwaysController extends AppController
                     }
                 endforeach; // activities
             endforeach; // steps
-            $percentage = floor(($totalclaimed / $requiredacts) * 100);
+            if($totalclaimed > 0) {
+                $percentage = floor(($totalclaimed / $requiredacts) * 100);
+            } else {
+                $percentage = 0;
+            }
         endif;
         $this->set(compact('pathway', 
                             'totalacts', 
@@ -209,44 +217,185 @@ class PathwaysController extends AppController
                             'Steps' => ['sort' => ['Steps.id' => 'asc']],
                             'Steps.Statuses', 
                             'Steps.Activities', 
-                            'Steps.Activities.ActivityTypes', 
-                            'Users'])->firstOrFail();
+                            'Steps.Activities.ActivityTypes'])->firstOrFail();
         
-        $this->RequestHandler->renderAs($this, 'json');
-        // $this->RequestHandler->respondAs('json', [
-        //     // Force download
-        //     'attachment' => true,
-        //     'charset' => 'UTF-8'
-        // ]);
-        $this->set(compact('pathway'));
+        //$this->RequestHandler->renderAs($this, 'json');
+
+        $p = json_encode($pathway);
+        $response = $this->response;
+    
+        // Inject string content into response body
+        $response = $response->withStringBody($p);
+    
+        $response = $response->withType('text/json');
+        $filename = $pathway->slug . '.json';
+        // Optionally force file download
+        $response = $response->withDownload($filename);
+    
+        // Return response object to prevent controller from trying to render
+        // a view.
+        return $response;
+
 
     }
+
+
+
 
     /**
      * Import method
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function import ()
+    public function import ($topicid = 0)
     {
-        $pathway = $this->Pathways->newEmptyEntity();
-        if ($this->request->is('post')) {
+        // #TODO sanitize this somehow and perhaps only accept urls from a 
+        // whitelist
+        $importfile = $this->request->getQuery('pathimportfile');
+        $this->viewBuilder()->setLayout('ajax');
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        $feed = file_get_contents($importfile);
+        $path = json_decode($feed);
 
+        $pathpast = $path->file_path . '';
+        $pathpast .= 'Imported pathway originally created by ' . $path->createdby . ' ';
+        $pathpast .= 'on ' . $path->created . '. Last modified by ' . $path->modifiedby . ' ';
+        $pathpast .= 'on ' . $path->modified;
 
-            
-            $pathway = $this->Pathways->patchEntity($pathway, );
-
-
-            $sluggedTitle = Text::slug($pathway->name);
-            // trim slug to maximum length defined in schema
-            $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
-            if ($this->Pathways->save($pathway)) {
-                $redir = '/pathways/' . $sluggedTitle;
-                return $this->redirect($redir);
-            }
-            $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
+        $pathslugtocheck = $path->slug;
+        $namecheck = $this->Pathways->find()->where(function ($exp, $query) use($pathslugtocheck) {
+                                        return $exp->like('Pathways.slug', '%'.$pathslugtocheck.'%');
+                                    })->toList();
+        $pathname = $path->name;
+        $pathslug = $path->slug;
+        if(!empty($namecheck)) {
+            $pathname = $path->name . ' - ' . FrozenTime::now();
+            $sluggedtitle = Text::slug($pathname);
+            $pathslug = strtolower(substr($sluggedtitle, 0, 191));
         }
+
+        $pathway = $this->Pathways->newEmptyEntity();
         
+        $pathdeets = [
+            'status_id' => 1,
+            'topic_id' => $topicid, //33,
+            'name' => $pathname,
+            'file_path' => $pathpast, // we are repurposing file_path here to create a log mostly because Allan is afraid of database migrations
+            'description' => $path->description,
+            'objective' => $path->objective,
+            'slug' => $pathslug,
+            'createdby' => $user->id,
+            'modifiedby' => $user->id
+        ];
+        //echo '<pre>'; print_r($pathdeets); exit;
+        
+        $pathway = $this->Pathways->patchEntity($pathway, $pathdeets);
+        if ($this->Pathways->save($pathway)) {
+            
+            $pathid = $pathway->id;
+            $st = TableRegistry::getTableLocator()->get('Steps');
+            $act = TableRegistry::getTableLocator()->get('Activities');
+            $asteptable = TableRegistry::getTableLocator()->get('ActivitiesSteps'); 
+            foreach($path->steps as $step) {
+
+                $newstep = $st->newEmptyEntity();
+                $stepdeets = [
+                    'pathways' => [['id' => $pathid]],
+                    'name' => $step->name,
+                    'slug' => $step->slug,
+                    'description' => $step->description,
+                    'createdby' => $user->id,
+                    'modifiedby' => $user->id
+                ];
+                
+                $newstep = $st->patchEntity($newstep,$stepdeets, [
+                    'associated' => [
+                        'Pathways'
+                    ]
+                ]);
+                if ($st->save($newstep)) {
+
+                    foreach ($step->activities as $a) {
+                        
+                        $linktocheck = $a->hyperlink;
+                        $check = $act->find()->where(function ($exp, $query) use($linktocheck) {
+                                                        return $exp->like('Activities.hyperlink', '%'.$linktocheck.'%');
+                                                    })->toList();
+                        if(empty($check)) {
+                            
+                            $newact = $act->newEmptyEntity();
+                            $actdeets = [
+                                'status_id' => 2,
+                                'activity_types_id' => 2,
+                                'hyperlink' => $a->hyperlink,
+                                'name' => $a->name,
+                                'slug' => $a->slug,
+                                'description' => $a->description,
+                                'createdby_id' => $user->id,
+                                'approvedby_id' => $user->id,
+                                'modifiedby_id' => $user->id
+                            ];
+                            
+                            $newact = $act->patchEntity($newact,$actdeets);
+                            if ($act->save($newact)) {
+                                $activitiesStep = $asteptable->newEmptyEntity();
+                                $context = $a->_joinData->stepcontext ?? '';
+                                $req = $a->_joinData->required ?? 0;
+                                $order = $a->_joinData->steporder ?? 0;
+                                $actstdeets = [
+                                    'step_id' => $newstep->id,
+                                    'activity_id' => $newact->id,
+                                    'steporder' => $order,
+                                    'stepcontext' => $context,
+                                    'required' => $req
+                                ];
+                                $activitiesStep = $asteptable->patchEntity($activitiesStep,$actstdeets);
+    
+                                if (!$asteptable->save($activitiesStep)) {
+                                    echo 'Cannot add to step!' . $check[0]->id;
+                                }
+
+                            } else {
+                                echo 'Activity could NOT be created.';
+                            }
+
+                        } else {
+
+                            $activitiesStep = $asteptable->newEmptyEntity();
+                            $context = $a->_joinData->stepcontext ?? '';
+                            $req = $a->_joinData->required ?? 0;
+                            $order = $a->_joinData->steporder ?? 0;
+                            $actstdeets = [
+                                'step_id' => $newstep->id,
+                                'activity_id' => $check[0]->id,
+                                'steporder' => $order,
+                                'stepcontext' => $context,
+                                'required' => $req
+                            ];
+                            $activitiesStep = $asteptable->patchEntity($activitiesStep,$actstdeets);
+
+                            if (!$asteptable->save($activitiesStep)) {
+                                echo 'Cannot add to step!' . $check[0]->id;
+                            }
+
+                        }
+
+                    }
+
+                } else {
+                    echo 'Step NOT created<br>';
+                }
+
+            }
+
+            $redir = '/pathways/' . $path->slug;
+            return $this->redirect($redir);
+
+        } else {
+            echo 'Something went wrong importing this pathway.';
+            exit;
+        }
+            
         
     }
 
@@ -257,14 +406,16 @@ class PathwaysController extends AppController
      */
     public function add()
     {
+        
         $pathway = $this->Pathways->newEmptyEntity();
         if ($this->request->is('post')) {
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
             $sluggedTitle = Text::slug($pathway->name);
             // trim slug to maximum length defined in schema
             $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
+            //echo '<pre>'; print_r($this->request->getData()); exit;
             if ($this->Pathways->save($pathway)) {
-                $this->Flash->success(__('The pathway has been saved.'));
+                //$this->Flash->success(__('The pathway has been saved.'));
                 $redir = '/pathways/' . $sluggedTitle;
                 return $this->redirect($redir);
             }

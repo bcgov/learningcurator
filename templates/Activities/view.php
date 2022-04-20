@@ -13,7 +13,7 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 
-<div class="p-6 dark:text-white">
+<div class="p-6">
 
 	<?php if($role == 'curator' || $role == 'superuser'): ?>
 	<div class="btn-group float-right">
@@ -33,7 +33,7 @@ if ($this->Identity->isLoggedIn()) {
 		<?= $activity->name ?>
 	</h1>
 
-	<div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
+	<div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg">
 		
 		<div class="mb-2">
 			<?php foreach($activity->tags as $tag): ?>
@@ -41,7 +41,7 @@ if ($this->Identity->isLoggedIn()) {
 			<?php endforeach ?>
 		</div>
 
-		<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-lg">
+		<div class="p-2 lg:p-4 text-lg bg-white dark:bg-[#002850] rounded-lg">
 		<?php if(!empty($activity->description)): ?>
 			<?= $activity->description ?>
 		<?php else: ?>
@@ -67,7 +67,7 @@ if ($this->Identity->isLoggedIn()) {
 				rel="noopener" 
 				data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
 				href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
-				class="inline-block my-2 p-3 bg-sky-600 rounded-lg text-white text-2xl hover:no-underline">
+				class="inline-block my-2 p-3 bg-sky-700 rounded-lg text-white text-2xl hover:no-underline">
 					Launch Activity
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
 						<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
@@ -106,9 +106,9 @@ if ($this->Identity->isLoggedIn()) {
 		
 		<?php if(count($activitylaunches) > 0): ?>
 		<div class="mb-3 p-3 bg-white dark:bg-slate-900 rounded-lg">
-			You launched this activity: 
+		<h2 class="text-lg">You launched this activity:</h2>
 		<?php foreach($activitylaunches as $u): ?>
-		<div class="p-2 my-2 bg-slate-800 dark:text-yellow-500 rounded-lg">
+		<div class="p-2 my-2 bg-slate-100 dark:bg-slate-800 dark:text-yellow-500 rounded-lg">
 			<?= $this->Time->format($u[1],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
 			<?= $this->Form->postLink(__('Remove'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $u[0]], ['class' => 'px-2 bg-white text-black dark:bg-black dark:text-white hover:no-underline rounded-lg', 'confirm' => __('Remove?')]) ?>
 		</div>
@@ -226,7 +226,7 @@ if ($this->Identity->isLoggedIn()) {
 							'required' => 'required']);
 			?>
 			
-			<input type="submit" class="mt-1 px-4 py-2 text-white bg-sky-600 hover:bg-sky-800 rounded-lg" value="Report Issue">
+			<input type="submit" class="mt-1 px-4 py-2 text-white bg-sky-700 hover:bg-sky-800 rounded-lg" value="Report Issue">
 			<span x-text="message"></span> 
 			<a class="inline-block ml-6" href="/profile/reports">See all your reports</a>
 

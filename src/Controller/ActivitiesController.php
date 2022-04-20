@@ -39,7 +39,9 @@ class ActivitiesController extends AppController
                                         'Statuses', 
                                         'Ministries', 
                                         'ActivityTypes',
-                                        'Steps.Pathways'])
+                                        'Steps.Pathways',
+                                        'Steps.Pathways.Topics',
+                                        'Steps.Pathways.Topics.Categories'])
                             ->where(['Activities.status_id' => 2])
                             ->order(['Activities.created' => 'DESC'])); // including 'Steps.Pathways' appears to be SUPER expensive    
 
@@ -384,6 +386,7 @@ class ActivitiesController extends AppController
                 $activity->modifiedby_id = $user->id;
                 $activity->approvedby_id = $user->id;
                 $activity->status_id = 2;
+                $activity->activity_types_id = 1;
 
                 $sluggedTitle = Text::slug($activity->name);
                 // trim slug to maximum length defined in schema
@@ -406,10 +409,10 @@ class ActivitiesController extends AppController
                         'activitystepid' => $activitiesStep->id,
                         'stepid' => $this->request->getData()['step_id']
                     );
-                    echo json_encode($actstep);
-                    exit;
-                    //$return = '/steps/edit/' . $this->request->getData()['step_id'];
-                    //return $this->redirect($return);
+                    // echo json_encode($actstep);
+                    // exit;
+                    $return = '/steps/edit/' . $this->request->getData()['step_id'];
+                    return $this->redirect($return);
                 }
     
             } // if POST method used

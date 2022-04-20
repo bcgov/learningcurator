@@ -8,7 +8,7 @@ $this->loadHelper('Authentication.Identity');
 
 <div class="p-6 dark:text-white">
 <div class="p-6 bg-slate-200 dark:bg-slate-900 rounded-lg">
-
+<?= $this->Form->postLink(__('Delete Pathway'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'float-right p-3 bg-red-100 dark:bg-red-900 hover:no-underline hover:underline rounded-lg']) ?>
 <?= $this->Form->create($pathway) ?>
 
 <label><?php echo $this->Form->checkbox('featured'); ?> Featured?</label>
@@ -24,10 +24,9 @@ $this->loadHelper('Authentication.Identity');
 
 <div>
 <label>Topic:
-<?php echo $this->Form->select(
-    'topic_id',
-    $areas,
-	['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg'],
+<?php echo $this->Form->select('topic_id',
+                                $areas,
+                                ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg'],
 );
 ?></label>
 </div>
@@ -40,12 +39,15 @@ echo $this->Form->control('objective', ['class' => 'w-full p-3 bg-slate-300 dark
 //echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true, 'class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']);
 //echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true, 'class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']);
 //echo $this->Form->control('color');
-//echo $this->Form->control('file_path');
+//echo $this->Form->control('file_path', ['class' => 'w-full p-3 bg-slate-300 dark:bg-slate-800 rounded-lg','label' => 'Import history']);
 //echo $this->Form->control('image_path');
 //echo $this->Form->control('ministry_id', ['options' => $ministries, 'empty' => true]);
 //echo $this->Form->control('competencies._ids', ['options' => $competencies]);
 ?>
-<?= $this->Form->button(__('Save Pathway'), ['class' => 'btn btn-block btn-success mt-3']) ?>
+<?php if(!empty($pathway->file_path)): ?>
+<div class="p-3 bg-white dark:bg-black text-sm italic rounded-lg"><?= $pathway->file_path ?></div>
+<?php endif ?>
+<?= $this->Form->button(__('Save Pathway'), ['class' => 'inline-block p-3 mt-3 bg-slate-200 dark:bg-sky-700 dark:hover:bg-sky-800 dark:text-white hover:no-underline rounded-lg']) ?>
 <?= $this->Form->end() ?>
 </div>
 </div>

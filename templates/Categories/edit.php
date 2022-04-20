@@ -3,30 +3,25 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Category $category
  */
+$this->loadHelper('Authentication.Identity');
 ?>
-<div class="container-fluid">
-<div class="row justify-content-md-center align-items-center"  id="colorful">
-<div class="col-md-10 col-lg-8 col-xl-6">
+<div class="p-6">
+
+<div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
+<?php if($this->Identity->get('role') == 'superuser'): ?>
 <div class="float-right mt-5">
-<?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $category->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $category->id), 'class' => 'btn btn-danger']
-            ) ?>
+<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $category->id], ['confirm' => __('Really delete?'), 'class' => 'inline-block my-2 p-3 bg-red-600 hover:bg-red-800 rounded-lg font-semibold text-white hover:no-underline']) ?>
 </div>
-    <div class="mt-5">Topic Area</div>
-    <h1 class="display-4 mb-5">
-        Editing <?= h($category->name) ?>
-    </h1>
-</div>
-</div>
-</div>
+<?php endif ?>
 
-<div class="container-fluid">
-<div class="row justify-content-md-center align-items-center">
-<div class="col-md-8 col-lg-6 col-xl-4">
-<div class="bg-white p-3 my-5 shadow-sm">
 
+<h1 class="text-3xl">
+    Editing <?= h($category->name) ?>
+</h1>
+<a class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline" 
+    href="/categories/view/<?= $category->id ?>">
+        View <?= h($category->name) ?>
+</a>
 
 <?= $this->Form->create($category) ?>
 <fieldset>
@@ -35,21 +30,18 @@
 </label>
 <?php
 //echo $this->Form->control('topics._ids', ['options' => $topics]);
-echo $this->Form->control('name',['class' => 'form-control']);
+echo $this->Form->control('name',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']);
 //echo $this->Form->control('slug');
-echo $this->Form->control('description',['class' => 'form-control']);
+echo $this->Form->control('description',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']);
 // echo $this->Form->control('image_path');
+echo $this->Form->control('sortorder',['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']);
 // echo $this->Form->control('color');
 
 //echo $this->Form->control('createdby');
 
 ?>
 </fieldset>
-<?= $this->Form->button(__('Update Topic Area'),['class' => 'btn btn-success mt-3']) ?>
+<?= $this->Form->button(__('Update Category'),['class' => 'inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline']) ?>
 <?= $this->Form->end() ?>
 </div>
 </div>
-</div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
