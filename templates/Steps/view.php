@@ -98,7 +98,11 @@ function loadStatus() {
 		.then((res) => res.json())
 		.then((json) => {
 			document.querySelector('.pbar').style.width = json.percentage + '%';
-			document.querySelector('.pbar').innerHTML = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
+			if(json.percentage > 20) {
+				document.querySelector('.pbar').innerHTML = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
+			} else {
+				document.querySelector('.pbar').outerHTML = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
+			}
 			//console.log(json);
 		})
 		.catch((err) => console.error("error:", err));
