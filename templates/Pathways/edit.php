@@ -47,7 +47,7 @@ echo $this->Form->control('objective', ['class' => 'w-full p-3 bg-slate-300 dark
 <?php if(!empty($pathway->file_path)): ?>
 <div class="p-3 bg-white dark:bg-black text-sm italic rounded-lg"><?= $pathway->file_path ?></div>
 <?php endif ?>
-<?= $this->Form->button(__('Save Pathway'), ['class' => 'btn btn-block btn-success mt-3']) ?>
+<?= $this->Form->button(__('Save Pathway'), ['class' => 'inline-block p-3 mt-3 bg-slate-200 dark:bg-sky-700 dark:hover:bg-sky-800 dark:text-white hover:no-underline rounded-lg']) ?>
 <?= $this->Form->end() ?>
 </div>
 </div>

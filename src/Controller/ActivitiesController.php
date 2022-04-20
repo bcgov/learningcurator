@@ -386,6 +386,7 @@ class ActivitiesController extends AppController
                 $activity->modifiedby_id = $user->id;
                 $activity->approvedby_id = $user->id;
                 $activity->status_id = 2;
+                $activity->activity_types_id = 1;
 
                 $sluggedTitle = Text::slug($activity->name);
                 // trim slug to maximum length defined in schema
