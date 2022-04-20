@@ -758,6 +758,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 1.5rem;
 }
 
+.h-7 {
+  height: 1.75rem;
+}
+
 .h-auto {
   height: auto;
 }
@@ -921,12 +925,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-bottom-left-radius: 0.5rem;
 }
 
-.rounded-tl-none {
-  border-top-left-radius: 0px;
-}
-
 .rounded-br-lg {
   border-bottom-right-radius: 0.5rem;
+}
+
+.rounded-tl-none {
+  border-top-left-radius: 0px;
 }
 
 .border {
@@ -1116,14 +1120,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-bottom: 0.25rem;
 }
 
-.px-8 {
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .py-6 {

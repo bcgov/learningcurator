@@ -88,25 +88,10 @@ foreach ($step->pathways as $pathways) {
 	<?= $step->pathways[0]->objective ?> 
 </div>
 
-<div
-    x-cloak
-    x-data="{status: [], 'isLoading': true}"
-    x-effect="fetch('/pathways/status/<?= $step->pathways[0]->id ?>')
-            .then(response => response.json())
-            .then(response => { 
-                    status = response; 
-                    isLoading = false; 
-                    console.log(response); 
-                })"
-	class="sticky top-0 z-50">
-<div class="" x-show="isLoading">Loading&hellip;</div>
-<div x-show="!isLoading" class="">
-	<div class="mb-6 h-6 w-full bg-slate-500 dark:bg-black rounded-b-lg">
-		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-sky-700 dark:bg-sky-700 text-white text-center rounded-bl-lg">&nbsp;</span>
-		<span x-text="status.percentage + '% - ' + status.completed + ' of ' + status.requiredacts" class="beginning inline-block text-white"></span>
-	</div>
+<div class="sticky top-0 w-full h-7 bg-slate-900 rounded-bl-lg rounded-br-lg">
+	<div class="pbar py-1 px-6 h-7 bg-sky-700 rounded-bl-lg rounded-br-lg"></div>
 </div>
-</div> <!-- / progress contain -->
+
 
 
 
@@ -287,7 +272,7 @@ if(!empty($youtube[1])):
 
 
 		<a target="_blank" 
-			x-on:click="count++;"
+			x-on:click="count++; loadStatus();"
 			rel="noopener" 
 			title="Launch this activity"
 			href="/activities-users/launch?activity_id=<?= $activity->id ?>"  
@@ -624,3 +609,18 @@ aria-controls="defunctacts">View archived activities</a>.
 </div>
 </div>
 </div>
+
+<script>
+loadStatus();
+function loadStatus() {
+	fetch("/pathways/status/<?= $step->pathways[0]->id ?>", { method: "GET" })
+		.then((res) => res.json())
+		.then((json) => {
+			document.querySelector('.pbar').style.width = json.percentage + '%';
+			document.querySelector('.pbar').innerHTML = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
+			//console.log(json);
+		})
+		.catch((err) => console.error("error:", err));
+
+}
+</script>

@@ -74,16 +74,10 @@ $this->assign('title', h($pathway->name));
 	<?= $pathway->objective ?> 
 </div>
 
-<div
+<!-- <div
     x-cloak
     x-data="{status: [], 'isLoading': true}"
-    x-init="fetch('/pathways/status/<?= $pathway->id ?>')
-            .then(response => response.json())
-            .then(response => { 
-                    status = response; 
-                    isLoading = false; 
-                    //console.log(response); 
-                })"
+    x-init="loadStatus()"
 >
 <div class="" x-show="isLoading">Loading&hellip;</div>
 <div x-show="!isLoading">
@@ -92,10 +86,25 @@ $this->assign('title', h($pathway->name));
 		<span x-text="status.percentage + '% - ' + status.completed + ' of ' + status.requiredacts" class="beginning inline-block text-white"></span>
 	</div>
 </div>
+</div> -->
+
+<div class="w-full h-7 bg-slate-900 rounded-bl-lg rounded-br-lg">
+	<div class="pbar py-1 px-6 h-7 bg-sky-700 rounded-bl-lg rounded-br-lg"></div>
 </div>
+<script>
+loadStatus();
+function loadStatus() {
+	fetch("/pathways/status/<?= $pathway->id ?>", { method: "GET" })
+		.then((res) => res.json())
+		.then((json) => {
+			document.querySelector('.pbar').style.width = json.percentage + '%';
+			document.querySelector('.pbar').innerHTML = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
+			console.log(json);
+		})
+		.catch((err) => console.error("error:", err));
 
-
-
+}
+</script>
 
 
 
