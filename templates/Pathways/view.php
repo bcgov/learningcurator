@@ -87,8 +87,7 @@ $this->assign('title', h($pathway->name));
 	</div>
 </div>
 </div> -->
-
-<div class="w-full h-7 bg-slate-900 rounded-bl-lg rounded-br-lg">
+<div class="sticky top-0 mb-6 w-full h-7 bg-slate-900 rounded-bl-lg rounded-br-lg">
 	<div class="pbar py-1 px-6 h-7 bg-sky-700 rounded-bl-lg rounded-br-lg"></div>
 </div>
 <script>

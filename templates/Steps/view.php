@@ -88,24 +88,28 @@ foreach ($step->pathways as $pathways) {
 	<?= $step->pathways[0]->objective ?> 
 </div>
 
-<div class="sticky top-0 w-full h-7 bg-slate-900 rounded-bl-lg rounded-br-lg">
+<div class="sticky top-0 mb-6 w-full h-7 bg-slate-900 rounded-bl-lg rounded-br-lg">
 	<div class="pbar py-1 px-6 h-7 bg-sky-700 rounded-bl-lg rounded-br-lg"></div>
 </div>
+<script>
+loadStatus();
+function loadStatus() {
+	fetch("/pathways/status/<?= $step->pathways[0]->id ?>", { method: "GET" })
+		.then((res) => res.json())
+		.then((json) => {
+			document.querySelector('.pbar').style.width = json.percentage + '%';
+			document.querySelector('.pbar').innerHTML = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
+			//console.log(json);
+		})
+		.catch((err) => console.error("error:", err));
 
-
-
-
+}
+</script>
 
 
 
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right ml-3">
-	<?php 
-	$pornot = 'Publish Step';
-	if($step->status_id == 2) $pornot = 'Unpublish Step'; 
-	?>
-	<a href="/steps/publishtoggle/<?= $step->id ?>"><?= $pornot ?></a>
-
 <?= $this->Html->link(__('Edit Step'), 
 						['controller' => 'Steps', 'action' => 'edit', $step->id], 
 						['class' => 'mt-2 inline-block p-3 bg-black hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline']); 
@@ -134,13 +138,13 @@ foreach ($step->pathways as $pathways) {
 		
 		
 		<h3 class="mb-3 text-2xl">Steps along this pathway</h3>
-		<div class="grid grid-cols-2 gap-4">
+		<div class=""> <!-- grid grid-cols-2 gap-4 -->
 		<?php foreach ($step->pathways as $pathways) : ?>
 		<?php foreach($pathways->steps as $s): ?>
 		<div class="">
 		<?php if($s->status_id == 2): ?>
 		<?php $c = '' ?>
-		<?php if($s->id == $step->id) $c = 'bg-slate-300 dark:bg-[#003366]' ?>
+		<?php if($s->id == $step->id) $c = 'bg-slate-300 dark:bg-slate-900' ?>
 		<a class="<?= $c ?> block px-4 py-2 mt-2 text-sm font-semibold rounded-lg dark:hover:bg-sky-700 dark:focus:bg-sky-800 dark:focus:text-white dark:hover:text-white dark:text-slate-200 md:mt-0 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline" 
 			href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
 				<?= h($s->name) ?> 
@@ -610,17 +614,3 @@ aria-controls="defunctacts">View archived activities</a>.
 </div>
 </div>
 
-<script>
-loadStatus();
-function loadStatus() {
-	fetch("/pathways/status/<?= $step->pathways[0]->id ?>", { method: "GET" })
-		.then((res) => res.json())
-		.then((json) => {
-			document.querySelector('.pbar').style.width = json.percentage + '%';
-			document.querySelector('.pbar').innerHTML = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
-			//console.log(json);
-		})
-		.catch((err) => console.error("error:", err));
-
-}
-</script>
