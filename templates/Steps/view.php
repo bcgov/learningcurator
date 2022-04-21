@@ -97,11 +97,12 @@ function loadStatus() {
 	fetch("/pathways/status/<?= $step->pathways[0]->id ?>", { method: "GET" })
 		.then((res) => res.json())
 		.then((json) => {
+			let message = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
 			document.querySelector('.pbar').style.width = json.percentage + '%';
 			if(json.percentage > 20) {
-				document.querySelector('.pbar').innerHTML = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
+				document.querySelector('.pbar').innerHTML = message;
 			} else {
-				document.querySelector('.pbar').outerHTML = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
+				document.querySelector('.pbar').outerHTML = message;
 			}
 			//console.log(json);
 		})
