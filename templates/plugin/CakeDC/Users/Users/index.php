@@ -54,6 +54,7 @@
 // these links are templated/built within the controller for noted reasons there
 
 ?>
+<?php if(!$noresponses->isEmpty()): ?>
 <?php foreach($noresponses as $report): ?>
 	<div class="p-3 mb-2 bg-slate-200 dark:bg-slate-800 rounded-lg">
 		
@@ -74,6 +75,11 @@
 		</a> 
 	</div> 
 <?php endforeach ?>
+<?php else: ?>
+    <div class="p-3 mb-2 bg-slate-200 dark:bg-slate-800 rounded-lg">
+        <p>No open reported issues to address! Good job.</p>
+    </div>
+<?php endif ?>
 </div>
 
 
