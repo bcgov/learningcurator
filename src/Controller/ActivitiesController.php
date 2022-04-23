@@ -275,13 +275,32 @@ class ActivitiesController extends AppController
                                 )));
         $numpaths = $pathways->count();
 
+        // We've searched for activities, categories, and pathways and that's
+        // great and all, but we also want to return results for steps as well. 
+        $allsteps = TableRegistry::getTableLocator()->get('Steps');
+        // $pathways = $allpaths->find()->where(function ($exp, $query) use($search) {
+        //     return $exp->like('name', '%'.$search.'%');
+        // })->order(['name' => 'ASC']);
+
+        $steps = $allpaths->find('all',
+                                    array('conditions' => 
+                                    array('OR' => 
+                                        array(
+                                            'name LIKE' => '%'.$search.'%',
+                                            'description LIKE' => '%'.$search.'%'
+                                        )
+                                )));
+        $numsteps = $steps->count();
+
 
 
         $this->set(compact('categories', 
                             'pathways', 
+                            'steps',
                             'activities', 
                             'search', 
                             'numcats', 
+                            'numsteps', 
                             'numacts', 
                             'numpaths'));
     }

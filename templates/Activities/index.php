@@ -54,7 +54,7 @@ foreach($actlist as $k => $v) {
 	
 	<a href="/profile/launches" 
 		x-cloak 
-		class="inline-block w-24 bg-slate-100 text-[#003366] dark:bg-slate-900 dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
+		class="inline-block w-24 bg-sky-700 dark:bg-slate-900 text-white dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
 		:class="[count > '0' ? 'show' : 'hidden']">
 			Launched
 	</a>

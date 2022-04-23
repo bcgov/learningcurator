@@ -83,32 +83,36 @@ foreach ($step->pathways as $pathways) {
 	<?= $step->pathways[0]->name ?>
 </h1>
 
-<div class="p-4 lg:text-2xl bg-slate-100 dark:bg-slate-800 rounded-lg">
+<div class="p-4 lg:text-2xl bg-slate-100 dark:bg-slate-900 rounded-lg">
 	<div class="text-xs">Objective</div>
 	<?= $step->pathways[0]->objective ?> 
 </div>
 
-<div class="sticky top-0 mt-1 mb-6 w-full h-8 bg-slate-50 dark:bg-slate-900 rounded-lg">
-	<div class="pbar pt-1 px-6 h-8 bg-sky-700 text-white rounded-lg"></div>
+<div class="pbarcontainer sticky top-0 mt-1 mb-6 w-full h-8 bg-slate-50 dark:bg-slate-900 rounded-lg">
+	<span class="inline-block pbar pt-1 px-6 h-8 bg-sky-700 text-white rounded-lg"></span>
 </div>
 <script>
-loadStatus();
-function loadStatus() {
-	fetch('/pathways/status/<?= $step->pathways[0]->id ?>', { method: 'GET' })
-		.then((res) => res.json())
-		.then((json) => {
-			let message = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
-			document.querySelector('.pbar').style.width = json.percentage + '%';
-			if(json.percentage > 20) {
-				document.querySelector('.pbar').innerHTML = message;
-			} else {
-				document.querySelector('.pbar').outerHTML = message;
-			}
-			//console.log(json);
-		})
-		.catch((err) => console.error("error:", err));
 
-}
+fetch('/pathways/status/<?= $step->pathways[0]->id ?> ', { method: 'GET' })
+	.then((res) => res.json())
+	.then((json) => {
+		if(json.percentage > 0) {
+			let message = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
+			if(json.percentage > 25) {
+				document.querySelector('.pbar').style.width = json.percentage + '%';
+			} 
+			if(json.percentage == 100) {
+				document.querySelector('.pbar').innerHTML = message + ' - COMPLETED!';
+			} else {
+				document.querySelector('.pbar').innerHTML = message;
+			}
+		} else {
+			document.querySelector('.pbarcontainer').innerHTML = '<span class="inline-block pt-1 px-3 h-8">Launch activities to see your progress here&hellip;</span>';
+		}
+		//console.log(json);
+	})
+	.catch((err) => console.error("error:", err));
+
 </script>
 
 

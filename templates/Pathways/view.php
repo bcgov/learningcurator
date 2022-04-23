@@ -25,7 +25,7 @@ $this->assign('title', h($pathway->name));
 <nav class="mb-3 bg-slate-100 dark:bg-slate-900 rounded-lg p-3" aria-label="breadcrumb">
 	<a href="/categories" class="hover:underline">Categories</a> / 
 	<a href="/category/<?= h($pathway->topic->categories[0]->id) ?>/<?= h($pathway->topic->categories[0]->slug) ?>" class="hover:underline"><?= h($pathway->topic->categories[0]->name) ?></a> / 
-	<a href="/category/<?= h($pathway->topic->categories[0]->id) ?>/<?= h($pathway->topic->categories[0]->slug) ?>/topic/<?= h($pathway->topic->slug) ?>" class="hover:underline"><?= h($pathway->topic->name) ?></a> / 
+	<a href="/category/<?= h($pathway->topic->categories[0]->id) ?>/<?= h($pathway->topic->categories[0]->slug) ?>/topic/<?= h($pathway->topic->id) ?>/<?= h($pathway->topic->slug) ?>" class="hover:underline"><?= h($pathway->topic->name) ?></a> / 
 	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
 		<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
 		<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
@@ -70,44 +70,27 @@ $this->assign('title', h($pathway->name));
 </div>
 <?php endif ?>
 
-<div class="p-4 text-2xl bg-slate-100 dark:bg-slate-800 rounded-lg">
+<div class="p-4 text-2xl bg-slate-100 dark:bg-slate-900 rounded-lg">
 <div class="text-xs">Objective</div>
 	<?= $pathway->objective ?> 
 </div>
 
-<!-- <div
-    x-cloak
-    x-data="{status: [], 'isLoading': true}"
-    x-init="loadStatus()"
->
-<div class="" x-show="isLoading">Loading&hellip;</div>
-<div x-show="!isLoading">
-	<div class="mb-6 w-full bg-slate-500 dark:bg-black rounded-b-lg">
-		<span :style="'width:' + status.percentage + '%;'" class="progressbar h-6 inline-block bg-sky-700 dark:bg-sky-700 text-white text-center rounded-bl-lg">&nbsp;</span>
-		<span x-text="status.percentage + '% - ' + status.completed + ' of ' + status.requiredacts" class="beginning inline-block text-white"></span>
-	</div>
-</div>
-</div> -->
 <div class="sticky top-0 mt-1 mb-6 w-full h-8 bg-slate-50 dark:bg-slate-900 rounded-lg">
-	<div class="pbar pt-1 px-6 h-8 bg-sky-700 text-white rounded-lg"></div>
+	<span class="inline-block pbar pt-1 px-6 h-8 bg-sky-700 text-white rounded-lg"></span>
 </div>
 <script>
-loadStatus();
-function loadStatus() {
-	fetch("/pathways/status/<?= $pathway->id ?>", { method: "GET" })
-		.then((res) => res.json())
-		.then((json) => {
+fetch('/pathways/status/<?= $pathway->id ?>', { method: 'GET' })
+	.then((res) => res.json())
+	.then((json) => {
+		let message = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
+		if(json.percentage > 25) {
 			document.querySelector('.pbar').style.width = json.percentage + '%';
-			if(json.percentage > 20) {
-				document.querySelector('.pbar').innerHTML = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
-			} else {
-				document.querySelector('.pbar').outerHTML = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
-			}
-			console.log(json);
-		})
-		.catch((err) => console.error("error:", err));
+		} 
+		document.querySelector('.pbar').innerHTML = message;
+		//console.log(json);
+	})
+	.catch((err) => console.error("error:", err));
 
-}
 </script>
 
 
