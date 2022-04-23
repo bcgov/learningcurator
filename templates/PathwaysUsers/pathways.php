@@ -22,7 +22,7 @@ if ($this->Identity->isLoggedIn()) {
 	<div class="p-3 mb-3 bg-white dark:bg-slate-800 rounded-lg">
 	<?php 
 	echo $this->Form->postLink(__('Un-Follow'), 
-									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $path->pathway->id], 
+									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $path->id], 
 									['class' => 'float-right inline-block p-3 bg-sky-700 hover:bg-sky-800 text-white hover:no-underline rounded-lg', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really un-pin?')]); 
 	?>
 
