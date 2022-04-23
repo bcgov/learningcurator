@@ -1,0 +1,65 @@
+https://compass.gww.gov.bc.ca/ 200 good
+https://www2.gov.bc.ca/gov/content/governments/organizational-structure NOT 200 BAD
+https://gww.gov.bc.ca/reference/gov101 200 good
+https://compass.gww.gov.bc.ca/workingwithgovernment/ 200 good
+https://gww.bcpublicservice.gov.bc.ca/learning/curator/forms/Foundations_of_Government.pdf 200 good
+https://www.bcbudget.gov.bc.ca/2020/ministryserviceplans.htm NOT 200 BAD
+https://lop.parl.ca/About/Parliament/Education/OurCountryOurParliament/html_booklet/three-levels-government-e.html#:~:text=In%20each%20of%20the%2010%20provinces%20in%20Canada%2C,are%20given%20to%20them%20by%20the%20federal%20government. NOT 200 BAD
+https://www2.gov.bc.ca/gov/content/governments/services-for-government/public-sector-management/pso-government/public-sector-management-roles-responsibilities NOT 200 BAD
+http://trc.ca/assets/pdf/Calls_to_Action_English2.pdf 200 good
+http://www.un.org/esa/socdev/unpfii/documents/DRIPS_en.pdf 200 good
+https://youtu.be/yInY-LpVmNs 200 good
+https://www2.gov.bc.ca/assets/gov/government/about-the-bc-government/regulatory-reform/pdfs/policy_approaches_playbook.pdf NOT 200 BAD
+https://learning.gov.bc.ca/psc/CHIPSPLM/EMPLOYEE/ELM/c/LM_OD_EMPLOYEE_FL.LM_CRS_DTL_FL.GBL?Page=LM_CRS_DTL_FL&Action=U&ForceSearch=Y&LM_CI_ID=17891&TargetFrameName=None 200 good
+https://cfc-swc.gc.ca/gba-acs/index-en.html 200 good
+https://learning.gov.bc.ca/psc/CHIPSPLM/EMPLOYEE/GBCLMPRD/c/LM_OD_EMPLOYEE_FL.LM_ACT_DTLS_FL.GBL?Page=LM_ACT_DTLS_FL&Action=U&ForceSearch=Y&LM_ACT_ID=9507&LM_CI_ID=17946&LM_ENRLMT_ID=1478832&TargetFrameName=None 200 good
+https://www.leg.bc.ca/learn-about-us/educational-programs-workshops/parliamentary-procedure-workshops NOT 200 BAD
+http://www.bclaws.ca/civix/content/amr/amr/2064853661/807031918/?xsl=/templates/browse.xsl 200 good
+https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/central-government-agencies/corporate-information-records-management-office NOT 200 BAD
+https://www.bclaws.ca/ 200 good
+https://www2.gov.bc.ca/gov/content/safety/emergency-preparedness-response-recovery/covid-19-provincial-support?bcgovtm=20200506_GCPE_AM_COVID_11_NOTIFICATION_BCGOVNEWS_BCGOV_EN_BC__NOTIFICATION 200 good
+https://www.youtube.com/watch?v=pxhy4nieoVE&feature=youtu.be NOT 200 BAD
+https://gww.bcpublicservice.gov.bc.ca/learning/aborig_relations/indigenous-can-history-101/ 200 good
+https://www2.gov.bc.ca/gov/content/governments/indigenous-people/new-relationship NOT 200 BAD
+https://www2.gov.bc.ca/gov/content/governments/about-the-bc-government NOT 200 BAD
+https://soundcloud.com/deloitteus/driving-team-performance?in=deloitteus/sets/capital-h NOT 200 BAD
+https://www.youtube.com/watch?app=desktop&v=gHCDvdCaJhI NOT 200 BAD
+https://support.microsoft.com/en-us/office/video-check-the-accessibility-of-your-document-9d660cba-1fcd-45ad-a9d1-c4f4b5eb5b7d NOT 200 BAD
+https://www.youtube.com/watch?v=n1jLkYyODsc NOT 200 BAD
+https://www2.gov.bc.ca/gov/content/careers-myhr/about-the-bc-public-service/diversity-inclusion/accessibility NOT 200 BAD
+https://www2.gov.bc.ca/gov/content/governments/about-the-bc-government/accessibility/legislation NOT 200 BAD
+https://www2.gov.bc.ca/gov/content/home/accessible-government/toolkit NOT 200 BAD
+https://www2.gov.bc.ca/gov/content/careers-myhr/job-seekers/internship-co-op-opportunities/work-able NOT 200 BAD
+https://www.canada.ca/en/employment-social-development/programs/disability/arc/inclusive-meetings.html NOT 200 BAD
+https://www2.gov.bc.ca/gov/content/careers-myhr/managers-supervisors/employee-labour-relations/managing-accommodation/managers-guide-reasonable-accommodation NOT 200 BAD
+https://accessibleemployers.ca/ NOT 200 BAD
+https://www.un.org/development/desa/disabilities/convention-on-the-rights-of-persons-with-disabilities.html NOT 200 BAD
+https://askjan.org/ NOT 200 BAD
+https://www.w3.org/WAI/standards-guidelines/wcag/ NOT 200 BAD
+https://medium.com/@CRA1G/the-evolution-of-an-accidental-meme-ddc4e139e0e4 200 good
+https://www.icscollaborative.com/webinars NOT 200 BAD
+https://www.fnha.ca/wellness/cultural-humility
+Warning (2): get_headers(): This function may only be used against URLs [APP/Controller/ActivitiesController.php, line 80]
+Warning (2): Trying to access array offset on value of type bool [APP/Controller/ActivitiesController.php, line 84]
+200 good
+https://www.intstudentsup.org/diversity/cultural_safety/ 200 good
+https://www.heretohelp.bc.ca/visions/indigenous-people-vol11/what-indigenous-cultural-safety-and-why-should-i-care-about-it
+Warning (2): get_headers() [<a href='https://secure.php.net/function.get-headers'>function.get-headers</a>]: This function may only be used against URLs [APP/Controller/ActivitiesController.php, line 80]
+Warning (2): Trying to access array offset on value of type bool [APP/Controller/ActivitiesController.php, line 84]
+200 good
+http://www.ecdip.org/culturalsafety/
+Warning (2): get_headers() [<a href='https://secure.php.net/function.get-headers'>function.get-headers</a>]: This function may only be used against URLs [APP/Controller/ActivitiesController.php, line 80]
+Warning (2): Trying to access array offset on value of type bool [APP/Controller/ActivitiesController.php, line 84]
+200 good
+https://intranet.gov.bc.ca/mcfd/content?id=F0250098D551464ABA2DDC6CADD03DC 200 good
+https://www.ictinc.ca/blog/7-tips-on-building-relationships-with-indigenous-peoples NOT 200 BAD
+https://www.animikii.com/news/building-trust-before-truth-how-non-indigenous-canadians-become-allies 200 good
+https://www.auma.ca/news/resources-support-relationship-building-indigenous-leaders 200 good
+https://www.youtube.com/watch?app=desktop&v=MkxcuhdgIwY&form=MY01SV&OCID=MY01SV NOT 200 BAD
+https://www.youtube.com/watch?app=desktop&v=cLDkA2RIeCM&form=MY01SV&OCID=MY01SV NOT 200 BAD
+https://gww.gov.bc.ca/groups/learn-work-week/blogs/2019/0917/cultural-safety-and-humility 200 good
+https://www2.gov.bc.ca/gov/content/careers-myhr/job-seekers/about-competencies/indigenous-relations/cultural-agility NOT 200 BAD
+https://www2.gov.bc.ca/gov/content/careers-myhr/job-seekers/about- competencies/indigenous-relations/building-trust-based-relationships 200 good
+Warning (512): Unable to emit headers. Headers sent in file=/home/lcurator/learningcurator/src/Controller/ActivitiesController.php line=85 [CORE/src/Http/ResponseEmitter.php, line 71]
+Warning (2): Cannot modify header information - headers already sent by (output started at /home/lcurator/learningcurator/src/Controller/ActivitiesController.php:85) [CORE/src/Http/ResponseEmitter.php, line 168]
+Warning (2): Cannot modify header information - headers already sent by (output started at /home/lcurator/learningcurator/src/Controller/ActivitiesController.php:85) [CORE/src/Http/ResponseEmitter.php, line 197]
