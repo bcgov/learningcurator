@@ -65,6 +65,54 @@ class ActivitiesController extends AppController
     }
 
 
+    /**
+     * Check all links in the site for 404 or redirect
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function audit ()
+    {
+        $this->viewBuilder()->setLayout('ajax');
+        $activities = $this->Activities->find('all')->where(['Activities.status_id' => 2])->toList();
+        
+        foreach($activities as $a) {
+            $url = trim($a->hyperlink);
+            echo $url . ' ';
+            // First check to see if this even a valid URL to attempt to check
+            if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
+
+                 echo '- NOT a valid URL!!';
+
+            } else {
+
+                // Now check against a exlusion list of URLs that we know are 
+                // restricted from this check for one reason or another
+                // e.g. manual check for intranet links that require auth
+                // $excluded = [
+                //     'https://learning.gov.bc.ca',
+                //     '',
+                // ];
+                // if(strpos($currentpage,'/pathway') !== false) {
+
+                // } else {
+                    // It's a good URL and isn't one that we know can't be
+                    // checked this way, so let's go ahead and check it
+                    $headers = get_headers($url);
+                    // Start with the very simple 200 check and expand to redirects
+                    if ($headers[0] == 'HTTP/1.1 200 OK') {
+                        echo '200 OK<br>';
+                    } elseif ($headers[0] == 'HTTP/1.1 302 REDIRECT') {
+                        echo '302 REDIRECT<br>';
+                    } else {
+                        echo 'NOT 200 or 302 WARNING<br>';
+                    }
+                // }
+            }
+        }
+
+        $this->set(compact('activities'));
+    }
+
 
     /**
      * View method
