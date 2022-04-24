@@ -6,6 +6,7 @@ namespace App\Controller;
 Use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
 use Cake\Event\EventInterface;
+use Cake\I18n\FrozenTime;
 
 /**
  * Activities Controller
@@ -73,11 +74,22 @@ class ActivitiesController extends AppController
     public function audit ()
     {
         $this->viewBuilder()->setLayout('ajax');
-        $activities = $this->Activities->find('all')->where(['Activities.status_id' => 2])->toList();
+        $now = FrozenTime::now();
+        $weekago = $now->subDays(7);
         
+        $activities = $this->Activities->find('all')
+                                        ->where(['Activities.status_id' => 2])
+                                        ->where(['Activities.audited < ' => $weekago])
+                                        ->where(['Activities.moderation_flag' => 0])
+                                        ->limit(10)
+                                        ->toList();
+        //print_r($activities); exit;
+        // echo $weekago; exit;
         foreach($activities as $a) {
+            
             $url = trim($a->hyperlink);
-            echo $url . ' ';
+            //echo '<a href="' . $url . '" target="_blank">' . $url . '</a> ';
+            echo  $url . ' ';
             // First check to see if this even a valid URL to attempt to check
             if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
 
@@ -88,25 +100,48 @@ class ActivitiesController extends AppController
                 // Now check against a exlusion list of URLs that we know are 
                 // restricted from this check for one reason or another
                 // e.g. manual check for intranet links that require auth
-                // $excluded = [
-                //     'https://learning.gov.bc.ca',
-                //     '',
-                // ];
-                // if(strpos($currentpage,'/pathway') !== false) {
-
-                // } else {
+                // We're keeping this exclusion list hard-coded here in 
+                // an array, but perhaps this could be sourced from somewhere
+                // more updateable...
+                $host = parse_url($url, PHP_URL_HOST);
+                $excluded = [
+                    'learning.gov.bc.ca',
+                    'gww.gov.bc.ca',
+                    'gww.bcpublicservice.gov.bc.ca',
+                    'compass.gww.gov.bc.ca',
+                    'intranet.gov.bc.ca'
+                ];
+                
+                if(in_array($host,$excluded)) {
+                    echo 'Internal - Manual check<br>';
+                    $act = $this->Activities->get($a->id);
+                    $act->moderation_flag = 1;
+                    if ($this->Activities->save($act)) {
+                        // silent success
+                    }
+                } else {
                     // It's a good URL and isn't one that we know can't be
                     // checked this way, so let's go ahead and check it
                     $headers = get_headers($url);
                     // Start with the very simple 200 check and expand to redirects
                     if ($headers[0] == 'HTTP/1.1 200 OK') {
                         echo '200 OK<br>';
-                    } elseif ($headers[0] == 'HTTP/1.1 302 REDIRECT') {
-                        echo '302 REDIRECT<br>';
+                    } elseif ($headers[0] == 'HTTP/1.1 301 Moved Permanently') {
+                        echo '301 Moved Permanently<br>';
+                    } elseif ($headers[0] == 'HTTP/1.1 302 Found') {
+                        echo '302 Temporarily Redirected<br>';
+                    } elseif ($headers[0] == 'HTTP/1.1 404 Not Found') {
+                        echo '404 Not Found!!<br>';
                     } else {
-                        echo 'NOT 200 or 302 WARNING<br>';
+                        echo $headers[0] . ' WARNING<br>';
                     }
-                // }
+                    //echo 'did not actually check doing audit date update<br>';
+                    $act = $this->Activities->get($a->id);
+                    $act->audited = $now;
+                    if ($this->Activities->save($act)) {
+                        // silent success
+                    }
+                }
             }
         }
 
