@@ -93,7 +93,7 @@ foreach ($step->pathways as $pathways) {
 </div>
 <script>
 
-fetch('/pathways/status/<?= $step->pathways[0]->id ?> ', { method: 'GET' })
+fetch('/pathways/status/<?= $step->pathways[0]->id ?>', { method: 'GET' })
 	.then((res) => res.json())
 	.then((json) => {
 		if(json.percentage > 0) {
