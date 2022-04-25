@@ -54,7 +54,7 @@
 
 <div class="md:grid md:grid-cols-2 md:gap-4">
 <div>
-<?php $rcount = 0 ?>
+<?php $rcount = $noresponses->count() ?? 0 ?>
 <h2 class="mt-4 text-2xl">Open Reports <span class="inline-block py-0 px-2 text-sm text-white bg-slate-900 rounded-lg"><?= $rcount ?></span></h2>
 <div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
 <?php 

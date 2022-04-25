@@ -141,10 +141,16 @@ trait SimpleCrudTrait
         // let's reduce that down to one line per activity and we're done!
         $top5follows = array_unique($plinks);
 
+        $reports = TableRegistry::getTableLocator()->get('Reports');
+        $noresponses = $reports->find('all', array('conditions' => array('Reports.response IS NULL')))
+                                ->contain(['Activities','Users'])
+                                ->order(['Reports.created' => 'desc']);
+
         $this->set('totalfollowcount', $totalfollowcount);
         $this->set('launchcount', $launchcount);
         $this->set('top5links', $top5links);
         $this->set('top5follows', $top5follows);
+        $this->set('noresponses', $noresponses);
     }
 
 
