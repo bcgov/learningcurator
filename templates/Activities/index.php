@@ -54,7 +54,7 @@ foreach($actlist as $k => $v) {
 	
 	<a href="/profile/launches" 
 		x-cloak 
-		class="inline-block w-24 bg-slate-100 text-[#003366] dark:bg-slate-900 dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
+		class="inline-block w-24 bg-sky-700 dark:bg-slate-900 text-white dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
 		:class="[count > '0' ? 'show' : 'hidden']">
 			Launched
 	</a>
@@ -201,7 +201,7 @@ foreach($actlist as $k => $v) {
 		<?php foreach($activity->steps as $step): ?>
 			<?php if(!empty($step->pathways[0]->slug)): ?>
 			<div class="p-2 mb-1 bg-slate-100 dark:bg-[#002850] rounded-lg">
-			<a href="/<?= $step->pathways[0]->topic->categories[0]->slug ?>/topic/<?= $step->pathways[0]->topic->slug ?>/pathway/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
+			<a href="/<?= $step->pathways[0]->topic->categories[0]->slug ?>/<?= $step->pathways[0]->topic->slug ?>/pathway/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
 				
 				<i class="bi bi-pin-map-fill"></i>
 				<?= $step->pathways[0]->name ?> - 

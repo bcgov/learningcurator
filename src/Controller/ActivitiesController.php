@@ -6,6 +6,7 @@ namespace App\Controller;
 Use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
 use Cake\Event\EventInterface;
+use Cake\I18n\FrozenTime;
 
 /**
  * Activities Controller
@@ -64,6 +65,130 @@ class ActivitiesController extends AppController
         $this->set(compact('activities','useractivitylist'));
     }
 
+
+    /**
+     * Flagged activities need to be manually audited
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function flagged ()
+    {
+        //$this->viewBuilder()->setLayout('ajax');
+        $now = FrozenTime::now();
+        $weeksago = $now->subDays(14);
+        
+        $activities = $this->Activities->find('all')
+                                        ->where(['Activities.status_id' => 2])
+                                        ->where(['Activities.audited < ' => $weeksago])
+                                        ->where(['Activities.moderation_flag' => 1])
+                                        ->limit(10);
+        
+        $this->set(compact('activities','now'));
+    }
+    /**
+     * Check all links in the site for 404 or redirect.
+     * The idea here is that we don't want to attempt to check
+     * all the links in the site at once. We're barely out the 
+     * door and have almost 500 links. You can't run a script
+     * that checks 500 links sequentially and synchronously,
+     * as it would take 20 minutes to run.
+     * Instead, this audit is designed to be run every, say, 
+     * 4 hours. At the interval, we take the next 10 (currently)
+     * activities whose 'audited' date is longer than 1 week ago
+     * and check just those 10. As we check, we update the audited
+     * date, thus removing the activity from the query the next time
+     * it's run. This way, we're only checking 10 links at a time
+     * and only doing that every X hours, and only checking links 
+     * that haven't been checked in a week. When we find a link
+     * that's not returning 200 OK, we automatically file a report
+     * with the actual header response #TODO have a nice little 
+     * suggestions for investigations on a case by case.
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function audit ()
+    {
+        //$this->viewBuilder()->setLayout('ajax');
+        $now = FrozenTime::now();
+        $weekago = $now->subDays(7);
+        
+        $activities = $this->Activities->find('all')
+                                        ->where(['Activities.status_id' => 2])
+                                        ->where(['Activities.audited < ' => $weekago])
+                                        ->where(['Activities.moderation_flag' => 0])
+                                        ->limit(10)
+                                        ->toList();
+
+        $report = TableRegistry::getTableLocator()->get('Reports');
+        $actcount = count($activities); 
+        $count200 = 0;
+        $reportcount = 0;
+        $excludedcount = 0;
+        
+        foreach($activities as $a) {
+    
+            $url = trim($a->hyperlink);
+            // First check to see if this even a valid URL to attempt to check
+            if (filter_var($url, FILTER_VALIDATE_URL) !== FALSE) {
+
+                // Now check against a exlusion list of URLs that we know are 
+                // restricted from this check for one reason or another
+                // e.g. manual check for intranet links that require auth
+                // We're keeping this exclusion list hard-coded here in 
+                // an array, but perhaps this could be sourced from somewhere
+                // more updateable...
+                $host = parse_url($url, PHP_URL_HOST);
+                $excludedhosts = [
+                    'learning.gov.bc.ca',
+                    'gww.gov.bc.ca',
+                    'gww.bcpublicservice.gov.bc.ca',
+                    'compass.gww.gov.bc.ca',
+                    'intranet.gov.bc.ca'
+                ];
+                
+                if(in_array($host,$excludedhosts)) {
+
+                    $act = $this->Activities->get($a->id);
+                    $act->moderation_flag = 1;
+                    //$act->audited = $now;
+                    if ($this->Activities->save($act)) {
+                        // echo 'Manual check - moderation flag set so this will not be queried again<br>';
+                        $excludedcount++;
+                    }
+                    
+                } else {
+                    // It's a good URL and isn't one that we know can't be
+                    // checked this way, so let's go ahead and check it
+                    $headers = get_headers($url);
+                    // Anything other than 200 OK gets reported
+                    if ($headers[0] != 'HTTP/1.1 200 OK') {
+                        $newreport = $report->newEmptyEntity();
+                        $reportdata = [
+                            'activity_id' => $a->id,
+                            'user_id' => 'fab197ca-eaa7-4418-960d-d8e8cf40231a', // always as superadmin
+                            'issue' => $headers[0]
+                        ];
+                        $newreport = $report->patchEntity($newreport, $reportdata);
+                        if ($report->save($newreport)) {
+                            $reportcount++;
+                            //echo $headers[0] . ' WARNING - Report Filed<br>';
+                        } 
+                        
+                    } else {
+                        $count200++;
+                    }
+                    // Whether it's 200 OK or not, we still log the time that we checked
+                    $act = $this->Activities->get($a->id);
+                    $act->audited = $now;
+                    if ($this->Activities->save($act)) {
+                        //echo $headers[0] . ' audited<br>';
+                    }
+                }
+            }
+        }
+
+        $this->set(compact('activities','actcount','excludedcount','count200','reportcount'));
+    }
 
 
     /**
@@ -275,13 +400,32 @@ class ActivitiesController extends AppController
                                 )));
         $numpaths = $pathways->count();
 
+        // We've searched for activities, categories, and pathways and that's
+        // great and all, but we also want to return results for steps as well. 
+        $allsteps = TableRegistry::getTableLocator()->get('Steps');
+        // $pathways = $allpaths->find()->where(function ($exp, $query) use($search) {
+        //     return $exp->like('name', '%'.$search.'%');
+        // })->order(['name' => 'ASC']);
+
+        $steps = $allpaths->find('all',
+                                    array('conditions' => 
+                                    array('OR' => 
+                                        array(
+                                            'name LIKE' => '%'.$search.'%',
+                                            'description LIKE' => '%'.$search.'%'
+                                        )
+                                )));
+        $numsteps = $steps->count();
+
 
 
         $this->set(compact('categories', 
                             'pathways', 
+                            'steps',
                             'activities', 
                             'search', 
                             'numcats', 
+                            'numsteps', 
                             'numacts', 
                             'numpaths'));
     }

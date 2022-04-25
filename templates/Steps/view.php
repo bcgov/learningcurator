@@ -83,31 +83,36 @@ foreach ($step->pathways as $pathways) {
 	<?= $step->pathways[0]->name ?>
 </h1>
 
-<div class="p-4 lg:text-2xl bg-slate-100 dark:bg-slate-800 rounded-t-lg">
+<div class="p-4 lg:text-2xl bg-slate-100 dark:bg-slate-900 rounded-lg">
 	<div class="text-xs">Objective</div>
 	<?= $step->pathways[0]->objective ?> 
 </div>
 
-<div class="sticky top-0 mb-6 w-full h-7 bg-slate-900 rounded-bl-lg rounded-br-lg">
-	<div class="pbar py-1 px-6 h-7 bg-sky-700 rounded-bl-lg rounded-br-lg"></div>
+<div class="pbarcontainer sticky top-0 mt-1 mb-6 w-full h-8 bg-slate-50 dark:bg-slate-900 rounded-lg">
+	<span class="inline-block pbar pt-1 px-6 h-8 bg-sky-700 text-white rounded-lg"></span>
 </div>
 <script>
-loadStatus();
-function loadStatus() {
-	fetch("/pathways/status/<?= $step->pathways[0]->id ?>", { method: "GET" })
-		.then((res) => res.json())
-		.then((json) => {
-			document.querySelector('.pbar').style.width = json.percentage + '%';
-			if(json.percentage > 20) {
-				document.querySelector('.pbar').innerHTML = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
-			} else {
-				document.querySelector('.pbar').outerHTML = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
-			}
-			//console.log(json);
-		})
-		.catch((err) => console.error("error:", err));
 
-}
+fetch('/pathways/status/<?= $step->pathways[0]->id ?>', { method: 'GET' })
+	.then((res) => res.json())
+	.then((json) => {
+		if(json.percentage > 0) {
+			let message = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
+			if(json.percentage > 25) {
+				document.querySelector('.pbar').style.width = json.percentage + '%';
+			} 
+			if(json.percentage == 100) {
+				document.querySelector('.pbar').innerHTML = message + ' - COMPLETED!';
+			} else {
+				document.querySelector('.pbar').innerHTML = message;
+			}
+		} else {
+			document.querySelector('.pbarcontainer').innerHTML = '<span class="inline-block pt-1 px-3 h-8">Launch activities to see your progress here&hellip;</span>';
+		}
+		//console.log(json);
+	})
+	.catch((err) => console.error("error:", err));
+
 </script>
 
 
@@ -148,8 +153,8 @@ function loadStatus() {
 		<div class="">
 		<?php if($s->status_id == 2): ?>
 		<?php $c = '' ?>
-		<?php if($s->id == $step->id) $c = 'bg-slate-300 dark:bg-slate-900' ?>
-		<a class="<?= $c ?> block px-4 py-2 mt-2 text-sm font-semibold rounded-lg dark:hover:bg-sky-700 dark:focus:bg-sky-800 dark:focus:text-white dark:hover:text-white dark:text-slate-200 md:mt-0 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline" 
+		<?php if($s->id == $step->id) $c = 'bg-sky-700 text-white' ?>
+		<a class="block py-1 px-3 <?= $c ?> hover:bg-sky-700 hover:text-white hover:no-underline rounded-lg" 
 			href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
 				<?= h($s->name) ?> 
 		</a>

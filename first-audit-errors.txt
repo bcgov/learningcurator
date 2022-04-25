@@ -1,0 +1,56 @@
+https://compass.gww.gov.bc.ca/ NOT 200 or 302 WARNING
+https://www2.gov.bc.ca/gov/content/governments/organizational-structure 200 OK
+https://gww.gov.bc.ca/reference/gov101 NOT 200 or 302 WARNING
+https://compass.gww.gov.bc.ca/workingwithgovernment/ NOT 200 or 302 WARNING
+https://gww.bcpublicservice.gov.bc.ca/learning/curator/forms/Foundations_of_Government.pdf NOT 200 or 302 WARNING
+https://www.bcbudget.gov.bc.ca/2020/ministryserviceplans.htm 200 OK
+https://lop.parl.ca/About/Parliament/Education/OurCountryOurParliament/html_booklet/three-levels-government-e.html#:~:text=In%20each%20of%20the%2010%20provinces%20in%20Canada%2C,are%20given%20to%20them%20by%20the%20federal%20government. 200 OK
+https://www2.gov.bc.ca/gov/content/governments/services-for-government/public-sector-management/pso-government/public-sector-management-roles-responsibilities 200 OK
+http://trc.ca/assets/pdf/Calls_to_Action_English2.pdf NOT 200 or 302 WARNING
+http://www.un.org/esa/socdev/unpfii/documents/DRIPS_en.pdf NOT 200 or 302 WARNING
+https://youtu.be/yInY-LpVmNs NOT 200 or 302 WARNING
+https://www2.gov.bc.ca/assets/gov/government/about-the-bc-government/regulatory-reform/pdfs/policy_approaches_playbook.pdf 200 OK
+https://learning.gov.bc.ca/psc/CHIPSPLM/EMPLOYEE/ELM/c/LM_OD_EMPLOYEE_FL.LM_CRS_DTL_FL.GBL?Page=LM_CRS_DTL_FL&Action=U&ForceSearch=Y&LM_CI_ID=17891&TargetFrameName=None NOT 200 or 302 WARNING
+https://cfc-swc.gc.ca/gba-acs/index-en.html NOT 200 or 302 WARNING
+https://learning.gov.bc.ca/psc/CHIPSPLM/EMPLOYEE/GBCLMPRD/c/LM_OD_EMPLOYEE_FL.LM_ACT_DTLS_FL.GBL?Page=LM_ACT_DTLS_FL&Action=U&ForceSearch=Y&LM_ACT_ID=9507&LM_CI_ID=17946&LM_ENRLMT_ID=1478832&TargetFrameName=None NOT 200 or 302 WARNING
+https://www.leg.bc.ca/learn-about-us/educational-programs-workshops/parliamentary-procedure-workshops 200 OK
+http://www.bclaws.ca/civix/content/amr/amr/2064853661/807031918/?xsl=/templates/browse.xsl NOT 200 or 302 WARNING
+https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/central-government-agencies/corporate-information-records-management-office 200 OK
+https://www.bclaws.ca/ NOT 200 or 302 WARNING
+https://www2.gov.bc.ca/gov/content/safety/emergency-preparedness-response-recovery/covid-19-provincial-support?bcgovtm=20200506_GCPE_AM_COVID_11_NOTIFICATION_BCGOVNEWS_BCGOV_EN_BC__NOTIFICATION NOT 200 or 302 WARNING
+https://www.youtube.com/watch?v=pxhy4nieoVE&feature=youtu.be 200 OK
+https://gww.bcpublicservice.gov.bc.ca/learning/aborig_relations/indigenous-can-history-101/ NOT 200 or 302 WARNING
+https://www2.gov.bc.ca/gov/content/governments/indigenous-people/new-relationship 200 OK
+https://www2.gov.bc.ca/gov/content/governments/about-the-bc-government 200 OK
+https://soundcloud.com/deloitteus/driving-team-performance?in=deloitteus/sets/capital-h 200 OK
+https://www.youtube.com/watch?app=desktop&v=gHCDvdCaJhI 200 OK
+https://support.microsoft.com/en-us/office/video-check-the-accessibility-of-your-document-9d660cba-1fcd-45ad-a9d1-c4f4b5eb5b7d 200 OK
+https://www.youtube.com/watch?v=n1jLkYyODsc 200 OK
+https://www2.gov.bc.ca/gov/content/careers-myhr/about-the-bc-public-service/diversity-inclusion/accessibility 200 OK
+https://www2.gov.bc.ca/gov/content/governments/about-the-bc-government/accessibility/legislation 200 OK
+https://www2.gov.bc.ca/gov/content/home/accessible-government/toolkit 200 OK
+https://www2.gov.bc.ca/gov/content/careers-myhr/job-seekers/internship-co-op-opportunities/work-able 200 OK
+https://www.canada.ca/en/employment-social-development/programs/disability/arc/inclusive-meetings.html 200 OK
+https://www2.gov.bc.ca/gov/content/careers-myhr/managers-supervisors/employee-labour-relations/managing-accommodation/managers-guide-reasonable-accommodation 200 OK
+https://accessibleemployers.ca/ 200 OK
+https://www.un.org/development/desa/disabilities/convention-on-the-rights-of-persons-with-disabilities.html 200 OK
+https://askjan.org/ 200 OK
+https://www.w3.org/WAI/standards-guidelines/wcag/ 200 OK
+https://medium.com/@CRA1G/the-evolution-of-an-accidental-meme-ddc4e139e0e4 NOT 200 or 302 WARNING
+https://www.icscollaborative.com/webinars 200 OK
+https://www.fnha.ca/wellness/cultural-humility NOT 200 or 302 WARNING
+https://www.intstudentsup.org/diversity/cultural_safety/ NOT 200 or 302 WARNING
+https://www.heretohelp.bc.ca/visions/indigenous-people-vol11/what-indigenous-cultural-safety-and-why-should-i-care-about-it 200 OK
+http://www.ecdip.org/culturalsafety/ NOT 200 or 302 WARNING
+https://intranet.gov.bc.ca/mcfd/content?id=F0250098D551464ABA2DDC6CADD03DC NOT 200 or 302 WARNING
+https://www.ictinc.ca/blog/7-tips-on-building-relationships-with-indigenous-peoples 200 OK
+https://www.animikii.com/news/building-trust-before-truth-how-non-indigenous-canadians-become-allies NOT 200 or 302 WARNING
+https://www.auma.ca/news/resources-support-relationship-building-indigenous-leaders NOT 200 or 302 WARNING
+https://www.youtube.com/watch?app=desktop&v=MkxcuhdgIwY&form=MY01SV&OCID=MY01SV 200 OK
+https://www.youtube.com/watch?app=desktop&v=cLDkA2RIeCM&form=MY01SV&OCID=MY01SV 200 OK
+https://gww.gov.bc.ca/groups/learn-work-week/blogs/2019/0917/cultural-safety-and-humility NOT 200 or 302 WARNING
+https://www2.gov.bc.ca/gov/content/careers-myhr/job-seekers/about-competencies/indigenous-relations/cultural-agility 200 OK
+https://www2.gov.bc.ca/gov/content/careers-myhr/job-seekers/about- competencies/indigenous-relations/building-trust-based-relationships - NOT a valid URL!!
+Warning (512): Unable to emit headers. Headers sent in file=/home/lcurator/learningcurator/src/Controller/ActivitiesController.php line=80 [CORE/src/Http/ResponseEmitter.php, line 71]
+Warning (2): Cannot modify header information - headers already sent by (output started at /home/lcurator/learningcurator/src/Controller/ActivitiesController.php:80) [CORE/src/Http/ResponseEmitter.php, line 168]
+Warning (2): Cannot modify header information - headers already sent by (output started at /home/lcurator/learningcurator/src/Controller/ActivitiesController.php:80) [CORE/src/Http/ResponseEmitter.php, line 197]

@@ -21,20 +21,20 @@ class PathwaysUsersController extends AppController
     public function pathways ()
     {
 
-        $allpaths = TableRegistry::getTableLocator()->get('Pathways');
-        // Select based on currently logged in person
-        $published = $allpaths->find('all')
-                                ->contain(['Topics','Topics.Categories'])
-                                ->where(['Pathways.status_id' => 2])
-                                ->where(['Pathways.featured' => 1])
-                                ->order(['Pathways.created' => 'desc']);
+        // $allpaths = TableRegistry::getTableLocator()->get('Pathways');
+        // // Select based on currently logged in person
+        // $published = $allpaths->find('all')
+        //                         ->contain(['Topics','Topics.Categories'])
+        //                         ->where(['Pathways.status_id' => 2])
+        //                         ->where(['Pathways.featured' => 1])
+        //                         ->order(['Pathways.created' => 'desc']);
 
         $user = $this->request->getAttribute('authentication')->getIdentity();
         $pathways = $this->PathwaysUsers->find()
-                                        ->contain(['Pathways','Users'])
-                                        ->where(['user_id' => $user->id])
+                                        ->contain(['Pathways','Users','Pathways.Topics','Pathways.Topics.Categories'])
+                                        ->where(['PathwaysUsers.user_id' => $user->id])
                                         ->order(['PathwaysUsers.date_start' => 'desc']);
-        $this->set(compact('pathways','published'));
+        $this->set(compact('pathways'));
     }
     /**
      * Follow method

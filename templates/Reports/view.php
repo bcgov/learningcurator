@@ -25,6 +25,7 @@ $this->loadHelper('Authentication.Identity');
 	<div class="p-3 mb-2 bg-slate-200 dark:bg-slate-800 rounded-lg">
 		
 		<?= h($report->created) ?>
+		<div><a href="<?= $report->activity->hyperlink ?>" target="_blank"><?= $report->activity->hyperlink ?></a></div>
 		<div><strong><a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></strong></div>
 		<blockquote class="p-3 my-1 bg-white dark:bg-slate-700">
 			<?= h($report->issue) ?>

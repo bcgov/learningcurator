@@ -25,7 +25,7 @@ if ($this->Identity->isLoggedIn()) {
 	<span class="badge badge-danger">DEFUNCT</span>
 	<?php endif ?>
 	<?php if($activity->moderation_flag == 1): ?>
-	<span class="badge badge-warning">INVESTIGATE</span>
+	<!-- <span class="badge badge-warning">INVESTIGATE</span> -->
 	<?php endif ?>
 	<?php endif; // role check ?>	
 
@@ -52,6 +52,7 @@ if ($this->Identity->isLoggedIn()) {
 				<?php if($role == 'curator' || $role == 'superuser'): ?>
 					by <a href="/users/view/<?= $activity->createdby_id ?>"><?= $curator[0]->username ?></a>
 				<?php endif ?>
+				This activity was last automatically audited on <?= $this->Time->format($activity->audited,\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
 			</div>
 		</div>
 

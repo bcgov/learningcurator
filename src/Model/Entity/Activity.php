@@ -87,6 +87,7 @@ class Activity extends Entity
         'competencies' => true,
         'steps' => true,
         'tags' => true,
+        'audited' => true,
     ];
     protected function _getTagString()
     {

@@ -48,6 +48,20 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php endif ?>
 
+<?php if($numsteps > 0): ?>
+<div class="p-3">
+<h2 class="text-2xl">Found <span class="badge badge-dark"><?= $numsteps ?></span> steps</h2>
+<?php foreach($steps as $s): ?>
+<div class="p-3 my-3 rounded-lg bg-slate-200 dark:bg-slate-900">
+	<h3 class="text-xl">
+		<a href="/pathways/<?= $s->slug ?>">
+			<?= $s->name ?>
+		</a>
+	</h3>
+</div>
+<?php endforeach ?>
+</div>
+<?php endif ?>
 
 
 
