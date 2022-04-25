@@ -36,6 +36,12 @@
     <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/profile/contributions">
         Your Contributions
     </a>
+    <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/activities/audit">
+        "Auto" Link Audit
+    </a>
+    <a class="inline-block p-3 mr-1 bg-sky-700 hover:no-underline hover:bg-sky-800 text-white rounded-lg" href="/activities/flagged">
+        Manual Link Review
+    </a>
 </div>
 <div class="p-3 my-4 bg-slate-200 dark:bg-slate-800 rounded-lg">
     Create new: 
