@@ -48,26 +48,23 @@
 
 <div class="md:grid md:grid-cols-2 md:gap-4">
 <div>
-<h2 class="mt-4 text-2xl">Open Reports</h2>
+<?php $rcount = $noresponses->count() ?? 0 ?>
+<h2 class="mt-4 text-2xl">Open Reports <span class="inline-block py-0 px-2 text-sm text-white bg-slate-900 rounded-lg"><?= $rcount ?></span></h2>
 <div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
 <?php 
 // these links are templated/built within the controller for noted reasons there
 
 ?>
 <?php if(!$noresponses->isEmpty()): ?>
+
 <?php foreach($noresponses as $report): ?>
 	<div class="p-3 mb-2 bg-slate-200 dark:bg-slate-800 rounded-lg">
 		
 		<?= h($report->created) ?>
 		<div><strong><a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></strong></div>
-		<blockquote class="p-3 mt-1 bg-white dark:bg-slate-700 rounded-t-lg">
+		<blockquote class="p-3 mt-1 bg-white dark:bg-slate-700 rounded-lg">
 			<?= h($report->issue) ?>
 		</blockquote>
-		<?php if(!empty($report->response)): ?>
-			<div class="p-3 mb-1 bg-white dark:bg-[#003366] rounded-b-lg"><?= h($report->response) ?></div>
-		<?php else: ?>
-			<div class="p-3 mb-1 bg-slate-100 dark:bg-[#003366] rounded-b-lg">No response yet.</div>
-		<?php endif ?>
         <a title="View this report"
 			href="/reports/view/<?= $report->id ?>"  
 			class="inline-block mt-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">

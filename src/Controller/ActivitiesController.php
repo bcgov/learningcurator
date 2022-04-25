@@ -67,13 +67,48 @@ class ActivitiesController extends AppController
 
 
     /**
-     * Check all links in the site for 404 or redirect
+     * Flagged activities need to be manually audited
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function flagged ()
+    {
+        //$this->viewBuilder()->setLayout('ajax');
+        $now = FrozenTime::now();
+        $weekago = $now->subDays(7);
+        
+        $activities = $this->Activities->find('all')
+                                        ->where(['Activities.status_id' => 2])
+                                        ->where(['Activities.audited < ' => $weekago])
+                                        ->where(['Activities.moderation_flag' => 1])
+                                        ->limit(10);
+        
+        $this->set(compact('activities'));
+    }
+    /**
+     * Check all links in the site for 404 or redirect.
+     * The idea here is that we don't want to attempt to check
+     * all the links in the site at once. We're barely out the 
+     * door and have almost 500 links. You can't run a script
+     * that checks 500 links sequentially and synchronously,
+     * as it would take 20 minutes to run.
+     * Instead, this audit is designed to be run every, say, 
+     * 4 hours. At the interval, we take the next 10 (currently)
+     * activities whose 'audited' date is longer than 1 week ago
+     * and check just those 10. As we check, we update the audited
+     * date, thus removing the activity from the query the next time
+     * it's run. This way, we're only checking 10 links at a time
+     * and only doing that every X hours, and only checking links 
+     * that haven't been checked in a week. When we find a link
+     * that's not returning 200 OK, we automatically file a report
+     * with the actual header response #TODO have a nice little 
+     * suggestions for investigations on a case by case.
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function audit ()
     {
-        $this->viewBuilder()->setLayout('ajax');
+        //$this->viewBuilder()->setLayout('ajax');
         $now = FrozenTime::now();
         $weekago = $now->subDays(7);
         
@@ -83,19 +118,18 @@ class ActivitiesController extends AppController
                                         ->where(['Activities.moderation_flag' => 0])
                                         ->limit(10)
                                         ->toList();
-        //print_r($activities); exit;
-        // echo $weekago; exit;
+
+        $report = TableRegistry::getTableLocator()->get('Reports');
+        $actcount = count($activities); 
+        $count200 = 0;
+        $reportcount = 0;
+        $excludedcount = 0;
+        
         foreach($activities as $a) {
-            
+    
             $url = trim($a->hyperlink);
-            //echo '<a href="' . $url . '" target="_blank">' . $url . '</a> ';
-            echo  $url . ' ';
             // First check to see if this even a valid URL to attempt to check
-            if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
-
-                 echo '- NOT a valid URL!!';
-
-            } else {
+            if (filter_var($url, FILTER_VALIDATE_URL) !== FALSE) {
 
                 // Now check against a exlusion list of URLs that we know are 
                 // restricted from this check for one reason or another
@@ -104,7 +138,7 @@ class ActivitiesController extends AppController
                 // an array, but perhaps this could be sourced from somewhere
                 // more updateable...
                 $host = parse_url($url, PHP_URL_HOST);
-                $excluded = [
+                $excludedhosts = [
                     'learning.gov.bc.ca',
                     'gww.gov.bc.ca',
                     'gww.bcpublicservice.gov.bc.ca',
@@ -112,40 +146,48 @@ class ActivitiesController extends AppController
                     'intranet.gov.bc.ca'
                 ];
                 
-                if(in_array($host,$excluded)) {
-                    echo 'Internal - Manual check<br>';
+                if(in_array($host,$excludedhosts)) {
+
                     $act = $this->Activities->get($a->id);
                     $act->moderation_flag = 1;
+                    //$act->audited = $now;
                     if ($this->Activities->save($act)) {
-                        // silent success
+                        // echo 'Manual check - moderation flag set so this will not be queried again<br>';
+                        $excludedcount++;
                     }
+                    
                 } else {
                     // It's a good URL and isn't one that we know can't be
                     // checked this way, so let's go ahead and check it
                     $headers = get_headers($url);
-                    // Start with the very simple 200 check and expand to redirects
-                    if ($headers[0] == 'HTTP/1.1 200 OK') {
-                        echo '200 OK<br>';
-                    } elseif ($headers[0] == 'HTTP/1.1 301 Moved Permanently') {
-                        echo '301 Moved Permanently<br>';
-                    } elseif ($headers[0] == 'HTTP/1.1 302 Found') {
-                        echo '302 Temporarily Redirected<br>';
-                    } elseif ($headers[0] == 'HTTP/1.1 404 Not Found') {
-                        echo '404 Not Found!!<br>';
+                    // Anything other than 200 OK gets reported
+                    if ($headers[0] != 'HTTP/1.1 200 OK') {
+                        $newreport = $report->newEmptyEntity();
+                        $reportdata = [
+                            'activity_id' => $a->id,
+                            'user_id' => 'fab197ca-eaa7-4418-960d-d8e8cf40231a', // always as superadmin
+                            'issue' => $headers[0]
+                        ];
+                        $newreport = $report->patchEntity($newreport, $reportdata);
+                        if ($report->save($newreport)) {
+                            $reportcount++;
+                            //echo $headers[0] . ' WARNING - Report Filed<br>';
+                        } 
+                        
                     } else {
-                        echo $headers[0] . ' WARNING<br>';
+                        $count200++;
                     }
-                    //echo 'did not actually check doing audit date update<br>';
+                    // Whether it's 200 OK or not, we still log the time that we checked
                     $act = $this->Activities->get($a->id);
                     $act->audited = $now;
                     if ($this->Activities->save($act)) {
-                        // silent success
+                        //echo $headers[0] . ' audited<br>';
                     }
                 }
             }
         }
 
-        $this->set(compact('activities'));
+        $this->set(compact('activities','actcount','excludedcount','count200','reportcount'));
     }
 
 
