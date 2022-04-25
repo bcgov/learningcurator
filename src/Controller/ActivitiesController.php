@@ -75,15 +75,15 @@ class ActivitiesController extends AppController
     {
         //$this->viewBuilder()->setLayout('ajax');
         $now = FrozenTime::now();
-        $weekago = $now->subDays(7);
+        $weeksago = $now->subDays(14);
         
         $activities = $this->Activities->find('all')
                                         ->where(['Activities.status_id' => 2])
-                                        ->where(['Activities.audited < ' => $weekago])
+                                        ->where(['Activities.audited < ' => $weeksago])
                                         ->where(['Activities.moderation_flag' => 1])
                                         ->limit(10);
         
-        $this->set(compact('activities'));
+        $this->set(compact('activities','now'));
     }
     /**
      * Check all links in the site for 404 or redirect.

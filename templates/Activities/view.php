@@ -25,7 +25,7 @@ if ($this->Identity->isLoggedIn()) {
 	<span class="badge badge-danger">DEFUNCT</span>
 	<?php endif ?>
 	<?php if($activity->moderation_flag == 1): ?>
-	<span class="badge badge-warning">INVESTIGATE</span>
+	<!-- <span class="badge badge-warning">INVESTIGATE</span> -->
 	<?php endif ?>
 	<?php endif; // role check ?>	
 
