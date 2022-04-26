@@ -160,8 +160,9 @@ class ActivitiesController extends AppController
                     // It's a good URL and isn't one that we know can't be
                     // checked this way, so let's go ahead and check it
                     $headers = get_headers($url);
+                    $code = explode(' ', $headers[0]);
                     // Anything other than 200 OK gets reported
-                    if ($headers[0] != 'HTTP/1.1 200 OK') {
+                    if ($code[1] != 200) {
                         $newreport = $report->newEmptyEntity();
                         $reportdata = [
                             'activity_id' => $a->id,
