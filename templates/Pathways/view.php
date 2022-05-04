@@ -165,9 +165,38 @@ fetch('/pathways/status/<?= $pathway->id ?>', { method: 'GET' })
 </h3>
 
 
-<div class="my-3 p-3 bg-slate-100 dark:bg-[#002850] text-xl rounded-lg">
+<div class="mt-3 p-3 bg-slate-100 dark:bg-[#002850] text-xl rounded-lg">
 	<?= $steps->description ?>
 </div>
+
+
+<div class="steppbarcontainer<?= $steps->id ?> sticky top-0 my-1 w-full h-8 bg-slate-50 dark:bg-[#002850] rounded-lg">
+	<span class="inline-block pbar<?= $steps->id ?> pt-1 px-6 h-8 bg-sky-700 text-white rounded-lg"></span>
+</div>
+<script>
+
+fetch('/steps/status/<?= $steps->id ?>', { method: 'GET' })
+	.then((res<?= $steps->id ?>) => res<?= $steps->id ?>.json())
+	.then((json<?= $steps->id ?>) => {
+		if(json<?= $steps->id ?>.steppercent > 0) {
+			let message = json<?= $steps->id ?>.steppercent + '% - ' + json<?= $steps->id ?>.stepclaimcount + ' of ' + json<?= $steps->id ?>.requiredacts;
+			if(json<?= $steps->id ?>.steppercent > 25) {
+				document.querySelector('.pbar<?= $steps->id ?>').style.width = json<?= $steps->id ?>.steppercent + '%';
+			} 
+			if(json<?= $steps->id ?>.steppercent == 100) {
+				document.querySelector('.pbar<?= $steps->id ?>').innerHTML = message + ' - COMPLETED!';
+			} else {
+				document.querySelector('.pbar<?= $steps->id ?>').innerHTML = message;
+			}
+		} else {
+			document.querySelector('.steppbarcontainer<?= $steps->id ?>').innerHTML = ''; //<span class="inline-block pt-1 px-3 h-8">Launch activities to see your progress here&hellip;</span>
+		}
+		//console.log(json);
+	})
+	.catch((err) => console.error("error:", err));
+
+</script>
+
 
 <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>"
 	class="inline-block p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">

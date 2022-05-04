@@ -91,29 +91,7 @@ foreach ($step->pathways as $pathways) {
 <div class="pbarcontainer sticky top-0 mt-1 mb-6 w-full h-8 bg-slate-50 dark:bg-slate-900 rounded-lg">
 	<span class="inline-block pbar pt-1 px-6 h-8 bg-sky-700 text-white rounded-lg"></span>
 </div>
-<script>
 
-fetch('/pathways/status/<?= $step->pathways[0]->id ?>', { method: 'GET' })
-	.then((res) => res.json())
-	.then((json) => {
-		if(json.percentage > 0) {
-			let message = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
-			if(json.percentage > 25) {
-				document.querySelector('.pbar').style.width = json.percentage + '%';
-			} 
-			if(json.percentage == 100) {
-				document.querySelector('.pbar').innerHTML = message + ' - COMPLETED!';
-			} else {
-				document.querySelector('.pbar').innerHTML = message;
-			}
-		} else {
-			document.querySelector('.pbarcontainer').innerHTML = '<span class="inline-block pt-1 px-3 h-8">Launch activities to see your progress here&hellip;</span>';
-		}
-		//console.log(json);
-	})
-	.catch((err) => console.error("error:", err));
-
-</script>
 
 
 
@@ -121,7 +99,7 @@ fetch('/pathways/status/<?= $step->pathways[0]->id ?>', { method: 'GET' })
 <div class="float-right ml-3">
 <?= $this->Html->link(__('Edit Step'), 
 						['controller' => 'Steps', 'action' => 'edit', $step->id], 
-						['class' => 'mt-2 inline-block p-3 bg-black hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline']); 
+						['class' => 'mt-2 inline-block py-2 px-6 bg-slate-200 dark:bg-slate-900 dark:text-white rounded-lg text-center hover:no-underline']); 
 ?>
 </div> <!-- /.btn-group -->
 <?php endif ?>
@@ -141,7 +119,7 @@ fetch('/pathways/status/<?= $step->pathways[0]->id ?>', { method: 'GET' })
 			x-transition:leave="transition ease-in duration-75" 
 			x-transition:leave-start="transform opacity-100 scale-100" 
 			x-transition:leave-end="transform opacity-0 scale-95" 
-			class="z-50 absolute left-0 w-full md:w-3/4 lg:w-1/2 origin-top-left -ml-6 bg-white dark:bg-[#003366] shadow-lg rounded-lg"
+			class="z-50 absolute left-0 w-full md:w-3/4 lg:w-1/2 origin-top-left -ml-6 bg-white dark:bg-slate-900 shadow-lg rounded-lg"
 	>
 		<div class="p-6">
 		
@@ -270,7 +248,7 @@ preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]
 if(!empty($youtube[1])):
 ?>
 <!-- <img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')"> -->
-<div class="w-full h-auto bg-black/50" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
+<div class="w-full z-50 h-auto bg-black/50" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
 <iframe 
 	width="560" 
 	height="315" 
@@ -285,7 +263,8 @@ if(!empty($youtube[1])):
 
 
 		<a target="_blank" 
-			x-on:click="count++; loadStatus();"
+			x-on:click="count++;"
+			onclick="loadStatus();"
 			rel="noopener" 
 			title="Launch this activity"
 			href="/activities-users/launch?activity_id=<?= $activity->id ?>"  
@@ -623,3 +602,31 @@ aria-controls="defunctacts">View archived activities</a>.
 </div>
 </div>
 
+<script>
+window.onload = function(event) {
+	loadStatus();    
+};
+
+function loadStatus() {
+	fetch('/pathways/status/<?= $step->pathways[0]->id ?>', { method: 'GET' })
+		.then((res) => res.json())
+		.then((json) => {
+			if(json.percentage > 0) {
+				let message = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts + '';
+				if(json.percentage > 25) {
+					document.querySelector('.pbar').style.width = json.percentage + '%';
+				} 
+				if(json.percentage == 100) {
+					document.querySelector('.pbar').innerHTML = message + ' - COMPLETED!';
+				} else {
+					document.querySelector('.pbar').innerHTML = message;
+				}
+			} else {
+				document.querySelector('.pbarcontainer').innerHTML = '<span class="inline-block pt-1 px-3 h-8">Launch activities to see your progress here&hellip;</span>';
+			}
+			//console.log(json);
+		})
+		.catch((err) => console.error("error:", err));
+}
+
+</script>

@@ -57,9 +57,10 @@
     ['name'=>'Followed Pathways','link' => '/profile/follows'],
     ['name'=>'Launched Activities','link' => '/profile/launches'],
     ['name'=>'Issues Reported','link' => '/profile/reports'],
-    ['name'=>'About','link' => '/questions']
+    ['name'=>'About','link' => '/questions'],
+    ['name'=>'Logout','link' => '/logout']
   );
-  // ['name'=>'Logout','link' => '/logout']
+
   foreach($navigation as $page): ?>
   <?php if(strpos($currentpage,$page['link']) !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
   <?php if(strpos($currentpage,'/topics') !== false && $page['name'] == 'Categories') $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
