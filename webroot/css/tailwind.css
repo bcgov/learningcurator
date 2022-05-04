@@ -1012,11 +1012,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(161 98 7 / var(--tw-bg-opacity));
 }
 
-.bg-lime-700 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(77 124 15 / var(--tw-bg-opacity));
-}
-
 .bg-red-900 {
   --tw-bg-opacity: 1;
   background-color: rgb(127 29 29 / var(--tw-bg-opacity));
@@ -1178,6 +1173,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   text-align: right;
 }
 
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
@@ -1196,11 +1196,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
-}
-
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
 }
 
 .text-4xl {
@@ -1487,6 +1482,11 @@ p {
   .dark\:bg-emerald-700 {
     --tw-bg-opacity: 1;
     background-color: rgb(4 120 87 / var(--tw-bg-opacity));
+  }
+
+  .dark\:bg-neutral-800 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(38 38 38 / var(--tw-bg-opacity));
   }
 
   .dark\:bg-white {
