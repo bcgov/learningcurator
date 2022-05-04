@@ -66,7 +66,7 @@ $this->assign('title', h($pathway->name));
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 <div class="float-right ml-3 mt-1">
 <?= $this->Html->link(__('Edit Pathway'), ['action' => 'edit', $pathway->id], ['class' => 'p-3 bg-slate-100 dark:bg-black hover:no-underline rounded-lg']) ?>
-<a href="/pathways/<?= $pathway->slug ?>/export" class="p-3 bg-slate-100 dark:bg-black hover:no-underline rounded-lg">Export Pathway</a>
+
 </div>
 <?php endif ?>
 
@@ -104,45 +104,39 @@ fetch('/pathways/status/<?= $pathway->id ?>', { method: 'GET' })
 
 
 
-<h2 class="text-3xl dark:text-white">
-	Steps along this pathway
-	<span class="inline-block px-2 bg-slate-500 dark:bg-black text-white text-sm rounded-full"><?= $requiredacts ?> activities</span>
-</h2>
-
-
-
 
 <?php if($role == 'curator' || $role == 'superuser'): ?>
 
-    <div x-data="{ open: false }">
-    <button @click="open = ! open" class="inline-block p-3 mb-1 ml-3 bg-slate-200 dark:bg-sky-700 dark:hover:bg-sky-800 dark:text-white hover:no-underline rounded-lg">
-        Add a Step
-    </button>
-    <div xcloak x-show="open" class="p-6 my-3 rounded-lg bg-white dark:bg-slate-800 dark:text-white">
+<div x-data="{ open: false }">
+<button @click="open = ! open" class="float-right inline-block p-3 mb-1 ml-3 bg-slate-200 dark:bg-black dark:text-white hover:no-underline rounded-lg">
+	Add a Step
+</button>
+<div xcloak x-show="open" class="p-6 my-3 rounded-lg bg-white dark:bg-slate-800 dark:text-white">
 
-		<?= $this->Form->create(null, ['url' => [
-			'controller' => 'Steps',
-			'action' => 'add'
-	]]) ?>
-		<?php
-		echo $this->Form->control('name',['class'=>'block w-full px-3 py-2 m-0 bg-slate-100 dark:text-white dark:bg-slate-900 rounded-lg']);
-		echo $this->Form->control('description',['class' => 'block w-full px-3 py-2 m-0 bg-slate-100 dark:text-white dark:bg-slate-900 rounded-lg', 'type' => 'textarea','label'=>'Objective']);
-		echo $this->Form->hidden('createdby', ['value' => $uid]);
-		echo $this->Form->hidden('modifiedby', ['value' => $uid]);
-		echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
-		?>
-		<?= $this->Form->button(__('Add Step'), ['class'=>'inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline']) ?>
-		<?= $this->Form->end() ?>
-    </div>
-  </div>
+	<?= $this->Form->create(null, ['url' => [
+		'controller' => 'Steps',
+		'action' => 'add'
+]]) ?>
+	<?php
+	echo $this->Form->control('name',['class'=>'block w-full px-3 py-2 m-0 bg-slate-100 dark:text-white dark:bg-slate-900 rounded-lg']);
+	echo $this->Form->control('description',['class' => 'block w-full px-3 py-2 m-0 bg-slate-100 dark:text-white dark:bg-slate-900 rounded-lg', 'type' => 'textarea','label'=>'Objective']);
+	echo $this->Form->hidden('createdby', ['value' => $uid]);
+	echo $this->Form->hidden('modifiedby', ['value' => $uid]);
+	echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
+	?>
+	<?= $this->Form->button(__('Add Step'), ['class'=>'inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline']) ?>
+	<?= $this->Form->end() ?>
+</div>
+</div>
 
 
 <?php endif ?>
 
 
-
-
-
+<h2 class="text-3xl dark:text-white">
+	Steps along this pathway
+	<span class="inline-block px-2 bg-slate-500 dark:bg-black text-white text-sm rounded-full"><?= $requiredacts ?> activities</span>
+</h2>
 
 
 

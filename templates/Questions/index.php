@@ -32,11 +32,11 @@ if ($this->Identity->isLoggedIn()) {
     follow it. When you follow a pathway, it will be listed 
     here, so the next time you login, you can jump right to it.
 </p>
-<p>Not just a big repository of important bookmarks, Curator rejects blind tagging in
+<!-- <p>Not just a big repository of important bookmarks, Curator rejects blind tagging in
     favor of a pedagogical approach where resources are structured into pathways
     which have specific objectives, and are further organized into logic steps, revealing
     a progression of concepts that blends formal and informal learning resources into a 
-    single stream.</p>
+    single stream.</p> -->
 <div class="w-1/2">
     <h2 class="text-lg">Frequently Asked Questions</h2>
 <?php foreach ($questions as $question): ?>
