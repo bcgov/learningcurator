@@ -94,7 +94,7 @@ fetch('/pathways/status/<?= $pathway->id ?>', { method: 'GET' })
 				document.querySelector('.pbar').innerHTML = message;
 			}
 		} else {
-			document.querySelector('.pbarcontainer').innerHTML = '<span class="inline-block pt-1 px-3 h-8">Launch activities to see your progress here&hellip;</span>';
+			document.querySelector('.pbarcontainer').innerHTML = ''; //'<span class="inline-block pt-1 px-3 h-8">Launch activities to see your progress here&hellip;</span>';
 		}
 		//console.log(json);
 	})
