@@ -14,25 +14,6 @@ class CategoriesController extends AppController
 {
 
     /**
-     * Home page method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function home()
-    {
-        $categories = $this->Categories->find()->contain(['Topics','Topics.Pathways']);
-        $featuredpaths = TableRegistry::getTableLocator()->get('Pathways');
-        $pathways = $featuredpaths->find('all')
-                                ->contain(['Statuses','Topics','Topics.Categories'])
-                                ->order(['Pathways.created' => 'desc'])
-                                ->where(['Pathways.featured' => 1])
-                                ->where(['Pathways.status_id' => 2])
-                                ->limit(10);
-        $featuredpathways = $pathways->toList();
-
-        $this->set(compact('categories','featuredpathways'));
-    }
-    /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
