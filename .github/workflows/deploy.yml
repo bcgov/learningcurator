@@ -182,7 +182,7 @@ jobs:
           echo "Current namespace is ${NAMESPACE}"
           oc -n ${BUILD_NAMESPACE} policy add-role-to-group system:image-puller system:serviceaccounts:${NAMESPACE}
           oc -n ${NAMESPACE} process -f openshift/app/learningcurator-persistent-template.json  \
-               -p APP_NAME=${APP} \
+              -p APP_NAME=${APP} \
                -p SITE_URL=${APP_HOST} \
                -p DB_HOST=mysql \
                -p DB_SECONDARY_NAME=mysql-read \
@@ -206,7 +206,7 @@ jobs:
                -p GIT_TAG=openshift \
                -p GITHUB_AUTH_TOKEN="${{ secrets.AUTH_TOKEN }}" | \
           oc -n ${NAMESPACE} apply -f -
-         oc rollout latest dc/learningcurator -n ${NAMESPACE}
+          oc rollout latest dc/learningcurator -n ${NAMESPACE}
           # Check deployment rollout status every 10 seconds (max 10 minutes) until complete.
           ATTEMPTS=0
           ROLLOUT_STATUS_CMD="oc rollout status dc/learningcurator -n ${NAMESPACE}"
