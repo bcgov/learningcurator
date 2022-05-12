@@ -9,6 +9,7 @@ on:
     branches:
       - main
       - master
+      - deploy-prod
 
 jobs:
   #Print variables for logging and debugging purposes
@@ -154,7 +155,7 @@ jobs:
       BUILD_ID: ${{ github.event.number }}
       NAMESPACE: a58ce1-prod
       BUILD_NAMESPACE: a58ce1-tools
-      BRANCH: main
+      BRANCH: deploy-prod
       APP: learningcurator
       APP_HOST: learningcurator-a58ce1-prod.apps.silver.devops.gov.bc.ca
     # needs:
