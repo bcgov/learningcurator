@@ -181,7 +181,7 @@ jobs:
           test -n "${BRANCH}"
           echo "Current namespace is ${NAMESPACE}"
           oc -n ${BUILD_NAMESPACE} policy add-role-to-group system:image-puller system:serviceaccounts:${NAMESPACE}
-          oc -n ${NAMESPACE} process -f openshift/app/moodle-dc-persistent-template-new.json \
+          oc -n ${NAMESPACE} process -f openshift/app/learningcurator-persistent-template.json  \
                -p APP_NAME=${APP} \
                -p SITE_URL=${APP_HOST} \
                -p DB_HOST=mysql \
