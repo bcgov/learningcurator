@@ -25,10 +25,10 @@ $this->loadHelper('Authentication.Identity');
     <?= $this->Form->hidden('featured', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']) ?>
     <?= $this->Form->hidden('modifiedby') ?>
     <?= $this->Form->hidden('pathway_id', ['value' => $step->pathway_id]) ?>
-    <?= $this->Form->control('status_id', ['options' => $statuses, 'class' => 'block w-full md:w-1/4 px-3 py-1 m-0 dark:text-white bg-slate-100 dark:bg-slate-800 rounded-lg']) ?>
-    <?= $this->Form->control('name', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white bg-slate-100 dark:bg-slate-800 rounded-lg']) ?>
+    <?= $this->Form->control('status_id', ['options' => $statuses, 'class' => 'block w-full md:w-1/4 px-3 py-1 m-0 dark:text-white bg-slate-100/80 dark:bg-slate-800 rounded-lg']) ?>
+    <?= $this->Form->control('name', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white bg-slate-100/80 dark:bg-slate-800 rounded-lg']) ?>
     <?php  //$this->Form->control('slug', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']); ?>
-    <?= $this->Form->control('description', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white bg-slate-100 dark:bg-slate-800 rounded-lg', 'label' => 'Objective']) ?>
+    <?= $this->Form->control('description', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white bg-slate-100/80 dark:bg-slate-800 rounded-lg', 'label' => 'Objective']) ?>
     <?= $this->Form->button(__('Save Step Details'),['class' => 'inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline']) ?>
     <?= $this->Form->end() ?>
 
@@ -46,7 +46,7 @@ $this->loadHelper('Authentication.Identity');
     <div xcloak x-show="open" class="p-6 my-3 rounded-lg bg-white dark:bg-slate-800 dark:text-white">
     Add Existing Activity to this step
     <form method="get" id="actfind" action="/activities/stepfind" class="form-inline my-2 my-lg-0 mr-3">
-        <input class="p-3 bg-slate-300 dark:bg-slate-900 rounded-lg mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
+        <input class="p-3 bg-slate-300 dark:bg-slate-900/80 rounded-lg mr-sm-2" type="search" placeholder="Activity Search" aria-label="Search" name="q">
         <input type="hidden" name="step_id" value="<?= $step->id ?>">
         <button class="inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline" type="submit">Search</button>
     </form>
@@ -70,10 +70,10 @@ echo $this->Form->hidden('createdby_id', ['value' => $this->Identity->get('id')]
 echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')]);
 echo $this->Form->hidden('step_id', ['value' => $step->id]);
 ?>
-<?php echo $this->Form->control('hyperlink', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900 rounded-lg']); ?>
-<?php echo $this->Form->control('name', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900 rounded-lg']); ?>
+<?php echo $this->Form->control('hyperlink', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900/80 rounded-lg']); ?>
+<?php echo $this->Form->control('name', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900/80 rounded-lg']); ?>
 <label for="description">Description</label>
-<?php echo $this->Form->textarea('description', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900 rounded-lg']) ?>
+<?php echo $this->Form->textarea('description', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900/80 rounded-lg']) ?>
 <?= $this->Form->button(__('Save Activity'), ['class' => 'inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline']) ?>
 <?= $this->Form->end() ?>
 
@@ -124,7 +124,7 @@ echo $this->Form->hidden('step_id', ['value' => $step->id]);
     
     <?php foreach($requiredacts as $a): ?>
         
-        <div class="my-3 p-3 bg-white dark:bg-slate-900 rounded-lg" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
+        <div class="my-3 p-3 bg-white dark:bg-slate-900/80 rounded-lg" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
         <div class="grid gap-4 grid-cols-12 items-center">
 
         <div class="col-span-2 text-center">
@@ -160,7 +160,7 @@ echo $this->Form->hidden('step_id', ['value' => $step->id]);
                 <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id,]) ?>
                 <label>Why is this activity on this step?<br>
                 <?= $this->Form->textarea('stepcontext',['value' => $a->_joinData->stepcontext,
-                                                            'class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900 rounded-lg',
+                                                            'class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900/80 rounded-lg',
                                                             'rows' => 2
                                                         ]) ?>
                 </label>
@@ -199,7 +199,7 @@ echo $this->Form->hidden('step_id', ['value' => $step->id]);
     <h3 class="mt-10 mb-3 text-xl">Supplemental Activities</h3>
     
     <?php foreach($supplementalacts as $a): ?>
-        <div class="my-3 p-3 bg-white dark:bg-slate-900 rounded-lg" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
+        <div class="my-3 p-3 bg-white dark:bg-slate-900/80 rounded-lg" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
             <div class="grid gap-4 grid-cols-12 items-center">
 
             <div class="col-span-2 text-center">
@@ -233,7 +233,7 @@ echo $this->Form->hidden('step_id', ['value' => $step->id]);
                 <?= $this->Form->control('id',['type' => 'hidden', 'value' => $a->_joinData->id,]) ?>
                 <label>Why is this activity on this step?<br>
                 <?= $this->Form->textarea('stepcontext',['value' => $a->_joinData->stepcontext,
-                                                            'class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900 rounded-lg',
+                                                            'class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900/80 rounded-lg',
                                                             'rows' => 2
                                                         ]) ?>
                 </label>

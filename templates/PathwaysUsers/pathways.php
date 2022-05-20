@@ -11,22 +11,23 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 
-<div class="p-6 dark:text-white">
+<div class="px-6 py-3 dark:text-white">
 
 
 <?php if (!$pathways->isEmpty()) : ?>
-	<div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg">
+	
 	<h1 class="mb-3 text-lg sr-only">Followed Pathways</h1>	
 	<?php foreach ($pathways as $path) : ?>
         
-	<div class="p-3 mb-3 bg-white dark:bg-slate-800 rounded-lg">
+		<div class="p-6 mb-3 w-full bg-center bg-no-repeat rounded-lg" style="background-image: url('<?= h($path->pathway->topic->categories[0]->image_path) ?>')">
+		<div class="p-3 text-xl bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">
 	<?php 
 	echo $this->Form->postLink(__('Un-Follow'), 
 									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $path->id], 
 									['class' => 'float-right inline-block p-3 bg-sky-700 hover:bg-sky-800 text-white hover:no-underline rounded-lg', 'title' => 'Stop seeing your progress on this pathway', 'confirm' => __('Really un-pin?')]); 
 	?>
 
-		<a href="/category/<?= $path->pathway->topic->categories[0]->id ?>/<?= $path->pathway->topic->categories[0]->slug ?>"><?= $path->pathway->topic->categories[0]->name ?></a> 
+		<a href="/category/<?= $path->pathway->topic->categories[0]->id ?>/<?= $path->pathway->topic->categories[0]->slug ?>"><?= $path->pathway->topic->categories[0]->name ?></a> / 
 		<a href="/category/<?= $path->pathway->topic->categories[0]->id ?>/<?= $path->pathway->topic->categories[0]->slug ?>/topic/<?= $path->pathway->topic->id ?>/<?= $path->pathway->topic->slug ?>"><?= $path->pathway->topic->name ?>
     	<h2 class="text-2xl mb-3">
 			<a href="/<?= $path->pathway->topic->categories[0]->slug ?>/<?= $path->pathway->topic->slug ?>/pathway/<?= $path->pathway->slug ?>" class="font-weight-bold">
@@ -38,7 +39,7 @@ if ($this->Identity->isLoggedIn()) {
 			</a>
 		</h2>
 
-		<div class="p-4 text-xl bg-slate-100 dark:bg-slate-900 rounded-lg">
+		<div class="p-4 text-xl bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">
 			<div class="text-xs">Objective</div>
 			<?= h($path->pathway->objective) ?>
 		</div>
@@ -53,7 +54,7 @@ if ($this->Identity->isLoggedIn()) {
 		<?php endif ?>
 
 
-		<div class="pbarcontainer<?= $path->pathway->id ?> sticky top-0 my-1 w-full h-8 bg-slate-50 dark:bg-slate-900 rounded-lg">
+		<div class="pbarcontainer<?= $path->pathway->id ?> sticky top-0 my-1 w-full h-8 bg-slate-50 dark:bg-slate-900/80 rounded-lg">
 			<span class="inline-block pbar<?= $path->pathway->id ?> pt-1 px-6 h-8 bg-sky-700 text-white rounded-lg"></span>
 		</div>
 		<script>
@@ -87,12 +88,13 @@ if ($this->Identity->isLoggedIn()) {
 
 
 	</div>
-	<?php endforeach; ?>
 	</div>
+	<?php endforeach; ?>
+	
 <?php else: ?>
 
 
-	<div class="p-3 mb-2 bg-slate-100 dark:bg-slate-900 dark:text-white rounded-lg">
+	<div class="p-3 mb-2 bg-slate-100/80 dark:bg-slate-900/80 dark:text-white rounded-lg">
 
 		<h2 class="mb-3 text-3xl">Get Started</h2>
 		<div class="p-4 bg-white dark:bg-slate-800 rounded-lg">

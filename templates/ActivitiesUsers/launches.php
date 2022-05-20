@@ -9,7 +9,7 @@ $uid = $this->Identity->get('id');
 
 <div class="p-6 dark:text-white">
 
-<div class="p-3 mb-2 bg-slate-100 dark:bg-slate-900 dark:text-white rounded-lg">
+<div class="p-3 mb-2 bg-slate-100/80 dark:bg-slate-900/80 dark:text-white rounded-lg">
 <?php if(!empty($alllaunches)): ?>
 <?php foreach($alllaunches as $a): ?>
 
@@ -20,7 +20,7 @@ $uid = $this->Identity->get('id');
 	</a>
 </h2>
 <div class="mt-3">
-	<div class="inline-block w-24 bg-slate-900 text-white text-sm text-center uppercase rounded-lg">
+	<div class="inline-block w-24 bg-slate-900/80 text-white text-sm text-center uppercase rounded-lg">
 		Launched
 	</div>
 	<?php foreach($a['launches'] as $ls): ?>

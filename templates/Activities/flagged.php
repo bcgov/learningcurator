@@ -7,7 +7,7 @@
 $this->loadHelper('Authentication.Identity');
 ?>
 <div class="p-6">
-<div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg">
+<div class="p-3 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">
 <h1 class="text-lg">Manual Review</h1>
 <p>These activities, usually because they are behind authentication, 
     (e.g. most of our intranet sites) cannot be automatically audited 
@@ -18,7 +18,7 @@ $this->loadHelper('Authentication.Identity');
     issue and be able to rectify it.</p>
 <p>These are links which have not been audited in the past 2 weeks.</p>
 <?php foreach($activities as $a): ?>
-<div class="p-3 mb-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
+<div class="p-3 mb-3 bg-slate-100/80 dark:bg-slate-800 rounded-lg">
 <div><a href="/activities/view/<?= h($a->id) ?>" target="_blank"><?= h($a->name) ?></a></div>
 <div>
     <a href="<?= h($a->hyperlink) ?>" target="_blank">Visit website to verify</a> 
@@ -31,7 +31,7 @@ $this->loadHelper('Authentication.Identity');
 <!--
 <?= $this->Form->create(null, ['url' => ['controller' => 'Activities','action' => 'edit/' . $a->id], 'class' => 'inline']) ?>
 <?= $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')]); ?>
-<?= $this->Form->control('hyperlink', ['value' => $a->hyperlink, 'label' => '', 'class' => 'inline-block px-3 py-2 m-0 dark:text-white dark:bg-slate-900 rounded-lg']); ?>
+<?= $this->Form->control('hyperlink', ['value' => $a->hyperlink, 'label' => '', 'class' => 'inline-block px-3 py-2 m-0 dark:text-white dark:bg-slate-900/80 rounded-lg']); ?>
 <?= $this->Form->button(__('Update Link'), ['class' => 'inline-block']) ?>
 <?= $this->Form->end() ?>
 -->

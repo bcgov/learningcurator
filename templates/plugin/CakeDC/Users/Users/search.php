@@ -27,7 +27,7 @@
 
 
 <?php foreach (${$tableAlias} as $user) : ?>
-<div class="bg-white dark:bg-slate-900 my-5 p-3">
+<div class="bg-white dark:bg-slate-900/80 my-5 p-3">
     <div class="">
     <?= $this->Html->link(__d('cake_d_c/users', h($user->username)), ['action' => 'view', $user->id],['class' => 'font-weight-bold']) ?> 
     <?= h($user->first_name) ?> <?= h($user->last_name) ?> <?= h($user->email) ?>

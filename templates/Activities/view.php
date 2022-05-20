@@ -33,7 +33,7 @@ if ($this->Identity->isLoggedIn()) {
 		<?= $activity->name ?>
 	</h1>
 
-	<div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg">
+	<div class="p-3 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">
 		
 		<div class="mb-2">
 			<?php foreach($activity->tags as $tag): ?>
@@ -95,7 +95,7 @@ if ($this->Identity->isLoggedIn()) {
 
 		</div>
 
-		<div class="my-3 p-3 bg-white dark:bg-slate-900 rounded-lg">
+		<div class="my-3 p-3 bg-white dark:bg-slate-900/80 rounded-lg">
 			<strong>Hyperlink:</strong>
 			<div class="p-2 bg-white dark:bg-black text-xl">
 				<?= $activity->hyperlink ?>
@@ -106,10 +106,10 @@ if ($this->Identity->isLoggedIn()) {
 
 		
 		<?php if(count($activitylaunches) > 0): ?>
-		<div class="mb-3 p-3 bg-white dark:bg-slate-900 rounded-lg">
+		<div class="mb-3 p-3 bg-white dark:bg-slate-900/80 rounded-lg">
 		<h2 class="text-lg">You launched this activity:</h2>
 		<?php foreach($activitylaunches as $u): ?>
-		<div class="p-2 my-2 bg-slate-100 dark:bg-slate-800 dark:text-yellow-500 rounded-lg">
+		<div class="p-2 my-2 bg-slate-100/80 dark:bg-slate-800 dark:text-yellow-500 rounded-lg">
 			<?= $this->Time->format($u[1],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
 			<?= $this->Form->postLink(__('Remove'), ['controller' => 'ActivitiesUsers','action' => 'delete/'. $u[0]], ['class' => 'px-2 bg-white text-black dark:bg-black dark:text-white hover:no-underline rounded-lg', 'confirm' => __('Remove?')]) ?>
 		</div>
@@ -122,7 +122,7 @@ if ($this->Identity->isLoggedIn()) {
 
 		<?php if($role == 'curator' || $role == 'superuser'): ?>
 		<?php if (!empty($activity->moderator_notes)) : ?>
-		<div class="my-3 p-3 bg-white dark:bg-slate-900 rounded-lg">
+		<div class="my-3 p-3 bg-white dark:bg-slate-900/80 rounded-lg">
 		<h3 class="text-lg"><?= __('Moderator Notes') ?></h3>
 		<blockquote>
 		<?= $this->Text->autoParagraph(h($activity->moderator_notes)); ?>
@@ -132,7 +132,7 @@ if ($this->Identity->isLoggedIn()) {
 		<?php endif; ?>
 		
 		<?php if(!empty($activity->steps)): ?>
-		<div class="my-3 p-3 bg-white dark:bg-slate-900 rounded-lg">
+		<div class="my-3 p-3 bg-white dark:bg-slate-900/80 rounded-lg">
 		<h3 class="text-lg">
 			This activity is included in the following pathways:
 		</h3>
@@ -166,7 +166,7 @@ if ($this->Identity->isLoggedIn()) {
 		<?php endif ?>
 
 
-	<div class="p-3 bg-white dark:bg-slate-900 rounded-lg">
+	<div class="p-3 bg-white dark:bg-slate-900/80 rounded-lg">
 		<p class="mb-1 text-lg">Is there something wrong with this activity? Report it!</p>
 		<script>
 

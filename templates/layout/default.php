@@ -10,7 +10,12 @@
 <link href="/css/tailwind.css" rel="stylesheet">
 </head>
 
-<body class="bg-slate-100 dark:bg-slate-800">
+<body class="bg-white dark:bg-black " >
+  
+<!-- :class="{'dark': darkMode === true}"
+      x-data="{'darkMode': false}" 
+      x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" -->
 
 <div class="md:flex flex-col md:flex-row md:min-h-screen w-full rounded-br-lg" >
 <div @click.away="open = false" class="flex flex-col flex-shrink-0 w-full md:w-56 text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-900" x-data="{ open: false }">
@@ -19,7 +24,7 @@
     <span class="leading-3 text-xl font-semibold tracking-widest text-slate-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
       <span class="text-xs">Learning</span>
       <br>
-      <span class="text-[#003366] dark:text-yellow-500">Curator</span>
+      <span class="text-[#003366] dark:text-sky-500">Curator</span>
     </span>
     <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open" aria-label="Menu Toggle">
       <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
@@ -62,32 +67,49 @@
   );
 
   foreach($navigation as $page): ?>
-  <?php if(strpos($currentpage,$page['link']) !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
-  <?php if(strpos($currentpage,'/topics') !== false && $page['name'] == 'Categories') $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
-  <?php if(strpos($currentpage,'/category') !== false && $page['name'] == 'Categories') $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
-  <?php if(strpos($currentpage,'/pathway') !== false && $page['name'] == 'Pathways') $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
-  <a class="hover:no-underline block px-4 py-2 mt-2 text-sm font-semibold text-slate-900 border-l-4 dark:hover:border-white dark:hover:bg-[#003366] dark:focus:bg-black dark:focus:text-white dark:hover:text-white dark:text-slate-200 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-300 focus:bg-slate-200 focus:outline-none focus:shadow-outline <?= $active ?>"
+  <div>
+  <?php if(strpos($currentpage,$page['link']) !== false) $active = 'bg-[#c3d4e4] dark:bg-black border-[#003366] dark:border-white'; ?>
+  <?php if(strpos($currentpage,'/topics') !== false && $page['name'] == 'Categories') $active = 'bg-[#c3d4e4] dark:bg-black border-[#003366] dark:border-white'; ?>
+  <?php if(strpos($currentpage,'/category') !== false && $page['name'] == 'Categories') $active = 'bg-[#c3d4e4] dark:bg-black border-[#003366] dark:border-white'; ?>
+  <?php if(strpos($currentpage,'/pathway') !== false && $page['name'] == 'Pathways') $active = 'bg-[#c3d4e4] dark:bg-black border-[#003366] dark:border-white'; ?>
+  <a class="hover:no-underline inline-block px-4 py-1 mt-2 ml-4 text-sm font-semibold text-slate-900 dark:hover:bg-black dark:focus:bg-black dark:focus:text-white dark:hover:text-white dark:text-slate-200 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-300 focus:bg-slate-200 focus:outline-none focus:shadow-outline rounded-lg <?= $active ?>"
     href="<?= $page['link'] ?>">
       <?= $page['name'] ?>
   </a>
   <?php $active = 'border-slate-400 dark:border-slate-800'; ?>
+  </div>
   <?php endforeach ?>
   </nav>
   <?php endif ?>
   
+   
 
+   
+<!-- <div class="flex items-center justify-center space-x-2">
+  <span class="text-sm text-gray-800 dark:text-gray-500">Light</span>
+  <label for="toggle"
+    class="flex items-center h-5 p-1 duration-300 ease-in-out bg-gray-300 rounded-full cursor-pointer w-9 dark:bg-gray-600">
+    <div
+      class="w-4 h-4 duration-300 ease-in-out transform bg-white rounded-full shadow-md toggle-dot dark:translate-x-3">
+    </div>
+  </label>
+  <span class="text-sm text-gray-400 dark:text-white">Dark</span>
+  <input id="toggle" type="checkbox" class="hidden" :value="darkMode" @change="darkMode = !darkMode" />
+</div> -->
+
+   
 
 </div>
 </div>
-<div class="bg-[#c3d4e4] dark:bg-[#003366] dark:text-white w-full 2xl:w-2/3" role="main">
+<div class="bg-white dark:bg-black dark:text-white w-full 2xl:w-2/3" role="main">
 
   <?php if(!empty($this->Identity->get('id'))): ?>
-  <div class="flex h-16 w-full px-6 pt-3 bg-slate-200 dark:bg-[#002850]"> <!-- sticky top-0 z-50 -->
+  <div class="flex h-16 w-full px-6 pt-3 bg-white dark:bg-black"> <!-- sticky top-0 z-50 -->
 
 
   <form method="get" action="/find" class="w-full" role="search">
     <label for="search" class="sr-only">Search</label>
-    <input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-900 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search" id="search"><button class="px-3 py-2 m-0 bg-slate-300 dark:text-white dark:bg-slate-900 dark:hover:bg-slate-800 rounded-r-lg" type="submit">Search</button>
+    <input class="px-3 py-2 m-0 dark:text-white bg-slate-100/80 dark:bg-slate-900 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search" id="search"><button class="px-3 py-2 m-0 bg-slate-200 dark:text-white dark:bg-slate-900 dark:hover:bg-slate-800 rounded-r-lg" type="submit">Search</button>
   </form>
 
 
@@ -99,7 +121,7 @@
   </div>
 </div>
 
-<div class="py-6 bg-slate-100 dark:bg-slate-900 dark:text-white text-center" role="contentinfo">
+<div class="py-6 bg-slate-100/80 dark:bg-slate-900 dark:text-white text-center" role="contentinfo">
 
 <div class="mx-auto mb-10 p-6 md:w-2/3 lg:w-1/4 bg-white dark:bg-slate-800 dark:text-slate-300 text-lg rounded-lg text-slate-700 text-center">
   We acknowledge with respect that the Learning Curator operates throughout B.C.

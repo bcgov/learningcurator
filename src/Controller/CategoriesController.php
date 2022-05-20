@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 Use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
+
 /**
  * Categories Controller
  *
@@ -21,18 +22,14 @@ class CategoriesController extends AppController
     public function index()
     {
         $user = $this->request->getAttribute('authentication')->getIdentity();
-        if($user->role == 'curator' || $user->role == 'superadmin') {
+        if($user->role == 'curator' || $user->role == 'superuser') {
             $categories = $this->Categories->find('all')
-                                            ->contain(['Topics','Topics.Pathways'])
-                                            ->order(['sortorder' => 'desc']);    
+                                            ->order(['Categories.sortorder' => 'desc']);    
         } else {
             $categories = $this->Categories->find('all')
-                                            ->contain(['Topics','Topics.Pathways'])
                                             ->where(['Categories.featured' => 1])
-                                            ->order(['sortorder' => 'desc']);
+                                            ->order(['Categories.sortorder' => 'desc']);
         }
-
-
         $this->set(compact('categories'));
     }
 
@@ -50,6 +47,7 @@ class CategoriesController extends AppController
         $category = $this->Categories->get($id, [
             'contain' => ['Topics','Topics.Pathways','Topics.Pathways.Statuses'],
         ]);
+
 
         $this->set(compact('category'));
     }
@@ -93,11 +91,10 @@ class CategoriesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $category = $this->Categories->patchEntity($category, $this->request->getData());
             if ($this->Categories->save($category)) {
-                //$this->Flash->success(__('The category has been saved.'));
-
+            
                 return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The category could not be saved. Please, try again.'));
+            echo __('The category could not be saved. Please, try again.');
         }
         $topics = $this->Categories->Topics->find('list', ['limit' => 200]);
         $this->set(compact('category', 'topics'));
@@ -115,9 +112,9 @@ class CategoriesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $category = $this->Categories->get($id);
         if ($this->Categories->delete($category)) {
-            $this->Flash->success(__('The category has been deleted.'));
+            echo __('The category has been deleted.');
         } else {
-            $this->Flash->error(__('The category could not be deleted. Please, try again.'));
+            echo __('The category could not be deleted. Please, try again.');
         }
 
         return $this->redirect(['action' => 'index']);

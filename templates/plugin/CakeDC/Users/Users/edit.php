@@ -31,7 +31,7 @@ if ($this->Identity->isLoggedIn()) {
     <?= $this->Form->create($Users); ?>
     <fieldset>
         <legend class="text-4xl"><?= __d('cake_d_c/users', 'Edit') . ' ' . $Users->first_name ?></legend>
-        <div class="mt-3 p-6 bg-slate-200 dark:bg-slate-900 rounded-lg">
+        <div class="mt-3 p-6 bg-slate-200 dark:bg-slate-900/80 rounded-lg">
             Activated on <?= $Users->activation_date ?>
         <?php
         if($role == 'superuser') {
