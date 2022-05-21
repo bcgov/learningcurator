@@ -47,7 +47,7 @@ $this->assign('title', h($pathway->name));
 	<?php 
 	echo $this->Form->postLink(__('Un-Follow Pathway'), 
 									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], 
-									['class' => 'mt-2 float-right inline-block p-3 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline',
+									['class' => 'mt-2 mr-2 float-right inline-block p-3 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline',
 									 'title' => 'Stop seeing this pathway on your profile', 
 									 'confirm' => '']); 
 	?>
@@ -156,6 +156,9 @@ fetch('/pathways/status/<?= $pathway->id ?>', { method: 'GET' })
 <h3 class="text-2xl">
 <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
 		<?= h($steps->name) ?> 
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+		<path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+		</svg>
 	</a>
 	<?php if($role == 'curator' || $role == 'superuser'): ?>
 	<span class="text-xs px-4 bg-slate-100/80 dark:bg-emerald-700 rounded-lg"><?= $steps->status->name ?></span>
@@ -202,6 +205,9 @@ fetch('/steps/status/<?= $steps->id ?>', { method: 'GET' })
 <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>"
 	class="inline-block p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 	View Step
+	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+	<path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+	</svg>
 </a>
 </div>
 <?php else: ?>

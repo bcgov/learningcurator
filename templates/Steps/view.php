@@ -103,7 +103,7 @@ foreach ($step->pathways as $pathways) {
 
 <!-- start drop-down -->
 <div x-cloak @click.away="open = false" class="relative ml-16" x-data="{ open: false }">
-	<button @click="open = !open" class="px-4 py-2 text-sm font-semibold text-right bg-slate-200/80 rounded-t-lg dark:bg-slate-900/80 dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900/80 dark:hover:bg-slate-900/80 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-100/80  focus:bg-white focus:outline-none focus:shadow-outline">
+	<button @click="open = !open" class="px-4 py-2 text-sm font-semibold text-right bg-slate-200/80 rounded-t-lg dark:bg-slate-900 dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900/80 dark:hover:bg-slate-900 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-100/80  focus:bg-white focus:outline-none focus:shadow-outline">
 		<span>Step Menu</span>
 		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
 			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -116,7 +116,7 @@ foreach ($step->pathways as $pathways) {
 			x-transition:leave="transition ease-in duration-75" 
 			x-transition:leave-start="transform opacity-100 scale-100" 
 			x-transition:leave-end="transform opacity-0 scale-95" 
-			class="z-50 absolute left-0 w-full md:w-3/4 lg:w-1/2 origin-top-left -ml-6 bg-white dark:bg-slate-900/80 shadow-lg rounded-lg"
+			class="z-50 absolute left-0 w-full md:w-3/4 lg:w-1/2 origin-top-left -ml-6 bg-white dark:bg-slate-900 shadow-lg rounded-lg"
 	>
 		<div class="p-6">
 		
