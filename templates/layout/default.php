@@ -68,15 +68,15 @@
 
   foreach($navigation as $page): ?>
   <div>
-  <?php if(strpos($currentpage,$page['link']) !== false) $active = 'bg-[#c3d4e4] dark:bg-sky-700'; ?>
-  <?php if(strpos($currentpage,'/topics') !== false && $page['name'] == 'Categories') $active = 'bg-[#c3d4e4] dark:bg-sky-700'; ?>
-  <?php if(strpos($currentpage,'/category') !== false && $page['name'] == 'Categories') $active = 'bg-[#c3d4e4] dark:bg-sky-700'; ?>
-  <?php if(strpos($currentpage,'/pathway') !== false && $page['name'] == 'Pathways') $active = 'bg-[#c3d4e4] dark:bg-sky-700'; ?>
-  <a class="hover:no-underline inline-block px-4 py-1 mt-2 ml-4 text-sm font-semibold text-slate-900 dark:hover:bg-sky-500 dark:focus:bg-black dark:focus:text-white dark:hover:text-white dark:text-slate-200 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-300 focus:bg-slate-200 focus:outline-none focus:shadow-outline rounded-lg <?= $active ?>"
+  <?php if(strpos($currentpage,$page['link']) !== false) $active = 'text-white bg-sky-700'; ?>
+  <?php if(strpos($currentpage,'/topics') !== false && $page['name'] == 'Categories') $active = 'text-white bg-sky-700'; ?>
+  <?php if(strpos($currentpage,'/category') !== false && $page['name'] == 'Categories') $active = 'text-white bg-sky-700'; ?>
+  <?php if(strpos($currentpage,'/pathway') !== false && $page['name'] == 'Pathways') $active = 'text-white bg-sky-700'; ?>
+  <a class="hover:no-underline inline-block px-4 py-1 mt-2 ml-4 text-sm font-semibold dark:text-white dark:hover:bg-sky-500 hover:bg-sky-700 hover:text-white rounded-lg <?= $active ?>"
     href="<?= $page['link'] ?>">
       <?= $page['name'] ?>
   </a>
-  <?php $active = 'border-slate-400 dark:border-slate-800'; ?>
+  <?php $active = 'text-slate-900'; ?>
   </div>
   <?php endforeach ?>
   </nav>
@@ -104,7 +104,7 @@
 <div class="bg-white dark:bg-black dark:text-white w-full 2xl:w-2/3" role="main">
 
   <?php if(!empty($this->Identity->get('id'))): ?>
-  <div class="flex h-16 w-full px-3 pt-3 bg-white dark:bg-black"> <!-- sticky top-0 z-50 -->
+  <div class="flex h-16 w-full px-6 pt-3 bg-white dark:bg-black"> <!-- sticky top-0 z-50 -->
 
 
   <form method="get" action="/find" class="w-full" role="search">

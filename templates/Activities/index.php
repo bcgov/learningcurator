@@ -24,7 +24,7 @@ if ($this->Identity->isLoggedIn()) {
 </style>
 <div class="p-6">
 
-<div class="paginator sticky top-0 z-50 py-3 bg-[#c3d4e4] dark:bg-[#003366]">
+<div class="paginator sticky top-0 z-50 py-3 bg-white dark:bg-black">
 	<div class="mb-3">
 		<?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} activities out of {{count}} total')) ?>
 	</div>
@@ -35,7 +35,7 @@ if ($this->Identity->isLoggedIn()) {
 	<?= $this->Paginator->last(__('last') . ' >>') ?>
 
 </div>
-<div class="p-3 mb-2 bg-slate-100/80 dark:bg-slate-900/80 dark:text-white rounded-lg">
+
 <?php foreach ($activities as $activity) : ?>
 <?php 
 // #TODO move this back into the controller and simplify
@@ -48,7 +48,7 @@ foreach($actlist as $k => $v) {
 	}
 }
 ?>
-<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-800 dark:text-white">
+<div class="p-3 my-3 rounded-lg activity bg-slate-100 dark:bg-[#003366]/80 dark:text-white">
 
 <div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
 	
@@ -63,7 +63,7 @@ foreach($actlist as $k => $v) {
 		<?= $activity->name ?>
 	</h4>
 	<?php if(!empty($activity->description)): ?>
-	<div class="p-2 lg:p-4 text-lg bg-slate-100/80 dark:bg-[#002850] rounded-lg">
+	<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-lg">
 	<?= $activity->description ?>
 	</div>
 	<?php else: ?>
@@ -196,7 +196,7 @@ foreach($actlist as $k => $v) {
 </div>
 </div>
 <?php if(!empty($activity->steps)): ?>
-	<div class="mt-2 p-3 bg-slate-100/80 dark:bg-slate-800 rounded-lg">
+	<div class="mt-2 p-3 bg-white dark:bg-slate-900 rounded-lg">
 		Included in pathways:<br> 
 		<?php foreach($activity->steps as $step): ?>
 			<?php if(!empty($step->pathways[0]->slug)): ?>
@@ -219,5 +219,4 @@ foreach($actlist as $k => $v) {
 </div>
 <?php endforeach; // end of activities loop for this step ?>
 
-</div>
 </div>

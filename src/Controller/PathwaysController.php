@@ -191,8 +191,10 @@ class PathwaysController extends AppController
                 $percentage = 0;
             }
         endif;
+        $stepcount = count($pathway->steps);
         $this->set(compact('pathway', 
                             'totalacts', 
+                            'stepcount', 
                             'requiredacts', 
                             'suppacts', 
                             'percentage', 

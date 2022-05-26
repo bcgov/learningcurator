@@ -39,7 +39,7 @@ foreach ($step->pathways as $pathways) {
 	}
 }
 ?>
-<div class="p-6 w-full bg-center bg-no-repeat bg-fixed" style="background-image: url('<?= h($step->pathways[0]->topic->categories[0]->image_path) ?>')">
+<div class="p-6 w-full bg-top md:bg-center bg-no-repeat bg-fixed min-h-screen rounded-tr-xl" style="background-image: url('<?= h($step->pathways[0]->topic->categories[0]->image_path) ?>')">
 
 <nav class="bg-slate-100/80  dark:bg-slate-900/80 rounded-lg p-3 mb-3" aria-label="breadcrumb">
 	<!-- <a href="/categories/index">Categories</a> /  -->
@@ -80,13 +80,13 @@ foreach ($step->pathways as $pathways) {
 	?>
 <?php endif ?>
 	<h1 class="mb-6 text-4xl">
-		<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
+		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="inline-block -mt-2" viewBox="0 0 16 16">
 			<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
 			<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
 		</svg>
 		<?= $step->pathways[0]->name ?>
 	</h1>
-	<div class="mb-4 p-3 text-xl bg-slate-100/80  dark:bg-slate-800 rounded-lg">
+	<div class="mb-4 p-3 text-xl bg-white  dark:bg-slate-800 rounded-lg shadow-lg">
 	<div class="text-xs">Pathway Objective</div>
 	<?= $step->pathways[0]->objective ?> 
 </div>
@@ -184,7 +184,7 @@ foreach ($step->pathways as $pathways) {
 <?php if($step->status_id == 1): ?>
 <span class="badge badge-warning">DRAFT</span>
 <?php endif ?>
-<div class="mb-4 p-3 text-xl bg-slate-100/80  dark:bg-slate-800 rounded-lg">
+<div class="mb-4 p-3 text-xl bg-white  dark:bg-slate-800 rounded-lg shadow-lg">
 	<div class="text-xs">Step Objective</div>
 <?= $step->description ?>
 </div>
@@ -204,7 +204,7 @@ foreach($actlist as $k => $v) {
 	}
 }
 ?>
-<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366]/80 dark:text-white">
+<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366]/80 dark:text-white shadow-lg">
 
 	<div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
 		
