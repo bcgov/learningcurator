@@ -1,11 +1,11 @@
 module.exports = {
-  content: ["./templates/**/*.php"],
+  content: ['./templates/**/*.php'],
   theme: {
-    // colors: {
-    //   'blue': {
-    //     900: '#003366',
-    //   },
-    // },
+    extend: {
+      fontFamily: {
+        'BCSans': ['BCSans', 'sans-serif'] 
+      },
+    },
   },
   //darkMode: 'class',
   plugins: [],

@@ -13,7 +13,7 @@ if ($this->Identity->isLoggedIn()) {
 ?>
 <div class="p-6 dark:text-white">
 
-
+<h1 class="text-4xl mb-6">Recent Pathways</h1>
 
 <?php foreach ($pathways as $pathway): ?>
 	<div class="p-6 mb-3 w-full bg-center bg-no-repeat rounded-lg" style="background-image: url('<?= h($pathway->topic->categories[0]->image_path) ?>')">

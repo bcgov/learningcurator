@@ -1243,6 +1243,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   text-align: right;
 }
 
+.font-BCSans {
+  font-family: BCSans, sans-serif;
+}
+
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -1263,14 +1267,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   line-height: 2rem;
 }
 
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .text-xs {
@@ -1408,6 +1412,25 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .ease-in-out {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@font-face {
+  font-family: 'BCSans';
+
+  font-style: normal;
+
+  font-weight: 400;
+
+  font-display: swap;
+
+  /* or block, swap, fallback, optional */
+
+  src: local('BCSans'),
+         url('/fonts/BCSans-Regular.woff2') format('woff2');
+
+  unicode-range: U+000-5FF;
+
+  /* Latin glyphs */
 }
 
 [x-cloak] {

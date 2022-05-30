@@ -1,6 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'BCSans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap; /* or block, swap, fallback, optional */
+    src: local('BCSans'),
+         url('/fonts/BCSans-Regular.woff2') format('woff2');
+    unicode-range: U+000-5FF; /* Latin glyphs */
+  }
+
 [x-cloak] { display: none !important; }
 a:hover {
     text-decoration: underline;

@@ -3,14 +3,14 @@
 <html lang="en" class="scroll-smooth">
 <head>
 <?= $this->Html->charset() ?>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title><?= $this->fetch('title') ?> | Learning Curator</title>
+<link rel="preload">
 <link href="/css/tailwind.css" rel="stylesheet">
 </head>
 
-<body class="bg-white dark:bg-black " >
+<body class="bg-white dark:bg-black font-BCSans" >
   
 <!-- :class="{'dark': darkMode === true}"
       x-data="{'darkMode': false}" 
@@ -21,7 +21,7 @@
 <div @click.away="open = false" class="flex flex-col flex-shrink-0 w-full md:w-56 text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-900" x-data="{ open: false }">
 <div class="sticky top-0">
   <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 " role="banner"> <!-- sticky top-0 bg-slate-200 dark:bg-[#002850]-->
-    <span class="leading-3 text-xl font-semibold tracking-widest text-slate-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
+    <span class="leading-3 text-xl  tracking-widest text-slate-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
       <span class="text-xs">Learning</span>
       <br>
       <span class="text-[#003366] dark:text-sky-500">Curator</span>
@@ -44,7 +44,7 @@
     <?php if(strpos($currentpage,'/users') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
     <?php if(strpos($currentpage,'/reports') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
     <?php if(strpos($currentpage,'/profile/contributions') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
-  <a class="hover:no-underline block px-4 py-2 mt-2 text-sm font-semibold text-slate-900 border-l-4 dark:hover:border-white dark:hover:bg-[#003366] dark:focus:bg-black dark:focus:text-white dark:hover:text-white dark:text-slate-200 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-300 focus:bg-slate-200 focus:outline-none focus:shadow-outline <?= $active ?>"
+  <a class="hover:no-underline block px-4 py-2 mt-2 text-sm  text-slate-900 border-l-4 dark:hover:border-white dark:hover:bg-[#003366] dark:focus:bg-black dark:focus:text-white dark:hover:text-white dark:text-slate-200 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-300 focus:bg-slate-200 focus:outline-none focus:shadow-outline <?= $active ?>"
       href="/users/index">
     Curator Dashboard
   </a>
@@ -72,7 +72,7 @@
   <?php if(strpos($currentpage,'/topics') !== false && $page['name'] == 'Categories') $active = 'text-white bg-sky-700'; ?>
   <?php if(strpos($currentpage,'/category') !== false && $page['name'] == 'Categories') $active = 'text-white bg-sky-700'; ?>
   <?php if(strpos($currentpage,'/pathway') !== false && $page['name'] == 'Pathways') $active = 'text-white bg-sky-700'; ?>
-  <a class="hover:no-underline inline-block px-4 py-1 mt-2 ml-4 text-sm font-semibold dark:text-white dark:hover:bg-sky-500 hover:bg-sky-700 hover:text-white rounded-lg <?= $active ?>"
+  <a class="hover:no-underline inline-block px-4 py-1 mt-2 ml-4 text-sm  dark:text-white dark:hover:bg-sky-500 hover:bg-sky-700 hover:text-white rounded-lg <?= $active ?>"
     href="<?= $page['link'] ?>">
       <?= $page['name'] ?>
   </a>

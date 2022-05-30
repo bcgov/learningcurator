@@ -1,9 +1,10 @@
 #TODO
 
+
 ---------------------------------------
 ## In Progress
 ---------------------------------------
-
+[] Implement BC Sans 
 [] Launching an activity doesn't update progress bar until full refesh
 [] Reports doesn't have a nice user id relation so hard to get user deets 
 [] Category view topic/pathway counts are wrong as they include draft topic/pathways that 
@@ -11,10 +12,10 @@
 [] When pathway completed update database with date!
 [] Implement step sorting
 [] Develop per-pathway reports dashboard
-[] Edit user template needs love
+[] Edit user templates needs love
 [] Fix activity ordering in step edit
 [] Add a inter or intra (public / private (auth required)) boolean for activities
-[] Grid or detail view on steps (currently grid only; option to collapse)
+[] Headline-only or detail view on steps (currently detail only; option to collapse)
 
 ---------------------------------------
 ## PLANNED 
