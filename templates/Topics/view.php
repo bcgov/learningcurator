@@ -12,7 +12,7 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<div class="p-6 w-full bg-top md:bg-center bg-no-repeat bg-fixed min-h-screen rounded-tr-xl" style="background-image: url('<?= h($topic->categories[0]->image_path) ?>')">
+<div class="p-6 w-full bg-top md:bg-center bg-no-repeat md:bg-fixed min-h-screen rounded-tr-xl" style="background-image: url('<?= h($topic->categories[0]->image_path) ?>')">
 
 
 <nav class="mb-3 p-3 bg-white dark:bg-slate-900 rounded-lg" aria-label="breadcrumb">

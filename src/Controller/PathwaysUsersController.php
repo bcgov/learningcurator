@@ -30,10 +30,11 @@ class PathwaysUsersController extends AppController
         //                         ->order(['Pathways.created' => 'desc']);
 
         $user = $this->request->getAttribute('authentication')->getIdentity();
-        $pathways = $this->PathwaysUsers->find()
+        $p = $this->PathwaysUsers->find()
                                         ->contain(['Pathways','Users','Pathways.Topics','Pathways.Topics.Categories'])
                                         ->where(['PathwaysUsers.user_id' => $user->id])
                                         ->order(['PathwaysUsers.date_start' => 'desc']);
+        $pathways = $p->all();
         $this->set(compact('pathways'));
     }
     /**

@@ -148,7 +148,7 @@ class PathwaysController extends AppController
         // Get access to the appropriate table
         $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
         // Select based on currently logged in person
-        $useractivities = $au->find()->where(['user_id = ' => $user->id])->toList();
+        $useractivities = $au->find()->where(['user_id = ' => $user->id])->all()->toList();
         // Loop through the resources and add just the ID to the 
         foreach($useractivities as $uact) {
             array_push($useractivitylist, $uact['activity_id']);

@@ -17,7 +17,7 @@ $this->assign('title', h($pathway->name));
 
 ?>
 
-<div class="p-6 w-full bg-center bg-no-repeat bg-fixed min-h-screen rounded-tr-xl" style="background-image: url('<?= h($pathway->topic->categories[0]->image_path) ?>')">
+<div class="p-6 w-full bg-top md:bg-center bg-no-repeat md:bg-fixed min-h-screen rounded-tr-xl" style="background-image: url('<?= h($pathway->topic->categories[0]->image_path) ?>')">
 <?php if($pathway->status_id == 1): ?>
 <span class="badge badge-warning" title="Edit to set to publish">DRAFT</span>
 <?php endif ?>
@@ -84,7 +84,7 @@ fetch('/pathways/status/<?= $pathway->id ?>', { method: 'GET' })
 	.then((res) => res.json())
 	.then((json) => {
 		if(json.percentage > 0) {
-			let message = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts;
+			let message = json.completed + ' of ' + json.requiredacts;
 			if(json.percentage > 25) {
 				document.querySelector('.pbar').style.width = json.percentage + '%';
 			} 

@@ -1796,6 +1796,10 @@ p {
     overflow-y: auto;
   }
 
+  .md\:bg-fixed {
+    background-attachment: fixed;
+  }
+
   .md\:bg-center {
     background-position: center;
   }
