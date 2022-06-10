@@ -14,7 +14,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <div class="p-3 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">
 
-<?php if (!$reports->isEmpty()) : ?>
+<?php if (!$reports->all()->isEmpty()) : ?>
 	
 	<?php foreach ($reports as $report) : ?>
 	<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">

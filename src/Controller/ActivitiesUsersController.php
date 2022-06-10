@@ -30,7 +30,7 @@ class ActivitiesUsersController extends AppController
         // of launches; so, we need to make it that way since having an 
         // activity listed a bunch of times doesn't make sense. 
         // I like working with arrays ...
-        $acts = $activities->toList();
+        $acts = $activities->all()->toList();
         // Parse out a list of just the activity IDs so that we can reduce it
         $justactids = [];
         foreach($acts as $a) {

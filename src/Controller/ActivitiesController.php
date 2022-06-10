@@ -56,7 +56,7 @@ class ActivitiesController extends AppController
         $useacts = $au->find()->where(['user_id = ' => $user->id]);
         // convert the results into a simple array so that we can
         // use in_array(needle,haystack) in the template
-        $useractivities = $useacts->toList();
+        $useractivities = $useacts->all()->toList();
         // Loop through the resources and add just the ID to the 
         // array that we will pass into the template
         foreach($useractivities as $uact) {
