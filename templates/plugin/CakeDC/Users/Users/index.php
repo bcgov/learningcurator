@@ -61,7 +61,7 @@
 // these links are templated/built within the controller for noted reasons there
 
 ?>
-<?php if(!$noresponses->isEmpty()): ?>
+<?php if(!$noresponses->all()->isEmpty()): ?>
 
 <?php foreach($noresponses as $report): ?>
 	<div class="p-3 mb-2 bg-slate-200 dark:bg-slate-800 rounded-lg">

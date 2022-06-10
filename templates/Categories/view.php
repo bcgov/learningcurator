@@ -15,7 +15,7 @@ if ($this->Identity->isLoggedIn()) {
 $pagetitle = $category->name . '';
 $this->assign('title', $pagetitle);
 ?>
-<div class="p-6 w-full bg-top md:bg-center bg-no-repeat md:bg-fixed min-h-screen rounded-tr-xl" style="background-image: url('<?= h($category->image_path) ?>')">
+<div class="p-6 w-full bg-top bg-no-repeat md:bg-fixed min-h-screen rounded-tr-xl" style="background-image: url('<?= h($category->image_path) ?>')">
 
 
 <?php if($role == 'curator' || $role == 'superuser'): ?>

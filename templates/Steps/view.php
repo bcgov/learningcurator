@@ -39,7 +39,7 @@ foreach ($step->pathways as $pathways) {
 	}
 }
 ?>
-<div class="p-6 w-full bg-top md:bg-center bg-no-repeat bg-fixed min-h-screen rounded-tr-xl" style="background-image: url('<?= h($step->pathways[0]->topic->categories[0]->image_path) ?>')">
+<div class="p-6 w-full bg-top bg-no-repeat bg-fixed min-h-screen rounded-tr-xl" style="background-image: url('<?= h($step->pathways[0]->topic->categories[0]->image_path) ?>')">
 
 <nav class="bg-slate-100/80  dark:bg-slate-900/80 rounded-lg p-3 mb-3" aria-label="breadcrumb">
 	<!-- <a href="/categories/index">Categories</a> /  -->

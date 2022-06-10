@@ -44,7 +44,7 @@
     <?php if(strpos($currentpage,'/users') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
     <?php if(strpos($currentpage,'/reports') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
     <?php if(strpos($currentpage,'/profile/contributions') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
-  <a class="hover:no-underline block px-4 py-2 mt-2 text-sm  text-slate-900 border-l-4 dark:hover:border-white dark:hover:bg-[#003366] dark:focus:bg-black dark:focus:text-white dark:hover:text-white dark:text-slate-200 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-300 focus:bg-slate-200 focus:outline-none focus:shadow-outline <?= $active ?>"
+  <a class="hover:no-underline inline-block px-4 py-1 mt-2 ml-4 text-sm  dark:text-white dark:hover:bg-sky-500 hover:bg-sky-700 hover:text-white rounded-lg <?= $active ?>"
       href="/users/index">
     Curator Dashboard
   </a>
