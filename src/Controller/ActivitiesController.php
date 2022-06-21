@@ -464,7 +464,7 @@ class ActivitiesController extends AppController
 
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
         $pathways = $allpaths->find('all')->contain(['Steps']);
-        $allpathways = $pathways->toList();
+        $allpathways = $pathways->all()->toList();
 
         $this->set(compact('activities','allpathways','stepid'));
     }
