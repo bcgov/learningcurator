@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:8.1-apache
 # TODO switch to buster once https://github.com/docker-library/php/issues/865 is resolved in a clean way (either in the PHP image or in PHP itself)
 
 RUN rm -vfr /var/lib/apt/lists/*
