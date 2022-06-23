@@ -7,9 +7,9 @@ $this->loadHelper('Authentication.Identity');
 ?>
 
 <div class="p-6 dark:text-white">
-<div class="p-6 bg-slate-200 dark:bg-slate-900 rounded-lg">
+<div class="p-6 bg-slate-200 dark:bg-slate-900/80 rounded-lg">
 <a href="/pathways/<?= $pathway->slug ?>" class="">View Pathway</a>
-<a href="/pathways/<?= $pathway->slug ?>/export" class="float-right ml-3 p-3 bg-slate-100 dark:bg-black hover:no-underline rounded-lg">Export Pathway</a>
+<a href="/pathways/<?= $pathway->slug ?>/export" class="float-right ml-3 p-3 bg-slate-100/80 dark:bg-black hover:no-underline rounded-lg">Export Pathway</a>
 <?= $this->Form->postLink(__('Delete Pathway'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'float-right p-3 bg-red-100 dark:bg-red-900 hover:no-underline hover:underline rounded-lg']) ?>
 <?= $this->Form->create($pathway) ?>
 

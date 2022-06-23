@@ -95,7 +95,7 @@ class TopicsController extends AppController
         $users = $this->Topics->Users->find('list', ['limit' => 200]);
         $cats = $this->Topics->Categories->find('all', ['limit' => 200]);
         //$categories = $cats->combine('id', 'name');
-        $categories = $cats->map(function ($value, $key) {
+        $categories = $cats->all()->map(function ($value, $key) {
             return [
                 'value' => $value->id,
                 'text' => $value->name,

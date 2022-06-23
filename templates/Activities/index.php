@@ -24,7 +24,8 @@ if ($this->Identity->isLoggedIn()) {
 </style>
 <div class="p-6">
 
-<div class="paginator sticky top-0 z-50 py-3 bg-[#c3d4e4] dark:bg-[#003366]">
+<h1 class="text-4xl">Recent Activities</h1>
+<div class="paginator sticky top-0 z-50 py-3 bg-white dark:bg-black">
 	<div class="mb-3">
 		<?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} activities out of {{count}} total')) ?>
 	</div>
@@ -35,7 +36,7 @@ if ($this->Identity->isLoggedIn()) {
 	<?= $this->Paginator->last(__('last') . ' >>') ?>
 
 </div>
-<div class="p-3 mb-2 bg-slate-100 dark:bg-slate-900 dark:text-white rounded-lg">
+
 <?php foreach ($activities as $activity) : ?>
 <?php 
 // #TODO move this back into the controller and simplify
@@ -48,13 +49,13 @@ foreach($actlist as $k => $v) {
 	}
 }
 ?>
-<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-800 dark:text-white">
+<div class="p-3 my-3 rounded-lg activity bg-slate-100 dark:bg-[#003366]/80 dark:text-white">
 
 <div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
 	
 	<a href="/profile/launches" 
 		x-cloak 
-		class="inline-block w-24 bg-sky-700 dark:bg-slate-900 text-white dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
+		class="inline-block w-24 bg-sky-700 dark:bg-slate-900/80 text-white dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
 		:class="[count > '0' ? 'show' : 'hidden']">
 			Launched
 	</a>
@@ -63,11 +64,11 @@ foreach($actlist as $k => $v) {
 		<?= $activity->name ?>
 	</h4>
 	<?php if(!empty($activity->description)): ?>
-	<div class="p-2 lg:p-4 text-lg bg-slate-100 dark:bg-[#002850] rounded-lg">
+	<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-lg">
 	<?= $activity->description ?>
 	</div>
 	<?php else: ?>
-	<div class="p-2 lg:p-4 text-lg bg-slate-100 dark:bg-[#002850] rounded-lg">
+	<div class="p-2 lg:p-4 text-lg bg-slate-100/80 dark:bg-[#002850] rounded-lg">
 		<em>No description provided&hellip;</em>
 	</div>
 	<?php endif ?>
@@ -102,14 +103,14 @@ foreach($actlist as $k => $v) {
 </div> <!-- click count increment container -->
 
 <div x-data="{ open: false }">
-<button @click="open = !open" class="px-4 py-2 text-md font-semibold text-right bg-slate-100 dark:text-white dark:bg-[#002850] dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900 dark:hover:bg-slate-900 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-100 focus:bg-slate-100 focus:outline-none focus:shadow-outline rounded-lg">
+<button @click="open = !open" class="px-4 py-2 text-md font-semibold text-right bg-slate-100/80 dark:text-white dark:bg-[#002850] dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900/80 dark:hover:bg-slate-900/80 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-100/80 focus:bg-slate-100/80 focus:outline-none focus:shadow-outline rounded-lg">
 	<span>More info</span>
 	<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
 		<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
 	</svg>
 </button>
 <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
-	<div class="p-4 bg-slate-100 rounded-md dark:bg-slate-900">
+	<div class="p-4 bg-slate-100/80 rounded-md dark:bg-slate-900">
 
 	<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
 		<a class="text-lg" href="/activities/view/<?= $activity->id ?>">
@@ -178,7 +179,7 @@ foreach($actlist as $k => $v) {
 		echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
 		echo $this->Form->hidden('user_id', ['value' => $uid]);
 		echo $this->Form->textarea('issue',
-						['class' => 'w-full h-20 p-6 bg-slate-100 dark:bg-slate-700 text-white rounded-lg', 
+						['class' => 'w-full h-20 p-6 bg-slate-100/80 dark:bg-slate-700 text-white rounded-lg', 
 						'x-model' => 'form'.$activity->id.'Data.issue', 
 						'placeholder' => 'Type here ...',
 						'required' => 'required']);
@@ -196,11 +197,11 @@ foreach($actlist as $k => $v) {
 </div>
 </div>
 <?php if(!empty($activity->steps)): ?>
-	<div class="mt-2 p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
+	<div class="mt-2 p-3 bg-white dark:bg-slate-900 rounded-lg">
 		Included in pathways:<br> 
 		<?php foreach($activity->steps as $step): ?>
 			<?php if(!empty($step->pathways[0]->slug)): ?>
-			<div class="p-2 mb-1 bg-slate-100 dark:bg-[#002850] rounded-lg">
+			<div class="p-2 mb-1 bg-slate-100/80 dark:bg-[#002850] rounded-lg">
 			<a href="/<?= $step->pathways[0]->topic->categories[0]->slug ?>/<?= $step->pathways[0]->topic->slug ?>/pathway/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
 				
 				<i class="bi bi-pin-map-fill"></i>
@@ -219,5 +220,4 @@ foreach($actlist as $k => $v) {
 </div>
 <?php endforeach; // end of activities loop for this step ?>
 
-</div>
 </div>

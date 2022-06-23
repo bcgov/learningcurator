@@ -7,7 +7,7 @@ $this->loadHelper('Authentication.Identity');
 ?>
 <div class="p-6">
 
-<div class="p-3 bg-white dark:bg-slate-900 rounded-lg">
+<div class="p-3 bg-white dark:bg-slate-900/80 rounded-lg">
 <?php if (!empty($reports)) : ?>
 	
 	<h2><?= __('Reports') ?></h2>

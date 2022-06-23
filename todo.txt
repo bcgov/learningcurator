@@ -1,22 +1,21 @@
 #TODO
 
+
 ---------------------------------------
 ## In Progress
 ---------------------------------------
-[] There's a "new pathway" button on the pathway index page for _everyone_
-[] Verify that "objective" is not a step field and remove it from step edit form
-[] Reports section on activity single view tries to use name but is borked
-[] Category view pathway counts are wrong as they include draft pathways that 
+[] Implement BC Sans 
+[] Launching an activity doesn't update progress bar until full refesh
+[] Reports doesn't have a nice user id relation so hard to get user deets 
+[] Category view topic/pathway counts are wrong as they include draft topic/pathways that 
     are there but not shown
-[] You file a report on an activity you are redirected to the activities index 
-    and not the profile page like they should be
 [] When pathway completed update database with date!
 [] Implement step sorting
-[] Develop reports dashboard
-[] Edit user template needs love
-[] there's a grey bar under the colorful div when no content; fix that
-[] Float edit button to right on step edit
+[] Develop per-pathway reports dashboard
+[] Edit user templates needs love
 [] Fix activity ordering in step edit
+[] Add a inter or intra (public / private (auth required)) boolean for activities
+[] Headline-only or detail view on steps (currently detail only; option to collapse)
 
 ---------------------------------------
 ## PLANNED 
@@ -54,7 +53,9 @@
 ---------------------------------------
 ## DONE 
 ---------------------------------------
-
+[x] You file a report on an activity you are redirected to the activities index 
+    and not the profile page like they should be
+[x] Verify that "objective" is not a step field and remove it from step edit form
 [x] Finish redesign the step page
 [x] User report for curators (paths followed, activities claimed)?
 [x] Add who created/modified paths and activities to curators

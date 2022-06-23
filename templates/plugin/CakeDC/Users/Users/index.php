@@ -16,7 +16,7 @@
     <span class="inline-block p-3 rounded-full bg-white dark:bg-slate-900"><?= $launchcount ?></span> Activity Launches
 </div>
 
-<form method="get" action="/users/search" class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
+<form method="get" action="/users/search" class="p-3 bg-slate-200 dark:bg-slate-900/80 rounded-lg">
 <label class="">Search for a user:
 <input class="px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-l-lg" 
         type="search" 
@@ -55,13 +55,13 @@
 <div class="md:grid md:grid-cols-2 md:gap-4">
 <div>
 <?php $rcount = $noresponses->count() ?? 0 ?>
-<h2 class="mt-4 text-2xl">Open Reports <span class="inline-block py-0 px-2 text-sm text-white bg-slate-900 rounded-lg"><?= $rcount ?></span></h2>
-<div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
+<h2 class="mt-4 text-2xl">Open Reports <span class="inline-block py-0 px-2 text-sm text-white bg-slate-900/80 rounded-lg"><?= $rcount ?></span></h2>
+<div class="p-3 bg-slate-200 dark:bg-slate-900/80 rounded-lg">
 <?php 
 // these links are templated/built within the controller for noted reasons there
 
 ?>
-<?php if(!$noresponses->isEmpty()): ?>
+<?php if(!$noresponses->all()->isEmpty()): ?>
 
 <?php foreach($noresponses as $report): ?>
 	<div class="p-3 mb-2 bg-slate-200 dark:bg-slate-800 rounded-lg">
@@ -91,28 +91,28 @@
 
 
 <h2 class="mt-4 text-2xl">Top 5 Followed Pathways</h2>
-<div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
+<div class="p-3 bg-slate-200 dark:bg-slate-900/80 rounded-lg">
 <ol class="pl-8">
 <?php 
 // these links are templated/built within the controller for noted reasons there
 
 ?>
 <?php foreach($top5follows as $link): ?>
-    <li class="my-1 p-1 px-2 list-decimal text-xl bg-white dark:bg-slate-900 rounded-lg"><?= $link ?></li>
+    <li class="my-1 p-1 px-2 list-decimal text-xl bg-white dark:bg-slate-900/80 rounded-lg"><?= $link ?></li>
 <?php endforeach ?>
 </ol>
 </div>
 
 
 <h2 class="mt-4 text-2xl">Top 5 Launched Activities</h2>
-<div class="p-3 bg-slate-200 dark:bg-slate-900 rounded-lg">
+<div class="p-3 bg-slate-200 dark:bg-slate-900/80 rounded-lg">
 <ol class="pl-8">
 <?php 
 // these links are templated/built within the controller for noted reasons there
 
 ?>
 <?php foreach($top5links as $link): ?>
-    <li class="my-1 p-1 px-2 list-decimal text-xl bg-white dark:bg-slate-900 rounded-lg"><?= $link ?></li>
+    <li class="my-1 p-1 px-2 list-decimal text-xl bg-white dark:bg-slate-900/80 rounded-lg"><?= $link ?></li>
 <?php endforeach ?>
 </ol>
 </div>

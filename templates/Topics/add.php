@@ -11,7 +11,7 @@ $this->loadHelper('Authentication.Identity');
         Add Topic
     </h1>
 
-<div class="mt-5 p-5 bg-slate-100 dark:bg-slate-900 rounded-lg">
+<div class="mt-5 p-5 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">
 
 <?= $this->Form->create($topic) ?>
 <fieldset>

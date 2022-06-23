@@ -148,7 +148,7 @@ class PathwaysController extends AppController
         // Get access to the appropriate table
         $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
         // Select based on currently logged in person
-        $useractivities = $au->find()->where(['user_id = ' => $user->id])->toList();
+        $useractivities = $au->find()->where(['user_id = ' => $user->id])->all()->toList();
         // Loop through the resources and add just the ID to the 
         foreach($useractivities as $uact) {
             array_push($useractivitylist, $uact['activity_id']);
@@ -191,8 +191,10 @@ class PathwaysController extends AppController
                 $percentage = 0;
             }
         endif;
+        $stepcount = count($pathway->steps);
         $this->set(compact('pathway', 
                             'totalacts', 
+                            'stepcount', 
                             'requiredacts', 
                             'suppacts', 
                             'percentage', 
@@ -535,7 +537,7 @@ class PathwaysController extends AppController
         $useacts = $au->find()->where(['user_id = ' => $user->id]);
         // convert the results into a simple array so that we can
         // use in_array in the template
-        $useractivities = $useacts->toList();
+        $useractivities = $useacts->all()->toList();
         // Loop through the resources and add just the ID to the 
         // array that we will pass into the template
         foreach($useractivities as $uact) {

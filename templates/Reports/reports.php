@@ -12,9 +12,9 @@ if ($this->Identity->isLoggedIn()) {
 <div class="p-6 dark:text-white">
 
 
-<div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg">
+<div class="p-3 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">
 
-<?php if (!$reports->isEmpty()) : ?>
+<?php if (!$reports->all()->isEmpty()) : ?>
 	
 	<?php foreach ($reports as $report) : ?>
 	<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
@@ -26,14 +26,14 @@ if ($this->Identity->isLoggedIn()) {
 		</div>
 		<div class="my-6 text-xl"><a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></div>
 		<div class="text-sm italic">You said:</div>
-		<blockquote class="p-3 my-1 bg-slate-100 dark:bg-slate-900 rounded-lg">
+		<blockquote class="p-3 my-1 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">
 			<?= h($report->issue) ?>
 		</blockquote>
 		<?php if(!empty($report->response)): ?>
-			<div class="p-3 my-1 bg-slate-100 dark:bg-slate-900 rounded-lg"><?= h($report->response) ?></div>
+			<div class="p-3 my-1 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg"><?= h($report->response) ?></div>
 		<?php else: ?>
 			<div class="text-sm italic">Curator Responds:</div>
-			<div class="p-3 my-1 bg-slate-100 dark:bg-slate-900 rounded-lg">There is no response from a Curator yet. Please be patient.</div>
+			<div class="p-3 my-1 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">There is no response from a Curator yet. Please be patient.</div>
 		<?php endif ?>
 
 
@@ -54,7 +54,7 @@ if ($this->Identity->isLoggedIn()) {
 			<?php
 			echo $this->Form->hidden('id', ['value' => $report->id]);
 			echo $this->Form->hidden('curator_id', ['value' =>  $this->Identity->get('id')]);
-			echo $this->Form->textarea('response',['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900 rounded-lg', 'placeholder' => 'Type here ...']);
+			echo $this->Form->textarea('response',['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900/80 rounded-lg', 'placeholder' => 'Type here ...']);
 			?>
 			</fieldset>
 			<input type="submit" class="btn btn-primary" value="Submit Response">

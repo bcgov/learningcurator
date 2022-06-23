@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
 <?= $this->Html->link(__('New Question'), ['action' => 'add'], ['class' => 'btn btn-success float-right']) ?>
 <?php endif ?>
 <h1 class="text-4xl">Learning Curator</h1>
-<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-900 dark:text-white">
+<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-slate-900/80 dark:text-white">
 <div class="mb-6 text-2xl">
     A web site where BC Public Service curators collect readings, courses, 
     activities and media, and shape pathways to learning goals. Where public 
@@ -60,7 +60,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php else: ?>
 <?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="p-3 my-3 bg-white dark:bg-slate-900 rounded-lg">
+<div class="p-3 my-3 bg-white dark:bg-slate-900/80 rounded-lg">
     <div><span class="badge badge-warning"><?= h($question->status->name) ?></span></div>
     <h2 class="text-2xl" id="<?= h($question->slug) ?>"><?= h($question->title) ?></h2>
     <div><?= $question->content ?></div>

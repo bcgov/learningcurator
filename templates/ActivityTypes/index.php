@@ -23,7 +23,7 @@ function rgbToHex(r, g, b) {
 <div class="grid grid-cols-2 gap-4">
 
 <?php foreach($activityTypes as $type): ?>
-	<div class="p-4 bg-white dark:bg-slate-900 rounded-lg">
+	<div class="p-4 bg-white dark:bg-slate-900/80 rounded-lg">
 	<div class="mb-3">
     <div class="float-right"><?= $this->Html->link(__('Edit'), ['action' => 'edit', $type->id],['class' => 'btn btn-light mt-3']) ?></div>
 

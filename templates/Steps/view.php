@@ -39,9 +39,9 @@ foreach ($step->pathways as $pathways) {
 	}
 }
 ?>
-<div class="p-6 dark:text-white">
+<div class="p-6 w-full bg-top bg-no-repeat bg-fixed min-h-screen rounded-tr-xl" style="background-image: url('<?= h($step->pathways[0]->topic->categories[0]->image_path) ?>')">
 
-<nav class="bg-slate-100 dark:bg-slate-900 rounded-lg p-3 mb-3" aria-label="breadcrumb">
+<nav class="bg-slate-100/80  dark:bg-slate-900/80 rounded-lg p-3 mb-3" aria-label="breadcrumb">
 	<!-- <a href="/categories/index">Categories</a> /  -->
 	<a href="/category/<?= h($step->pathways[0]->topic->categories[0]->id) ?>/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>"><?= h($step->pathways[0]->topic->categories[0]->name) ?></a> / 
 	<a href="/category/<?= h($step->pathways[0]->topic->categories[0]->id) ?>/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/topic/<?= h($step->pathways[0]->topic->id) ?>/<?= h($step->pathways[0]->topic->slug) ?>"><?= h($step->pathways[0]->topic->name) ?></a> /
@@ -53,8 +53,14 @@ foreach ($step->pathways as $pathways) {
 	<?= $step->name ?>
 </nav>
 
+
+
+
+
+
+<div class="p-4 bg-slate-100/80  dark:bg-slate-900/80 rounded-lg">
 <?php if(empty($followid)): ?>
-<div class="mt-2 float-right">
+<div class="mb-2 float-right">
 <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users','action' => 'follow']]) ?>
 <?= $this->Form->control('pathway_id',['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
 <button class="p-3 ml-3 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline">
@@ -68,45 +74,36 @@ foreach ($step->pathways as $pathways) {
 	<?php 
 	echo $this->Form->postLink(__('Un-Follow Pathway'), 
 									['controller' => 'PathwaysUsers', 'action' => 'delete/'. $followid], 
-									['class' => 'mt-2 ml-3 float-right inline-block p-3 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline',
+									['class' => 'mt-0 ml-3 float-right inline-block p-3 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline',
 									 'title' => 'Stop seeing your progress on this pathway', 
 									 'confirm' => '']); 
 	?>
 <?php endif ?>
-
-
-<h1 class="my-6 text-4xl">
-	<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
-		<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-		<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
-	</svg>
-	<?= $step->pathways[0]->name ?>
-</h1>
-
-<div class="p-4 lg:text-2xl bg-slate-100 dark:bg-slate-900 rounded-lg">
-	<div class="text-xs">Objective</div>
+	<h1 class="mb-6 text-4xl">
+		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="inline-block -mt-2" viewBox="0 0 16 16">
+			<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+			<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
+		</svg>
+		<?= $step->pathways[0]->name ?>
+	</h1>
+	<div class="mb-4 p-3 text-xl bg-white  dark:bg-slate-800 rounded-lg shadow-lg">
+	<div class="text-xs">Pathway Objective</div>
 	<?= $step->pathways[0]->objective ?> 
 </div>
+</div>
 
-<div class="pbarcontainer sticky top-0 mt-1 mb-6 w-full h-8 bg-slate-50 dark:bg-slate-900 rounded-lg">
+<div class="pbarcontainer mt-1 mb-6 w-full h-8 bg-slate-50 dark:bg-slate-900/80 rounded-lg">
 	<span class="inline-block pbar pt-1 px-6 h-8 bg-sky-700 text-white rounded-lg"></span>
 </div>
 
 
 
 
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-<div class="float-right ml-3">
-<?= $this->Html->link(__('Edit Step'), 
-						['controller' => 'Steps', 'action' => 'edit', $step->id], 
-						['class' => 'mt-2 inline-block py-2 px-6 bg-slate-200 dark:bg-slate-900 dark:text-white rounded-lg text-center hover:no-underline']); 
-?>
-</div> <!-- /.btn-group -->
-<?php endif ?>
+
 
 <!-- start drop-down -->
 <div x-cloak @click.away="open = false" class="relative ml-16" x-data="{ open: false }">
-	<button @click="open = !open" class="px-4 py-2 text-sm font-semibold text-right bg-slate-200 rounded-t-lg dark:bg-slate-900 dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900 dark:hover:bg-slate-900 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-100 focus:bg-white focus:outline-none focus:shadow-outline">
+	<button @click="open = !open" class="px-4 py-2 text-sm font-semibold text-right bg-slate-200/80 rounded-t-lg dark:bg-slate-900 dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900/80 dark:hover:bg-slate-900 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-100/80  focus:bg-white focus:outline-none focus:shadow-outline">
 		<span>Step Menu</span>
 		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
 			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -123,7 +120,14 @@ foreach ($step->pathways as $pathways) {
 	>
 		<div class="p-6">
 		
-		
+		<?php if($role == 'curator' || $role == 'superuser'): ?>
+		<div class="float-right ml-3">
+		<?= $this->Html->link(__('Edit Step'), 
+								['controller' => 'Steps', 'action' => 'edit', $step->id], 
+								['class' => 'mt-2 inline-block py-2 px-6 bg-slate-200/80 dark:bg-sky-600 dark:text-white rounded-lg text-center hover:no-underline']); 
+		?>
+		</div> <!-- /.btn-group -->
+		<?php endif ?>
 		<h3 class="mb-3 text-2xl">Steps along this pathway</h3>
 		<div class=""> <!-- grid grid-cols-2 gap-4 -->
 		<?php foreach ($step->pathways as $pathways) : ?>
@@ -150,7 +154,7 @@ foreach ($step->pathways as $pathways) {
 		</div>
 	
 		<?php if(!empty($previousid) || !empty($upnextid)): ?>
-		<div class="flex justify-center p-3 bg-white dark:bg-slate-900 rounded-lg">
+		<div class="flex justify-center p-3 bg-white dark:bg-slate-900/80 rounded-lg">
 		<?php if(!empty($previousid)): ?>
 			<a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" 
 				class="inline-block m-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
@@ -173,15 +177,15 @@ foreach ($step->pathways as $pathways) {
 </div>
 <!-- /end drop-down -->
 
-<div class="p-6 rounded-lg activity bg-slate-200 dark:bg-slate-900 dark:text-white">
+<div class="p-6 rounded-lg activity bg-slate-200/80 dark:bg-slate-900/80 dark:text-white">
 <h2 class="mb-4 text-3xl">
 <?= $step->name ?>
 </h2>
 <?php if($step->status_id == 1): ?>
 <span class="badge badge-warning">DRAFT</span>
 <?php endif ?>
-<div class="mb-4 p-3 text-xl bg-slate-100 dark:bg-slate-800 rounded-lg">
-	<div class="text-xs">Objective</div>
+<div class="mb-4 p-3 text-xl bg-white  dark:bg-slate-800 rounded-lg shadow-lg">
+	<div class="text-xs">Step Objective</div>
 <?= $step->description ?>
 </div>
 <div class="">
@@ -200,12 +204,12 @@ foreach($actlist as $k => $v) {
 	}
 }
 ?>
-<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366] dark:text-white">
+<div class="p-3 my-3 rounded-lg activity bg-white dark:bg-[#003366]/80 dark:text-white shadow-lg">
 
 	<div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
 		
 		<a href="/profile/launches" 
-			class="inline-block w-24 bg-sky-700 dark:bg-slate-900 text-white dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
+			class="inline-block w-24 bg-sky-700 dark:bg-slate-900/80 text-white dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
 			:class="[count > '0' ? 'show' : 'hidden']">
 				Launched
 		</a>
@@ -214,17 +218,17 @@ foreach($actlist as $k => $v) {
 			<?= $activity->name ?>
 		</h4>
 		<?php if(!empty($activity->description)): ?>
-		<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-t-lg">
+		<div class="p-2 lg:p-4 text-lg bg-slate-200/80 dark:bg-[#002850] rounded-t-lg">
 		<?= $activity->description ?>
 		</div>
 		<?php else: ?>
-		<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-t-lg">
+		<div class="p-2 lg:p-4 text-lg bg-slate-200/80 dark:bg-[#002850] rounded-t-lg">
 			<em>No description provided&hellip;</em>
 		</div>
 		<?php endif ?>
 
 		<?php if(!empty($activity->_joinData->stepcontext)): ?>
-		<div class="p-3 lg:p-4 mb-2 bg-slate-100 dark:bg-slate-900 rounded-b-lg">
+		<div class="p-3 lg:p-4 mb-2 bg-slate-100/80  dark:bg-slate-900/80 rounded-b-lg">
 			<em>Curator says:</em><br>
 			<?= $activity->_joinData->stepcontext ?>
 		</div>
@@ -247,8 +251,9 @@ foreach($actlist as $k => $v) {
 preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $youtube);
 if(!empty($youtube[1])):
 ?>
-<!-- <img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')"> -->
-<div class="w-full z-50 h-auto bg-black/50" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
+<img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
+
+<div class="hidden w-full z-50 h-auto bg-black/50" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
 <iframe 
 	width="560" 
 	height="315" 
@@ -281,14 +286,14 @@ if(!empty($youtube[1])):
 	</div> <!-- click count increment container -->
 
 	<div x-data="{ open: false }">
-	<button @click="open = !open" class="px-4 py-2 text-md font-semibold text-right bg-slate-200 dark:text-white dark:bg-[#002850] dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900 dark:hover:bg-slate-900 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline rounded-lg">
+	<button @click="open = !open" class="px-4 py-2 text-md font-semibold text-right bg-slate-200/80 dark:text-white dark:bg-[#002850] dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900/80 dark:hover:bg-slate-900/80 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200/80 focus:bg-slate-200/80 focus:outline-none focus:shadow-outline rounded-lg">
 		<span>More info</span>
 		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
 			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
 		</svg>
 	</button>
 	<div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
-		<div class="p-4 bg-slate-200 rounded-md dark:bg-slate-900">
+		<div class="p-4 bg-slate-200/80 rounded-md dark:bg-slate-900/80">
 
 		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
 			<a class="text-lg" href="/activities/view/<?= $activity->id ?>">
@@ -360,7 +365,7 @@ if(!empty($youtube[1])):
 			<label>Your Issue
 			<?php
 			echo $this->Form->textarea('issue',
-							['class' => 'w-full h-20 p-6 bg-slate-200 dark:bg-slate-700 text-white rounded-lg', 
+							['class' => 'w-full h-20 p-6 bg-slate-200/80 dark:bg-slate-700 text-white rounded-lg', 
 							'x-model' => 'form'.$activity->id.'Data.issue', 
 							'placeholder' => 'Type here ...',
 							'required' => 'required']);
@@ -414,7 +419,7 @@ foreach($actlist as $k => $v) {
 	<div x-data="{ count: <?= $completed ?> }">	
 
 		<a href="/profile/launches" 
-			class="inline-block w-24 bg-slate-200 text-[#003366] dark:bg-slate-900 dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
+			class="inline-block w-24 bg-slate-200/80 text-[#003366] dark:bg-slate-900/80 dark:text-yellow-500 text-sm text-center uppercase rounded-lg"
 			:class="[count > '0' ? 'show' : 'hidden']">
 				Launched
 		</a>
@@ -423,17 +428,17 @@ foreach($actlist as $k => $v) {
 			<?= $activity->name ?>
 		</h4>
 		<?php if(!empty($activity->description)): ?>
-		<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-t-lg">
+		<div class="p-2 lg:p-4 text-lg bg-slate-200/80 dark:bg-[#002850] rounded-t-lg">
 		<?= $activity->description ?>
 		</div>
 		<?php else: ?>
-		<div class="p-2 lg:p-4 text-lg bg-slate-200 dark:bg-[#002850] rounded-t-lg">
+		<div class="p-2 lg:p-4 text-lg bg-slate-200/80 dark:bg-[#002850] rounded-t-lg">
 			<em>No description provided&hellip;</em>
 		</div>
 		<?php endif ?>
 
 		<?php if(!empty($activity->_joinData->stepcontext)): ?>
-		<div class="p-3 lg:p-4 mb-2 bg-slate-100 dark:bg-slate-900 rounded-b-lg">
+		<div class="p-3 lg:p-4 mb-2 bg-slate-100/80  dark:bg-slate-900/80 rounded-b-lg">
 			<em>Curator says:</em><br>
 			<?= $activity->_joinData->stepcontext ?>
 		</div>
@@ -454,14 +459,14 @@ foreach($actlist as $k => $v) {
 		</a>
 	</div>
 <div x-data="{ open: false }">
-	<button @click="open = !open" class="px-4 py-2 text-lg font-semibold text-right bg-slate-200 dark:text-white dark:bg-[#002850] dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900 dark:hover:bg-slate-900 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline focus:rounded-b-none rounded-lg">
+	<button @click="open = !open" class="px-4 py-2 text-lg font-semibold text-right bg-slate-200/80 dark:text-white dark:bg-[#002850] dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900/80 dark:hover:bg-slate-900/80 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200/80 focus:bg-slate-200/80 focus:outline-none focus:shadow-outline focus:rounded-b-none rounded-lg">
 		<span>More info</span>
 		<svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
 			<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
 		</svg>
 	</button>
 	<div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
-		<div class="p-4 bg-slate-200 rounded-lg rounded-tl-none dark:bg-slate-900">
+		<div class="p-4 bg-slate-200/80 rounded-lg rounded-tl-none dark:bg-slate-900/80">
 
 		<div class="mb-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
 			<a class="text-lg" href="/activities/view/<?= $activity->id ?>">
@@ -526,7 +531,7 @@ foreach($actlist as $k => $v) {
 			<label>Your Issue
 			<?php
 			echo $this->Form->textarea('issue',['class' => 
-													'w-full h-20 bg-slate-200 dark:bg-slate-700 text-white rounded-lg', 
+													'w-full h-20 bg-slate-200/80 dark:bg-slate-700 text-white rounded-lg', 
 													'x-model' => 'form'.$activity->id.'Data.issue', 
 													'placeholder' => 'Type here ...',
 													'required' => 'required']);
@@ -581,7 +586,7 @@ aria-controls="defunctacts">View archived activities</a>.
 <?php endif ?>
 
 <?php if(!empty($previousid) || !empty($upnextid)): ?>
-<div class="flex justify-center p-3 bg-white dark:bg-slate-900 rounded-lg">
+<div class="flex justify-center p-3 bg-white dark:bg-slate-900/80 rounded-lg">
 <?php if(!empty($previousid)): ?>
 	<a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" 
 		class="inline-block m-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">

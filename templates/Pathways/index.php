@@ -13,10 +13,11 @@ if ($this->Identity->isLoggedIn()) {
 ?>
 <div class="p-6 dark:text-white">
 
-<div class="p-3 mb-2 bg-slate-100 dark:bg-slate-900 dark:text-white rounded-lg">
+<h1 class="text-4xl mb-6">Recent Pathways</h1>
 
 <?php foreach ($pathways as $pathway): ?>
-<div class="p-3 my-3 bg-white dark:bg-slate-800 rounded-lg">
+	<div class="p-6 mb-3 w-full bg-center bg-no-repeat rounded-lg" style="background-image: url('<?= h($pathway->topic->categories[0]->image_path) ?>')">
+	<div class="p-3 text-xl bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">
 	
 	<h2 class="mb-2 text-2xl">
 		<a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" class="font-weight-bold">
@@ -27,14 +28,14 @@ if ($this->Identity->isLoggedIn()) {
 			<?= h($pathway->name) ?>
 		</a> 
 	</h2>
-	<div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
+	<div class="p-3 bg-white dark:bg-slate-800 rounded-lg">
 		<?= h($pathway->description) ?>
 	</div>
 	<a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" 
 		class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
 			View Pathway
 	</a>
-	<div class="p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
+	<div class="p-3 bg-white dark:bg-slate-700 rounded-lg">
 		<?php 
 		$stat = 'badge-light'; 
 		if($pathway->status->name == 'Draft') $stat = 'badge-warning';
@@ -50,8 +51,8 @@ if ($this->Identity->isLoggedIn()) {
 
 	</div>
 </div>
+</div>
 <?php endforeach; ?>
 
 
-</div>
 </div>

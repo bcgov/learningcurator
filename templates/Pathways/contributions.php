@@ -14,7 +14,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <div class="p-6">
 	
-<div class="p-3 mb-2 bg-slate-200 dark:bg-slate-900 rounded-lg">
+<div class="p-3 mb-2 bg-slate-200 dark:bg-slate-900/80 rounded-lg">
 
 <h2><?= __('Your Contributions') ?></h2>
 

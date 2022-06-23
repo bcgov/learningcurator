@@ -13,76 +13,33 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<div class="p-6">
-<div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg">
+<div class="px-6">
+<div class="grid lg:grid-cols-2 gap-4">
 
 <?php foreach ($categories as $category): ?>
 
-<div class="my-2 p-3 md:p-6 bg-white dark:bg-slate-800 w-full rounded-lg">
-	<div x-data="{ topics<?= $category->id ?>: false }" x-cloak>			
+<div class="rounded-lg bg-center bg-cover shadow-lg" style="background-image: url('<?= h($category->image_path) ?>')">
+	<div class="my-2 h-40 ">
 		<?php if(empty($category->featured)): ?>
-			<span class="inline-block py-0 px-2 bg-yellow-600 text-white text-xs rounded-lg" title="Edit to set to publish">DRAFT</span>
+			<span class="inline-block py-0 px-2 bg-yellow-600 text-white text-xs" title="Edit to set to publish">DRAFT</span>
 		<?php endif ?>
 
 		<h1 class="text-3xl">
 
-			<a href="/category/<?= $category->id ?>/<?= h($category->slug) ?>"><?= h($category->name) ?></a>
+			<a class="block mt-6 p-3 bg-white/80 dark:bg-slate-900/80 hover:bg-white dark:hover:bg-slate-900 text-black dark:text-white shadow-lg hover:no-underline" href="/category/<?= $category->id ?>/<?= h($category->slug) ?>">
+				<?= h($category->name) ?>
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+				<path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+				</svg>
+			</a>
 
-			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="!topics<?= $category->id ?>" @click="topics<?= $category->id ?> = ! topics<?= $category->id ?>">
-				Show Topics
-			</button>
-			<button class="inline-block p-2 ml-3 text-xs bg-slate-200 hover:bg-slate-300 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="topics<?= $category->id ?>" @click="topics<?= $category->id ?> = ! topics<?= $category->id ?>">
-				Hide Topics
-			</button>
 		</h1>
 
-		<div x-show="topics<?= $category->id ?>" x-transition.duration.500ms>
-		<div class="my-3">
+		<!-- <div class="my-3">
 			<?= h($category->description) ?>
-		</div>
-		<?php if(!empty($category->topics[0]->pathways[0]->name)): ?>
-		<?php foreach ($category->topics as $topic): ?>
-		<div class="p-3 md:p-6 mb-3 bg-slate-200 dark:bg-[#003366] rounded-lg">
-		<div x-data="{ paths<?= $topic->id ?>: false }">
-	
-		<h2 class="text-3xl">
-			<a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= h($topic->id) ?>/<?= h($topic->slug) ?>"><?= h($topic->name) ?></a>
-			
-			<button class="inline-block p-2 ml-3 text-xs bg-slate-300 hover:bg-slate-200 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="!paths<?= $topic->id ?>" @click="paths<?= $topic->id ?> = ! paths<?= $topic->id ?>">
-				Show Pathways
-			</button>
-			<button class="inline-block p-2 ml-3 text-xs bg-slate-200 hover:bg-slate-300 dark:bg-[#003366] dark:hover:bg-gray-700 rounded-lg" x-show="paths<?= $topic->id ?>" @click="paths<?= $topic->id ?> = ! paths<?= $topic->id ?>">
-				Hide Pathways
-			</button>
-		</h2>
-		<div class="my-3">
-			<?= h($topic->description) ?>
-		</div>
-		<div x-show="paths<?= $topic->id ?>" x-transition.duration.500ms>
-			<?php foreach ($topic->pathways as $path): ?>
-				<div class="p-3 md:p-6 my-1 bg-white dark:bg-slate-900 rounded-lg">
-				<h4 class="text-xl">
-					<a href="/<?= h($category->slug) ?>/<?= h($topic->slug) ?>/pathway/<?= h($path->slug) ?>">
-					
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
-						<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-						<path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
-					</svg>
-					<?= h($path->name) ?>
-					</a>
-				</h4>
-				<div class="my-2 p-3 bg-slate-100 dark:bg-[#003366]/50">
-					<?= h($path->description) ?>
-				</div>
-				</div>
-			<?php endforeach ?>
-		</div> <!-- / paths container -->
-		</div> <!-- / parent container -->
-		</div> <!-- / formatting container -->
-		<?php endforeach ?>
-		<?php endif ?>
-		</div> <!-- / topics container -->
-	</div> <!-- parent container -->
+		</div> -->
+
+</div> <!-- overlay color -->
 </div> <!-- formatting container -->
 <?php endforeach; ?>
 
