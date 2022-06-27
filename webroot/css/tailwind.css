@@ -867,6 +867,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   flex-grow: 1;
 }
 
+.grow {
+  flex-grow: 1;
+}
+
 .origin-top-left {
   transform-origin: top left;
 }
@@ -1075,6 +1079,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(248 250 252 / var(--tw-bg-opacity));
 }
 
+.bg-slate-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 65 85 / var(--tw-bg-opacity));
+}
+
+.bg-sky-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(2 132 199 / var(--tw-bg-opacity));
+}
+
 .bg-slate-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(100 116 139 / var(--tw-bg-opacity));
@@ -1088,11 +1102,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
-}
-
-.bg-sky-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(2 132 199 / var(--tw-bg-opacity));
 }
 
 .bg-emerald-700 {
@@ -1754,6 +1763,11 @@ p {
 }
 
 @media (min-width: 768px) {
+  .md\:mx-1 {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+  }
+
   .md\:-mt-1 {
     margin-top: -0.25rem;
   }
@@ -1776,10 +1790,6 @@ p {
 
   .md\:min-h-screen {
     min-height: 100vh;
-  }
-
-  .md\:w-1\/4 {
-    width: 25%;
   }
 
   .md\:w-3\/4 {
@@ -1812,6 +1822,10 @@ p {
 
   .md\:bg-fixed {
     background-attachment: fixed;
+  }
+
+  .md\:p-1 {
+    padding: 0.25rem;
   }
 
   .md\:pb-0 {
