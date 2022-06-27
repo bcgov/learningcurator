@@ -117,6 +117,7 @@ class ActivitiesController extends AppController
                                         ->where(['Activities.audited < ' => $weekago])
                                         ->where(['Activities.moderation_flag' => 0])
                                         ->limit(10)
+                                        ->all()
                                         ->toList();
 
         $report = TableRegistry::getTableLocator()->get('Reports');
@@ -201,8 +202,7 @@ class ActivitiesController extends AppController
      */
     public function view($id = null)
     {
-     //
-        // #TODO the below is WRONG update 
+        // 
         // Check to see if the current user has "claimed" 
         // this activity. Here we get the current user id and use it to select 
         // all of the claimed activities assigned to them, and then process out 
@@ -256,11 +256,11 @@ class ActivitiesController extends AppController
 
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
         $pathways = $allpaths->find('all')->contain(['Steps']);
-        $allpathways = $pathways->toList();
+        $allpathways = $pathways->all()->toList();
 
         $curatorinfo = TableRegistry::getTableLocator()->get('Users');
         $cur = $curatorinfo->find()->where(['id = ' => $activity->createdby_id]);
-        $curator = $cur->toList();
+        $curator = $cur->all()->toList();
 
         $this->set(compact('activity', 'activitylaunches','allpathways','claimid','curator'));
     }

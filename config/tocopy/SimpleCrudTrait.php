@@ -64,7 +64,7 @@ trait SimpleCrudTrait
         // activity name as well as the ID--needed to make the link), 
         // so I extract a list that contains the counted and sorted IDs
         // and then use the 2nd array to extract the names. #inelegantbutworks
-        foreach($uselaunches->toList() as $ul) {
+        foreach($uselaunches->all()->toList() as $ul) {
             array_push($mostlaunched,$ul['activity_id']);
             array_push($actnames,['actid' => $ul['activity_id'], 'actname' => $ul['activity']['name']]);
         }
@@ -112,7 +112,7 @@ trait SimpleCrudTrait
         // activity name as well as the ID--needed to make the link), 
         // so I extract a list that contains the counted and sorted IDs
         // and then use the 2nd array to extract the names. #inelegantbutworks
-        foreach($pathfollows->toList() as $ul) {
+        foreach($pathfollows->all()->toList() as $ul) {
             array_push($mostfollowed,$ul['pathway_id']);
             array_push($pathnames,['pathid' => $ul['pathway_id'], 'pathname' => $ul['pathway']['name'], 'pathslug' => $ul['pathway']['slug']]);
         }
