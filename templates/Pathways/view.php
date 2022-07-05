@@ -74,9 +74,9 @@ $this->assign('title', h($pathway->name));
 	<?= $pathway->objective ?> 
 </div>
 </div>
-
-<div id="progress" class="flex pbarcontainer sticky top-0 mt-1 mb-6 w-full h-8 bg-slate-50 dark:bg-slate-900/80 rounded-lg">
-	
+<div class="mx-auto w-72 mt-3"><span class="pro px-3 py-1 bg-slate-50 dark:bg-slate-900/80 rounded-t-lg"></span></div>
+<div class="flex pbarcontainer sticky top-0 mb-6 w-full h-8 bg-slate-50 dark:bg-black text-center rounded-lg">
+	<span class="inline-block pbar pt-1 px-6 h-8 bg-sky-700 text-white rounded-lg"></span>
 </div>
 <script>
 
@@ -85,36 +85,15 @@ fetch('/pathways/status/<?= $pathway->id ?>', { method: 'GET' })
 	.then((json) => {
 		if(json.percentage > 0) {
 			let message = json.completed + ' of ' + json.requiredacts + ' launched';
-			let count = parseInt(json.requiredacts);
-			let compd = parseInt(json.completed);
-			 console.log(compd);
-			const progress = document.getElementById('progress');
-			for (let i = 0; i < count; i++) {
-				//console.log(i);
-				const ele = document.createElement('div');     // Create a DIV element.
-				
-				//ele.setAttribute ('class', '');
-				if(i < compd) {
-					ele.setAttribute ('class', 'grow md:p-1 bg-slate-700');
-					ele.innerHTML = i; 
-				} else {
-					ele.setAttribute ('class', 'grow md:p-1 bg-sky-600');
-					ele.innerHTML = i; 
-				}
-				
-				progress.appendChild(ele); 
+
+			document.querySelector('.pbar').style.width = json.percentage + '%';
+
+			if(json.percentage == 100) {
+				document.querySelector('.pro').innerHTML = message + ' - COMPLETED!';
+			} else {
+				document.querySelector('.pro').innerHTML = message;
+				document.querySelector('.pbar').innerHTML = json.percentage + '%';
 			}
-
-			// if(json.percentage > 25) {
-			// 	document.querySelector('.pbar').style.width = json.percentage + '%';
-			// } 
-			// if(json.percentage == 100) {
-			// 	document.querySelector('.pbar').innerHTML = message + ' - COMPLETED!';
-			// } else {
-			// 	document.querySelector('.pbar').innerHTML = message;
-			// }
-
-
 
 		} else {
 			document.querySelector('.pbarcontainer').innerHTML = ''; //'<span class="inline-block pt-1 px-3 h-8">Launch activities to see your progress here&hellip;</span>';
