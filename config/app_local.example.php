@@ -7,7 +7,7 @@
  */
 return [
     'App' => [
-        'fullBaseUrl' => env('SITE_URL', null),
+        'fullBaseUrl' => env('SITE_URL', 'https://learningcurator.apps.silver.devops.gov.bc.ca'),
     ],
     /*
      * Debug Level:
