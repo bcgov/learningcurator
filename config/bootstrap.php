@@ -217,5 +217,5 @@ $this->addPlugin(\CakeDC\Users\Plugin::class);
 
 Configure::write('Users.config', ['users']);
 
-Configure::write('OAuth.providers.azuread.options.clientId', '679b9e65-e832-4d5c-ad54-5445170114d7');
-Configure::write('OAuth.providers.azuread.options.clientSecret', '.b13IU8tk.zS~464nmZhy5Q1B_LNFxtkGu');
+Configure::write('OAuth.providers.azuread.options.clientId', env('AZURE_AD_CLIENT_ID', null));
+Configure::write('OAuth.providers.azuread.options.clientSecret', env('AZURE_AD_CLIENT_SECRET', null));

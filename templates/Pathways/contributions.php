@@ -20,7 +20,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-<?php if(!$pathways->isEmpty()): ?>
+<?php if(!$pathways->all()->isEmpty()): ?>
 
 
 <div>
@@ -48,7 +48,7 @@ if ($this->Identity->isLoggedIn()) {
 </div>
 <?php endif ?>
 
-<?php if(!$activities->isEmpty()): ?>
+<?php if(!$activities->all()->isEmpty()): ?>
 <div>
 <h3>Activities</h3>
 <div class="overflow-auto h-96">

@@ -74,8 +74,8 @@ $this->assign('title', h($pathway->name));
 	<?= $pathway->objective ?> 
 </div>
 </div>
-
-<div class="pbarcontainer sticky top-0 mt-1 mb-6 w-full h-8 bg-slate-50 dark:bg-slate-900/80 rounded-lg">
+<div class="mx-auto w-72 mt-3"><span class="pro px-3 py-1 bg-slate-50 dark:bg-slate-900/80 rounded-t-lg"></span></div>
+<div class="flex pbarcontainer sticky top-0 mb-6 w-full h-8 bg-slate-50 dark:bg-black text-center rounded-lg">
 	<span class="inline-block pbar pt-1 px-6 h-8 bg-sky-700 text-white rounded-lg"></span>
 </div>
 <script>
@@ -84,15 +84,17 @@ fetch('/pathways/status/<?= $pathway->id ?>', { method: 'GET' })
 	.then((res) => res.json())
 	.then((json) => {
 		if(json.percentage > 0) {
-			let message = json.completed + ' of ' + json.requiredacts;
-			if(json.percentage > 25) {
-				document.querySelector('.pbar').style.width = json.percentage + '%';
-			} 
+			let message = json.completed + ' of ' + json.requiredacts + ' launched';
+
+			document.querySelector('.pbar').style.width = json.percentage + '%';
+
 			if(json.percentage == 100) {
-				document.querySelector('.pbar').innerHTML = message + ' - COMPLETED!';
+				document.querySelector('.pro').innerHTML = message + ' - COMPLETED!';
 			} else {
-				document.querySelector('.pbar').innerHTML = message;
+				document.querySelector('.pro').innerHTML = message;
+				document.querySelector('.pbar').innerHTML = json.percentage + '%';
 			}
+
 		} else {
 			document.querySelector('.pbarcontainer').innerHTML = ''; //'<span class="inline-block pt-1 px-3 h-8">Launch activities to see your progress here&hellip;</span>';
 		}
