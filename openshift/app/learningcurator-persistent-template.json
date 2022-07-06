@@ -258,7 +258,7 @@
                     },
                     {
                       "name": "HOST_NAME",
-                      "value": "learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca"
+                      "value": "${SITE_URL}"
                     },
                     {
                       "name": "MYSQL_USER",
