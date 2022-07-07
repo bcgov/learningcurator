@@ -77,7 +77,7 @@ jobs:
       BUILD_NAMESPACE: a58ce1-tools
       BRANCH: main
       APP: learningcurator
-      APP_HOST: learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca
+      APP_HOST: learningcurator-dev.apps.silver.devops.gov.bc.ca
     needs:
       - build
     steps:
