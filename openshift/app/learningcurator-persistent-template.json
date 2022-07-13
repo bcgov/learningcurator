@@ -26,7 +26,7 @@
                       "template.openshift.io/expose-root_password": "{.data['database-root-password']}",
                       "template.openshift.io/expose-username": "{.data['database-user']}",
                       "template.openshift.io/expose-azuread-clientId": "{.data['azuread-clientId']}",
-                      "template.openshift.io/expose-azuread-clientSecret": "{.data['azuread-clientSecret']}",
+                      "template.openshift.io/expose-azuread-clientSecret": "{.data['azuread-clientSecret']}"
                   },
                   "name": "${APP_NAME}-secrets"
               },
