@@ -34,7 +34,9 @@
                   "database-name": "${DB_NAME}",
                   "database-password": "${DB_PASSWORD}",
                   "database-root-password": "${DB_ROOT_PASSWORD}",
-                  "database-user": "${DB_USER}"
+                  "database-user": "${DB_USER}",
+                  "azuread-clientId": "${AZURE_AD_CLIENT_ID}",
+                  "azuread-clientSecret": "${AZURE_AD_CLIENT_SECRET}"
               }
       },
       {
