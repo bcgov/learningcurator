@@ -487,6 +487,20 @@
         "value": "${DB_PASSWORD}"
       },
       {
+        "description": "ClientID for AzureAD SSO.",
+        "displayName": "ClientID for AzureAD SSO",
+        "name": "AZURE_AD_CLIENT_ID",
+        "required": false,
+        "value": "${AZURE_AD_CLIENT_ID}"
+      },
+      {
+        "description": "Client Secret for AzureAD SSO.",
+        "displayName": "Client Secret for AzureAD SSO",
+        "name": "AZURE_AD_CLIENT_SECRET",
+        "required": false,
+        "value": "${AZURE_AD_CLIENT_SECRET}"
+      },
+      {
         "description": "Git project URL, where project source can be found.",
         "displayName": "Git Project",
         "name": "GIT_PROJECT",
