@@ -105,8 +105,8 @@ jobs:
           oc -n ${NAMESPACE} process -f openshift/app/learningcurator-persistent-template.json \
                 -p APP_NAME=${APP} \
                 -p SITE_URL=${APP_HOST} \
-                -p AZURE_AD_CLIENT_ID=${AZURE_AD_CLIENT_ID} \
-                -p AZURE_AD_CLIENT_SECRET=${AZURE_AD_CLIENT_SECRET} \
+                -p AZURE_AD_CLIENT_ID=${{ secrets.AZURE_AD_CLIENT_ID }} \
+                -p AZURE_AD_CLIENT_SECRET=${{ secrets.AZURE_AD_CLIENT_SECRET }} \
                 -p DB_HOST=mysql-0.mysql \
                 -p DB_SECONDARY_NAME=mysql-read \
                 -p LEARNINGCURATOR_MEMORY_LIMIT=1Gi \
