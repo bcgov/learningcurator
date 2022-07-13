@@ -182,6 +182,14 @@
                       "value": "https://${SITE_URL}"
                     },
                     {
+                      "name": "AZURE_AD_CLIENT_ID",
+                      "value": "${AZURE_AD_CLIENT_ID}"
+                    },
+                    {
+                      "name": "AZURE_AD_CLIENT_SECRET",
+                      "value": "${AZURE_AD_CLIENT_SECRET}
+                    },
+                    {
                       "name": "APACHE_DOCUMENT_ROOT",
                       "value": "${APACHE_DOCUMENT_ROOT}"
                     },
