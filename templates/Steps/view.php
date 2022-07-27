@@ -79,6 +79,17 @@ foreach ($step->pathways as $pathways) {
 									 'confirm' => '']); 
 	?>
 <?php endif ?>
+
+<?php if($role == 'curator' || $role == 'superuser'): ?>
+	<div class="float-right ml-3">
+	<?= $this->Html->link(__('Edit Step'), 
+							['controller' => 'Steps', 'action' => 'edit', $step->id], 
+							['class' => 'mt-2 inline-block py-2 px-6 bg-slate-200 text-black rounded-lg text-center hover:no-underline']); 
+	?>
+	</div> <!-- /.btn-group -->
+<?php endif ?>
+
+
 	<h1 class="mb-6 text-4xl">
 		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="inline-block -mt-2" viewBox="0 0 16 16">
 			<path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
@@ -120,14 +131,7 @@ foreach ($step->pathways as $pathways) {
 	>
 		<div class="p-6">
 		
-		<?php if($role == 'curator' || $role == 'superuser'): ?>
-		<div class="float-right ml-3">
-		<?= $this->Html->link(__('Edit Step'), 
-								['controller' => 'Steps', 'action' => 'edit', $step->id], 
-								['class' => 'mt-2 inline-block py-2 px-6 bg-slate-200/80 dark:bg-sky-600 dark:text-white rounded-lg text-center hover:no-underline']); 
-		?>
-		</div> <!-- /.btn-group -->
-		<?php endif ?>
+
 		<h3 class="mb-3 text-2xl">Steps along this pathway</h3>
 		<div class=""> <!-- grid grid-cols-2 gap-4 -->
 		<?php foreach ($step->pathways as $pathways) : ?>
