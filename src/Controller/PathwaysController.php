@@ -71,7 +71,6 @@ class PathwaysController extends AppController
         } else {
             $pathways = $paths->find('all')
                                 ->contain(['Topics','Topics.Categories','Statuses'])
-                                ->where(['Pathways.featured' => 1])
                                 ->where(['status_id' => 2])
                                 ->order(['Pathways.created' => 'desc']);
         }
