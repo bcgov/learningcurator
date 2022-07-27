@@ -221,7 +221,7 @@ class PathwaysController extends AppController
                             'Steps.Activities.ActivityTypes'])->firstOrFail();
         
         //$this->RequestHandler->renderAs($this, 'json');
-
+        
         $p = json_encode($pathway);
         $response = $this->response;
     
@@ -229,7 +229,8 @@ class PathwaysController extends AppController
         $response = $response->withStringBody($p);
     
         $response = $response->withType('text/json');
-        $filename = $pathway->slug . '.json';
+        $now = date('Y-m-d-Hi');
+        $filename = $pathway->topic->slug . '-' . $pathway->slug . '-' . $now . '.json';
         // Optionally force file download
         $response = $response->withDownload($filename);
     
