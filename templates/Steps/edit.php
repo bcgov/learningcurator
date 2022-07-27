@@ -59,7 +59,7 @@ $this->loadHelper('Authentication.Identity');
 
 
   <div x-data="{ open: false }">
-    <button @click="open = ! open" class="inline-block px-3 py-1 ml-3 bg-sky-600 dark:bg-sky-700 dark:hover:bg-sky-800 text-white hover:no-underline rounded-lg">
+    <button @click="open = ! open" class="inline-block px-3 py-1 mb-1 ml-3 bg-sky-600 dark:bg-sky-700 dark:hover:bg-sky-800 text-white hover:no-underline rounded-lg">
         Add New Activity
     </button>
     <div x-show="open" class="p-6 my-3 mx-auto rounded-lg bg-slate-50 dark:bg-slate-800 dark:text-white">
@@ -81,7 +81,30 @@ $this->loadHelper('Authentication.Identity');
 
     </div>
   </div>
-  
+
+
+
+  <div x-data="{ open: false }">
+<button @click="open = ! open" class="inline-block px-3 py-1 ml-3 bg-sky-600 dark:bg-sky-700 dark:hover:bg-sky-800 text-white hover:no-underline rounded-lg">
+	Add New Step
+</button>
+<div xcloak x-show="open" class="p-6 my-3 rounded-lg bg-white dark:bg-slate-800 dark:text-white">
+
+	<?= $this->Form->create(null, ['url' => [
+		'controller' => 'Steps',
+		'action' => 'add'
+]]) ?>
+	<?php
+	echo $this->Form->control('name',['class'=>'block w-full px-3 py-2 m-0 bg-slate-100/80 dark:text-white dark:bg-slate-900/80 rounded-lg']);
+	echo $this->Form->control('description',['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 dark:text-white dark:bg-slate-900/80 rounded-lg', 'type' => 'textarea','label'=>'Objective']);
+	echo $this->Form->hidden('createdby', ['value' => $this->Identity->get('id')]);
+	echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]);
+	echo $this->Form->hidden('pathways.0.id', ['value' => $step->pathways[0]->id]);
+	?>
+	<?= $this->Form->button(__('Add Step'), ['class'=>'inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline']) ?>
+	<?= $this->Form->end() ?>
+</div>
+</div>
 
 
 
