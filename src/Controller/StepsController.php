@@ -147,6 +147,9 @@ class StepsController extends AppController
             $step->slug = strtolower(substr($sluggedTitle, 0, 191));
             //echo '<pre>'; print_r($step); exit;  
             if ($this->Steps->save($step)) {
+                // If we're running the import process we don't want to return a redirect,
+                // we want to simply return the step ID so that we can use it to add newly
+                // created activities to it. 
                 if(!empty($this->request->getData()['fromimport'])) {
                     
                     return $step->id;
