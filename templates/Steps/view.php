@@ -147,8 +147,10 @@ foreach ($step->pathways as $pathways) {
 		<!--<?= h($s->description) ?> -->
 		<?php else: ?>
 		<?php if($role == 'curator' || $role == 'superuser'): ?>
-		<span class="badge badge-warning">DRAFT</span>
-		<?= $s->name ?>
+		<a class="block py-1 px-3 hover:bg-sky-700 hover:text-white hover:no-underline rounded-lg" 
+			href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+				<span class="badge badge-warning">DRAFT</span> - 
+				<?= h($s->name) ?> 
 		</a>
 		<?php endif; // are you a curator? ?>
 		<?php endif; // is published? ?>
