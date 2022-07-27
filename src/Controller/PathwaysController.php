@@ -71,7 +71,6 @@ class PathwaysController extends AppController
         } else {
             $pathways = $paths->find('all')
                                 ->contain(['Topics','Topics.Categories','Statuses'])
-                                ->where(['Pathways.featured' => 1])
                                 ->where(['status_id' => 2])
                                 ->order(['Pathways.created' => 'desc']);
         }
@@ -222,7 +221,7 @@ class PathwaysController extends AppController
                             'Steps.Activities.ActivityTypes'])->firstOrFail();
         
         //$this->RequestHandler->renderAs($this, 'json');
-
+        
         $p = json_encode($pathway);
         $response = $this->response;
     
@@ -230,7 +229,8 @@ class PathwaysController extends AppController
         $response = $response->withStringBody($p);
     
         $response = $response->withType('text/json');
-        $filename = $pathway->slug . '.json';
+        $now = date('Y-m-d-Hi');
+        $filename = $pathway->topic->slug . '-' . $pathway->slug . '-' . $now . '.json';
         // Optionally force file download
         $response = $response->withDownload($filename);
     
