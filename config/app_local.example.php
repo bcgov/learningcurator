@@ -75,7 +75,7 @@ return [
      */
     'EmailTransport' => [
         'default' => [
-            'host' => 'localhost',
+            'host' => 'apps.smtp.gov.bc.ca',
             'port' => 25,
             'username' => null,
             'password' => null,
