@@ -103,18 +103,7 @@
 </div>
 <div class="bg-white dark:bg-black dark:text-white w-full 2xl:w-2/3" role="main">
 
-  <?php if(!empty($this->Identity->get('id'))): ?>
-  <div class="flex h-16 w-full px-6 pt-3 bg-white dark:bg-black"> <!-- sticky top-0 z-50 -->
-
-
-  <form method="get" action="/find" class="w-full" role="search">
-    <label for="search" class="sr-only">Search</label>
-    <input class="px-3 py-2 m-0 dark:text-white bg-slate-100/80 dark:bg-slate-900 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search" id="search"><button class="px-3 py-2 m-0 bg-slate-200 dark:text-white dark:bg-slate-900 dark:hover:bg-slate-800 rounded-r-lg" type="submit">Search</button>
-  </form>
-
-
-  </div>
-  <?php endif ?>
+  
 
   <?= $this->fetch('content') ?>
 
