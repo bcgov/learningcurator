@@ -26,12 +26,24 @@ $this->assign('title', 'Learning on demand');
 
 <body class="bg-cover bg-center min-h-full" style="background-image: url('/img/cape-scott-trail-n-r-t-on-flckr.jpg')">
 	
-<div class="p-3 pl-10 bg-white/95 dark:bg-slate-900/95" role="banner">
-<span class="leading-3 text-xl font-semibold tracking-widest text-slate-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
+<div class="p-3 py-10 bg-white/95 dark:bg-slate-900/9 flex justify-between" role="banner">
+<span class="leading-3 text-xl font-semibold tracking-widest text-slate-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline ">
       <span class="text-xs">Learning</span>
       <br>
       <span class="text-[#003366] dark:text-yellow-500">Curator</span>
     </span>
+    <div x-data="{ open: false }">
+	<button @click="open = true" class="inline dark:text-white">
+		Admin Login
+	</button>
+	<div x-show="open" x-cloak >
+		<?= $this->Form->create() ?>
+		<?= $this->Form->control('username', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-white text-black dark:bg-blue-900 dark:text-white rounded-lg']) ?>
+		<?= $this->Form->control('password', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-white text-black dark:bg-blue-900 dark:text-white rounded-lg']) ?>
+		<?= $this->Form->button(__d('cake_d_c/users', 'Admin Login'),['class'=>'p-3 bg-white dark:bg-blue-900 dark:text-white text-sm text-black hover:text-gray-500 rounded-lg']); ?>
+		<?= $this->Form->end() ?>
+	</div>
+</div>
 </div>
 
 <div class="w-full lg:w-1/2 px-3 py-10 lg:p-20 min-h-screen dark:text-white">
@@ -56,18 +68,7 @@ $this->assign('title', 'Learning on demand');
 
 
 
-<div x-data="{ open: false }">
-	<button @click="open = true" class="inline-block mt-20 p-3 rounded-lg bg-slate-300 hover:bg-white dark:bg-slate-800 dark:hover:bg-[#003366] text-sm shadow-lg hover:no-underline dark:text-white">
-		Admin Login
-	</button>
-	<div x-show="open" x-cloak >
-		<?= $this->Form->create() ?>
-		<?= $this->Form->control('username', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-white text-black dark:bg-blue-900 dark:text-white rounded-lg']) ?>
-		<?= $this->Form->control('password', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-white text-black dark:bg-blue-900 dark:text-white rounded-lg']) ?>
-		<?= $this->Form->button(__d('cake_d_c/users', 'Admin Login'),['class'=>'p-3 bg-white dark:bg-blue-900 dark:text-white text-sm text-black hover:text-gray-500 rounded-lg']); ?>
-		<?= $this->Form->end() ?>
-	</div>
-</div>
+
 
 
 
