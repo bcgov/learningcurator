@@ -50,7 +50,7 @@ $this->assign('title', 'Learning on demand');
 
 		<div class="mt-8">
 			<a href="/auth/azuread" class="inline-block p-3 rounded-lg bg-[#003366] hover:bg-blue-800 dark:bg-blue-800 dark:hover:bg-[#003366] text-xl shadow-lg hover:no-underline text-white" x-transition>
-				Sign In  with your.name@gov.bc.ca address to continue
+				Sign in
 			</a>
 		</div>
 
