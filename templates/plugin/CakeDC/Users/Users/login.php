@@ -26,7 +26,7 @@ $this->assign('title', 'Learning on demand');
 
 <body class="bg-cover bg-center min-h-full" style="background-image: url('/img/cape-scott-trail-n-r-t-on-flckr.jpg')">
 	
-<div class="p-3 py-10 bg-white/95 dark:bg-slate-900/9 flex justify-between" role="banner">
+<div class="p-5 bg-white/95 dark:bg-slate-900/9 flex justify-between" role="banner">
 <span class="leading-3 text-xl font-semibold tracking-widest text-slate-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline ">
       <span class="text-xs">Learning</span>
       <br>
@@ -49,7 +49,7 @@ $this->assign('title', 'Learning on demand');
 <div class="w-full lg:w-1/2 px-3 py-10 lg:p-20 min-h-screen dark:text-white">
 
 	<div class="p-6 lg:p-10 text-2xl bg-white/80 dark:bg-[#003366]/80 rounded-lg">
-
+<!-- TODO increase box width -->
 		<h1 class="mb-6 text-4xl text-[#003366] dark:text-white">
 			Learning on demand
 		</h1>
