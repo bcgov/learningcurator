@@ -33,14 +33,14 @@ $this->assign('title', 'Learning on demand');
       <span class="text-[#003366] dark:text-yellow-500">Curator</span>
     </span>
     <div x-data="{ open: false }">
-	<button @click="open = true" class="inline dark:text-white">
+	<button @click="open = true" class="text-sm text-[@003366] dark:text-yellow-500 hover:underline">
 		Admin Login
 	</button>
 	<div x-show="open" x-cloak >
 		<?= $this->Form->create() ?>
-		<?= $this->Form->control('username', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-white text-black dark:bg-blue-900 dark:text-white rounded-lg']) ?>
+		<?= $this->Form->control('username', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-white text-black dark:bg-blue-900 dark:text-white rounded-lg mt-1']) ?>
 		<?= $this->Form->control('password', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-white text-black dark:bg-blue-900 dark:text-white rounded-lg']) ?>
-		<?= $this->Form->button(__d('cake_d_c/users', 'Admin Login'),['class'=>'p-3 bg-white dark:bg-blue-900 dark:text-white text-sm text-black hover:text-gray-500 rounded-lg']); ?>
+		<?= $this->Form->button(__d('cake_d_c/users', 'Login'),['class'=>'p-2 mt-2 bg-[#003366] text-white text-sm dark:bg-white dark:text-black  hover:text-gray-500 rounded-lg']); ?>
 		<?= $this->Form->end() ?>
 	</div>
 </div>
