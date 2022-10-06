@@ -44,7 +44,7 @@
     <?php if(strpos($currentpage,'/users') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
     <?php if(strpos($currentpage,'/reports') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
     <?php if(strpos($currentpage,'/profile/contributions') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
-  <a class="hover:no-underline inline-block px-4 py-1 mt-2 ml-4 text-sm  dark:text-white dark:hover:bg-sky-500 hover:bg-sky-700 hover:text-white rounded-lg <?= $active ?>"
+  <a class="hover:no-underline block px-4 py-1 mt-2 mx-4 text-sm dark:text-white dark:hover:bg-sky-500 hover:bg-sky-700 hover:text-white rounded-lg <?= $active ?>"
       href="/users/index">
     Curator Dashboard
   </a>
@@ -72,7 +72,7 @@
   <?php if(strpos($currentpage,'/topics') !== false && $page['name'] == 'Categories') $active = 'text-white bg-sky-700'; ?>
   <?php if(strpos($currentpage,'/category') !== false && $page['name'] == 'Categories') $active = 'text-white bg-sky-700'; ?>
   <?php if(strpos($currentpage,'/pathway') !== false && $page['name'] == 'Pathways') $active = 'text-white bg-sky-700'; ?>
-  <a class="hover:no-underline inline-block px-4 py-1 mt-2 ml-4 text-sm  dark:text-white dark:hover:bg-sky-500 hover:bg-sky-700 hover:text-white rounded-lg <?= $active ?>"
+  <a class="hover:no-underline block px-4 py-1 mt-2 mx-4 text-sm  dark:text-white dark:hover:bg-sky-500 hover:bg-sky-700 hover:text-white rounded-lg <?= $active ?>"
     href="<?= $page['link'] ?>">
       <?= $page['name'] ?>
   </a>
