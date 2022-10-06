@@ -114,7 +114,7 @@ if ($this->Identity->isLoggedIn()) {
             <a href="/categories" class="inline-block p-3 mt-4 mr-4 bg-sagedark text-white text-xl hover:no-underline rounded-lg">
                 Explore Categories
             </a>
-            <a href="/categories" class="inline-block p-3 mt-4 bg-darkblue text-white text-xl hover:no-underline rounded-lg">
+            <a href="/pathways" class="inline-block p-3 mt-4 bg-darkblue text-white text-xl hover:no-underline rounded-lg">
                 Explore Pathways
             </a>
 
