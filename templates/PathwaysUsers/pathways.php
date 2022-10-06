@@ -101,24 +101,21 @@ if ($this->Identity->isLoggedIn()) {
         <header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/cape-scott-trail-n-r-t-on-flckr.jpg);">
             <div class="bg-bluegreen/90 h-44 w-1/3 drop-shadow-lg p-4 flex"><span class="text-white text-3xl font-bold m-auto tracking-wide">Getting Started</span></div>
         </header>
-        <div class="p-8">
+        <div class="p-8 text-xl max-w-prose">
+            <h2 class="mb-3 text-2xl text-darkblue font-semibold">Find your path</h2>
 
-            <h2 class="mb-3 text-3xl">Get Started</h2>
-            <div class="p-4 bg-white dark:bg-slate-800 rounded-lg">
-                <p class="mb-3 text-xl">
-                    Curator pathways are organized into
-                    <a href="/categories" class="underline">categories</a> and then topics.
-                    You can explore
-                    <a href="/pathways" class="underline">all the pathways</a>
-                    we have to offer and when you see one you like, you can
-                    follow it. When you follow a pathway, it will be listed
-                    here, so the next time you login, you can jump right to it.
-                </p>
-                <p class="text-lg">As you launch activities contained in a pathway you'll be able to see your progress here too.</p>
-            </div>
+            <p class="mb-3">
+                Curator pathways are organized into <a href="/categories" class="underline font-medium">categories</a> and then <span class="font-italic">topics</span>. You can explore all the <a href="/pathways" class="underline font-medium">pathways</a> we have to offer and when you see one you like, you can follow it.</p>
+            <p>When you follow a pathway, it will be listed here, so the next time you login, you can jump right to it.
+            </p>
+            <p>As you launch activities contained in a pathway you'll be able to see your progress here too.</p>
 
-            <a href="/categories" class="inline-block p-3 mt-4 bg-sky-700 dark:bg-sky-700 text-white text-2xl hover:no-underline rounded-lg">
+
+            <a href="/categories" class="inline-block p-3 mt-4 mr-4 bg-sagedark text-white text-xl hover:no-underline rounded-lg">
                 Explore Categories
+            </a>
+            <a href="/categories" class="inline-block p-3 mt-4 bg-darkblue text-white text-xl hover:no-underline rounded-lg">
+                Explore Pathways
             </a>
 
         </div>
