@@ -116,7 +116,7 @@
 
 </div>
 </div>
-<div class="bg-white dark:bg-black dark:text-white w-full 2xl:w-2/3" role="main">
+<div class="bg-white w-full 2xl:w-2/3" role="main">
 
   
 
@@ -125,16 +125,16 @@
   </div>
 </div>
 
-<div class="py-6 bg-slate-100/80 dark:bg-slate-900 dark:text-white text-center" role="contentinfo">
+<div class="p-6 bg-slate-100/80 text-center" role="contentinfo">
 
-<div class="mx-auto mb-10 p-6 md:w-2/3 lg:w-1/4 bg-white dark:bg-slate-800 dark:text-slate-300 text-lg rounded-lg text-slate-700 text-center">
+<div class="mb-6 max-w-prose text-lg text-slate-700 mx-auto italic">
   We acknowledge with respect that the Learning Curator operates throughout B.C.
    on the traditional lands of Indigenous peoples.
 </div>
 
   <div x-data="{ open: false }">
-    <button @click="open = ! open" class="inline-block p-3 ml-3 bg-slate-200 dark:bg-sky-700 dark:hover:bg-sky-800 dark:text-white hover:no-underline rounded-lg">Privacy Statement</button>
-    <div x-show="open" @click.outside="open = false" class="md:w-2/3 p-6 my-3 mx-auto rounded-lg bg-white dark:bg-slate-800 dark:text-white">
+    <button @click="open = ! open" class="inline-block p-3 bg-slate-200 hover:no-underline rounded-lg text-sm">Privacy Statement</button>
+    <div x-show="open" @click.outside="open = false" class="md:w-2/3 p-6 my-3 mx-auto rounded-lg bg-white text-sm">
       Your personal information is collected by the BC Public Service Agency
       in accordance with section 26(c) of the Freedom of Information and 
       Protection of Privacy Act for the purposes of managing and administering 
@@ -143,9 +143,11 @@
     </div>
   </div>
 
-  <img class="my-6 inline-block" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
-  
-  <img class="my-6 inline-block" src="/img/learning-centre-logo-wordmark.svg" height="100px" width="300px" alt="Learning Centre Logo">
+  <div class="flex justify-between">
+      <img class="mt-3 inline-block" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
+      
+      <img class="mt-3 inline-block" src="/img/learning-centre-logo-wordmark.svg" height="100px" width="300px" alt="Learning Centre Logo">
+  </div>
 
 
 </div>

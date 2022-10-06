@@ -99,7 +99,7 @@ if ($this->Identity->isLoggedIn()) {
     <?php else : ?>
 
         <header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/cape-scott-trail-n-r-t-on-flckr.jpg);">
-            <div class="bg-bluegreen/90 h-44 w-1/3 drop-shadow-lg p-4 flex"><span class="text-white text-3xl font-bold m-auto tracking-wide">Getting Started</span></div>
+            <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex"><span class="text-white text-3xl font-bold m-auto tracking-wide">Getting Started</span></div>
         </header>
         <div class="p-8 text-xl max-w-prose">
             <h2 class="mb-3 text-2xl text-darkblue font-semibold">Find your path</h2>
