@@ -1751,11 +1751,6 @@ p {
     color: rgb(0 0 0 / var(--tw-text-opacity));
   }
 
-  .dark\:text-slate-200 {
-    --tw-text-opacity: 1;
-    color: rgb(226 232 240 / var(--tw-text-opacity));
-  }
-
   .dark\:text-sky-500 {
     --tw-text-opacity: 1;
     color: rgb(14 165 233 / var(--tw-text-opacity));
@@ -1844,16 +1839,12 @@ p {
     width: 75%;
   }
 
-  .md\:w-56 {
-    width: 14rem;
+  .md\:w-60 {
+    width: 15rem;
   }
 
   .md\:w-2\/3 {
     width: 66.666667%;
-  }
-
-  .md\:w-3\/5 {
-    width: 60%;
   }
 
   .md\:grid-cols-2 {
