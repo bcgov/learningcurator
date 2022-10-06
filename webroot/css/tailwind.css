@@ -1193,6 +1193,11 @@ video {
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
+.bg-sagegreen {
+  --tw-bg-opacity: 1;
+  background-color: rgb(223 233 215 / var(--tw-bg-opacity));
+}
+
 .bg-\[\#c3d4e4\] {
   --tw-bg-opacity: 1;
   background-color: rgb(195 212 228 / var(--tw-bg-opacity));
