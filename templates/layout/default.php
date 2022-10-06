@@ -53,6 +53,7 @@
   $active = 'border-slate-400 dark:border-slate-800';
   endif; 
   ?>
+  
   <?php 
   #TODO re-write all of this
   $navigation = array(
@@ -79,6 +80,20 @@
   <?php $active = 'text-slate-900'; ?>
   </div>
   <?php endforeach ?>
+<!-- search box -->
+  <?php if(!empty($this->Identity->get('id'))): ?>
+  
+
+  <!-- <form method="get" action="/find" class="w-3/4 inline-block" role="search">
+    <label for="search" class="sr-only">Search</label>
+    <input class="px-3 py-2 m-0 bg-slate-100/80 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search" id="search"><button class="px-3 py-2 m-0 bg-slate-200 dark:text-white rounded-r-lg" type="submit">Search</button>
+  </form> -->
+
+  <div class="bg-white/80 dark:bg-slate-900 relative pointer-events-auto mx-3 m-2 rounded-md"><button type="button" class="hidden w-full lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700"><svg width="24" height="24" fill="none" aria-hidden="true" class="mr-3 flex-none"><path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle></svg>Quick search...<span class="ml-auto pl-3 flex-none text-xs font-semibold">Ctrl K</span></button></div>
+<!-- TODO add working search modal like on Tailwind CSS site -->
+  <?php endif ?>
+  
+  <!-- end search box -->
   </nav>
   <?php endif ?>
   
