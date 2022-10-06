@@ -8,6 +8,7 @@ module.exports = {
             colors: {
                 sagegreen: '#DFE9D7',
                 sagedark: '#7B8F6A',
+                bluegreen: '#2F6173',
             },
         },
     },
