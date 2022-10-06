@@ -1222,6 +1222,11 @@ video {
   background-color: rgb(0 51 102 / var(--tw-bg-opacity));
 }
 
+.bg-sagedark {
+  --tw-bg-opacity: 1;
+  background-color: rgb(123 143 106 / var(--tw-bg-opacity));
+}
+
 .bg-cover {
   background-size: cover;
 }
@@ -1597,6 +1602,11 @@ p {
 .hover\:bg-blue-800:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(30 64 175 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-sagedark:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(123 143 106 / var(--tw-bg-opacity));
 }
 
 .hover\:text-slate-900:hover {
