@@ -16,7 +16,9 @@ if ($this->Identity->isLoggedIn()) {
 $pagetitle = $category->name . '';
 $this->assign('title', $pagetitle);
 ?>
-
+<header class="w-full h-52 bg-cover bg-[center_top_65%] pb-8 px-8" style="background-image: url(/img/categories/Path_in_Sumallo_Grove-compressed.jpg);">
+    <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg p-4 flex"><span class="text-white text-3xl font-bold m-auto tracking-wide">Categories</span></div>
+</header>
 <div class="p-8 w-full">
 
 
