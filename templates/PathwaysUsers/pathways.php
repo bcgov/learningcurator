@@ -16,7 +16,7 @@ if ($this->Identity->isLoggedIn()) {
 
 
 <?php if (!$pathways->isEmpty()) : ?>
-    <div class="p-6 dark:text-white">
+    <div class="p-8 dark:text-white">
         <h1 class="mb-3 text-lg sr-only">Followed Pathways</h1>
         <?php foreach ($pathways as $path) : ?>
 
