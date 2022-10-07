@@ -37,9 +37,9 @@ if ($this->Identity->isLoggedIn()) {
                         <span class="inline-block py-0 px-2 my-2 bg-yellow-600 text-white text-xs" title="Edit to set to publish">DRAFT</span>
                     <?php endif ?>
 
-                    <h1 class="text-2xl bg-sky-700 text-white p-3">
+                    <h3 class="text-2xl bg-sky-700 text-white p-3">
                         <?= h($category->name) ?>
-                    </h1>
+                    </h3>
                     <div class="p-3">
                         <p class="mb-0"><?= h($category->description) ?></p>
 
