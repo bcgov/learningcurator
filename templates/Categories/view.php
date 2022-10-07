@@ -36,61 +36,44 @@ $this->assign('title', $pagetitle);
 
 
     <div class="max-w-prose">
-        <h2 class="mb-3 text-2xl text-darkblue font-semibold"> <?= h($category->name) ?></h2>
+        <h2 class="text-2xl text-darkblue font-semibold"> <?= h($category->name) ?></h2>
 
-        <p class="mb-3">
+        <p>
             <?= $this->Text->autoParagraph(h($category->description)); ?></p>
-
 
         <?php if (!empty($category->topics)) : ?>
             <?php foreach ($category->topics as $topic) : ?>
-
-
                 <?php if ($topic->featured == 1) : ?>
-                    <div class="p-3 my-3 bg-white/80 rounded-lg">
-                        <h3 class="text-3xl">
+                    <div class="my-3">
+                        <h3 class="text-2xl text-sky-700 mb-2 border-b-2 border-sky-700 block">
                             <!-- topic_id: <?= $topic->id ?> -->
-                            <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>">
+                            <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline hover:bg-slate-100 hover:p-2 hover:rounded-t-lg block">
                                 <?= $topic->name ?>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-                                    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
-                                </svg>
                             </a>
                         </h3>
 
-                        <div class="p-3 mb-2 text-xl bg-white rounded-lg">
+                        <div class="mb-4 text-lg pl-3">
                             <?= $topic->description ?>
+
                         </div>
-                        <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
-                            View Topic
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-                                <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
-                            </svg>
-                        </a>
+
                     </div>
                 <?php else : ?>
                     <?php if ($role == 'curator' || $role == 'superuser') : ?>
-                        <div class="p-3 my-3 bg-white/80 rounded-lg">
+                        <div class="my-3">
                             DRAFT
-                            <h2 class="text-3xl">
+                            <h3 class="text-2xl text-sky-700 mb-2 border-b-2 border-sky-700 block">
                                 <!-- topic_id: <?= $topic->id ?> -->
                                 <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>">
                                     <?= $topic->name ?>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-                                        <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
-                                    </svg>
-                                </a>
-                            </h2>
 
-                            <div class="p-3 mb-2 text-xl bg-white rounded-lg">
+                                </a>
+                            </h3>
+
+                            <div class="mb-4 text-lg pl-3">
                                 <?= $topic->description ?>
                             </div>
-                            <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
-                                View Topic
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-                                    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
-                                </svg>
-                            </a>
+
                         </div>
                     <?php endif ?>
                 <?php endif ?>
