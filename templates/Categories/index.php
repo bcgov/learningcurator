@@ -43,7 +43,7 @@ if ($this->Identity->isLoggedIn()) {
                     <div class="p-3">
                         <p class="mb-0"><?= h($category->description) ?></p>
 
-                        <a class="inline-block p-3 mt-4 bg-sky-700 text-white text-xl hover:no-underline rounded-lg" href="/category/<?= $category->id ?>/<?= h($category->slug) ?>">
+                        <a class="inline-block py-2 px-3 mt-4 bg-sky-700 text-white text-lg hover:no-underline rounded-lg" href="/category/<?= $category->id ?>/<?= h($category->slug) ?>">
                             Explore <span class="font-bold"><?= h($category->name) ?></span>
                         </a>
                     </div>
