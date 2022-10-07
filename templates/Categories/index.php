@@ -25,8 +25,8 @@ if ($this->Identity->isLoggedIn()) {
         <p class="mb-3">
             Category intro text here</p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-7 lg:gap-4">
-        <div class="lg:col-span-5 max-w-prose order-last lg:order-first">
+    <div class="flex flex-col lg:flex-row lg:gap-4">
+        <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
             <!-- TODO sort alphabetically as initial view? -->
             <!-- TODO add mobile collapse options -->
             <?php foreach ($categories as $category) : ?>
@@ -34,7 +34,7 @@ if ($this->Identity->isLoggedIn()) {
                 <div class="rounded-md shadow-lg border-2 border-sky-700 mb-4">
 
                     <?php if (empty($category->featured)) : ?>
-                        <span class="inline-block py-0 px-2 my-2 bg-yellow-600 text-white text-xs" title="Edit to set to publish">DRAFT</span>
+                        <span class="inline-block py-0 px-2 my-2 bg-yellow-600 text-slate-900 text-xs" title="Edit to set to publish">DRAFT</span>
                     <?php endif ?>
 
                     <h3 class="text-2xl bg-sky-700 text-white p-3">
@@ -51,7 +51,7 @@ if ($this->Identity->isLoggedIn()) {
             <?php endforeach; ?>
         </div>
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
-        <div class="lg:my-3 lg:col-span-2">
+        <div class="lg:my-3 lg:basis-1/5">
             <div class="flex justify-end lg:justify-start gap-4">
                 <!-- TODO add working sort and filter options -->
                 <a href="" class="hover:text-sky-700">

@@ -10,14 +10,14 @@
 <link href="/css/tailwind.css" rel="stylesheet">
 </head>
 
-<body class="bg-white font-BCSans" >
+<body class="bg-slate-100 font-BCSans" >
   
 <!-- :class="{'dark': darkMode === true}"
       x-data="{'darkMode': false}" 
       x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" -->
 
-<div class="md:flex flex-col md:flex-row md:min-h-screen w-full rounded-br-lg" >
+<div class="md:flex flex-col md:flex-row md:min-h-screen max-w-7xl justify-center mx-auto" >
 <div @click.away="open = false" class="flex flex-col flex-shrink-0 w-full md:w-60 text-slate-700 bg-sagegreen" x-data="{ open: false }">
 <div class="sticky top-0">
   <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 " role="banner"> <!-- sticky top-0 bg-slate-200-->
@@ -116,7 +116,7 @@
 
 </div>
 </div>
-<div class="bg-white w-full 2xl:w-2/3" role="main">
+<div class="bg-white w-full" role="main">
 
   
 
