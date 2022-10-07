@@ -1269,6 +1269,10 @@ video {
   background-color: rgb(0 51 102 / var(--tw-bg-opacity));
 }
 
+.bg-sagedark\/90 {
+  background-color: rgb(123 143 106 / 0.9);
+}
+
 .bg-cover {
   background-size: cover;
 }
@@ -1283,6 +1287,10 @@ video {
 
 .bg-top {
   background-position: top;
+}
+
+.bg-\[center_top_65\%\] {
+  background-position: center top 65%;
 }
 
 .bg-no-repeat {
