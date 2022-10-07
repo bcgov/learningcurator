@@ -1339,6 +1339,11 @@ video {
   background-color: rgb(3 105 161 / 0.9);
 }
 
+.bg-slate-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 65 85 / var(--tw-bg-opacity));
+}
+
 .bg-cover {
   background-size: cover;
 }
@@ -1538,6 +1543,11 @@ video {
   line-height: 1rem;
 }
 
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 .font-semibold {
   font-weight: 600;
 }
@@ -1617,6 +1627,16 @@ video {
 .text-gray-400 {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+
+.text-sagegreen {
+  --tw-text-opacity: 1;
+  color: rgb(223 233 215 / var(--tw-text-opacity));
+}
+
+.text-sagedark {
+  --tw-text-opacity: 1;
+  color: rgb(123 143 106 / var(--tw-text-opacity));
 }
 
 .underline {
