@@ -10,7 +10,7 @@
 <link href="/css/tailwind.css" rel="stylesheet">
 </head>
 
-<body class="bg-white dark:bg-black font-BCSans" >
+<body class="bg-white font-BCSans" >
   
 <!-- :class="{'dark': darkMode === true}"
       x-data="{'darkMode': false}" 
@@ -24,7 +24,7 @@
     <span class="leading-3 text-xl tracking-widest text-slate-900 uppercase rounded-lg focus:outline-none focus:shadow-outline">
       <span class="text-xs">Learning</span>
       <br>
-      <span class="text-[#003366] dark:text-sky-500">Curator</span>
+      <span class="text-[#003366]">Curator</span>
     </span>
     <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open" aria-label="Menu Toggle">
       <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
@@ -37,23 +37,23 @@
   <?php if(!empty($this->Identity->get('id'))): ?>
   <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto" role="navigation">
   <?php 
-    $active = 'border-slate-400 dark:border-slate-800';
+    $active = 'border-slate-400';
     $currentpage = $_SERVER["REQUEST_URI"];
    ?>
   <?php if($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'superuser'): ?>
-    <?php if(strpos($currentpage,'/users') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
-    <?php if(strpos($currentpage,'/reports') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
-    <?php if(strpos($currentpage,'/profile/contributions') !== false) $active = 'bg-[#c3d4e4] dark:bg-[#003366] border-[#003366] dark:border-white'; ?>
-  <a class="hover:no-underline block px-4 py-1 mt-2 mx-4 text-sm dark:text-white dark:hover:bg-sky-500 hover:bg-sagedark hover:text-white rounded-lg <?= $active ?>"
+    <?php if(strpos($currentpage,'/users') !== false) $active = 'bg-[#c3d4e4] border-[#003366]'; ?>
+    <?php if(strpos($currentpage,'/reports') !== false) $active = 'bg-[#c3d4e4] border-[#003366]'; ?>
+    <?php if(strpos($currentpage,'/profile/contributions') !== false) $active = 'bg-[#c3d4e4] border-[#003366]'; ?>
+  <a class="hover:no-underline block px-4 py-1 mt-2 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?= $active ?>"
       href="/users/index">
     Curator Dashboard
   </a>
   <?php 
   // reset state
-  $active = 'border-slate-400 dark:border-slate-800';
+  $active = 'border-slate-400';
   endif; 
   ?>
-  
+  <!-- Todo Add headings in nav: Explore, my Learning Curator?  -->
   <?php 
   #TODO re-write all of this
   $navigation = array(
@@ -73,7 +73,7 @@
   <?php if(strpos($currentpage,'/topics') !== false && $page['name'] == 'Categories') $active = 'text-white bg-sagedark'; ?>
   <?php if(strpos($currentpage,'/category') !== false && $page['name'] == 'Categories') $active = 'text-white bg-sagedark'; ?>
   <?php if(strpos($currentpage,'/pathway') !== false && $page['name'] == 'Pathways') $active = 'text-white bg-sagedark'; ?>
-  <a class="hover:no-underline block px-4 py-1 mt-2 mx-4 text-sm  dark:text-white dark:hover:bg-sky-500 hover:bg-sagedark hover:text-white rounded-lg <?= $active ?>"
+  <a class="hover:no-underline block px-4 py-1 mt-2 mx-4 text-sm  hover:bg-sagedark hover:text-white rounded-lg <?= $active ?>"
     href="<?= $page['link'] ?>">
       <?= $page['name'] ?>
   </a>
@@ -86,10 +86,10 @@
 
   <!-- <form method="get" action="/find" class="w-3/4 inline-block" role="search">
     <label for="search" class="sr-only">Search</label>
-    <input class="px-3 py-2 m-0 bg-slate-100/80 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search" id="search"><button class="px-3 py-2 m-0 bg-slate-200 dark:text-white rounded-r-lg" type="submit">Search</button>
+    <input class="px-3 py-2 m-0 bg-slate-100/80 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search" id="search"><button class="px-3 py-2 m-0 bg-slate-200 rounded-r-lg" type="submit">Search</button>
   </form> -->
 
-  <div class="relative pointer-events-auto mx-3 m-2 rounded-md"><button type="button" class="hidden bg-white w-full lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700"><svg width="24" height="24" fill="none" aria-hidden="true" class="mr-3 flex-none"><path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle></svg>Quick search...<span class="ml-auto pl-3 flex-none text-xs font-semibold">Ctrl K</span></button></div>
+  <div class="relative pointer-events-auto mx-3 m-2 rounded-md"><button type="button" class="hidden bg-white w-full lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300"><svg width="24" height="24" fill="none" aria-hidden="true" class="mr-3 flex-none"><path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle></svg>Quick search...<span class="ml-auto pl-3 flex-none text-xs font-semibold">Ctrl K</span></button></div>
 <!-- TODO add working search modal like on Tailwind CSS site -->
   <?php endif ?>
   
@@ -101,14 +101,14 @@
 
    
 <!-- <div class="flex items-center justify-center space-x-2">
-  <span class="text-sm text-gray-800 dark:text-gray-500">Light</span>
+  <span class="text-sm text-gray-800">Light</span>
   <label for="toggle"
-    class="flex items-center h-5 p-1 duration-300 ease-in-out bg-gray-300 rounded-full cursor-pointer w-9 dark:bg-gray-600">
+    class="flex items-center h-5 p-1 duration-300 ease-in-out bg-gray-300 rounded-full cursor-pointer w-9">
     <div
-      class="w-4 h-4 duration-300 ease-in-out transform bg-white rounded-full shadow-md toggle-dot dark:translate-x-3">
+      class="w-4 h-4 duration-300 ease-in-out transform bg-white rounded-full shadow-md toggle-dot">
     </div>
   </label>
-  <span class="text-sm text-gray-400 dark:text-white">Dark</span>
+  <span class="text-sm text-gray-400">Dark</span>
   <input id="toggle" type="checkbox" class="hidden" :value="darkMode" @change="darkMode = !darkMode" />
 </div> -->
 
