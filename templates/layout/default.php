@@ -126,7 +126,7 @@
 </div>
 
 <div class="p-6 bg-slate-100/80 text-center" role="contentinfo">
-
+<!-- TODO still needs some formatting help. Seems not quite right yet  -->
 <div class="mb-6 max-w-prose text-lg text-slate-700 mx-auto italic">
   We acknowledge with respect that the Learning Curator operates throughout B.C.
    on the traditional lands of Indigenous peoples.
