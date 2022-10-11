@@ -19,31 +19,38 @@ if ($this->Identity->isLoggedIn()) {
     </div>
 </header>
 <!-- TODO should this be Pathways or Categories label here? -->
+
+
 <div class="p-8 pt-4 w-full text-xl">
     <nav class="mb-4 text-sagedark text-sm" aria-label="breadcrumb">
         <?= $this->Html->link(__('Categories'), ['controller' => 'Categories', 'action' => 'index'], ['class' => '']) ?> /
         <a href="/category/<?= h($topic->categories[0]->id) ?>/<?= h($topic->categories[0]->slug) ?>"><?= h($topic->categories[0]->name) ?></a> /
         <?= h($topic->name) ?>
     </nav>
+    <?php if ($role == 'curator' || $role == 'superuser') : ?>
+        <div class="p-4 float-right">
+            <?= $this->Html->link(__('Edit Topic'), ['action' => 'edit', $topic->id], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
+            <!-- <a href="/pathways/import/<?= $topic->id ?>">Import a Pathway</a> -->
+        </div>
 
+
+    <?php endif ?>
 
     <div class="max-w-prose">
         <h2 class="text-2xl text-darkblue font-semibold mb-3"> <?= h($topic->name) ?></h2>
         <?= $this->Text->autoParagraph(h($topic->description)); ?>
-
-
-
-
         <?php if ($role == 'curator' || $role == 'superuser') : ?>
-            <?= $this->Html->link(__('Edit Topic'), ['action' => 'edit', $topic->id], ['class' => 'inline-block px-4 py-2 text-md bg-sky-700 text-white dark:bg-sky-700 dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900/80 dark:hover:bg-slate-900/80 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
-            <!-- <a href="/pathways/import/<?= $topic->id ?>">Import a Pathway</a> -->
 
-            <form method="GET" action="/pathways/import/<?= $topic->id ?>" class="p-3 m-3 bg-white dark:bg-slate-900">
-                <input type="text" name="pathimportfile" id="pathimportfile" class="block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg">
+            <form method="GET" action="/pathways/import/<?= $topic->id ?>" class="p-3 m-3 border">
+                <input type="text" name="pathimportfile" id="pathimportfile" class="inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg">
                 <input type="submit" value="Import Pathway">
             </form>
 
         <?php endif ?>
+
+
+
+
 
 
 
