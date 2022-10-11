@@ -52,7 +52,8 @@ if ($this->Identity->isLoggedIn()) {
                             View the <strong><?= h($pathway->name) ?></strong> pathway
                     </p>
                 </div>
-                <div class="p-3bg-slate-700 rounded-lg">
+                <!-- TODO fix badges/tags -->
+                <div class="p-3 bg-slate-700 rounded-lg">
                     <?php
                     $stat = 'badge-light';
                     if ($pathway->status->name == 'Draft') $stat = 'badge-warning';
