@@ -29,17 +29,15 @@ $this->assign('title', $pagetitle);
 <?php endif;  // curator or admin? 
 ?>
 <div class="p-8 pt-4 w-full text-xl">
-    <nav class="mb-3 text-sagedark text-sm" aria-label="breadcrumb">
+    <nav class="mb-4 text-sagedark text-sm" aria-label="breadcrumb">
         <?= $this->Html->link(__('Categories'), ['controller' => 'Categories', 'action' => 'index'], ['class' => '']) ?> /
         <?= h($category->name) ?>
     </nav>
 
 
     <div class="max-w-prose">
-        <h2 class="text-2xl text-darkblue font-semibold"> <?= h($category->name) ?></h2>
-
-        <p>
-            <?= $this->Text->autoParagraph(h($category->description)); ?></p>
+        <h2 class="text-2xl text-darkblue font-semibold mb-3"> <?= h($category->name) ?></h2>
+        <?= $this->Text->autoParagraph(h($category->description)); ?>
 
         <?php if (!empty($category->topics)) : ?>
             <?php foreach ($category->topics as $topic) : ?>
