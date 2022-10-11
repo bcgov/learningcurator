@@ -30,7 +30,7 @@ if ($this->Identity->isLoggedIn()) {
     <?php if ($role == 'curator' || $role == 'superuser') : ?>
         <div class="p-4 float-right">
             <?= $this->Html->link(__('Edit Topic'), ['action' => 'edit', $topic->id], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
-            <!-- <a href="/pathways/import/<?= $topic->id ?>">Import a Pathway</a> -->
+        
         </div>
 
 
@@ -41,7 +41,7 @@ if ($this->Identity->isLoggedIn()) {
         <?= $this->Text->autoParagraph(h($topic->description)); ?>
         <?php if ($role == 'curator' || $role == 'superuser') : ?>
 
-            <form method="GET" action="/pathways/import/<?= $topic->id ?>" class="mt-3 mb-5">
+            <form method="GET" action="/pathways/import/<?= $topic->id ?>" class="mt-3 mb-8">
                 <input type="text" name="pathimportfile" id="pathimportfile" class="inline-block px-4 py-2 text-md bg-slate-200 hover:border-bg-slate-700 focus:outline focus:shadow-outline hover:no-underline rounded-lg">
                 <input type="submit" value="Import Pathway" class="inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg">
             </form>
@@ -51,18 +51,18 @@ if ($this->Identity->isLoggedIn()) {
         <?php foreach ($topic->pathways as $pathway) : ?>
             <?php if ($pathway->status_id == 2) : ?>
 
-                <div class="p-3 my-3 bg-bluegreen text-white w-full point-left -m-4">
+                <div class="p-3 mb-3 mt-5 bg-bluegreen text-white w-full point-left">
                     <h3 class="text-2xl flex items-center justify-between">
                         <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3" viewBox="0 0 16 16">
                                 <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
                             </svg><?= h($pathway->name) ?>
-                        </a><span class="text-sm ">8 steps | 23 activities</span>
+                        </a><span class="text-sm">8 steps | 23 activities</span>
                     </h3>
 
                     <!-- TODO add code to pull in steps/activities -->
                 </div>
-                <div class="p-4 text-lg bg-slate-100/80 dark:bg-slate-800 rounded-lg">
+                <div class="pl-10 text-lg">
                     <?= h($pathway->description) ?>
                 </div>
                 <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
