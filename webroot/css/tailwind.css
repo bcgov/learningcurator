@@ -2096,6 +2096,10 @@ p {
     margin-bottom: 0.75rem;
   }
 
+  .lg\:mt-8 {
+    margin-top: 2rem;
+  }
+
   .lg\:flex {
     display: flex;
   }
