@@ -41,9 +41,9 @@ if ($this->Identity->isLoggedIn()) {
         <?= $this->Text->autoParagraph(h($topic->description)); ?>
         <?php if ($role == 'curator' || $role == 'superuser') : ?>
 
-            <form method="GET" action="/pathways/import/<?= $topic->id ?>" class="p-3 m-3 border">
-                <input type="text" name="pathimportfile" id="pathimportfile" class="inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg">
-                <input type="submit" value="Import Pathway">
+            <form method="GET" action="/pathways/import/<?= $topic->id ?>" class="mt-3 mb-5">
+                <input type="text" name="pathimportfile" id="pathimportfile" class="inline-block px-4 py-2 text-md bg-slate-200 hover:border-bg-slate-700 focus:outline focus:shadow-outline hover:no-underline rounded-lg">
+                <input type="submit" value="Import Pathway" class="inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg">
             </form>
 
         <?php endif ?>
