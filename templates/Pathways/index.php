@@ -31,15 +31,18 @@ if ($this->Identity->isLoggedIn()) {
 
 
             <?php foreach ($pathways as $pathway) : ?>
-                <div class="p-3 mb-3 mt-8 bg-bluegreen text-white w-full point-left">
-                    <h3 class="text-2xl flex items-center justify-between">
-                        <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3" viewBox="0 0 16 16">
-                                <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
-                            </svg><?= h($pathway->name) ?>
-                        </a><span class="text-sm">8 steps | 23 activities</span>
-                    </h3>
-                </div>
+                <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
+                    <div class="p-3 mb-3 mt-8 bg-bluegreen text-white w-full point-left  hover:bg-slate-200 hover:text-slate-900 flex justify-start items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 mx-3 grow-0" viewBox="0 0 16 16">
+                            <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
+                        </svg>
+                        <h3 class="text-2xl flex-1">
+
+                            <?= h($pathway->name) ?>
+
+                        </h3><span class="text-sm ml-3 justify-self-end flex-none">8 steps | 23 activities</span>
+                    </div>
+                </a>
                 <!-- TODO add code to pull in steps/activities -->
 
                 <div class="pl-10 text-lg">
@@ -49,7 +52,7 @@ if ($this->Identity->isLoggedIn()) {
                             View the <strong><?= h($pathway->name) ?></strong> pathway
                     </p>
                 </div>
-                <div class="p-3 bg-white dark:bg-slate-700 rounded-lg">
+                <div class="p-3bg-slate-700 rounded-lg">
                     <?php
                     $stat = 'badge-light';
                     if ($pathway->status->name == 'Draft') $stat = 'badge-warning';
