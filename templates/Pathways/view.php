@@ -55,7 +55,7 @@ $this->assign('title', h($pathway->name));
             <span class="text-sm ml-3 justify-self-end flex-none">8 steps | 23 activities</span>
         </div>
 
-        <div class="pl-10 text-lg">
+        <div class="pl-8 text-lg">
             <p><span class="font-bold">Objective: </span>
                 <?= $pathway->objective ?></p>
             <?php if (empty($followid)) : ?>
@@ -136,11 +136,11 @@ $this->assign('title', h($pathway->name));
     <?php if ($role == 'curator' || $role == 'superuser') : ?>
 
         <div x-data="{ open: false }">
-            <div class="pr-8 float-right">
-                <button @click="open = ! open" class="inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg ">
-                    Add a Step
-                </button>
-            </div>
+
+            <button @click="open = ! open" class="inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg ml-8">
+                Add a Step
+            </button>
+
             <!-- TODO hide button when opened -->
             <div class="max-w-prose pl-10">
 
@@ -163,25 +163,35 @@ $this->assign('title', h($pathway->name));
             </div>
         </div>
     <?php endif ?>
-    <div class="max-w-prose">
-        <div x-data="{ openTab: 1 }" class="p-6">
-            <ul class="flex border-b">
-                <li @click="openTab = 1" class="-mb-px mr-1">
-                    <a class="bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-700 font-semibold" href="#">Tab 1</a>
-                </li>
-                <li @click="openTab = 2" class="mr-1">
-                    <a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold" href="#">Tab 2</a>
-                </li>
-                <li @click="openTab = 3" class="mr-1">
-                    <a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold" href="#">Tab 3</a>
-                </li>
-            </ul>
-            <div class="w-full pt-4">
-                <div x-show="openTab === 1">Tab #1</div>
-                <div x-show="openTab === 2">Tab #2</div>
-                <div x-show="openTab === 3">Tab #3</div>
+    <div class="max-w-prose mt-3">
+        <div x-data="{ tab: window.location.hash ? window.location.hash.substring(1) : 'step1' }" id="tab_wrapper" class="flex ml-8">
+            <!-- The tabs navigation -->
+            <div class="basis-1/5 flex-none">
+                <nav class="flex flex-col gap-2">
+                    <a :class="{ 'active bg-gray-500 -ml-8': tab === 'step1' }" @click.prevent="tab = 'step1'; window.location.hash = 'step1'" href="#" class=" border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-gray-500 text-white hover:no-underline">Step 1</a>
+                    <a :class="{ 'active bg-gray-500 -ml-8': tab === 'step2' }" @click.prevent="tab = 'step2'; window.location.hash = 'step2'" href="#" class=" border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-gray-500 text-white hover:no-underline">Step 2</a>
+                    <a :class="{ 'active bg-gray-500 -ml-8': tab === 'step3' }" @click.prevent="tab = 'step3'; window.location.hash = 'step3'" href="#" class=" border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-gray-500 text-white hover:no-underline">Step 3</a>
+                    <a :class="{ 'active bg-gray-500 -ml-8': tab === 'step4' }" @click.prevent="tab = 'step4'; window.location.hash = 'step4'" href="#" class=" border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-gray-500 text-white hover:no-underline">Step 4</a>
+                </nav>
             </div>
+            <!-- The tabs content -->
+            <div class="basis-4/5 flex-1 border-2 border-bluegreen rounded-r-lg p-6">
+                <div x-show="tab === 'step1'">
+                    Lorem ipsum description.
+                </div>
+                <div x-show="tab === 'step2'">
+                    Lorem ipsum reviews.
+                </div>
+                <div x-show="tab === 'step3'">
+                    Lorem ipsum reviews.
+                </div>
+                <div x-show="tab === 'step4'">
+                    Lorem ipsum reviews.
+                </div>
+            </div>
+
         </div>
+
         <?php if (!empty($pathway->steps)) : ?>
             <?php foreach ($pathway->steps as $steps) : ?>
                 <?php $requiredacts = 0; ?>
