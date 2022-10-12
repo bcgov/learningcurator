@@ -89,11 +89,10 @@ $this->assign('title', h($pathway->name));
             <?php endif ?>
 
 <h3 class="mt-4 mb-1 text-darkblue font-semibold">Activity Progress</h3>
-            <div class="flex pbarcontainer justify-between mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2">
-                <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro"></span>
+            <div class="flex pbarcontainer mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-between">
+                <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
                 <span class="py-2 px-3 text-base total"></span>
                 </div>
-            <!-- TODO fix border on progress bar -->
             <script>
                 fetch('/pathways/status/<?= $pathway->id ?>', {
                         method: 'GET'
@@ -114,7 +113,7 @@ $this->assign('title', h($pathway->name));
                             }
 
                         } else {
-                            document.querySelector('.pbarcontainer').innerHTML = ''; //'<span class="inline-block pt-1 px-3 h-8">Launch activities to see your progress here&hellip;</span>';
+                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
                         }
                         //console.log(json);
                     })
