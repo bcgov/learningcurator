@@ -35,59 +35,34 @@ $this->assign('title', h($pathway->name));
 
 
 
-    <?php if (empty($followid)) : ?>
-        <div class="m-3 float-right">
-            <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users', 'action' => 'follow']]) ?>
-            <?= $this->Form->control('pathway_id', ['type' => 'hidden', 'value' => $pathway->id]) ?>
-            <button class="p-3 bg-sky-700 dark:bg-sky-700 text-white rounded-lg text-center">
-                <svg class="inline-block" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pin-fill" viewBox="0 0 16 16">
-                    <path d="M4.146.146A.5.5 0 0 1 4.5 0h7a.5.5 0 0 1 .5.5c0 .68-.342 1.174-.646 1.479-.126.125-.25.224-.354.298v4.431l.078.048c.203.127.476.314.751.555C12.36 7.775 13 8.527 13 9.5a.5.5 0 0 1-.5.5h-4v4.5c0 .276-.224 1.5-.5 1.5s-.5-1.224-.5-1.5V10h-4a.5.5 0 0 1-.5-.5c0-.973.64-1.725 1.17-2.189A5.921 5.921 0 0 1 5 6.708V2.277a2.77 2.77 0 0 1-.354-.298C4.342 1.674 4 1.179 4 .5a.5.5 0 0 1 .146-.354z" />
-                </svg> Follow Pathway
-            </button>
-            <?= $this->Form->end(); ?>
+    <?php if ($role == 'curator' || $role == 'superuser') : ?>
+        <div class="p-4 float-right">
+            <?= $this->Html->link(__('Edit Pathway'), ['action' => 'edit', $pathway->id], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
         </div>
-    <?php else : ?>
-        <?php
-        echo $this->Form->postLink(
-            __('Un-Follow Pathway'),
-            ['controller' => 'PathwaysUsers', 'action' => 'delete/' . $followid],
-            [
-                'class' => 'm-3 float-right inline-block p-3 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline',
-                'title' => 'Stop seeing this pathway on your profile',
-                'confirm' => ''
-            ]
-        );
-        ?>
+
     <?php endif ?>
 
-    <div class="p-3 mb-3 mt-8 bg-bluegreen text-white w-prose point-left flex justify-start items-center">
+    <div class="p-3 mb-3 mt-8 bg-bluegreen text-white max-w-prose point-left flex justify-start items-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 mx-3 grow-0" viewBox="0 0 16 16">
             <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
         </svg>
         <h2 class="text-2xl flex-1">
-
-            <?= h($pathway->name) ?><?php if ($pathway->status_id == 1) : ?>
-            <span class="bg-orange-400 text-white rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
-
-        </h2><span class="text-sm ml-3 justify-self-end flex-none">8 steps | 23 activities</span>
+            <?= h($pathway->name) ?>
+            <?php if ($pathway->status_id == 1) : ?>
+                <span class="bg-orange-400 text-white rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
+            <?php endif ?>
+        </h2>
+        <span class="text-sm ml-3 justify-self-end flex-none">8 steps | 23 activities</span>
     </div>
 
 
 
-<?php endif ?>
 
 
-<?php if ($role == 'curator' || $role == 'superuser') : ?>
-    <div class="float-right ml-3 mt-1">
-        <?= $this->Html->link(__('Edit Pathway'), ['action' => 'edit', $pathway->id], ['class' => 'p-3 bg-slate-100/80 dark:bg-black hover:no-underline rounded-lg']) ?>
-
+    <div class="p-4 text-2xl bg-white dark:bg-slate-900/80 rounded-lg shadow-lg">
+        <div class="text-xs">Objective</div>
+        <?= $pathway->objective ?>
     </div>
-<?php endif ?>
-
-<div class="p-4 text-2xl bg-white dark:bg-slate-900/80 rounded-lg shadow-lg">
-    <div class="text-xs">Objective</div>
-    <?= $pathway->objective ?>
-</div>
 </div>
 <div class="mx-auto w-72 mt-3"><span class="pro px-3 py-1 bg-slate-50 dark:bg-slate-900/80 rounded-t-lg"></span></div>
 <div class="flex pbarcontainer sticky top-0 mb-6 w-full h-8 bg-slate-50 dark:bg-black text-center rounded-lg">

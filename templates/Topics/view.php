@@ -36,7 +36,7 @@ if ($this->Identity->isLoggedIn()) {
 
     <?php endif ?>
 
-    <div class="w-prose">
+    <div class="max-w-prose">
 
         <h2 class="text-2xl text-darkblue font-semibold mb-3"> <?= h($topic->name) ?></h2>
         <?= $this->Text->autoParagraph(h($topic->description)); ?>
