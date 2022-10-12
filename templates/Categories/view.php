@@ -30,7 +30,7 @@ $this->assign('title', $pagetitle);
 ?>
 <div class="p-8 pt-4 w-full text-xl">
     <nav class="mb-4 text-sagedark text-sm" aria-label="breadcrumb">
-        <?= $this->Html->link(__('Categories'), ['controller' => 'Categories', 'action' => 'index'], ['class' => '']) ?> /
+        <?= $this->Html->link(__('Categories'), ['controller' => 'Categories', 'action' => 'index'], ['class' => '']) ?> >
         <?= h($category->name) ?>
     </nav>
 

@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Pathways</h1>
     </div>
 </header>
-<div class="p-8 pt-4 text-lg">
+<div class="p-8 text-lg">
     <div class="max-w-prose">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Recent Pathways</h2>
 
@@ -58,7 +58,7 @@ if ($this->Identity->isLoggedIn()) {
                         <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tag inline-block" viewBox="0 0 16 16">
                                 <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z" />
                                 <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z" />
-                            </svg><?php $topiclink = $pathway->topic->categories[0]->name . ' / ' . $pathway->topic->name ?>
+                            </svg><?php $topiclink = $pathway->topic->categories[0]->name . ' > ' . $pathway->topic->name ?>
                             <a href="/category/<?= $pathway->topic->categories[0]->id ?>/<?= $pathway->topic->categories[0]->slug ?>/topic/<?= $pathway->topic->id ?>/<?= $pathway->topic->slug ?>">
                                 <?= $topiclink ?>
                             </a></span>
