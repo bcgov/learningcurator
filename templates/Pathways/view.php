@@ -16,8 +16,12 @@ if ($this->Identity->isLoggedIn()) {
 $this->assign('title', h($pathway->name));
 
 ?>
-
-<div class="p-6 w-full bg-top  bg-no-repeat md:bg-fixed min-h-screen rounded-tr-xl" style="background-image: url('<?= h($pathway->topic->categories[0]->image_path) ?>')">
+<header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed.jpg);">
+    <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg p-4 flex">
+        <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Pathways</h1>
+    </div>
+</header>
+<div class="p-6 w-full bg-top bg-no-repeat md:bg-fixed min-h-screen rounded-tr-xl" style="background-image: url('<?= h($pathway->topic->categories[0]->image_path) ?>')">
 <?php if($pathway->status_id == 1): ?>
 <span class="badge badge-warning" title="Edit to set to publish">DRAFT</span>
 <?php endif ?>
