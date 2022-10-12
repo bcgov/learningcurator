@@ -875,6 +875,14 @@ video {
   margin-bottom: -1px;
 }
 
+.ml-8 {
+  margin-left: 2rem;
+}
+
+.ml-10 {
+  margin-left: 2.5rem;
+}
+
 .block {
   display: block;
 }
@@ -1599,6 +1607,14 @@ video {
 
 .pl-0 {
   padding-left: 0px;
+}
+
+.pr-4 {
+  padding-right: 1rem;
+}
+
+.pr-8 {
+  padding-right: 2rem;
 }
 
 .text-center {
