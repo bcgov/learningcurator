@@ -80,22 +80,24 @@ if ($this->Identity->isLoggedIn()) {
 
                 <?php else : ?>
                     <?php if ($role == 'curator' || $role == 'superuser') : ?>
-                        <div class="p-3 mb-3 mt-8 bg-bluegreen text-white w-full point-left">
-                            <div class="badge badge-warning">DRAFT</div>
-                            <h3 class="text-2xl flex items-center justify-between">
-                                <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3" viewBox="0 0 16 16">
+                        <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
+                            <div class="p-3 mb-3 mt-8 bg-bluegreen text-white w-full point-left">
+
+                                <h3 class="text-2xl flex items-center justify-start">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3 flex-none" viewBox="0 0 16 16">
                                         <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
-                                    </svg>
-                                    <?= h($pathway->name) ?></a>
-                                <span class="text-sm">8 steps | 23 activities</span>
-                            </h3>
-                            <div class="pl-10 text-lg">
-                                <?= h($pathway->description) ?>
+                                    </svg><span class="flex-1 items-center"><?= h($pathway->name) ?> <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 mx-2 align-middle">DRAFT</span></span>
+                                    <span class="text-sm justify-self-end flex-none">8 steps | 23 activities</span>
+                                </h3>
                             </div>
+                        </a>
+                        <div class="pl-10 text-lg">
+
+                            <?= h($pathway->description) ?>
                             <p> <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
                                     View the <strong><?= h($pathway->name) ?></strong> pathway
-                                </a></p>
+                                </a> </p>
                         </div>
                     <?php endif ?>
                 <?php endif ?>
