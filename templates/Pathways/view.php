@@ -163,34 +163,8 @@ $this->assign('title', h($pathway->name));
             </div>
         </div>
     <?php endif ?>
-    <div class="max-w-prose mt-3">
-        <div x-data="{ tab: window.location.hash ? window.location.hash.substring(1) : 'step1' }" id="tab_wrapper" class="flex ml-8">
-            <!-- The tabs navigation -->
-            <div class="basis-1/5 flex-none">
-                <nav class="flex flex-col gap-2">
-                    <a :class="{ 'active bg-gray-500 -ml-8': tab === 'step1' }" @click.prevent="tab = 'step1'; window.location.hash = 'step1'" href="#" class=" border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-gray-500 text-white hover:no-underline">Step 1</a>
-                    <a :class="{ 'active bg-gray-500 -ml-8': tab === 'step2' }" @click.prevent="tab = 'step2'; window.location.hash = 'step2'" href="#" class=" border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-gray-500 text-white hover:no-underline">Step 2</a>
-                    <a :class="{ 'active bg-gray-500 -ml-8': tab === 'step3' }" @click.prevent="tab = 'step3'; window.location.hash = 'step3'" href="#" class=" border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-gray-500 text-white hover:no-underline">Step 3</a>
-                    <a :class="{ 'active bg-gray-500 -ml-8': tab === 'step4' }" @click.prevent="tab = 'step4'; window.location.hash = 'step4'" href="#" class=" border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-gray-500 text-white hover:no-underline">Step 4</a>
-                </nav>
-            </div>
-            <!-- The tabs content -->
-            <div class="basis-4/5 flex-1 border-2 border-bluegreen rounded-r-lg p-6">
-                <div x-show="tab === 'step1'">
-                    Lorem ipsum description.
-                </div>
-                <div x-show="tab === 'step2'">
-                    Lorem ipsum reviews.
-                </div>
-                <div x-show="tab === 'step3'">
-                    Lorem ipsum reviews.
-                </div>
-                <div x-show="tab === 'step4'">
-                    Lorem ipsum reviews.
-                </div>
-            </div>
+    <div class="max-w-prose mt-8">
 
-        </div>
 
         <?php if (!empty($pathway->steps)) : ?>
             <?php foreach ($pathway->steps as $steps) : ?>
@@ -198,9 +172,38 @@ $this->assign('title', h($pathway->name));
                 <?php foreach ($steps->activities as $act) : ?>
                     <?php if ($act->_joinData->required == 1) $requiredacts++; ?>
                 <?php endforeach ?>
-
                 <?php //echo '<pre>'; print_r($steps); continue; 
                 ?>
+                <!-- count required activities -->
+                <div x-data="{ tab: window.location.hash ? window.location.hash.substring(1) : 'step1' }" id="tab_wrapper" class="flex ml-8">
+                    <!-- The tabs navigation -->
+                    <div class="basis-1/5 flex-none">
+                        <nav class="flex flex-col gap-2">
+                            <a :class="{ 'active bg-gray-500 -ml-8': tab === 'step1' }" @click.prevent="tab = 'step1'; window.location.hash = 'step1'" href="#" class=" border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-gray-500 text-white hover:no-underline">Step 1</a>
+                            <a :class="{ 'active bg-gray-500 -ml-8': tab === 'step2' }" @click.prevent="tab = 'step2'; window.location.hash = 'step2'" href="#" class=" border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-gray-500 text-white hover:no-underline">Step 2</a>
+                            <a :class="{ 'active bg-gray-500 -ml-8': tab === 'step3' }" @click.prevent="tab = 'step3'; window.location.hash = 'step3'" href="#" class=" border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-gray-500 text-white hover:no-underline">Step 3</a>
+                            <a :class="{ 'active bg-gray-500 -ml-8': tab === 'step4' }" @click.prevent="tab = 'step4'; window.location.hash = 'step4'" href="#" class=" border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-gray-500 text-white hover:no-underline">Step 4</a>
+                        </nav>
+                    </div>
+                    <!-- The tabs content -->
+                    <div class="basis-4/5 flex-1 border-2 border-bluegreen rounded-r-lg p-6">
+                        <div x-show="tab === 'step1'">
+                            Lorem ipsum description.
+                        </div>
+                        <div x-show="tab === 'step2'">
+                            Lorem ipsum reviews.
+                        </div>
+                        <div x-show="tab === 'step3'">
+                            Lorem ipsum reviews.
+                        </div>
+                        <div x-show="tab === 'step4'">
+                            Lorem ipsum reviews.
+                        </div>
+                    </div>
+
+                </div>
+
+
                 <?php if ($steps->status->name == 'Published') : ?>
                     <div class="p-6 my-3 rounded-lg bg-white/80 dark:bg-slate-900/80 dark:text-white">
                         <h3 class="text-2xl">
@@ -224,40 +227,10 @@ $this->assign('title', h($pathway->name));
                         </div>
 
 
-                        <div class="steppbarcontainer<?= $steps->id ?> sticky top-0 my-1 w-full h-8 bg-slate-50 dark:bg-slate-900/80 rounded-lg">
-                            <span class="inline-block pbar<?= $steps->id ?> pt-1 px-6 h-8 bg-sky-700 text-white rounded-lg"></span>
-                        </div>
-                        <script>
-                            fetch('/steps/status/<?= $steps->id ?>', {
-                                    method: 'GET'
-                                })
-                                .then((res<?= $steps->id ?>) => res<?= $steps->id ?>.json())
-                                .then((json<?= $steps->id ?>) => {
-                                    if (json<?= $steps->id ?>.steppercent > 0) {
-                                        let message = json<?= $steps->id ?>.steppercent + '% - ' + json<?= $steps->id ?>.stepclaimcount + ' of ' + json<?= $steps->id ?>.requiredacts;
-                                        if (json<?= $steps->id ?>.steppercent > 25) {
-                                            document.querySelector('.pbar<?= $steps->id ?>').style.width = json<?= $steps->id ?>.steppercent + '%';
-                                        }
-                                        if (json<?= $steps->id ?>.steppercent == 100) {
-                                            document.querySelector('.pbar<?= $steps->id ?>').innerHTML = message + ' - COMPLETED!';
-                                        } else {
-                                            document.querySelector('.pbar<?= $steps->id ?>').innerHTML = message;
-                                        }
-                                    } else {
-                                        document.querySelector('.steppbarcontainer<?= $steps->id ?>').innerHTML = ''; //<span class="inline-block pt-1 px-3 h-8">Launch activities to see your progress here&hellip;</span>
-                                    }
-                                    //console.log(json);
-                                })
-                                .catch((err) => console.error("error:", err));
-                        </script>
 
 
-                        <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="inline-block p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
-                            View Step
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-                                <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
-                            </svg>
-                        </a>
+
+
                     </div>
                 <?php else : ?>
                     <?php if ($role == 'curator' || $role == 'superuser') : ?>
