@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Pathways</h1>
     </div>
 </header>
-<div class="p-8 pt-4 w-full text-xl">
+<div class="p-8 pt-4 text-lg">
     <div class="max-w-prose">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Recent Pathways</h2>
 
