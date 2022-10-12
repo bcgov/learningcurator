@@ -41,8 +41,8 @@ $this->assign('title', h($pathway->name));
         </div>
 
     <?php endif ?>
-
-    <div class="p-3 mb-3 mt-8 bg-bluegreen text-white max-w-prose point-left flex justify-start items-center">
+    <div class="max-w-prose">
+    <div class="p-3 mb-3 mt-8 bg-bluegreen text-white  point-left flex justify-start items-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 mx-3 grow-0" viewBox="0 0 16 16">
             <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
         </svg>
@@ -59,9 +59,9 @@ $this->assign('title', h($pathway->name));
 
 
 
-    <div class="p-4 text-2xl bg-white dark:bg-slate-900/80 rounded-lg shadow-lg">
-        <div class="text-xs">Objective</div>
-        <?= $pathway->objective ?>
+    <div class="pl-10 text-lg">
+        <p><span class="font-bold">Objective: </span>
+        <?= $pathway->objective ?></p>
     </div>
 </div>
 <div class="mx-auto w-72 mt-3"><span class="pro px-3 py-1 bg-slate-50 dark:bg-slate-900/80 rounded-t-lg"></span></div>
@@ -243,5 +243,5 @@ $this->assign('title', h($pathway->name));
     <div>There don't appear to be any steps assigned to this pathway yet.</div>
 <?php endif; // are there any steps at all? 
 ?>
-
+</div>
 </div>
