@@ -55,7 +55,7 @@ foreach ($step->pathways as $pathways) {
 
 
 
-
+<!-- TODO incorporate this content into the pathway view page -->
 
 
 <div class="p-4 bg-slate-100/80  dark:bg-slate-900/80 rounded-lg">

@@ -191,6 +191,7 @@ $this->assign('title', h($pathway->name));
             </div>
         </div>
 <!-- TODO fix this to make steps work inside tabs -->
+<!-- TODO do steps have titles? -->
         <?php if (!empty($pathway->steps)) : ?>
             <div x-data="{ tab: window.location.hash ? window.location.hash.substring(1) : 'step1' }" id="tab_wrapper" class="flex ml-8"> <?php foreach ($pathway->steps as $steps) : ?>
                     <?php $requiredacts = 0; ?>
