@@ -24,25 +24,26 @@ if ($this->Identity->isLoggedIn()) {
 
         <p class="mb-3">
             Category intro text here</p>
+
+        <div class="sticky top-0 z-50 text-sm mb-4 text-sky-700">
+            <!-- TODO do we want this to be sticky? -->
+            <?= $this->Paginator->first('<< ' . __('first')) ?>
+            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?php $this->Paginator->numbers()
+            ?>
+            <?= $this->Paginator->next(__('next') . ' >') ?>
+            <?= $this->Paginator->last(__('last') . ' >>') ?>
+            <div class="mb-3 text-slate-700">
+                <?= $this->Paginator->counter(__('Page {{page}} of {{pages}} | {{count}} total activities')) ?>
+            </div>
+
+
+        </div>
+
+        <!-- TODO find paginator styling controls -->
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
-            <div class="sticky top-0 z-50 text-sm mb-4 text-sky-700">
-                <?= $this->Paginator->first('<< ' . __('first')) ?>
-                <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                <?php $this->Paginator->numbers()
-                ?>
-                <?= $this->Paginator->next(__('next') . ' >') ?>
-                <?= $this->Paginator->last(__('last') . ' >>') ?>
-                <div class="mb-3 text-slate-700">
-                    <?= $this->Paginator->counter(__('Page {{page}} of {{pages}} | {{count}} total activities')) ?>
-                </div>
-
-
-            </div>
-
-            <!-- TODO find paginator styling controls -->
-
             <?php foreach ($activities as $activity) : ?>
                 <?php
                 // #TODO move this back into the controller and simplify
