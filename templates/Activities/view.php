@@ -87,7 +87,7 @@ if ($this->Identity->isLoggedIn()) {
 		<?php elseif($activity->status_id == 3): ?>
 		<div class="p-6 text-xl dark:bg-slate-900" >
 			<div><strong>Archived</strong></div>
-			<p>This activity has been archived, so it's link will not be shown. If you are a curator you
+			<p>This activity has been archived, so its link will not be shown. If you are a curator you
 				can still access the hyperlink by editing this activity.
 			</p>
 		</div>
