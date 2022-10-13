@@ -46,7 +46,7 @@ $this->assign('title', 'Learning on demand');
 </div>
 </div>
 
-<div class="w-full md:w-3/4 px-6 py-10 md:p-20 min-h-screen dark:text-white">
+<div class="w-full md:w-2/5 px-6 py-10 md:p-20 min-h-screen dark:text-white">
 
 	<div class="p-6 md:p-10 text-2xl bg-white/80 dark:bg-[#003366]/80 rounded-lg">
 <!-- TODO adjust box width -->

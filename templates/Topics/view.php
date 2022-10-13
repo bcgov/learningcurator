@@ -18,7 +18,6 @@ if ($this->Identity->isLoggedIn()) {
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Categories</h1>
     </div>
 </header>
-<!-- TODO should this be Pathways or Categories label here? -->
 
 
 <div class="p-8 pt-4 w-full text-xl">
@@ -52,8 +51,7 @@ if ($this->Identity->isLoggedIn()) {
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4 w-full">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
-            <!-- TODO sort alphabetically as initial view? -->
-            <!-- TODO add mobile collapse options -->
+            <!-- TODO Nori add mobile collapse options -->
             <?php foreach ($topic->pathways as $pathway) : ?>
                 <?php if ($pathway->status_id == 2) : ?>
                     <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
@@ -64,9 +62,10 @@ if ($this->Identity->isLoggedIn()) {
                                     <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
                                 </svg><?= h($pathway->name) ?>
 
-                            </h3><span class="text-sm">8 steps | 23 activities</span>
+                            </h3>
+                            <!-- <span class="text-sm">8 steps | 23 activities</span> -->
 
-                            <!-- TODO add code to pull in steps/activities -->
+                            <!-- TODO Allan eventually add code to pull in steps/activities -->
                         </div>
                     </a>
                     <div class="pl-10 text-lg">
@@ -108,7 +107,7 @@ if ($this->Identity->isLoggedIn()) {
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
         <div class="lg:mt-8 lg:basis-1/5">
             <div class="flex justify-end lg:justify-start gap-4">
-                <!-- TODO add working sort and filter options -->
+                <!-- TODO Allan add working sort and filter options -->
                 <a href="" class="hover:text-sky-700">
                     <div class="flex flex-col justify items-center gap-1">
 

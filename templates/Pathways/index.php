@@ -26,8 +26,8 @@ if ($this->Identity->isLoggedIn()) {
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
-            <!-- TODO sort alphabetically as initial view? -->
-            <!-- TODO add mobile collapse options -->
+            <!-- TODO Allan sort alphabetically as initial view? -->
+            <!-- TODO Nori add mobile collapse options -->
 
 
             <?php foreach ($pathways as $pathway) : ?>
@@ -44,7 +44,7 @@ if ($this->Identity->isLoggedIn()) {
                         <!-- <span class="text-sm ml-3 justify-self-end flex-none">8 steps | 23 activities</span> -->
                     </div>
                 </a>
-                <!-- TODO add code to pull in steps/activities - add later-->
+                <!-- TODO Allan add code to pull in steps/activities - add later, can't add without impacting page load at this time-->
 
                 <div class="pl-10 text-lg">
                     <div class="flex justify-between items-center text-xs text-slate-500 my-3">
@@ -71,8 +71,8 @@ if ($this->Identity->isLoggedIn()) {
                             View the <strong><?= h($pathway->name) ?></strong> pathway
                     </p>
                 </div>
-                <!-- TODO can we enforce descriptions? Most of these don't have them -->
-
+                <!-- TODO Allan require curators to enter descriptions and have a minimum/maximum length of 130 chars/ 325 chars (2 lines prose length/5 lines prose length) -->
+                <!-- TODO Shannon Q: objectives vs descriptions and when to use each -->
 
             <?php endforeach; ?>
         </div>
@@ -80,7 +80,7 @@ if ($this->Identity->isLoggedIn()) {
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
         <div class="lg:mt-8 lg:basis-1/5">
             <div class="flex justify-end lg:justify-start gap-4">
-                <!-- TODO add working sort and filter options -->
+                <!-- TODO Allan add working sort and filter options -->
                 <a href="" class="hover:text-sky-700">
                     <div class="flex flex-col justify items-center gap-1">
 

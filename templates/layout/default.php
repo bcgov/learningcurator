@@ -53,9 +53,8 @@
   $active = 'border-slate-400';
   endif; 
   ?>
-  <!-- Todo Add headings in nav: Explore, my Learning Curator?  -->
+  <!-- Todo Nori Add headings in nav: Explore, my Learning Curator? change to html vs array  -->
   <?php 
-  #TODO re-write all of this
   $navigation = array(
     ['name'=>'Categories','link' => '/categories'], 
     ['name'=>'Pathways','link' => '/pathways'],
@@ -90,7 +89,7 @@
   </form> -->
 
   <div class="relative pointer-events-auto mx-3 m-2 rounded-md"><button type="button" class="hidden bg-white w-full lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300"><svg width="24" height="24" fill="none" aria-hidden="true" class="mr-3 flex-none"><path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle></svg>Quick search...<span class="ml-auto pl-3 flex-none text-xs font-semibold">Ctrl K</span></button></div>
-<!-- TODO add working search modal like on Tailwind CSS site -->
+<!-- TODO Allan add working search modal like on Tailwind CSS site -->
   <?php endif ?>
   
   <!-- end search box -->
@@ -126,7 +125,7 @@
 </div>
 
 <div class="p-6 bg-slate-100/80 text-center" role="contentinfo">
-<!-- TODO still needs some formatting help. Seems not quite right yet  -->
+<!-- TODO Nori still needs some formatting help. Seems not quite right yet  -->
 <div class="mb-6 max-w-prose text-lg text-slate-700 mx-auto italic">
   We acknowledge with respect that the Learning Curator operates throughout B.C.
    on the traditional lands of Indigenous peoples.

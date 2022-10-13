@@ -17,7 +17,7 @@ $stepacts = count($requiredacts);
 $supplmentalcount = count($supplementalacts);
 
 
-#TODO move this into the controller
+#TODO Allan move this into the controller
 $last = 0;
 $previousid = 0;
 $next = 0;
@@ -55,7 +55,6 @@ foreach ($step->pathways as $pathways) {
 
 
 
-<!-- TODO incorporate this content into the pathway view page -->
 
 
 <div class="p-4 bg-slate-100/80  dark:bg-slate-900/80 rounded-lg">
@@ -200,7 +199,7 @@ foreach ($step->pathways as $pathways) {
 <div><em>Launch these activities and fill in your progress bar.</em></div>
 <?php foreach ($requiredacts as $activity) : ?>
 <?php 
-// #TODO move this back into the controller and simplify
+// #TODO Allan move this back into the controller and simplify
 // this was an attempt at requiring two launches to satify a complete
 $completed = 0;
 $actlist = array_count_values($useractivitylist); 
@@ -410,7 +409,7 @@ if(!empty($youtube[1])):
 <p><em>Launching these activities does not count towards your progress along this pathway.</em></p>
 <?php foreach ($supplementalacts as $activity): ?>
 	<?php 
-// #TODO move this back into the controller and simplify
+// #TODO Allan move this back into the controller and simplify
 // this was an attempt at requiring two launches to satify a complete
 $completed = 0;
 $actlist = array_count_values($useractivitylist); 
