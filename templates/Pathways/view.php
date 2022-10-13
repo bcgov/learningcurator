@@ -157,7 +157,7 @@ $this->assign('title', h($pathway->name));
                         echo $this->Form->hidden('modifiedby', ['value' => $uid]);
                         echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
                         ?>
-                        <?= $this->Form->button(__('Add Step'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-700 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
+                        <?= $this->Form->button(__('Add Step'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
                         <?= $this->Form->end() ?>
                     </div>
                 </div>

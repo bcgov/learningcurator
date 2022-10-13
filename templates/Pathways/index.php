@@ -40,10 +40,11 @@ if ($this->Identity->isLoggedIn()) {
 
                             <?= h($pathway->name) ?>
 
-                        </h3><span class="text-sm ml-3 justify-self-end flex-none">8 steps | 23 activities</span>
+                        </h3>
+                        <!-- <span class="text-sm ml-3 justify-self-end flex-none">8 steps | 23 activities</span> -->
                     </div>
                 </a>
-                <!-- TODO add code to pull in steps/activities -->
+                <!-- TODO add code to pull in steps/activities - add later-->
 
                 <div class="pl-10 text-lg">
                     <div class="flex justify-between items-center text-xs text-slate-500 my-3">
