@@ -1919,6 +1919,14 @@ p {
   background-color: rgb(51 65 85 / 0.8);
 }
 
+.hover\:bg-sagedark\/80:hover {
+  background-color: rgb(112 119 90 / 0.8);
+}
+
+.hover\:bg-sagedark\/60:hover {
+  background-color: rgb(112 119 90 / 0.6);
+}
+
 .hover\:p-2:hover {
   padding: 0.5rem;
 }

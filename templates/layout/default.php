@@ -47,23 +47,23 @@
                             <?php if (strpos($currentpage, '/users') !== false) $active = 'text-white bg-sagedark'; ?>
                             <?php if (strpos($currentpage, '/reports') !== false) $active = 'text-white bg-sagedark'; ?>
                             <?php if (strpos($currentpage, '/profile/contributions') !== false) $active = 'text-white bg-sagedark'; ?>
-                            <a class="hover:no-underline block px-4 py-1 mt-2 mb-4 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?= $active ?>" href="/users/index">
+                            <a class="hover:no-underline block px-4 py-1 mt-2 mb-4 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?= $active ?>" href="/users/index">
                                 Curator Dashboard
                             </a>
                         
                             <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
                             
-                            <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?php if ((strpos($currentpage, '/category') !== false) || ($currentpage == '/categories')) {echo 'text-white bg-sagedark'; }?>">Categories</a>
+                            <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ((strpos($currentpage, '/category') !== false) || ($currentpage == '/categories')) {echo 'text-white bg-sagedark'; }?>">Categories</a>
                        <?php endif; ?>
 
-                        <a href="/pathways" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?php if ((strpos($currentpage, '/pathway') !== false) || ($currentpage == '/pathways')) {echo 'text-white bg-sagedark'; }?>">Pathways</a>
-                        <a href="/activities" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?php if ((strpos($currentpage, '/activity') !== false) || ($currentpage == '/activities')) {echo 'text-white bg-sagedark'; }?>">Activities</a>
-                        <a href="/questions" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?php if ($currentpage == '/questions') {echo 'text-white bg-sagedark'; }?>">About</a>
+                        <a href="/pathways" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ((strpos($currentpage, '/pathway') !== false) || ($currentpage == '/pathways')) {echo 'text-white bg-sagedark'; }?>">Pathways</a>
+                        <a href="/activities" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ((strpos($currentpage, '/activity') !== false) || ($currentpage == '/activities')) {echo 'text-white bg-sagedark'; }?>">Activities</a>
+                        <a href="/questions" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/questions') {echo 'text-white bg-sagedark'; }?>">About</a>
                         <p class="font-semibold block mt-4 mb-1 mx-4 text-base">My Curator</p>
-                        <a href="/profile/follows" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?php if ($currentpage == '/profile/follows') {echo 'text-white bg-sagedark'; }?>">Followed Pathways</a>
-                        <a href="/profile/launches" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?php if ($currentpage == '/profile/launches') {echo 'text-white bg-sagedark'; }?>">Launched Activities</a>
-                        <a href="/profile/reports" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?php if ($currentpage == '/profile/reports') {echo 'text-white bg-sagedark'; }?>">Issues Reported</a>
-                        <a href="/logout" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg">Logout</a>
+                        <a href="/profile/follows" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/follows') {echo 'text-white bg-sagedark'; }?>">Followed Pathways</a>
+                        <a href="/profile/launches" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/launches') {echo 'text-white bg-sagedark'; }?>">Launched Activities</a>
+                        <a href="/profile/reports" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/reports') {echo 'text-white bg-sagedark'; }?>">Issues Reported</a>
+                        <a href="/logout" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg">Logout</a>
 
                         <!-- search box -->
 
