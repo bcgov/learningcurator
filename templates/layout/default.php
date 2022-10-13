@@ -49,26 +49,24 @@
                             <?php if (strpos($currentpage, '/profile/contributions') !== false) $active = 'text-white bg-sagedark'; ?>
                             <a class="hover:no-underline block px-4 py-1 mt-2 mb-4 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?= $active ?>" href="/users/index">
                                 Curator Dashboard
-                            </a>  <?php
-                    // reset state
-                    $active = 'border-slate-400';
-                endif;
-                    ?>
-
+                            </a>
                         
-                        <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
-                        <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?= $active ?>">Categories</a>
-                        <a href="/pathways" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?= $active ?>">Pathways</a>
-                        <a href="/activities" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?= $active ?>">Activities</a>
-                        <a href="/questions" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?= $active ?>">About</a>
+                            <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
+                            
+                            <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?php if ((strpos($currentpage, '/category') !== false) || ($currentpage == '/categories')) {echo 'text-white bg-sagedark'; }?>">Categories</a>
+                       <?php endif; ?>
+
+                        <a href="/pathways" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?php if ((strpos($currentpage, '/pathway') !== false) || ($currentpage == '/pathways')) {echo 'text-white bg-sagedark'; }?>">Pathways</a>
+                        <a href="/activities" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?php if ((strpos($currentpage, '/activity') !== false) || ($currentpage == '/activities')) {echo 'text-white bg-sagedark'; }?>">Activities</a>
+                        <a href="/questions" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?php if ($currentpage == '/questions') {echo 'text-white bg-sagedark'; }?>">About</a>
                         <p class="font-semibold block mt-4 mb-1 mx-4 text-base">My Curator</p>
-                        <a href="/profile/follows" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?= $active ?>">Followed Pathways</a>
-                        <a href="/profile/launches" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?= $active ?>">Launched Activities</a>
-                        <a href="/profile/reports" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?= $active ?>">Issues Reported</a>
-                        <a href="/logout" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?= $active ?>">Logout</a>
-                    
-                    <!-- search box -->
-                   
+                        <a href="/profile/follows" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?php if ($currentpage == '/profile/follows') {echo 'text-white bg-sagedark'; }?>">Followed Pathways</a>
+                        <a href="/profile/launches" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?php if ($currentpage == '/profile/launches') {echo 'text-white bg-sagedark'; }?>">Launched Activities</a>
+                        <a href="/profile/reports" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg <?php if ($currentpage == '/profile/reports') {echo 'text-white bg-sagedark'; }?>">Issues Reported</a>
+                        <a href="/logout" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark hover:text-white rounded-lg">Logout</a>
+
+                        <!-- search box -->
+
 
                         <!-- <form method="get" action="/find" class="w-3/4 inline-block" role="search">
     <label for="search" class="sr-only">Search</label>
@@ -80,16 +78,16 @@
                                     <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
                                 </svg>Quick search...<span class="ml-auto pl-3 flex-none text-xs font-semibold">Ctrl K</span></button></div>
                         <!-- TODO Allan add working search modal like on Tailwind CSS site -->
-                    <?php endif ?>
 
-                    <!-- end search box -->
+
+                        <!-- end search box -->
                     </nav>
 
+                <?php endif ?>
 
 
 
-
-                    <!-- <div class="flex items-center justify-center space-x-2">
+                <!-- <div class="flex items-center justify-center space-x-2">
   <span class="text-sm text-gray-800">Light</span>
   <label for="toggle"
     class="flex items-center h-5 p-1 duration-300 ease-in-out bg-gray-300 rounded-full cursor-pointer w-9">
