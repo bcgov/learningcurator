@@ -13,7 +13,7 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 <header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed.jpg);">
-    <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg p-4 flex">
+    <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Pathways</h1>
     </div>
 </header>

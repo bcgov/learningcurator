@@ -1378,6 +1378,10 @@ video {
   background-color: rgb(0 51 102 / var(--tw-bg-opacity));
 }
 
+.bg-sagedark\/90 {
+  background-color: rgb(112 119 90 / 0.9);
+}
+
 .bg-cover {
   background-size: cover;
 }
