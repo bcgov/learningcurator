@@ -91,7 +91,7 @@ $this->assign('title', $pagetitle);
         </div>
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
         <div class="lg:my-3 lg:basis-1/5">
-            <div class="flex justify-end lg:justify-start gap-4">
+            <div class="flex justify-end lg:justify-start gap-4 sticky top-4">
                 <!-- TODO Allan add working sort and filter options -->
                 <a href="" class="hover:text-sky-700">
                     <div class="flex flex-col justify items-center gap-1">
