@@ -49,16 +49,14 @@ $this->assign('title', $pagetitle);
                 <?php foreach ($category->topics as $topic) : ?>
                     <?php if ($topic->featured == 1) : ?>
                         <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline">
-                            <div class="rounded-md shadow-lg border-2 border-sky-700 hover:border-sky-700/80 mb-4">
-                                <h3 class="text-xl bg-sky-700 text-white p-2 hover:no-underline hover:bg-sky-700/80 "><?= $topic->name ?>
+                            <div class="rounded-md shadow-lg p-0.5 bg-sky-700  hover:bg-sky-700/80 mb-4">
+                                <h3 class="text-xl text-white p-2 hover:no-underline "><?= $topic->name ?>
                                     <!-- topic_id: <?= $topic->id ?> -->
-
-
                                 </h3>
-                                <div class="p-3 text-lg">
-                                    <p class="mb-0"><?= h($topic->description) ?></p>
-
-
+                                <div class="bg-white inset-1 rounded-b-sm">
+                                    <div class="p-3 text-lg">
+                                        <p class="mb-0"><?= h($topic->description) ?></p>
+                                    </div>
                                 </div>
                             </div>
                         </a> <!-- formatting container -->
@@ -66,17 +64,15 @@ $this->assign('title', $pagetitle);
                     <?php else : ?>
                         <?php if ($role == 'curator' || $role == 'superuser') : ?>
                             <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline">
-                                <div class="rounded-md shadow-lg border-2 border-sky-700 hover:border-sky-700/80 mb-4">
+                                <div class="rounded-md shadow-lg p-0.5 bg-sky-700  hover:bg-sky-700/80 mb-4">
                                     DRAFT
-                                    <h3 class="text-xl bg-sky-700 text-white p-2 hover:no-underline hover:bg-sky-700/80 ">
-                                        <!-- topic_id: <?= $topic->id ?> --><?= $topic->name ?>
-
-
+                                    <h3 class="text-xl text-white p-2 hover:no-underline "><?= $topic->name ?>
+                                        <!-- topic_id: <?= $topic->id ?> -->
                                     </h3>
-                                    <div class="p-3 text-lg">
-                                        <p class="mb-0"><?= h($topic->description) ?></p>
-
-
+                                    <div class="bg-white inset-1 rounded-b-sm">
+                                        <div class="p-3 text-lg">
+                                            <p class="mb-0"><?= h($topic->description) ?></p>
+                                        </div>
                                     </div>
                                 </div>
                             </a>
