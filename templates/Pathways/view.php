@@ -132,37 +132,39 @@ $this->assign('title', h($pathway->name));
                 <?= $requiredacts ?> required activities</span>
         </h2> -->
 
-    </div>
-    <?php if ($role == 'curator' || $role == 'superuser') : ?>
 
-        <div x-data="{ open: false }">
+        <?php if ($role == 'curator' || $role == 'superuser') : ?>
 
-            <button @click="open = ! open" class="inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg ml-8">
-                Add a Step
-            </button>
+            <div x-data="{ open: false }">
 
-            <!-- TODO hide button when opened -->
-            <div class="max-w-prose pl-10">
+                <button @click="open = ! open" class="inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg ml-8">
+                    Add a Step
+                </button>
 
-                <div xcloak x-show="open" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block mt-10 ">
+                <!-- TODO hide button when opened -->
+                <div class="max-w-prose pl-10">
 
-                    <?= $this->Form->create(null, ['url' => [
-                        'controller' => 'Steps',
-                        'action' => 'add'
-                    ]]) ?>
-                    <?php
-                    echo $this->Form->control('name', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3']);
-                    echo $this->Form->control('description', ['class' => ' block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg', 'type' => 'textarea', 'label' => 'Objective']);
-                    echo $this->Form->hidden('createdby', ['value' => $uid]);
-                    echo $this->Form->hidden('modifiedby', ['value' => $uid]);
-                    echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
-                    ?>
-                    <?= $this->Form->button(__('Add Step'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-700 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
-                    <?= $this->Form->end() ?>
+                    <div xcloak x-show="open" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block mt-10 ">
+
+                        <?= $this->Form->create(null, ['url' => [
+                            'controller' => 'Steps',
+                            'action' => 'add'
+                        ]]) ?>
+                        <?php
+                        echo $this->Form->control('name', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3']);
+                        echo $this->Form->control('description', ['class' => ' block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg', 'type' => 'textarea', 'label' => 'Objective']);
+                        echo $this->Form->hidden('createdby', ['value' => $uid]);
+                        echo $this->Form->hidden('modifiedby', ['value' => $uid]);
+                        echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
+                        ?>
+                        <?= $this->Form->button(__('Add Step'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-700 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
+                        <?= $this->Form->end() ?>
+                    </div>
                 </div>
             </div>
-        </div>
-    <?php endif ?>
+
+        <?php endif ?>
+    </div>
     <div class="max-w-prose mt-8">
         <div x-data="{ tab: window.location.hash ? window.location.hash.substring(1) : 'step1' }" id="tab_wrapper" class="flex ml-8">
             <!-- The tabs navigation -->
@@ -190,10 +192,11 @@ $this->assign('title', h($pathway->name));
                 </div>
             </div>
         </div>
-<!-- TODO fix this to make steps work inside tabs -->
-<!-- TODO do steps have titles? -->
+        <!-- TODO fix this to make steps work inside tabs -->
+        <!-- TODO do steps have titles? -->
         <?php if (!empty($pathway->steps)) : ?>
-            <div x-data="{ tab: window.location.hash ? window.location.hash.substring(1) : 'step1' }" id="tab_wrapper" class="flex ml-8"> <?php foreach ($pathway->steps as $steps) : ?>
+            <div x-data="{ tab: window.location.hash ? window.location.hash.substring(1) : 'step1' }" id="tab_wrapper" class="flex ml-8"> 
+                <?php foreach ($pathway->steps as $steps) : ?>
                     <?php $requiredacts = 0; ?>
                     <?php foreach ($steps->activities as $act) : ?>
                         <?php if ($act->_joinData->required == 1) $requiredacts++; ?>
@@ -223,50 +226,50 @@ $this->assign('title', h($pathway->name));
                                 </p>
                             </div>
                         </div>
+                    <?php else : ?>
+                        <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                            <div class="p-6 my-3 rounded-lg bg-white dark:bg-slate-900/80 dark:text-white">
+                                <h3 class="text-2xl">
+                                    <a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
+                                        <?= h($steps->name) ?>
+                                    </a>
+                                    <?php if ($role == 'curator' || $role == 'superuser') : ?>
 
+                                        <span class="text-xs px-4  bg-yellow-700 text-white rounded-lg"><?= $steps->status->name ?></span>
+
+                                    <?php endif ?>
+                                    <span class="inline-block px-2 bg-slate-500 dark:bg-black text-white text-xs rounded-full">
+                                        <?= $requiredacts ?> activities
+                                    </span>
+                                </h3>
+
+
+                                <div class="my-3 p-3 bg-slate-100/80 dark:bg-[#002850] text-xl rounded-lg">
+                                    <?= $steps->description ?>
+                                </div>
+
+                                <a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="inline-block p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
+                                    View Draft Step
+                                </a>
+
+                                <a href="/steps/publishtoggle/<?= $steps->id ?>">Publish Step</a>
+                            </div>
+                        <?php endif; // if curator or admin 
+                        ?>
+                    <?php endif; // if published 
+                    ?>
+
+                <?php endforeach ?>
 
             </div>
 
 
 
+
         <?php else : ?>
-            <?php if ($role == 'curator' || $role == 'superuser') : ?>
-                <div class="p-6 my-3 rounded-lg bg-white dark:bg-slate-900/80 dark:text-white">
-                    <h3 class="text-2xl">
-                        <a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>">
-                            <?= h($steps->name) ?>
-                        </a>
-                        <?php if ($role == 'curator' || $role == 'superuser') : ?>
-
-                            <span class="text-xs px-4  bg-yellow-700 text-white rounded-lg"><?= $steps->status->name ?></span>
-
-                        <?php endif ?>
-                        <span class="inline-block px-2 bg-slate-500 dark:bg-black text-white text-xs rounded-full">
-                            <?= $requiredacts ?> activities
-                        </span>
-                    </h3>
-
-
-                    <div class="my-3 p-3 bg-slate-100/80 dark:bg-[#002850] text-xl rounded-lg">
-                        <?= $steps->description ?>
-                    </div>
-
-                    <a href="/pathways/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="inline-block p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
-                        View Draft Step
-                    </a>
-
-                    <a href="/steps/publishtoggle/<?= $steps->id ?>">Publish Step</a>
-                </div>
-            <?php endif; // if curator or admin 
-            ?>
-        <?php endif; // if published 
+            <div>There don't appear to be any steps assigned to this pathway yet.</div>
+        <?php endif; // are there any steps at all? 
         ?>
-
-    <?php endforeach ?>
-<?php else : ?>
-    <div>There don't appear to be any steps assigned to this pathway yet.</div>
-<?php endif; // are there any steps at all? 
-?>
 
     </div>
 
