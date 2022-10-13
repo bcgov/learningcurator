@@ -34,51 +34,58 @@ $this->assign('title', $pagetitle);
         <?= h($category->name) ?>
     </nav>
 
-
     <div class="max-w-prose">
         <h2 class="text-2xl text-darkblue font-semibold mb-3"> <?= h($category->name) ?></h2>
         <?= $this->Text->autoParagraph(h($category->description)); ?>
+        <div class="flex flex-col lg:flex-row lg:gap-4">
+            <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
+                <!-- TODO Allan sort alphabetically as initial view? -->
+                <!-- TODO Nori add mobile collapse options -->
 
-        <?php if (!empty($category->topics)) : ?>
-            <?php foreach ($category->topics as $topic) : ?>
-                <?php if ($topic->featured == 1) : ?>
-                    <div class="my-3">
-                        <h3 class="text-2xl text-sky-700 mb-2 border-b-2 border-sky-700 block">
-                            <!-- topic_id: <?= $topic->id ?> -->
-                            <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline hover:bg-slate-100 hover:p-2 hover:rounded-t-lg block">
-                                <?= $topic->name ?>
-                            </a>
-                        </h3>
 
-                        <div class="mb-4 text-lg pl-3">
-                            <?= $topic->description ?>
 
-                        </div>
+                <?php if (!empty($category->topics)) : ?>
+                    <?php foreach ($category->topics as $topic) : ?>
+                        <?php if ($topic->featured == 1) : ?>
+                            <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline">
+                                <div class="rounded-md shadow-lg border-2 border-sky-700 hover:border-sky-700/80 mb-4">
+                                    <h3 class="text-xl bg-sky-700 text-white p-2 hover:no-underline hover:bg-sky-700/80 "><?= $topic->name ?>
+                                        <!-- topic_id: <?= $topic->id ?> -->
 
-                    </div>
-                <?php else : ?>
-                    <?php if ($role == 'curator' || $role == 'superuser') : ?>
-                        <div class="my-3">
-                            DRAFT
-                            <h3 class="text-2xl text-sky-700 mb-2 border-b-2 border-sky-700 block">
-                                <!-- topic_id: <?= $topic->id ?> -->
-                                <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>">
-                                    <?= $topic->name ?>
 
+                                    </h3>
+                                    <div class="p-3 text-lg">
+                                        <p class="mb-0"><?= h($topic->description) ?></p>
+
+
+                                    </div>
+                                </div>
+                            </a> <!-- formatting container -->
+
+                        <?php else : ?>
+                            <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                                <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline">
+                                    <div class="rounded-md shadow-lg border-2 border-sky-700 hover:border-sky-700/80 mb-4">
+                                        DRAFT
+                                        <h3 class="text-xl bg-sky-700 text-white p-2 hover:no-underline hover:bg-sky-700/80 ">
+                                            <!-- topic_id: <?= $topic->id ?> --><?= $topic->name ?>
+
+
+                                        </h3>
+                                        <div class="p-3 text-lg">
+                                            <p class="mb-0"><?= h($topic->description) ?></p>
+
+
+                                        </div>
+                                    </div>
                                 </a>
-                            </h3>
 
-                            <div class="mb-4 text-lg pl-3">
-                                <?= $topic->description ?>
-                            </div>
+                            <?php endif ?>
+                        <?php endif ?>
 
-                        </div>
-                    <?php endif ?>
-                <?php endif ?>
+                    <?php endforeach ?>
+                <?php endif; // topics 
+                ?>
 
-            <?php endforeach ?>
-        <?php endif; // topics 
-        ?>
-
-    </div>
-</div>
+            </div>
+        </div>
