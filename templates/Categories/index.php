@@ -27,8 +27,8 @@ if ($this->Identity->isLoggedIn()) {
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
-            <!-- TODO sort alphabetically as initial view? -->
-            <!-- TODO add mobile collapse options -->
+            <!-- TODO Allan sort alphabetically as initial view? -->
+            <!-- TODO Nori add mobile collapse options -->
             <?php foreach ($categories as $category) : ?>
 
                 <div class="rounded-md shadow-lg border-2 border-sky-700 mb-4">
@@ -53,7 +53,7 @@ if ($this->Identity->isLoggedIn()) {
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
         <div class="lg:my-3 lg:basis-1/5">
             <div class="flex justify-end lg:justify-start gap-4">
-                <!-- TODO add working sort and filter options -->
+                <!-- TODO Allan add working sort and filter options -->
                 <a href="" class="hover:text-sky-700">
                     <div class="flex flex-col justify items-center gap-1">
 

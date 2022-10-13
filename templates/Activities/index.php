@@ -26,7 +26,7 @@ if ($this->Identity->isLoggedIn()) {
             Category intro text here</p>
 
         <div class="sticky top-0 z-50 text-sm mb-4 text-sky-700">
-            <!-- TODO do we want this to be sticky? -->
+           <!-- TODO Allan update pagination and styling -->
             <?= $this->Paginator->first('<< ' . __('first')) ?>
             <?= $this->Paginator->prev('< ' . __('previous')) ?>
             <?php $this->Paginator->numbers()
@@ -40,13 +40,12 @@ if ($this->Identity->isLoggedIn()) {
 
         </div>
 
-        <!-- TODO find paginator styling controls -->
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
             <?php foreach ($activities as $activity) : ?>
                 <?php
-                // #TODO move this back into the controller and simplify
+                // #TODO Allan move this back into the controller and simplify
                 // this was an attempt at requiring two launches to satify a complete
                 $completed = 0;
                 $actlist = array_count_values($useractivitylist);
@@ -231,7 +230,7 @@ if ($this->Identity->isLoggedIn()) {
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
         <div class="lg:mt-8 lg:basis-1/5">
             <div class="flex justify-end lg:justify-start gap-4">
-                <!-- TODO add working sort and filter options -->
+                <!-- TODO Allan add working sort and filter options -->
                 <a href="" class="hover:text-sky-700">
                     <div class="flex flex-col justify items-center gap-1">
 
