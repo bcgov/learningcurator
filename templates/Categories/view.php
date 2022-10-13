@@ -29,7 +29,7 @@ $this->assign('title', $pagetitle);
 <?php endif;  // curator or admin? 
 ?>
 <div class="p-8 pt-4 w-full text-xl">
-    <nav class="mb-4 text-sagedark text-sm" aria-label="breadcrumb">
+    <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
         <?= $this->Html->link(__('Categories'), ['controller' => 'Categories', 'action' => 'index'], ['class' => '']) ?> >
         <?= h($category->name) ?>
     </nav>

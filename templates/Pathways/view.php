@@ -23,7 +23,7 @@ $this->assign('title', h($pathway->name));
 </header>
 <div class="p-8 pt-4 w-full text-xl">
 
-    <nav class="mb-4 text-sagedark text-sm" aria-label="breadcrumb">
+    <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
         <a href="/category/<?= h($pathway->topic->categories[0]->id) ?>/<?= h($pathway->topic->categories[0]->slug) ?>" class="hover:underline"><?= h($pathway->topic->categories[0]->name) ?></a> >
         <a href="/category/<?= h($pathway->topic->categories[0]->id) ?>/<?= h($pathway->topic->categories[0]->slug) ?>/topic/<?= h($pathway->topic->id) ?>/<?= h($pathway->topic->slug) ?>" class="hover:underline"><?= h($pathway->topic->name) ?></a> >
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-signpost-2 mr-1 inline-block" viewBox="0 0 16 16">
