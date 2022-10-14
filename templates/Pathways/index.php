@@ -33,7 +33,8 @@ if ($this->Identity->isLoggedIn()) {
             <?php foreach ($pathways as $pathway) : ?>
 
 
-                <div class="rounded-md shadow-lg p-0.5 bg-bluegreen hover:bg-bluegreen/80 mb-4"><a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
+                <div class="rounded-md shadow-lg p-0.5 bg-bluegreen hover:bg-bluegreen/80 mb-4">
+                    <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
                         <div class="flex justify-start items-center ">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-signpost-2 mx-3" viewBox="0 0 16 16">
                                 <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
@@ -63,21 +64,23 @@ if ($this->Identity->isLoggedIn()) {
                                     <a href="/category/<?= $pathway->topic->categories[0]->id ?>/<?= $pathway->topic->categories[0]->slug ?>/topic/<?= $pathway->topic->id ?>/<?= $pathway->topic->slug ?>">
                                         <?= $topiclink ?>
                                     </a></span>
+                            </div>
 
+                            <p><?php if (!empty($pathway->description)) : ?>
+                                    <?= h($pathway->description) ?>
+                                <?php else : ?>
+                                    <?= h($pathway->objective) ?>
+                                <?php endif ?></p>
+                            <!-- This conditional is kind of a hack and we need to make people aware that the description isn't actually optional -->
+                            <p> <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
+                                    View the <strong><?= h($pathway->name) ?></strong> pathway
+                            </p>
+                        </div>
                     </div>
-                    <p><?php if (!empty($pathway->description)) : ?>
-                            <?= h($pathway->description) ?>
-                        <?php else : ?>
-                            <?= h($pathway->objective) ?>
-                        <?php endif ?></p>
-<!-- This conditional is kind of a hack and we need to make people aware that the description isn't actually optional -->
-                    <p> <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
-                            View the <strong><?= h($pathway->name) ?></strong> pathway
-                    </p>
-                </div>
-                <!-- TODO Allan require curators to enter descriptions and have a minimum/maximum length of 130 chars/ 325 chars (2 lines prose length/5 lines prose length) -->
-                <!-- TODO Shannon Q: objectives vs descriptions and when to use each -->
 
+                    <!-- TODO Allan require curators to enter descriptions and have a minimum/maximum length of 130 chars/ 325 chars (2 lines prose length/5 lines prose length) -->
+                    <!-- TODO Shannon Q: objectives vs descriptions and when to use each -->
+                </div>
             <?php endforeach; ?>
         </div>
 
