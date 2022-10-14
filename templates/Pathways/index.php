@@ -33,18 +33,18 @@ if ($this->Identity->isLoggedIn()) {
             <?php foreach ($pathways as $pathway) : ?>
 
 
-                <div class="rounded-md shadow-lg p-0.5 bg-bluegreen hover:bg-bluegreen/80 mb-4"><a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
-                        <div class="flex justify-start items-center ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-signpost-2 mx-3" viewBox="0 0 16 16">
+                <div class="rounded-md border-2 border-bluegreen mb-4"><a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
+                        <div class="flex justify-start items-center text-bluegreen">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 mx-3" viewBox="0 0 16 16">
                                 <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
                             </svg>
-                            <h3 class="text-xl text-white p-2 hover:no-underline "> <?= h($pathway->name) ?>
+                            <h3 class="text-xl p-2 hover:underline font-bold "> <?= h($pathway->name) ?>
                             </h3>
                             <!-- <span class="text-sm ml-3 justify-self-end flex-none">8 steps | 23 activities</span> -->
                             <!-- TODO Allan add code to pull in steps/activities - add later, can't add without impacting page load at this time-->
                         </div>
                     </a>
-                    <div class="bg-white inset-1 rounded-b-sm">
+                    <div class>
                         <div class="p-3 text-lg">
                             <div class="flex justify-between items-center text-xs text-slate-500 mt-0 mb-3">
                                 <?php
