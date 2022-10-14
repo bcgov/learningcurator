@@ -31,38 +31,38 @@ if ($this->Identity->isLoggedIn()) {
 
 
             <?php foreach ($pathways as $pathway) : ?>
-                <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
-                    <div class="p-3 mb-3 mt-8 bg-bluegreen text-white w-full point-left hover:bg-bluegreen/80 flex justify-start items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 mx-3 grow-0" viewBox="0 0 16 16">
-                            <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
-                        </svg>
-                        <h3 class="text-2xl flex-1">
 
-                            <?= h($pathway->name) ?>
 
-                        </h3>
-                        <!-- <span class="text-sm ml-3 justify-self-end flex-none">8 steps | 23 activities</span> -->
-                    </div>
-                </a>
-                <!-- TODO Allan add code to pull in steps/activities - add later, can't add without impacting page load at this time-->
-
-                <div class="pl-10 text-lg">
-                    <div class="flex justify-between items-center text-xs text-slate-500 my-3">
-                        <?php
-                        $stat = 'bg-slate-200';
-                        if ($pathway->status->name == 'Draft') $stat = 'bg-orange-400 text-white';
-                        ?>
-                        <?php if ($pathway->featured == 1) : ?>
-                            <span class="bg-green-600 text-white py-1 px-2 rounded-full mr-3">Featured</span>
-                        <?php endif ?>
-                        <span class="<?= $stat ?> py-1 px-2 rounded-full mr-3"><?= $pathway->status->name ?></span>
-                        <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tag inline-block" viewBox="0 0 16 16">
-                                <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z" />
-                                <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z" />
-                            </svg><?php $topiclink = $pathway->topic->categories[0]->name . ' > ' . $pathway->topic->name ?>
-                            <a href="/category/<?= $pathway->topic->categories[0]->id ?>/<?= $pathway->topic->categories[0]->slug ?>/topic/<?= $pathway->topic->id ?>/<?= $pathway->topic->slug ?>">
-                                <?= $topiclink ?>
-                            </a></span>
+                <div class="rounded-md shadow-lg p-0.5 bg-bluegreen hover:bg-bluegreen/80 mb-4"><a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
+                        <div class="flex justify-start items-center ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-signpost-2 mx-3" viewBox="0 0 16 16">
+                                <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
+                            </svg>
+                            <h3 class="text-xl text-white p-2 hover:no-underline "> <?= h($pathway->name) ?>
+                            </h3>
+                            <!-- <span class="text-sm ml-3 justify-self-end flex-none">8 steps | 23 activities</span> -->
+                            <!-- TODO Allan add code to pull in steps/activities - add later, can't add without impacting page load at this time-->
+                        </div>
+                    </a>
+                    <div class="bg-white inset-1 rounded-b-sm">
+                        <div class="p-3 text-lg">
+                            <div class="flex justify-between items-center text-xs text-slate-500 mt-0 mb-3">
+                                <?php
+                                $stat = 'bg-slate-200';
+                                if ($pathway->status->name == 'Draft') $stat = 'bg-orange-400 text-white';
+                                ?>
+                                <?php if ($pathway->featured == 1) : ?>
+                                    <span class="bg-green-600 text-white py-1 px-2 rounded-full mr-3">Featured</span>
+                                <?php endif ?>
+                                <span class="<?= $stat ?> py-1 px-2 rounded-full mr-3"><?= $pathway->status->name ?></span>
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tag inline-block" viewBox="0 0 16 16">
+                                        <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z" />
+                                        <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z" />
+                                    </svg><?php $topiclink = $pathway->topic->categories[0]->name . ' > ' . $pathway->topic->name ?>
+                                    <a href="/category/<?= $pathway->topic->categories[0]->id ?>/<?= $pathway->topic->categories[0]->slug ?>/topic/<?= $pathway->topic->id ?>/<?= $pathway->topic->slug ?>">
+                                        <?= $topiclink ?>
+                                    </a></span>
 
                     </div>
                     <p><?php if (!empty($pathway->description)) : ?>
