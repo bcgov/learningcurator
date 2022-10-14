@@ -70,7 +70,7 @@ if ($this->Identity->isLoggedIn()) {
                         <?php else : ?>
                             <?= h($pathway->objective) ?>
                         <?php endif ?></p>
-
+<!-- This conditional is kind of a hack and we need to make people aware that the description isn't actually optional -->
                     <p> <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
                             View the <strong><?= h($pathway->name) ?></strong> pathway
                     </p>
