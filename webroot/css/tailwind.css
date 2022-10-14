@@ -632,6 +632,10 @@ video {
   visibility: visible;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
 }
@@ -662,6 +666,10 @@ video {
 
 .left-0 {
   left: 0px;
+}
+
+.bottom-4 {
+  bottom: 1rem;
 }
 
 .z-50 {
@@ -1098,6 +1106,10 @@ video {
 
 .content-center {
   align-content: center;
+}
+
+.content-end {
+  align-content: flex-end;
 }
 
 .items-center {

@@ -19,7 +19,7 @@
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" -->
 
     <div class="md:flex flex-col md:flex-row md:min-h-screen max-w-7xl justify-center mx-auto">
-        <div @click.away="open = false" class="flex flex-col flex-shrink-0 w-full md:w-60 text-slate-700 bg-sagegreen" x-data="{ open: false }">
+        <div @click.away="open = false" class="flex flex-col flex-shrink-0 justify-between w-full md:w-60 text-slate-700 bg-sagegreen" x-data="{ open: false }">
             <div class="sticky top-0">
                 <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 " role="banner">
                     <!-- sticky top-0 bg-slate-200-->
@@ -50,19 +50,33 @@
                             <a class="hover:no-underline block px-4 py-1 mt-2 mb-4 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?= $active ?>" href="/users/index">
                                 Curator Dashboard
                             </a>
-                        
-                            <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
-                            
-                            <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ((strpos($currentpage, '/category') !== false) || ($currentpage == '/categories')) {echo 'text-white bg-sagedark'; }?>">Categories</a>
-                       <?php endif; ?>
 
-                        <a href="/pathways" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ((strpos($currentpage, '/pathway') !== false) || ($currentpage == '/pathways')) {echo 'text-white bg-sagedark'; }?>">Pathways</a>
-                        <a href="/activities" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ((strpos($currentpage, '/activity') !== false) || ($currentpage == '/activities')) {echo 'text-white bg-sagedark'; }?>">Activities</a>
-                        <a href="/questions" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/questions') {echo 'text-white bg-sagedark'; }?>">About</a>
+                            <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
+
+                            <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ((strpos($currentpage, '/category') !== false) || ($currentpage == '/categories')) {
+                                                                                                                                                                echo 'text-white bg-sagedark';
+                                                                                                                                                            } ?>">Categories</a>
+                        <?php endif; ?>
+
+                        <a href="/pathways" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ((strpos($currentpage, '/pathway') !== false) || ($currentpage == '/pathways')) {
+                                                                                                                                                                echo 'text-white bg-sagedark';
+                                                                                                                                                            } ?>">Pathways</a>
+                        <a href="/activities" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ((strpos($currentpage, '/activity') !== false) || ($currentpage == '/activities')) {
+                                                                                                                                                                echo 'text-white bg-sagedark';
+                                                                                                                                                            } ?>">Activities</a>
+                        <a href="/questions" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/questions') {
+                                                                                                                                                                echo 'text-white bg-sagedark';
+                                                                                                                                                            } ?>">About</a>
                         <p class="font-semibold block mt-4 mb-1 mx-4 text-base">My Curator</p>
-                        <a href="/profile/follows" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/follows') {echo 'text-white bg-sagedark'; }?>">Followed Pathways</a>
-                        <a href="/profile/launches" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/launches') {echo 'text-white bg-sagedark'; }?>">Launched Activities</a>
-                        <a href="/profile/reports" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/reports') {echo 'text-white bg-sagedark'; }?>">Issues Reported</a>
+                        <a href="/profile/follows" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/follows') {
+                                                                                                                                                                echo 'text-white bg-sagedark';
+                                                                                                                                                            } ?>">Followed Pathways</a>
+                        <a href="/profile/launches" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/launches') {
+                                                                                                                                                                        echo 'text-white bg-sagedark';
+                                                                                                                                                                    } ?>">Launched Activities</a>
+                        <a href="/profile/reports" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/reports') {
+                                                                                                                                                                    echo 'text-white bg-sagedark';
+                                                                                                                                                                } ?>">Issues Reported</a>
                         <a href="/logout" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg">Logout</a>
 
                         <!-- search box -->
@@ -83,6 +97,7 @@
                         <!-- end search box -->
                     </nav>
 
+
                 <?php endif ?>
 
 
@@ -101,7 +116,8 @@
 
 
 
-            </div>
+            </div><img class="hidden md:block mt-3 px-2 sticky bottom-4" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
+
         </div>
         <div class="bg-white w-full" role="main">
 
@@ -110,34 +126,33 @@
             <?= $this->fetch('content') ?>
 
         </div>
-    </div>
+        <div class="p-6 bg-slate-100/80 text-center" role="contentinfo">
+            <!-- TODO Nori still needs some formatting help. Seems not quite right yet  -->
+            <img class="md:hidden my-3 px-2 max-w-75 mx-auto" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
 
-    <div class="p-6 bg-slate-100/80 text-center" role="contentinfo">
-        <!-- TODO Nori still needs some formatting help. Seems not quite right yet  -->
-        <div class="mb-6 max-w-prose text-lg text-slate-700 mx-auto italic">
-            We acknowledge with respect that the Learning Curator operates throughout B.C.
-            on the traditional lands of Indigenous peoples.
-        </div>
-
-        <div x-data="{ open: false }">
-            <button @click="open = ! open" class="inline-block p-3 bg-slate-200 hover:no-underline rounded-lg text-sm">Privacy Statement</button>
-            <div x-show="open" @click.outside="open = false" class="md:w-2/3 p-6 my-3 mx-auto rounded-lg bg-white text-sm">
-                Your personal information is collected by the BC Public Service Agency
-                in accordance with section 26(c) of the Freedom of Information and
-                Protection of Privacy Act for the purposes of managing and administering
-                employee development and training. If you have any questions, submit an
-                AskMyHR request at www.gov.bc.ca/myhr/contact or call 250-952-6000.
+            <div class="mb-6 max-w-prose text-lg text-slate-700 mx-auto italic">
+                We acknowledge with respect that the Learning Curator operates throughout B.C.
+                on the traditional lands of Indigenous peoples.
             </div>
+
+            <div x-data="{ open: false }">
+                <button @click="open = ! open" class="inline-block px-3 py-2 bg-slate-300 hover:no-underline rounded-lg text-sm">Privacy Statement</button>
+                <div x-show="open" @click.outside="open = false" class="md:w-2/3 p-6 my-3 mx-auto rounded-lg bg-white text-sm">
+                    Your personal information is collected by the BC Public Service Agency
+                    in accordance with section 26(c) of the Freedom of Information and
+                    Protection of Privacy Act for the purposes of managing and administering
+                    employee development and training. If you have any questions, submit an
+                    AskMyHR request at www.gov.bc.ca/myhr/contact or call 250-952-6000.
+                </div>
+            </div>
+
+
+
+
         </div>
-
-        <div class="flex justify-between">
-            <img class="mt-3 inline-block" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
-
-            <img class="mt-3 inline-block" src="/img/learning-centre-logo-wordmark.svg" height="100px" width="300px" alt="Learning Centre Logo">
-        </div>
-
-
     </div>
+
+
 
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
