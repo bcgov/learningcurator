@@ -55,7 +55,7 @@ if ($this->Identity->isLoggedIn()) {
             <?php foreach ($topic->pathways as $pathway) : ?>
                 <?php if ($pathway->status_id == 2) : ?>
                     <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
-                        <div class="p-3 mb-3 mt-8 bg-bluegreen text-white  hover:bg-slate-200 hover:text-slate-900 w-full rounded-l-full flex items-center justify-between">
+                        <div class="p-3 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-l-full flex items-center justify-between">
                             <h3 class="text-2xl ">
 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3" viewBox="0 0 16 16">
@@ -81,7 +81,7 @@ if ($this->Identity->isLoggedIn()) {
                 <?php else : ?>
                     <?php if ($role == 'curator' || $role == 'superuser') : ?>
                         <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
-                            <div class="p-3 mb-3 mt-8 bg-bluegreen text-white  hover:bg-slate-200 hover:text-slate-900 w-full rounded-l-full">
+                            <div class="p-3 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80 w-full rounded-l-full">
 
                                 <h3 class="text-2xl flex items-center justify-start">
 
