@@ -53,7 +53,7 @@ if ($this->Identity->isLoggedIn()) {
                         if ($pathway->status->name == 'Draft') $stat = 'bg-orange-400 text-white';
                         ?>
                         <?php if ($pathway->featured == 1) : ?>
-                            <span class="bg-green-600 text-white">Featured</span>
+                            <span class="bg-green-600 text-white py-1 px-2 rounded-full mr-3">Featured</span>
                         <?php endif ?>
                         <span class="<?= $stat ?> py-1 px-2 rounded-full mr-3"><?= $pathway->status->name ?></span>
                         <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tag inline-block" viewBox="0 0 16 16">
@@ -65,7 +65,11 @@ if ($this->Identity->isLoggedIn()) {
                             </a></span>
 
                     </div>
-                    <p><?= h($pathway->description) ?></p>
+                    <p><?php if (!empty($pathway->description)) : ?>
+                            <?= h($pathway->description) ?>
+                        <?php else : ?>
+                            <?= h($pathway->objective) ?>
+                        <?php endif ?></p>
 
                     <p> <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
                             View the <strong><?= h($pathway->name) ?></strong> pathway
