@@ -116,7 +116,7 @@
 
 
 
-                </div><img class="hidden md:block mt-3 px-2 sticky bottom-4" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
+                </div><img class="hidden md:block my-3 px-2 sticky bottom-4" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
 
             </div>
             <div class="bg-white w-full" role="main">
