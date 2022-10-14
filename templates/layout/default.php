@@ -11,7 +11,7 @@
     <link href="/css/tailwind.css" rel="stylesheet">
 </head>
 
-<body class="bg-slate-100 font-BCSans">
+<body class="bg-slate-50 font-BCSans">
 
     <!-- :class="{'dark': darkMode === true}"
       x-data="{'darkMode': false}" 
