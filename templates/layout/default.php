@@ -129,19 +129,18 @@
 
         </div>
 
-        <div class="p-6 bg-slate-200 text-center" role="contentinfo">
-            <!-- TODO Nori still needs some formatting help. Seems not quite right yet  -->
+        <div class="p-6 bg-slate-200 " role="contentinfo">
+           
             <img class="md:hidden my-3 px-2 max-w-75 mx-auto" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
 
-            <div class="mb-6 max-w-prose text-lg text-slate-700 mx-auto italic">
+            <div class="mb-6 max-w-prose text-lg text-slate-700 mx-auto italic text-center">
                 We acknowledge with respect that the Learning Curator operates throughout B.C.
                 on the traditional lands of Indigenous peoples.
             </div>
 
-            <div x-data="{ open: false }">
-                <button @click="open = ! open" class="inline-block px-3 py-2 bg-slate-300 hover:no-underline rounded-lg text-sm">Privacy Statement</button>
-                <div x-show="open" @click.outside="open = false" class="md:w-2/3 p-6 my-3 mx-auto rounded-lg bg-white text-sm">
-                    Your personal information is collected by the BC Public Service Agency
+            <div x-data="{ open: false }" class="leading-snug mx-4">
+                <button @click="open = ! open" class="inline text-darkblue text-sm hover:underline">Privacy Statement<span x-show="open">:</span></button>
+                <div x-show="open" @click.outside="open = false" class="inline text-sm">Your personal information is collected by the BC Public Service Agency
                     in accordance with section 26(c) of the Freedom of Information and
                     Protection of Privacy Act for the purposes of managing and administering
                     employee development and training. If you have any questions, submit an
