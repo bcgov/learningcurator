@@ -2219,6 +2219,10 @@ p {
     flex-basis: 20%;
   }
 
+  .lg\:basis-1\/2 {
+    flex-basis: 50%;
+  }
+
   .lg\:flex-row {
     flex-direction: row;
   }
