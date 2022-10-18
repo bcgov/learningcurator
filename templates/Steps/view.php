@@ -158,8 +158,8 @@ foreach ($step->pathways as $pathways) {
                         <?php foreach ($pathways->steps as $s) : ?>
                             <?php if ($s->status_id == 2) : ?>
                                 <?php $c = '' ?>
-                                <?php if ($s->id == $step->id) $c = 'active bg-gray-500 -ml-6' ?>
-                                <a class="border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+                                <?php if ($s->id == $step->id) $c = 'active bg-gray-500 -ml-5' ?>
+                                <a class="border border-slate-200 rounded-l-lg py-3 px-4 bg-bluegreen hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
                                     <?= h($s->name) ?>
                                 </a><?php else : ?>
                                 <?php if ($role == 'curator' || $role == 'superuser') : ?>
