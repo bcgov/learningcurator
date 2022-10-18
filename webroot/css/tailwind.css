@@ -886,6 +886,10 @@ video {
   margin-top: 0px;
 }
 
+.ml-4 {
+  margin-left: 1rem;
+}
+
 .block {
   display: block;
 }
@@ -1036,6 +1040,14 @@ video {
 
 .basis-4\/5 {
   flex-basis: 80%;
+}
+
+.basis-1\/6 {
+  flex-basis: 16.666667%;
+}
+
+.basis-5\/6 {
+  flex-basis: 83.333333%;
 }
 
 .origin-top-left {

@@ -77,7 +77,7 @@ foreach ($step->pathways as $pathways) {
             <!-- TODO add code to pull in pathway steps -->
             <span class="text-sm ml-3 justify-self-end flex-none"> <?= $stepacts ?> required activities</span>
         </div>
-        <div class="pl-8 text-lg">
+        <div class="pl-8 mb-5 text-lg">
             <p><span class="font-bold">Pathway Objective: </span>
                 <?= $step->pathways[0]->objective ?></p>
 
@@ -115,9 +115,9 @@ foreach ($step->pathways as $pathways) {
             <?php endif ?>
 
 
-<!-- TODO Shannon Q should this be progress for the step or the pathway? -->
-           <h3 class="mt-4 mb-1 text-darkblue font-semibold">Activity Progress</h3>
-            <div class="flex pbarcontainer mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-between">
+            <!-- TODO Shannon Q should this be progress for the step or the pathway? -->
+            <h3 class="mt-4 mb-1 text-darkblue font-semibold">Activity Progress</h3>
+            <div class="flex pbarcontainer mb-5 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-between">
                 <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
                 <span class="py-2 px-3 text-base total"></span>
             </div>
@@ -148,83 +148,45 @@ foreach ($step->pathways as $pathways) {
                     })
                     .catch((err) => console.error("error:", err));
             </script>
-            </div>
+        </div>
 
-
-
-            <!-- start drop-down -->
-            <div x-cloak @click.away="open = false" class="relative ml-16" x-data="{ open: false }">
-                <button @click="open = !open" class="px-4 py-2 text-sm font-semibold text-right bg-slate-200/80 rounded-t-lg dark:bg-slate-900 dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900/80 dark:hover:bg-slate-900 md:block hover:text-slate-900 focus:text-slate-900 hover:bg-slate-100/80  focus:bg-white focus:outline-none focus:shadow-outline">
-                    <span>Step Menu</span>
-                    <svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
-                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                </button>
-                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="z-50 absolute left-0 w-full md:w-3/4 lg:w-1/2 origin-top-left -ml-6 bg-white dark:bg-slate-900 shadow-lg rounded-lg">
-                    <div class="p-6">
-
-
-                        <h3 class="mb-3 text-2xl">Steps along this pathway</h3>
-                        <div class="">
-                            <!-- grid grid-cols-2 gap-4 -->
-                            <?php foreach ($step->pathways as $pathways) : ?>
-                                <?php foreach ($pathways->steps as $s) : ?>
-                                    <div class="">
-                                        <?php if ($s->status_id == 2) : ?>
-                                            <?php $c = '' ?>
-                                            <?php if ($s->id == $step->id) $c = 'bg-sky-700 text-white' ?>
-                                            <a class="block py-1 px-3 <?= $c ?> hover:bg-sky-700 hover:text-white hover:no-underline rounded-lg" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                                                <?= h($s->name) ?>
-                                            </a>
-                                            <!--<?= h($s->description) ?> -->
-                                        <?php else : ?>
-                                            <?php if ($role == 'curator' || $role == 'superuser') : ?>
-                                                <a class="block py-1 px-3 hover:bg-sky-700 hover:text-white hover:no-underline rounded-lg" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                                                    <span class="badge badge-warning">DRAFT</span> -
-                                                    <?= h($s->name) ?>
-                                                </a>
-                                            <?php endif; // are you a curator? 
-                                            ?>
-                                        <?php endif; // is published? 
-                                        ?>
-                                    </div>
-                                <?php endforeach ?>
-                            <?php endforeach ?>
-                        </div>
-
-                        <?php if (!empty($previousid) || !empty($upnextid)) : ?>
-                            <div class="flex justify-center p-3 bg-white dark:bg-slate-900/80 rounded-lg">
-                                <?php if (!empty($previousid)) : ?>
-                                    <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" class="inline-block m-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
-                                        Previous Step
+        <!-- TODO prevent current tab from being clicked -->
+        <div class="flex ml-4 mt-8">
+            <div class="basis-1/6 flex-none">
+                <nav class="flex flex-col gap-2">
+                    <?php foreach ($step->pathways as $pathways) : ?>
+                        <?php foreach ($pathways->steps as $s) : ?>
+                            <?php if ($s->status_id == 2) : ?>
+                                <?php $c = '' ?>
+                                <?php if ($s->id == $step->id) $c = 'active bg-gray-500 -ml-6' ?>
+                                <a class="border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+                                    <?= h($s->name) ?>
+                                </a><?php else : ?>
+                                <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                                    <a class="border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+                                        <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 mx-2 align-middle">DRAFT</span> -
+                                        <?= h($s->name) ?>
                                     </a>
-                                <?php endif ?>
-
-                                <?php if (!empty($upnextid)) : ?>
-                                    <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" class="inline-block m-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
-                                        Next Step
-                                    </a>
-                                <?php endif ?>
-                            </div>
-                        <?php endif ?>
-
-
-                    </div>
-                </div>
+                                <?php endif; // are you a curator? 
+                                ?>
+                            <?php endif; // is published? 
+                            ?> <?php endforeach ?>
+                    <?php endforeach ?>
+                </nav>
             </div>
-            <!-- /end drop-down -->
+            <div class="basis-5/6 flex-1 border-2 border-bluegreen rounded-r-lg p-6">
 
-            <div class="p-6 rounded-lg activity bg-slate-200/80 dark:bg-slate-900/80 dark:text-white">
                 <h2 class="mb-4 text-3xl">
                     <?= $step->name ?>
                 </h2>
                 <?php if ($step->status_id == 1) : ?>
-                    <span class="badge badge-warning">DRAFT</span>
+                    <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 mx-2 align-middle">DRAFT</span>
                 <?php endif ?>
-                <div class="mb-4 p-3 text-xl bg-white  dark:bg-slate-800 rounded-lg shadow-lg">
-                    <div class="text-xs">Step Objective</div>
+                <p><span class="font-bold">Objective: </span>
+
                     <?= $step->description ?>
-                </div>
+                </p>
+
                 <div class="">
                     <?php if (!empty($requiredacts)) : ?>
                         <h3 class="mt-6 text-2xl dark:text-white">Required Activities <span class="bg-black text-white dark:bg-white dark:text-black rounded-lg text-lg inline-block px-2"><?= $stepacts ?></span></h3>
@@ -277,10 +239,10 @@ foreach ($step->pathways as $pathways) {
 
 
                                     <!-- <form action="/activities/like/<?= $activity->id ?>"
-				x-on:click="liked++"
-				@submit.prevent="submitData">
-			<button><span x-text="liked"></span> likes</button>
-		</form> -->
+    x-on:click="liked++"
+    @submit.prevent="submitData">
+<button><span x-text="liked"></span> likes</button>
+</form> -->
 
                                     <?php
                                     preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $youtube);
@@ -326,8 +288,8 @@ foreach ($step->pathways as $pathways) {
                                                 <strong>Hyperlink:</strong> <?= $activity->hyperlink ?>
                                             </div>
                                             <!-- <div class="mb-3 p-3bg-white dark:bg-slate-800 rounded-lg">
-			<strong>Activity type:</strong> <?= $activity->activity_type->name ?>
-		</div> -->
+<strong>Activity type:</strong> <?= $activity->activity_type->name ?>
+</div> -->
 
                                             <div class="p-3 bg-white dark:bg-slate-800 rounded-lg">
 
@@ -498,8 +460,8 @@ foreach ($step->pathways as $pathways) {
                                         <strong>Hyperlink:</strong> <?= $activity->hyperlink ?>
                                     </div>
                                     <!-- <div class="mb-3 p-3 bg-slate-800 rounded-lg">
-			<strong>Activity type:</strong> <?= $activity->activity_type->name ?>
-		</div> -->
+<strong>Activity type:</strong> <?= $activity->activity_type->name ?>
+</div> -->
 
                                     <div class="p-3 bg-white dark:bg-slate-800 rounded-lg">
                                         <script>
@@ -625,35 +587,65 @@ foreach ($step->pathways as $pathways) {
             <?php endif ?>
 
             </div>
+
+
         </div>
+
+
     </div>
 
-    <script>
-        window.onload = function(event) {
-            loadStatus();
-        };
+    <?php if (!empty($previousid) || !empty($upnextid)) : ?>
+        <div class="flex justify-center p-3 bg-white dark:bg-slate-900/80 rounded-lg">
+            <?php if (!empty($previousid)) : ?>
+                <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" class="inline-block m-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
+                    Previous Step
+                </a>
+            <?php endif ?>
 
-        function loadStatus() {
-            fetch('/pathways/status/<?= $step->pathways[0]->id ?>', {
-                    method: 'GET'
-                })
-                .then((res) => res.json())
-                .then((json) => {
-                    if (json.percentage > 0) {
-                        let message = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts + '';
-                        if (json.percentage > 25) {
-                            document.querySelector('.pbar').style.width = json.percentage + '%';
-                        }
-                        if (json.percentage == 100) {
-                            document.querySelector('.pbar').innerHTML = message + ' - COMPLETED!';
-                        } else {
-                            document.querySelector('.pbar').innerHTML = message;
-                        }
-                    } else {
-                        document.querySelector('.pbarcontainer').innerHTML = '<span class="inline-block pt-1 px-3 h-8">Launch activities to see your progress here&hellip;</span>';
+            <?php if (!empty($upnextid)) : ?>
+                <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" class="inline-block m-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-lg hover:no-underline">
+                    Next Step
+                </a>
+            <?php endif ?>
+        </div>
+    <?php endif ?>
+
+
+</div>
+</div>
+</div>
+<!-- /end drop-down -->
+
+
+</div>
+</div>
+
+<script>
+    window.onload = function(event) {
+        loadStatus();
+    };
+
+    function loadStatus() {
+        fetch('/pathways/status/<?= $step->pathways[0]->id ?>', {
+                method: 'GET'
+            })
+            .then((res) => res.json())
+            .then((json) => {
+                if (json.percentage > 0) {
+                    let message = json.percentage + '% - ' + json.completed + ' of ' + json.requiredacts + '';
+                    if (json.percentage > 25) {
+                        document.querySelector('.pbar').style.width = json.percentage + '%';
                     }
-                    //console.log(json);
-                })
-                .catch((err) => console.error("error:", err));
-        }
-    </script>
+                    if (json.percentage == 100) {
+                        document.querySelector('.pbar').innerHTML = message + ' - COMPLETED!';
+                    } else {
+                        document.querySelector('.pbar').innerHTML = message;
+                    }
+                } else {
+                    document.querySelector('.pbarcontainer').innerHTML = '<span class="inline-block pt-1 px-3 h-8">Launch activities to see your progress here&hellip;</span>';
+                }
+                //console.log(json);
+            })
+            .catch((err) => console.error("error:", err));
+    }
+</script>
