@@ -74,7 +74,7 @@ foreach ($step->pathways as $pathways) {
 
             </h2>
             <!-- <span class="text-sm ml-3 justify-self-end flex-none"><?= h($pathways->steps) ?> steps | <?= $stepacts ?> activities</span> -->
-            <!-- TODO add code to pull in pathway steps -->
+            <!-- TODO Allan add code to pull in pathway steps -->
             <span class="text-sm ml-3 justify-self-end flex-none"> <?= $stepacts ?> required activities</span>
         </div>
         <div class="pl-8 mb-5 text-lg">
@@ -115,7 +115,7 @@ foreach ($step->pathways as $pathways) {
             <?php endif ?>
 
 
-            <!-- TODO Shannon Q should this be progress for the step or the pathway? -->
+            <!-- TODO Q should this be progress for the step or the pathway? -->
             <h3 class="mt-4 mb-1 text-darkblue font-semibold">Activity Progress</h3>
             <div class="flex pbarcontainer mb-5 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-between">
                 <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
@@ -150,10 +150,11 @@ foreach ($step->pathways as $pathways) {
                     .catch((err) => console.error("error:", err));
             </script>
         </div>
-        <!-- TODO Q should the step boxes be wider (prose width inside, not outside? Won't line up with top content then.) -->
+        <!-- TODO  Shannon Q should the step boxes be wider (prose width inside, not outside? Won't line up with top content then.) -->
 
-        <!-- TODO prevent current tab from being clicked -->
+        <!-- TODO Allan prevent current tab from being clicked -->
         <!-- TODO Q should active be grey and inactive blue or reverse?-->
+        <!--TODO Q too many colours? -->
         <div class="flex ml-4 mt-8">
             <div class="basis-1/6 flex-none">
                 <nav class="flex flex-col gap-2">
@@ -214,7 +215,7 @@ foreach ($step->pathways as $pathways) {
                                     <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
                                 </svg>
 
-                                <!-- TODO Change icon for activity based on activity type -->
+                                <!-- TODO Allan Change icon for activity based on activity type -->
 
 
                                 <div class="bg-white inset-1 rounded-r-sm flex-1">
@@ -279,7 +280,7 @@ foreach ($step->pathways as $pathways) {
                                                 </svg>
                                             </a>
 
-                                            <!-- TODO Long hyperlinks breaking cards on more info -->
+                                            <!-- TODO Nori Long hyperlinks breaking cards on more info -->
                                             <div x-data="{ open: false }">
                                                 <button @click="open = !open" class="text-sm text-sky-700 text-right">
                                                     <span>More info</span>
@@ -417,7 +418,7 @@ foreach ($step->pathways as $pathways) {
                                     <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
                                 </svg>
 
-                                <!-- TODO Change icon for activity based on activity type -->
+                                <!-- TODO Allan Change icon for activity based on activity type -->
 
 
                                 <div class="bg-white inset-1 rounded-r-sm flex-1">
@@ -548,7 +549,7 @@ foreach ($step->pathways as $pathways) {
 
                                                             <?= $this->Form->end() ?>
 
-
+<!-- TODO change report issue to modal? -->
 
                                                         </div>
                                                     </div> <!-- end hidden more info -->
@@ -601,7 +602,7 @@ foreach ($step->pathways as $pathways) {
                             <?php endif ?>
 
                             <?php if (!empty($upnextid)) : ?>
-                                <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" class="inline-block m-2 p-3 bg-darkblue hover:darkblue/80  rounded-lg text-white text-lg hover:no-underline">
+                                <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" class="inline-block m-2 p-2 bg-darkblue hover:darkblue/80  rounded-lg text-white text-lg hover:no-underline">
                                     Next Step
                                 </a>
                             <?php endif ?>

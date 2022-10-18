@@ -186,9 +186,9 @@ $this->assign('title', h($pathway->name));
                         <?php endforeach ?>
                     </nav>
                 </div>
-                <!-- TODO required activities not displaying per step -->
-                <!-- TODO add active highlighting to active tabs -->
-                <!-- TODO add default view to step 1 -->
+                <!-- TODO Allan required activities not displaying per step -->
+                <!-- TODO Allan add active highlighting to active tabs -->
+                <!-- TODO Allan add default view to step 1 -->
                 <!-- The tabs content -->
                 <div class="basis-4/5 flex-1 border-2 border-bluegreen rounded-r-lg p-6">
                     <script>
