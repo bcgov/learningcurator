@@ -75,59 +75,50 @@ foreach ($step->pathways as $pathways) {
             </h2>
             <!-- <span class="text-sm ml-3 justify-self-end flex-none"><?= h($pathways->steps) ?> steps | <?= $stepacts ?> activities</span> -->
             <!-- TODO add code to pull in pathway steps -->
-                <span class="text-sm ml-3 justify-self-end flex-none"> <?= $stepacts ?> required activities</span>
+            <span class="text-sm ml-3 justify-self-end flex-none"> <?= $stepacts ?> required activities</span>
         </div>
         <div class="pl-8 text-lg">
             <p><span class="font-bold">Pathway Objective: </span>
                 <?= $step->pathways[0]->objective ?></p>
 
-            <div class="p-4 bg-slate-100/80  dark:bg-slate-900/80 rounded-lg">
-                <?php if (empty($followid)) : ?>
-                    <div class="mb-2 float-right">
-                        <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users', 'action' => 'follow']]) ?>
-                        <?= $this->Form->control('pathway_id', ['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
-                        <button class="p-3 ml-3 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline">
-                            <svg class="inline-block" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pin-fill" viewBox="0 0 16 16">
-                                <path d="M4.146.146A.5.5 0 0 1 4.5 0h7a.5.5 0 0 1 .5.5c0 .68-.342 1.174-.646 1.479-.126.125-.25.224-.354.298v4.431l.078.048c.203.127.476.314.751.555C12.36 7.775 13 8.527 13 9.5a.5.5 0 0 1-.5.5h-4v4.5c0 .276-.224 1.5-.5 1.5s-.5-1.224-.5-1.5V10h-4a.5.5 0 0 1-.5-.5c0-.973.64-1.725 1.17-2.189A5.921 5.921 0 0 1 5 6.708V2.277a2.77 2.77 0 0 1-.354-.298C4.342 1.674 4 1.179 4 .5a.5.5 0 0 1 .146-.354z" />
-                            </svg> Follow Pathway
-                        </button>
-                        <?= $this->Form->end(); ?>
-                    </div>
-                <?php else : ?>
+
+
+
+            <?php if (empty($followid)) : ?>
+                <div class="my-3">
+                    <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users', 'action' => 'follow']]) ?>
+                    <?= $this->Form->control('pathway_id', ['type' => 'hidden', 'value' => $step->pathways[0]->id]) ?>
+                    <button class="py-2 px-4 bg-darkblue text-white rounded-lg hover:bg-darkblue/80">
+                        Follow Pathway<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pin ml-2 inline" viewBox="0 0 16 16">
+                            <path d="M4.146.146A.5.5 0 0 1 4.5 0h7a.5.5 0 0 1 .5.5c0 .68-.342 1.174-.646 1.479-.126.125-.25.224-.354.298v4.431l.078.048c.203.127.476.314.751.555C12.36 7.775 13 8.527 13 9.5a.5.5 0 0 1-.5.5h-4v4.5c0 .276-.224 1.5-.5 1.5s-.5-1.224-.5-1.5V10h-4a.5.5 0 0 1-.5-.5c0-.973.64-1.725 1.17-2.189A5.921 5.921 0 0 1 5 6.708V2.277a2.77 2.77 0 0 1-.354-.298C4.342 1.674 4 1.179 4 .5a.5.5 0 0 1 .146-.354zm1.58 1.408-.002-.001.002.001zm-.002-.001.002.001A.5.5 0 0 1 6 2v5a.5.5 0 0 1-.276.447h-.002l-.012.007-.054.03a4.922 4.922 0 0 0-.827.58c-.318.278-.585.596-.725.936h7.792c-.14-.34-.407-.658-.725-.936a4.915 4.915 0 0 0-.881-.61l-.012-.006h-.002A.5.5 0 0 1 10 7V2a.5.5 0 0 1 .295-.458 1.775 1.775 0 0 0 .351-.271c.08-.08.155-.17.214-.271H5.14c.06.1.133.191.214.271a1.78 1.78 0 0 0 .37.282z" />
+                        </svg></button>
+                    <?= $this->Form->end(); ?>
+                </div>
+            <?php else : ?>
+                <div class="my-3">
+                    <!-- TODO Allan add pin-angle to unfollow button to match follow button-->
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pin-angle" viewBox="0 0 16 16">
+                    <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146zm.122 2.112v-.002.002zm0-.002v.002a.5.5 0 0 1-.122.51L6.293 6.878a.5.5 0 0 1-.511.12H5.78l-.014-.004a4.507 4.507 0 0 0-.288-.076 4.922 4.922 0 0 0-.765-.116c-.422-.028-.836.008-1.175.15l5.51 5.509c.141-.34.177-.753.149-1.175a4.924 4.924 0 0 0-.192-1.054l-.004-.013v-.001a.5.5 0 0 1 .12-.512l3.536-3.535a.5.5 0 0 1 .532-.115l.096.022c.087.017.208.034.344.034.114 0 .23-.011.343-.04L9.927 2.028c-.029.113-.04.23-.04.343a1.779 1.779 0 0 0 .062.46z"/>
+                  </svg> -->
                     <?php
                     echo $this->Form->postLink(
                         __('Un-Follow Pathway'),
                         ['controller' => 'PathwaysUsers', 'action' => 'delete/' . $followid],
                         [
-                            'class' => 'mt-0 ml-3 float-right inline-block p-3 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-center hover:no-underline',
-                            'title' => 'Stop seeing your progress on this pathway',
+                            'class' => 'p-2 bg-darkblue text-white rounded-lg hover:no-underline',
+                            'title' => 'Stop seeing this pathway on your profile',
                             'confirm' => ''
                         ]
                     );
                     ?>
-                <?php endif ?>
-
-
-
-                <h1 class="mb-6 text-4xl">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="inline-block -mt-2" viewBox="0 0 16 16">
-                        <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
-                        <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z" />
-                    </svg>
-                    <?= $step->pathways[0]->name ?>
-                </h1>
-                <div class="mb-4 p-3 text-xl bg-white  dark:bg-slate-800 rounded-lg shadow-lg">
-                    <div class="text-xs">Pathway Objective</div>
-                    <?= $step->pathways[0]->objective ?>
                 </div>
-            </div>
+            <?php endif ?>
+
+
 
             <div class="pbarcontainer mt-1 mb-6 w-full h-8 bg-slate-50 dark:bg-slate-900/80 rounded-lg">
                 <span class="inline-block pbar pt-1 px-6 h-8 bg-sky-700 text-white rounded-lg"></span>
             </div>
-
-
-
 
 
 
