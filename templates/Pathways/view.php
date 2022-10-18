@@ -173,10 +173,12 @@ $this->assign('title', h($pathway->name));
 
                                 <!-- The tabs navigation -->
 
-                                <a :class="{ 'active bg-gray-500 -ml-8': tab === '<?= h($steps->slug) ?>' }" href="#" x-on:click="loadContent('<?= h($steps->slug) ?>' )" class="border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-bluegreen/80 text-white hover:no-underline"><?= h($steps->name) ?></a>
+                                <a id="tab-link" href="#" x-on:click="loadContent('<?= h($steps->slug) ?>' )" class="border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-bluegreen/80 text-white hover:no-underline"><?= h($steps->name) ?></a>
 
                                 <input type="hidden" id="<?= h($steps->slug) ?>_name" value="<?= h($steps->name) ?>"></input>
                                 <input type="hidden" id="<?= h($steps->slug) ?>_reqact" value="<?= $requiredacts ?> "></input>
+                                <input type="hidden" id="<?= h($steps->slug) ?>_desc" value="<?= h($steps->description) ?> "></input>
+                                <input type="hidden" id="<?= h($steps->slug) ?>_link" value="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>"></input>
 
                                 <!-- bring -->
                             <?php endif; // if published 
@@ -184,30 +186,26 @@ $this->assign('title', h($pathway->name));
                         <?php endforeach ?>
                     </nav>
                 </div>
-
+                <!-- TODO required activities not displaying per step -->
+                <!-- TODO add active highlighting to active tabs -->
+                <!-- TODO add default view to step 1 -->
                 <!-- The tabs content -->
                 <div class="basis-4/5 flex-1 border-2 border-bluegreen rounded-r-lg p-6">
                     <script>
                         function loadContent(stepID) {
                             document.getElementById('stepContent').innerHTML = '<h3 class="text-2xl font-semibold mb-1">' + document.getElementById(stepID + '_name').value + '</h3>' + '<p class="text-bluegreen font-semibold text-base">' +
-                            <?= $requiredacts ?> + document.getElementById(stepID + '_reqact').value + 'required activities</p>';
+                                <?= $requiredacts ?> + document.getElementById(stepID + '_reqact').value + 'required activities</p> <p><span class="font-bold">Objective: </span>' + document.getElementById(stepID + '_desc').value + '</p>' + '<a href="' + document.getElementById(stepID + '_link').value + '" class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">' + 'View ' + document.getElementById(stepID + '_name').value +
+                                '</a>';
+                            document.getElementById('tab-link').classList.add(" active bg-gray-500 -ml-8");
                         }
                     </script>
                     <div id="stepContent">
 
-
-                        <p><span class="font-bold">Objective: </span>
-                            <?= $steps->description ?></p>
                         <!-- <?php if ($role == 'curator' || $role == 'superuser') : ?>
                                 <span class="text-xs px-4 bg-slate-100/80 dark:bg-emerald-700 rounded-lg"><?= $steps->status->name ?></span>
                             <?php endif ?> -->
 
-                        <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="inline-block p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
-                            View Step
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-                                <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
-                            </svg>
-                        </a>
+
                     </div>
 
                 </div>
