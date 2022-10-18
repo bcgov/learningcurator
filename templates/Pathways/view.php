@@ -158,7 +158,7 @@ $this->assign('title', h($pathway->name));
 
         <!-- TODO Shannon Q: do steps have titles? -->
         <?php if (!empty($pathway->steps)) : ?>
-            <div x-data id="tab_wrapper" class="flex ml-8">
+            <div x-data id="tab_wrapper" class="flex ml-4">
                 <div class="basis-1/5 flex-none">
                     <nav class="flex flex-col gap-2">
                         <?php foreach ($pathway->steps as $steps) : ?>
@@ -173,7 +173,7 @@ $this->assign('title', h($pathway->name));
 
                                 <!-- The tabs navigation -->
 
-                                <a id="tab-link-<?= h($steps->slug) ?>" href="#" x-on="loadContent('step-1')" x-on:click="loadContent('<?= h($steps->slug) ?>' )" class="border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-bluegreen/80 text-white hover:no-underline"><?= h($steps->name) ?></a>
+                                <a id="tab-link-<?= h($steps->slug) ?>" href="#" x-on="loadContent('step-1')" x-on:click="loadContent('<?= h($steps->slug) ?>' )" class="border border-slate-200 rounded-l-lg py-3 px-4 bg-bluegreen hover:bg-bluegreen/80 text-white hover:no-underline"><?= h($steps->name) ?></a>
 
                                 <input type="hidden" id="<?= h($steps->slug) ?>_name" value="<?= h($steps->name) ?>"></input>
                                 <input type="hidden" id="<?= h($steps->slug) ?>_reqact" value="<?= $requiredacts ?> "></input>
