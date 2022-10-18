@@ -40,8 +40,13 @@ foreach ($step->pathways as $pathways) {
     }
 }
 ?>
-<div class="p-6 w-full bg-top bg-no-repeat bg-fixed min-h-screen rounded-tr-xl" style="background-image: url('<?= h($step->pathways[0]->topic->categories[0]->image_path) ?>')">
 
+<header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed.jpg);">
+    <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg p-4 flex">
+        <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Pathways</h1>
+    </div>
+</header>
+<div class="p-8 pt-4 w-full text-xl">
     <nav class="bg-slate-100/80  dark:bg-slate-900/80 rounded-lg p-3 mb-3" aria-label="breadcrumb">
         <!-- <a href="/categories/index">Categories</a> /  -->
         <a href="/category/<?= h($step->pathways[0]->topic->categories[0]->id) ?>/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>"><?= h($step->pathways[0]->topic->categories[0]->name) ?></a> /
