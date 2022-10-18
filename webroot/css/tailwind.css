@@ -2244,4 +2244,8 @@ p {
   .xl\:w-3\/5 {
     width: 60%;
   }
+
+  .xl\:basis-2\/5 {
+    flex-basis: 40%;
+  }
 }
