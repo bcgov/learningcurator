@@ -158,7 +158,7 @@ $this->assign('title', h($pathway->name));
 
         <!-- TODO Shannon Q: do steps have titles? -->
         <?php if (!empty($pathway->steps)) : ?>
-            <div x-data="{ tab: 'step-1' }" id="tab_wrapper" class="flex ml-8">
+            <div x-data id="tab_wrapper" class="flex ml-8">
                 <div class="basis-1/5 flex-none">
                     <nav class="flex flex-col gap-2">
                         <?php foreach ($pathway->steps as $steps) : ?>
@@ -173,7 +173,7 @@ $this->assign('title', h($pathway->name));
 
                                 <!-- The tabs navigation -->
 
-                                <a id="tab-link" href="#" x-on:click="loadContent('<?= h($steps->slug) ?>' )" class="border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-bluegreen/80 text-white hover:no-underline"><?= h($steps->name) ?></a>
+                                <a id="tab-link-<?= h($steps->slug) ?>" href="#" x-on="loadContent('step-1')" x-on:click="loadContent('<?= h($steps->slug) ?>' )" class="border border-slate-200 rounded-l-lg py-3 px-6 bg-bluegreen hover:bg-bluegreen/80 text-white hover:no-underline"><?= h($steps->name) ?></a>
 
                                 <input type="hidden" id="<?= h($steps->slug) ?>_name" value="<?= h($steps->name) ?>"></input>
                                 <input type="hidden" id="<?= h($steps->slug) ?>_reqact" value="<?= $requiredacts ?> "></input>
@@ -193,10 +193,10 @@ $this->assign('title', h($pathway->name));
                 <div class="basis-4/5 flex-1 border-2 border-bluegreen rounded-r-lg p-6">
                     <script>
                         function loadContent(stepID) {
-                            document.getElementById('stepContent').innerHTML = '<h3 class="text-2xl font-semibold mb-1">' + document.getElementById(stepID + '_name').value + '</h3>' + '<p class="text-bluegreen font-semibold text-base">' +
+                            document.getElementById('stepContent').innerHTML = '<div> <h3 class="text-2xl font-semibold mb-1">' + document.getElementById(stepID + '_name').value + '</h3>' + '<p class="text-bluegreen font-semibold text-base">' +
                                 <?= $requiredacts ?> + document.getElementById(stepID + '_reqact').value + 'required activities</p> <p><span class="font-bold">Objective: </span>' + document.getElementById(stepID + '_desc').value + '</p>' + '<a href="' + document.getElementById(stepID + '_link').value + '" class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">' + 'View ' + document.getElementById(stepID + '_name').value +
-                                '</a>';
-                            document.getElementById('tab-link').classList.add(" active bg-gray-500 -ml-8");
+                                '</a></div>';
+                            document.getElementById('tab-link-<?= h($steps->slug) ?>').classList.add(" active bg-gray-500 -ml-8");
                         }
                     </script>
                     <div id="stepContent">
