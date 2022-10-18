@@ -1928,6 +1928,10 @@ p {
   background-color: rgb(112 119 90 / 0.8);
 }
 
+.hover\:bg-slate-700\/80:hover {
+  background-color: rgb(51 65 85 / 0.8);
+}
+
 .hover\:text-slate-900:hover {
   --tw-text-opacity: 1;
   color: rgb(15 23 42 / var(--tw-text-opacity));
