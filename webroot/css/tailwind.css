@@ -862,10 +862,6 @@ video {
   margin-right: 1rem;
 }
 
-.mt-0 {
-  margin-top: 0px;
-}
-
 .ml-16 {
   margin-left: 4rem;
 }
@@ -884,6 +880,10 @@ video {
 
 .ml-auto {
   margin-left: auto;
+}
+
+.mt-0 {
+  margin-top: 0px;
 }
 
 .block {
