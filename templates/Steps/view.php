@@ -47,7 +47,7 @@ foreach ($step->pathways as $pathways) {
     </div>
 </header>
 <div class="p-8 pt-4 w-full text-xl">
-<nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
+    <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
         <a href="/category/<?= h($step->pathways[0]->topic->categories[0]->id) ?>/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>" class="hover:underline"><?= h($step->pathways[0]->topic->categories[0]->name) ?></a> >
         <a href="/category/<?= h($step->pathways[0]->topic->categories[0]->id) ?>/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/topic/<?= h($step->pathways[0]->topic->id) ?>/<?= h($step->pathways[0]->topic->slug) ?>" class="hover:underline"><?= h($step->pathways[0]->topic->name) ?></a> >
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-signpost-2 mr-1 inline-block" viewBox="0 0 16 16">
@@ -55,9 +55,16 @@ foreach ($step->pathways as $pathways) {
         </svg><a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= h($step->pathways[0]->slug) ?>"><?= h($step->pathways[0]->name) ?></a> /
         <?= $step->name ?>
     </nav>
-    
+    <?php if ($role == 'curator' || $role == 'superuser') : ?>
+        <div class="p-4 float-right">
+            <?= $this->Html->link(
+                __('Edit Step'),
+                ['controller' => 'Steps', 'action' => 'edit', $step->id],
+                ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']
+            ) ?>
+        </div>
 
-
+    <?php endif ?>
 
 
 
@@ -87,16 +94,6 @@ foreach ($step->pathways as $pathways) {
             ?>
         <?php endif ?>
 
-        <?php if ($role == 'curator' || $role == 'superuser') : ?>
-            <div class="float-right ml-3">
-                <?= $this->Html->link(
-                    __('Edit Step'),
-                    ['controller' => 'Steps', 'action' => 'edit', $step->id],
-                    ['class' => 'mt-2 inline-block py-2 px-6 bg-slate-200 text-black rounded-lg text-center hover:no-underline']
-                );
-                ?>
-            </div> <!-- /.btn-group -->
-        <?php endif ?>
 
 
         <h1 class="mb-6 text-4xl">
