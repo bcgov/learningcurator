@@ -49,21 +49,21 @@ if ($this->Identity->isLoggedIn()) {
 
 
 
-        <h3 class="text-xl">Frequently Asked Questions</h3>
+        <h3 class="text-xl text-darkblue">Frequently Asked Questions</h3>
         <?php foreach ($questions as $question) : ?>
             <?php if ($question->status_id == 2) : ?>
-                <div class="p-3 my-3 bg-white dark:bg-slate-800 rounded-lg">
+                <div class="p-3 my-3 border border-sky-700 rounded-lg">
                     <details>
                         <summary id="<?= h($question->slug) ?>"><?= h($question->title) ?></summary>
 
-                        <div class="p-3 bg-slate-200 dark:bg-slate-700 rounded-lg">
+                        <div class="text-base">
                             <?= $question->content ?>
                         </div>
 
                         <?php if ($role == 'curator' || $role == 'superuser') : ?>
-                            <div class="btn-group mt-3">
-                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id], ['class' => 'btn btn-primary']) ?>
-                                <?= $this->Form->postLink(__('Delete Question'), ['action' => 'delete', $question->id], ['confirm' => __('Are you sure you want to delete # {0}?', $question->id), 'class' => 'btn btn-danger']) ?>
+                            <div class="mt-3 text-right">
+                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id], ['class' => 'inline-block px-3 py-1 text-white text-base bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg']) ?>
+                                <?= $this->Form->postLink(__('Delete Question'), ['action' => 'delete', $question->id], ['confirm' => __('Are you sure you want to delete # {0}?', $question->id), 'class' => 'inline-block px-3 py-1 text-base hover:bg-red-700/80 text-white bg-red-700 hover:no-underline rounded-lg']) ?>
                             </div>
                         <?php endif ?>
 
