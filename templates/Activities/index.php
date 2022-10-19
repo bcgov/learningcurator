@@ -13,6 +13,7 @@ if ($this->Identity->isLoggedIn()) {
     $uid = $this->Identity->get('id');
 }
 ?>
+
 <header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/flickr-james-wheeler-49993278088_08ea00ed09_k.jpg);">
     <div class="bg-sagedark/90 h-44 w-72 drop-shadow-lg p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Activities</h1>
@@ -153,7 +154,7 @@ if ($this->Identity->isLoggedIn()) {
                                                 <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
                                             </svg>
                                         </a>
-                                        <!-- TODO Nori Long hyperlinks breaking cards on more info -->
+                                        <!-- TODO Allan Long hyperlinks breaking cards on more info. Add to site js, see https://css-tricks.com/better-line-breaks-for-long-urls/ -->
                                         <div x-data="{ open: false }">
                                             <button @click="open = !open" class="text-sm text-sky-700 text-right">
                                                 <span>More info</span>
