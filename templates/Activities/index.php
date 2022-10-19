@@ -86,7 +86,7 @@ if ($this->Identity->isLoggedIn()) {
             </div>
         </div>
     </div>
-    <div class="flex lg:flex-wrap flex-col lg:flex-row">
+    <div class="grid lg:grid-cols-2 gap-4 items-start">
                 <?php foreach ($activities as $activity) : ?>
                     <?php
                     // #TODO Allan move this back into the controller and simplify
@@ -101,7 +101,7 @@ if ($this->Identity->isLoggedIn()) {
                     ?>
                     <!-- TODO Nori make this two columns of cards at xl screen size -->
 
-                    <div class="lg:basis-1/2 flex-1 rounded-md bg-sagedark hover:bg-sagedark/80 mb-4 p-0.5">
+                    <div class="align-self-start rounded-md bg-sagedark hover:bg-sagedark/80 p-0.5">
                         <div class="flex flex-row justify-between">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-journal-text mx-3 my-4 flex-none" viewBox="0 0 16 16">
                                 <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
