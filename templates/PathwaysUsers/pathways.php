@@ -12,22 +12,23 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 
-<header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed.jpg);">
-    <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
-        <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Pathways</h1>
-    </div>
-</header>
-<div class="p-8 text-lg">
-    <div class="max-w-prose">
-        <h2 class="mb-3 text-2xl text-darkblue font-semibold">Followed Pathways</h2>
-
-        <p class="mb-3">
-            Category intro text here</p>
-    </div>
 
 
-<?php if (!$pathways->isEmpty()) : ?>
-    
+
+<?php if (!$pathways->isEmpty()) : ?><header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed.jpg);">
+        <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
+            <h1 class="text-white text-3xl font-bold m-auto tracking-wide">My Curator</h1>
+        </div>
+    </header>
+    <!-- TODO Q should the title be followed pathways? My Curator? -->
+    <div class="p-8 text-lg">
+        <div class="max-w-prose">
+            <h2 class="mb-3 text-2xl text-darkblue font-semibold">Followed Pathways</h2>
+
+            <p class="mb-3">
+            When you follow a pathway, it will be listed here, so the next time you login, you can jump right to it.</p>
+        </div>
+
         <?php foreach ($pathways as $path) : ?>
 
             <div class="p-6 mb-3 w-full bg-center bg-no-repeat rounded-lg" style="background-image: url('<?= h($path->pathway->topic->categories[0]->image_path) ?>')">
@@ -109,7 +110,9 @@ if ($this->Identity->isLoggedIn()) {
     <?php else : ?>
 
         <header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/cape-scott-trail-n-r-t-on-flckr.jpg);">
-            <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex"><h1 class="text-white text-3xl font-bold m-auto tracking-wide">Getting Started</h1></div>
+            <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
+                <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Getting Started</h1>
+            </div>
         </header>
         <div class="p-8 text-xl max-w-prose">
             <h2 class="mb-3 text-2xl text-darkblue font-semibold">Find your path</h2>
