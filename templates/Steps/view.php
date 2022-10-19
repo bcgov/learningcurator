@@ -222,7 +222,7 @@ foreach ($step->pathways as $pathways) {
 
                                     <div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
                                         <div class="p-3 text-lg">
-                                            <a href="/profile/launches" class="inline-block p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
+                                            <a href="/profile/launches" class="inline-block float-right p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
                                                 Launched
                                             </a>
 
@@ -426,7 +426,7 @@ foreach ($step->pathways as $pathways) {
                                     <div x-data="{ count: <?= $completed ?> }">
 
                                         <div class="p-3 text-lg">
-                                            <a href="/profile/launches" class="inline-block p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
+                                            <a href="/profile/launches" class="inline-block float-right p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
                                                 Launched
                                             </a>
 
