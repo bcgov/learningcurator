@@ -46,13 +46,13 @@ if ($this->Identity->isLoggedIn()) {
         <?php endif ?>
 
 
+<!-- TODO Nori change this to accordions rather than details -->
 
 
-
-        <h3 class="text-xl text-darkblue">Frequently Asked Questions</h3>
+        <h3 class="text-xl text-darkblue font-semibold">Frequently Asked Questions</h3>
         <?php foreach ($questions as $question) : ?>
             <?php if ($question->status_id == 2) : ?>
-                <div class="p-3 my-3 border border-sky-700 rounded-lg">
+                <div class="p-3 my-3 border border-sky-700 rounded-lg hover:cursor-pointer">
                     <details>
                         <summary id="<?= h($question->slug) ?>"><?= h($question->title) ?></summary>
 
