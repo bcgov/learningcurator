@@ -58,7 +58,7 @@ if ($this->Identity->isLoggedIn()) {
                                     </a></span>
                             </div>
 
-                            
+
 
                             <!-- <div>Followed on:
 		<?= $this->Time->format($path->date_start, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
@@ -71,32 +71,7 @@ if ($this->Identity->isLoggedIn()) {
                             <?php endif ?>
 
 
-                            <div class="pbarcontainer<?= $path->pathway->id ?> sticky top-0 my-1 w-full h-8 bg-slate-50 dark:bg-slate-900/80 rounded-lg">
-                                <span class="inline-block pbar<?= $path->pathway->id ?> pt-2 px-6 h-8 text-sm bg-sky-700 text-white rounded-lg"></span>
-                            </div>
-                            <script>
-                                fetch('/pathways/status/<?= $path->pathway->id ?>', {
-                                        method: 'GET'
-                                    })
-                                    .then((res<?= $path->pathway->id ?>) => res<?= $path->pathway->id ?>.json())
-                                    .then((json<?= $path->pathway->id ?>) => {
-                                        if (json<?= $path->pathway->id ?>.percentage > 0) {
-                                            let message = json<?= $path->pathway->id ?>.percentage + '% - ' + json<?= $path->pathway->id ?>.completed + ' of ' + json<?= $path->pathway->id ?>.requiredacts;
-                                            if (json<?= $path->pathway->id ?>.percentage > 25) {
-                                                document.querySelector('.pbar<?= $path->pathway->id ?>').style.width = json<?= $path->pathway->id ?>.percentage + '%';
-                                            }
-                                            if (json<?= $path->pathway->id ?>.percentage == 100) {
-                                                document.querySelector('.pbar<?= $path->pathway->id ?>').innerHTML = message + ' - COMPLETED!';
-                                            } else {
-                                                document.querySelector('.pbar<?= $path->pathway->id ?>').innerHTML = message;
-                                            }
-                                        } else {
-                                            document.querySelector('.pbarcontainer<?= $path->pathway->id ?>').innerHTML = ''; //'<span class="inline-block pt-1 px-3 h-8">Launch activities to see your progress here&hellip;</span>';
-                                        }
-                                        //console.log(json);
-                                    })
-                                    .catch((err) => console.error("error:", err));
-                            </script>
+
                             <p><?php if (!empty($path->pathway->description)) : ?>
                                     <?= h($path->pathway->description) ?>
                                 <?php else : ?>
@@ -106,6 +81,38 @@ if ($this->Identity->isLoggedIn()) {
                             <p class="mb-2"> <a href="/<?= h($path->pathway->topic->categories[0]->slug) ?>/<?= h($path->pathway->topic->slug) ?>/pathway/<?= h($path->pathway->slug) ?>" class="text-sky-700 underline">
                                     View the <strong><?= h($path->pathway->name) ?></strong> pathway</a>
                             </p>
+                            <h3 class="mt-4 mb-1 text-darkblue font-semibold">Activity Progress</h3>
+                            <div class="flex pbarcontainer mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-between">
+                                <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
+                                <span class="py-2 px-3 text-base total"></span>
+                            </div>
+                            <!-- TODO Nori adjust progress bar text when percentage is small and doesn't fit text -->
+                            <script>
+                                fetch('/pathways/status/<?= $path->pathway->id ?>', {
+                                        method: 'GET'
+                                    })
+                                    .then((res) => res.json())
+                                    .then((json) => {
+                                        if (json.percentage > 0) {
+                                            let launched = json.completed + ' launched';
+                                            let remaining = (json.requiredacts - json.completed) + ' remaining';
+
+                                            document.querySelector('.pbar').style.width = json.percentage + '%';
+
+                                            if (json.percentage == 100) {
+                                                document.querySelector('.pro').innerHTML = 'Pathway completed!';
+                                            } else {
+                                                document.querySelector('.pro').innerHTML = launched;
+                                                document.querySelector('.total').innerHTML = remaining;
+                                            }
+
+                                        } else {
+                                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
+                                        }
+                                        //console.log(json);
+                                    })
+                                    .catch((err) => console.error("error:", err));
+                            </script>
                         </div>
                     </div>
 
