@@ -91,15 +91,15 @@ if ($this->Identity->isLoggedIn()) {
                                 fetch('/pathways/status/<?= $path->pathway->id ?>', {
                                         method: 'GET'
                                     })
-                                    .then((res) => res.json())
-                                    .then((json) => {
-                                        if (json.percentage > 0) {
-                                            let launched = json.completed + ' launched';
-                                            let remaining = (json.requiredacts - json.completed) + ' remaining';
+                                    .then((res<?= $path->pathway->id ?>) => res<?= $path->pathway->id ?>.json())
+                                    .then((json<?= $path->pathway->id ?>) => {
+                                        if (json<?= $path->pathway->id ?>.percentage > 0) {
+                                            let launched = json<?= $path->pathway->id ?>.completed + ' launched';
+                                            let remaining = (json<?= $path->pathway->id ?>.requiredacts - json<?= $path->pathway->id ?>.completed) + ' remaining';
 
-                                            document.querySelector('.pbar').style.width = json.percentage + '%';
+                                            document.querySelector('.pbar').style.width = json<?= $path->pathway->id ?>.percentage + '%';
 
-                                            if (json.percentage == 100) {
+                                            if (json<?= $path->pathway->id ?>.percentage == 100) {
                                                 document.querySelector('.pro').innerHTML = 'Pathway completed!';
                                             } else {
                                                 document.querySelector('.pro').innerHTML = launched;
@@ -107,7 +107,7 @@ if ($this->Identity->isLoggedIn()) {
                                             }
 
                                         } else {
-                                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
+                                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json<?= $path->pathway->id ?>.requiredacts + ' activities remaining</span>';
                                         }
                                         //console.log(json);
                                     })
@@ -116,8 +116,7 @@ if ($this->Identity->isLoggedIn()) {
                         </div>
                     </div>
 
-                    <!-- TODO Allan require curators to enter descriptions and have a minimum/maximum length of 130 chars/ 325 chars (2 lines prose length/5 lines prose length) -->
-                    <!-- TODO Shannon Q: objectives vs descriptions and when to use each -->
+                   
                 </div>
             </div>
 
