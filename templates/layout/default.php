@@ -17,8 +17,8 @@
       x-data="{'darkMode': false}" 
       x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" -->
-    <div class="flex flex-col max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row md:min-h-screen">
+    <div class="flex flex-col max-w-7xl mx-auto min-h-screen justify-between">
+        <div class="flex flex-col md:flex-row grow">
             <div @click.away="open = false" class="flex flex-col flex-shrink-0 justify-between w-full md:w-60 text-slate-700 bg-sagegreen" x-data="{ open: false }">
                 <div class="sticky top-0">
                     <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 " role="banner">
@@ -116,7 +116,8 @@
 
 
 
-                </div><img class="hidden md:block my-3 px-2 sticky bottom-4" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
+                </div>
+                <img class="hidden md:block my-3 px-2 sticky bottom-4" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
 
             </div>
             <div class="bg-white w-full" role="main">
@@ -138,7 +139,7 @@
                 on the traditional lands of Indigenous peoples.
             </div>
 
-            <div x-data="{ open: false }" class="leading-snug mx-4">
+            <div x-data="{ open: false }" class="leading-snug my-4">
                 <button @click="open = ! open" class="inline text-darkblue text-sm hover:underline">Privacy Statement<span x-show="open">:</span></button>
                 <div x-show="open" @click.outside="open = false" class="inline text-sm">Your personal information is collected by the BC Public Service Agency
                     in accordance with section 26(c) of the Freedom of Information and

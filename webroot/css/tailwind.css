@@ -1038,6 +1038,10 @@ video {
   flex-grow: 0;
 }
 
+.grow {
+  flex-grow: 1;
+}
+
 .basis-1\/5 {
   flex-basis: 20%;
 }

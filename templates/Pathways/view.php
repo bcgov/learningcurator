@@ -212,3 +212,5 @@ $this->assign('title', h($pathway->name));
             ?>
 
         </div>
+    </div>
+</div>
