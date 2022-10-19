@@ -30,7 +30,7 @@ if ($this->Identity->isLoggedIn()) {
         </div>
         <!-- TODO Q do we want to have sort/filter options here? -->
         <?php foreach ($pathways as $path) : ?>
-
+<!-- TODO Nori fix hover here - cards or links only, not both -->
             <div class="rounded-md  bg-bluegreen hover:bg-bluegreen/80 mb-4 p-0.5">
                 <div class="flex flex-row justify-between">
 
@@ -122,37 +122,37 @@ if ($this->Identity->isLoggedIn()) {
             </div>
 
 
-    </div>
-<?php endforeach; ?>
 
-<?php else : ?>
+        <?php endforeach; ?>
 
-    <header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/cape-scott-trail-n-r-t-on-flckr.jpg);">
-        <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
-            <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Getting Started</h1>
+    <?php else : ?>
+
+        <header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/cape-scott-trail-n-r-t-on-flckr.jpg);">
+            <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
+                <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Getting Started</h1>
+            </div>
+        </header>
+        <div class="p-8 text-xl max-w-prose">
+            <h2 class="mb-3 text-2xl text-darkblue font-semibold">Find your path</h2>
+
+            <p class="mb-3">
+                Curator pathways are organized into <a href="/categories" class="underline font-medium">categories</a> and then <span class="font-italic">topics</span>. You can explore all the <a href="/pathways" class="underline font-medium">pathways</a> we have to offer and when you see one you like, you can follow it.</p>
+            <p>When you follow a pathway, it will be listed here, so the next time you login, you can jump right to it.
+            </p>
+            <p>As you launch activities contained in a pathway you'll be able to see your progress here too.</p>
+
+
+            <a href="/categories" class="inline-block p-3 mt-4 mr-4 bg-sagedark text-white text-xl hover:no-underline rounded-lg">
+                Explore Categories
+            </a>
+            <a href="/pathways" class="inline-block p-3 mt-4 bg-darkblue text-white text-xl hover:no-underline rounded-lg">
+                Explore Pathways
+            </a>
+
         </div>
-    </header>
-    <div class="p-8 text-xl max-w-prose">
-        <h2 class="mb-3 text-2xl text-darkblue font-semibold">Find your path</h2>
-
-        <p class="mb-3">
-            Curator pathways are organized into <a href="/categories" class="underline font-medium">categories</a> and then <span class="font-italic">topics</span>. You can explore all the <a href="/pathways" class="underline font-medium">pathways</a> we have to offer and when you see one you like, you can follow it.</p>
-        <p>When you follow a pathway, it will be listed here, so the next time you login, you can jump right to it.
-        </p>
-        <p>As you launch activities contained in a pathway you'll be able to see your progress here too.</p>
 
 
-        <a href="/categories" class="inline-block p-3 mt-4 mr-4 bg-sagedark text-white text-xl hover:no-underline rounded-lg">
-            Explore Categories
-        </a>
-        <a href="/pathways" class="inline-block p-3 mt-4 bg-darkblue text-white text-xl hover:no-underline rounded-lg">
-            Explore Pathways
-        </a>
+    <?php endif ?>
+
 
     </div>
-
-
-<?php endif ?>
-
-
-</div>
