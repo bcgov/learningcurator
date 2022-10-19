@@ -28,8 +28,7 @@ if ($this->Identity->isLoggedIn()) {
         
 
     </div>
-    <!-- TODO Nori figure out small pixel gap showing content at top of page on scroll -->
-    <div class="max-w-full flex flex-col lg:flex-row lg:gap-4 sticky bg-white top-0 z-50 py-2">
+    <div class="max-w-full flex flex-col lg:flex-row lg:gap-4 sticky bg-white -top-[2px] z-50 py-2">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
         <div class="text-sm text-sky-700">
             <!-- TODO Allan update pagination and styling -->
