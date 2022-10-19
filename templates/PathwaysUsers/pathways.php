@@ -12,12 +12,22 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 
+<header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed.jpg);">
+    <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
+        <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Pathways</h1>
+    </div>
+</header>
+<div class="p-8 text-lg">
+    <div class="max-w-prose">
+        <h2 class="mb-3 text-2xl text-darkblue font-semibold">Followed Pathways</h2>
 
+        <p class="mb-3">
+            Category intro text here</p>
+    </div>
 
 
 <?php if (!$pathways->isEmpty()) : ?>
-    <div class="p-8 dark:text-white">
-        <h1 class="mb-3 text-lg sr-only">Followed Pathways</h1>
+    
         <?php foreach ($pathways as $path) : ?>
 
             <div class="p-6 mb-3 w-full bg-center bg-no-repeat rounded-lg" style="background-image: url('<?= h($path->pathway->topic->categories[0]->image_path) ?>')">
