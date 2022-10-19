@@ -65,7 +65,7 @@ $this->assign('title', $pagetitle);
                         <?php if ($role == 'curator' || $role == 'superuser') : ?>
                             <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline">
                                 <div class="rounded-md shadow-lg p-0.5 bg-sky-700  hover:bg-sky-700/80 mb-4">
-                                    DRAFT
+                                <span class="bg-orange-400 text-white rounded-lg px-2 py-1 m-1 text-sm align-middle float-right" title="Edit to set to publish">DRAFT</span>
                                     <h3 class="text-xl text-white p-2 hover:no-underline "><?= $topic->name ?>
                                         <!-- topic_id: <?= $topic->id ?> -->
                                     </h3>
