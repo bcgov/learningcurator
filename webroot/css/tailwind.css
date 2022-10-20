@@ -1610,6 +1610,14 @@ video {
   font-weight: 500;
 }
 
+.font-light {
+  font-weight: 300;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
 .uppercase {
   text-transform: uppercase;
 }
@@ -1953,6 +1961,10 @@ p {
 .focus\:bg-slate-200:focus {
   --tw-bg-opacity: 1;
   background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+}
+
+.focus\:bg-slate-700\/80:focus {
+  background-color: rgb(51 65 85 / 0.8);
 }
 
 .focus\:text-slate-900:focus {

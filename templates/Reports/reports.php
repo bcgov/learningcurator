@@ -42,32 +42,32 @@ if ($this->Identity->isLoggedIn()) {
                         <?php else : ?>
                             <div class="italic text-slate-700 mt-2">Thank you for your report! A Curator will respond to your message soon.</div>
                         <?php endif ?>
-
+                        <?= $this->Form->postLink(__('Delete Issue Report'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'inline-block my-2 text-red-500 underline hover:text-red-700 hover:cursor-pointer']) ?>
 
                         <?php if ($role == 'curator' || $role == 'superuser') : ?>
 
 
                             <div x-data="{ open: false }">
-                                <button @click="open = ! open" class="inline-block p-3 mb-1 ml-3 bg-slate-200 dark:bg-sky-700 dark:hover:bg-sky-800 dark:text-white hover:no-underline rounded-lg">
+                                <button @click="open = ! open" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg my-3">
                                     Respond
                                 </button>
-                                <div xcloak x-show="open" class="p-3 my-3 rounded-lg bg-slate-200 dark:bg-slate-800 dark:text-white">
+                                <div xcloak x-show="open" class="p-3 my-3 rounded-lg bg-slate-200 font-semibold ">
 
                                     <?= $this->Form->create(null, ['url' => ['controller' => 'reports', 'action' => 'edit', $report->id]]) ?>
                                     <fieldset>
-                                        <legend><?= __('Respond') ?></legend>
+                                        <legend><?= __('Curator Response') ?></legend>
                                         <?php
                                         echo $this->Form->hidden('id', ['value' => $report->id]);
                                         echo $this->Form->hidden('curator_id', ['value' =>  $this->Identity->get('id')]);
-                                        echo $this->Form->textarea('response', ['class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900/80 rounded-lg', 'placeholder' => 'Type here ...']);
+                                        echo $this->Form->textarea('response', ['class' => 'block w-full px-3 py-1 my-2 rounded-lg font-light', 'placeholder' => 'Type here ...']);
                                         ?>
                                     </fieldset>
-                                    <input type="submit" class="btn btn-primary" value="Submit Response">
+                                    <input type="submit" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg my-3 font-normal hover:cursor-pointer" value="Submit Response">
                                     <?= $this->Form->end() ?>
 
                                 </div>
                             </div>
-                            <?= $this->Form->postLink(__('Delete Issue Report'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'inline-block my-2 text-red-500 underline hover:text-red-700 hover:cursor-pointer']) ?>
+
                     </div>
                 </div>
 
