@@ -102,7 +102,8 @@ if ($this->Identity->isLoggedIn()) {
                                     </p>
 
                                 </div>
-                                <!-- TODO Q do we want description/objective here, more info? or just abbreviated? -->
+                                <!-- TODO Q do we want description/objective here, more info? or just abbreviated?  -->
+                                <!-- TODO Allan Descriptions aren't pulling in here properly -->
 
                                 <?php if (!empty($a->description)) : ?>
                                     <?= $a->description ?>
