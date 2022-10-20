@@ -27,23 +27,20 @@ if ($this->Identity->isLoggedIn()) {
 
             <?php foreach ($reports as $report) : ?>
                 <div class="border-2 border-slate-700 mb-3 rounded-md">
-                    <div class="flex justify-between gap-4 items-center bg-slate-700 text-white rounded-t-md p-2"> <span class="ml-2 font-semibold">Issue report #<?= $report->id ?></span>
+                    <div class="flex justify-between gap-4 items-center bg-slate-700 text-white p-2"> <span class="ml-2 font-semibold">Issue report #<?= $report->id ?></span>
                         <span class="text-sm"><?= $this->Time->format($report->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></span>
                     </div>
                     <div class="p-3">
-                        
-
-
                         <div class="text-xl"><span class="font-semibold">Activity Reported:</span> <a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></div>
-                        <div class="text-sm italic">You said:</div>
-                        <blockquote class="p-3 my-1 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">
+                        <div class="text-sm italic mt-2">You said:</div>
+                        <blockquote class="border-l-2 p-2 m-2">
                             <?= h($report->issue) ?>
                         </blockquote>
                         <?php if (!empty($report->response)) : ?>
-                            <div class="p-3 my-1 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg"><?= h($report->response) ?></div>
+                            <div class="text-sm italic mt-2">Curator Response:</div>
+                            <blockquote class="border-l-2 p-2 m-2"><?= h($report->response) ?></blockquote>
                         <?php else : ?>
-                            <div class="text-sm italic">Curator Responds:</div>
-                            <div class="p-3 my-1 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">There is no response from a Curator yet. Please be patient.</div>
+                            <div class="italic text-slate-700 mt-2">Thank you for your report! A Curator will respond to your message soon.</div>
                         <?php endif ?>
 
 
@@ -54,7 +51,7 @@ if ($this->Identity->isLoggedIn()) {
                                 <button @click="open = ! open" class="inline-block p-3 mb-1 ml-3 bg-slate-200 dark:bg-sky-700 dark:hover:bg-sky-800 dark:text-white hover:no-underline rounded-lg">
                                     Respond
                                 </button>
-                                <div xcloak x-show="open" class="p-3 my-3 rounded-lg bg-white dark:bg-slate-800 dark:text-white">
+                                <div xcloak x-show="open" class="p-3 my-3 rounded-lg bg-slate-200 dark:bg-slate-800 dark:text-white">
 
                                     <?= $this->Form->create(null, ['url' => ['controller' => 'reports', 'action' => 'edit', $report->id]]) ?>
                                     <fieldset>
