@@ -125,24 +125,24 @@ if ($this->Identity->isLoggedIn()) {
             <!-- TODO Nori compare this to getting started page for pathways -->
             <!-- TODO Nori figure out why this short page isn't showing the footer within the screen height but the pathways page is -->
         <?php else : ?>
+            <div class="p-8 text-xl max-w-prose">
+                <h2 class="mb-3 text-2xl text-darkblue font-semibold">You haven't launched any activities yet</h2>
+                <div class="p-4 text-xl">
+                    <p>As you launch activities on a pathway, they will be recorded here
+                        along with the date and time that you clicked the launch button.</p>
+                    <p>Pathway modules have one or more required activities. When you launch
+                        a required activity, that action counts towards your pathway progress,
+                        indicated by the progress bar.</p>
+                </div>
 
-            <h2 class="mb-3 text-3xl">You haven't launched any activities yet</h2>
-            <div class="p-4 text-xl">
-                <p>As you launch activities on a pathway, they will be recorded here
-                    along with the date and time that you clicked the launch button.</p>
-                <p>Pathway modules have one or more required activities. When you launch
-                    a required activity, that action counts towards your pathway progress,
-                    indicated by the progress bar.</p>
+                <a href="/categories" class="inline-block p-3 mt-4 mr-4 bg-sagedark text-white text-xl hover:no-underline rounded-lg">
+                    Explore Categories
+                </a>
+                <a href="/pathways" class="inline-block p-3 mt-4 bg-darkblue text-white text-xl hover:no-underline rounded-lg">
+                    Explore Pathways
+                </a>
+
             </div>
-
-            <a href="/categories" class="inline-block p-3 mt-4 mr-4 bg-sagedark text-white text-xl hover:no-underline rounded-lg">
-                Explore Categories
-            </a>
-            <a href="/pathways" class="inline-block p-3 mt-4 bg-darkblue text-white text-xl hover:no-underline rounded-lg">
-                Explore Pathways
-            </a>
-
-
         <?php endif ?>
         </div>
 </div>
