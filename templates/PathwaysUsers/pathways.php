@@ -15,7 +15,8 @@ if ($this->Identity->isLoggedIn()) {
 
 
 
-<?php if (!$pathways->isEmpty()) : ?><header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed.jpg);">
+<?php if (!$pathways->isEmpty()) : ?>
+    <header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed.jpg);">
         <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
             <h1 class="text-white text-3xl font-bold m-auto tracking-wide">My Curator</h1>
         </div>
