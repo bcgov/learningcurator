@@ -31,7 +31,7 @@ if ($this->Identity->isLoggedIn()) {
                         <span class="text-sm"><?= $this->Time->format($report->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></span>
                     </div>
                     <div class="p-3">
-                        <?= $this->Form->postLink(__('Remove Issue'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'float-right inline-block p-3 mb-1 ml-3 bg-slate-200 dark:bg-sky-700 dark:hover:bg-sky-800 dark:text-white hover:no-underline rounded-lg']) ?>
+                        
 
 
                         <div class="text-xl"><span class="font-semibold">Activity Reported:</span> <a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></div>
@@ -70,6 +70,7 @@ if ($this->Identity->isLoggedIn()) {
 
                                 </div>
                             </div>
+                            <?= $this->Form->postLink(__('Delete Issue Report'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'inline-block my-2 text-red-500 underline hover:text-red-700 hover:cursor-pointer']) ?>
                     </div>
                 </div>
 
