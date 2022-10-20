@@ -9,7 +9,10 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 ?>
-<div class="p-6 dark:text-white">
+<header class="w-full h-52 bg-darkblue px-8 flex items-center">
+    <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
+</header>
+<div class="p-8 text-lg">
 
 <div class="text-3xl mb-3">
     <span class="inline-block p-3 rounded-full bg-white dark:bg-slate-900"><?= $totalfollowcount ?></span> Pathway Follows 

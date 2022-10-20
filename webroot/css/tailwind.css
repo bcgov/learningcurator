@@ -771,6 +771,11 @@ video {
   margin-right: 1rem;
 }
 
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .mb-3 {
   margin-bottom: 0.75rem;
 }
@@ -949,6 +954,10 @@ video {
 
 .h-5 {
   height: 1.25rem;
+}
+
+.h-32 {
+  height: 8rem;
 }
 
 .min-h-screen {
