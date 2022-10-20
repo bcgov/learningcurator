@@ -17,15 +17,16 @@ if ($this->Identity->isLoggedIn()) {
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Launched Activites</h2>
 
         <p class="mb-3">
-            When you launch an activity, it will be listed here, so you can jump right to it.</p>
+            As you launch activities on a pathway, they will be recorded here,
+            along with the date and time when you clicked the launch button.</p>
     </div>
     <!-- TODO Q do we need pagination/sorth options here? -->
     <div class="max-w-full flex flex-col lg:flex-row lg:gap-4 sticky bg-white -top-[2px] z-50 py-2">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
             <div class="text-sm text-sky-700">
                 <!-- TODO Allan add in pagination? -->
-              
-Pagination placeholder
+
+                Pagination placeholder
 
             </div>
         </div>
@@ -74,47 +75,71 @@ Pagination placeholder
     <?php if (!empty($alllaunches)) : ?>
         <div class="grid lg:grid-cols-2 gap-4 items-start">
             <?php foreach ($alllaunches as $a) : ?>
+                <!-- TODO Q - does this look weird with the different sized cards? Masonry type layout may be better if possible  -->
 
-                <div class="p-3 mb-3 bg-white dark:bg-slate-800 rounded-lg">
-                    <h2 class="text-2xl">
-                        <a href="/activities/view/<?= $a['id'] ?>" class="font-weight-bold">
-                            <?= $a['name'] ?>
-                        </a>
-                    </h2>
-                    <div class="mt-3">
-                        <div class="inline-block w-24 bg-slate-900/80 text-white text-sm text-center uppercase rounded-lg">
-                            Launched
-                        </div>
-                        <?php foreach ($a['launches'] as $ls) : ?>
-                            <span class="inline-block px-3 py-0 mb-2 tex-lg bg-slate-200 dark:bg-slate-700 text-sm rounded-lg">
-                                <?= $this->Time->format($ls['date'], \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
-                            </span>
-                        <?php endforeach ?>
-
-                    </div>
-                    <a target="_blank" rel="noopener" data-toggle="tooltip" data-placement="bottom" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $a['id'] ?>" class="inline-block my-2 p-3 bg-sky-700 rounded-lg text-white text-xl hover:no-underline">
-                        Launch Activity
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
-                            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+                <div class="align-self-start rounded-md bg-sagedark hover:bg-sagedark/80 p-0.5">
+                    <div class="flex flex-row justify-between">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-journal-text mx-3 my-4 flex-none" viewBox="0 0 16 16">
+                            <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+                            <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+                            <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
                         </svg>
-                    </a>
+                        <!-- TODO Allan Change icon for activity based on activity type -->
+                        <div class="bg-white inset-1 rounded-r-sm flex-1">
+                            <div class="p-3 text-lg">
+                                <h4 class="mb-3 mt-1 text-2xl">
+                                    <a href="/activities/view/<?= $a['id'] ?>">
+                                        <?= $a['name'] ?>
+                                    </a>
+                                </h4>
+                                <div class="mt-3">
+                                    <p class="text-sm">
+                                        <span class="font-semibold">Launched: </span><?php foreach ($a['launches'] as $ls) : ?>
+                                            <span class="inline-block">
+                                                <?= $this->Time->format($ls['date'], \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
+                                            </span>
+                                        <?php endforeach ?>
+                                    </p>
 
+                                </div>
+                                <!-- TODO Q do we want description/objective here, more info? or just abbreviated? -->
+
+                                <?php if (!empty($a->description)) : ?>
+                                    <?= $a->description ?>
+                                <?php else : ?>
+                                    <p><em>No description provided&hellip;</em></p>
+                                <?php endif ?>
+
+                                <a target="_blank" rel="noopener" data-toggle="tooltip" data-placement="bottom" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $a['id'] ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
+                                    Launch
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+                                        <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             <?php endforeach ?>
+            <!-- TODO Nori compare this to getting started page for pathways -->
+            <!-- TODO Nori figure out why this short page isn't showing the footer within the screen height but the pathways page is -->
         <?php else : ?>
 
-            <h2 class="mb-3 text-3xl">You've not yet launched any activities</h2>
-            <div class="p-4 bg-white dark:bg-slate-800 rounded-lg">
-                <p class="text-xl">As you launch activities on a pathway, they will be recorded here
+            <h2 class="mb-3 text-3xl">You haven't launched any activities yet</h2>
+            <div class="p-4 text-xl">
+                <p>As you launch activities on a pathway, they will be recorded here
                     along with the date and time that you clicked the launch button.</p>
-                <p class="text-lg">Pathway modules have one or more required activities. When you launch
+                <p>Pathway modules have one or more required activities. When you launch
                     a required activity, that action counts towards your pathway progress,
                     indicated by the progress bar.</p>
             </div>
 
-            <a href="/categories" class="inline-block p-3 mt-4 bg-sky-700 dark:bg-sky-700 text-white text-2xl hover:no-underline rounded-lg">
+            <a href="/categories" class="inline-block p-3 mt-4 mr-4 bg-sagedark text-white text-xl hover:no-underline rounded-lg">
                 Explore Categories
+            </a>
+            <a href="/pathways" class="inline-block p-3 mt-4 bg-darkblue text-white text-xl hover:no-underline rounded-lg">
+                Explore Pathways
             </a>
 
 
