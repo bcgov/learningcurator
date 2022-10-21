@@ -33,7 +33,7 @@ if ($this->Identity->isLoggedIn()) {
             <?php foreach ($pathways as $pathway) : ?>
 
 
-                <div class="rounded-md  bg-bluegreen hover:bg-bluegreen/80 mb-4 p-0.5">
+                <div class="rounded-md bg-bluegreen hover:bg-bluegreen/80 mb-4 p-0.5">
                     <div class="flex flex-row justify-between">
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-signpost-2 mx-3 my-4 flex-none" viewBox="0 0 16 16">
