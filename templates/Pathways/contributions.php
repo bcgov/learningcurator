@@ -12,9 +12,10 @@ if ($this->Identity->isLoggedIn()) {
 ?>
 
 
-<div class="p-6">
-	
-<div class="p-3 mb-2 bg-slate-200 dark:bg-slate-900/80 rounded-lg">
+<header class="w-full h-52 bg-darkblue px-8 flex items-center">
+    <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
+</header>
+<div class="p-8 text-lg">
 
 <h2><?= __('Your Contributions') ?></h2>
 
