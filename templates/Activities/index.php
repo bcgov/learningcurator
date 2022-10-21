@@ -87,7 +87,7 @@ if ($this->Identity->isLoggedIn()) {
             </div>
         </div>
     </div>
-    <div class="columns-2 gap-4">
+    <div class="lg:columns-2 gap-4">
                 <?php foreach ($activities as $activity) : ?>
                     <?php
                     // #TODO Allan move this back into the controller and simplify

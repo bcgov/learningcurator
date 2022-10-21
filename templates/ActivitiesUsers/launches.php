@@ -73,7 +73,7 @@ if ($this->Identity->isLoggedIn()) {
     </div>
 
     <?php if (!empty($alllaunches)) : ?>
-        <div class="columns-2 gap-4">
+        <div class="lg:columns-2 gap-4">
             <?php foreach ($alllaunches as $a) : ?>
 
                 <div class="w-full inline-block mb-4 rounded-md bg-sagedark hover:bg-sagedark/80 p-0.5">
