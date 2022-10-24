@@ -2,9 +2,7 @@
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
 <div class="p-8 text-lg">
-    <!-- TODO Allan/Nori add created date? -->
-    <h2 class="text-2xl text-darkblue font-semibold">"Auto" Link Audit</h2>
-
+    <h2 class="text-2xl text-darkblue font-semibold mb-3">"Auto" Link Audit</h2>
     <h3><?= $actcount ?> activities checked.</h3>
     <?php if ($actcount > 0) : ?>
         <div><?= $count200 ?> activities OK.</div>
