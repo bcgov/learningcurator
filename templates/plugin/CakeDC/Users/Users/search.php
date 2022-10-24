@@ -26,7 +26,7 @@
     <h3 class="mt-4 font-semibold">All Users</h3>
     <p>Click on any username to see information about that user and their contributions to the Learning Curator.</p>
     <p class="mt-3 text-base">Page <?= $this->Paginator->counter() ?></p>
-    <table class="border-collapse border border-slate-400 mt-1">
+    <table class="border-collapse border border-slate-400">
         <thead>
             <tr>
                 <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left">Username</th>
@@ -47,7 +47,7 @@
                         <?= h($user->last_name) ?>
                     </td>
                     <td class="px-2 py-1 border border-slate-300">
-                        <a href="mailto:<?= h($user->email) ?>" class="text-sky-700 underline hover:text-sky-500"><?= h($user->email) ?></a>
+                        <a href="mailto:<?= h($user->email) ?>" class="hover:underline"><?= h($user->email) ?></a>
                     </td>
                 </tr>
 
