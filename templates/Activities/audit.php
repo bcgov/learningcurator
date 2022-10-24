@@ -1,10 +1,15 @@
-<div class="p-6">
-<div class="p-3 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">
-<h1 class="text-lg"><?= $actcount ?> activities checked.</h1>
-<?php if($actcount > 0): ?>
-<div><?= $count200 ?> activities OK.</div>
-<div><?= $excludedcount ?> activities excluded for manual review.</div>
-<div><?= $reportcount ?> reports filed.</div>
-<?php endif ?>
+<header class="w-full h-52 bg-darkblue px-8 flex items-center">
+    <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
+</header>
+<div class="p-8 text-lg">
+    <!-- TODO Allan/Nori add created date? -->
+    <h2 class="text-2xl text-darkblue font-semibold">"Auto" Link Audit</h2>
+
+    <h3><?= $actcount ?> activities checked.</h3>
+    <?php if ($actcount > 0) : ?>
+        <div><?= $count200 ?> activities OK.</div>
+        <div><?= $excludedcount ?> activities excluded for manual review.</div>
+        <div><?= $reportcount ?> reports filed.</div>
+    <?php endif ?>
 </div>
-</div>
+<!-- TODO Nori add Dashboard active highlighting? -->
