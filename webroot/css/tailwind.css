@@ -2072,9 +2072,18 @@ p {
   background-color: rgb(2 132 199 / var(--tw-bg-opacity));
 }
 
+.group:hover .group-hover\:bg-sky-700\/80 {
+  background-color: rgb(3 105 161 / 0.8);
+}
+
 .group:hover .group-hover\:text-sky-500 {
   --tw-text-opacity: 1;
   color: rgb(14 165 233 / var(--tw-text-opacity));
+}
+
+.group:hover .group-hover\:text-sky-600 {
+  --tw-text-opacity: 1;
+  color: rgb(2 132 199 / var(--tw-text-opacity));
 }
 
 @media (prefers-color-scheme: dark) {

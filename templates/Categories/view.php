@@ -48,14 +48,16 @@ $this->assign('title', $pagetitle);
             <?php if (!empty($category->topics)) : ?>
                 <?php foreach ($category->topics as $topic) : ?>
                     <?php if ($topic->featured == 1) : ?>
-                        <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline">
-                            <div class="rounded-md shadow-lg p-0.5 bg-sky-700  hover:bg-sky-700/80 mb-4">
-                                <h3 class="text-xl text-white p-2 hover:no-underline "><?= $topic->name ?>
+                        <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline group">
+                            <div class="rounded-md shadow-lg p-0.5 bg-sky-700  group-hover:bg-sky-700/80 mb-4">
+                                <h3 class="text-xl text-white p-2"><?= $topic->name ?>
                                     <!-- topic_id: <?= $topic->id ?> -->
                                 </h3>
                                 <div class="bg-white inset-1 rounded-b-sm">
                                     <div class="p-3 text-lg">
                                         <p class="mb-0"><?= h($topic->description) ?></p>
+                                        <p class="mb-2 inline-block mt-4 hover:text-sky-600 underline text-sky-700 ">
+Explore <strong><?= $topic->name ?></strong></p>
                                     </div>
                                 </div>
                             </div>
