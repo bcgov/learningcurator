@@ -10,9 +10,13 @@
  */
 ?>
 
-<div class="p-6">
-<div class="mt-5"><a href="/users/index">All Users</a></div>
-<h1 class="mt-0">Search Users</h1>
+<header class="w-full h-52 bg-darkblue px-8 flex items-center">
+    <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
+</header>
+<div class="p-8 text-lg">
+    <h2 class="text-2xl text-darkblue font-semibold mb-3">User Search</h2>
+
+<div class="mt-5"><a href="/users/search">All Users</a></div>
 <form method="get" action="/users/search" class="mb-5">
 <label>Search
 		<input class="form-control" 
