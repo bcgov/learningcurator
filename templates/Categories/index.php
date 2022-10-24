@@ -33,23 +33,27 @@ if ($this->Identity->isLoggedIn()) {
             <!-- TODO Nori add mobile collapse options -->
             <?php foreach ($categories as $category) : ?>
 
-                <div class="rounded-md shadow-lg border-2 border-sky-700 mb-4">
+                <a class="group hover:no-underline" href="/category/<?= $category->id ?>/<?= h($category->slug) ?>">
+                    <div class="rounded-md shadow-lg border-2 border-sky-700 mb-4 group-hover:border-sky-600">
+                        <?php if (empty($category->featured)) : ?>
+                            <span class="inline-block py-0 px-2 my-2 bg-yellow-600 text-slate-900 text-xs" title="Edit to set to publish">DRAFT</span>
+                        <?php endif ?>
 
-                    <?php if (empty($category->featured)) : ?>
-                        <span class="inline-block py-0 px-2 my-2 bg-yellow-600 text-slate-900 text-xs" title="Edit to set to publish">DRAFT</span>
-                    <?php endif ?>
+                        <h3 class="text-2xl bg-sky-700 text-white p-3 group-hover:bg-sky-600">
+                            <?= h($category->name) ?>
+                        </h3>
+                        <div class="p-3 text-lg">
+                            <p class="mb-0"><?= h($category->description) ?></p>
 
-                    <h3 class="text-2xl bg-sky-700 text-white p-3">
-                        <?= h($category->name) ?>
-                    </h3>
-                    <div class="p-3">
-                        <p class="mb-0"><?= h($category->description) ?></p>
+                            <p class="mb-2 inline-block mt-4 hover:text-sky-600 underline text-sky-700 ">
 
-                        <a class="inline-block py-2 px-3 mt-4 bg-sky-700 text-white text-lg hover:no-underline rounded-lg" href="/category/<?= $category->id ?>/<?= h($category->slug) ?>">
-                            Explore <span class="font-bold"><?= h($category->name) ?></span>
-                        </a>
+                                Explore <span class="font-bold"><?= h($category->name) ?></span>
+
+                            </p>
+
+                        </div>
                     </div>
-                </div> <!-- formatting container -->
+                </a><!-- formatting container -->
             <?php endforeach; ?>
         </div>
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
