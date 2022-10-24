@@ -78,7 +78,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php endforeach ?>
 </div>
 <?php else: ?>
-<div class="dark:bg-slate-900/80 p-3 rounded-lg">This person hasn't claimed any activites yet.</div>
+<div class="dark:bg-slate-900/80 p-3 rounded-lg">This person hasn't claimed any activities yet.</div>
 <?php endif ?>
 </div>
 

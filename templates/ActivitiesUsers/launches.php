@@ -14,7 +14,7 @@ if ($this->Identity->isLoggedIn()) {
 <!-- TODO Q should the title be followed pathways? My Curator? -->
 <div class="p-8 text-lg">
     <div class="max-w-prose">
-        <h2 class="mb-3 text-2xl text-darkblue font-semibold">Launched Activites</h2>
+        <h2 class="mb-3 text-2xl text-darkblue font-semibold">Launched Activities</h2>
 
         <p class="mb-3">
             As you launch activities on a pathway, they will be recorded here,
