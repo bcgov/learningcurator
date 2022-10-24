@@ -65,15 +65,17 @@ Explore <strong><?= $topic->name ?></strong></p>
 
                     <?php else : ?>
                         <?php if ($role == 'curator' || $role == 'superuser') : ?>
-                            <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline">
-                                <div class="rounded-md shadow-lg p-0.5 bg-sky-700  hover:bg-sky-700/80 mb-4">
-                                <span class="bg-orange-400 text-white rounded-lg px-2 py-1 m-1 text-sm align-middle float-right" title="Edit to set to publish">DRAFT</span>
+                            <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline group">
+                                <div class="rounded-md shadow-lg p-0.5 bg-sky-700  group-hover:bg-sky-700/80 mb-4">
+                                <span class="bg-orange-400 text-white rounded-lg px-2 py-1 m-2 text-sm align-middle float-right" title="Edit to set to publish">DRAFT</span>
                                     <h3 class="text-xl text-white p-2 hover:no-underline "><?= $topic->name ?>
                                         <!-- topic_id: <?= $topic->id ?> -->
                                     </h3>
                                     <div class="bg-white inset-1 rounded-b-sm">
                                         <div class="p-3 text-lg">
                                             <p class="mb-0"><?= h($topic->description) ?></p>
+                                            <p class="mb-2 inline-block mt-4 hover:text-sky-600 underline text-sky-700">
+Explore <strong><?= $topic->name ?></strong></p>
                                         </div>
                                     </div>
                                 </div>
