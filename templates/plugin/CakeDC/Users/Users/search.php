@@ -35,7 +35,7 @@
                 <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left">Email</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="text-base">
             <?php foreach (${$tableAlias} as $user) : ?>
                 <tr>
                     <td class="px-2 py-1 border border-slate-300"><?= $this->Html->link(__d('cake_d_c/users', h($user->username)), ['action' => 'view', $user->id], ['class' => 'font-weight-bold']) ?></td>
