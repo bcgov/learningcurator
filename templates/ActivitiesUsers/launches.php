@@ -92,7 +92,7 @@ if ($this->Identity->isLoggedIn()) {
                                 </h4>
                                 <div class="mt-3 text-sm">
                                     <p class="mb-0">
-                                        <!-- TODO Nori/Allan change to last launched -->
+                                        <!-- TODO Nori/Allan change to last launched, add launched number of times -->
                                         <span class="font-semibold">Launched: </span>X times
                                     </p>
                                     <p class="mt-0">
@@ -105,19 +105,20 @@ if ($this->Identity->isLoggedIn()) {
 
                                 </div>
 
-                                <p>
-                                    <a class="text-lg text-sky-700 hover:underline" href="/activities/view/<?= $a['id'] ?>">
-                                        View Activity Record
-                                    </a>
-                                </p>
+                                <ul class="list-disc pl-8 mt-2 text-lg ">
+                                    <li>
+                                        <a class="hover:underline hover:text-sky-700" href="/activities/view/<?= $a['id'] ?>">
+                                            View Activity Record
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" rel="noopener" data-toggle="tooltip" data-placement="bottom" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $a['id'] ?>" class="hover:underline hover:text-sky-700">
+                                            Launch Activity
+                                        </a>
+                                    </li>
+                                </ul>
 
-                                <a target="_blank" rel="noopener" data-toggle="tooltip" data-placement="bottom" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $a['id'] ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
-                                    Launch
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
-                                        <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
-                                    </svg>
-                                </a>
+
                             </div>
                         </div>
                     </div>
