@@ -11,7 +11,6 @@ if ($this->Identity->isLoggedIn()) {
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">My Curator</h1>
     </div>
 </header>
-<!-- TODO Q should the title be followed pathways? My Curator? -->
 <div class="p-8 text-lg">
     <div class="max-w-prose">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Launched Activities</h2>
@@ -20,7 +19,7 @@ if ($this->Identity->isLoggedIn()) {
             As you launch activities on a pathway, they will be recorded here,
             along with the date and time when you clicked the launch button.</p>
     </div>
-    <!-- TODO Q do we need pagination/sorth options here? -->
+    <!-- TODO Allan show pagination/sort options here for 10+ items? -->
     <div class="max-w-full flex flex-col lg:flex-row lg:gap-4 sticky bg-white -top-[2px] z-50 py-2">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
             <div class="text-sm text-sky-700">
@@ -91,9 +90,13 @@ if ($this->Identity->isLoggedIn()) {
                                         <?= $a['name'] ?>
                                     </a>
                                 </h4>
-                                <div class="mt-3">
-                                    <p class="text-sm">
-                                        <span class="font-semibold">Launched: </span><?php foreach ($a['launches'] as $ls) : ?>
+                                <div class="mt-3 text-sm">
+                                    <p class="mb-0">
+                                        <!-- TODO Nori/Allan change to last launched -->
+                                        <span class="font-semibold">Launched: </span>X times
+                                    </p>
+                                    <p class="mt-0">
+                                        <span class="font-semibold">Last launched: </span><?php foreach ($a['launches'] as $ls) : ?>
                                             <span class="inline-block">
                                                 <?= $this->Time->format($ls['date'], \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
                                             </span>

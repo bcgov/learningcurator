@@ -137,7 +137,7 @@ if ($this->Identity->isLoggedIn()) {
                         @submit.prevent="submitData">
                     <button><span x-text="liked"></span> likes</button>
                     </form> -->
-                    <!-- TODO Q do we want to include video preview images here? takes up a lot of space in grid view -->
+                    <!-- TODO Allan to update video preview embed functionality -->
                                         <?php
                                         preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $youtube);
                                         if (!empty($youtube[1])) :
