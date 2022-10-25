@@ -104,14 +104,12 @@ if ($this->Identity->isLoggedIn()) {
                                     </p>
 
                                 </div>
-                                <!-- TODO Q do we want description/objective here, more info? or just abbreviated?  -->
-                                <!-- TODO Allan Descriptions aren't pulling in here properly -->
 
-                                <?php if (!empty($a->description)) : ?>
-                                    <?= $a->description ?>
-                                <?php else : ?>
-                                    <p><em>No description provided&hellip;</em></p>
-                                <?php endif ?>
+                                <p>
+                                    <a class="text-lg text-sky-700 hover:underline" href="/activities/view/<?= $a['id'] ?>">
+                                        View Activity Record
+                                    </a>
+                                </p>
 
                                 <a target="_blank" rel="noopener" data-toggle="tooltip" data-placement="bottom" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $a['id'] ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
                                     Launch
