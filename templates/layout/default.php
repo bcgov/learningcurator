@@ -50,13 +50,13 @@
                                 <a class="hover:no-underline block px-4 py-1 mt-2 mb-4 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?= $active ?>" href="/users/index">
                                     Curator Dashboard
                                 </a>
-
-                                <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
-
-                                <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ((strpos($currentpage, '/category') !== false) || ($currentpage == '/categories')) {
-                                                                                                                                                                    echo 'text-white bg-sagedark';
-                                                                                                                                                                } ?>">Categories</a>
                             <?php endif; ?>
+                            <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
+
+                            <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ((strpos($currentpage, '/category') !== false) || ($currentpage == '/categories')) {
+                                                                                                                                                                echo 'text-white bg-sagedark';
+                                                                                                                                                            } ?>">Categories</a>
+
 
                             <a href="/pathways" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ((strpos($currentpage, '/pathway') !== false) || ($currentpage == '/pathways')) {
                                                                                                                                                                     echo 'text-white bg-sagedark';
@@ -131,7 +131,7 @@
         </div>
 
         <div class="p-6 bg-slate-200 " role="contentinfo">
-           
+
             <img class="md:hidden my-3 px-2 max-w-75 mx-auto" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
 
             <div class="mb-6 max-w-prose text-lg text-slate-700 mx-auto italic text-center">
