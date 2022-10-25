@@ -85,25 +85,12 @@ if ($this->Identity->isLoggedIn()) {
                         <!-- TODO Allan Change icon for activity based on activity type -->
                         <div class="bg-white inset-1 rounded-r-sm flex-1">
                             <div class="p-3 text-lg">
-                                <h4 class="mb-3 mt-1 text-2xl">
+                                <h4 class="mb-3 mt-1 text-2xl hover:text-sky-700">
                                     <a href="/activities/view/<?= $a['id'] ?>">
                                         <?= $a['name'] ?>
                                     </a>
                                 </h4>
-                                <div class="mt-3 text-sm">
-                                    <p class="mb-0">
-                                        <!-- TODO Nori/Allan change to last launched, add launched number of times -->
-                                        <span class="font-semibold">Launched: </span>X times
-                                    </p>
-                                    <p class="mt-0">
-                                        <span class="font-semibold">Last launched: </span><?php foreach ($a['launches'] as $ls) : ?>
-                                            <span class="inline-block">
-                                                <?= $this->Time->format($ls['date'], \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
-                                            </span>
-                                        <?php endforeach ?>
-                                    </p>
 
-                                </div>
 
                                 <ul class="list-disc pl-8 mt-2 text-lg ">
                                     <li>
@@ -117,6 +104,19 @@ if ($this->Identity->isLoggedIn()) {
                                         </a>
                                     </li>
                                 </ul>
+                                <div class="mt-3 text-sm">
+                                    <p class="mb-0">
+                                        <span class="font-semibold">Launched: </span><?= count($a['launches']) ?> times
+                                    </p>
+                                    <p class="mt-0 mb-0">
+                                        <span class="font-semibold">Last launched: </span><?php ?>
+                                        <span class="inline-block">
+                                            <?= $this->Time->format($a['launches'][0]['date'], \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
+                                        </span>
+                                        <?php ?>
+                                    </p>
+
+                                </div>
 
 
                             </div>
