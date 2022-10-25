@@ -31,7 +31,7 @@ if ($this->Identity->isLoggedIn()) {
         </div>
         <!-- TODO Q do we want to have sort/filter options here? -->
         <?php foreach ($pathways as $path) : ?>
-<!-- TODO Nori fix hover here - cards or links only, not both -->
+            <!-- TODO Nori fix hover here - cards or links only, not both -->
             <div class="rounded-md  bg-bluegreen hover:bg-bluegreen/80 mb-4 p-0.5">
                 <div class="flex flex-row justify-between">
 
@@ -117,7 +117,7 @@ if ($this->Identity->isLoggedIn()) {
                         </div>
                     </div>
 
-                   
+
                 </div>
             </div>
 
@@ -153,6 +153,3 @@ if ($this->Identity->isLoggedIn()) {
 
 
     <?php endif ?>
-
-
-    </div>
