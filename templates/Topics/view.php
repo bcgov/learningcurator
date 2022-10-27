@@ -20,7 +20,7 @@ if ($this->Identity->isLoggedIn()) {
 </header>
 
 <!-- TODO Q should this be Pathways header/active at this point? Page is showing pathways in a topic, not categories -->
-<div class="p-8 pt-4 w-full text-xl">
+<div class="p-8 pt-4 w-full text-lg">
     <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
         <?= $this->Html->link(__('Categories'), ['controller' => 'Categories', 'action' => 'index'], ['class' => '']) ?> >
         <a href="/category/<?= h($topic->categories[0]->id) ?>/<?= h($topic->categories[0]->slug) ?>"><?= h($topic->categories[0]->name) ?></a> >
@@ -31,14 +31,12 @@ if ($this->Identity->isLoggedIn()) {
             <?= $this->Html->link(__('Edit Topic'), ['action' => 'edit', $topic->id], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
 
         </div>
-
-
     <?php endif ?>
 
     <div class="max-w-prose">
 
         <h2 class="text-2xl text-darkblue font-semibold mb-3"> <?= h($topic->name) ?></h2>
-        <?= $this->Text->autoParagraph(h($topic->description)); ?>
+        <div class="text-xl"><?= $this->Text->autoParagraph(h($topic->description)); ?></div>
         <?php if ($role == 'curator' || $role == 'superuser') : ?>
 
             <form method="GET" action="/pathways/import/<?= $topic->id ?>" class="mt-3 mb-4">
@@ -55,7 +53,7 @@ if ($this->Identity->isLoggedIn()) {
             <?php foreach ($topic->pathways as $pathway) : ?>
                 <?php if ($pathway->status_id == 2) : ?>
                     <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
-                        <div class="px-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-l-full flex items-center justify-between">
+                        <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-l-full flex items-center justify-between">
                             <h3 class="text-2xl ">
 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3" viewBox="0 0 16 16">
@@ -68,7 +66,7 @@ if ($this->Identity->isLoggedIn()) {
                             <!-- TODO Allan eventually add code to pull in steps/activities -->
                         </div>
                     </a>
-                    <div class="pl-10 text-lg">
+                    <div class="pl-10">
                         <p><?= h($pathway->description) ?></p>
 
                         <p class="mt-3"> <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
