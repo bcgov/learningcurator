@@ -54,7 +54,7 @@ if ($this->Identity->isLoggedIn()) {
                 <?php if ($pathway->status_id == 2) : ?>
                     <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
                         <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-l-full flex items-center justify-between">
-                            <h3 class="text-2xl ">
+                            <h3 class="text-2xl">
 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3" viewBox="0 0 16 16">
                                     <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
@@ -67,9 +67,9 @@ if ($this->Identity->isLoggedIn()) {
                         </div>
                     </a>
                     <div class="pl-10">
-                        <p><?= h($pathway->description) ?></p>
+                        <p class="mb-3"><?= h($pathway->description) ?></p>
 
-                        <p class="mt-3"> <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
+                        <p class="mb-4"> <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
                                 View the <strong><?= h($pathway->name) ?></strong> pathway
                             </a></p>
                     </div>
@@ -79,7 +79,7 @@ if ($this->Identity->isLoggedIn()) {
                 <?php else : ?>
                     <?php if ($role == 'curator' || $role == 'superuser') : ?>
                         <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
-                            <div class="px-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80 w-full rounded-l-full flex items-center justify-start">
+                            <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-l-full flex items-center justify-between">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3 flex-none" viewBox="0 0 16 16">
                                     <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
                                 </svg>
@@ -89,10 +89,10 @@ if ($this->Identity->isLoggedIn()) {
                                 <!-- <span class="text-sm justify-self-end flex-none">8 steps | 23 activities</span> -->
                             </div>
                         </a>
-                        <div class="pl-10 text-lg">
+                        <div class="pl-10">
 
-                            <?= h($pathway->description) ?>
-                            <p class="mt-3"> <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
+                            <p class="mb-3"><?= h($pathway->description) ?></p>
+                            <p class="mb-4"> <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
                                     View the <strong><?= h($pathway->name) ?></strong> pathway
                                 </a> </p>
                         </div>
