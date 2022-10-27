@@ -144,8 +144,8 @@ $this->assign('title', h($pathway->name));
 
 
             <?php endif ?>
-
-
+<!-- TODO Nori sometimes objective has added line breaks? -->
+<!-- TODO Nori change to simple numbers in blue, then add subtitle and title in box -->
             <?php if (!empty($pathway->steps)) : ?>
 
                 <?php foreach ($pathway->steps as $steps) : ?>
@@ -157,15 +157,19 @@ $this->assign('title', h($pathway->name));
                     ?>
                     <!-- count required activities -->
                     <?php if ($steps->status->name == 'Published') : ?>
-                        <div class="mt-4">
-                            <h3 class="text-2xl font-semibold mb-1"><?= h($steps->name) ?></h3>
-                            <p class="text-bluegreen font-semibold text-base">
-                                <?= $requiredacts ?> required activities</p>
-                            <p><span class="font-semibold">Objective: </span><?= $steps->description ?></p>
-                            <a href="' + document.getElementById(stepID + '_link').value + '" class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">View <?= h($steps->name) ?></a>
-                            <!-- <?php if ($role == 'curator' || $role == 'superuser') : ?>
-                                <span class="text-xs px-4 bg-slate-100/80 dark:bg-emerald-700 rounded-lg"><?= $steps->status->name ?></span>
-                            <?php endif ?> -->
+                        <div class="mt-4 text-lg border-2 border-bluegreen rounded-lg flex justify-start">
+                            <h3 class="text-xl flex-none bg-bluegreen text-white basis-1/7 p-3"><?= h($steps->name) ?></h3>
+                            <div class="flex-1 basis-6/7 p-3">
+                                <p class="text-bluegreen font-semibold text-base">
+                                    <?= $requiredacts ?> required activities</p>
+                                <p class="mb-2"><span class="font-semibold">Objective: </span><?= $steps->description ?></p>
+                                <p class="mb-2"> <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="text-sky-700 underline">
+                                        View <strong><?= h($steps->name) ?></strong>
+                                    </a> </p>
+                                <!-- <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                                    <span class="text-xs px-4 bg-slate-100/80 dark:bg-emerald-700 rounded-lg"><?= $steps->status->name ?></span>
+                                <?php endif ?> -->
+                            </div>
                         </div>
 
 
