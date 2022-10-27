@@ -21,7 +21,7 @@ $this->assign('title', h($pathway->name));
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Pathways</h1>
     </div>
 </header>
-<div class="p-8 pt-4 w-full text-xl">
+<div class="p-8 pt-4 w-full text-lg">
 
     <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
         <a href="/category/<?= h($pathway->topic->categories[0]->id) ?>/<?= h($pathway->topic->categories[0]->slug) ?>" class="hover:underline"><?= h($pathway->topic->categories[0]->name) ?></a> >
@@ -47,7 +47,7 @@ $this->assign('title', h($pathway->name));
             <span class="text-sm ml-3 justify-self-end flex-none"><?= $stepcount ?> steps | <?= $requiredacts ?> activities</span>
         </div>
 
-        <div class="pl-8 text-lg">
+        <div class="pl-8 text-xl">
 
             <p><span class="font-bold">Objective: </span>
                 <?= $pathway->objective ?></p>
@@ -81,7 +81,7 @@ $this->assign('title', h($pathway->name));
                 </div>
             <?php endif ?>
 
-            <h3 class="mt-4 mb-1 text-darkblue font-semibold">Activity Progress</h3>
+            <h3 class="mt-4 mb-1 text-darkblue font-semibold text-lg">Activity Progress</h3>
             <div class="flex pbarcontainer mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-between">
                 <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
                 <span class="py-2 px-3 text-base total"></span>
@@ -117,7 +117,7 @@ $this->assign('title', h($pathway->name));
 
 
             <?php if ($role == 'curator' || $role == 'superuser') : ?>
-                <div x-data="{ open: false }">
+                <div x-data="{ open: false }" class="mb-8">
                     <div class="flex justify-start gap-4">
                         <?= $this->Html->link(__('Edit Pathway'), ['action' => 'edit', $pathway->id], ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg flex-none justify-self-start']) ?>
                         <button @click="open = ! open" class=" px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">
@@ -144,69 +144,49 @@ $this->assign('title', h($pathway->name));
 
 
             <?php endif ?>
-        </div>
-        <div class="max-w-prose mt-8">
+
 
             <?php if (!empty($pathway->steps)) : ?>
-                <div x-data id="tab_wrapper" class="flex ml-4">
-                    <div class="basis-1/5 flex-none">
-                        <nav class="flex flex-col gap-2">
-                            <?php foreach ($pathway->steps as $steps) : ?>
-                                <?php $requiredacts = 0; ?>
-                                <?php foreach ($steps->activities as $act) : ?>
-                                    <?php if ($act->_joinData->required == 1) $requiredacts++; ?>
-                                <?php endforeach ?>
-                                <?php //echo '<pre>'; print_r($steps); continue; 
-                                ?>
-                                <!-- count required activities -->
-                                <?php if ($steps->status->name == 'Published') : ?>
 
-                                    <!-- The tabs navigation -->
-
-                                    <a id="tab-link-<?= h($steps->slug) ?>" href="#" x-on="loadContent('step-1')" x-on:click="loadContent('<?= h($steps->slug) ?>' )" class="border border-slate-200 rounded-l-lg py-3 px-4 bg-bluegreen hover:bg-bluegreen/80 text-white hover:no-underline"><?= h($steps->name) ?></a>
-
-                                    <input type="hidden" id="<?= h($steps->slug) ?>_name" value="<?= h($steps->name) ?>"></input>
-                                    <input type="hidden" id="<?= h($steps->slug) ?>_reqact" value="<?= $requiredacts ?> "></input>
-                                    <input type="hidden" id="<?= h($steps->slug) ?>_desc" value="<?= h($steps->description) ?> "></input>
-                                    <input type="hidden" id="<?= h($steps->slug) ?>_link" value="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>"></input>
-
-                                    <!-- bring -->
-                                <?php endif; // if published 
-                                ?>
-                            <?php endforeach ?>
-                        </nav>
-                    </div>
-                    <!-- TODO Allan required activities not displaying per step -->
-                    <!-- The tabs content -->
-                    <div class="basis-4/5 flex-1 border-2 border-bluegreen rounded-r-lg p-6">
-                        <script>
-                            function loadContent(stepID) {
-                                document.getElementById('stepContent').innerHTML = '<div> <h3 class="text-2xl font-semibold mb-1">' + document.getElementById(stepID + '_name').value + '</h3>' + '<p class="text-bluegreen font-semibold text-base">' +
-                                    <?= $requiredacts ?> + document.getElementById(stepID + '_reqact').value + 'required activities</p> <p><span class="font-bold">Objective: </span>' + document.getElementById(stepID + '_desc').value + '</p>' + '<a href="' + document.getElementById(stepID + '_link').value + '" class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">' + 'View ' + document.getElementById(stepID + '_name').value +
-                                    '</a></div>';
-                                document.getElementById('tab-link-<?= h($steps->slug) ?>').classList.add(" active bg-gray-500 -ml-8");
-                            }
-                        </script>
-                        <div id="stepContent">
-
+                <?php foreach ($pathway->steps as $steps) : ?>
+                    <?php $requiredacts = 0; ?>
+                    <?php foreach ($steps->activities as $act) : ?>
+                        <?php if ($act->_joinData->required == 1) $requiredacts++; ?>
+                    <?php endforeach ?>
+                    <?php //echo '<pre>'; print_r($steps); continue; 
+                    ?>
+                    <!-- count required activities -->
+                    <?php if ($steps->status->name == 'Published') : ?>
+                        <div class="mt-4">
+                            <h3 class="text-2xl font-semibold mb-1"><?= h($steps->name) ?></h3>
+                            <p class="text-bluegreen font-semibold text-base">
+                                <?= $requiredacts ?> required activities</p>
+                            <p><span class="font-semibold">Objective: </span><?= $steps->description ?></p>
+                            <a href="' + document.getElementById(stepID + '_link').value + '" class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">View <?= h($steps->name) ?></a>
                             <!-- <?php if ($role == 'curator' || $role == 'superuser') : ?>
                                 <span class="text-xs px-4 bg-slate-100/80 dark:bg-emerald-700 rounded-lg"><?= $steps->status->name ?></span>
                             <?php endif ?> -->
-
-
                         </div>
 
-                    </div>
-                </div>
 
-
-
-
-            <?php else : ?>
-                <div>There don't appear to be any steps assigned to this pathway yet.</div>
-            <?php endif; // are there any steps at all? 
-            ?>
-
+                    <?php endif; // if published 
+                    ?>
+                <?php endforeach ?>
+                </nav>
         </div>
+
+
     </div>
+</div>
+
+
+
+
+<?php else : ?>
+    <div>There don't appear to be any steps assigned to this pathway yet.</div>
+<?php endif; // are there any steps at all? 
+?>
+
+</div>
+</div>
 </div>
