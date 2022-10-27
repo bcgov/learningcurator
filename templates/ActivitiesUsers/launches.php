@@ -126,7 +126,6 @@ if ($this->Identity->isLoggedIn()) {
             </div>
         <?php endforeach ?>
         <!-- TODO Nori compare this to getting started page for pathways -->
-        <!-- TODO Nori figure out why this short page isn't showing the footer within the screen height but the pathways page is -->
     <?php else : ?>
         <h3 class="mb-3 text-xl font-semibold">You haven't launched any activities yet</h3>
         <p>As you launch activities on a pathway, they will be recorded here

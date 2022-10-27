@@ -153,3 +153,4 @@ if ($this->Identity->isLoggedIn()) {
 
 
     <?php endif ?>
+    </div>
