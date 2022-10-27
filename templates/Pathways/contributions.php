@@ -68,7 +68,6 @@ if ($this->Identity->isLoggedIn()) {
                     </div>
 
                     <!-- TODO Allan require curators to enter descriptions and have a minimum/maximum length of 130 chars/ 325 chars (2 lines prose length/5 lines prose length) -->
-                    <!-- TODO Shannon Q: objectives vs descriptions and when to use each -->
                 </div>
             </div>
 

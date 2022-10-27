@@ -24,7 +24,6 @@ if ($this->Identity->isLoggedIn()) {
     <div class="max-w-full flex flex-col lg:flex-row lg:gap-4 sticky bg-white -top-[2px] z-50 py-2">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
             <div class="text-sm text-sky-700">
-                <!-- TODO Allan add in pagination? -->
 
                 Pagination placeholder
 
@@ -125,7 +124,6 @@ if ($this->Identity->isLoggedIn()) {
                 </div>
             </div>
         <?php endforeach ?>
-        <!-- TODO Nori compare this to getting started page for pathways -->
     <?php else : ?>
         <h3 class="mb-3 text-xl font-semibold">You haven't launched any activities yet</h3>
         <p>As you launch activities on a pathway, they will be recorded here

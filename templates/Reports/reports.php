@@ -15,7 +15,6 @@ if ($this->Identity->isLoggedIn()) {
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">My Curator</h1>
     </div>
 </header>
-<!-- TODO Q should the title be followed pathways? My Curator? -->
 <div class="p-8 text-lg">
     <div class="max-w-prose">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Issues Reported</h2>

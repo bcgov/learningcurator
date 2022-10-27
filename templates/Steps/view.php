@@ -549,7 +549,7 @@ foreach ($step->pathways as $pathways) {
 
                                                             <?= $this->Form->end() ?>
 
-<!-- TODO change report issue to modal? -->
+<!-- TODO Allan/Nori change report issue to modal? -->
 
                                                         </div>
                                                     </div> <!-- end hidden more info -->

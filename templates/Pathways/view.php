@@ -147,7 +147,6 @@ $this->assign('title', h($pathway->name));
         </div>
         <div class="max-w-prose mt-8">
 
-            <!-- TODO Shannon Q: do steps have titles? -->
             <?php if (!empty($pathway->steps)) : ?>
                 <div x-data id="tab_wrapper" class="flex ml-4">
                     <div class="basis-1/5 flex-none">
@@ -177,10 +176,7 @@ $this->assign('title', h($pathway->name));
                             <?php endforeach ?>
                         </nav>
                     </div>
-                    <!-- TODO Allan Q hidden variables possibly a security risk -->
                     <!-- TODO Allan required activities not displaying per step -->
-                    <!-- TODO Allan add active highlighting to active tabs -->
-                    <!-- TODO Allan add default view to step 1 -->
                     <!-- The tabs content -->
                     <div class="basis-4/5 flex-1 border-2 border-bluegreen rounded-r-lg p-6">
                         <script>
