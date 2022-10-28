@@ -859,16 +859,16 @@ video {
   margin-left: 0.5rem;
 }
 
-.ml-4 {
-  margin-left: 1rem;
-}
-
-.-ml-8 {
-  margin-left: -2rem;
+.mb-8 {
+  margin-bottom: 2rem;
 }
 
 .mt-10 {
   margin-top: 2.5rem;
+}
+
+.ml-4 {
+  margin-left: 1rem;
 }
 
 .-ml-5 {
@@ -881,10 +881,6 @@ video {
 
 .ml-auto {
   margin-left: auto;
-}
-
-.mb-8 {
-  margin-bottom: 2rem;
 }
 
 .block {
@@ -1023,24 +1019,12 @@ video {
   flex-grow: 1;
 }
 
-.basis-1\/5 {
-  flex-basis: 20%;
-}
-
-.basis-4\/5 {
-  flex-basis: 80%;
-}
-
 .basis-1\/6 {
   flex-basis: 16.666667%;
 }
 
 .basis-5\/6 {
   flex-basis: 83.333333%;
-}
-
-.basis-4\/6 {
-  flex-basis: 66.666667%;
 }
 
 .border-collapse {
@@ -1217,11 +1201,6 @@ video {
   border-color: rgb(3 105 161 / var(--tw-border-opacity));
 }
 
-.border-slate-200 {
-  --tw-border-opacity: 1;
-  border-color: rgb(226 232 240 / var(--tw-border-opacity));
-}
-
 .border-bluegreen {
   --tw-border-opacity: 1;
   border-color: rgb(47 97 115 / var(--tw-border-opacity));
@@ -1230,6 +1209,11 @@ video {
 .border-slate-700 {
   --tw-border-opacity: 1;
   border-color: rgb(51 65 85 / var(--tw-border-opacity));
+}
+
+.border-slate-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity));
 }
 
 .border-slate-400 {
@@ -1337,11 +1321,6 @@ video {
   background-color: rgb(254 226 226 / var(--tw-bg-opacity));
 }
 
-.bg-gray-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
-}
-
 .bg-darkblue\/90 {
   background-color: rgb(0 51 102 / 0.9);
 }
@@ -1376,6 +1355,16 @@ video {
   background-color: rgb(241 245 249 / var(--tw-bg-opacity));
 }
 
+.bg-gray-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+}
+
+.bg-green-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(74 222 128 / var(--tw-bg-opacity));
+}
+
 .bg-sagegreen {
   --tw-bg-opacity: 1;
   background-color: rgb(223 233 215 / var(--tw-bg-opacity));
@@ -1397,11 +1386,6 @@ video {
 
 .bg-white\/80 {
   background-color: rgb(255 255 255 / 0.8);
-}
-
-.bg-green-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(74 222 128 / var(--tw-bg-opacity));
 }
 
 .bg-cover {
