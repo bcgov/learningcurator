@@ -124,7 +124,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php else : ?>
 
-    <header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/1200w/cape-scott-trail-n-r-t-on-flckr_1200w.jpg);">
+    <header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/cape-scott-trail-n-r-t-on-flckr.jpg);">
         <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
             <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Getting Started</h1>
         </div>
