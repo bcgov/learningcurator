@@ -153,21 +153,20 @@ foreach ($step->pathways as $pathways) {
         <!-- TODO  Shannon Q should the step boxes be wider (prose width inside, not outside? Won't line up with top content then.) -->
 
         <!-- TODO Allan prevent current tab from being clicked -->
-        <!-- TODO Q should active be grey and inactive blue or reverse?-->
-        <!--TODO Q too many colours? -->
         <div class="flex ml-4 mt-8">
             <div class="basis-1/6 flex-none">
                 <nav class="flex flex-col gap-2">
                     <?php foreach ($step->pathways as $pathways) : ?>
                         <?php foreach ($pathways->steps as $s) : ?>
                             <?php if ($s->status_id == 2) : ?>
-                                <?php $c = '' ?>
-                                <?php if ($s->id == $step->id) $c = 'active bg-gray-500 -ml-5' ?>
-                                <a class="border border-slate-200 rounded-l-lg py-3 px-4 bg-bluegreen hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+                                <?php $c = 'bg-gray-500' ?>
+                                <?php if ($s->id == $step->id) $c = 'active bg-bluegreen -ml-5' ?>
+                                <a class="border border-slate-200 rounded-l-lg py-3 px-4  hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
                                     <?= h($s->name) ?>
-                                </a><?php else : ?>
+                                </a>
+                                <?php else : ?>
                                 <?php if ($role == 'curator' || $role == 'superuser') : ?>
-                                    <a class="border border-slate-200 rounded-l-lg py-3 px-4 bg-bluegreen hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+                                    <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
                                         <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 mx-2 align-middle">DRAFT</span> -
                                         <?= h($s->name) ?>
                                     </a>
