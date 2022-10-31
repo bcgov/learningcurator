@@ -6,10 +6,10 @@ module.exports = {
                 'BCSans': ['BCSans', 'sans-serif']
             },
             colors: {
-                sagegreen: '#DFE9D7',
-                sagedark: '#70775A',
+                sagegreen: '#bfd5cf',
+                sagedark: '#29735E',
                 bluegreen: '#2F6173',
-                darkblue: '#003366'
+                darkblue: '#234075'
             },
         },
     },
