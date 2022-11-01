@@ -16,7 +16,7 @@ if ($this->Identity->isLoggedIn()) {
     <div class="max-w-prose">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Launched Activities</h2>
         <?php if (!empty($alllaunches)) : ?>
-            <p class="mb-3">
+            <p class="mb-3 text-xl">
                 As you launch activities on a pathway, they will be recorded here,
                 along with the date and time when you clicked the launch button.</p>
     </div>

@@ -36,7 +36,7 @@ $this->assign('title', $pagetitle);
 
     <div class="max-w-prose">
         <h2 class="text-2xl text-darkblue font-semibold mb-3"> <?= h($category->name) ?></h2>
-        <?= $this->Text->autoParagraph(h($category->description)); ?>
+        <p class="text-xl"><?= $this->Text->autoParagraph(h($category->description)); ?></p>
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">

@@ -20,7 +20,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="p-8 text-lg">
     <div class="max-w-prose">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Recent Pathways</h2>
-        <p class="mb-3">
+        <p class="mb-3 text-xl">
         Explore recently added pathways in all categories.</p>
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4">

@@ -23,7 +23,7 @@ if ($this->Identity->isLoggedIn()) {
     <div class="max-w-prose">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Recent Activities</h2>
 
-        <p class="mb-3">Explore recently added activities in all categories.</p>
+        <p class="mb-3 text-xl">Explore recently added activities in all categories.</p>
 
         
 

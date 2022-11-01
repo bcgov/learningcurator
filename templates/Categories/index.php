@@ -24,7 +24,7 @@ if ($this->Identity->isLoggedIn()) {
     <div class="max-w-prose">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Categories of Learning</h2>
 
-        <p class="mb-3">
+        <p class="mb-3 text-xl">
         Pathways are organized into categories of learning. These categories reflect current priorities of learning and delivery across the public service.</p>
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4">
