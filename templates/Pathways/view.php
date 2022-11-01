@@ -81,7 +81,7 @@ $this->assign('title', h($pathway->name));
                 </div>
             <?php endif ?>
 
-            <h3 class="mt-4 mb-1 text-darkblue font-semibold text-lg">Activity Progress</h3>
+            <h3 class="mt-4 mb-1 text-darkblue font-semibold text-lg">Pathway Activity Progress</h3>
             <div class="flex pbarcontainer mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
                 <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
                 <span class="py-2 px-3 text-base pbar pro_sm flex-none"></span>

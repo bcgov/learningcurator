@@ -75,7 +75,7 @@ foreach ($step->pathways as $pathways) {
             </h2>
             <!-- <span class="text-sm ml-3 justify-self-end flex-none"><?= h($pathways->steps) ?> steps | <?= $stepacts ?> activities</span> -->
             <!-- TODO Allan add code to pull in pathway steps -->
-            <span class="text-sm ml-3 justify-self-end flex-none"> <?= $stepacts ?> required activities</span>
+            <!-- <span class="text-sm ml-3 justify-self-end flex-none"> <?= $stepacts ?> required activities</span> -->
         </div>
         <div class="pl-8 mb-5 text-lg">
             <p><span class="font-bold">Pathway Objective: </span>
@@ -116,12 +116,12 @@ foreach ($step->pathways as $pathways) {
 
 
             <!-- TODO Q should this be progress for the step or the pathway? -->
-            <h3 class="mt-4 mb-1 text-darkblue font-semibold">Activity Progress</h3>
+            <h3 class="mt-4 mb-1 text-darkblue font-semibold">Pathway Activity Progress</h3>
             <div class="flex pbarcontainer mb-5 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-between">
                 <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
                 <span class="py-2 px-3 text-base total"></span>
             </div>
-            <!-- TODO Nori adjust progress bar text when percentage is small and doesn't fit text -->
+
 
             <script>
                 fetch('/pathways/status/<?= $step->pathways[0]->id ?>', {
@@ -137,6 +137,10 @@ foreach ($step->pathways as $pathways) {
 
                             if (json.percentage == 100) {
                                 document.querySelector('.pro').innerHTML = 'Pathway completed!';
+                            }
+                            if (json.percentage < 20) {
+                                document.querySelector('.pro_sm').innerHTML = launched;
+                                document.querySelector('.total').innerHTML = remaining;
                             } else {
                                 document.querySelector('.pro').innerHTML = launched;
                                 document.querySelector('.total').innerHTML = remaining;
@@ -164,7 +168,7 @@ foreach ($step->pathways as $pathways) {
                                 <a class="border border-slate-200 rounded-l-lg py-3 px-4  hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
                                     <?= h($s->name) ?>
                                 </a>
-                                <?php else : ?>
+                            <?php else : ?>
                                 <?php if ($role == 'curator' || $role == 'superuser') : ?>
                                     <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
                                         <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 mx-2 align-middle">DRAFT</span> -
@@ -389,7 +393,8 @@ foreach ($step->pathways as $pathways) {
                         </div> <!-- end activity card -->
                     <?php endforeach; // end of activities loop for this step 
                     ?>
-                <?php endif; //end of required activities ?> 
+                <?php endif; //end of required activities 
+                ?>
 
 
                 <?php if (count($supplementalacts) > 0) : ?>
@@ -548,7 +553,7 @@ foreach ($step->pathways as $pathways) {
 
                                                             <?= $this->Form->end() ?>
 
-<!-- TODO Allan/Nori change report issue to modal? -->
+                                                            <!-- TODO Allan/Nori change report issue to modal? -->
 
                                                         </div>
                                                     </div> <!-- end hidden more info -->
@@ -559,58 +564,60 @@ foreach ($step->pathways as $pathways) {
 
                                     </div> <!-- end white inner box -->
                                 </div>
-                            </div> 
-                        </div><!-- end activity card -->
-                        <?php endforeach; // end of activities loop for this step 
-                        ?>
-
-                    <?php endif ?>
-
-
-                    <?php if (!empty($archivedacts)) : ?>
-                        <div x-data="{ open: false }">
-
-                            <h4>Archived Activities</h4>
-                            <p>This step used to have these activities assigned to them, but they are no
-                                longer considered relevant or appropriate for one reason or another. They
-                                are listed here for posterity. <a class="underline text-sky-700" @click="open = !open">View archived activities</a>.
-                            </p>
-                            <div x-cloak x-show="open">
-                                <?php foreach ($archivedacts as $activity) : ?>
-                                    <h5>
-                                        <a href="/activities/view/<?= $activity->id ?>">
-                                            <i class="bi <?= $activity->activity_type->image_path ?>"></i>
-                                            <?= $activity->name ?>
-                                        </a>
-                                    </h5>
-                                    <?= $activity->description ?>
-                                <?php endforeach ?>
                             </div>
+                        </div><!-- end activity card -->
+                    <?php endforeach; // end of activities loop for this step 
+                    ?>
+
+                <?php endif ?>
+
+
+                <?php if (!empty($archivedacts)) : ?>
+                    <div x-data="{ open: false }">
+
+                        <h4>Archived Activities</h4>
+                        <p>This step used to have these activities assigned to them, but they are no
+                            longer considered relevant or appropriate for one reason or another. They
+                            are listed here for posterity. <a class="underline text-sky-700" @click="open = !open">View archived activities</a>.
+                        </p>
+                        <div x-cloak x-show="open">
+                            <?php foreach ($archivedacts as $activity) : ?>
+                                <h5>
+                                    <a href="/activities/view/<?= $activity->id ?>">
+                                        <i class="bi <?= $activity->activity_type->image_path ?>"></i>
+                                        <?= $activity->name ?>
+                                    </a>
+                                </h5>
+                                <?= $activity->description ?>
+                            <?php endforeach ?>
                         </div>
-                    <?php endif ?>
+                    </div>
+                <?php endif ?>
 
 
 
 
-                    <?php if (!empty($previousid) || !empty($upnextid)) : ?>
-                        <div class="flex justify-between">
-                            <?php if (!empty($previousid)) : ?>
-                                <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" class="inline-block m-2 p-2 bg-darkblue hover:darkblue/80 rounded-lg text-white text-lg hover:no-underline">
-                                    Previous Step
-                                </a>
-                            <?php endif ?>
+                <?php if (!empty($previousid) || !empty($upnextid)) : ?>
+                    <div class="flex justify-between">
+                        <?php if (!empty($previousid)) : ?>
+                            <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" class="inline-block m-2 p-2 bg-darkblue hover:darkblue/80 rounded-lg text-white text-lg hover:no-underline">
+                                Previous Step
+                            </a>
+                        <?php endif ?>
 
-                            <?php if (!empty($upnextid)) : ?>
-                                <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" class="inline-block m-2 p-2 bg-darkblue hover:darkblue/80  rounded-lg text-white text-lg hover:no-underline">
-                                    Next Step
-                                </a>
-                            <?php endif ?>
-                        </div>
-                    <?php endif ?> <!--end next/previous buttons-->
+                        <?php if (!empty($upnextid)) : ?>
+                            <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" class="inline-block m-2 p-2 bg-darkblue hover:darkblue/80  rounded-lg text-white text-lg hover:no-underline">
+                                Next Step
+                            </a>
+                        <?php endif ?>
+                    </div>
+                <?php endif ?>
+                <!--end next/previous buttons-->
 
-                        
 
-            </div><!--end step outer box -->
+
+            </div>
+            <!--end step outer box -->
 
 
 

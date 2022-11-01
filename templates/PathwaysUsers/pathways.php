@@ -81,33 +81,37 @@ if ($this->Identity->isLoggedIn()) {
                                 <p class="mb-2"> <a href="/<?= h($path->pathway->topic->categories[0]->slug) ?>/<?= h($path->pathway->topic->slug) ?>/pathway/<?= h($path->pathway->slug) ?>" class="text-sky-700 underline">
                                         View the <strong><?= h($path->pathway->name) ?></strong> pathway</a>
                                 </p>
-                                <h3 class="mt-4 mb-1 text-darkblue font-semibold">Activity Progress</h3>
-                                <div class="flex pbarcontainer mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-between">
+                                <h3 class="mt-4 mb-1 text-darkblue font-semibold">Pathway Activity Progress</h3>
+                                <div class="flex pbarcontainer mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
                                     <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
-                                    <span class="py-2 px-3 text-base total"></span>
+                                    <span class="py-2 px-3 text-base pbar pro_sm flex-none"></span>
+                                    <span class="py-2 px-3 text-base total flex-1 text-right"></span>
                                 </div>
-                                <!-- TODO Nori adjust progress bar text when percentage is small and doesn't fit text -->
                                 <script>
-                                    fetch('/pathways/status/<?= $path->pathway->id ?>', {
+                                    fetch('/pathways/status/<?= $pathway->id ?>', {
                                             method: 'GET'
                                         })
-                                        .then((res<?= $path->pathway->id ?>) => res<?= $path->pathway->id ?>.json())
-                                        .then((json<?= $path->pathway->id ?>) => {
-                                            if (json<?= $path->pathway->id ?>.percentage > 0) {
-                                                let launched = json<?= $path->pathway->id ?>.completed + ' launched';
-                                                let remaining = (json<?= $path->pathway->id ?>.requiredacts - json<?= $path->pathway->id ?>.completed) + ' remaining';
+                                        .then((res) => res.json())
+                                        .then((json) => {
+                                            if (json.percentage > 0) {
+                                                let launched = json.completed + ' launched';
+                                                let remaining = (json.requiredacts - json.completed) + ' remaining';
 
-                                                document.querySelector('.pbar').style.width = json<?= $path->pathway->id ?>.percentage + '%';
+                                                document.querySelector('.pbar').style.width = json.percentage + '%';
 
-                                                if (json<?= $path->pathway->id ?>.percentage == 100) {
+                                                if (json.percentage == 100) {
                                                     document.querySelector('.pro').innerHTML = 'Pathway completed!';
+                                                }
+                                                if (json.percentage < 20) {
+                                                    document.querySelector('.pro_sm').innerHTML = launched;
+                                                    document.querySelector('.total').innerHTML = remaining;
                                                 } else {
                                                     document.querySelector('.pro').innerHTML = launched;
                                                     document.querySelector('.total').innerHTML = remaining;
                                                 }
 
                                             } else {
-                                                document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json<?= $path->pathway->id ?>.requiredacts + ' activities remaining</span>';
+                                                document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
                                             }
                                             //console.log(json);
                                         })
