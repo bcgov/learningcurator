@@ -22,10 +22,10 @@ if ($this->Identity->isLoggedIn()) {
 
 <div class="p-8 text-lg">
     <div class="max-w-prose">
-        <h2 class="mb-3 text-2xl text-darkblue font-semibold">TBD</h2>
+        <h2 class="mb-3 text-2xl text-darkblue font-semibold">Categories of Learning</h2>
 
         <p class="mb-3">
-            Category intro text here</p>
+        Pathways are organized into categories of learning. These categories reflect current priorities of learning and delivery across the public service.</p>
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
