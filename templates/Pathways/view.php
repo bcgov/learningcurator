@@ -158,8 +158,10 @@ $this->assign('title', h($pathway->name));
                     <!-- count required activities -->
                     <?php if ($steps->status->name == 'Published') : ?>
                         <div class="mt-4 text-lg border-2 border-bluegreen rounded-lg flex justify-start">
-                            <h3 class="text-xl flex-none bg-bluegreen text-white basis-1/7 p-3"><?= h($steps->name) ?></h3>
+                            <?php $step_num = trim(str_replace("step-","", $steps->slug)); ?>
+                            <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen text-white basis-1/7 p-3"><?= $step_num ?></h3>
                             <div class="flex-1 basis-6/7 p-3">
+                            <h4 class="text-xl font-semibold"><?= h($steps->name) ?>: Subtitle here</h4>
                                 <p class="text-bluegreen font-semibold text-base">
                                     <?= $requiredacts ?> required activities</p>
                                 <p class="mb-2"><span class="font-semibold">Objective: </span><?= $steps->description ?></p>
