@@ -19,10 +19,9 @@ if ($this->Identity->isLoggedIn()) {
     </div>
 </header>
 
-<!-- TODO Q should this be Pathways header/active at this point? Page is showing pathways in a topic, not categories -->
 <div class="p-8 pt-4 w-full text-lg">
     <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
-        <?= $this->Html->link(__('Categories'), ['controller' => 'Categories', 'action' => 'index'], ['class' => '']) ?> >
+        <?= $this->Html->link(__('All Categories'), ['controller' => 'Categories', 'action' => 'index'], ['class' => '']) ?> >
         <a href="/category/<?= h($topic->categories[0]->id) ?>/<?= h($topic->categories[0]->slug) ?>"><?= h($topic->categories[0]->name) ?></a> >
         <?= h($topic->name) ?>
     </nav>
