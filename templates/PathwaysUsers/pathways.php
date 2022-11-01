@@ -122,8 +122,8 @@ if ($this->Identity->isLoggedIn()) {
                     </div>
                 </div>
         </div>
-
-    <?php endforeach; ?>
+    </div>
+<?php endforeach; ?>
 
 <?php else : ?>
 
@@ -153,4 +153,3 @@ if ($this->Identity->isLoggedIn()) {
 
 
 <?php endif ?>
-    </div>
