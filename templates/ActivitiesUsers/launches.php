@@ -75,7 +75,7 @@ if ($this->Identity->isLoggedIn()) {
     <div class="lg:columns-2 gap-4">
         <?php foreach ($alllaunches as $a) : ?>
 
-            <div class="w-full inline-block mb-4 rounded-md bg-sagedark hover:bg-sagedark/80 p-0.5">
+            <div class="w-full inline-block mb-4 rounded-md bg-sagedark p-0.5">
                 <div class="flex flex-row justify-between">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-journal-text mx-3 my-4 flex-none" viewBox="0 0 16 16">
                         <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
@@ -85,10 +85,8 @@ if ($this->Identity->isLoggedIn()) {
                     <!-- TODO Allan Change icon for activity based on activity type -->
                     <div class="bg-white inset-1 rounded-r-sm flex-1">
                         <div class="p-3 text-lg">
-                            <h4 class="mb-3 mt-1 text-2xl hover:text-sky-700">
-                                <a href="/activities/view/<?= $a['id'] ?>">
-                                    <?= $a['name'] ?>
-                                </a>
+                            <h4 class="mb-2 mt-1 text-xl font-semibold">
+                                <?= $a['name'] ?>
                             </h4>
 
 

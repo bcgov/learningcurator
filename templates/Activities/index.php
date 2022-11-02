@@ -111,26 +111,24 @@ if ($this->Identity->isLoggedIn()) {
                             <div class="bg-white inset-1 rounded-r-sm flex-1">
                                 <div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
                                     <div class="p-3 text-lg">
-                                        <a href="/profile/launches" class="inline-block float-right p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
+                                        <a href="/profile/launches" class="inline-block p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
                                             Launched
                                         </a>
-                                        <h4 class="mb-3 mt-1 text-2xl">
+                                        <h4 class="mb-2 mt-1 text-xl font-semibold">
                                             <?= $activity->name ?>
                                         </h4>
-                                        <div class="text-lg">
-                                            <?php if (!empty($activity->description)) : ?>
-                                                <?= $activity->description ?>
-                                            <?php else : ?>
-                                                <p><em>No description provided&hellip;</em></p>
-                                            <?php endif ?>
-                                            <?php if (!empty($activity->_joinData->stepcontext)) : ?>
-                                                <em>Curator says:</em><br>
-                                                <?= $activity->_joinData->stepcontext ?>
-                                            <?php endif ?>
-                                            <?php if (!empty($activity->isbn)) : ?>
-                                                ISBN: <?= $activity->isbn ?>
-                                            <?php endif ?>
-                                        </div>
+                                        <?php if (!empty($activity->description)) : ?>
+                                            <?= $activity->description ?>
+                                        <?php else : ?>
+                                            <p><em>No description provided&hellip;</em></p>
+                                        <?php endif ?>
+                                        <?php if (!empty($activity->_joinData->stepcontext)) : ?>
+                                            <em>Curator says:</em><br>
+                                            <?= $activity->_joinData->stepcontext ?>
+                                        <?php endif ?>
+                                        <?php if (!empty($activity->isbn)) : ?>
+                                            ISBN: <?= $activity->isbn ?>
+                                        <?php endif ?>
                                         <!-- <form action="/activities/like/<?= $activity->id ?>"
                         x-on:click="liked++"
                         @submit.prevent="submitData">
@@ -153,6 +151,7 @@ if ($this->Identity->isLoggedIn()) {
                                                 <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
                                             </svg>
                                         </a>
+                                        <!-- TODO Nori different launch icon? -->
                                         <!-- TODO Allan Long hyperlinks breaking cards on more info. Add to site js, see https://css-tricks.com/better-line-breaks-for-long-urls/ -->
                                         <div x-data="{ open: false }">
                                             <button @click="open = !open" class="text-sm text-sky-700 text-right">

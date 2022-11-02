@@ -93,10 +93,10 @@ if ($this->Identity->isLoggedIn()) {
                         <!-- TODO Allan Change icon for activity based on activity type -->
                         <div class="bg-white inset-1 rounded-r-sm flex-1">
                             <div class="p-3 text-lg">
-                                <h4 class="mb-3 mt-1 text-2xl">
+                                <h4 class="mb-3 mt-1 text-xl font-semibold">
                                     <a href="/activities/view/<?= $a->id ?>"><?= h($a->name) ?></a>
                                 </h4>
-
+<!-- TODO Nori/Allan add created/modified date? -->
                                 <?php if (!empty($activity->description)) : ?>
                                     <?= $activity->description ?>
                                 <?php else : ?>
