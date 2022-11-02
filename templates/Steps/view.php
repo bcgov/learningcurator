@@ -55,18 +55,10 @@ foreach ($step->pathways as $pathways) {
         </svg><a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= h($step->pathways[0]->slug) ?>"><?= h($step->pathways[0]->name) ?></a> /
         <?= $step->name ?>
     </nav>
-    <?php if ($role == 'curator' || $role == 'superuser') : ?>
-        <div class="p-4 float-right">
-            <?= $this->Html->link(
-                __('Edit Step'),
-                ['controller' => 'Steps', 'action' => 'edit', $step->id],
-                ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']
-            ) ?>
-        </div>
-    <?php endif ?>
-    <div class="max-w-prose">
-        <div class="p-3 mb-3 mt-8 bg-bluegreen text-white point-left flex justify-start items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 mx-3 grow-0" viewBox="0 0 16 16">
+
+    <div class="">
+        <div class="py-3 px-4 mb-3 mt-8 bg-bluegreen text-white point-left flex justify-start items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 mx-4 grow-0" viewBox="0 0 16 16">
                 <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
             </svg>
             <h2 class="text-2xl flex-1">
@@ -77,7 +69,7 @@ foreach ($step->pathways as $pathways) {
             <!-- TODO Allan add code to pull in pathway steps -->
             <!-- <span class="text-sm ml-3 justify-self-end flex-none"> <?= $stepacts ?> required activities</span> -->
         </div>
-        <div class="pl-8 mb-5 text-lg">
+        <div class="pl-20 pr-8 mb-5 text-lg">
             <p class="text-xl"><span class="font-bold">Pathway Objective: </span>
                 <?= $step->pathways[0]->objective ?></p>
 
@@ -115,7 +107,6 @@ foreach ($step->pathways as $pathways) {
             <?php endif ?>
 
 
-            <!-- TODO Q should this be progress for the step or the pathway? -->
             <h3 class="mt-4 mb-1 text-darkblue font-semibold">Pathway Activity Progress</h3>
             <div class="flex pbarcontainer mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
                 <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
@@ -154,6 +145,13 @@ foreach ($step->pathways as $pathways) {
                     })
                     .catch((err) => console.error("error:", err));
             </script>
+            <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                <?= $this->Html->link(
+                    __('Edit Step'),
+                    ['controller' => 'Steps', 'action' => 'edit', $step->id],
+                    ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']
+                ) ?>
+            <?php endif ?>
         </div>
     </div>
 
@@ -183,6 +181,7 @@ foreach ($step->pathways as $pathways) {
                 <?php endforeach ?>
             </nav>
         </div>
+        <!-- TODO Nori add step progress bars? -->
         <div class="basis-6/7 flex-1 border-2 border-bluegreen rounded-r-lg p-6 max-w-prose">
             <h2 class="mb-4 text-2xl">
                 <strong><?= $step->name ?></strong>: Subtitle

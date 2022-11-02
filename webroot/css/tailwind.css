@@ -1553,6 +1553,22 @@ video {
   padding-bottom: 0.25rem;
 }
 
+.pl-16 {
+  padding-left: 4rem;
+}
+
+.pr-8 {
+  padding-right: 2rem;
+}
+
+.pl-20 {
+  padding-left: 5rem;
+}
+
+.pl-24 {
+  padding-left: 6rem;
+}
+
 .text-left {
   text-align: left;
 }
