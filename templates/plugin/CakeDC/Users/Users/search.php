@@ -56,7 +56,7 @@
 
         </tbody>
     </table>
-
+<!-- TODO Nori/Allan update pagination styling? -->
     <div class="paginator">
         <ul class="flex items-center gap-2">
             <?= $this->Paginator->prev('< ' . __d('cake_d_c/users', 'Previous')) ?>
