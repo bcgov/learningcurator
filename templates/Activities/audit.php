@@ -10,4 +10,3 @@
         <div><?= $reportcount ?> reports filed.</div>
     <?php endif ?>
 </div>
-<!-- TODO Nori add Dashboard active highlighting? -->
