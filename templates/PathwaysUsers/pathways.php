@@ -53,7 +53,16 @@ if ($this->Identity->isLoggedIn()) {
                             <?= $topiclink ?>
                         </a></span>
                     </div>
+                    <p class="text-base"><strong>Followed on:</strong>
+                        <?= $this->Time->format($path->date_start, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
+                    </p>
 
+                    <?php if (!empty($path->date_complete)) : ?>
+                        <p class="text-base">
+                            <strong>Completed:</strong>
+                            <?= $this->Time->format($path->date_complete, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
+                        </p>
+                    <?php endif ?>
                     <p class="mb-3"><?php if (!empty($path->pathway->description)) : ?>
                             <?= h($path->pathway->description) ?>
                         <?php else : ?>
@@ -61,19 +70,11 @@ if ($this->Identity->isLoggedIn()) {
                         <?php endif ?></p>
 
                     <!-- This conditional is kind of a hack and we need to make people aware that the description isn't actually optional -->
-                    
-                    <h3 class="mt-4 mb-1 text-darkblue font-semibold">Pathway Activity Progress</h3>
-                    <p><strong>Followed on:</strong>
-                        <?= $this->Time->format($path->date_start, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
-                    </p>
+                    <p class="my-4"> <a href="/<?= h($path->pathway->topic->categories[0]->slug) ?>/<?= $path->pathway->topic->slug ?>/pathway/<?= h($path->pathway->slug) ?>" class="text-sky-700 underline">
+                            View the <strong><?= h($path->pathway->name) ?></strong> pathway
+                        </a> </p>
+                    <h3 class="mt-4 mb-1 text-darkblue font-semibold">Activity Progress</h3>
 
-                    <?php if (!empty($path->date_complete)) : ?>
-                        <p>
-                            <strong>Completed:</strong>
-                            <?= $this->Time->format($path->date_complete, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
-                        </p>
-                    <?php endif ?>
-<!-- TODO Nori polish formatting here -->
                     <div class="flex pbarcontainer mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
                         <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
                         <span class="py-2 px-3 text-base pbar pro_sm flex-none"></span>
@@ -109,9 +110,7 @@ if ($this->Identity->isLoggedIn()) {
                             })
                             .catch((err) => console.error("error:", err));
                     </script>
-                    <p class="my-4"> <a href="/<?= h($path->pathway->topic->categories[0]->slug) ?>/<?= $path->pathway->topic->slug ?>/pathway/<?= h($path->pathway->slug) ?>" class="text-sky-700 underline">
-                            View the <strong><?= h($path->pathway->name) ?></strong> pathway
-                        </a> </p>
+
                 </div>
         </div>
     </div>
