@@ -28,10 +28,10 @@ $this->assign('title', 'Learning on demand');
     <link href="/css/tailwind.css" rel="stylesheet">
 </head>
 
-<body class="bg-cover bg-center" style="background-image: url('/img/cape-scott-trail-n-r-t-on-flckr.jpg')">
+<body class="bg-cover bg-center font-BCSans" style="background-image: url('/img/cape-scott-trail-n-r-t-on-flckr.jpg')">
     <div class="flex flex-col  min-h-screen justify-start">
-        <div class="p-5 bg-white/95 dark:bg-slate-900/9 flex justify-between flex-none" role="banner">
-            <span class="leading-3 text-xl font-semibold tracking-widest text-slate-900 uppercase rounded-lg focus:outline-none focus:shadow-outline ">
+        <div class="p-5 bg-white/95 flex justify-between flex-none" role="banner">
+            <span class="leading-3 text-xl tracking-widest text-slate-900 uppercase rounded-lg focus:outline-none focus:shadow-outline ">
                 <span class="text-xs">Learning</span>
                 <br>
                 <span class="text-darkblue">Curator</span>
@@ -44,7 +44,7 @@ $this->assign('title', 'Learning on demand');
                     <?= $this->Form->create() ?>
                     <?= $this->Form->control('username', ['label' => '', 'required' => true, 'class' => 'p-1 mb-1 bg-white text-black  rounded-lg mt-1']) ?>
                     <?= $this->Form->control('password', ['label' => '', 'required' => true, 'class' => 'p-1 mb-1 bg-white text-black  rounded-lg']) ?>
-                    <?= $this->Form->button(__d('cake_d_c/users', 'Login'), ['class' => 'p-2 mt-2 bg-darkblue text-white text-sm dark:bg-white   hover:bg-darkblue/80 rounded-lg']); ?>
+                    <?= $this->Form->button(__d('cake_d_c/users', 'Login'), ['class' => 'p-2 mt-2 bg-darkblue text-white text-sm hover:bg-darkblue/80 rounded-lg']); ?>
                     <?= $this->Form->end() ?>
                 </div>
             </div>

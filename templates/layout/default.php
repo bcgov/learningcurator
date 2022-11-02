@@ -24,7 +24,7 @@
                         <span class="leading-3 text-xl tracking-widest text-slate-900 uppercase rounded-lg focus:outline-none focus:shadow-outline">
                             <span class="text-xs">Learning</span>
                             <br>
-                            <span class="text-[#003366]">Curator</span>
+                            <span class="text-darkblue">Curator</span>
                         </span>
                         <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open" aria-label="Menu Toggle">
                             <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
