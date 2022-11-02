@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2010 - 2019, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -14,8 +15,8 @@ $usenam = $Users->first_name . ' ' . $Users->last_name . ' profile';
 $this->assign('title', $usenam);
 $this->loadHelper('Authentication.Identity');
 if ($this->Identity->isLoggedIn()) {
-	$role = $this->Identity->get('role');
-	$uid = $this->Identity->get('id');
+    $role = $this->Identity->get('role');
+    $uid = $this->Identity->get('id');
 }
 ?>
 
@@ -23,135 +24,93 @@ if ($this->Identity->isLoggedIn()) {
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
 <div class="p-8 text-lg">
-    <h2 class="text-2xl text-darkblue font-semibold mb-3">User Search</h2>
-    <h3 class="mt-4 font-semibold">Search for a User</h3>
-    <form method="get" action="/users/search" class="mt-2">
-        <label class="">
-            <input class="px-3 py-2 m-0 border rounded-l-lg" type="search" placeholder="first or last name ..." aria-label="User Search" name="q" value="<?= h($q) ?>"></label><button class="px-3 py-2 m-0 bg-slate-400 hover:bg-slate-300 rounded-r-lg" type="submit">User Search</button>
-        <div class="inline-block ml-2 text-sky-700 hover:underline text-base"><a href="/users/search">Show All Users</a></div>
-    </form>
-
-    <h3 class="mt-4 font-semibold">All Users</h3>
-
-
-<?php if($role == 'superuser'): ?>
-<div class="btn-group float-right mt-5">
-<?= $this->Html->link(__d('cake_d_c/users', 'Edit User'), ['action' => 'edit', $Users->id],['class'=>'btn btn-primary']) ?> 
-<?= $this->Form->postLink(
+    <h2 class="text-2xl text-darkblue font-semibold mb-3">User Profile</h2>
+    <h3 class="mt-4 text-xl font-semibold"><?= h($Users->first_name) ?> <?= h($Users->last_name) ?></h3>
+    <?php if ($role == 'superuser') : ?>
+        <div class="btn-group float-right mt-5">
+            <?= $this->Html->link(__d('cake_d_c/users', 'Edit User'), ['action' => 'edit', $Users->id], ['class' => 'inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
+            <?= $this->Form->postLink(
                 __d('cake_d_c/users', 'Delete User'),
                 ['action' => 'delete', $Users->id],
-                ['confirm' => __d('cake_d_c/users', 'Are you sure you want to delete # {0}?', $Users->id),
-                'class' => 'btn btn-light']
-            ) ?> 
-</div>
-<?php endif ?>
-
-<div class="mt-5"><a href="/users/index">All Users</a></div>
-<h1 class="display-4 mt-0">
-    <?= h($Users->first_name) ?> <?= h($Users->last_name) ?>
-</h1>
-<div class="mb-3">
-    <?php if($this->Number->format($Users->active) == 1): ?>
-    <span class="badge badge-success">Active</span>
+                [
+                    'confirm' => __d('cake_d_c/users', 'Are you sure you want to delete # {0}?', $Users->id),
+                    'class' => 'inline-block px-3 py-1 text-base hover:bg-red-700/80 text-white bg-red-700 hover:no-underline rounded-lg'
+                ]
+            ) ?>
+        </div>
     <?php endif ?>
-    <span class="badge badge-dark"><?= h($Users->role) ?></span>
-    <span class="badge badge-primary">
-    <?php if($Users->ministry_id == 2): ?>
-        Public Service Agency
-    <?php elseif($Users->ministry_id == 3): ?>
-        Citizen Services
+
+    <div class="mb-3">
+        <ul class="list-disc pl-8 mt-2">
+            <li class="px-2"><strong>Status:</strong> <?php if ($this->Number->format($Users->active) == 1) : ?>
+                    Active
+                <?php endif ?> </li>
+            <li class="px-2"><strong>Role:</strong> <?= ucfirst($Users->role) ?></li>
+            <!-- TODO Nori/Allan add other status options here? -->
+            <?php if ($Users->ministry_id == 2) : ?>
+                <li class="px-2"><strong>Ministry:</strong> Public Service Agency</li>
+            <?php elseif ($Users->ministry_id == 3) : ?>
+                <li class="px-2"><strong>Ministry:</strong> Citizen Services</li>
+            <?php endif ?>
+            <li class="px-2"><strong>Username:</strong> <?= h($Users->username) ?></li>
+            <li class="px-2"><strong>Email:</strong> <a href="mailto:<?= h($Users->email) ?>" class="font-weight-bold"><?= h($Users->email) ?></a></li>
+            <li class="px-2"><strong>User Created:</strong> <?= $this->Time->format($Users->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></li>
+            <li class="px-2"><strong>Last Modified:</strong> <?= $this->Time->format($Users->modified, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></li>
+        </ul>
+    </div>
+    <!-- TODO Nori/Allan should we add icons or cards or other additional formatting here? -->
+    <h3 class="mt-4 font-semibold text-xl">Activities Claimed</h3>
+    <?php if (!empty($Users->activities_users)) : ?>
+        <ul class="list-disc pl-8 mt-2">
+            <?php foreach ($Users->activities_users as $act) : ?>
+                <li class="px-2"><a href="/activities/view/<?= $act->activity->id ?>"><?= h($act->activity->name) ?></a>
+                </li>
+            <?php endforeach ?>
+        </ul>
+        <!-- TODO Nori/Allan add claimed date? -->
+    <?php else : ?>
+        <p>This user hasn't claimed any activities yet.</p>
     <?php endif ?>
-    </span>
-</div>
-<!-- <div><?= h($Users->username) ?></div> -->
+    <h3 class="mt-4 font-semibold text-xl">Activities Contributed</h3>
+    <?php if (!$actsadded->isEmpty()) : ?>
+        <ul class="list-disc pl-8 mt-2">
+            <?php foreach ($actsadded as $act) : ?>
+                <li class="px-2"> <a href="/activities/view/<?= $act->id ?>">
+                        <?= h($act->name) ?>
+                    </a>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    <?php else : ?>
+        <p>This user hasn't contributed any activities yet.</p>
+    <?php endif ?>
+    <h3 class="mt-4 font-semibold text-xl">Pathways Followed</h3>
+    <?php if (!empty($Users->pathways_users)) : ?>
+        <ul class="list-disc pl-8 mt-2">
+            <?php foreach ($Users->pathways_users as $path) : ?>
+                <li class="px-2"><a href="/pathways/<?= $path->pathway->slug ?>">
+                        <i class="bi bi-pin-map-fill"></i>
+                        <?= $path->pathway->name ?>
+                    </a></li>
 
-<div>
-    <a href="mailto:<?= h($Users->email) ?>" class="font-weight-bold"><?= h($Users->email) ?></a>
-</div>
-<div class="mt-3">
-    <?= __d('cake_d_c/users', 'Created') ?> 
-    <?= h($Users->created) ?>
-    <?= __d('cake_d_c/users', 'Modified') ?> <?= h($Users->modified) ?>
-</div>
+            <?php endforeach ?>
+        </ul>
+    <?php else : ?>
+        <p>This user hasn't followed any pathways yet.</p>
+    <?php endif ?>
+    <h3 class="mt-4 font-semibold text-xl">Pathways Contributed</h3>
+    <?php if (!$pathsadded->isEmpty()) : ?>
+        <!-- TODO Allan deprecation error for isEmpty -->
+        <ul class="list-disc pl-8 mt-2">
 
-
-
-
-<h3 class="mt-4">Activities Claimed</h3>
-<?php if(!empty($Users->activities_users)): ?>
-<div class="overflow-auto" style="height: 20em">
-<?php foreach($Users->activities_users as $act): ?>
-<div class="dark:bg-slate-900/80 px-3 py-2 rounded-lg">
-    <a href="/activities/view/<?= $act->activity->id ?>">
-    <i class="<?= $act->activity->activity_type->image_path ?>"></i>
-        <?= $act->activity->name ?>
-    </a>
+            <?php foreach ($pathsadded as $path) : ?>
+                <li class="px-2"> <a href="/pathways/<?= $path->slug ?>">
+                        <?= $path->name ?>
+                    </a>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    <?php else : ?>
+        <p>This user hasn't contributed any pathways yet.</p>
+    <?php endif ?>
 </div>
-<?php endforeach ?>
-</div>
-<?php else: ?>
-<div class="dark:bg-slate-900/80 p-3 rounded-lg">This person hasn't claimed any activities yet.</div>
-<?php endif ?>
-</div>
-
-<div class="col-md-4 col-xl-3">
-<h3 class="mt-4">Activities Contributed</h3>
-<?php if(!$actsadded->isEmpty()): ?>
-<div class="overflow-auto" style="height: 20em">
-<?php foreach($actsadded as $act): ?>
-<div class="dark:bg-slate-900/80 p-3 rounded-lg">
-    <a href="/activities/view/<?= $act->id ?>">
-        <i class="<?= $act->activity_type->image_path ?>"></i>
-        <?= $act->name ?>
-    </a>
-</div>
-<?php endforeach ?>
-</div>
-<?php else: ?>
-<div class="dark:bg-slate-900/80 p-3 rounded-lg">This person hasn't contributed any activities yet.</div>
-<?php endif ?>
-</div>
-
-
-<div class="col-md-4 col-xl-3">
-<h3 class="mt-4">Paths Following</h3>
-<?php if(!empty($Users->pathways_users)): ?>
-<?php foreach($Users->pathways_users as $path): ?>
-<div class="dark:bg-slate-900/80 p-3 rounded-lg">
-    <a href="/pathways/<?= $path->pathway->slug ?>">
-        <i class="bi bi-pin-map-fill"></i>
-        <?= $path->pathway->name ?>
-    </a>
-</div>
-<?php endforeach ?>
-<?php else: ?>
-<div class="dark:bg-slate-900/80 p-3 rounded-lg">This person hasn't followed any pathways yet.</div>
-<?php endif ?>
-</div>
-
-<div class="col-md-4 col-xl-3">
-<h3 class="mt-4">Pathways Contributed</h3>
-<?php if(!$pathsadded->isEmpty()): ?>
-<?php foreach($pathsadded as $path): ?>
-<div class="dark:bg-slate-900/80 p-3 rounded-lg">
-    <a href="/pathways/<?= $path->slug ?>">
-    <i class="bi bi-pin-map-fill"></i>
-        <?= $path->name ?>
-    </a>
-</div>
-<?php endforeach ?>
-<?php else: ?>
-<div class="dark:bg-slate-900/80 p-3 rounded-lg">This person hasn't contributed any pathways yet.</div>
-<?php endif ?>
-</div>
-
-
-
-
-
-</div>
-</div>
-</div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

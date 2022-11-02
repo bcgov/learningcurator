@@ -38,7 +38,7 @@ if ($this->Identity->isLoggedIn()) {
                             <?= h($pathway->name) ?>
                         </h3>
                         <?php if ($pathway->status_id == 1) : ?>
-                            <span class="bg-orange-400 text-white rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
+                            <span class="bg-orange-600 text-white rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
                         <?php endif ?>
                         <?php if ($pathway->featured == 1) : ?>
                             <span class="bg-green-600 text-white rounded-full px-2 py-1 text-sm align-middle">Featured</span>
