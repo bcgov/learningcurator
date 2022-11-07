@@ -107,7 +107,7 @@ foreach ($step->pathways as $pathways) {
             <?php endif ?>
 
 
-            <h3 class="mt-4 mb-1 text-darkblue font-semibold">Pathway Activity Progress</h3>
+            <h3 class="mt-6 mb-1 text-darkblue font-semibold">Pathway Activity Progress</h3>
             <div class="flex pbarcontainer mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
                 <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
                 <span class="py-2 px-3 text-base pbar pro_sm flex-none"></span>
@@ -182,6 +182,7 @@ foreach ($step->pathways as $pathways) {
             </nav>
         </div>
         <!-- TODO Nori add step progress bars? -->
+        <!-- TODO Allan/Nori - Title vs step name/subtitle -->
         <div class="basis-6/7 flex-1 border-2 border-bluegreen rounded-r-lg p-6 max-w-prose">
             <h2 class="mb-4 text-2xl">
                 <strong><?= $step->name ?></strong>: Subtitle
@@ -193,7 +194,7 @@ foreach ($step->pathways as $pathways) {
                 <?= $step->description ?>
             </p>
             <?php if (!empty($requiredacts)) : ?>
-                <h4 class="mt-6 text-xl text-sky-700">Required Activities <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $stepacts ?></span></h4>
+                <h4 class="mt-6 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1"><?= $stepacts ?></span>Required Activities </h4>
                 <p class="text-base"><em>Launch these activities and fill in your progress bar.</em></p>
                 <?php foreach ($requiredacts as $activity) : ?>
                     <?php
@@ -207,7 +208,7 @@ foreach ($step->pathways as $pathways) {
                         }
                     }
                     ?>
-                    <div class="rounded-md bg-sagedark hover:bg-sagedark/80 mb-4 p-0.5">
+                    <div class="rounded-md bg-sagedark mb-4 p-0.5">
                         <div class="flex flex-row justify-between">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-journal-text mx-3 my-4 flex-none" viewBox="0 0 16 16">
                                 <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
@@ -254,7 +255,7 @@ foreach ($step->pathways as $pathways) {
                                         <?php endif ?>
                                         <a target="_blank" x-on:click="count++;" onclick="loadStatus();" rel="noopener" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $activity->id ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
                                             Launch
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="ml-1 inline align-baseline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
                                                 <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
                                             </svg>
@@ -374,7 +375,7 @@ foreach ($step->pathways as $pathways) {
                         }
                     }
                     ?>
-                    <div class="rounded-md bg-sagedark hover:bg-sagedark/80 mb-4 p-0.5">
+                    <div class="rounded-md bg-sagedark mb-4 p-0.5">
                         <div class="flex flex-row justify-between">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-journal-text mx-3 my-4 flex-none" viewBox="0 0 16 16">
                                 <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />

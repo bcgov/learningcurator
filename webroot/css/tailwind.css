@@ -1543,6 +1543,10 @@ video {
   text-align: right;
 }
 
+.align-baseline {
+  vertical-align: baseline;
+}
+
 .align-middle {
   vertical-align: middle;
 }
@@ -1706,6 +1710,11 @@ video {
 .text-slate-300 {
   --tw-text-opacity: 1;
   color: rgb(203 213 225 / var(--tw-text-opacity));
+}
+
+.text-sagedark {
+  --tw-text-opacity: 1;
+  color: rgb(41 115 94 / var(--tw-text-opacity));
 }
 
 .underline {
