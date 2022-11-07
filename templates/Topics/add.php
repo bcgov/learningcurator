@@ -5,13 +5,12 @@
  */
 $this->loadHelper('Authentication.Identity');
 ?>
-<div class="p-6">
-
-    <h1 class="text-3xl my-5">
-        Add Topic
-    </h1>
-
-<div class="mt-5 p-5 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">
+<header class="w-full h-52 bg-darkblue px-8 flex items-center">
+    <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
+</header>
+<div class="p-8 text-lg" id="mainContent">
+    <h2 class="text-2xl text-darkblue font-semibold mb-3">Add Topic</h2>
+    <div class="max-w-prose outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
 
 <?= $this->Form->create($topic) ?>
 <fieldset>
