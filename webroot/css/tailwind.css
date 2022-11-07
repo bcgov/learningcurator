@@ -2103,6 +2103,10 @@ p {
     display: none;
   }
 
+  .md\:h-52 {
+    height: 13rem;
+  }
+
   .md\:w-60 {
     width: 15rem;
   }

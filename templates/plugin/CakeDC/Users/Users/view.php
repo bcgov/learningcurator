@@ -20,7 +20,7 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 
-<header class="w-full h-32 lg:h-52 bg-darkblue px-8 flex items-center">
+<header class="w-full h-32 md:h-52 bg-darkblue px-8 flex items-center">
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
 <div class="p-8 text-lg" id="mainContent">
