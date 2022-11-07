@@ -18,6 +18,7 @@ if ($this->Identity->isLoggedIn()) {
 </header>
 <div class="p-8 text-lg" id="mainContent">
     <!-- TODO Allan/Nori add created date? -->
+    <!-- created/modified on each of the db tables -->
     <h2 class="text-2xl text-darkblue font-semibold"><?= __('My Contributions') ?></h2>
     <h3 class="mt-4 font-semibold text-xl">My Pathways</h3>
     <?php if (!$pathways->all()->isEmpty()) : ?>

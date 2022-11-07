@@ -151,7 +151,6 @@ if ($this->Identity->isLoggedIn()) {
                                                 <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
                                             </svg>
                                         </a>
-                                        <!-- TODO Nori different launch icon? -->
                                         <!-- TODO Allan Long hyperlinks breaking cards on more info. Add to site js, see https://css-tricks.com/better-line-breaks-for-long-urls/ -->
                                         <div x-data="{ open: false }">
                                             <button @click="open = !open" class="text-sm text-sky-700 text-right">
