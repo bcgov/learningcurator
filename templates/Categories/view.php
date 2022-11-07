@@ -28,7 +28,7 @@ $this->assign('title', $pagetitle);
     </div>
 <?php endif;  // curator or admin? 
 ?>
-<div class="p-8 pt-4 w-full text-xl">
+<div class="p-8 pt-4 w-full text-xl" id="mainContent">
     <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
         <?= $this->Html->link(__('All Categories'), ['controller' => 'Categories', 'action' => 'index'], ['class' => '']) ?> >
         <?= h($category->name) ?>

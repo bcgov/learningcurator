@@ -46,7 +46,7 @@ foreach ($step->pathways as $pathways) {
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Pathways</h1>
     </div>
 </header>
-<div class="p-8 pt-4 w-full text-xl">
+<div class="p-8 pt-4 w-full text-xl" id="mainContent">
     <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
         <a href="/category/<?= h($step->pathways[0]->topic->categories[0]->id) ?>/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>" class="hover:underline"><?= h($step->pathways[0]->topic->categories[0]->name) ?></a> >
         <a href="/category/<?= h($step->pathways[0]->topic->categories[0]->id) ?>/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/topic/<?= h($step->pathways[0]->topic->id) ?>/<?= h($step->pathways[0]->topic->slug) ?>" class="hover:underline"><?= h($step->pathways[0]->topic->name) ?></a> >

@@ -19,7 +19,7 @@ if ($this->Identity->isLoggedIn()) {
     </div>
 </header>
 
-<div class="p-8 pt-4 w-full text-lg">
+<div class="p-8 pt-4 w-full text-lg" id="mainContent">
     <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
         <?= $this->Html->link(__('All Categories'), ['controller' => 'Categories', 'action' => 'index'], ['class' => '']) ?> >
         <a href="/category/<?= h($topic->categories[0]->id) ?>/<?= h($topic->categories[0]->slug) ?>"><?= h($topic->categories[0]->name) ?></a> >

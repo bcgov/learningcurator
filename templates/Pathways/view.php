@@ -21,7 +21,7 @@ $this->assign('title', h($pathway->name));
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Pathways</h1>
     </div>
 </header>
-<div class="p-8 pt-4 w-full text-lg">
+<div class="p-8 pt-4 w-full text-lg" id="mainContent">
 
     <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
         <a href="/category/<?= h($pathway->topic->categories[0]->id) ?>/<?= h($pathway->topic->categories[0]->slug) ?>" class="hover:underline"><?= h($pathway->topic->categories[0]->name) ?></a> >

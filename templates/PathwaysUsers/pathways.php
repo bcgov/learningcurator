@@ -123,7 +123,7 @@ if ($this->Identity->isLoggedIn()) {
             <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Getting Started</h1>
         </div>
     </header>
-    <div class="p-8 text-xl max-w-prose">
+    <div class="p-8 text-xl max-w-prose" id="mainContent">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Find your path</h2>
 
         <p class="mb-3">
