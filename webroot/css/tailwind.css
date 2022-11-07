@@ -907,6 +907,10 @@ video {
   height: 1.25rem;
 }
 
+.h-32 {
+  height: 8rem;
+}
+
 .max-h-\[100px\] {
   max-height: 100px;
 }
@@ -2164,6 +2168,10 @@ p {
 
   .lg\:grid {
     display: grid;
+  }
+
+  .lg\:h-52 {
+    height: 13rem;
   }
 
   .lg\:w-1\/2 {
