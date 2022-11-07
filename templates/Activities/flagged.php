@@ -10,7 +10,7 @@ $this->loadHelper('Authentication.Identity');
 <header class="w-full h-52 bg-darkblue px-8 flex items-center">
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
-<div class="p-8 text-lg">
+<div class="p-8 text-lg" id="mainContent">
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Manual Link Review</h2>
 
     <p>These activities, usually because they are behind authentication,

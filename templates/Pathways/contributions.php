@@ -16,7 +16,7 @@ if ($this->Identity->isLoggedIn()) {
 <header class="w-full h-52 bg-darkblue px-8 flex items-center">
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
-<div class="p-8 text-lg">
+<div class="p-8 text-lg" id="mainContent">
     <!-- TODO Allan/Nori add created date? -->
     <h2 class="text-2xl text-darkblue font-semibold"><?= __('My Contributions') ?></h2>
     <h3 class="mt-4 font-semibold text-xl">My Pathways</h3>

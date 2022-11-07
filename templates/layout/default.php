@@ -11,6 +11,7 @@
 </head>
 
 <body class="bg-slate-50 font-BCSans">
+    <a href="#mainContent" class="sr-only focus:not-sr-only"><span class="p-3">Skip to Content</span></a>
     <!-- :class="{'dark': darkMode === true}"
   x-data="{'darkMode': false}" 
   x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));

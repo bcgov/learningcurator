@@ -18,7 +18,7 @@ if ($this->Identity->isLoggedIn()) {
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">About</h1>
     </div>
 </header>
-<div class="p-8 text-lg">
+<div class="p-8 text-lg" id="mainContent">
 
 
     <div class="max-w-prose">

@@ -20,8 +20,8 @@ if ($this->Identity->isLoggedIn()) {
     </div>
 </header>
 
-<div class="p-8 text-lg">
-    <div class="max-w-prose">
+<div class="p-8 text-lg" id="mainContent">
+    <div class="max-w-prose" >
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">All Categories of Learning</h2>
 
         <p class="mb-3 text-xl">

@@ -13,7 +13,7 @@
 <header class="w-full h-52 bg-darkblue px-8 flex items-center">
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
-<div class="p-8 text-lg">
+<div class="p-8 text-lg" id="mainContent">
     <div class="lg:grid lg:grid-cols-3 lg:gap-4 items-start">
         <div class="lg:col-span-2">
             <div class="p-3 rounded-lg bg-slate-100">
