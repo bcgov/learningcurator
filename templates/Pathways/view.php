@@ -168,8 +168,14 @@ $this->assign('title', h($pathway->name));
                             <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen text-white basis-1/7 p-3"><?= $step_num ?></h3>
                             <div class="flex-1 basis-6/7 p-3">
                             <h4 class="text-xl font-semibold"><?= h($steps->name) ?>: Subtitle here</h4>
-                                <p class="text-bluegreen font-semibold text-base">
+                            <?php if ($requiredacts == 1) : ?> 
+
+                            <p class="text-bluegreen font-semibold text-base">
+                                    <?= $requiredacts ?> required activity</p>
+                                    <?php else : ?>
+                                        <p class="text-bluegreen font-semibold text-base">
                                     <?= $requiredacts ?> required activities</p>
+                                        <?php endif ?>
                                 <p class="mb-2"><span class="font-semibold">Objective: </span><?= $steps->description ?></p>
                                 <p class="mb-2"> <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="text-sky-700 underline">
                                         View <strong><?= h($steps->name) ?></strong>
