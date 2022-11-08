@@ -29,7 +29,7 @@ if ($this->Identity->isLoggedIn()) {
                 When you follow a pathway, it will be listed here, so you can jump right to it.</p>
 
             <?php foreach ($pathways as $path) : ?>
-
+                
                 <a href="/<?= h($path->pathway->topic->categories[0]->slug) ?>/<?= h($path->pathway->topic->slug) ?>/pathway/<?= h($path->pathway->slug) ?>" class="hover:no-underline">
 
                     <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-l-full flex items-center justify-between">
@@ -39,7 +39,7 @@ if ($this->Identity->isLoggedIn()) {
                         <h3 class="text-2xl flex-1">
                             <?= h($path->pathway->name) ?>
                         </h3>
-                        <span class="text-sm ml-3 justify-self-end flex-none"><?= h($path->pathway->stepcount) ?> steps | <?= h($path->pathway->requiredacts) ?> activities</span>
+                        <span class="text-sm ml-3 justify-self-end flex-none"><?= h($path->pathway->steps) ?> steps | <?= h($path->pathway->requiredacts) ?> activities</span>
                     </div>
                 </a>
                 <div class="pl-10">

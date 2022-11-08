@@ -49,8 +49,8 @@ $this->assign('title', h($pathway->name));
 
         <div class="pl-8 text-xl">
 
-            <p><span class="font-bold">Objective: </span>
-                <?= $pathway->objective ?></p>
+            <div class="mb-5 block">
+                <?= $pathway->objective ?></div>
             <?php if (empty($followid)) : ?>
                 <div class="my-3">
                     <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users', 'action' => 'follow']]) ?>
@@ -105,9 +105,7 @@ $this->assign('title', h($pathway->name));
                             if (json.percentage < 20) {
                                 document.querySelector('.pro_sm').innerHTML = launched;
                                 document.querySelector('.total').innerHTML = remaining;
-                            }
-                        
-                            else {
+                            } else {
                                 document.querySelector('.pro').innerHTML = launched;
                                 document.querySelector('.total').innerHTML = remaining;
                             }
@@ -150,8 +148,8 @@ $this->assign('title', h($pathway->name));
 
 
             <?php endif ?>
-<!-- TODO Nori sometimes objective has added line breaks? -->
-<!-- TODO Nori/Allan add code for subtitle in box -->
+            <!-- TODO Nori sometimes objective has added line breaks? -->
+            <!-- TODO Nori/Allan add code for subtitle in box -->
             <?php if (!empty($pathway->steps)) : ?>
 
                 <?php foreach ($pathway->steps as $steps) : ?>
@@ -164,18 +162,18 @@ $this->assign('title', h($pathway->name));
                     <!-- count required activities -->
                     <?php if ($steps->status->name == 'Published') : ?>
                         <div class="mt-4 text-lg border-2 border-bluegreen rounded-lg flex justify-start">
-                            <?php $step_num = trim(str_replace("step-","", $steps->slug)); ?>
+                            <?php $step_num = trim(str_replace("step-", "", $steps->slug)); ?>
                             <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen text-white basis-1/7 p-3"><?= $step_num ?></h3>
                             <div class="flex-1 basis-6/7 p-3">
-                            <h4 class="text-xl font-semibold"><?= h($steps->name) ?>: Subtitle here</h4>
-                            <?php if ($requiredacts == 1) : ?> 
+                                <h4 class="text-xl font-semibold"><?= h($steps->name) ?>: Subtitle here</h4>
+                                <?php if ($requiredacts == 1) : ?>
 
-                            <p class="text-bluegreen font-semibold text-base">
-                                    <?= $requiredacts ?> required activity</p>
-                                    <?php else : ?>
-                                        <p class="text-bluegreen font-semibold text-base">
-                                    <?= $requiredacts ?> required activities</p>
-                                        <?php endif ?>
+                                    <p class="text-bluegreen font-semibold text-base">
+                                        <?= $requiredacts ?> required activity</p>
+                                <?php else : ?>
+                                    <p class="text-bluegreen font-semibold text-base">
+                                        <?= $requiredacts ?> required activities</p>
+                                <?php endif ?>
                                 <div class="mb-2"><?= $steps->description ?></div>
                                 <p class="mb-2"> <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="text-sky-700 underline">
                                         View <strong><?= h($steps->name) ?></strong>
