@@ -1847,6 +1847,16 @@ p {
   margin-bottom: 1em;
 }
 
+.before\:font-semibold::before {
+  content: var(--tw-content);
+  font-weight: 600;
+}
+
+.before\:content-\[\'Objective\'\]::before {
+  --tw-content: 'Objective';
+  content: var(--tw-content);
+}
+
 .hover\:cursor-pointer:hover {
   cursor: pointer;
 }

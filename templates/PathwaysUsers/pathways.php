@@ -37,10 +37,9 @@ if ($this->Identity->isLoggedIn()) {
                             <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
                         </svg>
                         <h3 class="text-2xl flex-1">
-
                             <?= h($path->pathway->name) ?>
                         </h3>
-                        <!-- <span class="text-sm justify-self-end flex-none">8 steps | 23 activities</span> -->
+                        <span class="text-sm ml-3 justify-self-end flex-none"><?= h($path->pathway->stepcount) ?> steps | <?= h($path->pathway->requiredacts) ?> activities</span>
                     </div>
                 </a>
                 <div class="pl-10">
@@ -63,12 +62,11 @@ if ($this->Identity->isLoggedIn()) {
                             <?= $this->Time->format($path->date_complete, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
                         </p>
                     <?php endif ?>
-                    <!-- TODO Nori/Allan check on the h() here and <p> -->
-                    <p class="mb-3"><?php if (!empty($path->pathway->description)) : ?>
-                            <?= h($path->pathway->description) ?>
+                    <div class="mb-3"><?php if (!empty($path->pathway->description)) : ?>
+                            <?= $path->pathway->description ?>
                         <?php else : ?>
-                            <?= h($path->pathway->objective) ?>
-                        <?php endif ?></p>
+                            <?= $path->pathway->objective ?>
+                        <?php endif ?></div>
                     <!-- This conditional is kind of a hack and we need to make people aware that the description isn't actually optional -->
 
                 
