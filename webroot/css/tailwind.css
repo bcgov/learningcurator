@@ -1533,6 +1533,10 @@ video {
   vertical-align: middle;
 }
 
+.align-text-top {
+  vertical-align: text-top;
+}
+
 .font-BCSans {
   font-family: BCSans, sans-serif;
 }
