@@ -25,9 +25,10 @@
                 </form>
                 <h3 class="mt-4 font-bold">View</h3>
                 <ul class="list-disc pl-8 mt-2">
-                    <!-- <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/reports/index">Reports</a></li>
-                <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/activity-types">Activity Types</a></li>
-                <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/ministries">Ministries</a></li> -->
+                    <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/reports/index">Open Issue Reports</a></li>
+                    <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/reports/closed">Closed Issue Reports</a></li>
+                    <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/activity-types">Activity Types</a></li>
+                    <!--<li class="px-2"><a class="hover:underline hover:text-sky-700" href="/ministries">Ministries</a></li> -->
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/profile/contributions">
                             My Contributions
                         </a></li>
@@ -89,7 +90,7 @@
 
             </div>
 
-            
+
         </div>
         <div class="border-2 border-darkblue p-3 rounded-lg">
             <h2 class="text-2xl text-darkblue">Today's Stats</h2>
