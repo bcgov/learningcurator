@@ -16,18 +16,15 @@ $this->loadHelper('Authentication.Identity');
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
 <div class="p-8 text-lg" id="mainContent">
-
     <?php if (!empty($report)) : ?>
 
-        <div class="mt-0 mb-6">
-            <a class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg mr-2" href="/reports/index">Open Reports</a>
-            <a class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg mr-2" href="/reports/closed">Closed Reports</a>
-        </div>
+       
+        <h2 class="text-2xl text-darkblue font-semibold mb-3">Open Report</h2>
 
         <div class="border-2 border-slate-700 mb-3 rounded-md">
-            <h2 class="flex justify-between gap-4 items-center bg-slate-700 text-white p-2"> <span class="ml-2 font-semibold">Issue report #<?= $report->id ?></span>
+            <h3 class="flex justify-between gap-4 items-center bg-slate-700 text-white p-2"> <span class="ml-2 font-semibold">Issue report #<?= $report->id ?></span>
                 <span class="text-sm"><?= $this->Time->format($report->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></span>
-            </h2>
+            </h3>
             <div class="p-3">
                 <div class="text-xl mb-3"><span class="font-semibold">Activity Reported:</span> <a href="/activities/view/<?= $report->activity->id ?>"><?= $report->activity->name ?></a></div>
                 <div class="text-base"><span class="font-semibold">Hyperlink:</span> <a href="<?= $report->activity->hyperlink ?>" target="_blank"><?= $report->activity->hyperlink ?></a></div>
@@ -63,11 +60,14 @@ $this->loadHelper('Authentication.Identity');
                         <?= $this->Form->end() ?>
 
 
-                        <?= $this->Form->postLink(__('Delete Issue Report'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'block my-2 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-right']) ?>
+                        <?= $this->Form->postLink(__('Delete Issue Report'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'block my-2 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base']) ?>
                     <?php endif ?>
                 </div><!-- curatorresponse -->
-
             </div>
         </div>
+        <div class="mt-0 mb-6">
+    <a class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg mr-2" href="/reports/index">All Open Reports</a>
+    <a class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg mr-2" href="/reports/closed">All Closed Reports</a>
+</div>
     <?php endif ?>
 </div>
