@@ -1531,6 +1531,10 @@ video {
   padding-bottom: 0.25rem;
 }
 
+.pl-1 {
+  padding-left: 0.25rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -1865,6 +1869,10 @@ p {
   margin-bottom: 1em;
 }
 
+.focus-within\:border-l-0:focus-within {
+  border-left-width: 0px;
+}
+
 .hover\:cursor-pointer:hover {
   cursor: pointer;
 }
@@ -1969,6 +1977,18 @@ p {
 .focus\:translate-y-0:focus {
   --tw-translate-y: 0px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.focus\:border-0:focus {
+  border-width: 0px;
+}
+
+.focus\:border-l-0:focus {
+  border-left-width: 0px;
+}
+
+.focus\:border-none:focus {
+  border-style: none;
 }
 
 .focus\:bg-slate-200:focus {
