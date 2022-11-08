@@ -176,7 +176,7 @@ $this->assign('title', h($pathway->name));
                                         <p class="text-bluegreen font-semibold text-base">
                                     <?= $requiredacts ?> required activities</p>
                                         <?php endif ?>
-                                <p class="mb-2"><span class="font-semibold">Objective: </span><?= $steps->description ?></p>
+                                <div class="mb-2"><?= $steps->description ?></div>
                                 <p class="mb-2"> <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="text-sky-700 underline">
                                         View <strong><?= h($steps->name) ?></strong>
                                     </a> </p>
