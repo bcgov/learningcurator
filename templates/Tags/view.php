@@ -2,7 +2,7 @@
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
 <div class="p-8 text-lg" id="mainContent">
-    <h2 class="text-2xl text-darkblue font-semibold mb-3">Tagged Activities: <span class="font-normal text-slate-900"><?= h($tag->name) ?></span>  </h2>
+    <h2 class="text-2xl text-darkblue font-semibold mb-3">Tagged Activities: <span class="text-slate-900"><?= h($tag->name) ?></span>  </h2>
 
     <div class="text-xl">
         <!-- TODO Nori/Allan auto Paragraph formatting function here? -->
