@@ -1986,6 +1986,10 @@ p {
   border-color: rgb(2 132 199 / var(--tw-border-opacity));
 }
 
+.group:hover .group-hover\:border-bluegreen\/80 {
+  border-color: rgb(47 97 115 / 0.8);
+}
+
 .group:hover .group-hover\:bg-sky-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(2 132 199 / var(--tw-bg-opacity));
@@ -1993,6 +1997,10 @@ p {
 
 .group:hover .group-hover\:bg-sky-700\/80 {
   background-color: rgb(3 105 161 / 0.8);
+}
+
+.group:hover .group-hover\:bg-bluegreen\/80 {
+  background-color: rgb(47 97 115 / 0.8);
 }
 
 @media (prefers-color-scheme: dark) {
