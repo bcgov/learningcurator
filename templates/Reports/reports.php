@@ -41,7 +41,7 @@ if ($this->Identity->isLoggedIn()) {
                         <?php else : ?>
                             <div class="italic text-slate-700 mt-2">Thank you for your report! A Curator will respond to your message soon.</div>
                         <?php endif ?>
-                        <?= $this->Form->postLink(__('Delete Issue Report'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'inline-block my-2 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base']) ?>
+
 
                         <?php if ($role == 'curator' || $role == 'superuser') : ?>
 
@@ -67,6 +67,7 @@ if ($this->Identity->isLoggedIn()) {
                                 </div>
                             </div>
                         <?php endif ?>
+                        <?= $this->Form->postLink(__('Delete Issue Report'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'inline-block my-2 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base']) ?>
                     </div>
                 </div>
             <?php endforeach ?>
