@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2010 - 2019, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -8,75 +9,86 @@
  * @copyright Copyright 2010 - 2018, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+
 use Cake\Core\Configure;
+
 $this->layout = 'ajax';
 $this->assign('title', 'Learning on demand');
 ?>
 <?php $this->loadHelper('Authentication.Identity') ?>
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-<head>
-<?= $this->Html->charset() ?>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title><?= $this->fetch('title') ?> | Learning Curator</title>
-<link href="/css/tailwind.css" rel="stylesheet">
+<head>
+    <?= $this->Html->charset() ?>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><?= $this->fetch('title') ?> | Learning Curator</title>
+    <link href="/css/tailwind.css" rel="stylesheet">
 </head>
 
-<body class="bg-cover bg-center min-h-full" style="background-image: url('/img/cape-scott-trail-n-r-t-on-flckr.jpg')">
-	
-<div class="p-3 pl-10 bg-white/95 dark:bg-slate-900/95" role="banner">
-<span class="leading-3 text-xl font-semibold tracking-widest text-slate-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
-      <span class="text-xs">Learning</span>
-      <br>
-      <span class="text-[#003366] dark:text-yellow-500">Curator</span>
-    </span>
-</div>
+<body class="bg-cover bg-center font-BCSans" style="background-image: url('/img/cape-scott-trail-n-r-t-on-flckr.jpg')">
+    <div class="flex flex-col  min-h-screen justify-start">
+        <div class="p-5 bg-white/95 flex justify-between flex-none" role="banner">
+            <span class="leading-3 text-xl tracking-widest text-slate-900 uppercase rounded-lg focus:outline-none focus:shadow-outline ">
+                <span class="text-xs">Learning</span>
+                <br>
+                <span class="text-darkblue">Curator</span>
+            </span>
+            <div x-data="{ open: false }">
+                <button @click="open = true" class="text-sm text-[@003366] hover:underline">
+                    Admin Login
+                </button>
+                <div x-show="open" x-cloak>
+                    <?= $this->Form->create() ?>
+                    <?= $this->Form->control('username', ['label' => '', 'required' => true, 'class' => 'p-1 mb-1 bg-white text-black  rounded-lg mt-1']) ?>
+                    <?= $this->Form->control('password', ['label' => '', 'required' => true, 'class' => 'p-1 mb-1 bg-white text-black  rounded-lg']) ?>
+                    <?= $this->Form->button(__d('cake_d_c/users', 'Login'), ['class' => 'p-2 mt-2 bg-darkblue text-white text-sm hover:bg-darkblue/80 rounded-lg']); ?>
+                    <?= $this->Form->end() ?>
+                </div>
+            </div>
+        </div>
 
-<div class="w-full lg:w-1/2 px-3 py-10 lg:p-20 min-h-screen dark:text-white">
+        <div class="w-full md:w-3/4 lg:w-2/3 xl:w-3/5 px-6 py-10 md:p-20 grow">
 
-	<div class="p-6 lg:p-10 text-2xl bg-white/80 dark:bg-[#003366]/80 rounded-lg">
+            <div class="p-6 md:p-10 text-2xl bg-white/80 rounded-lg">
+                <h1 class="mb-6 text-4xl text-darkblue">
+                    Learning on demand
+                </h1>
 
-		<h1 class="mb-6 text-4xl text-[#003366] dark:text-white">
-			Learning on demand
-		</h1>
-		
-		<div>
-			A web site where BC Public Service curators collect readings, courses, activities
-			and media, and shape pathways to learning goals. Where public service employees 
-			learn on their own time, at their own pace. 
-		</div>
+                <div>
+                    Expertly curated materials and clear pathways to help you meet your learning goals.
+                </div>
 
-		<div class="mt-8">
-			<a href="/auth/azuread" class="inline-block p-3 rounded-lg bg-[#003366] hover:bg-blue-800 dark:bg-blue-800 dark:hover:bg-[#003366] text-xl shadow-lg hover:no-underline text-white" x-transition>
-				Sign In  with your.name@gov.bc.ca address to continue
-			</a>
-		</div>
+                <div class="mt-8">
+                    <a href="/auth/azuread" class="inline-block p-3 rounded-lg bg-darkblue hover:bg-darkblue/80 text-xl shadow-lg hover:no-underline text-white" x-transition>
+                        Sign in
+                    </a>
+                </div>
 
-	</div>
-
-
-
-<div x-data="{ open: false }">
-	<button @click="open = true" class="inline-block mt-20 p-3 rounded-lg bg-slate-300 hover:bg-white dark:bg-slate-800 dark:hover:bg-[#003366] text-sm shadow-lg hover:no-underline dark:text-white">
-		Admin Login
-	</button>
-	<div x-show="open" x-cloak >
-		<?= $this->Form->create() ?>
-		<?= $this->Form->control('username', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-white text-black dark:bg-blue-900 dark:text-white rounded-lg']) ?>
-		<?= $this->Form->control('password', ['label' => '', 'required' => true, 'class'=>'p-1 mb-1 bg-white text-black dark:bg-blue-900 dark:text-white rounded-lg']) ?>
-		<?= $this->Form->button(__d('cake_d_c/users', 'Admin Login'),['class'=>'p-3 bg-white dark:bg-blue-900 dark:text-white text-sm text-black hover:text-gray-500 rounded-lg']); ?>
-		<?= $this->Form->end() ?>
-	</div>
-</div>
+            </div>
 
 
 
+        </div>
+        <div class="p-10 pb-0 bg-slate-900/90 text-white flex-none" role="contentinfo">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="max-w-prose text-lg">
+                    <p> We acknowledge with respect that the Learning Curator operates throughout B.C. on the traditional lands of Indigenous peoples. </p>
+                    
+                </div>
 
-</div>
-
-<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+                <img class="max-h-[100px] md:-mt-4 md:-mr-4 mx-auto md:mx-0" src="/img/where-ideas-work-whitetext.svg" height="100px" width="380px" alt="Where Ideas Work logo">
+            </div>
+            <div x-data="{ open: false }" class="leading-snug pb-1 text-slate-300">
+                            <button @click="open = ! open" class="inline text-sm hover:underline">Privacy Statement<span x-show="open">:</span></button>
+                            <div x-show="open" @click.outside="open = false" class="inline text-sm">Your personal information is collected by the BC Public Service Agency in accordance with section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes of managing and administering employee development and training. If you have any questions, submit an AskMyHR request at www.gov.bc.ca/myhr/contact or call 250-952-6000. </div>
+                        </div>
+        </div>
+    </div>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 </body>
+
 </html>

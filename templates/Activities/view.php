@@ -87,7 +87,7 @@ if ($this->Identity->isLoggedIn()) {
 		<?php elseif($activity->status_id == 3): ?>
 		<div class="p-6 text-xl dark:bg-slate-900" >
 			<div><strong>Archived</strong></div>
-			<p>This activity has been archived, so it's link will not be shown. If you are a curator you
+			<p>This activity has been archived, so its link will not be shown. If you are a curator you
 				can still access the hyperlink by editing this activity.
 			</p>
 		</div>
@@ -228,7 +228,7 @@ if ($this->Identity->isLoggedIn()) {
 			?>
 			
 			<input type="submit" class="mt-1 px-4 py-2 text-white bg-sky-700 hover:bg-sky-800 rounded-lg" value="Report Issue">
-			<span x-text="message"></span> 
+			<span x-text="message" class="ml-1 text-sm text-sky-700"></span>
 			<a class="inline-block ml-6" href="/profile/reports">See all your reports</a>
 
 		<?= $this->Form->end() ?>

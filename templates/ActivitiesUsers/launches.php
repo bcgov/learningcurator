@@ -1,66 +1,141 @@
-<?php  
+<?php
 $this->assign('title', 'Activities you\'ve claimed');
 $this->loadHelper('Authentication.Identity');
 if ($this->Identity->isLoggedIn()) {
-$role = $this->Identity->get('role');
-$uid = $this->Identity->get('id');
+    $role = $this->Identity->get('role');
+    $uid = $this->Identity->get('id');
 }
 ?>
+<header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
+    <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
+        <h1 class="text-white text-3xl font-bold m-auto tracking-wide">My Curator</h1>
+    </div>
+</header>
+<div class="p-8 text-lg" id="mainContent">
 
-<div class="p-6 dark:text-white">
+    <div class="max-w-prose">
+        <h2 class="mb-3 text-2xl text-darkblue font-semibold">Launched Activities</h2>
+        <?php if (!empty($alllaunches)) : ?>
+            <p class="mb-3 text-xl">
+                As you launch activities on a pathway, they will be recorded here,
+                along with the date and time when you clicked the launch button.</p>
+    </div>
+    <!-- TODO Allan show pagination/sort options here for 10+ items? -->
+    <div class="max-w-full flex flex-col lg:flex-row lg:gap-4 sticky bg-white -top-[2px] z-50 py-2">
+        <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
+            <div class="text-sm text-sky-700">
 
-<div class="p-3 mb-2 bg-slate-100/80 dark:bg-slate-900/80 dark:text-white rounded-lg">
-<?php if(!empty($alllaunches)): ?>
-<?php foreach($alllaunches as $a): ?>
+                Pagination placeholder
 
-<div class="p-3 mb-3 bg-white dark:bg-slate-800 rounded-lg">
-<h2 class="text-2xl">
-	<a href="/activities/view/<?= $a['id'] ?>" class="font-weight-bold">
-		<?= $a['name'] ?>
-	</a>
-</h2>
-<div class="mt-3">
-	<div class="inline-block w-24 bg-slate-900/80 text-white text-sm text-center uppercase rounded-lg">
-		Launched
-	</div>
-	<?php foreach($a['launches'] as $ls): ?>
-	<span class="inline-block px-3 py-0 mb-2 tex-lg bg-slate-200 dark:bg-slate-700 text-sm rounded-lg">
-		<?= $this->Time->format($ls['date'],\IntlDateFormatter::MEDIUM,null,'GMT-8') ?>
-	</span>
-	<?php endforeach ?>
+            </div>
+        </div>
+        <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
+        <div class="lg:basis-1/5">
+            <div class="flex justify-end lg:justify-start gap-4">
+                <!-- TODO Allan add working sort and filter options -->
+                <a href="" class="hover:text-sky-700">
+                    <div class="flex flex-col justify items-center gap-1">
 
-</div>
-<a target="_blank" 
-	rel="noopener" 
-	data-toggle="tooltip" data-placement="bottom" title="Launch this activity"
-	href="/activities-users/launch?activity_id=<?= $a['id'] ?>" 
-	class="inline-block my-2 p-3 bg-sky-700 rounded-lg text-white text-xl hover:no-underline">
-		Launch Activity 
-		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-			<path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-			<path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
-		</svg>
-</a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-view-stacked" viewBox="0 0 16 16">
+                            <path d="M3 0h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3zm0 8h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3z" />
+                        </svg>
+                        <p class="text-xs text-center">List View</p>
 
-</div>
-<?php endforeach ?>
-<?php else: ?>
-
-	<h2 class="mb-3 text-3xl">You've not yet launched any activities</h2>
-	<div class="p-4 bg-white dark:bg-slate-800 rounded-lg">
-	<p class="text-xl">As you launch activities on a pathway, they will be recorded here 
-		along with the date and time that you clicked the launch button.</p>
-	<p class="text-lg">Pathway modules have one or more required activities. When you launch
-		a required activity, that action counts towards your pathway progress,
-		indicated by the progress bar.</p> 
-	</div>
-	
-	<a href="/categories" class="inline-block p-3 mt-4 bg-sky-700 dark:bg-sky-700 text-white text-2xl hover:no-underline rounded-lg">
-		Explore Categories
-	</a>
+                    </div>
+                </a>
+                <a href="" class="hover:text-sky-700">
+                    <div class="flex flex-col justify items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-grid" viewBox="0 0 16 16">
+                            <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+                        </svg>
+                        <p class="text-xs text-center">Grid View</p>
+                    </div>
+                </a>
+                <a href="" class="hover:text-sky-700">
+                    <div class="flex flex-col justify items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
+                            <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" />
+                        </svg>
+                        <p class="text-xs text-center">Filter</p>
+                    </div>
+                </a>
+                <a href="" class="hover:text-sky-700">
+                    <div class="flex flex-col justify items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-sort-down" viewBox="0 0 16 16">
+                            <path d="M3.5 2.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 11.293V2.5zm3.5 1a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z" />
+                        </svg>
+                        <p class="text-xs text-center">Sort</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 
 
-<?php endif ?>
-</div>
-</div>
+    <div class="lg:columns-2 gap-4">
+        <?php foreach ($alllaunches as $a) : ?>
+
+            <div class="w-full inline-block mb-4 rounded-md bg-sagedark p-0.5">
+                <div class="flex flex-row justify-between">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-journal-text mx-3 my-4 flex-none" viewBox="0 0 16 16">
+                        <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
+                    </svg>
+                    <!-- TODO Allan Change icon for activity based on activity type -->
+                    <div class="bg-white inset-1 rounded-r-sm flex-1">
+                        <div class="p-3 text-lg">
+                            <h4 class="mb-2 mt-1 text-xl font-semibold">
+                                <?= $a['name'] ?>
+                            </h4>
+
+
+                            <ul class="list-disc pl-8 mt-2 text-lg ">
+                                <li>
+                                    <a class="hover:underline hover:text-sky-700" href="/activities/view/<?= $a['id'] ?>">
+                                        View Activity Record
+                                    </a>
+                                </li>
+                                <li>
+                                    <a target="_blank" rel="noopener" data-toggle="tooltip" data-placement="bottom" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $a['id'] ?>" class="hover:underline hover:text-sky-700">
+                                        Launch Activity
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="mt-3 text-sm">
+                                <p class="mb-0">
+                                    <span class="font-semibold">Launched: </span><?= count($a['launches']) ?> times
+                                </p>
+                                <p class="mt-0 mb-0">
+                                    <span class="font-semibold">Last launched: </span><?php ?>
+                                    <span class="inline-block">
+                                        <?= $this->Time->format($a['launches'][0]['date'], \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
+                                    </span>
+                                    <?php ?>
+                                </p>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach ?>
+    <?php else : ?>
+        <h3 class="mb-3 text-xl font-semibold">You haven't launched any activities yet</h3>
+        <p>As you launch activities on a pathway, they will be recorded here
+            along with the date and time that you clicked the launch button.</p>
+        <p>Pathway modules have one or more required activities. When you launch
+            a required activity, that action counts towards your pathway progress,
+            indicated by the progress bar.</p>
+
+        <a href="/categories" class="inline-block p-3 mt-4 mr-4 bg-sagedark text-white text-xl hover:no-underline rounded-lg">
+            Explore Categories
+        </a>
+        <a href="/pathways" class="inline-block p-3 mt-4 bg-darkblue text-white text-xl hover:no-underline rounded-lg">
+            Explore Pathways
+        </a>
+    <?php endif ?>
+    </div>
 </div>

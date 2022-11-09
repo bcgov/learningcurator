@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Topic $topic
@@ -8,98 +9,136 @@ $this->loadHelper('Authentication.Identity');
 $uid = 0;
 $role = 0;
 if ($this->Identity->isLoggedIn()) {
-	$role = $this->Identity->get('role');
-	$uid = $this->Identity->get('id');
+    $role = $this->Identity->get('role');
+    $uid = $this->Identity->get('id');
 }
 ?>
-<div class="p-6 w-full bg-top bg-no-repeat md:bg-fixed min-h-screen rounded-tr-xl" style="background-image: url('<?= h($topic->categories[0]->image_path) ?>')">
-
-
-<nav class="mb-3 p-3 bg-white dark:bg-slate-900 rounded-lg" aria-label="breadcrumb">
-    <?= $this->Html->link(__('Categories'), ['controller' => 'Categories', 'action' => 'index'],['class' => '']) ?> / 
-    <a href="/category/<?= h($topic->categories[0]->id) ?>/<?= h($topic->categories[0]->slug) ?>"><?= h($topic->categories[0]->name) ?></a> / 
-    <?= h($topic->name) ?>
-</nav>
-
-
-<div class="p-4 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">
-<h1 class="text-3xl">
-    <?= h($topic->name) ?>
-</h1>
-<div class="p-4 text-2xl bg-slate-100/80 dark:bg-slate-800 rounded-lg">
-<?= h($topic->description) ?>
-</div>
-</div>
-
-
-
-<?php if($role == 'curator' || $role == 'superuser'): ?>
-<?= $this->Html->link(__('Edit Topic'), ['action' => 'edit', $topic->id], ['class' => 'inline-block px-4 py-2 text-md bg-sky-700 text-white dark:bg-sky-700 dark:focus:text-white dark:hover:text-white dark:focus:bg-slate-900/80 dark:hover:bg-slate-900/80 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
-<!-- <a href="/pathways/import/<?= $topic->id ?>">Import a Pathway</a> -->
-
-<form method="GET" action="/pathways/import/<?= $topic->id ?>" class="p-3 m-3 bg-white dark:bg-slate-900">
-<input type="text" 
-        name="pathimportfile" 
-        id="pathimportfile" 
-        class="block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg">
-<input type="submit" value="Import Pathway">
-</form>
-
-<?php endif ?>
-
-
-
-
-
-<?php foreach($topic->pathways as $pathway): ?>
-<?php if($pathway->status_id == 2): ?>
-
-
-    <div class="p-3 my-3 bg-white/80 rounded-lg shadow-sm dark:bg-slate-900/80 dark:text-white">
-    <h2 class="text-3xl">
-            <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="inline-block -mt-2" viewBox="0 0 16 16">
-                    <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-                    <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
-                </svg>
-                <?= h($pathway->name) ?>
-            </a>
-        </h2>
-        <div class="p-4 text-lg bg-slate-100/80 dark:bg-slate-800 rounded-lg">
-            <?= h($pathway->description) ?>
-        </div>
-        <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>"
-            class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
-                View Pathway
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-				<path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-				</svg>
-        </a>
+<header class="w-full h-52 bg-cover bg-[center_top_65%] pb-8 px-8" style="background-image: url(/img/categories/1200w/Path_in_Sumallo_Grove-compressed_1200w.jpg);">
+    <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg p-4 flex">
+        <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Categories</h1>
     </div>
+</header>
 
+<div class="p-8 pt-4 w-full text-lg" id="mainContent">
+    <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
+        <?= $this->Html->link(__('All Categories'), ['controller' => 'Categories', 'action' => 'index'], ['class' => '']) ?> >
+        <a href="/category/<?= h($topic->categories[0]->id) ?>/<?= h($topic->categories[0]->slug) ?>"><?= h($topic->categories[0]->name) ?></a> >
+        <?= h($topic->name) ?>
+    </nav>
+    <?php if ($role == 'curator' || $role == 'superuser') : ?>
+        <div class="p-4 float-right">
+            <?= $this->Html->link(__('Edit Topic'), ['action' => 'edit', $topic->id], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
 
-<?php else: ?>
-    <?php if($role == 'curator' || $role == 'superuser'): ?>
-        <div class="p-3 my-3 bg-white/80 rounded-lg shadow-sm dark:bg-slate-900/80 dark:text-white">
-        <div class="badge badge-warning">DRAFT</div>
-        <h2 class="text-2xl">
-            <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-compass" viewBox="0 0 16 16">
-                    <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-                    <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
-                </svg>
-                <?= h($pathway->name) ?>
-            </a>
-        </h2>
-        <div class="p-4 text-lg bg-slate-100/80 dark:bg-slate-800 rounded-lg">
-            <?= h($pathway->description) ?>
         </div>
-        <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>"
-            class="inline-block my-2 p-3 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-xl hover:no-underline">
-                View Pathway
-        </a>
-    </div>
     <?php endif ?>
-<?php endif ?>
-<?php endforeach ?>
+
+    <div class="max-w-prose">
+
+        <h2 class="text-2xl text-darkblue font-semibold mb-3"> <?= h($topic->name) ?></h2>
+        <div class="text-xl"><?= $this->Text->autoParagraph(h($topic->description)); ?></div>
+
+    </div>
+    <div class="flex flex-col lg:flex-row lg:gap-4 w-full">
+        <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
+            <!-- TODO Nori add mobile collapse options -->
+            <?php foreach ($topic->pathways as $pathway) : ?>
+                <?php if ($pathway->status_id == 2) : ?>
+                    <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
+                        <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-l-full flex items-center justify-between">
+                            <h3 class="text-2xl">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3" viewBox="0 0 16 16">
+                                    <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
+                                </svg><?= h($pathway->name) ?>
+
+                            </h3>
+                            <!-- <span class="text-sm">8 steps | 23 activities</span> -->
+
+                            <!-- TODO Allan eventually add code to pull in steps/activities -->
+                        </div>
+                    </a>
+                    <div class="pl-10">
+                        <p class="mb-3"><?= h($pathway->description) ?></p>
+
+                        <p class="mb-4"> <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
+                                View the <strong><?= h($pathway->name) ?></strong> pathway
+                            </a></p>
+                    </div>
+
+
+
+                <?php else : ?>
+                    <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                        <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
+                            <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-l-full flex items-center justify-between">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3 flex-none" viewBox="0 0 16 16">
+                                    <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
+                                </svg>
+                                <h3 class="text-2xl flex-1">
+                                    <?= h($pathway->name) ?>
+                                </h3>
+                                <?php
+                                $stat = 'bg-slate-200';
+                                if ($topic->pathway->status->name == 'Draft') $stat = 'bg-orange-400 text-white text-xs rounded-full px-2 py-1 mx-2 justify-self-end flex-none';
+                                ?>
+                                <?php if ($topic->pathway->featured == 1) : ?>
+                                    <span class="bg-green-400 text-white text-xs rounded-full px-2 py-1 mx-2 justify-self-end flex-none">Featured</span>
+                                <?php endif ?>
+                                <span class="<?= $stat ?> text-xs rounded-full px-2 py-1 mx-2 justify-self-end flex-none"><?= $topic->pathway->status->name ?></span>
+                                <!-- <span class="text-sm justify-self-end flex-none">8 steps | 23 activities</span> -->
+                            </div>
+                        </a>
+                        <div class="pl-10">
+
+                            <p class="mb-3"><?= h($pathway->description) ?></p>
+                            <p class="mb-4"> <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
+                                    View the <strong><?= h($pathway->name) ?></strong> pathway
+                                </a> </p>
+                        </div>
+                    <?php endif ?>
+                <?php endif ?>
+            <?php endforeach ?>
+        </div> <!-- formatting container -->
+
+        <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
+        <div class="lg:mt-8 lg:basis-1/5">
+            <div class="flex justify-end lg:justify-start gap-4 sticky top-4">
+                <!-- TODO Allan add working sort and filter options -->
+                <a href="" class="hover:text-sky-700">
+                    <div class="flex flex-col justify items-center gap-1">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-view-stacked" viewBox="0 0 16 16">
+                            <path d="M3 0h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3zm0 8h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3z" />
+                        </svg>
+                        <p class="text-xs text-center">List View</p>
+
+                    </div>
+                </a>
+                <a href="" class="hover:text-sky-700">
+                    <div class="flex flex-col justify items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-grid" viewBox="0 0 16 16">
+                            <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+                        </svg>
+                        <p class="text-xs text-center">Grid View</p>
+                    </div>
+                </a>
+                <a href="" class="hover:text-sky-700">
+                    <div class="flex flex-col justify items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
+                            <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" />
+                        </svg>
+                        <p class="text-xs text-center">Filter</p>
+                    </div>
+                </a>
+                <a href="" class="hover:text-sky-700">
+                    <div class="flex flex-col justify items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-sort-down" viewBox="0 0 16 16">
+                            <path d="M3.5 2.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 11.293V2.5zm3.5 1a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z" />
+                        </svg>
+                        <p class="text-xs text-center">Sort</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>

@@ -26,3 +26,9 @@ p {
         @apply block w-full px-3 py-1 m-0 border-solid border-2 border-slate-200 dark:border-black dark:text-white bg-slate-100/80 dark:bg-slate-800 rounded-lg;
     }
 }
+
+@layer utilities {
+    .point-left {
+        clip-path: polygon(5% 0%, 100% 0%, 100% 100%, 5% 100%, 0% 50%);
+    }
+}
