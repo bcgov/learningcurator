@@ -81,6 +81,7 @@ if ($this->Identity->isLoggedIn()) {
                                 $stat = 'bg-slate-200';
                                 if ($topic->pathway->status->name == 'Draft') $stat = 'bg-orange-400 text-white text-xs rounded-full px-2 py-1 mx-2 justify-self-end flex-none';
                                 ?>
+                                <!-- TODO Nori/Allan error here re status in topic draft view -->
                                 <?php if ($topic->pathway->featured == 1) : ?>
                                     <span class="bg-green-400 text-white text-xs rounded-full px-2 py-1 mx-2 justify-self-end flex-none">Featured</span>
                                 <?php endif ?>
