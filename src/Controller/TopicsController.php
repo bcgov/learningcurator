@@ -38,7 +38,7 @@ class TopicsController extends AppController
     {
         //$topic = $this->Topics->findBySlug($slug)->contain(['Users', 'Categories', 'Pathways'])->firstOrFail();
         $topic = $this->Topics->get($id, [
-            'contain' => ['Users', 'Categories', 'Pathways'],
+            'contain' => ['Users', 'Categories', 'Pathways', 'Pathways.Statuses'],
         ]);
 
         $this->set(compact('topic'));
