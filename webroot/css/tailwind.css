@@ -835,6 +835,18 @@ video {
   margin-left: auto;
 }
 
+.ml-8 {
+  margin-left: 2rem;
+}
+
+.-ml-4 {
+  margin-left: -1rem;
+}
+
+.ml-4 {
+  margin-left: 1rem;
+}
+
 .block {
   display: block;
 }
@@ -953,6 +965,14 @@ video {
 
 .max-w-\[75\%\] {
   max-width: 75%;
+}
+
+.max-w-4xl {
+  max-width: 56rem;
+}
+
+.max-w-3xl {
+  max-width: 48rem;
 }
 
 .flex-none {
@@ -1515,6 +1535,14 @@ video {
 
 .pb-1 {
   padding-bottom: 0.25rem;
+}
+
+.pl-16 {
+  padding-left: 4rem;
+}
+
+.pr-4 {
+  padding-right: 1rem;
 }
 
 .text-left {
