@@ -157,12 +157,13 @@ foreach ($step->pathways as $pathways) {
     <div class="flex mt-8">
         <div class="basis-1/7 flex-none">
             <nav class="flex flex-col gap-2">
+            <?php $c = 'bg-gray-500' ?>
                 <?php foreach ($step->pathways as $pathways) : ?>
                     <?php $count = 0 ?>
                     <?php foreach ($pathways->steps as $s) : ?>
                         <?php if ($s->status_id == 2) : ?>
                             <?php $count++ ?>
-                            <?php $c = 'bg-gray-500' ?>
+                            
                             <?php if ($s->id == $step->id) $c = 'active bg-bluegreen -ml-4' ?>
                             <a class="border border-slate-200 rounded-l-lg py-3 px-4  hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
                                 Step <?= $count ?>
@@ -170,8 +171,7 @@ foreach ($step->pathways as $pathways) {
                         <?php else : ?>
                             <?php if ($role == 'curator' || $role == 'superuser') : ?>
                                 <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                                    <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 mx-2 align-middle">DRAFT</span> -
-                                    <?= h($s->name) ?>
+                                    <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 mx-2 align-middle">DRAFT</span>
                                 </a>
                             <?php endif; // are you a curator?
                             ?>
@@ -254,10 +254,10 @@ foreach ($step->pathways as $pathways) {
                                         preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $youtube);
                                         if (!empty($youtube[1])) :
                                         ?>
-                                            <img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
+                                            <!-- <img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
                                             <div class="hidden w-full z-50 h-auto bg-black/50" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
                                                 <iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $youtube[1] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                            </div>
+                                            </div> -->
                                         <?php endif ?>
                                         <a target="_blank" x-on:click="count++;" onclick="loadStatus();" rel="noopener" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $activity->id ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
                                             Launch

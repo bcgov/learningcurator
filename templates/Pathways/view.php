@@ -164,7 +164,7 @@ $this->assign('title', h($pathway->name));
                         <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
                         <div class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
                             
-                            <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3"><?= $count ?></h3>
+                            <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3">Step <?= $count ?></h3>
                             <div class="flex-1 basis-6/7 p-3">
                                 <h4 class="text-xl font-semibold"><?= h($steps->name) ?></h4>
                                 
@@ -184,10 +184,34 @@ $this->assign('title', h($pathway->name));
                                 <?php endif ?> -->
                             </div>
                         </div>
-
-
-                    <?php endif; // if published 
-                    ?>
+<?php else: ?>
+    <?php if ($role == 'curator' || $role == 'superuser') : ?>
+        <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
+                        <div class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
+                            
+                            <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3">Step <?= $count ?></h3>
+                            <div class="flex-1 basis-6/7 p-3">
+                            <span class="bg-orange-400 text-white rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
+                                <h4 class="text-xl font-semibold"><?= h($steps->name) ?></h4>
+                                
+                                <?php if ($requiredacts == 1) : ?>
+                                    <p class="text-bluegreen font-semibold text-base">
+                                        <?= $requiredacts ?> required activity</p>
+                                <?php else : ?>
+                                    <p class="text-bluegreen font-semibold text-base">
+                                        <?= $requiredacts ?> required activities</p>
+                                <?php endif ?>
+                                <div class="mb-2"><?= $steps->description ?></div>
+                                <p class="mb-2 text-sky-700 underline">
+                                        View <strong><?= h($steps->name) ?></strong>
+                                     </p>
+                                <!-- <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                                    <span class="text-xs px-4 bg-slate-100/80 dark:bg-emerald-700 rounded-lg"><?= $steps->status->name ?></span>
+                                <?php endif ?> -->
+                            </div>
+                        </div>
+                    <?php endif; // is curator ?>
+                    <?php endif; // if published ?>
                 <?php endforeach ?>
                 </nav>
         </div>
