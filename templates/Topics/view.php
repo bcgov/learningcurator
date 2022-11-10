@@ -51,7 +51,7 @@ if ($this->Identity->isLoggedIn()) {
                                 <h3 class="text-2xl flex-1">
                                     <?= h($pathway->name) ?>
                                 </h3>
-                                <span class="text-sm ml-3 justify-self-end flex-none"><?= h($pathway->stepcount) ?> steps | <?= h($pathway->requiredacts) ?> activities</span>
+                                <!-- <span class="text-sm ml-3 justify-self-end flex-none"><?= h($pathway->stepcount) ?> steps | <?= h($pathway->requiredacts) ?> activities</span> -->
 
 
                             <!-- TODO Allan eventually add code to pull in steps/activities -->
@@ -86,7 +86,7 @@ if ($this->Identity->isLoggedIn()) {
                                     <span class="bg-green-400 text-white text-xs rounded-full px-2 py-1 mx-2 justify-self-end flex-none">Featured</span>
                                 <?php endif ?>
                                 <span class="<?= $stat ?> text-xs rounded-full px-2 py-1 mx-2 justify-self-end flex-none"><?= $topic->pathway->status->name ?></span>
-                                <span class="text-sm ml-3 justify-self-end flex-none"><?= $stepcount ?> steps | <?= $requiredacts ?> activities</span>
+                                <!-- <span class="text-sm ml-3 justify-self-end flex-none"><?= $stepcount ?> steps | <?= $requiredacts ?> activities</span> -->
 
                             </div>
                         </a>

@@ -167,6 +167,7 @@ $this->assign('title', h($pathway->name));
                             <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3"><?= $count ?></h3>
                             <div class="flex-1 basis-6/7 p-3">
                                 <h4 class="text-xl font-semibold"><?= h($steps->name) ?></h4>
+                                
                                 <?php if ($requiredacts == 1) : ?>
                                     <p class="text-bluegreen font-semibold text-base">
                                         <?= $requiredacts ?> required activity</p>
