@@ -58,7 +58,7 @@ if ($this->Identity->isLoggedIn()) {
                         </div>
                     </a>
                     <div class="pl-10">
-                        <p class="mb-3"><?= h($pathway->description) ?></p>
+                        <p class="mb-3"><?= $pathway->description ?></p>
 
                         <p class="mb-4"> <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
                                 View the <strong><?= h($pathway->name) ?></strong> pathway
@@ -91,7 +91,7 @@ if ($this->Identity->isLoggedIn()) {
                         </a>
                         <div class="pl-10">
 
-                            <p class="mb-3"><?= h($pathway->description) ?></p>
+                            <p class="mb-3"><?= $pathway->description ?></p>
                             <p class="mb-4"> <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
                                     View the <strong><?= h($pathway->name) ?></strong> pathway
                                 </a> </p>

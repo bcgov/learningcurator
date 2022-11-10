@@ -43,7 +43,8 @@ if ($this->Identity->isLoggedIn()) {
                             <?php endif ?>
                         </div>
                         <div class="p-3 text-lg">
-                            <p class="mb-0"><?= h($category->description) ?></p>
+                            <div class="mb-0">
+                                <?= $category->description ?></div>
 
                             <p class="mb-2 inline-block mt-4 hover:text-sky-600 underline text-sky-700 ">
 

@@ -16,7 +16,7 @@
 
 <div class="my-3 p-3" style="background-color: rgba(255,255,255,.5)">
 
-<?= h($activityType->description); ?>
+<?= $activityType->description; ?>
 
 </div>
 </div>

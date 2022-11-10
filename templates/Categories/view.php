@@ -36,7 +36,7 @@ $this->assign('title', $pagetitle);
 
     <div class="max-w-prose">
         <h2 class="text-2xl text-darkblue font-semibold mb-3"> <?= h($category->name) ?></h2>
-        <p class="text-xl"><?= $this->Text->autoParagraph(h($category->description)); ?></p>
+        <p class="text-xl"><?= $category->description ?></p>
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
@@ -55,7 +55,7 @@ $this->assign('title', $pagetitle);
                                 </h3>
                                 <div class="bg-white inset-1 rounded-b-sm">
                                     <div class="p-3 text-lg">
-                                        <p class="mb-0"><?= h($topic->description) ?></p>
+                                        <p class="mb-0"><?= $topic->description ?></p>
                                         <p class="mb-2 inline-block mt-4 hover:text-sky-600 underline text-sky-700 ">
 Explore <strong><?= $topic->name ?></strong></p>
                                     </div>
@@ -73,7 +73,7 @@ Explore <strong><?= $topic->name ?></strong></p>
                                     </h3>
                                     <div class="bg-white inset-1 rounded-b-sm">
                                         <div class="p-3 text-lg">
-                                            <p class="mb-0"><?= h($topic->description) ?></p>
+                                            <p class="mb-0"><?= $topic->description ?></p>
                                             <p class="mb-2 inline-block mt-4 hover:text-sky-600 underline text-sky-700">
 Explore <strong><?= $topic->name ?></strong></p>
                                         </div>

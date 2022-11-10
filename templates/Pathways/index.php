@@ -58,9 +58,9 @@ if ($this->Identity->isLoggedIn()) {
                         </a></span>
                     </div>
                     <p class="mb-3"><?php if (!empty($pathway->description)) : ?>
-                            <?= h($pathway->description) ?>
+                            <?= $pathway->description ?>
                         <?php else : ?>
-                            <?= h($pathway->objective) ?>
+                            <?= $pathway->objective ?>
                         <?php endif ?></p>
                     <!-- This conditional is kind of a hack and we need to make people aware that the description isn't actually optional -->
                     <p class="mb-4"> <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
