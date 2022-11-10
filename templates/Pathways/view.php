@@ -150,7 +150,7 @@ $this->assign('title', h($pathway->name));
             <?php endif ?>
             <!-- TODO Nori/Allan add code for subtitle in box -->
             <?php if (!empty($pathway->steps)) : ?>
-
+                <?php $count = 0 ?>
                 <?php foreach ($pathway->steps as $steps) : ?>
                     <?php $requiredacts = 0; ?>
                     <?php foreach ($steps->activities as $act) : ?>
@@ -160,10 +160,11 @@ $this->assign('title', h($pathway->name));
                     ?>
                     <!-- count required activities -->
                     <?php if ($steps->status->name == 'Published') : ?>
+                        <?php $count++ ?>
                         <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
                         <div class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
-                            <?php $step_num = trim(str_replace("step-", "", $steps->slug)); ?>
-                            <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3"><?= $step_num ?></h3>
+                            
+                            <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3">Step <?= $count ?></h3>
                             <div class="flex-1 basis-6/7 p-3">
                                 <h4 class="text-xl font-semibold"><?= h($steps->name) ?></h4>
                                 <?php if ($requiredacts == 1) : ?>
