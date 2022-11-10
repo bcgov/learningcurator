@@ -157,16 +157,16 @@ foreach ($step->pathways as $pathways) {
     <div class="flex mt-8">
         <div class="basis-1/7 flex-none">
             <nav class="flex flex-col gap-2">
-            <?php $c = 'bg-gray-500' ?>
+
                 <?php foreach ($step->pathways as $pathways) : ?>
                     <?php $count = 0 ?>
                     <?php foreach ($pathways->steps as $s) : ?>
                         <?php if ($s->status_id == 2) : ?>
                             <?php $count++ ?>
-                            
-                            <?php if ($s->id == $step->id) $c = 'active bg-bluegreen -ml-4' ?>
-                            <a class="border border-slate-200 rounded-l-lg py-3 px-4  hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                                <?= $count ?>
+                            <?php $c = 'bg-gray-500' ?>
+                            <?php if ($s->id == $step->id)  $c = 'active bg-bluegreen -ml-4' ?>
+                            <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+                                Step <?= $count ?>
                             </a>
                         <?php else : ?>
                             <?php if ($role == 'curator' || $role == 'superuser') : ?>
