@@ -21,11 +21,11 @@ if ($this->Identity->isLoggedIn()) {
 </header>
 
 <div class="p-8 text-lg" id="mainContent">
-    <div class="max-w-prose" >
+    <div class="max-w-prose">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">All Categories of Learning</h2>
 
         <p class="mb-3 text-xl">
-        Pathways are organized into categories of learning. These categories reflect current priorities of learning and delivery across the public service.</p>
+            Pathways are organized into categories of learning. These categories reflect current priorities of learning and delivery across the public service.</p>
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
@@ -35,13 +35,13 @@ if ($this->Identity->isLoggedIn()) {
 
                 <a class="group hover:no-underline" href="/category/<?= $category->id ?>/<?= h($category->slug) ?>">
                     <div class="rounded-md shadow-lg border-2 border-sky-700 mb-4 group-hover:border-sky-600">
-                        <?php if (empty($category->featured)) : ?>
-                            <span class="inline-block py-0 px-2 my-2 bg-yellow-600 text-slate-900 text-xs" title="Edit to set to publish">DRAFT</span>
-                        <?php endif ?>
-
-                        <h3 class="text-2xl bg-sky-700 text-white p-3 group-hover:bg-sky-600">
-                            <?= h($category->name) ?>
-                        </h3>
+                        <div class="bg-sky-700 p-3 group-hover:bg-sky-600 flex justify-between items-center">
+                            <h3 class="text-2xl text-white flex-1">
+                                <?= h($category->name) ?>
+                            </h3><?php if (empty($category->featured)) : ?>
+                                <span class="bg-orange-500 py-1 px-2 rounded-full text-slate-900 text-sm" title="Edit to set to publish">DRAFT</span>
+                            <?php endif ?>
+                        </div>
                         <div class="p-3 text-lg">
                             <p class="mb-0"><?= h($category->description) ?></p>
 
