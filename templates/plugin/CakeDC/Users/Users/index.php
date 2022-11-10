@@ -32,9 +32,9 @@
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/profile/contributions">
                             My Contributions
                         </a></li>
-                    <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/activities/audit">
+                    <!-- <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/activities/audit">
                             "Auto" Link Audit
-                        </a></li>
+                        </a></li> -->
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/activities/flagged">
                             Manual Link Review
                         </a></li>
