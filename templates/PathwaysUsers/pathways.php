@@ -39,7 +39,7 @@ if ($this->Identity->isLoggedIn()) {
                         <h3 class="text-2xl flex-1">
                             <?= h($path->pathway->name) ?>
                         </h3>
-                        <span class="text-sm ml-3 justify-self-end flex-none"><?= h($path->pathway->steps) ?> steps | <?= h($path->pathway->requiredacts) ?> activities</span>
+                        <!-- <span class="text-sm ml-3 justify-self-end flex-none"><?= h($path->pathway->steps) ?> steps | <?= h($path->pathway->requiredacts) ?> activities</span> -->
                     </div>
                 </a>
                 <div class="pl-10">
