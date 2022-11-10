@@ -65,7 +65,6 @@ foreach ($step->pathways as $pathways) {
                 <?= $step->pathways[0]->name ?>
 
             </h2>
-            <span class="text-sm ml-3 justify-self-end flex-none"><?= count($pathways->steps) ?> steps | <?= $stepacts ?> activities</span>
         </div>
         <div class="pl-16 pr-4 mb-5 text-lg">
             <p class="text-xl"><span class="font-bold">Pathway Objective: </span>
@@ -363,7 +362,8 @@ foreach ($step->pathways as $pathways) {
             ?>
             <?php if (count($supplementalacts) > 0) : ?>
                 <div class="my-3 text-center text-sm">End of required activities for this module.</div>
-                <h4 class="mt-6 text-xl text-sky-700">Supplementary Resources <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $supplmentalcount ?></span></h4>
+                <h4 class="mt-6 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1"><?= $supplmentalcount ?></span>Supplementary Resources </h4>
+                
                 <p class="text-base"><em>Launching these activities does not count towards your progress along this pathway.</em></p>
                 <?php foreach ($supplementalacts as $activity) : ?>
                     <?php
@@ -533,14 +533,14 @@ foreach ($step->pathways as $pathways) {
                 <div class="flex justify-items-stretch">
                     <div class="flex-1 justify-self-start">
                         <?php if (!empty($previousid)) : ?>
-                            <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" class="inline-block m-2 p-2 bg-darkblue hover:darkblue/80 rounded-lg text-white text-lg hover:no-underline">
+                            <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" class="inline-block p-2 bg-darkblue hover:darkblue/80 rounded-lg text-white text-lg hover:no-underline">
                                 Previous Step
                             </a>
                         <?php endif ?>
                     </div>
                     <div class="flex-none justify-self-end">
                         <?php if (!empty($upnextid)) : ?>
-                            <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" class="inline-block m-2 p-2 bg-darkblue hover:darkblue/80  rounded-lg text-white text-lg hover:no-underline">
+                            <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" class="inline-block p-2 bg-darkblue hover:darkblue/80  rounded-lg text-white text-lg hover:no-underline">
                                 Next Step
                             </a>
                         <?php endif ?>
