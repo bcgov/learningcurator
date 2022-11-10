@@ -166,7 +166,7 @@ foreach ($step->pathways as $pathways) {
                             
                             <?php if ($s->id == $step->id) $c = 'active bg-bluegreen -ml-4' ?>
                             <a class="border border-slate-200 rounded-l-lg py-3 px-4  hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                                Step <?= $count ?>
+                                <?= $count ?>
                             </a>
                         <?php else : ?>
                             <?php if ($role == 'curator' || $role == 'superuser') : ?>
