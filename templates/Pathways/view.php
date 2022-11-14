@@ -145,7 +145,7 @@ $this->assign('title', h($pathway->name));
                         <?= $this->Form->end() ?>
                     </div>
                 </div>
-
+<!-- TODO Q do we need required activities in addition to the step progress bar? -->
 
             <?php endif ?>
             <!-- TODO Nori/Allan add code for subtitle in box -->
