@@ -84,7 +84,7 @@ $this->assign('title', h($pathway->name));
             <h3 class="mt-4 mb-1 text-darkblue font-semibold text-lg">Pathway Activity Progress</h3>
             <div class="flex pbarcontainer mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
                 <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
-                <span class="py-2 px-3 text-base pbar pro_sm flex-none"></span>
+                <span class="py-2 px-1 text-base pbar pro_sm flex-none"></span>
                 <span class="py-2 px-3 text-base total flex-1 text-right"></span>
             </div>
             <script>
@@ -95,7 +95,7 @@ $this->assign('title', h($pathway->name));
                     .then((json) => {
                         if (json.percentage > 0) {
                             let launched = json.completed + ' launched';
-                            let remaining = (json.requiredacts - json.completed) + ' remaining';
+                            let remaining = (json.requiredacts - json.completed) + ' to go';
 
                             document.querySelector('.pbar').style.width = json.percentage + '%';
 
@@ -181,7 +181,7 @@ $this->assign('title', h($pathway->name));
                                             .then((json) => {
                                                 if (json.steppercent > 0) {
                                                     let launched = json.stepclaimcount + ' launched';
-                                                    let remaining = (json.requiredacts - json.stepclaimcount) + ' remaining';
+                                                    let remaining = (json.requiredacts - json.stepclaimcount) + ' to go';
 
                                                     document.querySelector('.pbar_<?= h($steps->id) ?>').style.width = json.steppercent + '%';
 
@@ -205,7 +205,7 @@ $this->assign('title', h($pathway->name));
                                     </script>
                                     <div class="flex pbarcontainer_<?= h($steps->id) ?> mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
                                         <span class="py-1 px-3 bg-bluegreen text-white rounded-lg text-sm pbar_<?= h($steps->id) ?> pro_<?= h($steps->id) ?> flex-none"></span>
-                                        <span class="py-1 px-3 text-sm pbar_<?= h($steps->id) ?> pro_sm_<?= h($steps->id) ?> flex-none"></span>
+                                        <span class="py-1 px-1 text-sm pbar_<?= h($steps->id) ?> pro_sm_<?= h($steps->id) ?> flex-none"></span>
                                         <span class="py-1 px-3 text-sm total_<?= h($steps->id) ?> flex-1 text-right"></span>
                                     </div>
                                     <div class="mb-2"><?= $steps->description ?></div>
@@ -243,7 +243,7 @@ $this->assign('title', h($pathway->name));
                                                     .then((json) => {
                                                         if (json.steppercent > 0) {
                                                             let launched = json.stepclaimcount + ' launched';
-                                                            let remaining = (json.requiredacts - json.stepclaimcount) + ' remaining';
+                                                            let remaining = (json.requiredacts - json.stepclaimcount) + ' to go';
 
                                                             document.querySelector('.pbar_<?= h($steps->id) ?>').style.width = json.steppercent + '%';
 
@@ -267,7 +267,7 @@ $this->assign('title', h($pathway->name));
                                             </script>
                                             <div class="flex pbarcontainer_<?= h($steps->id) ?> mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
                                                 <span class="py-1 px-3 bg-bluegreen text-white rounded-lg text-sm pbar_<?= h($steps->id) ?> pro_<?= h($steps->id) ?> flex-none"></span>
-                                                <span class="py-1 px-3 text-sm pbar_<?= h($steps->id) ?> pro_sm_<?= h($steps->id) ?> flex-none"></span>
+                                                <span class="py-1 px-1 text-sm pbar_<?= h($steps->id) ?> pro_sm_<?= h($steps->id) ?> flex-none"></span>
                                                 <span class="py-1 px-3 text-sm total_<?= h($steps->id) ?> flex-1 text-right"></span>
                                             </div>
                                             <div class="mb-2"><?= $steps->description ?></div>
