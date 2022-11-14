@@ -131,8 +131,7 @@ $this->loadHelper('Authentication.Identity');
 
         <div class="my-3 " id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
             <div class="flex justify-start gap-4 items-center">
-
-                <div class="basis-1/5 flex-none flex flex-col justify-center items-end text-sm">
+                <div class="basis-1/6 flex-none flex flex-col justify-center items-end text-sm">
                     <div class="">
                         <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'sort/' . $a->_joinData->id], 'class' => 'inline-block']) ?>
                         <?= $this->Form->control('sortorder', ['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
@@ -141,8 +140,8 @@ $this->loadHelper('Authentication.Identity');
                         <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
                         <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
                         <button class="px-3 py-1 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">Up <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill inline-block" viewBox="0 0 16 16">
-                          <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-                        </svg></button>
+                                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
+                            </svg></button>
                         <?= $this->Form->end() ?>
                     </div>
 
@@ -154,34 +153,12 @@ $this->loadHelper('Authentication.Identity');
                         <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
                         <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
                         <button class="px-3 py-1 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg mt-1">Down <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill inline-block" viewBox="0 0 16 16">
-                          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                        </svg></button>
+                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                            </svg></button>
                         <?= $this->Form->end() ?>
                     </div>
-                    <div class="mt-2">
-
-
-<?= $this->Form->create(null, ['action' => '/activities-steps/required-toggle/' . $a->_joinData->id, 'class' => 'inline-block']) ?>
-<?= $this->Form->hidden('id', ['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
-<?php if ($a->_joinData->required == 0) : ?>
-    <?= $this->Form->hidden('required', ['type' => 'hidden', 'value' => 1]) ?>
-<?php else : ?>
-    <?= $this->Form->hidden('required', ['type' => 'hidden', 'value' => 0]) ?>
-<?php endif ?>
-<?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
-<?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
-<?= $this->Form->button(__('Not required'), ['class' => 'px-3 py-1 text-white text-md bg-sky-700 hover:text-slate-900 hover:bg-sky-200 hover:no-underline rounded-lg mr-1']) ?>
-<?= $this->Form->end() ?>
-
-<?= $this->Form->create(null, ['action' => '/activities-steps/delete/' . $a->_joinData->id, 'class' => 'inline-block']) ?>
-<?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
-<?= $this->Form->button(__('Remove'), ['class' => 'px-3 py-1 text-white text-md bg-red-700 hover:text-slate-900 hover:bg-red-200 hover:no-underline rounded-lg']) ?>
-<?= $this->Form->end() ?>
-
-</div>
-
                 </div>
-                <div class="basis-4/5 flex-1">
+                <div class="basis-4/6 flex-1">
                     <div class="w-full inline-block mb-4 rounded-md bg-sagedark p-0.5">
                         <div class="flex flex-row justify-between">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-journal-text mx-3 my-4 flex-none" viewBox="0 0 16 16">
@@ -194,7 +171,7 @@ $this->loadHelper('Authentication.Identity');
 
                                 <div class="p-3 text-lg">
                                     <span class="px-2 py-0 bg-sky-700 text-xs text-white rounded-lg inline-block align-top"><?= $a->status->name ?></span>
-                                    <h4 class="mb-2 mt-1 text-xl font-semibold">
+                                    <h4 class="mb-1 mt-1 text-xl font-semibold">
                                         <a class="hover:underline" href="/activities/view/<?= $a['id'] ?>"><?= $a['name'] ?></a>
                                     </h4>
                                     <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'edit/' . $a->_joinData->id], 'class' => '']) ?>
@@ -206,7 +183,7 @@ $this->loadHelper('Authentication.Identity');
                                             'rows' => 2
                                         ]) ?>
                                     </label>
-                                    <button class="px-3 py-1 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg mt-3">Save Context</button>
+                                    <button class="px-3 py-1 text-white text-sm bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg mt-3">Save Context</button>
                                     <?= $this->Form->end() ?>
 
 
@@ -225,89 +202,113 @@ $this->loadHelper('Authentication.Identity');
 
 
                 </div>
-                
-            </div>
-        </div>
-    <?php endforeach ?>
-
-    <h3 class="text-xl text-darkblue font-semibold mt-8">Supplemental Activities</h3>
-
-    <?php foreach ($supplementalacts as $a) : ?>
-        <div class="my-3 p-3 bg-white dark:bg-slate-900/80 rounded-lg" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
-            <div class="grid gap-4 grid-cols-12 items-center">
-
-                <div class="col-span-2 text-center">
-                    <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'sort/' . $a->_joinData->id], 'class' => 'inline-block']) ?>
-                    <?= $this->Form->control('sortorder', ['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
-                    <?= $this->Form->control('direction', ['type' => 'hidden', 'value' => 'up']) ?>
-                    <?= $this->Form->control('id', ['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
-                    <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
-                    <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
-                    <button class="inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline">Up</button>
-                    <?= $this->Form->end() ?>
-
-                    <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'sort/' . $a->_joinData->id], 'class' => 'inline-block']) ?>
-                    <?= $this->Form->control('sortorder', ['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
-                    <?= $this->Form->control('direction', ['type' => 'hidden', 'value' => 'down']) ?>
-                    <?= $this->Form->control('id', ['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
-                    <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
-                    <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
-                    <button class="inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline">Down</button>
-                    <?= $this->Form->end() ?>
-                </div>
-                <div class="col-span-7">
+                <div class="basis-1/6 flex-none flex flex-col justify-center items-start text-sm">
 
                     <div>
-                        <span class="px-2 py-0 bg-emerald-700 text-xs text-white rounded-lg"><?= $a->status->name ?></span>
-                    </div>
 
-                    <div class="actname text-xl"><a href="/activities/view/<?= $a->id ?>"><?= $a->name ?></a> </div>
-                    <div class="p-3 bg-slate-200 dark:bg-slate-800 rounded-lg">
-                        <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'edit/' . $a->_joinData->id], 'class' => '']) ?>
-                        <?= $this->Form->control('id', ['type' => 'hidden', 'value' => $a->_joinData->id,]) ?>
-                        <label>Why is this activity on this step?<br>
-                            <?= $this->Form->textarea('stepcontext', [
-                                'value' => $a->_joinData->stepcontext,
-                                'class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900/80 rounded-lg',
-                                'rows' => 2
-                            ]) ?>
-                        </label>
-                        <button class="inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline btn-sm">Save Context</button>
+
+                        <?= $this->Form->create(null, ['action' => '/activities-steps/required-toggle/' . $a->_joinData->id, 'class' => 'inline-block']) ?>
+                        <?= $this->Form->hidden('id', ['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
+                        <?php if ($a->_joinData->required == 0) : ?>
+                            <?= $this->Form->hidden('required', ['type' => 'hidden', 'value' => 1]) ?>
+                        <?php else : ?>
+                            <?= $this->Form->hidden('required', ['type' => 'hidden', 'value' => 0]) ?>
+                        <?php endif ?>
+                        <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
+                        <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
+                        <?= $this->Form->button(__('Not required'), ['class' => 'px-3 py-1 text-white text-md bg-sky-700 hover:text-slate-900 hover:bg-sky-200 hover:no-underline rounded-lg ']) ?>
                         <?= $this->Form->end() ?>
                     </div>
+                    <div>
+                        <?= $this->Form->create(null, ['action' => '/activities-steps/delete/' . $a->_joinData->id, 'class' => 'inline-block']) ?>
+                        <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
+                        <?= $this->Form->button(__('Remove'), ['class' => 'px-3 py-1 text-white text-md bg-red-700 hover:text-slate-900 hover:bg-red-200 hover:no-underline rounded-lg mt-1']) ?>
+                        <?= $this->Form->end() ?>
 
-
-
-                </div>
-                <div class="col-span-3 text-center">
-
-
-                    <?= $this->Form->create(null, ['action' => '/activities-steps/required-toggle/' . $a->_joinData->id, 'class' => 'inline-block']) ?>
-                    <?= $this->Form->hidden('id', ['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
-                    <?php if ($a->_joinData->required == 0) : ?>
-                        <?= $this->Form->hidden('required', ['type' => 'hidden', 'value' => 1]) ?>
-                    <?php else : ?>
-                        <?= $this->Form->hidden('required', ['type' => 'hidden', 'value' => 0]) ?>
-                    <?php endif ?>
-                    <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
-                    <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
-                    <?= $this->Form->button(__('Require'), ['class' => 'inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline']) ?>
-                    <?= $this->Form->end() ?>
-
-                    <?= $this->Form->create(null, ['action' => '/activities-steps/delete/' . $a->_joinData->id, 'class' => 'inline-block']) ?>
-                    <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
-                    <?= $this->Form->button(__('Remove'), ['class' => 'inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline']) ?>
-                    <?= $this->Form->end() ?>
+                    </div>
 
                 </div>
             </div>
+        <?php endforeach ?>
+
+        <h3 class="text-xl text-darkblue font-semibold mt-8">Supplemental Activities</h3>
+
+        <?php foreach ($supplementalacts as $a) : ?>
+            <div class="my-3 p-3 bg-white dark:bg-slate-900/80 rounded-lg" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
+                <div class="grid gap-4 grid-cols-12 items-center">
+
+                    <div class="col-span-2 text-center">
+                        <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'sort/' . $a->_joinData->id], 'class' => 'inline-block']) ?>
+                        <?= $this->Form->control('sortorder', ['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
+                        <?= $this->Form->control('direction', ['type' => 'hidden', 'value' => 'up']) ?>
+                        <?= $this->Form->control('id', ['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
+                        <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
+                        <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
+                        <button class="inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline">Up</button>
+                        <?= $this->Form->end() ?>
+
+                        <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'sort/' . $a->_joinData->id], 'class' => 'inline-block']) ?>
+                        <?= $this->Form->control('sortorder', ['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
+                        <?= $this->Form->control('direction', ['type' => 'hidden', 'value' => 'down']) ?>
+                        <?= $this->Form->control('id', ['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
+                        <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
+                        <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
+                        <button class="inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline">Down</button>
+                        <?= $this->Form->end() ?>
+                    </div>
+                    <div class="col-span-7">
+
+                        <div>
+                            <span class="px-2 py-0 bg-emerald-700 text-xs text-white rounded-lg"><?= $a->status->name ?></span>
+                        </div>
+
+                        <div class="actname text-xl"><a href="/activities/view/<?= $a->id ?>"><?= $a->name ?></a> </div>
+                        <div class="p-3 bg-slate-200 dark:bg-slate-800 rounded-lg">
+                            <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'edit/' . $a->_joinData->id], 'class' => '']) ?>
+                            <?= $this->Form->control('id', ['type' => 'hidden', 'value' => $a->_joinData->id,]) ?>
+                            <label>Why is this activity on this step?<br>
+                                <?= $this->Form->textarea('stepcontext', [
+                                    'value' => $a->_joinData->stepcontext,
+                                    'class' => 'block w-full px-3 py-1 m-0 dark:text-white dark:bg-slate-900/80 rounded-lg',
+                                    'rows' => 2
+                                ]) ?>
+                            </label>
+                            <button class="inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline btn-sm">Save Context</button>
+                            <?= $this->Form->end() ?>
+                        </div>
+
+
+
+                    </div>
+                    <div class="col-span-3 text-center">
+
+
+                        <?= $this->Form->create(null, ['action' => '/activities-steps/required-toggle/' . $a->_joinData->id, 'class' => 'inline-block']) ?>
+                        <?= $this->Form->hidden('id', ['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
+                        <?php if ($a->_joinData->required == 0) : ?>
+                            <?= $this->Form->hidden('required', ['type' => 'hidden', 'value' => 1]) ?>
+                        <?php else : ?>
+                            <?= $this->Form->hidden('required', ['type' => 'hidden', 'value' => 0]) ?>
+                        <?php endif ?>
+                        <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
+                        <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
+                        <?= $this->Form->button(__('Require'), ['class' => 'inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline']) ?>
+                        <?= $this->Form->end() ?>
+
+                        <?= $this->Form->create(null, ['action' => '/activities-steps/delete/' . $a->_joinData->id, 'class' => 'inline-block']) ?>
+                        <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
+                        <?= $this->Form->button(__('Remove'), ['class' => 'inline-block my-2 p-2 bg-sky-700 hover:bg-sky-800 rounded-lg text-white text-sm hover:no-underline']) ?>
+                        <?= $this->Form->end() ?>
+
+                    </div>
+                </div>
+            </div>
+        <?php endforeach ?>
+
+
+
+
         </div>
-    <?php endforeach ?>
-
-
-
-
-</div>
 </div> <!-- /.main wrap -->
 
 
