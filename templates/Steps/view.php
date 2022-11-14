@@ -193,15 +193,11 @@ foreach ($step->pathways as $pathways) {
             </p>
             <?php if (!empty($requiredacts)) : ?>
                 <?php if (count($requiredacts) === 1) : ?>
-                    <h4 class="mt-6 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1"><?= $stepacts ?></span>Required Activity </h4>
+                    <h4 class="mt-6 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1">1</span>Required Activity </h4>
                 <?php else : ?>
-                    <h4 class="mt-6 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1"><?= $stepacts ?></span>Required Activities </h4><?php endif ?>
+                    <h4 class="mt-6 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1"><?= $stepacts ?></span>Required Activities </h4>
+                <?php endif ?>
                 <p class="text-base"><em>Launch these activities and fill in your progress bar.</em></p>
-
-
-
-
-
                 <?php foreach ($requiredacts as $activity) : ?>
                     <?php
                     // #TODO Allan move this back into the controller and simplify
