@@ -145,7 +145,7 @@ $this->assign('title', h($pathway->name));
                         <?= $this->Form->end() ?>
                     </div>
                 </div>
-<!-- TODO Q do we need required activities in addition to the step progress bar? -->
+                <!-- TODO Q do we need required activities in addition to the step progress bar? -->
 
             <?php endif ?>
             <!-- TODO Nori/Allan add code for subtitle in box -->
@@ -163,23 +163,16 @@ $this->assign('title', h($pathway->name));
                         <?php $count++ ?>
                         <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
                             <div class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
-
                                 <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3"><?= $count ?></h3>
                                 <div class="flex-1 basis-6/7 p-3">
-                                    <h4 class="text-xl font-semibold"><?= h($steps->name) ?></h4>
-
+                                    <h4 class="text-xl font-semibold mb-2"><?= h($steps->name) ?></h4>
                                     <?php if ($requiredacts == 1) : ?>
-                                        <p class="text-bluegreen font-semibold text-base">
-                                            1 required activity</p>
+                                        <p class="text-bluegreen font-semibold text-base mb-1">
+                                            1 Required Activity</p>
                                     <?php else : ?>
-                                        <p class="text-bluegreen font-semibold text-base">
-                                            <?= $requiredacts ?> required activities</p>
+                                        <p class="text-bluegreen font-semibold text-base mb-1">
+                                            <?= $requiredacts ?> Required Activities</p>
                                     <?php endif ?>
-                                    <div class="mb-2"><?= $steps->description ?></div>
-                                    <p class="mb-2 text-sky-700 underline">
-                                        View <strong><?= h($steps->name) ?></strong>
-                                    </p>
-                                    <h3 class="mt-4 mb-1 text-darkblue font-semibold text-base">Step Activity Progress</h3>
                                     <script>
                                         fetch('/steps/status/<?= $steps->id ?>', {
                                                 method: 'GET'
@@ -204,17 +197,23 @@ $this->assign('title', h($pathway->name));
                                                     }
 
                                                 } else {
-                                                    document.querySelector('.pbarcontainer_<?= h($steps->id) ?>').innerHTML = '<span class="py-1 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
+                                                    document.querySelector('.pbarcontainer_<?= h($steps->id) ?>').innerHTML = '<span class="py-1 px-3 text-sm text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
                                                 }
                                                 //console.log(json);
                                             })
                                             .catch((err) => console.error("error:", err));
                                     </script>
-                                    <div class="flex pbarcontainer_<?= h($steps->id) ?> mb-2 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
-                                        <span class="py-1 px-3 bg-darkblue text-white rounded-lg text-base pbar_<?= h($steps->id) ?> pro_<?= h($steps->id) ?> flex-none"></span>
-                                        <span class="py-1 px-3 text-base pbar_<?= h($steps->id) ?> pro_sm_<?= h($steps->id) ?> flex-none"></span>
-                                        <span class="py-1 px-3 text-base total_<?= h($steps->id) ?> flex-1 text-right"></span>
+                                    <div class="flex pbarcontainer_<?= h($steps->id) ?> mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
+                                        <span class="py-1 px-3 bg-bluegreen text-white rounded-lg text-sm pbar_<?= h($steps->id) ?> pro_<?= h($steps->id) ?> flex-none"></span>
+                                        <span class="py-1 px-3 text-sm pbar_<?= h($steps->id) ?> pro_sm_<?= h($steps->id) ?> flex-none"></span>
+                                        <span class="py-1 px-3 text-sm total_<?= h($steps->id) ?> flex-1 text-right"></span>
                                     </div>
+                                    <div class="mb-2"><?= $steps->description ?></div>
+                                    <p class="mb-2 text-sky-700 underline">
+                                        View <strong><?= h($steps->name) ?></strong>
+                                    </p>
+
+
                                     <!-- <?php if ($role == 'curator' || $role == 'superuser') : ?>
                                     <span class="text-xs px-4 bg-slate-100/80 dark:bg-emerald-700 rounded-lg"><?= $steps->status->name ?></span>
                                 <?php endif ?> -->
@@ -225,62 +224,63 @@ $this->assign('title', h($pathway->name));
                                 <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
                                     <div class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
 
-                                        <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3">Step <?= $count ?></h3>
+                                        <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3"><?= $count ?></h3>
                                         <div class="flex-1 basis-6/7 p-3">
                                             <span class="bg-orange-400 text-white rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
-                                            <h4 class="text-xl font-semibold"><?= h($steps->name) ?></h4>
-
+                                            <h4 class="text-xl font-semibold mb-2"><?= h($steps->name) ?></h4>
                                             <?php if ($requiredacts == 1) : ?>
-                                                <p class="text-bluegreen font-semibold text-base">
-                                                    1 required activity</p>
+                                                <p class="text-bluegreen font-semibold text-base mb-1">
+                                                    1 Required Activity</p>
                                             <?php else : ?>
-                                                <p class="text-bluegreen font-semibold text-base">
-                                                    <?= $requiredacts ?> required activities</p>
+                                                <p class="text-bluegreen font-semibold text-base mb-1">
+                                                    <?= $requiredacts ?> Required Activities</p>
                                             <?php endif ?>
+                                            <script>
+                                                fetch('/steps/status/<?= $steps->id ?>', {
+                                                        method: 'GET'
+                                                    })
+                                                    .then((res) => res.json())
+                                                    .then((json) => {
+                                                        if (json.steppercent > 0) {
+                                                            let launched = json.stepclaimcount + ' launched';
+                                                            let remaining = (json.requiredacts - json.stepclaimcount) + ' remaining';
+
+                                                            document.querySelector('.pbar_<?= h($steps->id) ?>').style.width = json.steppercent + '%';
+
+                                                            if (json.steppercent == 100) {
+                                                                document.querySelector('.pro_<?= h($steps->id) ?>').innerHTML = 'Step completed!';
+                                                            }
+                                                            if (json.steppercent < 20) {
+                                                                document.querySelector('.pro_sm_<?= h($steps->id) ?>').innerHTML = launched;
+                                                                document.querySelector('.total_<?= h($steps->id) ?>').innerHTML = remaining;
+                                                            } else {
+                                                                document.querySelector('.pro_<?= h($steps->id) ?>').innerHTML = launched;
+                                                                document.querySelector('.total_<?= h($steps->id) ?>').innerHTML = remaining;
+                                                            }
+
+                                                        } else {
+                                                            document.querySelector('.pbarcontainer_<?= h($steps->id) ?>').innerHTML = '<span class="py-1 px-3 text-sm text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
+                                                        }
+                                                        //console.log(json);
+                                                    })
+                                                    .catch((err) => console.error("error:", err));
+                                            </script>
+                                            <div class="flex pbarcontainer_<?= h($steps->id) ?> mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
+                                                <span class="py-1 px-3 bg-bluegreen text-white rounded-lg text-sm pbar_<?= h($steps->id) ?> pro_<?= h($steps->id) ?> flex-none"></span>
+                                                <span class="py-1 px-3 text-sm pbar_<?= h($steps->id) ?> pro_sm_<?= h($steps->id) ?> flex-none"></span>
+                                                <span class="py-1 px-3 text-sm total_<?= h($steps->id) ?> flex-1 text-right"></span>
+                                            </div>
                                             <div class="mb-2"><?= $steps->description ?></div>
                                             <p class="mb-2 text-sky-700 underline">
                                                 View <strong><?= h($steps->name) ?></strong>
                                             </p>
-                                            <h3 class="mt-4 mb-1 text-darkblue font-semibold text-base">Step Activity Progress</h3>
-                    <script>
-                        fetch('/steps/status/<?= $steps->id ?>', {
-                                method: 'GET'
-                            })
-                            .then((res) => res.json())
-                            .then((json) => {
-                                if (json.steppercent > 0) {
-                                    let launched = json.stepclaimcount + ' launched';
-                                    let remaining = (json.requiredacts - json.stepclaimcount) + ' remaining';
 
-                                    document.querySelector('.pbar_<?= h($steps->id) ?>').style.width = json.steppercent + '%';
 
-                                    if (json.steppercent == 100) {
-                                        document.querySelector('.pro_<?= h($steps->id) ?>').innerHTML = 'Step completed!';
-                                    }
-                                    if (json.steppercent < 20) {
-                                        document.querySelector('.pro_sm_<?= h($steps->id) ?>').innerHTML = launched;
-                                        document.querySelector('.total_<?= h($steps->id) ?>').innerHTML = remaining;
-                                    } else {
-                                        document.querySelector('.pro_<?= h($steps->id) ?>').innerHTML = launched;
-                                        document.querySelector('.total_<?= h($steps->id) ?>').innerHTML = remaining;
-                                    }
-
-                                } else {
-                                    document.querySelector('.pbarcontainer_<?= h($steps->id) ?>').innerHTML = '<span class="py-1 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
-                                }
-                                //console.log(json);
-                            })
-                            .catch((err) => console.error("error:", err));
-                    </script>
-                    <div class="flex pbarcontainer_<?= h($steps->id) ?> mb-2 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
-                        <span class="py-1 px-3 bg-darkblue text-white rounded-lg text-base pbar_<?= h($steps->id) ?> pro_<?= h($steps->id) ?> flex-none"></span>
-                        <span class="py-1 px-3 text-base pbar_<?= h($steps->id) ?> pro_sm_<?= h($steps->id) ?> flex-none"></span>
-                        <span class="py-1 px-3 text-base total_<?= h($steps->id) ?> flex-1 text-right"></span>
-                    </div>
                                             <!-- <?php if ($role == 'curator' || $role == 'superuser') : ?>
                                     <span class="text-xs px-4 bg-slate-100/80 dark:bg-emerald-700 rounded-lg"><?= $steps->status->name ?></span>
                                 <?php endif ?> -->
                                         </div>
+
                                     </div>
                                 <?php endif; // is curator 
                                 ?>
