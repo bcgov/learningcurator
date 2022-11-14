@@ -81,7 +81,7 @@ $this->assign('title', 'Learning on demand');
 
                 <img class="max-h-[100px] md:-mt-4 md:-mr-4 mx-auto md:mx-0" src="/img/where-ideas-work-whitetext.svg" height="100px" width="380px" alt="Where Ideas Work logo">
             </div>
-            <div x-data="{ open: false }" class="leading-snug pb-1 text-slate-300">
+            <div x-data="{ open: false }" class="leading-snug mb-4 text-slate-300">
                             <button @click="open = ! open" class="inline text-sm hover:underline">Privacy Statement<span x-show="open">:</span></button>
                             <div x-show="open" @click.outside="open = false" class="inline text-sm">Your personal information is collected by the BC Public Service Agency in accordance with section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes of managing and administering employee development and training. If you have any questions, submit an AskMyHR request at www.gov.bc.ca/myhr/contact or call 250-952-6000. </div>
                         </div>
