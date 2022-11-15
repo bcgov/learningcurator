@@ -11,6 +11,7 @@
     <div class="max-w-prose">
         <h2 class="text-2xl text-darkblue font-semibold mb-3">Edit Question <span><?= $this->Html->link(__('View All Questions'), ['action' => 'index'], ['class' => 'inline-block ml-2 text-sky-700 hover:underline text-base font-normal']) ?></span></h2>
 
+        <div class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
 
         <?= $this->Form->create($question) ?>
         <?php
@@ -20,6 +21,7 @@
         ?>
         <?= $this->Form->button(__('Save Edits'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
         <?= $this->Form->end() ?>
+        </div>
     </div>
 </div>
 <!-- TODO removed Summernote for now -->
