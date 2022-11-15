@@ -951,6 +951,10 @@ video {
   max-width: 75%;
 }
 
+.max-w-\[70ch\] {
+  max-width: 70ch;
+}
+
 .flex-none {
   flex: none;
 }
