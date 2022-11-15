@@ -70,7 +70,7 @@ $options = array(
 <?php //echo $this->Form->control('steps._ids', ['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg', 'options' => $steps]); ?>
 <?php //echo $this->Form->control('licensing', ['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']); ?>
 <?php //echo $this->Form->control('moderator_notes', ['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']); ?>
-<?php echo $this->Form->control('isbn', ['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg']); ?>
+<?php echo $this->Form->control('isbn', ['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg', 'label' => 'ISBN']); ?>
 
 
 <?php echo $this->Form->control('tag_string', ['class' => 'block w-full px-3 py-2 m-0 dark:text-white dark:bg-slate-800 rounded-lg', 'type' => 'text']); ?>

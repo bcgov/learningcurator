@@ -51,7 +51,7 @@ $this->loadHelper('Authentication.Identity');
         ?>
         <?php //echo $this->Form->control('moderator_notes', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3']); 
         ?>
-        <?php echo $this->Form->control('isbn', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3']); ?>
+        <?php echo $this->Form->control('isbn', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3', 'label' => 'ISBN']); ?>
         <?php echo $this->Form->control('activity_types_id', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3  text-base border', 'options' => $activityTypes]); ?>
         <?php echo $this->Form->control('status_id', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3 text-base border', 'options' => $statuses, 'empty' => true]); ?>
         <?php //echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3']); 
