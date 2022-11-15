@@ -60,7 +60,7 @@ $this->loadHelper('Authentication.Identity');
                             <?= $this->Form->end() ?>
 
 
-                            <?= $this->Form->postLink(__('Delete Issue Report'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'block my-2 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base']) ?>
+                            <?= $this->Form->postLink(__('Delete Issue Report'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?'), 'class' => 'block my-2 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base']) ?>
                         <?php endif ?>
                     </div><!-- curatorresponse -->
                 </div>
