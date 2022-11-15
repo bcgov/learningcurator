@@ -12,6 +12,7 @@
     <h2 class="text-2xl text-darkblue font-semibold mb-3">All Activity Tags</h2>
     <p class="text-xl">Click on any tag to see its description and the activities tagged with it.</p>
 <!-- TODO Nori/Allan add descriptions? Can this be alphabetical? -->
+<!-- TODO Q should there be an add tag button here? -->
     <ul class="list-disc pl-8 mt-2">
         <?php foreach ($tags as $tag) : ?>
             <li class="px-2"> <?= $this->Html->link(h($tag->name), ['action' => 'view', $tag->id]) ?>

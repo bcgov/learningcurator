@@ -20,11 +20,11 @@
         <div class="px-4 py-3">
             <?= $this->Form->create($report) ?>
             <fieldset>
-                <div class="mt-2"><?php echo $this->Form->control('activity_id', ['options' => $activities, 'class' => 'form-field max-w-prose text-base']);  ?></div>
-                <div class="mt-2"><?php echo $this->Form->control('user_id', ['class' => 'form-field max-w-prose text-base']);  ?></div>
-                <div class="mt-2"><?php echo $this->Form->control('issue', ['class' => 'form-field max-w-prose text-base']); ?></div>
-                <div class="mt-2"><?php echo $this->Form->control('curator_id', ['options' => $users, 'empty' => true, 'class' => 'form-field max-w-prose text-base']); ?></div>
-                <div class="mt-2"><?php echo $this->Form->control('response', ['class' => 'form-field max-w-prose text-base']); ?></div>
+                <?php echo $this->Form->control('activity_id', ['options' => $activities, 'class' => 'form-field max-w-prose text-base mb-3']);
+                echo $this->Form->control('user_id', ['class' => 'form-field max-w-prose text-base mb-3']);
+                echo $this->Form->control('issue', ['class' => 'form-field max-w-prose text-base mb-3']);
+                echo $this->Form->control('curator_id', ['options' => $users, 'empty' => true, 'class' => 'form-field max-w-prose text-base mb-3']);
+                echo $this->Form->control('response', ['class' => 'form-field max-w-prose text-base mb-3']); ?>
             </fieldset>
             <?= $this->Form->button(__('Submit'), ['class' => 'inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg my-3 font-normal hover:cursor-pointer']) ?>
             <?= $this->Form->postLink(__('Delete Issue Report'), ['action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?'), 'class' => 'block my-2 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base']) ?>
