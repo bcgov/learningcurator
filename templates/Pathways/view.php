@@ -111,7 +111,7 @@ $this->assign('title', h($pathway->name));
                             }
 
                         } else {
-                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-a px-3 text-base text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
+                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
                         }
                         //console.log(json);
                     })
