@@ -127,7 +127,7 @@ if ($this->Identity->isLoggedIn()) {
                 <?php else : ?>
                     <div class="mt-2">
                         <p>No activities contributed yet.</p>
-                        <button class="px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg" href="/activities/add">Add an Activity</button>
+                        <a class="px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg inline-block" href="/activities/add">Add an Activity</a>
                     </div>
                 <?php endif ?>
                 </div>
