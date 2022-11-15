@@ -169,7 +169,9 @@ if ($this->Identity->isLoggedIn()) {
                 <?php endforeach ?>
             </ul>
         <?php endif ?>
-        <div class="bg-gray-200 p-3 rounded-md mt-4">
+        <h4 class="font-semibold text-xl mt-5">Report an Issue with this Activity</h4>
+
+        <div class="bg-gray-200 p-3 rounded-md">
             <script>
                 var message = '';
 
@@ -215,7 +217,6 @@ if ($this->Identity->isLoggedIn()) {
                     '@submit.prevent' => 'submitData'
                 ]
             ) ?>
-            <h4 class="font-semibold text-xl mt-5">Report an issue with this activity</h4>
             <?php
             echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
             echo $this->Form->hidden('user_id', ['value' => $uid]);
