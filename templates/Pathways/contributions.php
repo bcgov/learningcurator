@@ -17,8 +17,6 @@ if ($this->Identity->isLoggedIn()) {
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
 <div class="p-8 text-lg" id="mainContent">
-    <!-- TODO Allan/Nori add created date? -->
-    <!-- created/modified on each of the db tables -->
     <h2 class="text-2xl text-darkblue font-semibold"><?= __('My Contributions') ?></h2>
     <h3 class="mt-4 font-semibold text-xl">My Pathways</h3>
     <div class="max-w-prose">
@@ -46,24 +44,31 @@ if ($this->Identity->isLoggedIn()) {
                         </div>
                     </a>
                     <div class="pl-10">
-                        <div class="flex justify-end items-center text-xs text-slate-500 mt-2 mb-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tag inline-block mr-1" viewBox="0 0 16 16">
-                                <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z" />
-                                <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z" />
-                            </svg>
 
-                            <?= $this->Html->link($pathway->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id], ['class' => '']) ?>
-                            <!-- TODO Nori Allan add code to link category as well as topic -->
-                        </div>
-                        <p class="mb-3"><?php if (!empty($pathway->description)) : ?>
+                        <p class="my-3"><?php if (!empty($pathway->description)) : ?>
                                 <?= $pathway->description ?>
                             <?php else : ?>
                                 <?= $pathway->objective ?>
                             <?php endif ?></p>
+
                         <!-- This conditional is kind of a hack and we need to make people aware that the description isn't actually optional -->
                         <p class="mb-4"> <a href="/pathways/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
                                 View the <strong><?= h($pathway->name) ?></strong> pathway
                             </a> </p>
+                        <div class="text-sm mt-2">
+
+
+                            <p class="mb-0 inline">
+                                <strong><?= $pathway->status->name ?></strong>
+                                in
+
+                                <?= $this->Html->link($pathway->topic->name, ['controller' => 'Topics', 'action' => 'view', $pathway->topic->id], ['class' => '']) ?>
+                            </p>
+                            <p class="mb-0"><strong>Added</strong> <?= $this->Time->format($pathway->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></p>
+
+
+
+                        </div>
                     </div>
                 </div>
 
@@ -133,12 +138,12 @@ if ($this->Identity->isLoggedIn()) {
                                     <?php foreach ($a->steps as $step) : ?>
                                         <?php if (!empty($step->pathways[0]->slug)) : ?>
                                             <a href="/pathways/<?= h($step->pathways[0]->slug) ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
-                                                <?= h($step->pathways[0]->name) ?> - <?= h($step->name) ?>
+                                                <?= h($step->pathways[0]->name) ?>, <?= h($step->name) ?>
                                             </a>
                                         <?php endif ?>
                                     <?php endforeach ?>
 
-                                    <p class="mb-0"><strong>Added:</strong> <?= $this->Time->format($a->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></p>
+                                    <p class="mb-0"><strong>Added</strong> <?= $this->Time->format($a->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></p>
 
 
 
