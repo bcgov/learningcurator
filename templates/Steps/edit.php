@@ -126,14 +126,14 @@ $this->loadHelper('Authentication.Identity');
     ?>
 
     <?php if (count($requiredacts) === 1) : ?>
-        <h4 class="font-semibold mt-8 mb-3 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1">1</span>Required Activity </h4>
+        <h4 class="font-semibold mt-8 mb-3 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-2">1</span>Required Activity </h4>
     <?php else : ?>
-        <h4 class="font-semibold mt-8 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1"><?= count($requiredacts) ?></span>Required Activities </h4>
+        <h4 class="font-semibold mt-8 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-2"><?= count($requiredacts) ?></span>Required Activities </h4>
     <?php endif ?>
     <?php foreach ($requiredacts as $a) : ?>
         <div class="my-3" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
             <div class="flex justify-start gap-4 items-center">
-                <div class="basis-1/6 flex-none flex flex-col justify-center items-end text-sm">
+                <div class="basis-1/7 flex-none flex flex-col justify-center items-end text-sm">
                     <div class="">
                         <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'sort/' . $a->_joinData->id], 'class' => 'inline-block']) ?>
                         <?= $this->Form->control('sortorder', ['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
@@ -160,7 +160,7 @@ $this->loadHelper('Authentication.Identity');
                         <?= $this->Form->end() ?>
                     </div>
                 </div>
-                <div class="basis-4/6 flex-1">
+                <div class="basis-4/7 flex-1">
                     <div class="w-full inline-block mb-4 rounded-md bg-sagedark p-0.5">
                         <div class="flex flex-row justify-between">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-journal-text mx-3 my-4 flex-none" viewBox="0 0 16 16">
@@ -172,7 +172,11 @@ $this->loadHelper('Authentication.Identity');
                             <div class="bg-white inset-1 rounded-r-sm flex-1">
 
                                 <div class="p-3 text-lg">
-                                    <span class="px-2 py-0.5 bg-sky-700 text-xs text-white rounded-lg inline-block align-top"><?= $a->status->name ?></span>
+                                    <?php if ($a->status->name == 'Draft') : ?>
+                                        <span class="bg-orange-400 text-slate-900 rounded-full px-2 py-0.5 text-sm inline-block align-top" title="Edit to set to publish">DRAFT</span>
+                                    <?php else : ?>
+                                        <span class="px-2 py-0.5 bg-sky-700 text-xs text-white rounded-lg inline-block align-top"><?= $a->status->name ?></span>
+                                    <?php endif ?>
                                     <h4 class="mb-1 mt-1 text-xl font-semibold">
                                         <a class="hover:underline" href="/activities/view/<?= $a['id'] ?>"><?= $a['name'] ?></a>
                                     </h4>
@@ -192,7 +196,7 @@ $this->loadHelper('Authentication.Identity');
                         </div>
                     </div>
                 </div>
-                <div class="basis-1/6 flex-none flex flex-col justify-center items-start text-sm">
+                <div class="basis-2/7 flex-none flex flex-col justify-center items-start text-sm">
 
                     <div>
                         <?= $this->Form->create(null, ['action' => '/activities-steps/required-toggle/' . $a->_joinData->id, 'class' => 'inline-block']) ?>
@@ -221,14 +225,14 @@ $this->loadHelper('Authentication.Identity');
     <?php endforeach ?>
 
     <?php if (count($supplementalacts) === 1) : ?>
-        <h4 class="font-semibold mt-8 mb-3 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1">1</span>Supplemental Activity </h4>
+        <h4 class="font-semibold mt-8 mb-3 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-2">1</span>Supplemental Activity </h4>
     <?php else : ?>
-        <h4 class="font-semibold mt-8 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1"><?= count($supplementalacts) ?></span>Supplemental Activities </h4>
+        <h4 class="font-semibold mt-8 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-2"><?= count($supplementalacts) ?></span>Supplemental Activities </h4>
     <?php endif ?>
     <?php foreach ($supplementalacts as $a) : ?>
         <div class="my-3" id="exac-<?= $a->id ?>" data-stepid="<?= $a->_joinData->id ?>">
             <div class="flex justify-start gap-4 items-center">
-                <div class="basis-1/6 flex-none flex flex-col justify-center items-end text-sm">
+                <div class="basis-1/7 flex-none flex flex-col justify-center items-end text-sm">
                     <div class="">
                         <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'sort/' . $a->_joinData->id], 'class' => 'inline-block']) ?>
                         <?= $this->Form->control('sortorder', ['type' => 'hidden', 'value' => $a->_joinData->steporder]) ?>
@@ -255,7 +259,7 @@ $this->loadHelper('Authentication.Identity');
                         <?= $this->Form->end() ?>
                     </div>
                 </div>
-                <div class="basis-4/6 flex-1">
+                <div class="basis-4/7 flex-1">
                     <div class="w-full inline-block mb-4 rounded-md bg-sagedark p-0.5">
                         <div class="flex flex-row justify-between">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-journal-text mx-3 my-4 flex-none" viewBox="0 0 16 16">
@@ -287,7 +291,7 @@ $this->loadHelper('Authentication.Identity');
                         </div>
                     </div>
                 </div>
-                <div class="basis-1/6 flex-none flex flex-col justify-center items-start text-sm">
+                <div class="basis-2/7 flex-none flex flex-col justify-center items-start text-sm">
                     <div>
                         <?= $this->Form->create(null, ['action' => '/activities-steps/required-toggle/' . $a->_joinData->id, 'class' => 'inline-block']) ?>
                         <?= $this->Form->hidden('id', ['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
