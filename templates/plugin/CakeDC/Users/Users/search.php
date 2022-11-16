@@ -18,9 +18,9 @@
     <h2 class="text-2xl text-darkblue font-semibold mb-3">User Search</h2>
     <h3 class="text-xl mt-4 font-semibold">Search for a User</h3>
     <form method="get" action="/users/search" class="mt-2">
-        <label class="">
-            <input class="px-3 py-2 m-0 border rounded-l-lg" type="search" placeholder="first or last name ..." aria-label="User Search" name="q" value="<?= h($q) ?>"></label><button class="px-3 py-2 m-0 bg-slate-400 hover:bg-slate-300 rounded-r-lg" type="submit">User Search</button>
-        
+
+        <input class="px-3 py-2 m-0 border rounded-l-lg" type="search" placeholder="first or last name ..." aria-label="User Search" name="q" value="<?= h($q) ?>"><button class="px-3 py-2 m-0 bg-slate-400 hover:bg-slate-300 rounded-r-lg" type="submit">User Search</button>
+
     </form>
 
     <h3 class="text-xl mt-4 font-semibold">All Users</h3>
@@ -56,14 +56,14 @@
 
         </tbody>
     </table>
-<!-- TODO Nori/Allan update pagination styling? -->
+    <!-- TODO Nori/Allan update pagination styling? -->
     <div class="paginator">
         <ul class="flex items-center gap-2">
             <?= $this->Paginator->prev('< ' . __d('cake_d_c/users', 'Previous')) ?>
             <?= $this->Paginator->numbers() ?>
             <?= $this->Paginator->next(__d('cake_d_c/users', 'Next') . ' >') ?>
         </ul>
-        
+
     </div>
 
 
