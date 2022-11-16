@@ -1,33 +1,24 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\ActivityType $activityType
  */
 
 ?>
-<div class="container-fluid">
-<div class="row justify-content-md-center" style="background-color: rgba(<?= h($activityType->color) ?>,1)">
-<div class="col-md-7">
-
-<h1 class="mt-3">
-    <span class="fas <?= h($activityType->image_path) ?>"></span>
-    <?= h($activityType->name) ?>
-</h1>
-
-<div class="my-3 p-3" style="background-color: rgba(255,255,255,.5)">
-
-<?= $activityType->description; ?>
-
-</div>
-</div>
-</div>
-<div class="container">
-<div class="row justify-content-md-center">
-<div class="col-md-8">
-<?php foreach($activities as $activity): ?>
-    <div class="card card-body my-3"><?= $this->Html->link(h($activity->name), ['controller' => 'Activities', 'action' => 'view', $activity->id]) ?></div>
-<?php endforeach ?>
-
-</div>
-</div>
+<header class="w-full h-32 md:h-52 bg-darkblue px-8 flex items-center">
+    <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
+</header>
+<div class="p-8 text-lg" id="mainContent">
+    <h2 class="text-2xl text-darkblue font-semibold mb-3">View Activity Type: <span class="text-slate-900">
+            <!-- <span class="fas <?= h($activityType->image_path) ?>"></span> -->
+            <?= h($activityType->name) ?>
+        </span></h2>
+    <!-- TODO alphabetize the list or sort options? -->
+    <div class="my-2 text-xl"><?= $activityType->description; ?></div>
+    <ul class="pl-8 list-disc">
+        <?php foreach ($activities as $activity) : ?>
+            <li class="px-2"><?= $this->Html->link(($activity->name), ['controller' => 'Activities', 'action' => 'view', $activity->id]) ?></li>
+        <?php endforeach ?>
+    </ul>
 </div>
