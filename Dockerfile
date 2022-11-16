@@ -108,6 +108,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 WORKDIR /var/www/html
 COPY . /var/www/html
 RUN mkdir /var/www/html/logs
+RUN chmod 777 /var/www/html/logs
 
 ENV COMPOSER_MEMORY_LIMIT=-1
 RUN composer install --optimize-autoloader --no-interaction
