@@ -23,46 +23,31 @@ $this->loadHelper('Authentication.Identity');
 
             <label><?php echo $this->Form->checkbox('featured'); ?> Featured?</label>
 
-            <?php echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]) ?>
+            <?php echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]);
 
-
-            <div class="mt-2"><?php echo $this->Form->control('status_id', ['type' => 'select', 'options' => $statuses, 'class' => 'form-field']) ?></div>
-
-
-            <div class="mt-2"><?php echo $this->Form->control('createdby', ['type' => 'select', 'options' => $users, 'class' => 'form-field']) ?></div>
-
-
-            <div class="mt-2">
-                <label>Topic
-                    <?php echo $this->Form->select(
-                        'topic_id',
-                        $areas,
-                        ['class' => 'form-field'],
-                    );
-                    ?></label>
-            </div>
-            <div class="mt-2"> <?php
-                                echo $this->Form->control('name', ['class' => 'form-field']);
-                                //echo $this->Form->control('slug', ['class' => 'form-field']);
-                                ?></div>
-            <div class="mt-2"><?php echo $this->Form->control('description', ['class' => 'form-field']) ?></div>
-            <?php // echo $this->Form->control('estimated_time', ['class' => 'form-field'])
-            ?>
-            <div class="mt-2"><?php echo $this->Form->control('objective', ['class' => 'form-field']) ?></div>
-            <?php  //  echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true, 'class' => 'form-field']);
-            //echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true, 'class' => 'form-field']);
+            echo $this->Form->control('status_id', ['type' => 'select', 'options' => $statuses, 'class' => 'form-field mb-3']);
+            echo $this->Form->control('createdby', ['type' => 'select', 'options' => $users, 'class' => 'form-field mb-3', 'label' => 'Created By']) ?>
+            <?php echo $this->Form->control('topic_id', ['type' => 'select', 'options' => $areas, 'class' => 'form-field mb-3', 'label' => 'Topic']); ?>
+            <?php
+            echo $this->Form->control('name', ['class' => 'form-field mb-3']);
+            //echo $this->Form->control('slug', ['class' => 'form-field mb-3']);
+            echo $this->Form->control('description', ['class' => 'form-field mb-3']) ?>
+            <?php // echo $this->Form->control('estimated_time', ['class' => 'form-field mb-3']);
+            echo $this->Form->control('objective', ['class' => 'form-field mb-3']);
+            //  echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true, 'class' => 'form-field mb-3']);
+            //echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true, 'class' => 'form-field mb-3']);
             //echo $this->Form->control('color');
-            //echo $this->Form->control('file_path', ['class' => 'form-field','label' => 'Import history']);
+            //echo $this->Form->control('file_path', ['class' => 'form-field mb-3','label' => 'Import history']);
             //echo $this->Form->control('image_path');
             //echo $this->Form->control('ministry_id', ['options' => $ministries, 'empty' => true]);
             //echo $this->Form->control('competencies._ids', ['options' => $competencies]);
             ?>
-        <?php if (!empty($pathway->file_path)) : ?>
-            <div class="form-field"><?= $pathway->file_path ?></div>
-        <?php endif ?>
-        <?= $this->Form->button(__('Save Pathway'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
-        <?= $this->Form->end() ?>
-        <?= $this->Form->postLink(__('Delete Pathway'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'inline-block mt-3 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base']) ?>
+            <?php if (!empty($pathway->file_path)) : ?>
+                <div class="form-field mb-3"><?= $pathway->file_path ?></div>
+            <?php endif ?>
+            <?= $this->Form->button(__('Save Pathway'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
+            <?= $this->Form->end() ?>
+            <?= $this->Form->postLink(__('Delete Pathway'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'inline-block mt-3 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base']) ?>
+        </div>
     </div>
-</div>
 </div>
