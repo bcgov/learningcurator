@@ -34,19 +34,20 @@ if ($this->Identity->isLoggedIn()) {
             <?php foreach ($categories as $category) : ?>
 
                 <a class="group hover:no-underline" href="/category/<?= $category->id ?>/<?= h($category->slug) ?>">
-                    <div class="rounded-md shadow-lg border-2 border-sky-700 mb-4 group-hover:border-sky-600">
-                        <div class="bg-sky-700 p-3 group-hover:bg-sky-600 flex justify-between items-center">
+                    <div class="rounded-md shadow-lg border-2 border-sky-700 mb-4 group-hover:border-sky-700/80">
+                        <div class="bg-sky-700 p-3 group-hover:bg-sky-700/80 flex justify-between items-center">
                             <h3 class="text-2xl text-white flex-1">
                                 <?= h($category->name) ?>
-                            </h3><?php if (empty($category->featured)) : ?>
-                                <span class="bg-orange-500 py-1 px-2 rounded-full text-slate-900 text-sm" title="Edit to set to publish">DRAFT</span>
+                            </h3>
+                            <?php if (empty($category->featured)) : ?>
+                                <span class="bg-orange-400 py-1 px-2 rounded-full text-slate-900 text-sm" title="Edit to set to publish">DRAFT</span>
                             <?php endif ?>
                         </div>
                         <div class="p-3 text-lg">
                             <div class="mb-0">
                                 <?= $category->description ?></div>
 
-                            <p class="mb-2 inline-block mt-4 hover:text-sky-600 underline text-sky-700 ">
+                            <p class="mb-2 inline-block mt-4 hover:text-sky-700/80 underline text-sky-700">
 
                                 Explore <span class="font-bold"><?= h($category->name) ?></span>
 

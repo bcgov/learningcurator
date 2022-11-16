@@ -49,15 +49,15 @@ $this->assign('title', $pagetitle);
                 <?php foreach ($category->topics as $topic) : ?>
                     <?php if ($topic->featured == 1) : ?>
                         <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline group">
-                            <div class="rounded-md shadow-lg p-0.5 bg-sky-700  group-hover:bg-sky-700/80 mb-4">
+                            <div class="rounded-md shadow-lg p-0.5 bg-sky-700 group-hover:bg-sky-700/80 mb-4">
                                 <h3 class="text-xl text-white p-2"><?= $topic->name ?>
                                     <!-- topic_id: <?= $topic->id ?> -->
                                 </h3>
                                 <div class="bg-white inset-1 rounded-b-sm">
                                     <div class="p-3 text-lg">
                                         <p class="mb-0"><?= $topic->description ?></p>
-                                        <p class="mb-2 inline-block mt-4 hover:text-sky-600 underline text-sky-700 ">
-Explore <strong><?= $topic->name ?></strong></p>
+                                        <p class="mb-2 inline-block mt-4 group-hover:text-sky-700/80 underline text-sky-700">
+                                            Explore <strong><?= $topic->name ?></strong></p>
                                     </div>
                                 </div>
                             </div>
@@ -66,19 +66,29 @@ Explore <strong><?= $topic->name ?></strong></p>
                     <?php else : ?>
                         <?php if ($role == 'curator' || $role == 'superuser') : ?>
                             <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline group">
-                                <div class="rounded-md shadow-lg p-0.5 bg-sky-700  group-hover:bg-sky-700/80 mb-4">
-                                <span class="bg-orange-400 text-white rounded-lg px-2 py-1 m-2 text-sm align-middle float-right" title="Edit to set to publish">DRAFT</span>
-                                    <h3 class="text-xl text-white p-2 hover:no-underline "><?= $topic->name ?>
-                                        <!-- topic_id: <?= $topic->id ?> -->
-                                    </h3>
-                                    <div class="bg-white inset-1 rounded-b-sm">
-                                        <div class="p-3 text-lg">
-                                            <p class="mb-0"><?= $topic->description ?></p>
-                                            <p class="mb-2 inline-block mt-4 hover:text-sky-600 underline text-sky-700">
-Explore <strong><?= $topic->name ?></strong></p>
+                                <div class="rounded-md shadow-lg border-2 border-sky-700 mb-4 group-hover:border-sky-700/80">
+                                    <div class="bg-sky-700 p-2 group-hover:bg-sky-700/80 flex justify-between items-center">
+                                        <h3 class="text-xl text-white flex-1">
+                                            <?= h($topic->name) ?>
+                                        </h3>
+                                        <?php if (empty($category->featured)) : ?>
+                                            <span class="bg-orange-400 py-1 px-2 rounded-full text-slate-900 text-sm" title="Edit to set to publish">DRAFT</span>
+                                        <?php endif ?>
+                                    </div>
+                                    <div class="p-3 text-lg">
+                                        <div class="mb-0">
+                                            <?= $topic->description ?>
                                         </div>
+
+                                        <p class="mb-2 inline-block mt-4 hover:text-sky-700/80 underline text-sky-700 ">
+
+                                            Explore <span class="font-bold"><?= h($topic->name) ?></span>
+
+                                        </p>
+
                                     </div>
                                 </div>
+
                             </a>
 
                         <?php endif ?>

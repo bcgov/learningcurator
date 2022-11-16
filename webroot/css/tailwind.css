@@ -1934,6 +1934,10 @@ p {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.hover\:text-sky-700\/80:hover {
+  color: rgb(3 105 161 / 0.8);
+}
+
 .hover\:underline:hover {
   text-decoration-line: underline;
 }
@@ -1990,6 +1994,10 @@ p {
   border-color: rgb(47 97 115 / 0.8);
 }
 
+.group:hover .group-hover\:border-sky-700\/80 {
+  border-color: rgb(3 105 161 / 0.8);
+}
+
 .group:hover .group-hover\:bg-sky-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(2 132 199 / var(--tw-bg-opacity));
@@ -2001,6 +2009,15 @@ p {
 
 .group:hover .group-hover\:bg-bluegreen\/80 {
   background-color: rgb(47 97 115 / 0.8);
+}
+
+.group:hover .group-hover\:text-sky-600 {
+  --tw-text-opacity: 1;
+  color: rgb(2 132 199 / var(--tw-text-opacity));
+}
+
+.group:hover .group-hover\:text-sky-700\/80 {
+  color: rgb(3 105 161 / 0.8);
 }
 
 @media (prefers-color-scheme: dark) {
