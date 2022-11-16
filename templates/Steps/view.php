@@ -170,8 +170,9 @@ foreach ($step->pathways as $pathways) {
                             </a>
                         <?php else : ?>
                             <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                                <?php $c = 'bg-gray-500' ?>
                                 <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                                    <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 mx-2 align-middle">DRAFT</span>
+                                   DRAFT
                                 </a>
                             <?php endif; // are you a curator?
                             ?>
@@ -182,12 +183,13 @@ foreach ($step->pathways as $pathways) {
         </div>
         <!-- TODO Allan/Nori - Title vs step name/subtitle -->
         <div class="basis-6/7 flex-1 border-2 border-bluegreen rounded-r-lg p-6 max-w-prose">
+            <?php if ($step->status_id == 1) : ?>
+                <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 align-middle">DRAFT</span>
+            <?php endif ?> 
             <h2 class="mb-4 text-2xl">
                 <strong><?= $step->name ?></strong>
             </h2>
-            <?php if ($step->status_id == 1) : ?>
-                <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 mx-2 align-middle">DRAFT</span>
-            <?php endif ?>
+
             <p><span class="font-bold">Objective: </span>
                 <?= $step->description ?>
             </p>
