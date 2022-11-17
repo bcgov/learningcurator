@@ -40,7 +40,7 @@ if ($this->Identity->isLoggedIn()) {
                                 <span class="bg-green-500 text-slate-900 rounded-full px-2 py-1 text-sm">Featured</span>
                             <?php endif ?>
                             <!-- <span class="text-sm ml-3 justify-self-end flex-none"><?= $pathway->stepcount ?> steps | <?= $pathway->requiredacts ?> activities</span> -->
-                            <!-- TODO fix steps/activity count here -->
+                            <!-- TODO Allan - will need to calculate... fix steps/activity count here -->
                         </div>
                     </a>
                     <div class="pl-10">

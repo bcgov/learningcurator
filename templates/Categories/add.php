@@ -13,7 +13,6 @@ $this->loadHelper('Authentication.Identity');
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Add Category</h2>
     <div class="max-w-prose outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
         <?= $this->Form->create($category) ?>
-        <!-- TODO Nori/Allan add paragraph styling options for description? -->
         <!-- TODO Nori/Allan add more guidance about each field? tooltip or placeholder or both? -->
         <fieldset>
             <?php
