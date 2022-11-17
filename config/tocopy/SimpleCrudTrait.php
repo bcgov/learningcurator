@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -14,7 +15,7 @@ declare(strict_types=1);
 namespace CakeDC\Users\Controller\Traits;
 
 use Cake\Utility\Inflector;
-Use Cake\ORM\TableRegistry;
+use Cake\ORM\TableRegistry;
 use Cake\Event\EventInterface;
 
 /**
@@ -64,22 +65,22 @@ trait SimpleCrudTrait
         // activity name as well as the ID--needed to make the link), 
         // so I extract a list that contains the counted and sorted IDs
         // and then use the 2nd array to extract the names. #inelegantbutworks
-        foreach($uselaunches->all()->toList() as $ul) {
-            array_push($mostlaunched,$ul['activity_id']);
-            array_push($actnames,['actid' => $ul['activity_id'], 'actname' => $ul['activity']['name']]);
+        foreach ($uselaunches->all()->toList() as $ul) {
+            array_push($mostlaunched, $ul['activity_id']);
+            array_push($actnames, ['actid' => $ul['activity_id'], 'actname' => $ul['activity']['name']]);
         }
         $most = array_count_values($mostlaunched);
         arsort($most);
         // So far we've counted and sorted the entire list, so now we 
         // just slice off the top 5. It is probably more efficient to do 
         // this earlier 
-        $top5 = array_slice($most,0,5,true);
-        foreach($top5 as $id => $count) {
+        $top5 = array_slice($most, 0, 5, true);
+        foreach ($top5 as $id => $count) {
             // Needing to loop through the entire list of activity launches
             // for each of the top 5 links to extract the name is probably
             // a dumb way of doing this, but #inelegantbutworks #refactor
-            foreach($actnames as $key => $val) {
-                if($val['actid'] == $id) {
+            foreach ($actnames as $key => $val) {
+                if ($val['actid'] == $id) {
                     // #TODO shouldn't be doing formatting here but when I build an array
                     // the array_unique call below breaks and it took me so long to get to
                     // this point that I'm just rolling with it for now.
@@ -112,22 +113,22 @@ trait SimpleCrudTrait
         // activity name as well as the ID--needed to make the link), 
         // so I extract a list that contains the counted and sorted IDs
         // and then use the 2nd array to extract the names. #inelegantbutworks
-        foreach($pathfollows->all()->toList() as $ul) {
-            array_push($mostfollowed,$ul['pathway_id']);
-            array_push($pathnames,['pathid' => $ul['pathway_id'], 'pathname' => $ul['pathway']['name'], 'pathslug' => $ul['pathway']['slug']]);
+        foreach ($pathfollows->all()->toList() as $ul) {
+            array_push($mostfollowed, $ul['pathway_id']);
+            array_push($pathnames, ['pathid' => $ul['pathway_id'], 'pathname' => $ul['pathway']['name'], 'pathslug' => $ul['pathway']['slug']]);
         }
         $followcounts = array_count_values($mostfollowed);
         arsort($followcounts);
         // So far we've counted and sorted the entire list, so now we 
         // just slice off the top 5. It is probably more efficient to do 
         // this earlier 
-        $top5f = array_slice($followcounts,0,5,true);
-        foreach($top5f as $id => $count) {
+        $top5f = array_slice($followcounts, 0, 5, true);
+        foreach ($top5f as $id => $count) {
             // Needing to loop through the entire list of activity launches
             // for each of the top 5 links to extract the name is probably
             // a dumb way of doing this, but #inelegantbutworks #refactor
-            foreach($pathnames as $key => $val) {
-                if($val['pathid'] == $id) {
+            foreach ($pathnames as $key => $val) {
+                if ($val['pathid'] == $id) {
                     // #TODO shouldn't be doing formatting here but when I build an array
                     // the array_unique call below breaks and it took me so long to get to
                     // this point that I'm just rolling with it for now.
@@ -143,8 +144,8 @@ trait SimpleCrudTrait
 
         $reports = TableRegistry::getTableLocator()->get('Reports');
         $noresponses = $reports->find('all', array('conditions' => array('Reports.response IS NULL')))
-                                ->contain(['Activities','Users'])
-                                ->order(['Reports.created' => 'desc']);
+            ->contain(['Activities', 'Users'])
+            ->order(['Reports.created' => 'desc']);
 
         $this->set('totalfollowcount', $totalfollowcount);
         $this->set('launchcount', $launchcount);
@@ -186,19 +187,22 @@ trait SimpleCrudTrait
     public function view($id = null)
     {
         $acts = TableRegistry::getTableLocator()->get('Activities');
-        $actsadded = $acts->find('all')->contain(['ActivityTypes','Statuses','Steps','Steps.Pathways'])
-                                        ->where(['Activities.createdby_id' => $id]);
+        $actsadded = $acts->find('all')->contain(['ActivityTypes', 'Statuses', 'Steps', 'Steps.Pathways'])
+            ->where(['Activities.createdby_id' => $id]);
         $paths = TableRegistry::getTableLocator()->get('Pathways');
         $pathsadded = $paths->find('all')->where(['Pathways.createdby' => $id]);
 
         $table = $this->loadModel();
         $tableAlias = $table->getAlias();
         $entity = $table->get($id, [
-            'contain' => ['PathwaysUsers',
-                            'PathwaysUsers.Pathways',
-                            'ActivitiesUsers',
-                            'ActivitiesUsers.Activities',
-                            'ActivitiesUsers.Activities.ActivityTypes'],
+            'contain' => [
+                'PathwaysUsers',
+                'Ministries',
+                'PathwaysUsers.Pathways',
+                'ActivitiesUsers',
+                'ActivitiesUsers.Activities',
+                'ActivitiesUsers.Activities.ActivityTypes'
+            ],
         ]);
         $this->set('actsadded', $actsadded);
         $this->set('pathsadded', $pathsadded);
@@ -221,23 +225,24 @@ trait SimpleCrudTrait
         $table = $this->loadModel();
         $tableAlias = $table->getAlias();
         $entity = $table->get($user->id, [
-            'contain' => ['PathwaysUsers',
-                            'PathwaysUsers.Pathways',
-                            'ActivitiesUsers',
-                            'ActivitiesUsers.Activities'],
+            'contain' => [
+                'PathwaysUsers',
+                'PathwaysUsers.Pathways',
+                'ActivitiesUsers',
+                'ActivitiesUsers.Activities'
+            ],
         ]);
         $completed = [];
-        foreach($entity->activities_users as $act) {
-                array_push($completed,$act->activity_id);
+        foreach ($entity->activities_users as $act) {
+            array_push($completed, $act->activity_id);
         }
         $pathspinned = [];
-        foreach($entity->pathways_users as $path) {
-            array_push($pathspinned,$path->pathway_id);
+        foreach ($entity->pathways_users as $path) {
+            array_push($pathspinned, $path->pathway_id);
         }
         $this->viewBuilder()->setLayout('ajax');
         $this->set('ActivitiesCompleted', $completed);
         $this->set('PathwaysPinned', $pathspinned);
-
     }
 
     /**
