@@ -10,6 +10,7 @@ $this->loadHelper('Authentication.Identity');
 <header class="w-full h-32 md:h-52 bg-darkblue px-8 flex items-center">
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
+<!-- TODO collapse step edit info - highlight activities stuff -->
 <div class="p-8 text-lg" id="mainContent">
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Edit Step: <span class="text-slate-900"><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
                 <?= $step->pathways[0]->name ?>, <?= $step->name ?>

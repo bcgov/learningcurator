@@ -8,9 +8,8 @@
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
 <div class="p-8 text-lg" id="mainContent">
-    <!-- TODO Q where is this linked from, if anywhere? Should it be? -->
-    <!-- TODO Q If this page is used, need to address errors with undefined variables -->
-    <h2 class="text-2xl text-darkblue font-semibold mb-3">Add Issue Report
+<!-- TODO delete this page eventually -->
+<h2 class="text-2xl text-darkblue font-semibold mb-3">Add Issue Report
         <span class="inline-block ml-2 text-sky-700 hover:underline text-base font-normal"><?= $this->Html->link(__('View All Open Reports'), ['action' => 'index']) ?></span>
     </h2>
     <div class="border-2 border-slate-700 mb-3 rounded-md max-w-[70ch]">

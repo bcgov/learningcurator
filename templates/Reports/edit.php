@@ -5,11 +5,11 @@
  * @var \App\Model\Entity\Report $report
  */
 ?>
+<!-- TODO delete this page eventually -->
 <header class="w-full h-32 md:h-52 bg-darkblue px-8 flex items-center">
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
 <div class="p-8 text-lg" id="mainContent">
-    <!-- TODO Q where is this linked from, if anywhere? Should it be? -->
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Edit Issue Report
         <span class="inline-block ml-2 text-sky-700 hover:underline text-base font-normal"><?= $this->Html->link(__('View All Open Reports'), ['action' => 'index']) ?></span>
     </h2>

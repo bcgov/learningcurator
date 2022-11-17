@@ -145,7 +145,6 @@ $this->assign('title', h($pathway->name));
                         <?= $this->Form->end() ?>
                     </div>
                 </div>
-                <!-- TODO Q do we need required activities in addition to the step progress bar? -->
 
             <?php endif ?>
             <!-- TODO Nori/Allan add code for subtitle in box -->
@@ -166,13 +165,10 @@ $this->assign('title', h($pathway->name));
                                 <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3"><?= $count ?></h3>
                                 <div class="flex-1 basis-6/7 p-3">
                                     <h4 class="text-xl font-semibold mb-2"><?= h($steps->name) ?></h4>
-                                    <?php if ($requiredacts == 1) : ?>
+                                   
                                         <p class="text-bluegreen font-semibold text-base mb-1">
-                                            1 Required Activity</p>
-                                    <?php else : ?>
-                                        <p class="text-bluegreen font-semibold text-base mb-1">
-                                            <?= $requiredacts ?> Required Activities</p>
-                                    <?php endif ?>
+                                            Step Activity Progress</p>
+                                <!-- TODO step completed not showing correctly with 1 activity -->
                                     <script>
                                         fetch('/steps/status/<?= $steps->id ?>', {
                                                 method: 'GET'
@@ -228,13 +224,8 @@ $this->assign('title', h($pathway->name));
                                         <div class="flex-1 basis-6/7 p-3">
                                             <span class="bg-orange-400 text-white rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
                                             <h4 class="text-xl font-semibold mb-2"><?= h($steps->name) ?></h4>
-                                            <?php if ($requiredacts == 1) : ?>
-                                                <p class="text-bluegreen font-semibold text-base mb-1">
-                                                    1 Required Activity</p>
-                                            <?php else : ?>
-                                                <p class="text-bluegreen font-semibold text-base mb-1">
-                                                    <?= $requiredacts ?> Required Activities</p>
-                                            <?php endif ?>
+                                            <p class="text-bluegreen font-semibold text-base mb-1">
+                                            Step Activity Progress</p>
                                             <script>
                                                 fetch('/steps/status/<?= $steps->id ?>', {
                                                         method: 'GET'

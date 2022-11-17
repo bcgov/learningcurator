@@ -504,7 +504,7 @@ foreach ($step->pathways as $pathways) {
                                                         <span x-text="message" class="ml-1 text-sm text-sky-700"></span>
                                                         <p class="text-sm hover:underline "><a href="/profile/reports">See all your reports</a></p>
                                                         <?= $this->Form->end() ?>
-                                                        <!-- TODO Allan/Nori change report issue to modal? -->
+                                                        <!-- TODO Allan/Nori change report issue to different style or on activity report only? -->
                                                     </div>
                                                 </div> <!-- end hidden more info -->
                                             </div><!-- end more info dropdown -->

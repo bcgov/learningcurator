@@ -26,9 +26,8 @@
                 <strong>Slug: </strong><?= h($question->slug) ?>
             </li>
             <li class="px-2">
-                <strong>Status: </strong><?= $question->has('status') ? $this->Html->link($question->status->name, ['controller' => 'Statuses', 'action' => 'view', $question->status->id]) : '' ?>
+                <strong>Status: </strong><?= h($question->status->name) ?>
             </li>
-            <!-- TODO this link to status doesn't go anywhere -->
             <li class="px-2">
                 <strong>Created By: </strong><?= h($question->createdby_id) ?>
             </li>

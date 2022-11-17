@@ -13,8 +13,7 @@
 
     <!-- <?= $this->Text->autoParagraph(h($tag->description)); ?> -->
     <ul class="list-disc pl-8 mt-2">
-        <!-- TODO Nori/Allan why arent' the activities being listed here? Working in tag edit view -->
-        <?php if (!empty($tag->activities)) : ?>
+            <?php if (!empty($tag->activities)) : ?>
             <?php foreach ($tag->activities as $activities) : ?>
                 <li class="px-2">
                     <?= $this->Html->link($activities->name, ['controller' => 'Activities', 'action' => 'view', $activities->id]) ?>

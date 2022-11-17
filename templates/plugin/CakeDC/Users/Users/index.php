@@ -98,7 +98,7 @@
             <div class="text-xl">
                 <p class="mt-2"><span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $totalfollowcount ?></span> Pathway Follows</p>
                 <h3 class="mt-4 font-semibold">Top 5 Followed Pathways</h3>
-                <!-- TODO Nori add styling to the follows piece of the link -->
+                <!-- TODO Nori add styling to the follows piece of the link - formatting in SimpleCrudTrait.php -->
                 <ol class="pl-8 text-base mt-2 list-decimal leading-snug">
                     <?php
                     // these links are templated/built within the controller for noted reasons there
