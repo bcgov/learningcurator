@@ -85,6 +85,7 @@ if ($this->Identity->isLoggedIn()) {
             <div class="w-full inline-block mb-4 rounded-md bg-sagedark p-0.5">
                 <div class="flex flex-row justify-between">
                     <!-- TODO fix the path to get to the right data for activity types. Couldn't figure it out -->
+                    <div class="mx-3 my-4 flex-none"></div>
                 <!-- <i class="<?= h($a->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($a->activity_type->name) ?>"></i> -->
                     <div class="bg-white inset-1 rounded-r-sm flex-1">
                         <div class="p-3 text-lg">
