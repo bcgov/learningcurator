@@ -38,10 +38,10 @@ if ($this->Identity->isLoggedIn()) {
                             <?= h($pathway->name) ?>
                         </h3>
                         <?php if ($pathway->status_id == 1) : ?>
-                            <span class="bg-orange-500 text-slate-900 rounded-full px-2 py-1 text-sm" title="Edit to set to publish">DRAFT</span>
+                            <span class="bg-orange-400 text-slate-900 rounded-full px-2 py-1 text-sm" title="Edit to set to publish">DRAFT</span>
                         <?php endif ?>
                         <?php if ($pathway->featured == 1) : ?>
-                            <span class="bg-green-500 text-slate-900 rounded-full px-2 py-1 text-sm">Featured</span>
+                            <span class="bg-green-400 text-slate-900 rounded-full px-2 py-1 text-sm">Featured</span>
                         <?php endif ?>
                         <!-- <span class="text-sm justify-self-end flex-none">8 steps | 23 activities</span> -->
                     </div>
