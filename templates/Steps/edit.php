@@ -15,44 +15,23 @@ $this->loadHelper('Authentication.Identity');
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Edit Step: <span class="text-slate-900"><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
                 <?= $step->pathways[0]->name ?>, <?= $step->name ?>
             </a></span></h2>
-    <div class="max-w-prose">
-        <div class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
-            <?= $this->Form->create($step) ?>
-            <?= $this->Form->hidden('image_path', ['class' => 'form-field']) ?>
-            <?= $this->Form->hidden('featured', ['class' => 'form-field']) ?>
-            <?= $this->Form->hidden('modifiedby') ?>
-            <?= $this->Form->hidden('pathway_id', ['value' => $step->pathway_id]) ?>
-            <?= $this->Form->control('status_id', ['options' => $statuses, 'class' => 'form-field']) ?>
-            <div class="mt-2"><?= $this->Form->control('name', ['class' => 'form-field']) ?></div>
-            <?php  //$this->Form->control('slug', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']); 
-            ?>
-            <div class="mt-2"><?= $this->Form->control('description', ['class' => 'form-field', 'label' => 'Objective']) ?></div>
-            <?= $this->Form->button(__('Save Step Details'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
-            <?= $this->Form->end() ?>
-            <?= $this->Form->postLink(
-                __('Delete Step'),
-                ['action' => 'delete', $step->id],
-                [
-                    'class' => 'inline-block mt-3 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base',
-                    'confirm' => __('Are you sure you want to delete # {0}?', $step->name)
-                ]
-            );
-            ?>
+    <div x-data="{openTab: 0}">
+        <div class="flex justify-start gap-4 my-5">
+            <button @click="openTab = 1" :class="{ 'bg-slate-200 text-slate-900' : openTab === 1 }" class="px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">
+                Add Existing Activity
+            </button>
+
+            <button @click="openTab = 2" :class="{ 'bg-slate-200 text-slate-900' : openTab === 2 }" class=" px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">
+                Add New Activity
+            </button>
+            <button @click="openTab = 3" :class="{ 'bg-slate-200 text-slate-900' : openTab === 3 }" class=" px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">
+                Edit Current Step
+            </button>
+            <button @click="openTab = 4" :class="{ 'bg-slate-200 text-slate-900' : openTab === 4 }" class=" px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">
+                Add New Step
+            </button>
         </div>
-
-        <div x-data="{openTab: 0}">
-            <div class="flex justify-start gap-4 my-5">
-                <button @click="openTab = 1" :class="{ 'bg-slate-200 text-slate-900' : openTab === 1 }" class="px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">
-                    Add Existing Activity
-                </button>
-
-                <button @click="openTab = 2" :class="{ 'bg-slate-200 text-slate-900' : openTab === 2 }" class=" px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">
-                    Add New Activity
-                </button>
-                <button @click="openTab = 3" :class="{ 'bg-slate-200 text-slate-900' : openTab === 3 }" class=" px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">
-                    Add New Step
-                </button>
-            </div>
+        <div class="max-w-prose">
             <div xcloak x-show="openTab === 1" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
                 <h3 class="font-semibold">Add Existing Activity to this Step</h3>
                 <form method="get" id="actfind" action="/activities/stepfind" class="my-2 flex justify-between gap-2">
@@ -65,7 +44,6 @@ $this->loadHelper('Authentication.Identity');
             </div>
             <div xcloak x-show="openTab === 2" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
                 <h3 class="font-semibold">Add New Activity to this Step</h3>
-
                 <?= $this->Form->create(null, ['url' => ['controller' => 'Activities', 'action' => 'addtostep']]) ?>
                 <?php
                 echo $this->Form->hidden('createdby_id', ['value' => $this->Identity->get('id')]);
@@ -78,11 +56,34 @@ $this->loadHelper('Authentication.Identity');
                     <?php echo $this->Form->textarea('description', ['class' => 'form-field']) ?></div>
                 <?= $this->Form->button(__('Save Activity'), ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg mt-3']) ?>
                 <?= $this->Form->end() ?>
-
-
             </div>
-            <div xcloak x-show="openTab === 3" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
-                <h3 class="font-semibold">Add New Step</h3>
+            <div xcloak x-show="openTab === 3" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block max">
+                <h3 class="font-semibold">Edit Current Step</h3>
+
+                <?= $this->Form->create($step) ?>
+                <?= $this->Form->hidden('image_path', ['class' => 'form-field']) ?>
+                <?= $this->Form->hidden('featured', ['class' => 'form-field']) ?>
+                <?= $this->Form->hidden('modifiedby') ?>
+                <?= $this->Form->hidden('pathway_id', ['value' => $step->pathway_id]) ?>
+                <?= $this->Form->control('status_id', ['options' => $statuses, 'class' => 'form-field']) ?>
+                <div class="mt-2"><?= $this->Form->control('name', ['class' => 'form-field']) ?></div>
+                <?php  //$this->Form->control('slug', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']);
+                ?>
+                <div class="mt-2"><?= $this->Form->control('description', ['class' => 'form-field', 'label' => 'Objective']) ?></div>
+                <?= $this->Form->button(__('Save Step Details'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
+                <?= $this->Form->end() ?>
+                <?= $this->Form->postLink(
+                    __('Delete Step'),
+                    ['action' => 'delete', $step->id],
+                    [
+                        'class' => 'inline-block mt-3 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base',
+                        'confirm' => __('Are you sure you want to delete # {0}?', $step->name)
+                    ]
+                );
+                ?>
+            </div>
+            <div xcloak x-show="openTab === 4" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+                <h3 class="font-semibold">Add New Step to Pathway</h3>
                 <?= $this->Form->create(null, ['url' => [
                     'controller' => 'Steps',
                     'action' => 'add'
