@@ -191,8 +191,9 @@ foreach ($step->pathways as $pathways) {
             </h2>
 
             <p><span class="font-bold">Objective: </span>
-                <?= $step->description ?>
+                <?= h($step->description) ?>
             </p>
+            <!-- TODO objectives should be edited to remove p tags, or use autoparagraph and change heading to not be inline. Or can we omit the word objective entirely? -->
             <?php if (!empty($requiredacts)) : ?>
                 <?php if (count($requiredacts) === 1) : ?>
                     <h4 class="mt-6 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1">1</span>Required Activity </h4>
