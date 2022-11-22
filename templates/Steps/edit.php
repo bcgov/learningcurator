@@ -31,8 +31,9 @@ $this->loadHelper('Authentication.Identity');
                 Add New Step
             </button>
         </div>
+        <!-- TODO Nori decide if this should toggle the fields rather than close on click outside - toggle vs tab -->
         <div class="max-w-prose">
-            <div xcloak x-show="openTab === 1" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+            <div xcloak x-show="openTab === 1" @click.outside="openTab = 0" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
                 <h3 class="font-semibold">Add Existing Activity to this Step</h3>
                 <form method="get" id="actfind" action="/activities/stepfind" class="my-2 flex justify-between gap-2">
                     <input class="form-field" type="search" placeholder="Activity Search" aria-label="Search" name="q">
@@ -42,7 +43,7 @@ $this->loadHelper('Authentication.Identity');
                 <ul class="list-group list-group-flush" id="results">
                 </ul>
             </div>
-            <div xcloak x-show="openTab === 2" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+            <div xcloak x-show="openTab === 2" @click.outside="openTab = 0" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
                 <h3 class="font-semibold">Add New Activity to this Step</h3>
                 <?= $this->Form->create(null, ['url' => ['controller' => 'Activities', 'action' => 'addtostep']]) ?>
                 <?php
@@ -57,7 +58,7 @@ $this->loadHelper('Authentication.Identity');
                 <?= $this->Form->button(__('Save Activity'), ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg mt-3']) ?>
                 <?= $this->Form->end() ?>
             </div>
-            <div xcloak x-show="openTab === 3" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block max">
+            <div xcloak x-show="openTab === 3" @click.outside="openTab = 0" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block max">
                 <h3 class="font-semibold">Edit Current Step</h3>
 
                 <?= $this->Form->create($step) ?>
@@ -82,7 +83,7 @@ $this->loadHelper('Authentication.Identity');
                 );
                 ?>
             </div>
-            <div xcloak x-show="openTab === 4" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+            <div xcloak x-show="openTab === 4" @click.outside="openTab = 0" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
                 <h3 class="font-semibold">Add New Step to Pathway</h3>
                 <?= $this->Form->create(null, ['url' => [
                     'controller' => 'Steps',
