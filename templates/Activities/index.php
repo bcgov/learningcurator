@@ -158,7 +158,9 @@ if ($this->Identity->isLoggedIn()) {
                                         </svg>
                                     </button>
                                     <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
-                                        <p><strong>Hyperlink:</strong> <?= $activity->hyperlink ?></p>
+
+                                        <p x-data="{ input: '<?= $activity->hyperlink ?>', tooltip: 'Click to copy link', showMsg: false }"><strong>Hyperlink: </strong>
+                                            <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true" class="bg-sky-700 text-white rounded-lg py-1 px-2 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link"></i> <span x-show="!showMsg">Copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></p>
                                         <!-- <div class="mb-3 p-3bg-white dark:bg-slate-800 rounded-lg">
                     <strong>Activity type:</strong> <?= $activity->activity_type->name ?>
                     </div> -->
