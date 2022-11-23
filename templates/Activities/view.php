@@ -122,7 +122,7 @@ if ($this->Identity->isLoggedIn()) {
             <?php endif ?>
             <li class="px-2"><strong>Last Automatic Audit:</strong> <?= $this->Time->format($activity->audited, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></li>
             <li class="px-2" x-data="{ input: '<?= $activity->hyperlink ?>', tooltip: 'Click to copy link', showMsg: false }"><strong>Hyperlink: </strong>
-                <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true"  class="bg-sky-700 text-white rounded-lg py-1 px-2 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link" ></i> <span x-show="!showMsg">Click to copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></li>
+                <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true"  class="bg-sky-700 text-white rounded-lg py-1 px-2 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link" ></i> <span x-show="!showMsg">Copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></li>
         </ul>
 
         <?php if (count($activitylaunches) > 0) : ?>
