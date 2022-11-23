@@ -121,7 +121,7 @@ if ($this->Identity->isLoggedIn()) {
                 <li class="px-2"><strong>Added by:</strong> <a href="/users/view/<?= $activity->createdby_id ?>"><?= $curator[0]->username ?></a></li>
             <?php endif ?>
             <li class="px-2"><strong>Last Automatic Audit:</strong> <?= $this->Time->format($activity->audited, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></li>
-            <li class="px-2"><strong>Hyperlink:</strong> <?= $activity->hyperlink ?></li>
+            <li class="px-2" x-data="{ input: '<?=$activity->hyperlink ?>'}"><strong>Hyperlink:</strong> <?= $activity->hyperlink ?><i class="bi bi-clipboard2 ml-1 hover:cursor-pointer hover:text-sky-700" title="Copy link to clipboard" x-clipboard="input"></i></li>
 
         </ul>
 
