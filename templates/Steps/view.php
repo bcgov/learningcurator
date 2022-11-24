@@ -172,7 +172,7 @@ foreach ($step->pathways as $pathways) {
                             <?php if ($role == 'curator' || $role == 'superuser') : ?>
                                 <?php $c = 'bg-gray-500' ?>
                                 <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                                   DRAFT
+                                    DRAFT
                                 </a>
                             <?php endif; // are you a curator?
                             ?>
@@ -185,7 +185,7 @@ foreach ($step->pathways as $pathways) {
         <div class="basis-6/7 flex-1 border-2 border-bluegreen rounded-r-lg p-6 max-w-prose">
             <?php if ($step->status_id == 1) : ?>
                 <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 align-middle">DRAFT</span>
-            <?php endif ?> 
+            <?php endif ?>
             <h2 class="mb-4 text-2xl">
                 <strong><?= $step->name ?></strong>
             </h2>
@@ -237,8 +237,8 @@ foreach ($step->pathways as $pathways) {
                                                 <p><em>No description provided&hellip;</em></p>
                                             <?php endif ?>
                                             <?php if (!empty($activity->_joinData->stepcontext)) : ?>
-                                                <em>Curator says:</em><br>
-                                                <?= $activity->_joinData->stepcontext ?>
+                                                <div class="text-sm italic mt-2">Curator says:</div>
+                                                <blockquote class="border-l-2 p-2 m-2"><?= h($activity->_joinData->stepcontext) ?></blockquote>
                                             <?php endif ?>
                                             <?php if (!empty($activity->isbn)) : ?>
                                                 ISBN: <?= $activity->isbn ?>
@@ -274,8 +274,8 @@ foreach ($step->pathways as $pathways) {
                                                 </svg>
                                             </button>
                                             <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
-                                            <p x-data="{ input: '<?= $activity->hyperlink ?>', tooltip: 'Click to copy link', showMsg: false }"><strong>Hyperlink: </strong>
-                                            <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true" class="bg-sky-700 text-white rounded-lg py-1 px-2 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link"></i> <span x-show="!showMsg">Copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></p>
+                                                <p x-data="{ input: '<?= $activity->hyperlink ?>', tooltip: 'Click to copy link', showMsg: false }"><strong>Hyperlink: </strong>
+                                                    <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true" class="bg-sky-700 text-white rounded-lg py-1 px-2 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link"></i> <span x-show="!showMsg">Copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></p>
                                                 <!-- <div class="mb-3 p-3bg-white dark:bg-slate-800 rounded-lg">
     <strong>Activity type:</strong> <?= $activity->activity_type->name ?>
     </div> -->
@@ -404,13 +404,14 @@ foreach ($step->pathways as $pathways) {
                                         </h4>
                                         <div class="text-lg">
                                             <?php if (!empty($activity->description)) : ?>
-                                                <?= $activity->description ?>
+                                                <p><?= h($activity->description) ?></p>
                                             <?php else : ?>
                                                 <p><em>No description provided&hellip;</em></p>
                                             <?php endif ?>
                                             <?php if (!empty($activity->_joinData->stepcontext)) : ?>
-                                                <em>Curator says:</em><br>
-                                                <?= $activity->_joinData->stepcontext ?>
+                                                <div class="text-sm italic mt-2">Curator says:</div>
+                                                <blockquote class="border-l-2 p-2 m-2"><?= h($activity->_joinData->stepcontext) ?></blockquote>
+
                                             <?php endif ?>
                                             <div class="">
                                                 <a target="_blank" x-on:click="count++;" onclick="loadStatus();" rel="noopener" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $activity->id ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
@@ -429,8 +430,8 @@ foreach ($step->pathways as $pathways) {
                                                     </svg>
                                                 </button>
                                                 <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
-                                                <p x-data="{ input: '<?= $activity->hyperlink ?>', tooltip: 'Click to copy link', showMsg: false }"><strong>Hyperlink: </strong>
-                                            <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true" class="bg-sky-700 text-white rounded-lg py-1 px-2 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link"></i> <span x-show="!showMsg">Copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></p>
+                                                    <p x-data="{ input: '<?= $activity->hyperlink ?>', tooltip: 'Click to copy link', showMsg: false }"><strong>Hyperlink: </strong>
+                                                        <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true" class="bg-sky-700 text-white rounded-lg py-1 px-2 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link"></i> <span x-show="!showMsg">Copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></p>
                                                     <!-- <div class="mb-3 p-3bg-white dark:bg-slate-800 rounded-lg">
     <strong>Activity type:</strong> <?= $activity->activity_type->name ?>
     </div> -->
