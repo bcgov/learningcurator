@@ -50,7 +50,7 @@ $this->assign('title', 'Learning on demand');
             </div>
         </div>
 
-        <div class="w-full md:w-3/4 lg:w-2/3 xl:w-3/5 px-6 py-10 md:p-20 grow">
+        <div class="w-full md:w-3/4 lg:w-2/3 xl:w-3/5 px-6 py-10 md:p-20 grow flex flex-col justify-between">
 
             <div class="p-6 md:p-10 text-2xl bg-white/80 rounded-lg">
                 <h1 class="mb-6 text-4xl text-darkblue">
@@ -69,7 +69,7 @@ $this->assign('title', 'Learning on demand');
 
             </div>
 
-
+<p class="bg-white/50 flex-none self-start py-1 px-2 rounded-md mb-0">Photo: <a href="https://www.flickr.com/photos/n-r-t/1200374518/" target="_blank">Cape Scott Trail</a> by <a href="https://www.flickr.com/photos/n-r-t/" target="_blank">Nick Thompson on Flickr</a> (<a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC BY-NC-ND 2.0</a>)</p>
 
         </div>
         <div class="p-10 pb-0 bg-slate-900/90 text-white flex-none" role="contentinfo">
