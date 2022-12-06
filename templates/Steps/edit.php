@@ -17,17 +17,17 @@ $this->loadHelper('Authentication.Identity');
             </a></span></h2>
     <div x-data="{openTab: 0}">
         <div class="flex justify-start gap-4 my-5">
-            <button @click="openTab = 1" :class="{ 'bg-slate-200 text-slate-900' : openTab === 1 }" class="px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">
+            <button @click="openTab = 1" :class="{ 'bg-slate-200 text-slate-900' : openTab === 1 }" class="px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/70 hover:no-underline rounded-lg">
                 Add Existing Activity
             </button>
 
-            <button @click="openTab = 2" :class="{ 'bg-slate-200 text-slate-900' : openTab === 2 }" class=" px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">
+            <button @click="openTab = 2" :class="{ 'bg-slate-200 text-slate-900' : openTab === 2 }" class=" px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/70 hover:no-underline rounded-lg">
                 Add New Activity
             </button>
-            <button @click="openTab = 3" :class="{ 'bg-slate-200 text-slate-900' : openTab === 3 }" class=" px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">
-                Edit Current Step
+            <button @click="openTab = 3" :class="{ 'bg-slate-200 text-slate-900' : openTab === 3 }" class=" px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/70  hover:no-underline rounded-lg">
+                Edit Step Info
             </button>
-            <button @click="openTab = 4" :class="{ 'bg-slate-200 text-slate-900' : openTab === 4 }" class=" px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">
+            <button @click="openTab = 4" :class="{ 'bg-slate-200 text-slate-900' : openTab === 4 }" class=" px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/70  hover:no-underline rounded-lg">
                 Add New Step
             </button>
         </div>
@@ -38,7 +38,7 @@ $this->loadHelper('Authentication.Identity');
                 <form method="get" id="actfind" action="/activities/stepfind" class="my-2 flex justify-between gap-2">
                     <input class="form-field" type="search" placeholder="Activity Search" aria-label="Search" name="q">
                     <input type="hidden" name="step_id" value="<?= $step->id ?>">
-                    <button class="px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg" type="submit">Search</button>
+                    <button class="px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/70 hover:no-underline rounded-lg" type="submit">Search</button>
                 </form>
                 <ul class="list-group list-group-flush" id="results">
                 </ul>
@@ -55,7 +55,7 @@ $this->loadHelper('Authentication.Identity');
                 <div class="mt-2"><?php echo $this->Form->control('name', ['class' => 'form-field']); ?></div>
                 <div class="mt-2"><label for="description">Description</label>
                     <?php echo $this->Form->textarea('description', ['class' => 'form-field']) ?></div>
-                <?= $this->Form->button(__('Save Activity'), ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg mt-3']) ?>
+                <?= $this->Form->button(__('Save Activity'), ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/70 hover:no-underline rounded-lg mt-3']) ?>
                 <?= $this->Form->end() ?>
             </div>
             <div xcloak x-show="openTab === 3" @click.outside="openTab = 0" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block max">
@@ -97,7 +97,7 @@ $this->loadHelper('Authentication.Identity');
                                     echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]);
                                     echo $this->Form->hidden('pathways.0.id', ['value' => $step->pathways[0]->id]);
                                     ?></div>
-                <?= $this->Form->button(__('Add Step'), ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg mt-3']) ?>
+                <?= $this->Form->button(__('Add Step'), ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/70 hover:no-underline rounded-lg mt-3']) ?>
                 <?= $this->Form->end() ?>
             </div>
         </div>
@@ -144,7 +144,7 @@ $this->loadHelper('Authentication.Identity');
                         <?= $this->Form->control('id', ['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
                         <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
                         <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
-                        <button class="px-3 py-1 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">Up <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill inline-block" viewBox="0 0 16 16">
+                        <button class="px-3 py-1 text-white text-md bg-slate-700 hover:bg-slate-700/70 hover:no-underline rounded-lg">Up <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill inline-block" viewBox="0 0 16 16">
                                 <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
                             </svg></button>
                         <?= $this->Form->end() ?>
@@ -157,7 +157,7 @@ $this->loadHelper('Authentication.Identity');
                         <?= $this->Form->control('id', ['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
                         <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
                         <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
-                        <button class="px-3 py-1 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg mt-1">Down <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill inline-block" viewBox="0 0 16 16">
+                        <button class="px-3 py-1 text-white text-md bg-slate-700 hover:bg-slate-700/70 hover:no-underline rounded-lg mt-1">Down <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill inline-block" viewBox="0 0 16 16">
                                 <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                             </svg></button>
                         <?= $this->Form->end() ?>
@@ -192,7 +192,7 @@ $this->loadHelper('Authentication.Identity');
                                             'rows' => 2
                                         ]) ?>
                                     </label>
-                                    <button class="px-3 py-1 text-white text-sm bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg mt-3">Save Context</button>
+                                    <button class="px-3 py-1 text-white text-sm bg-slate-700 hover:bg-slate-700/70 hover:no-underline rounded-lg mt-3">Save Context</button>
                                     <?= $this->Form->end() ?>
                                 </div>
                             </div>
@@ -211,13 +211,13 @@ $this->loadHelper('Authentication.Identity');
                         <?php endif ?>
                         <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
                         <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
-                        <?= $this->Form->button(__('Make Supplemental'), ['class' => 'px-3 py-1 text-white text-sm bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg ']) ?>
+                        <?= $this->Form->button(__('Make Supplemental'), ['class' => 'px-3 py-1 text-white text-sm bg-slate-700 hover:bg-slate-700/70 hover:no-underline rounded-lg ']) ?>
                         <?= $this->Form->end() ?>
                     </div>
                     <div>
                         <?= $this->Form->create(null, ['action' => '/activities-steps/delete/' . $a->_joinData->id, 'class' => 'inline-block']) ?>
                         <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
-                        <?= $this->Form->button(__('Remove Activity'), ['class' => 'px-3 py-1 text-white text-md bg-red-700 hover:text-slate-900 hover:bg-red-200 hover:no-underline rounded-lg mt-1']) ?>
+                        <?= $this->Form->button(__('Remove Activity'), ['class' => 'px-3 py-1 text-white text-md bg-red-700 hover:bg-red-700/70 hover:no-underline rounded-lg mt-1']) ?>
                         <?= $this->Form->end() ?>
 
                     </div>
@@ -243,7 +243,7 @@ $this->loadHelper('Authentication.Identity');
                         <?= $this->Form->control('id', ['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
                         <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
                         <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
-                        <button class="px-3 py-1 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">Up <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill inline-block" viewBox="0 0 16 16">
+                        <button class="px-3 py-1 text-white text-md bg-slate-700 hover:bg-slate-700/70 hover:no-underline rounded-lg">Up <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill inline-block" viewBox="0 0 16 16">
                                 <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
                             </svg></button>
                         <?= $this->Form->end() ?>
@@ -256,7 +256,7 @@ $this->loadHelper('Authentication.Identity');
                         <?= $this->Form->control('id', ['type' => 'hidden', 'value' => $a->_joinData->id]) ?>
                         <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
                         <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
-                        <button class="px-3 py-1 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg mt-1">Down <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill inline-block" viewBox="0 0 16 16">
+                        <button class="px-3 py-1 text-white text-md bg-slate-700 hover:bg-slate-700/70 hover:no-underline rounded-lg mt-1">Down <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill inline-block" viewBox="0 0 16 16">
                                 <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                             </svg></button>
                         <?= $this->Form->end() ?>
@@ -287,7 +287,7 @@ $this->loadHelper('Authentication.Identity');
                                             'rows' => 2
                                         ]) ?>
                                     </label>
-                                    <button class="px-3 py-1 text-white text-sm bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg mt-3">Save Context</button>
+                                    <button class="px-3 py-1 text-white text-sm bg-slate-700 hover:bg-slate-700/70 hover:no-underline rounded-lg mt-3">Save Context</button>
                                     <?= $this->Form->end() ?>
                                 </div>
                             </div>
@@ -305,13 +305,13 @@ $this->loadHelper('Authentication.Identity');
                         <?php endif ?>
                         <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => $step->id]) ?>
                         <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => $a->id]) ?>
-                        <?= $this->Form->button(__('Make Required'), ['class' => 'px-3 py-1 text-white text-sm bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg ']) ?>
+                        <?= $this->Form->button(__('Make Required'), ['class' => 'px-3 py-1 text-white text-sm bg-slate-700 hover:bg-slate-700/70 hover:no-underline rounded-lg ']) ?>
                         <?= $this->Form->end() ?>
                     </div>
                     <div>
                         <?= $this->Form->create(null, ['action' => '/activities-steps/delete/' . $a->_joinData->id, 'class' => 'inline-block']) ?>
                         <?= $this->Form->hidden('id', ['value' => $a->_joinData->id]) ?>
-                        <?= $this->Form->button(__('Remove Activity'), ['class' => 'px-3 py-1 text-white text-md bg-red-700 hover:text-slate-900 hover:bg-red-200 hover:no-underline rounded-lg mt-1']) ?>
+                        <?= $this->Form->button(__('Remove Activity'), ['class' => 'px-3 py-1 text-white text-md bg-red-700  hover:bg-red-700/70 hover:no-underline rounded-lg mt-1']) ?>
                         <?= $this->Form->end() ?>
 
                     </div>

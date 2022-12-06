@@ -1327,6 +1327,18 @@ video {
   background-color: rgb(15 23 42 / 0.9);
 }
 
+.bg-slate-700\/80 {
+  background-color: rgb(51 65 85 / 0.8);
+}
+
+.bg-slate-700\/60 {
+  background-color: rgb(51 65 85 / 0.6);
+}
+
+.bg-slate-700\/70 {
+  background-color: rgb(51 65 85 / 0.7);
+}
+
 .bg-cover {
   background-size: cover;
 }
@@ -1883,6 +1895,18 @@ p {
 
 .hover\:bg-sagedark\/60:hover {
   background-color: rgb(41 115 94 / 0.6);
+}
+
+.hover\:bg-slate-700\/70:hover {
+  background-color: rgb(51 65 85 / 0.7);
+}
+
+.hover\:bg-red-700\/60:hover {
+  background-color: rgb(185 28 28 / 0.6);
+}
+
+.hover\:bg-red-700\/70:hover {
+  background-color: rgb(185 28 28 / 0.7);
 }
 
 .hover\:text-slate-900:hover {
