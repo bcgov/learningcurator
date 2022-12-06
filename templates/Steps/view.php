@@ -121,7 +121,7 @@ foreach ($step->pathways as $pathways) {
                     .then((json) => {
                         if (json.percentage > 0) {
                             let launched = json.completed + ' launched';
-                            let remaining = (json.requiredacts - json.completed) + ' remaining';
+                            let remaining = (json.requiredacts - json.completed) + ' to go';
 
                             document.querySelector('.pbar').style.width = json.percentage + '%';
 
@@ -137,7 +137,7 @@ foreach ($step->pathways as $pathways) {
                             }
 
                         } else {
-                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
+                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities to go</span>';
                         }
                         //console.log(json);
                     })

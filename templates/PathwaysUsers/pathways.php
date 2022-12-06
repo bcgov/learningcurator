@@ -80,7 +80,7 @@ if ($this->Identity->isLoggedIn()) {
                             .then((json) => {
                                 if (json.percentage > 0) {
                                     let launched = json.completed + ' launched';
-                                    let remaining = (json.requiredacts - json.completed) + ' remaining';
+                                    let remaining = (json.requiredacts - json.completed) + ' to go';
 
                                     document.querySelector('.pbar_<?= h($path->pathway->id) ?>').style.width = json.percentage + '%';
 
@@ -96,7 +96,7 @@ if ($this->Identity->isLoggedIn()) {
                                     }
 
                                 } else {
-                                    document.querySelector('.pbarcontainer_<?= h($path->pathway->id) ?>').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
+                                    document.querySelector('.pbarcontainer_<?= h($path->pathway->id) ?>').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities to go</span>';
                                 }
                                 //console.log(json);
                             })

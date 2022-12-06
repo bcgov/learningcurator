@@ -112,7 +112,7 @@ $this->assign('title', h($pathway->name));
                             }
 
                         } else {
-                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
+                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities to go</span>';
                         }
                         //console.log(json);
                     })
@@ -194,7 +194,7 @@ $this->assign('title', h($pathway->name));
                                                     }
 
                                                 } else {
-                                                    document.querySelector('.pbarcontainer_<?= h($steps->id) ?>').innerHTML = '<span class="py-1 px-3 text-sm text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
+                                                    document.querySelector('.pbarcontainer_<?= h($steps->id) ?>').innerHTML = '<span class="py-1 px-3 text-sm text-right flex-1">' + json.requiredacts + ' activities to go</span>';
                                                 }
                                                 //console.log(json);
                                             })
@@ -251,7 +251,7 @@ $this->assign('title', h($pathway->name));
                                                             }
 
                                                         } else {
-                                                            document.querySelector('.pbarcontainer_<?= h($steps->id) ?>').innerHTML = '<span class="py-1 px-3 text-sm text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
+                                                            document.querySelector('.pbarcontainer_<?= h($steps->id) ?>').innerHTML = '<span class="py-1 px-3 text-sm text-right flex-1">' + json.requiredacts + ' activities to go</span>';
                                                         }
                                                         //console.log(json);
                                                     })
