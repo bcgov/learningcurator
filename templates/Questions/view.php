@@ -51,9 +51,9 @@
         </ul>
 
         <div class="mt-4">
-            <?= $this->Html->link(__('Edit Question'), ['action' => 'edit', $question->id], ['class' => 'inline-block px-3 py-1 text-white text-base bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg']) ?>
+            <?= $this->Html->link(__('Edit Question'), ['action' => 'edit', $question->id], ['class' => 'inline-block px-3 py-1 text-white text-base bg-slate-700 hover:bg-slate-700/80 hover:no-underline rounded-lg']) ?>
             <?= $this->Form->postLink(__('Delete Question'), ['action' => 'delete', $question->id], ['confirm' => __('Are you sure you want to delete # {0}?', $question->id), 'class' => 'inline-block px-3 py-1 text-base hover:bg-red-700/80 text-white bg-red-700 hover:no-underline rounded-lg']) ?>
-            <?= $this->Html->link(__('Add New Question'), ['action' => 'add'], ['class' => 'inline-block px-3 py-1 text-white text-base bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg']) ?>
+            <?= $this->Html->link(__('Add New Question'), ['action' => 'add'], ['class' => 'inline-block px-3 py-1 text-white text-base bg-slate-700 hover:bg-slate-700/80 hover:no-underline rounded-lg']) ?>
         </div>
     </div>
 </div>

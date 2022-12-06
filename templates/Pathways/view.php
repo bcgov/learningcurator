@@ -125,7 +125,7 @@ $this->assign('title', h($pathway->name));
                 <div x-data="{ open: false }" class="mb-8">
                     <div class="flex justify-start gap-4">
                         <?= $this->Html->link(__('Edit Pathway'), ['action' => 'edit', $pathway->id], ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg flex-none justify-self-start']) ?>
-                        <button @click="open = ! open" class=" px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg">
+                        <button @click="open = ! open" class=" px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 hover:no-underline rounded-lg">
                             Add a Step
                         </button>
                     </div>
