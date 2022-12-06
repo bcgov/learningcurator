@@ -13,10 +13,11 @@ if ($this->Identity->isLoggedIn()) {
     $uid = $this->Identity->get('id');
 }
 ?>
-<header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/1200w/flickr-james-wheeler-49993278088_08ea00ed09_k_1200w.jpg);">
-    <div class="bg-sagedark/90 h-44 w-72 drop-shadow-lg p-4 flex">
+<header class="w-full h-52 bg-cover bg-center pb-2 px-2" style="background-image: url(/img/categories/1200w/flickr-james-wheeler-49993278088_08ea00ed09_k_1200w.jpg);">
+    <div class="bg-sagedark/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Activities</h1>
     </div>
+    <p class="text-xs text-white float-right -mt-3 mb-0">Photo: <a href="https://www.pexels.com/photo/brown-wooden-pathway-in-the-middle-of-green-grass-and-trees-3988366/" target="_blank">Tofino Pathway</a> by <a href="https://www.pexels.com/@souvenirpixels/" target="_blank">James Wheeler on Pexels</a></p>
 </header>
 <div class="p-8 text-lg" id="mainContent">
     <div class="max-w-prose">
