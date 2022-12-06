@@ -13,10 +13,11 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 
-<header class="w-full h-52 bg-cover bg-[center_top_65%] pb-8 px-8" style="background-image: url(/img/categories/1200w/cape-scott-trail-n-r-t-on-flckr_1200w.jpg);">
-    <div class="bg-darkblue/90 h-44 w-72 drop-shadow-lg p-4 flex">
+<header class="w-full h-52 bg-cover bg-[center_top_65%] pb-2 px-2" style="background-image: url(/img/categories/1200w/cape-scott-trail-n-r-t-on-flckr_1200w.jpg);">
+    <div class="bg-darkblue/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">About</h1>
     </div>
+    <p class="text-xs text-white float-right -mt-3 mb-0">Photo: <a href="https://www.flickr.com/photos/n-r-t/1200374518/" target="_blank">Cape Scott Trail</a> by <a href="https://www.flickr.com/photos/n-r-t/" target="_blank">Nick Thompson on Flickr</a> (<a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC BY-NC-ND 2.0</a>)</p>
 </header>
 <div class="p-8 text-lg" id="mainContent">
 

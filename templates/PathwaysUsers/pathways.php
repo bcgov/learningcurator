@@ -122,6 +122,7 @@ if ($this->Identity->isLoggedIn()) {
         <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
             <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Getting Started</h1>
         </div>
+        <p class="text-xs text-white float-right -mt-3 mb-0">Photo: <a href="https://www.flickr.com/photos/n-r-t/1200374518/" target="_blank">Cape Scott Trail</a> by <a href="https://www.flickr.com/photos/n-r-t/" target="_blank">Nick Thompson on Flickr</a> (<a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC BY-NC-ND 2.0</a>)</p>
     </header>
     <div class="p-8 text-xl max-w-prose" id="mainContent">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Find your path</h2>

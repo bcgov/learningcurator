@@ -852,6 +852,10 @@ video {
   margin-bottom: -1.25rem;
 }
 
+.-mt-3 {
+  margin-top: -0.75rem;
+}
+
 .block {
   display: block;
 }
@@ -1524,6 +1528,10 @@ video {
 
 .pb-0 {
   padding-bottom: 0px;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
 }
 
 .text-left {
