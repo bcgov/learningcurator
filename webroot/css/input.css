@@ -16,9 +16,14 @@
 a:hover {
     text-decoration: underline;
 }
+
 p {
     line-height: 1.5;
     margin-bottom: 1em;
+}
+
+.autop>p {
+    margin-bottom: 0.5em;
 }
 
 @layer components {

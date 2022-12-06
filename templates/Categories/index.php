@@ -25,10 +25,10 @@ if ($this->Identity->isLoggedIn()) {
     <div class="max-w-prose">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">All Categories of Learning</h2>
 
-        <p class="mb-3 text-xl">
+        <p class="mb-5 text-xl">
             Pathways are organized into categories of learning. These categories reflect current priorities of learning and delivery across the public service.</p>
     </div>
-    <div class="flex flex-col lg:flex-row lg:gap-4">
+    <div class="flex flex-col lg:flex-row lg:gap-4 mt-8">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
             <!-- TODO Allan sort alphabetically as initial view? -->
             <!-- TODO Nori add mobile collapse options -->
@@ -45,10 +45,9 @@ if ($this->Identity->isLoggedIn()) {
                             <?php endif ?>
                         </div>
                         <div class="p-3 text-lg">
-                            <div class="mb-0">
-                                <?= $category->description ?></div>
+                            <div class="autop"><?= $this->Text->autoParagraph(h($category->description)); ?></div>
 
-                            <p class="mb-2 inline-block mt-4 hover:text-sky-700/80 underline text-sky-700">
+                            <p class="mb-2 inline-block hover:text-sky-700/80 underline text-sky-700">
 
                                 Explore <span class="font-bold"><?= h($category->name) ?></span>
 

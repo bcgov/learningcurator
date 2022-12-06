@@ -1327,18 +1327,6 @@ video {
   background-color: rgb(15 23 42 / 0.9);
 }
 
-.bg-slate-700\/80 {
-  background-color: rgb(51 65 85 / 0.8);
-}
-
-.bg-slate-700\/60 {
-  background-color: rgb(51 65 85 / 0.6);
-}
-
-.bg-slate-700\/70 {
-  background-color: rgb(51 65 85 / 0.7);
-}
-
 .bg-cover {
   background-size: cover;
 }
@@ -1469,10 +1457,6 @@ video {
   padding-bottom: 0.5rem;
 }
 
-.pb-8 {
-  padding-bottom: 2rem;
-}
-
 .pt-4 {
   padding-top: 1rem;
 }
@@ -1491,6 +1475,10 @@ video {
 
 .pl-10 {
   padding-left: 2.5rem;
+}
+
+.pb-8 {
+  padding-bottom: 2rem;
 }
 
 .pl-16 {
@@ -1850,13 +1838,16 @@ p {
   margin-bottom: 1em;
 }
 
+.autop>p {
+  margin-bottom: 0.5em;
+}
+
 .hover\:cursor-pointer:hover {
   cursor: pointer;
 }
 
-.hover\:bg-slate-200:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+.hover\:bg-slate-700\/80:hover {
+  background-color: rgb(51 65 85 / 0.8);
 }
 
 .hover\:bg-sagedark\/80:hover {
@@ -1869,10 +1860,6 @@ p {
 
 .hover\:bg-darkblue\/80:hover {
   background-color: rgb(35 64 117 / 0.8);
-}
-
-.hover\:bg-slate-700\/80:hover {
-  background-color: rgb(51 65 85 / 0.8);
 }
 
 .hover\:bg-red-700\/80:hover {
@@ -1888,30 +1875,12 @@ p {
   background-color: rgb(203 213 225 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-red-200:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 202 202 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-sagedark\/60:hover {
-  background-color: rgb(41 115 94 / 0.6);
-}
-
-.hover\:bg-slate-700\/70:hover {
-  background-color: rgb(51 65 85 / 0.7);
-}
-
-.hover\:bg-red-700\/60:hover {
-  background-color: rgb(185 28 28 / 0.6);
-}
-
 .hover\:bg-red-700\/70:hover {
   background-color: rgb(185 28 28 / 0.7);
 }
 
-.hover\:text-slate-900:hover {
-  --tw-text-opacity: 1;
-  color: rgb(15 23 42 / var(--tw-text-opacity));
+.hover\:bg-sagedark\/60:hover {
+  background-color: rgb(41 115 94 / 0.6);
 }
 
 .hover\:text-sky-700:hover {
@@ -1961,13 +1930,13 @@ p {
   border-style: none;
 }
 
+.focus\:bg-slate-700\/80:focus {
+  background-color: rgb(51 65 85 / 0.8);
+}
+
 .focus\:bg-slate-200:focus {
   --tw-bg-opacity: 1;
   background-color: rgb(226 232 240 / var(--tw-bg-opacity));
-}
-
-.focus\:bg-slate-700\/80:focus {
-  background-color: rgb(51 65 85 / 0.8);
 }
 
 .focus\:text-slate-900:focus {

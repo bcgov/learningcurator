@@ -36,7 +36,7 @@ if ($this->Identity->isLoggedIn()) {
     <div class="max-w-prose">
 
         <h2 class="text-2xl text-darkblue font-semibold mb-3"> <?= h($topic->name) ?></h2>
-        <div class="text-xl"><?= $this->Text->autoParagraph(h($topic->description)); ?></div>
+        <div class="text-xl autop"><?= $this->Text->autoParagraph(h($topic->description)); ?></div>
 
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4 w-full">

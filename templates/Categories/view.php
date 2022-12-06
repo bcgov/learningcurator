@@ -37,15 +37,12 @@ $this->assign('title', $pagetitle);
 
     <div class="max-w-prose">
         <h2 class="text-2xl text-darkblue font-semibold mb-3"> <?= h($category->name) ?></h2>
-        <p class="text-xl"><?= $category->description ?></p>
+        <div class="text-xl"><?= $this->Text->autoParagraph(h($category->description)); ?></div>
     </div>
-    <div class="flex flex-col lg:flex-row lg:gap-4">
+    <div class="flex flex-col lg:flex-row lg:gap-4 mt-8">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
             <!-- TODO Allan sort alphabetically as initial view? -->
             <!-- TODO Nori add mobile collapse options -->
-
-
-
             <?php if (!empty($category->topics)) : ?>
                 <?php foreach ($category->topics as $topic) : ?>
                     <?php if ($topic->featured == 1) : ?>
@@ -56,8 +53,8 @@ $this->assign('title', $pagetitle);
                                 </h3>
                                 <div class="bg-white inset-1 rounded-b-sm">
                                     <div class="p-3 text-lg">
-                                        <p class="mb-0"><?= $topic->description ?></p>
-                                        <p class="mb-2 inline-block mt-4 group-hover:text-sky-700/80 underline text-sky-700">
+                                        <div class="autop"><?= $this->Text->autoParagraph(h($topic->description)); ?></div>
+                                        <p class="mb-2 inline-block  group-hover:text-sky-700/80 underline text-sky-700">
                                             Explore <strong><?= $topic->name ?></strong></p>
                                     </div>
                                 </div>
@@ -77,14 +74,10 @@ $this->assign('title', $pagetitle);
                                         <?php endif ?>
                                     </div>
                                     <div class="p-3 text-lg">
-                                        <div class="mb-0">
-                                            <?= $topic->description ?>
-                                        </div>
+                                        <div class="autop"><?= $this->Text->autoParagraph(h($topic->description)); ?></div>
 
-                                        <p class="mb-2 inline-block mt-4 hover:text-sky-700/80 underline text-sky-700 ">
-
+                                        <p class="mb-2 inline-block hover:text-sky-700/80 underline text-sky-700 ">
                                             Explore <span class="font-bold"><?= h($topic->name) ?></span>
-
                                         </p>
 
                                     </div>
