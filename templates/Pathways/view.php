@@ -51,7 +51,7 @@ $this->assign('title', h($pathway->name));
         <div class="pl-8 text-xl">
 
             <div class="mb-5 block">
-                <?= $pathway->objective ?></div>
+            <p><span class="font-bold">Pathway Goal: </span><?= $pathway->objective ?></p></div>
             <?php if (empty($followid)) : ?>
                 <div class="my-3">
                     <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users', 'action' => 'follow']]) ?>
@@ -205,7 +205,7 @@ $this->assign('title', h($pathway->name));
                                         <span class="py-1 px-1 text-sm pbar_<?= h($steps->id) ?> pro_sm_<?= h($steps->id) ?> flex-none"></span>
                                         <span class="py-1 px-3 text-sm total_<?= h($steps->id) ?> flex-1 text-right"></span>
                                     </div>
-                                    <div class="mb-2"><?= $steps->description ?></div>
+                                    <div class="mb-2"><p><span class="font-bold">Objective: </span><?= h($steps->description) ?></p></div>
                                     <p class="mb-2 text-sky-700 underline">
                                         View <strong><?= h($steps->name) ?></strong>
                                     </p>

@@ -22,7 +22,7 @@ if ($this->Identity->isLoggedIn()) {
     <div class="max-w-prose">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Recent Pathways</h2>
         <p class="mb-3 text-xl">
-        Explore recently added pathways in all categories.</p>
+            Explore recently added pathways in all categories.</p>
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
@@ -58,12 +58,9 @@ if ($this->Identity->isLoggedIn()) {
                             <?= $topiclink ?>
                         </a></span>
                     </div>
-                    <p class="mb-3"><?php if (!empty($pathway->description)) : ?>
-                            <?= $pathway->description ?>
-                        <?php else : ?>
-                            <?= $pathway->objective ?>
-                        <?php endif ?></p>
-                    <!-- This conditional is kind of a hack and we need to make people aware that the description isn't actually optional -->
+                    <p class="mb-3">
+                        <?= $pathway->description ?>
+                    </p>
                     <p class="mb-4"> <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
                             View the <strong><?= h($pathway->name) ?></strong> pathway
                         </a> </p>

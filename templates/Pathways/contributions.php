@@ -45,13 +45,10 @@ if ($this->Identity->isLoggedIn()) {
                     </a>
                     <div class="pl-10">
 
-                        <p class="my-3"><?php if (!empty($pathway->description)) : ?>
-                                <?= $pathway->description ?>
-                            <?php else : ?>
-                                <?= $pathway->objective ?>
-                            <?php endif ?></p>
+                        <p class="my-3">
+                            <?= $pathway->description ?>
+                        </p>
 
-                        <!-- This conditional is kind of a hack and we need to make people aware that the description isn't actually optional -->
                         <p class="mb-4"> <a href="/pathways/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
                                 View the <strong><?= h($pathway->name) ?></strong> pathway
                             </a> </p>

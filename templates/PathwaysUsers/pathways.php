@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php if (!$pathways->isEmpty()) : ?>
     <header class="w-full h-52 bg-cover bg-center pb-2 px-2" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
-    <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
+        <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
             <h1 class="text-white text-3xl font-bold m-auto tracking-wide">My Curator</h1>
         </div>
         <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://flic.kr/p/JULZFP" target="_blank">Paradise Meadows Boardwalk</a> by <a href="https://flic.kr/ps/3bxUBu" target="_blank">Fyre Mael on Flickr</a> (<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank">CC BY 2.0</a>)</p>
@@ -30,7 +30,7 @@ if ($this->Identity->isLoggedIn()) {
                 When you follow a pathway, it will be listed here, so you can jump right to it.</p>
 
             <?php foreach ($pathways as $path) : ?>
-                
+
                 <a href="/<?= h($path->pathway->topic->categories[0]->slug) ?>/<?= h($path->pathway->topic->slug) ?>/pathway/<?= h($path->pathway->slug) ?>" class="hover:no-underline">
 
                     <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-l-full flex items-center justify-between">
@@ -63,14 +63,10 @@ if ($this->Identity->isLoggedIn()) {
                             <?= $this->Time->format($path->date_complete, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
                         </p>
                     <?php endif ?>
-                    <div class="mb-3"><?php if (!empty($path->pathway->description)) : ?>
-                            <?= $path->pathway->description ?>
-                        <?php else : ?>
-                            <?= $path->pathway->objective ?>
-                        <?php endif ?></div>
-                    <!-- This conditional is kind of a hack and we need to make people aware that the description isn't actually optional -->
+                    <div class="mb-3">
+                        <?= $path->pathway->description ?>
+                    </div>
 
-                
                     <h3 class="mt-4 mb-1 text-darkblue font-semibold">Pathway Activity Progress</h3>
                     <script>
                         fetch('/pathways/status/<?= $path->pathway->id ?>', {
