@@ -114,17 +114,20 @@ if ($this->Identity->isLoggedIn()) {
                                 <h4 class="mb-2 mt-1 text-xl font-semibold">
                                     <?= $activity->name ?>
                                 </h4>
-                                <?php if (!empty($activity->description)) : ?>
-                                    <?= $activity->description ?>
-                                <?php else : ?>
-                                    <p><em>No description provided&hellip;</em></p>
-                                <?php endif ?>
+                                <div class="">
+                                    <?php if (!empty($activity->description)) : ?>
+                                        <?= $activity->description ?>
+                                    <?php else : ?>
+                                        <p><em>No description provided&hellip;</em></p>
+                                    <?php endif ?>
+                                </div>
                                 <?php if (!empty($activity->_joinData->stepcontext)) : ?>
-                                    <em>Curator says:</em><br>
-                                    <?= $activity->_joinData->stepcontext ?>
+                                    <div class="text-sm italic mt-2"> Curator says:
+                                        <blockquote class="border-l-2 p-2 m-2"><?= $activity->_joinData->stepcontext ?></blockquote>
+                                    </div>
                                 <?php endif ?>
                                 <?php if (!empty($activity->isbn)) : ?>
-                                    ISBN: <?= $activity->isbn ?>
+                                    <p class="mt-2">ISBN: <?= $activity->isbn ?></p>
                                 <?php endif ?>
                                 <!-- <form action="/activities/like/<?= $activity->id ?>"
                         x-on:click="liked++"

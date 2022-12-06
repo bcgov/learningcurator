@@ -122,7 +122,8 @@ if ($this->Identity->isLoggedIn()) {
                                 <?php if (!empty($a->_joinData->stepcontext)) : ?>
                                     <div class="text-sm italic mt-2">
                                         Curator says:
-                                        <blockquote class="border-l-2 p-2 m-2"><?= $a->_joinData->stepcontext ?></blockquote>
+                                        <blockquote class="border-l-2 p-2 m-2">
+                                            <?= $a->_joinData->stepcontext ?></blockquote>
                                     </div>
                                 <?php endif ?>
 
