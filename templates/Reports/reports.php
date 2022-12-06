@@ -48,7 +48,7 @@ if ($this->Identity->isLoggedIn()) {
 
 
                             <div x-data="{ open: false }">
-                                <button @click="open = ! open" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg my-3">
+                                <button @click="open = ! open" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg my-3">
                                     Respond
                                 </button>
                                 <div xcloak x-show="open" class="p-3 my-3 rounded-lg bg-slate-200 font-semibold ">
@@ -62,7 +62,7 @@ if ($this->Identity->isLoggedIn()) {
                                         echo $this->Form->textarea('response', ['class' => 'block w-full px-3 py-1 my-2 rounded-lg font-light', 'placeholder' => 'Type here ...']);
                                         ?>
                                     </fieldset>
-                                    <input type="submit" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg my-3 font-normal hover:cursor-pointer" value="Submit Response">
+                                    <input type="submit" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg my-3 font-normal hover:cursor-pointer" value="Submit Response">
                                     <?= $this->Form->end() ?>
 
                                 </div>

@@ -21,7 +21,7 @@
         echo $this->Form->control('status_id', ['options' => $statuses, 'empty' => true, 'class' => 'form-field mb-3 text-base']);
                                 ?>
             <div class="mt-4">
-                <?= $this->Form->button(__('Add question'), ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 hover:no-underline rounded-lg']) ?>
+                <?= $this->Form->button(__('Add question'), ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg']) ?>
                 <?= $this->Form->end() ?></div>
         </div>
     </div>

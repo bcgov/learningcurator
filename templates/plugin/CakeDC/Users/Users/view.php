@@ -28,7 +28,7 @@ if ($this->Identity->isLoggedIn()) {
     <h3 class="mt-4 text-xl font-semibold"><?= h($Users->first_name) ?> <?= h($Users->last_name) ?></h3>
     <?php if ($role == 'superuser') : ?>
         <div class="btn-group float-right mt-5">
-            <?= $this->Html->link(__d('cake_d_c/users', 'Edit User'), ['action' => 'edit', $Users->id], ['class' => 'inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
+            <?= $this->Html->link(__d('cake_d_c/users', 'Edit User'), ['action' => 'edit', $Users->id], ['class' => 'inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
             <?= $this->Form->postLink(
                 __d('cake_d_c/users', 'Delete User'),
                 ['action' => 'delete', $Users->id],

@@ -17,10 +17,10 @@
         <?= $activityType->description; ?>
     </div>
     <div class="mt-2">
-        <a title="View this activity type" href="/activity-types/" class="mb-3 inline-block px-3 py-1 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg">
+        <a title="View this activity type" href="/activity-types/" class="mb-3 inline-block px-3 py-1 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg">
             View All Types
         </a>
-        <?= $this->Html->link(('Edit'), ['controller' => 'ActivityTypes', 'action' => 'edit', $activityType->id], ['class' => 'mt-3 mb-5 inline-block px-3 py-1 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
+        <?= $this->Html->link(('Edit'), ['controller' => 'ActivityTypes', 'action' => 'edit', $activityType->id], ['class' => 'mt-3 mb-5 inline-block px-3 py-1 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
     </div>
 
 

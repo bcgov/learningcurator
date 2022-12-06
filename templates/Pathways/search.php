@@ -16,7 +16,7 @@
         <input class="px-3 py-2 m-0 border rounded-l-lg w-3/4" type="search" placeholder="title or keyword ..." aria-label="Search" name="q" value="<?= h($q) ?>"><button class="px-3 py-2 m-0 bg-slate-400 hover:bg-slate-300 rounded-r-lg" type="submit">Search</button>
     </form>
 
-    <?= $this->Html->link(__('Add Pathway'), ['action' => 'add'], ['class' => 'inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg my-4']) ?>
+    <?= $this->Html->link(__('Add Pathway'), ['action' => 'add'], ['class' => 'inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg my-4']) ?>
     <h3 class="text-xl mt-4 font-semibold">All Pathways</h3>
 
     <table class="border-collapse border border-slate-400 mt-3">

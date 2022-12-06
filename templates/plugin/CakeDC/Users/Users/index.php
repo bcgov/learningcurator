@@ -69,7 +69,7 @@
                                     <blockquote class="border-l-2 p-2 m-2">
                                         <?= h($report->issue) ?>
                                     </blockquote>
-                                    <a title="View this report" href="/reports/view/<?= $report->id ?>" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg mt-3 mb-1">
+                                    <a title="View this report" href="/reports/view/<?= $report->id ?>" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg mt-3 mb-1">
                                         View Report
                                     </a>
                                 </div>

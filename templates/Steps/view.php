@@ -147,7 +147,7 @@ foreach ($step->pathways as $pathways) {
                 <?= $this->Html->link(
                     __('Edit Step'),
                     ['controller' => 'Steps', 'action' => 'edit', $step->id],
-                    ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']
+                    ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']
                 ) ?>
             <?php endif ?>
         </div>
@@ -349,7 +349,7 @@ foreach ($step->pathways as $pathways) {
                                                         );
                                                         ?>
                                                     </label>
-                                                    <input type="submit" class="inline-block px-4 py-2 text-white text-md bg-slate-700 focus:text-slate-900 hover:bg-slate-700/80 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg cursor-pointer my-2" value="Submit Report">
+                                                    <input type="submit" class="inline-block px-4 py-2 text-white text-md bg-slate-700 focus:text-slate-900 hover:bg-slate-700/80 focus:bg-slate-200 hover:no-underline rounded-lg cursor-pointer my-2" value="Submit Report">
                                                     <span x-text="message" class="ml-1 text-sm text-sky-700"></span>
                                                     <p class="text-sm hover:underline "><a href="/profile/reports">See all your reports</a></p>
                                                     <?= $this->Form->end() ?>
@@ -505,7 +505,7 @@ foreach ($step->pathways as $pathways) {
                                                             );
                                                             ?>
                                                         </label>
-                                                        <input type="submit" class="inline-block px-4 py-2 text-white text-md bg-slate-700 focus:text-slate-900 hover:bg-slate-700/80 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg cursor-pointer my-2" value="Submit Report">
+                                                        <input type="submit" class="inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg cursor-pointer my-2" value="Submit Report">
                                                         <span x-text="message" class="ml-1 text-sm text-sky-700"></span>
                                                         <p class="text-sm hover:underline "><a href="/profile/reports">See all your reports</a></p>
                                                         <?= $this->Form->end() ?>

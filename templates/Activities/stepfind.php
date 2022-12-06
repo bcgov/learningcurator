@@ -7,7 +7,7 @@
 <?= $this->Form->control('step_id',['type' => 'hidden', 'value' => $stepid ]) ?>
 <?= $this->Form->control('activity_id',['type' => 'hidden', 'value' => $activity->id]) ?>
 <div class="italic text-sm"><?= $this->Form->control('stepcontext', ['class' => 'form-field', 'label' => 'Give context for including this activity in this step']); ?></div>
-<?= $this->Form->button(__('Assign to step'),['class'=>'mt-3 inline-block px-3 py-1 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
+<?= $this->Form->button(__('Assign to step'),['class'=>'mt-3 inline-block px-3 py-1 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
 <?= $this->Form->end() ?>
 </div>
 <hr>

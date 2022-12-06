@@ -43,7 +43,7 @@ $this->loadHelper('Authentication.Identity');
             //echo $this->Form->control('users._ids', ['options' => $users]);
             ?>
         </fieldset>
-        <?= $this->Form->button(__('Add new pathway'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
+        <?= $this->Form->button(__('Add new pathway'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
         <?= $this->Form->end() ?>
     </div>
 </div>
