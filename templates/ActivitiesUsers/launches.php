@@ -13,11 +13,13 @@ if ($this->Identity->isLoggedIn()) {
  * @var \App\Model\Entity\ActivityType[]|\Cake\Collection\CollectionInterface $activityTypes
  */
 ?>
-<header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
-    <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
+<header class="w-full h-52 bg-cover bg-center pb-2 px-2" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
+    <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">My Curator</h1>
     </div>
+    <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://flic.kr/p/JULZFP" target="_blank">Paradise Meadows Boardwalk</a> by <a href="https://flic.kr/ps/3bxUBu" target="_blank">Fyre Mael on Flickr</a> (<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank">CC BY 2.0</a>)</p>
 </header>
+
 <div class="p-8 text-lg" id="mainContent">
 
     <div class="max-w-prose">
@@ -86,7 +88,7 @@ if ($this->Identity->isLoggedIn()) {
                 <div class="flex flex-row justify-between">
                     <!-- TODO fix the path to get to the right data for activity types. Couldn't figure it out -->
                     <div class="mx-3 my-4 flex-none"></div>
-                <!-- <i class="<?= h($a->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($a->activity_type->name) ?>"></i> -->
+                    <!-- <i class="<?= h($a->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($a->activity_type->name) ?>"></i> -->
                     <div class="bg-white inset-1 rounded-r-sm flex-1">
                         <div class="p-3 text-lg">
                             <h4 class="mb-2 mt-1 text-xl font-semibold">
