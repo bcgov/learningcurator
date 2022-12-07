@@ -45,9 +45,7 @@ if ($this->Identity->isLoggedIn()) {
                     </a>
                     <div class="pl-10">
 
-                        <p class="my-3">
-                            <?= $pathway->description ?>
-                        </p>
+                    <div class="autop"><?= $this->Text->autoParagraph(h($pathway->description)); ?></div>
 
                         <p class="mb-4"> <a href="/pathways/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
                                 View the <strong><?= h($pathway->name) ?></strong> pathway

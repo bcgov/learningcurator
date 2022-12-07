@@ -58,9 +58,8 @@ if ($this->Identity->isLoggedIn()) {
                             <?= $topiclink ?>
                         </a></span>
                     </div>
-                    <p class="mb-3">
-                        <?= $pathway->description ?>
-                    </p>
+                    <div class="autop"><?= $this->Text->autoParagraph(h($pathway->description)); ?></div>
+
                     <p class="mb-4"> <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
                             View the <strong><?= h($pathway->name) ?></strong> pathway
                         </a> </p>

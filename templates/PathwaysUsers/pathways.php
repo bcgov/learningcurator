@@ -63,9 +63,9 @@ if ($this->Identity->isLoggedIn()) {
                             <?= $this->Time->format($path->date_complete, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
                         </p>
                     <?php endif ?>
-                    <div class="mb-3">
-                        <?= $path->pathway->description ?>
-                    </div>
+
+                    <div class="autop"><?= $this->Text->autoParagraph(h($path->pathway->description)); ?></div>
+
 
                     <h3 class="mt-4 mb-1 text-darkblue font-semibold">Pathway Activity Progress</h3>
                     <script>
