@@ -20,9 +20,12 @@ $this->loadHelper('Authentication.Identity');
             <?php
             echo $this->Form->control('categories._ids[]', ['type' => 'select', 'options' => $categories, 'class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3 border text-base', 'label' => 'Category']);
             echo $this->Form->control('name', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3']);
-            //echo $this->Form->hidden('slug');
-            echo $this->Form->control('description', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg']);
-            //echo $this->Form->control('image_path');
+            //echo $this->Form->hidden('slug');?>
+            <label for="description">Description</label>
+            <small class="text-slate-600 block mt-0" id="descriptionHelp"><i class="bi bi-info-circle"></i> A brief description of the topic within the category (1-2 sentences).</small>
+           <?php echo $this->Form->textarea('description', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg', 'aria-describedby' => 'descriptionHelp']); ?>
+          
+           <?php //echo $this->Form->control('image_path');
             //echo $this->Form->control('color');
 
             //echo $this->Form->control('user_id', ['options' => $users]);
