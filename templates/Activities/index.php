@@ -162,86 +162,92 @@ if ($this->Identity->isLoggedIn()) {
                                         </svg>
                                     </button>
                                     <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
+                                        <ul class="list-disc pl-6 mt-2">
+                                            <li x-data="{ input: '<?= $activity->hyperlink ?>', tooltip: 'Click to copy link', showMsg: false }" class="px-1"><strong>Hyperlink: </strong>
+                                                <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true" class="bg-sky-700 text-white rounded-lg py-1 px-2 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link"></i> <span x-show="!showMsg">Copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></li>
+                                            <li class="px-1">
+                                                <a class="text-lg text-sky-700 hover:underline" href="/activities/view/<?= $activity->id ?>">
+                                                    View Activity Record
+                                                </a>
+                                            </li>
+                                        </ul>
 
-                                        <p x-data="{ input: '<?= $activity->hyperlink ?>', tooltip: 'Click to copy link', showMsg: false }"><strong>Hyperlink: </strong>
-                                            <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true" class="bg-sky-700 text-white rounded-lg py-1 px-2 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link"></i> <span x-show="!showMsg">Copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></p>
                                         <!-- <div class="mb-3 p-3bg-white dark:bg-slate-800 rounded-lg">
                     <strong>Activity type:</strong> <?= $activity->activity_type->name ?>
                     </div> -->
-                                        <p>
-                                            <a class="text-lg text-sky-700 hover:underline" href="/activities/view/<?= $activity->id ?>">
-                                                View Activity Record
-                                            </a>
-                                        </p>
-                                        <div class="bg-gray-200 p-3 rounded-md">
-                                            <script>
-                                                var message = '';
 
-                                                function report<?= $activity->id ?>Form() {
-                                                    return {
-                                                        form<?= $activity->id ?>Data: {
-                                                            activity_id: '<?= $activity->id ?>',
-                                                            user_id: '<?= $uid ?>',
-                                                            issue: '',
-                                                            csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
-                                                        },
-                                                        message: '',
-                                                        submitData() {
-                                                            this.message = ''
-                                                            fetch('/reports/add', {
-                                                                    method: 'POST',
-                                                                    headers: {
-                                                                        'Content-Type': 'application/json',
-                                                                        'X-CSRF-Token': <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>
-                                                                    },
-                                                                    body: JSON.stringify(this.form<?= $activity->id ?>Data)
-                                                                })
-                                                                .then(() => {
-                                                                    this.message = 'Report sucessfully submitted!';
-                                                                    this.form<?= $activity->id ?>Data.issue = '';
-                                                                })
-                                                                .catch(() => {
-                                                                    this.message = 'Ooops! Something went wrong!';
-                                                                })
+                                        <div class="border-2 border-slate-700 rounded-md mt-5">
+                                            <h4 class="bg-slate-700 text-white p-2">Report an Issue with this Activity</h4>
+                                            <div class="p-3 pb-1">
+                                                <script>
+                                                    var message = '';
+
+                                                    function report<?= $activity->id ?>Form() {
+                                                        return {
+                                                            form<?= $activity->id ?>Data: {
+                                                                activity_id: '<?= $activity->id ?>',
+                                                                user_id: '<?= $uid ?>',
+                                                                issue: '',
+                                                                csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
+                                                            },
+                                                            message: '',
+                                                            submitData() {
+                                                                this.message = ''
+                                                                fetch('/reports/add', {
+                                                                        method: 'POST',
+                                                                        headers: {
+                                                                            'Content-Type': 'application/json',
+                                                                            'X-CSRF-Token': <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>
+                                                                        },
+                                                                        body: JSON.stringify(this.form<?= $activity->id ?>Data)
+                                                                    })
+                                                                    .then(() => {
+                                                                        this.message = 'Report sucessfully submitted!';
+                                                                        this.form<?= $activity->id ?>Data.issue = '';
+                                                                    })
+                                                                    .catch(() => {
+                                                                        this.message = 'Ooops! Something went wrong!';
+                                                                    })
+                                                            }
                                                         }
                                                     }
-                                                }
-                                            </script>
-                                            <?= $this->Form->create(
-                                                null,
-                                                [
-                                                    'url' => [
-                                                        'controller' => 'reports',
-                                                        'action' => 'add'
-                                                    ],
-                                                    'class' => '',
-                                                    'x-data' => 'report' . $activity->id . 'Form()',
-                                                    '@submit.prevent' => 'submitData'
-                                                ]
-                                            ) ?>
-                                            <p class="font-semibold">Report an issue with this activity</p>
-                                            <?php
-                                            echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
-                                            echo $this->Form->hidden('user_id', ['value' => $uid]);
-                                            ?>
-                                            <label>
-                                                <?php
-                                                echo $this->Form->textarea(
-                                                    'issue',
+                                                </script>
+                                                <?= $this->Form->create(
+                                                    null,
                                                     [
-                                                        'class' => 'w-full h-20 p-3 bg-white rounded-lg',
-                                                        'x-model' => 'form' . $activity->id . 'Data.issue',
-                                                        'placeholder' => 'Type here ...',
-                                                        'required' => 'required'
+                                                        'url' => [
+                                                            'controller' => 'reports',
+                                                            'action' => 'add'
+                                                        ],
+                                                        'class' => '',
+                                                        'x-data' => 'report' . $activity->id . 'Form()',
+                                                        '@submit.prevent' => 'submitData'
                                                     ]
-                                                );
+                                                ) ?>
+                                                <?php
+                                                echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
+                                                echo $this->Form->hidden('user_id', ['value' => $uid]);
                                                 ?>
-                                            </label>
-                                            <input type="submit" class="inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg cursor-pointer my-2" value="Submit Report">
-                                            <span x-text="message" class="ml-1 text-sm text-sky-700"></span>
-                                            <p class="text-sm hover:underline "><a href="/profile/reports">See all your reports</a></p>
-                                            <?= $this->Form->end() ?>
+                                                <label>
+                                                    <?php
+                                                    echo $this->Form->textarea(
+                                                        'issue',
+                                                        [
+                                                            'class' => 'form-field',
+                                                            'x-model' => 'form' . $activity->id . 'Data.issue',
+                                                            'placeholder' => 'Type here ...',
+                                                            'required' => 'required',
+                                                            'rows' => '2'
+                                                        ]
+                                                    );
+                                                    ?>
+                                                </label>
+                                                <input type="submit" class="inline-block px-3 py-1 text-white text-sm bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg cursor-pointer mt-3 mb-1" value="Submit Report">
+                                                <span x-text="message" class="ml-1 text-sm text-sky-700"></span>
+                                                <?= $this->Form->end() ?>
+                                            </div>
                                         </div>
+
                                     </div> <!-- end hidden more info -->
                                 </div><!-- end more info dropdown -->
                             </div>
