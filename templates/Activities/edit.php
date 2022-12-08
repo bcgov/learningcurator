@@ -79,7 +79,7 @@ $this->loadHelper('Authentication.Identity');
 
                     <?php else : ?>
                         <li class="px-2">
-                            <span class="bg-orange-400 text-slate-900 py-1 px-2 rounded-full mr-3">DRAFT</span>
+                            <span class="bg-orange-400 text-slate-900 py-1 px-2 rounded-full text-sm mr-2">DRAFT</span>
                             <a href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a>
                         </li>
 
