@@ -179,6 +179,7 @@ if ($this->Identity->isLoggedIn()) {
             <div class="p-3 pb-1">
                 <script>
                     var message = '';
+
                     function report<?= $activity->id ?>Form() {
                         return {
                             form<?= $activity->id ?>Data: {
@@ -240,8 +241,9 @@ if ($this->Identity->isLoggedIn()) {
                 </label>
                 <input type="submit" class="inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg cursor-pointer my-3" value="Submit Report">
                 <span x-text="message" class="ml-1 text-sm text-sky-700"></span>
-                <p class="text-sm hover:underline mb-0"><a href="/profile/reports">See all your reports</a></p>
+                <p class="text-sm hover:underline mb-1"><a href="/profile/reports">See all your reports</a></p>
                 <?= $this->Form->end() ?>
             </div>
         </div>
     </div>
+</div>
