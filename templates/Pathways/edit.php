@@ -29,9 +29,13 @@ $this->loadHelper('Authentication.Identity');
             echo $this->Form->control('createdby', ['type' => 'select', 'options' => $users, 'class' => 'form-field mb-3', 'label' => 'Created By']) ?>
             <?php echo $this->Form->control('topic_id', ['type' => 'select', 'options' => $areas, 'class' => 'form-field mb-3', 'label' => 'Topic']); ?>
             <?php
-            echo $this->Form->control('name', ['class' => 'form-field mb-3']);
-            //echo $this->Form->control('slug', ['class' => 'form-field mb-3']);
-            echo $this->Form->control('description', ['class' => 'form-field mb-3']) ?>
+            echo $this->Form->input('name', ['class' => 'form-field mb-3', 'type' => 'text']);
+            //echo $this->Form->control('slug', ['class' => 'form-field mb-3']); ?>
+            
+             <label for="description">Description</label>
+            <small class="text-slate-600 block mt-0" id="descriptionHelp"><i class="bi bi-info-circle"></i> A brief description of the topic within the category (1-2 sentences).</small>
+            <?php echo $this->Form->textarea('description', ['class' => 'form-field mb-3']) ?>
+           <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
             <?php // echo $this->Form->control('estimated_time', ['class' => 'form-field mb-3']);
             echo $this->Form->control('objective', ['class' => 'form-field mb-3']);
             //  echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true, 'class' => 'form-field mb-3']);

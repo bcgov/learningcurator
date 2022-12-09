@@ -24,7 +24,7 @@
             <div class="mt-2"><?php echo $this->Form->control('slug', ['class' => 'form-field  max-w-prose']); ?></div>
             <label for="description">Step Objective</label>
             <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1 phrase/sentence).</span>
-           <?php echo $this->Form->textarea('description', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg', 'aria-describedby' => 'descriptionHelp']); ?>
+           <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
             <div class="mt-2"><?php // echo $this->Form->control('image_path', ['class' => 'form-field max-w-prose']); 
                                 ?></div>
             <div class="mt-2"><?php echo $this->Form->control('featured', ['class' => 'form-field max-w-prose']); ?></div>
