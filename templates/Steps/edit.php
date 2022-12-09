@@ -52,13 +52,15 @@ $this->loadHelper('Authentication.Identity');
                 ?>
                 <div class="mt-2"> <?php echo $this->Form->control('hyperlink', ['class' => 'form-field']); ?></div>
                 <div class="mt-2"><?php echo $this->Form->control('name', ['class' => 'form-field']); ?></div>
-                <div class="mt-2"><label for="description">Description</label>
-                    <?php echo $this->Form->textarea('description', ['class' => 'form-field']) ?></div>
+                <div class="mt-2"><label for="description">Activity Description</label>
+                    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> You can replace the automated description text with your own. Keep the description general and not specific to your pathway. This field will be displayed every time the item is included in a pathway everywhere in the Curator—not just on the step to which you add it.</span>
+                    <?php echo $this->Form->textarea('description', ['class' => 'form-field']) ?>
+                </div>
                 <?= $this->Form->button(__('Save Activity'), ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg mt-3']) ?>
                 <?= $this->Form->end() ?>
             </div>
             <div xcloak x-show="openTab === 3" @click.outside="openTab = 0" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block max">
-                <h3 class="font-semibold">Edit Current Step</h3>
+                <h3 class="font-semibold">Edit Current Step Info</h3>
 
                 <?= $this->Form->create($step) ?>
                 <?= $this->Form->hidden('image_path', ['class' => 'form-field']) ?>
@@ -66,10 +68,16 @@ $this->loadHelper('Authentication.Identity');
                 <?= $this->Form->hidden('modifiedby') ?>
                 <?= $this->Form->hidden('pathway_id', ['value' => $step->pathway_id]) ?>
                 <?= $this->Form->control('status_id', ['options' => $statuses, 'class' => 'form-field']) ?>
-                <div class="mt-2"><?= $this->Form->control('name', ['class' => 'form-field']) ?></div>
+                <div class="mt-2">
+                    <label for="name">Step Title</label>
+                    <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span> <?= $this->Form->input('name', ['type' => 'text', 'class' => 'form-field', 'aria-describedby' => 'nameHelp']) ?>
+                </div>
                 <?php  //$this->Form->control('slug', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']);
                 ?>
-                <div class="mt-2"><?= $this->Form->control('description', ['class' => 'form-field', 'label' => 'Objective']) ?></div>
+                <div class="mt-2"><label for="description">Step Objective</label>
+                    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1 phrase/sentence).</span><?= $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']) ?>
+                </div>
+
                 <?= $this->Form->button(__('Save Step Details'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
                 <?= $this->Form->end() ?>
                 <?= $this->Form->postLink(
@@ -89,13 +97,16 @@ $this->loadHelper('Authentication.Identity');
                     'action' => 'add'
                 ]]) ?>
                 <div class="mt-2">
-                    <?php
-                    echo $this->Form->control('name', ['class' => 'form-field']); ?></div>
-                <div class="mt-2"><?php echo $this->Form->control('description', ['class' => 'form-field', 'type' => 'textarea', 'label' => 'Objective']);
-                                    echo $this->Form->hidden('createdby', ['value' => $this->Identity->get('id')]);
-                                    echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]);
-                                    echo $this->Form->hidden('pathways.0.id', ['value' => $step->pathways[0]->id]);
-                                    ?></div>
+                    <label for="name">Step Title</label>
+                    <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span> <?= $this->Form->input('name', ['type' => 'text', 'class' => 'form-field', 'aria-describedby' => 'nameHelp']) ?>
+                </div>
+                <div class="mt-2"><label for="description">Step Objective</label>
+                    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1 phrase/sentence).</span><?= $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']);
+                    echo $this->Form->hidden('createdby', ['value' => $this->Identity->get('id')]);
+                    echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]);
+                    echo $this->Form->hidden('pathways.0.id', ['value' => $step->pathways[0]->id]);
+                    ?>
+                </div>
                 <?= $this->Form->button(__('Add Step'), ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg mt-3']) ?>
                 <?= $this->Form->end() ?>
             </div>
@@ -184,7 +195,8 @@ $this->loadHelper('Authentication.Identity');
                                     </h4>
                                     <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'edit/' . $a->_joinData->id], 'class' => '']) ?>
                                     <?= $this->Form->control('id', ['type' => 'hidden', 'value' => $a->_joinData->id,]) ?>
-                                    <label><span class="text-sm italic">Curator Context: Why is this activity on this step?</span><br>
+                                    <label for="stepcontext"><span class="text-slate-600 block mb-1 text-sm" id="curatorContext"><i class="bi bi-info-circle"></i> Curator Context: Why is this activity on this step?</span>
+
                                         <?= $this->Form->textarea('stepcontext', [
                                             'value' => $a->_joinData->stepcontext,
                                             'class' => 'form-field',
@@ -279,7 +291,7 @@ $this->loadHelper('Authentication.Identity');
                                     </h4>
                                     <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'edit/' . $a->_joinData->id], 'class' => '']) ?>
                                     <?= $this->Form->control('id', ['type' => 'hidden', 'value' => $a->_joinData->id,]) ?>
-                                    <label><span class="text-sm italic">Curator Context: Why is this activity on this step?</span><br>
+                                    <label for="stepcontext"><span class="text-slate-600 block mb-1 text-sm" id="curatorContext"><i class="bi bi-info-circle"></i> Curator Context: Why is this activity on this step?</span>
                                         <?= $this->Form->textarea('stepcontext', [
                                             'value' => $a->_joinData->stepcontext,
                                             'class' => 'form-field',
