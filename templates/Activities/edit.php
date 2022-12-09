@@ -22,8 +22,10 @@ $this->loadHelper('Authentication.Identity');
             echo $this->Form->hidden('createdby_id', ['value' => $activity->createdby_id, 'class' => 'form-field mb-3']);
             echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'), 'class' => 'form-field mb-3']);
             ?>
-            <?php echo $this->Form->control('name', ['class' => 'form-field mb-3']); ?>
-            <?php echo $this->Form->control('description', ['class' => 'form-field mb-3']); ?>
+        <?php echo $this->Form->control('name', ['class' => 'form-field mb-3', 'label' => 'Activity Title']); ?>
+            <label for="description">Activity Description</label>
+                    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> You can replace the automated description text with your own. Keep the description general and not specific to your pathway. This field will be displayed every time the item is included in a pathway everywhere in the Curator—not just on the step to which you add it.</span>
+                    <?php echo $this->Form->textarea('description', ['class' => 'form-field mb-3']) ?>
             <?php echo $this->Form->control('hyperlink', ['class' => 'form-field mb-3']); ?>
             <div id="linkcheck"></div>
             <?php

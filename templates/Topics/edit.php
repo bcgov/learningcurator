@@ -40,8 +40,8 @@
             //echo $this->Form->control('user_id', ['options' => $users]);
             echo $this->Form->control('name', ['class' => 'form-field mb-3']);
             echo $this->Form->hidden('slug');    ?>
-          <label for="description">Description</label>
-            <small class="text-slate-600 block mt-0" id="descriptionHelp"><i class="bi bi-info-circle"></i> A brief description of the topic within the category (1-2 sentences).</small>
+          <label for="description">Topic Description</label>
+            <small class="text-slate-600 block mt-0" id="descriptionHelp"><i class="bi bi-info-circle"></i> A brief description of the topic within the category (1&nbsp;to&nbsp;2&nbsp;sentences).</small>
            <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
          
         </fieldset>

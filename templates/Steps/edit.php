@@ -195,7 +195,7 @@ $this->loadHelper('Authentication.Identity');
                                     </h4>
                                     <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'edit/' . $a->_joinData->id], 'class' => '']) ?>
                                     <?= $this->Form->control('id', ['type' => 'hidden', 'value' => $a->_joinData->id,]) ?>
-                                    <label for="stepcontext"><span class="text-slate-600 block mb-1 text-sm" id="curatorContext"><i class="bi bi-info-circle"></i> Curator Context: Why is this activity on this step?</span>
+                                    <label for="stepcontext"><span class="text-slate-600 block mb-1 text-sm" id="curatorContext"><i class="bi bi-info-circle"></i> This is where you’ll add what the learners will do, need to pay attention to, etc. Elaborate on the context—why you chose this item for this step/pathway. Example: “Just read pages 20-34 of this chapter, which sheds light on how you can adopt a servant leadership approach.” </span>
 
                                         <?= $this->Form->textarea('stepcontext', [
                                             'value' => $a->_joinData->stepcontext,
@@ -291,7 +291,7 @@ $this->loadHelper('Authentication.Identity');
                                     </h4>
                                     <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'edit/' . $a->_joinData->id], 'class' => '']) ?>
                                     <?= $this->Form->control('id', ['type' => 'hidden', 'value' => $a->_joinData->id,]) ?>
-                                    <label for="stepcontext"><span class="text-slate-600 block mb-1 text-sm" id="curatorContext"><i class="bi bi-info-circle"></i> Curator Context: Why is this activity on this step?</span>
+                                    <label for="stepcontext"><span class="text-slate-600 block mb-1 text-sm" id="curatorContext"><i class="bi bi-info-circle"></i> This is where you’ll add what the learners will do, need to pay attention to, etc. Elaborate on the context—why you chose this item for this step/pathway. Example: “Just read pages 20-34 of this chapter, which sheds light on how you can adopt a servant leadership approach.” </span>
                                         <?= $this->Form->textarea('stepcontext', [
                                             'value' => $a->_joinData->stepcontext,
                                             'class' => 'form-field',
