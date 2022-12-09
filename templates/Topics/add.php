@@ -22,7 +22,7 @@ $this->loadHelper('Authentication.Identity');
             echo $this->Form->control('name', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3']);
             //echo $this->Form->hidden('slug');?>
             <label for="description">Description</label>
-            <small class="text-slate-600 block mt-0" id="descriptionHelp"><i class="bi bi-info-circle"></i> A brief description of the topic within the category (1-2 sentences).</small>
+            <span class="text-slate-600 block mt-0 text-small" id="descriptionHelp"><i class="bi bi-info-circle"></i> A brief description of the topic within the category (1-2 sentences).</span>
            <?php echo $this->Form->textarea('description', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg', 'aria-describedby' => 'descriptionHelp']); ?>
           
            <?php //echo $this->Form->control('image_path');
