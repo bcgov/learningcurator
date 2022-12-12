@@ -16,10 +16,11 @@ if ($this->Identity->isLoggedIn()) {
 
 
 <?php if (!$pathways->isEmpty()) : ?>
-    <header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
-        <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
+    <header class="w-full h-52 bg-cover bg-center pb-2 px-2" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
+        <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
             <h1 class="text-white text-3xl font-bold m-auto tracking-wide">My Curator</h1>
         </div>
+        <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://flic.kr/p/JULZFP" target="_blank">Paradise Meadows Boardwalk</a> by <a href="https://flic.kr/ps/3bxUBu" target="_blank">Fyre Mael on Flickr</a> (<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank">CC BY 2.0</a>)</p>
     </header>
     <div class="p-8 text-lg" id="mainContent">
         <div class="max-w-prose">
@@ -29,7 +30,7 @@ if ($this->Identity->isLoggedIn()) {
                 When you follow a pathway, it will be listed here, so you can jump right to it.</p>
 
             <?php foreach ($pathways as $path) : ?>
-                
+
                 <a href="/<?= h($path->pathway->topic->categories[0]->slug) ?>/<?= h($path->pathway->topic->slug) ?>/pathway/<?= h($path->pathway->slug) ?>" class="hover:no-underline">
 
                     <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-l-full flex items-center justify-between">
@@ -39,7 +40,7 @@ if ($this->Identity->isLoggedIn()) {
                         <h3 class="text-2xl flex-1">
                             <?= h($path->pathway->name) ?>
                         </h3>
-                        <span class="text-sm ml-3 justify-self-end flex-none"><?= h($path->pathway->steps) ?> steps | <?= h($path->pathway->requiredacts) ?> activities</span>
+                        <!-- <span class="text-sm ml-3 justify-self-end flex-none"><?= h($path->pathway->steps) ?> steps | <?= h($path->pathway->requiredacts) ?> activities</span> -->
                     </div>
                 </a>
                 <div class="pl-10">
@@ -62,14 +63,10 @@ if ($this->Identity->isLoggedIn()) {
                             <?= $this->Time->format($path->date_complete, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
                         </p>
                     <?php endif ?>
-                    <div class="mb-3"><?php if (!empty($path->pathway->description)) : ?>
-                            <?= $path->pathway->description ?>
-                        <?php else : ?>
-                            <?= $path->pathway->objective ?>
-                        <?php endif ?></div>
-                    <!-- This conditional is kind of a hack and we need to make people aware that the description isn't actually optional -->
 
-                
+                    <div class="autop"><?= $this->Text->autoParagraph(h($path->pathway->description)); ?></div>
+
+
                     <h3 class="mt-4 mb-1 text-darkblue font-semibold">Pathway Activity Progress</h3>
                     <script>
                         fetch('/pathways/status/<?= $path->pathway->id ?>', {
@@ -79,7 +76,7 @@ if ($this->Identity->isLoggedIn()) {
                             .then((json) => {
                                 if (json.percentage > 0) {
                                     let launched = json.completed + ' launched';
-                                    let remaining = (json.requiredacts - json.completed) + ' remaining';
+                                    let remaining = (json.requiredacts - json.completed) + ' to go';
 
                                     document.querySelector('.pbar_<?= h($path->pathway->id) ?>').style.width = json.percentage + '%';
 
@@ -95,7 +92,7 @@ if ($this->Identity->isLoggedIn()) {
                                     }
 
                                 } else {
-                                    document.querySelector('.pbarcontainer_<?= h($path->pathway->id) ?>').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
+                                    document.querySelector('.pbarcontainer_<?= h($path->pathway->id) ?>').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities to go</span>';
                                 }
                                 //console.log(json);
                             })
@@ -122,6 +119,7 @@ if ($this->Identity->isLoggedIn()) {
         <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
             <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Getting Started</h1>
         </div>
+        <p class="text-xs text-white float-right -mt-3 mb-0">Photo: <a href="https://www.flickr.com/photos/n-r-t/1200374518/" target="_blank">Cape Scott Trail</a> by <a href="https://www.flickr.com/photos/n-r-t/" target="_blank">Nick Thompson on Flickr</a> (<a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC BY-NC-ND 2.0</a>)</p>
     </header>
     <div class="p-8 text-xl max-w-prose" id="mainContent">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Find your path</h2>

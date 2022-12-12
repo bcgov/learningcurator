@@ -56,18 +56,18 @@ $this->loadHelper('Authentication.Identity');
                                     ?>
                                 </fieldset>
                             </div>
-                            <input type="submit" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg my-3 font-normal hover:cursor-pointer" value="Submit Response">
+                            <input type="submit" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg my-3 font-normal hover:cursor-pointer" value="Submit Response">
                             <?= $this->Form->end() ?>
 
 
-                            <?= $this->Form->postLink(__('Delete Issue Report'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?', $report->id), 'class' => 'block my-2 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base']) ?>
+                            <?= $this->Form->postLink(__('Delete Issue Report'), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => __('Are you sure you want to delete this report?'), 'class' => 'block my-2 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base']) ?>
                         <?php endif ?>
                     </div><!-- curatorresponse -->
                 </div>
             </div>
             <div class="mt-6">
-                <a class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg mr-2" href="/reports/index">All Open Reports</a>
-                <a class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg mr-2" href="/reports/closed">All Closed Reports</a>
+                <a class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg mr-2" href="/reports/index">All Open Reports</a>
+                <a class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg mr-2" href="/reports/closed">All Closed Reports</a>
             </div>
         </div>
     <?php endif ?>

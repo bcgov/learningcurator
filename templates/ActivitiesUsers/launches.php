@@ -6,11 +6,20 @@ if ($this->Identity->isLoggedIn()) {
     $uid = $this->Identity->get('id');
 }
 ?>
-<header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
-    <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
+<?php
+
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\ActivityType[]|\Cake\Collection\CollectionInterface $activityTypes
+ */
+?>
+<header class="w-full h-52 bg-cover bg-center pb-2 px-2" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
+    <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">My Curator</h1>
     </div>
+    <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://flic.kr/p/JULZFP" target="_blank">Paradise Meadows Boardwalk</a> by <a href="https://flic.kr/ps/3bxUBu" target="_blank">Fyre Mael on Flickr</a> (<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank">CC BY 2.0</a>)</p>
 </header>
+
 <div class="p-8 text-lg" id="mainContent">
 
     <div class="max-w-prose">
@@ -77,12 +86,9 @@ if ($this->Identity->isLoggedIn()) {
 
             <div class="w-full inline-block mb-4 rounded-md bg-sagedark p-0.5">
                 <div class="flex flex-row justify-between">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-journal-text mx-3 my-4 flex-none" viewBox="0 0 16 16">
-                        <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
-                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
-                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
-                    </svg>
-                    <!-- TODO Allan Change icon for activity based on activity type -->
+                    <!-- TODO fix the path to get to the right data for activity types. Couldn't figure it out -->
+                    <div class="mx-3 my-4 flex-none"></div>
+                    <!-- <i class="<?= h($a->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($a->activity_type->name) ?>"></i> -->
                     <div class="bg-white inset-1 rounded-r-sm flex-1">
                         <div class="p-3 text-lg">
                             <h4 class="mb-2 mt-1 text-xl font-semibold">

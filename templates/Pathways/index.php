@@ -12,16 +12,17 @@ if ($this->Identity->isLoggedIn()) {
     $uid = $this->Identity->get('id');
 }
 ?>
-<header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
-    <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
+<header class="w-full h-52 bg-cover bg-center pb-2 px-2" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
+    <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Pathways</h1>
     </div>
+    <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://flic.kr/p/JULZFP" target="_blank">Paradise Meadows Boardwalk</a> by <a href="https://flic.kr/ps/3bxUBu" target="_blank">Fyre Mael on Flickr</a> (<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank">CC BY 2.0</a>)</p>
 </header>
 <div class="p-8 text-lg" id="mainContent">
     <div class="max-w-prose">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Recent Pathways</h2>
         <p class="mb-3 text-xl">
-        Explore recently added pathways in all categories.</p>
+            Explore recently added pathways in all categories.</p>
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
@@ -38,10 +39,10 @@ if ($this->Identity->isLoggedIn()) {
                             <?= h($pathway->name) ?>
                         </h3>
                         <?php if ($pathway->status_id == 1) : ?>
-                            <span class="bg-orange-600 text-white rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
+                            <span class="bg-orange-400 text-slate-900 rounded-full px-2 py-1 text-sm" title="Edit to set to publish">DRAFT</span>
                         <?php endif ?>
                         <?php if ($pathway->featured == 1) : ?>
-                            <span class="bg-green-600 text-white rounded-full px-2 py-1 text-sm align-middle">Featured</span>
+                            <span class="bg-green-400 text-slate-900 rounded-full px-2 py-1 text-sm">Featured</span>
                         <?php endif ?>
                         <!-- <span class="text-sm justify-self-end flex-none">8 steps | 23 activities</span> -->
                     </div>
@@ -57,12 +58,8 @@ if ($this->Identity->isLoggedIn()) {
                             <?= $topiclink ?>
                         </a></span>
                     </div>
-                    <p class="mb-3"><?php if (!empty($pathway->description)) : ?>
-                            <?= h($pathway->description) ?>
-                        <?php else : ?>
-                            <?= h($pathway->objective) ?>
-                        <?php endif ?></p>
-                    <!-- This conditional is kind of a hack and we need to make people aware that the description isn't actually optional -->
+                    <div class="autop"><?= $this->Text->autoParagraph(h($pathway->description)); ?></div>
+
                     <p class="mb-4"> <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
                             View the <strong><?= h($pathway->name) ?></strong> pathway
                         </a> </p>

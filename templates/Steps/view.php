@@ -41,13 +41,14 @@ foreach ($step->pathways as $pathways) {
 }
 ?>
 
-<header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
-    <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg p-4 flex">
+<header class="w-full h-52 bg-cover bg-center pb-2 px-2" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
+    <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Pathways</h1>
     </div>
+    <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://flic.kr/p/JULZFP" target="_blank">Paradise Meadows Boardwalk</a> by <a href="https://flic.kr/ps/3bxUBu" target="_blank">Fyre Mael on Flickr</a> (<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank">CC BY 2.0</a>)</p>
 </header>
 <div class="p-8 pt-4 w-full text-xl" id="mainContent">
-    <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
+    <nav class="mb-4 ml-4 text-slate-500 text-sm" aria-label="breadcrumb">
         <a href="/category/<?= h($step->pathways[0]->topic->categories[0]->id) ?>/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>" class="hover:underline"><?= h($step->pathways[0]->topic->categories[0]->name) ?></a> >
         <a href="/category/<?= h($step->pathways[0]->topic->categories[0]->id) ?>/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/topic/<?= h($step->pathways[0]->topic->id) ?>/<?= h($step->pathways[0]->topic->slug) ?>" class="hover:underline"><?= h($step->pathways[0]->topic->name) ?></a> >
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-signpost-2 mr-1 inline-block" viewBox="0 0 16 16">
@@ -56,22 +57,19 @@ foreach ($step->pathways as $pathways) {
         <?= $step->name ?>
     </nav>
 
-    <div class="">
-        <div class="py-3 px-4 mb-3 mt-8 bg-bluegreen text-white point-left flex justify-start items-center">
+    <div class="max-w-3xl ml-8">
+        <div class="p-3 mb-3 mt-8 bg-bluegreen text-white rounded-l-full  flex justify-end items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 mx-4 grow-0" viewBox="0 0 16 16">
                 <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
             </svg>
             <h2 class="text-2xl flex-1">
-                <?= $step->pathways[0]->name ?>
+                <?= h($step->pathways[0]->name) ?>
 
             </h2>
-            <!-- <span class="text-sm ml-3 justify-self-end flex-none"><?= h($pathways->steps) ?> steps | <?= $stepacts ?> activities</span> -->
-            <!-- TODO Allan add code to pull in pathway steps -->
-            <!-- <span class="text-sm ml-3 justify-self-end flex-none"> <?= $stepacts ?> required activities</span> -->
         </div>
-        <div class="pl-20 pr-8 mb-5 text-lg">
-            <p class="text-xl"><span class="font-bold">Pathway Objective: </span>
-                <?= $step->pathways[0]->objective ?></p>
+        <div class="pl-16 pr-4 mb-5 text-lg">
+            <p class="text-xl"><span class="font-bold">Pathway Goal: </span>
+                <?= h($step->pathways[0]->objective) ?></p>
 
 
 
@@ -123,7 +121,7 @@ foreach ($step->pathways as $pathways) {
                     .then((json) => {
                         if (json.percentage > 0) {
                             let launched = json.completed + ' launched';
-                            let remaining = (json.requiredacts - json.completed) + ' remaining';
+                            let remaining = (json.requiredacts - json.completed) + ' to go';
 
                             document.querySelector('.pbar').style.width = json.percentage + '%';
 
@@ -139,7 +137,7 @@ foreach ($step->pathways as $pathways) {
                             }
 
                         } else {
-                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
+                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities to go</span>';
                         }
                         //console.log(json);
                     })
@@ -149,7 +147,7 @@ foreach ($step->pathways as $pathways) {
                 <?= $this->Html->link(
                     __('Edit Step'),
                     ['controller' => 'Steps', 'action' => 'edit', $step->id],
-                    ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']
+                    ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']
                 ) ?>
             <?php endif ?>
         </div>
@@ -160,19 +158,22 @@ foreach ($step->pathways as $pathways) {
     <div class="flex mt-8">
         <div class="basis-1/7 flex-none">
             <nav class="flex flex-col gap-2">
+
                 <?php foreach ($step->pathways as $pathways) : ?>
+                    <?php $count = 0 ?>
                     <?php foreach ($pathways->steps as $s) : ?>
                         <?php if ($s->status_id == 2) : ?>
+                            <?php $count++ ?>
                             <?php $c = 'bg-gray-500' ?>
-                            <?php if ($s->id == $step->id) $c = 'active bg-bluegreen -ml-5' ?>
-                            <a class="border border-slate-200 rounded-l-lg py-3 px-4  hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                                <?= h($s->name) ?>
+                            <?php if ($s->id == $step->id)  $c = 'active bg-bluegreen -ml-4' ?>
+                            <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+                                Step <?= $count ?>
                             </a>
                         <?php else : ?>
                             <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                                <?php $c = 'bg-gray-500' ?>
                                 <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                                    <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 mx-2 align-middle">DRAFT</span> -
-                                    <?= h($s->name) ?>
+                                    DRAFT
                                 </a>
                             <?php endif; // are you a curator?
                             ?>
@@ -181,59 +182,26 @@ foreach ($step->pathways as $pathways) {
                 <?php endforeach ?>
             </nav>
         </div>
-        <!-- TODO Nori add step progress bars? -->
         <!-- TODO Allan/Nori - Title vs step name/subtitle -->
         <div class="basis-6/7 flex-1 border-2 border-bluegreen rounded-r-lg p-6 max-w-prose">
-            <h2 class="mb-4 text-2xl">
-                <strong><?= $step->name ?></strong>: Subtitle
-            </h2>
             <?php if ($step->status_id == 1) : ?>
-                <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 mx-2 align-middle">DRAFT</span>
+                <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 align-middle">DRAFT</span>
             <?php endif ?>
+            <h2 class="mb-4 text-2xl">
+                <strong><?= $step->name ?></strong>
+            </h2>
+
             <p><span class="font-bold">Objective: </span>
-                <?= $step->description ?>
+                <?= h($step->description) ?>
             </p>
+            <!-- TODO objectives should be edited to remove p tags, or use autoparagraph and change heading to not be inline. Or can we omit the word objective entirely? -->
             <?php if (!empty($requiredacts)) : ?>
-                <h4 class="mt-6 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1"><?= $stepacts ?></span>Required Activities </h4>
+                <?php if (count($requiredacts) === 1) : ?>
+                    <h4 class="mt-6 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1">1</span>Required Activity </h4>
+                <?php else : ?>
+                    <h4 class="mt-6 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1"><?= $stepacts ?></span>Required Activities </h4>
+                <?php endif ?>
                 <p class="text-base"><em>Launch these activities and fill in your progress bar.</em></p>
-                <h3 class="mt-6 mb-1 text-darkblue font-semibold">Pathway Activity Progress</h3>
-            <div class="flex pbarcontainer mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
-                <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
-                <span class="py-2 px-3 text-base pbar pro_sm flex-none"></span>
-                <span class="py-2 px-3 text-base total flex-1 text-right"></span>
-            </div>
-
-
-            <script>
-                fetch('/pathways/status/<?= $step->pathways[0]->id ?>', {
-                        method: 'GET'
-                    })
-                    .then((res) => res.json())
-                    .then((json) => {
-                        if (json.percentage > 0) {
-                            let launched = json.completed + ' launched';
-                            let remaining = (json.requiredacts - json.completed) + ' remaining';
-
-                            document.querySelector('.pbar').style.width = json.percentage + '%';
-
-                            if (json.percentage == 100) {
-                                document.querySelector('.pro').innerHTML = 'Pathway completed!';
-                            }
-                            if (json.percentage < 20) {
-                                document.querySelector('.pro_sm').innerHTML = launched;
-                                document.querySelector('.total').innerHTML = remaining;
-                            } else {
-                                document.querySelector('.pro').innerHTML = launched;
-                                document.querySelector('.total').innerHTML = remaining;
-                            }
-
-                        } else {
-                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities remaining</span>';
-                        }
-                        //console.log(json);
-                    })
-                    .catch((err) => console.error("error:", err));
-            </script>
                 <?php foreach ($requiredacts as $activity) : ?>
                     <?php
                     // #TODO Allan move this back into the controller and simplify
@@ -248,12 +216,7 @@ foreach ($step->pathways as $pathways) {
                     ?>
                     <div class="rounded-md bg-sagedark mb-4 p-0.5">
                         <div class="flex flex-row justify-between">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-journal-text mx-3 my-4 flex-none" viewBox="0 0 16 16">
-                                <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
-                                <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
-                                <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
-                            </svg>
-                            <!-- TODO Allan Change icon for activity based on activity type -->
+                        <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($activity->activity_type->name) ?>"></i>
                             <div class="bg-white inset-1 rounded-r-sm flex-1">
                                 <div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
                                     <div class="p-3 text-lg">
@@ -270,8 +233,8 @@ foreach ($step->pathways as $pathways) {
                                                 <p><em>No description provided&hellip;</em></p>
                                             <?php endif ?>
                                             <?php if (!empty($activity->_joinData->stepcontext)) : ?>
-                                                <em>Curator says:</em><br>
-                                                <?= $activity->_joinData->stepcontext ?>
+                                                <div class="text-sm italic mt-2">Curator says:</div>
+                                                <blockquote class="border-l-2 p-2 m-2"><?= h($activity->_joinData->stepcontext) ?></blockquote>
                                             <?php endif ?>
                                             <?php if (!empty($activity->isbn)) : ?>
                                                 ISBN: <?= $activity->isbn ?>
@@ -286,10 +249,10 @@ foreach ($step->pathways as $pathways) {
                                         preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $youtube);
                                         if (!empty($youtube[1])) :
                                         ?>
-                                            <img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
+                                            <!-- <img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
                                             <div class="hidden w-full z-50 h-auto bg-black/50" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
                                                 <iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $youtube[1] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                            </div>
+                                            </div> -->
                                         <?php endif ?>
                                         <a target="_blank" x-on:click="count++;" onclick="loadStatus();" rel="noopener" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $activity->id ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
                                             Launch
@@ -307,164 +270,22 @@ foreach ($step->pathways as $pathways) {
                                                 </svg>
                                             </button>
                                             <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
-                                                <p><strong>Hyperlink:</strong> <?= $activity->hyperlink ?></p>
-                                                <!-- <div class="mb-3 p-3bg-white dark:bg-slate-800 rounded-lg">
-    <strong>Activity type:</strong> <?= $activity->activity_type->name ?>
-    </div> -->
-                                                <p>
-                                                    <a class="text-lg text-sky-700 hover:underline" href="/activities/view/<?= $activity->id ?>">
-                                                        View Activity Record
-                                                    </a>
-                                                </p>
-                                                <div class="bg-gray-200 p-3 rounded-md">
-                                                    <script>
-                                                        var message = '';
-
-                                                        function report<?= $activity->id ?>Form() {
-                                                            return {
-                                                                form<?= $activity->id ?>Data: {
-                                                                    activity_id: '<?= $activity->id ?>',
-                                                                    user_id: '<?= $uid ?>',
-                                                                    issue: '',
-                                                                    csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
-                                                                },
-                                                                message: '',
-                                                                submitData() {
-                                                                    this.message = ''
-                                                                    fetch('/reports/add', {
-                                                                            method: 'POST',
-                                                                            headers: {
-                                                                                'Content-Type': 'application/json',
-                                                                                'X-CSRF-Token': <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>
-                                                                            },
-                                                                            body: JSON.stringify(this.form<?= $activity->id ?>Data)
-                                                                        })
-                                                                        .then(() => {
-                                                                            this.message = 'Report sucessfully submitted!';
-                                                                            this.form<?= $activity->id ?>Data.issue = '';
-                                                                        })
-                                                                        .catch(() => {
-                                                                            this.message = 'Ooops! Something went wrong!';
-                                                                        })
-                                                                }
-                                                            }
-                                                        }
-                                                    </script>
-                                                    <?= $this->Form->create(
-                                                        null,
-                                                        [
-                                                            'url' => [
-                                                                'controller' => 'reports',
-                                                                'action' => 'add'
-                                                            ],
-                                                            'class' => '',
-                                                            'x-data' => 'report' . $activity->id . 'Form()',
-                                                            '@submit.prevent' => 'submitData'
-                                                        ]
-                                                    ) ?>
-                                                    <p class="font-semibold">Report an issue with this activity</p>
-                                                    <?php
-                                                    echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
-                                                    echo $this->Form->hidden('user_id', ['value' => $uid]);
-                                                    ?>
-                                                    <label>
-                                                        <?php
-                                                        echo $this->Form->textarea(
-                                                            'issue',
-                                                            [
-                                                                'class' => 'w-full h-20 p-3 bg-white rounded-lg',
-                                                                'x-model' => 'form' . $activity->id . 'Data.issue',
-                                                                'placeholder' => 'Type here ...',
-                                                                'required' => 'required'
-                                                            ]
-                                                        );
-                                                        ?>
-                                                    </label>
-                                                    <input type="submit" class="inline-block px-4 py-2 text-white text-md bg-slate-700 focus:text-slate-900 hover:bg-slate-700/80 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg cursor-pointer my-2" value="Submit Report">
-                                                    <span x-text="message" class="ml-1 text-sm text-sky-700"></span>
-                                                    <p class="text-sm hover:underline "><a href="/profile/reports">See all your reports</a></p>
-                                                    <?= $this->Form->end() ?>
-                                                </div>
-                                            </div> <!-- end hidden more info -->
-                                        </div><!-- end more info dropdown -->
-                                    </div>
-                                </div> <!-- click count increment container -->
-                            </div>
-                        </div> <!-- end white inner box -->
-                    </div>
-                    <!-- end activity card -->
-                <?php endforeach; // end of activities loop for this step
-                ?>
-            <?php endif; //end of required activities
-            ?>
-            <?php if (count($supplementalacts) > 0) : ?>
-                <div class="my-3 text-center text-sm">End of required activities for this module.</div>
-                <h4 class="mt-6 text-xl text-sky-700">Supplementary Resources <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $supplmentalcount ?></span></h4>
-                <p class="text-base"><em>Launching these activities does not count towards your progress along this pathway.</em></p>
-                <?php foreach ($supplementalacts as $activity) : ?>
-                    <?php
-                    // #TODO Allan move this back into the controller and simplify
-                    // this was an attempt at requiring two launches to satify a complete
-                    $completed = 0;
-                    $actlist = array_count_values($useractivitylist);
-                    foreach ($actlist as $k => $v) {
-                        if ($k == $activity->id) {
-                            if ($v > 0) $completed = $v;
-                        }
-                    }
-                    ?>
-                    <div class="rounded-md bg-sagedark mb-4 p-0.5">
-                        <div class="flex flex-row justify-between">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-journal-text mx-3 my-4 flex-none" viewBox="0 0 16 16">
-                                <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
-                                <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
-                                <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
-                            </svg>
-                            <!-- TODO Allan Change icon for activity based on activity type -->
-                            <div class="bg-white inset-1 rounded-r-sm flex-1">
-                                <div x-data="{ count: <?= $completed ?> }">
-                                    <div class="p-3 text-lg">
-                                        <a href="/profile/launches" class="inline-block p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
-                                            Launched
-                                        </a>
-                                        <h4 class="mb-3 mt-1 text-xl font-semibold">
-                                            <?= $activity->name ?>
-                                        </h4>
-                                        <div class="text-lg">
-                                            <?php if (!empty($activity->description)) : ?>
-                                                <?= $activity->description ?>
-                                            <?php else : ?>
-                                                <p><em>No description provided&hellip;</em></p>
-                                            <?php endif ?>
-                                            <?php if (!empty($activity->_joinData->stepcontext)) : ?>
-                                                <em>Curator says:</em><br>
-                                                <?= $activity->_joinData->stepcontext ?>
-                                            <?php endif ?>
-                                            <a target="_blank" x-on:click="count++;" onclick="loadStatus();" rel="noopener" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $activity->id ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
-                                                Launch
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
-                                                    <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
-                                                </svg>
-                                            </a>
-                                            <div x-data="{ open: false }">
-                                                <button @click="open = !open" class="text-sm text-sky-700 text-right">
-                                                    <span>More info</span>
-                                                    <svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
-                                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                                    </svg>
-                                                </button>
-                                                <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
-                                                    <p><strong>Hyperlink:</strong> <?= $activity->hyperlink ?></p>
-                                                    <!-- <div class="mb-3 p-3bg-white dark:bg-slate-800 rounded-lg">
-    <strong>Activity type:</strong> <?= $activity->activity_type->name ?>
-    </div> -->
-                                                    <p>
+                                                <ul class="list-disc pl-6 mt-2">
+                                                    <li x-data="{ input: '<?= $activity->hyperlink ?>', tooltip: 'Click to copy link', showMsg: false }" class="px-1"><strong>Hyperlink: </strong>
+                                                        <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true" class="bg-sky-700 text-white rounded-lg py-1 px-2 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link"></i> <span x-show="!showMsg">Copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></li>
+                                                    <li class="px-1">
                                                         <a class="text-lg text-sky-700 hover:underline" href="/activities/view/<?= $activity->id ?>">
                                                             View Activity Record
                                                         </a>
-                                                    </p>
-                                                    <div class="bg-gray-200 p-3 rounded-md">
+                                                    </li>
+                                                </ul>
+                                                <!-- <div class="mb-3 p-3bg-white dark:bg-slate-800 rounded-lg">
+    <strong>Activity type:</strong> <?= $activity->activity_type->name ?>
+    </div> -->
+
+                                                <div class="border-2 border-slate-700 rounded-md mt-5">
+                                                    <h4 class="bg-slate-700 text-white p-2">Report an Issue with this Activity</h4>
+                                                    <div class="p-3 pb-1">
                                                         <script>
                                                             var message = '';
 
@@ -510,7 +331,6 @@ foreach ($step->pathways as $pathways) {
                                                                 '@submit.prevent' => 'submitData'
                                                             ]
                                                         ) ?>
-                                                        <p class="font-semibold">Report an issue with this activity</p>
                                                         <?php
                                                         echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
                                                         echo $this->Form->hidden('user_id', ['value' => $uid]);
@@ -520,19 +340,175 @@ foreach ($step->pathways as $pathways) {
                                                             echo $this->Form->textarea(
                                                                 'issue',
                                                                 [
-                                                                    'class' => 'w-full h-20 p-3 bg-white rounded-lg',
+                                                                    'class' => 'form-field',
                                                                     'x-model' => 'form' . $activity->id . 'Data.issue',
                                                                     'placeholder' => 'Type here ...',
-                                                                    'required' => 'required'
+                                                                    'required' => 'required',
+                                                                    'rows' => '2'
                                                                 ]
                                                             );
                                                             ?>
                                                         </label>
-                                                        <input type="submit" class="inline-block px-4 py-2 text-white text-md bg-slate-700 focus:text-slate-900 hover:bg-slate-700/80 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg cursor-pointer my-2" value="Submit Report">
+                                                        <input type="submit" class="inline-block px-3 py-1 text-white text-sm bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg cursor-pointer mt-3 mb-1" value="Submit Report">
                                                         <span x-text="message" class="ml-1 text-sm text-sky-700"></span>
-                                                        <p class="text-sm hover:underline "><a href="/profile/reports">See all your reports</a></p>
                                                         <?= $this->Form->end() ?>
-                                                        <!-- TODO Allan/Nori change report issue to modal? -->
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end hidden more info -->
+                                        </div><!-- end more info dropdown -->
+                                    </div>
+                                </div> <!-- click count increment container -->
+                            </div>
+                        </div> <!-- end white inner box -->
+                    </div>
+                    <!-- end activity card -->
+                <?php endforeach; // end of activities loop for this step
+                ?>
+            <?php endif; //end of required activities
+            ?>
+            <?php if (count($supplementalacts) > 0) : ?>
+                <div class="my-3 text-center text-sm">End of required activities for this module.</div>
+                <?php if (count($supplementalacts) === 1) : ?>
+                    <h4 class="mt-6 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1"><?= $supplmentalcount ?></span>Supplementary Resource </h4>
+                <?php else : ?>
+                    <h4 class="mt-6 text-xl text-sagedark"><span class="bg-sagedark text-white rounded-lg text-lg inline-block px-2 mr-1"><?= $supplmentalcount ?></span>Supplementary Resources </h4>
+                <?php endif ?>
+                <p class="text-base"><em>Launching these activities does not count towards your progress along this pathway.</em></p>
+                <?php foreach ($supplementalacts as $activity) : ?>
+                    <?php
+                    // #TODO Allan move this back into the controller and simplify
+                    // this was an attempt at requiring two launches to satify a complete
+                    $completed = 0;
+                    $actlist = array_count_values($useractivitylist);
+                    foreach ($actlist as $k => $v) {
+                        if ($k == $activity->id) {
+                            if ($v > 0) $completed = $v;
+                        }
+                    }
+                    ?>
+                    <div class="rounded-md bg-sagedark mb-4 p-0.5">
+                        <div class="flex flex-row justify-between">
+                        <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($activity->activity_type->name) ?>"></i>
+                            <div class="bg-white inset-1 rounded-r-sm flex-1">
+                                <div x-data="{ count: <?= $completed ?> }">
+                                    <div class="p-3 text-lg">
+                                        <a href="/profile/launches" class="inline-block p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
+                                            Launched
+                                        </a>
+                                        <h4 class="mb-3 mt-1 text-xl font-semibold">
+                                            <?= $activity->name ?>
+                                        </h4>
+                                        <div class="text-lg">
+                                            <?php if (!empty($activity->description)) : ?>
+                                                <p><?= h($activity->description) ?></p>
+                                            <?php else : ?>
+                                                <p><em>No description provided&hellip;</em></p>
+                                            <?php endif ?>
+                                            <?php if (!empty($activity->_joinData->stepcontext)) : ?>
+                                                <div class="text-sm italic mt-2">Curator says:</div>
+                                                <blockquote class="border-l-2 p-2 m-2"><?= h($activity->_joinData->stepcontext) ?></blockquote>
+
+                                            <?php endif ?>
+                                            <div class="">
+                                                <a target="_blank" x-on:click="count++;" onclick="loadStatus();" rel="noopener" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $activity->id ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
+                                                    Launch
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+                                                        <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                            <div x-data="{ open: false }">
+                                                <button @click="open = !open" class="text-sm text-sky-700 text-right">
+                                                    <span>More info</span>
+                                                    <svg fill="currentColor" viewBox="0 0 8 18" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-8 h-4 transition-transform duration-200 transform md:-mt-1">
+                                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                </button>
+                                                <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
+                                                    <ul class="list-disc pl-6 mt-2">
+                                                        <li x-data="{ input: '<?= $activity->hyperlink ?>', tooltip: 'Click to copy link', showMsg: false }" class="px-1"><strong>Hyperlink: </strong>
+                                                            <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true" class="bg-sky-700 text-white rounded-lg py-1 px-2 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link"></i> <span x-show="!showMsg">Copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></li>
+                                                        <li class="px-1">
+                                                            <a class="text-lg text-sky-700 hover:underline" href="/activities/view/<?= $activity->id ?>">
+                                                                View Activity Record
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- <div class="mb-3 p-3bg-white dark:bg-slate-800 rounded-lg">
+    <strong>Activity type:</strong> <?= $activity->activity_type->name ?>
+    </div> -->
+
+                                                    <div class="border-2 border-slate-700 rounded-md mt-5">
+                                                        <h4 class="bg-slate-700 text-white p-2">Report an Issue with this Activity</h4>
+                                                        <div class="p-3 pb-1">
+                                                            <script>
+                                                                var message = '';
+
+                                                                function report<?= $activity->id ?>Form() {
+                                                                    return {
+                                                                        form<?= $activity->id ?>Data: {
+                                                                            activity_id: '<?= $activity->id ?>',
+                                                                            user_id: '<?= $uid ?>',
+                                                                            issue: '',
+                                                                            csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
+                                                                        },
+                                                                        message: '',
+                                                                        submitData() {
+                                                                            this.message = ''
+                                                                            fetch('/reports/add', {
+                                                                                    method: 'POST',
+                                                                                    headers: {
+                                                                                        'Content-Type': 'application/json',
+                                                                                        'X-CSRF-Token': <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>
+                                                                                    },
+                                                                                    body: JSON.stringify(this.form<?= $activity->id ?>Data)
+                                                                                })
+                                                                                .then(() => {
+                                                                                    this.message = 'Report sucessfully submitted!';
+                                                                                    this.form<?= $activity->id ?>Data.issue = '';
+                                                                                })
+                                                                                .catch(() => {
+                                                                                    this.message = 'Ooops! Something went wrong!';
+                                                                                })
+                                                                        }
+                                                                    }
+                                                                }
+                                                            </script>
+                                                            <?= $this->Form->create(
+                                                                null,
+                                                                [
+                                                                    'url' => [
+                                                                        'controller' => 'reports',
+                                                                        'action' => 'add'
+                                                                    ],
+                                                                    'class' => '',
+                                                                    'x-data' => 'report' . $activity->id . 'Form()',
+                                                                    '@submit.prevent' => 'submitData'
+                                                                ]
+                                                            ) ?>
+                                                            <?php
+                                                            echo $this->Form->hidden('activity_id', ['value' => $activity->id]);
+                                                            echo $this->Form->hidden('user_id', ['value' => $uid]);
+                                                            ?>
+                                                            <label>
+                                                                <?php
+                                                                echo $this->Form->textarea(
+                                                                    'issue',
+                                                                    [
+                                                                        'class' => 'form-field',
+                                                                        'x-model' => 'form' . $activity->id . 'Data.issue',
+                                                                        'placeholder' => 'Type here ...',
+                                                                        'required' => 'required',
+                                                                        'rows' => '2'
+                                                                    ]
+                                                                );
+                                                                ?>
+                                                            </label>
+                                                            <input type="submit" class="inline-block px-3 py-1 text-white text-sm bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg cursor-pointer mt-3 mb-1" value="Submit Report">
+                                                            <span x-text="message" class="ml-1 text-sm text-sky-700"></span>
+                                                            <?= $this->Form->end() ?>
+                                                        </div>
                                                     </div>
                                                 </div> <!-- end hidden more info -->
                                             </div><!-- end more info dropdown -->
@@ -569,14 +545,14 @@ foreach ($step->pathways as $pathways) {
                 <div class="flex justify-items-stretch">
                     <div class="flex-1 justify-self-start">
                         <?php if (!empty($previousid)) : ?>
-                            <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" class="inline-block m-2 p-2 bg-darkblue hover:darkblue/80 rounded-lg text-white text-lg hover:no-underline">
+                            <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" class="inline-block p-2 bg-darkblue hover:darkblue/80 rounded-lg text-white text-lg hover:no-underline">
                                 Previous Step
                             </a>
                         <?php endif ?>
                     </div>
                     <div class="flex-none justify-self-end">
                         <?php if (!empty($upnextid)) : ?>
-                            <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" class="inline-block m-2 p-2 bg-darkblue hover:darkblue/80  rounded-lg text-white text-lg hover:no-underline">
+                            <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" class="inline-block p-2 bg-darkblue hover:darkblue/80  rounded-lg text-white text-lg hover:no-underline">
                                 Next Step
                             </a>
                         <?php endif ?>
@@ -587,5 +563,4 @@ foreach ($step->pathways as $pathways) {
         </div>
         <!--end step outer box -->
     </div>
-</div>
 </div>

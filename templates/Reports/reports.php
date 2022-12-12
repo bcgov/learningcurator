@@ -10,10 +10,11 @@ if ($this->Identity->isLoggedIn()) {
     $uid = $this->Identity->get('id');
 }
 ?>
-<header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
-    <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
+<header class="w-full h-52 bg-cover bg-center pb-2 px-2" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
+    <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">My Curator</h1>
     </div>
+    <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://flic.kr/p/JULZFP" target="_blank">Paradise Meadows Boardwalk</a> by <a href="https://flic.kr/ps/3bxUBu" target="_blank">Fyre Mael on Flickr</a> (<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank">CC BY 2.0</a>)</p>
 </header>
 <div class="p-8 text-lg" id="mainContent">
     <div class="max-w-prose">
@@ -47,7 +48,7 @@ if ($this->Identity->isLoggedIn()) {
 
 
                             <div x-data="{ open: false }">
-                                <button @click="open = ! open" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg my-3">
+                                <button @click="open = ! open" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg my-3">
                                     Respond
                                 </button>
                                 <div xcloak x-show="open" class="p-3 my-3 rounded-lg bg-slate-200 font-semibold ">
@@ -61,7 +62,7 @@ if ($this->Identity->isLoggedIn()) {
                                         echo $this->Form->textarea('response', ['class' => 'block w-full px-3 py-1 my-2 rounded-lg font-light', 'placeholder' => 'Type here ...']);
                                         ?>
                                     </fieldset>
-                                    <input type="submit" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg my-3 font-normal hover:cursor-pointer" value="Submit Response">
+                                    <input type="submit" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg my-3 font-normal hover:cursor-pointer" value="Submit Response">
                                     <?= $this->Form->end() ?>
 
                                 </div>

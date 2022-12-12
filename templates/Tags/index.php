@@ -11,7 +11,7 @@
 <div class="p-8 text-lg" id="mainContent">
     <h2 class="text-2xl text-darkblue font-semibold mb-3">All Activity Tags</h2>
     <p class="text-xl">Click on any tag to see its description and the activities tagged with it.</p>
-<!-- TODO Nori/Allan add descriptions? Can this be alphabetical? -->
+<!-- Can this be alphabetical - would need to pull from database that way through the controller-->
     <ul class="list-disc pl-8 mt-2">
         <?php foreach ($tags as $tag) : ?>
             <li class="px-2"> <?= $this->Html->link(h($tag->name), ['action' => 'view', $tag->id]) ?>

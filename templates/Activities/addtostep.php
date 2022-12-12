@@ -7,7 +7,7 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-
+<!-- TODO Check with Allan about adding styling here -->
 
 <div class="p-6">
 <div class="p-3 bg-slate-100/80 dark:bg-slate-900/80 rounded-lg">

@@ -13,10 +13,11 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 
-<header class="w-full h-52 bg-cover bg-[center_top_65%] pb-8 px-8" style="background-image: url(/img/categories/1200w/cape-scott-trail-n-r-t-on-flckr_1200w.jpg);">
-    <div class="bg-darkblue/90 h-44 w-72 drop-shadow-lg p-4 flex">
+<header class="w-full h-52 bg-cover bg-[center_top_65%] pb-2 px-2" style="background-image: url(/img/categories/1200w/cape-scott-trail-n-r-t-on-flckr_1200w.jpg);">
+    <div class="bg-darkblue/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">About</h1>
     </div>
+    <p class="text-xs text-white float-right -mt-3 mb-0">Photo: <a href="https://www.flickr.com/photos/n-r-t/1200374518/" target="_blank">Cape Scott Trail</a> by <a href="https://www.flickr.com/photos/n-r-t/" target="_blank">Nick Thompson on Flickr</a> (<a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC BY-NC-ND 2.0</a>)</p>
 </header>
 <div class="p-8 text-lg" id="mainContent">
 
@@ -42,14 +43,11 @@ if ($this->Identity->isLoggedIn()) {
     a progression of concepts that blends formal and informal learning resources into a 
     single stream.</p> -->
         <?php if ($role == 'curator' || $role == 'superuser') : ?>
-            <?= $this->Html->link(__('Add New Question'), ['action' => 'add'], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg mb-5']) ?>
+            <?= $this->Html->link(__('Add New Question'), ['action' => 'add'], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg mb-5']) ?>
         <?php endif ?>
 
 
-<!-- TODO Nori change this to accordions rather than details -->
-
-
-        <h3 class="text-xl text-darkblue font-semibold">Frequently Asked Questions</h3>
+    <h3 class="text-xl text-darkblue font-semibold">Frequently Asked Questions</h3>
         <?php foreach ($questions as $question) : ?>
             <?php if ($question->status_id == 2) : ?>
                 <div class="p-3 my-3 border border-sky-700 rounded-lg hover:cursor-pointer">
@@ -62,7 +60,7 @@ if ($this->Identity->isLoggedIn()) {
 
                         <?php if ($role == 'curator' || $role == 'superuser') : ?>
                             <div class="mt-3 text-right">
-                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id], ['class' => 'inline-block px-3 py-1 text-white text-base bg-slate-700 hover:text-slate-900 hover:bg-slate-200 hover:no-underline rounded-lg']) ?>
+                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id], ['class' => 'inline-block px-3 py-1 text-white text-base bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg']) ?>
                                 <?= $this->Form->postLink(__('Delete Question'), ['action' => 'delete', $question->id], ['confirm' => __('Are you sure you want to delete # {0}?', $question->id), 'class' => 'inline-block px-3 py-1 text-base hover:bg-red-700/80 text-white bg-red-700 hover:no-underline rounded-lg']) ?>
                             </div>
                         <?php endif ?>

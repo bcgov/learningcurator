@@ -14,38 +14,40 @@ if ($this->Identity->isLoggedIn()) {
     $uid = $this->Identity->get('id');
 }
 ?>
-<header class="w-full h-52 bg-cover bg-[center_top_65%] pb-8 px-8" style="background-image: url(/img/categories/1200w/Path_in_Sumallo_Grove-compressed_1200w.jpg);">
-    <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg p-4 flex">
+<header class="w-full h-52 bg-cover bg-[center_top_65%] pb-2 px-2" style="background-image: url(/img/categories/1200w/Path_at_French_Beach_BC_Canada_-_panoramio_1200w.jpg);">
+    <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg mb-6 mx-6p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Categories</h1>
     </div>
+    <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://commons.wikimedia.org/wiki/File:Path_at_French_Beach_BC_Canada_-_panoramio.jpg">Path at French Beach</a> by MaryConverse via Wikimedia Commons (<a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>)</p>
 </header>
 
 <div class="p-8 text-lg" id="mainContent">
-    <div class="max-w-prose" >
+    <div class="max-w-prose">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">All Categories of Learning</h2>
 
-        <p class="mb-3 text-xl">
-        Pathways are organized into categories of learning. These categories reflect current priorities of learning and delivery across the public service.</p>
+        <p class="mb-5 text-xl">
+            Pathways are organized into categories of learning. These categories reflect current priorities of learning and delivery across the public service.</p>
     </div>
-    <div class="flex flex-col lg:flex-row lg:gap-4">
+    <div class="flex flex-col lg:flex-row lg:gap-4 mt-8">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
             <!-- TODO Allan sort alphabetically as initial view? -->
             <!-- TODO Nori add mobile collapse options -->
             <?php foreach ($categories as $category) : ?>
 
                 <a class="group hover:no-underline" href="/category/<?= $category->id ?>/<?= h($category->slug) ?>">
-                    <div class="rounded-md shadow-lg border-2 border-sky-700 mb-4 group-hover:border-sky-600">
-                        <?php if (empty($category->featured)) : ?>
-                            <span class="inline-block py-0 px-2 my-2 bg-yellow-600 text-slate-900 text-xs" title="Edit to set to publish">DRAFT</span>
-                        <?php endif ?>
-
-                        <h3 class="text-2xl bg-sky-700 text-white p-3 group-hover:bg-sky-600">
-                            <?= h($category->name) ?>
-                        </h3>
+                    <div class="rounded-md shadow-lg border-2 border-sky-700 mb-4 group-hover:border-sky-700/80">
+                        <div class="bg-sky-700 p-3 group-hover:bg-sky-700/80 flex justify-between items-center">
+                            <h3 class="text-2xl text-white flex-1">
+                                <?= h($category->name) ?>
+                            </h3>
+                            <?php if (empty($category->featured)) : ?>
+                                <span class="bg-orange-400 py-1 px-2 rounded-full text-slate-900 text-sm" title="Edit to set to publish">DRAFT</span>
+                            <?php endif ?>
+                        </div>
                         <div class="p-3 text-lg">
-                            <p class="mb-0"><?= h($category->description) ?></p>
+                            <div class="autop"><?= $this->Text->autoParagraph(h($category->description)); ?></div>
 
-                            <p class="mb-2 inline-block mt-4 hover:text-sky-600 underline text-sky-700 ">
+                            <p class="mb-2 inline-block hover:text-sky-700/80 underline text-sky-700">
 
                                 Explore <span class="font-bold"><?= h($category->name) ?></span>
 

@@ -28,7 +28,7 @@ if ($this->Identity->isLoggedIn()) {
     <h3 class="mt-4 text-xl font-semibold"><?= h($Users->first_name) ?> <?= h($Users->last_name) ?></h3>
     <?php if ($role == 'superuser') : ?>
         <div class="btn-group float-right mt-5">
-            <?= $this->Html->link(__d('cake_d_c/users', 'Edit User'), ['action' => 'edit', $Users->id], ['class' => 'inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
+            <?= $this->Html->link(__d('cake_d_c/users', 'Edit User'), ['action' => 'edit', $Users->id], ['class' => 'inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
             <?= $this->Form->postLink(
                 __d('cake_d_c/users', 'Delete User'),
                 ['action' => 'delete', $Users->id],
@@ -46,19 +46,13 @@ if ($this->Identity->isLoggedIn()) {
                     Active
                 <?php endif ?> </li>
             <li class="px-2"><strong>Role:</strong> <?= ucfirst($Users->role) ?></li>
-            <!-- TODO Nori/Allan add other status options here? -->
-            <?php if ($Users->ministry_id == 2) : ?>
-                <li class="px-2"><strong>Ministry:</strong> Public Service Agency</li>
-            <?php elseif ($Users->ministry_id == 3) : ?>
-                <li class="px-2"><strong>Ministry:</strong> Citizen Services</li>
-            <?php endif ?>
+            <li class="px-2"><strong>Ministry:</strong> <?= h($Users->ministry->name) ?></li>
             <li class="px-2"><strong>Username:</strong> <?= h($Users->username) ?></li>
             <li class="px-2"><strong>Email:</strong> <a href="mailto:<?= h($Users->email) ?>" class="font-weight-bold"><?= h($Users->email) ?></a></li>
             <li class="px-2"><strong>User Created:</strong> <?= $this->Time->format($Users->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></li>
             <li class="px-2"><strong>Last Modified:</strong> <?= $this->Time->format($Users->modified, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></li>
         </ul>
     </div>
-    <!-- TODO Nori/Allan should we add icons or cards or other additional formatting here? -->
     <h3 class="mt-4 font-semibold text-xl">Activities Claimed</h3>
     <?php if (!empty($Users->activities_users)) : ?>
         <ul class="list-disc pl-8 mt-2">
@@ -99,8 +93,7 @@ if ($this->Identity->isLoggedIn()) {
         <p>This user hasn't followed any pathways yet.</p>
     <?php endif ?>
     <h3 class="mt-4 font-semibold text-xl">Pathways Contributed</h3>
-    <?php if (!$pathsadded->isEmpty()) : ?>
-        <!-- TODO Allan deprecation error for isEmpty -->
+    <?php if (!$pathsadded->all()->isEmpty()) : ?>
         <ul class="list-disc pl-8 mt-2">
 
             <?php foreach ($pathsadded as $path) : ?>

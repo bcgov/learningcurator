@@ -16,15 +16,16 @@ if ($this->Identity->isLoggedIn()) {
 $pagetitle = $category->name . '';
 $this->assign('title', $pagetitle);
 ?>
-<header class="w-full h-52 bg-cover bg-[center_top_65%] pb-8 px-8" style="background-image: url(/img/categories/1200w/Path_in_Sumallo_Grove-compressed_1200w.jpg);">
-    <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg p-4 flex">
+<header class="w-full h-52 bg-cover bg-[center_top_65%] pb-2 px-2" style="background-image: url(/img/categories/1200w/Path_at_French_Beach_BC_Canada_-_panoramio_1200w.jpg);">
+    <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Categories</h1>
     </div>
+    <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://commons.wikimedia.org/wiki/File:Path_at_French_Beach_BC_Canada_-_panoramio.jpg">Path at French Beach</a> by MaryConverse via Wikimedia Commons (<a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>)</p>
 </header>
 <?php if ($role == 'curator' || $role == 'superuser') : ?>
     <div class="p-4 float-right">
-        <?= $this->Html->link(__('Edit Category'), ['action' => 'edit', $category->id], ['class' => 'inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg mr-2']) ?>
-        <?= $this->Html->link(__('Add Topic'), ['controller' => 'Topics', 'action' => 'add'], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
+        <?= $this->Html->link(__('Edit Category'), ['action' => 'edit', $category->id], ['class' => 'inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg mr-2']) ?>
+        <?= $this->Html->link(__('Add Topic'), ['controller' => 'Topics', 'action' => 'add'], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
     </div>
 <?php endif;  // curator or admin? 
 ?>
@@ -36,28 +37,25 @@ $this->assign('title', $pagetitle);
 
     <div class="max-w-prose">
         <h2 class="text-2xl text-darkblue font-semibold mb-3"> <?= h($category->name) ?></h2>
-        <p class="text-xl"><?= $this->Text->autoParagraph(h($category->description)); ?></p>
+        <div class="text-xl"><?= $this->Text->autoParagraph(h($category->description)); ?></div>
     </div>
-    <div class="flex flex-col lg:flex-row lg:gap-4">
+    <div class="flex flex-col lg:flex-row lg:gap-4 mt-8">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
             <!-- TODO Allan sort alphabetically as initial view? -->
             <!-- TODO Nori add mobile collapse options -->
-
-
-
             <?php if (!empty($category->topics)) : ?>
                 <?php foreach ($category->topics as $topic) : ?>
                     <?php if ($topic->featured == 1) : ?>
                         <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline group">
-                            <div class="rounded-md shadow-lg p-0.5 bg-sky-700  group-hover:bg-sky-700/80 mb-4">
+                            <div class="rounded-md shadow-lg p-0.5 bg-sky-700 group-hover:bg-sky-700/80 mb-4">
                                 <h3 class="text-xl text-white p-2"><?= $topic->name ?>
                                     <!-- topic_id: <?= $topic->id ?> -->
                                 </h3>
                                 <div class="bg-white inset-1 rounded-b-sm">
                                     <div class="p-3 text-lg">
-                                        <p class="mb-0"><?= h($topic->description) ?></p>
-                                        <p class="mb-2 inline-block mt-4 hover:text-sky-600 underline text-sky-700 ">
-Explore <strong><?= $topic->name ?></strong></p>
+                                        <div class="autop"><?= $this->Text->autoParagraph(h($topic->description)); ?></div>
+                                        <p class="mb-2 inline-block  group-hover:text-sky-700/80 underline text-sky-700">
+                                            Explore <strong><?= $topic->name ?></strong></p>
                                     </div>
                                 </div>
                             </div>
@@ -66,19 +64,25 @@ Explore <strong><?= $topic->name ?></strong></p>
                     <?php else : ?>
                         <?php if ($role == 'curator' || $role == 'superuser') : ?>
                             <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline group">
-                                <div class="rounded-md shadow-lg p-0.5 bg-sky-700  group-hover:bg-sky-700/80 mb-4">
-                                <span class="bg-orange-400 text-white rounded-lg px-2 py-1 m-2 text-sm align-middle float-right" title="Edit to set to publish">DRAFT</span>
-                                    <h3 class="text-xl text-white p-2 hover:no-underline "><?= $topic->name ?>
-                                        <!-- topic_id: <?= $topic->id ?> -->
-                                    </h3>
-                                    <div class="bg-white inset-1 rounded-b-sm">
-                                        <div class="p-3 text-lg">
-                                            <p class="mb-0"><?= h($topic->description) ?></p>
-                                            <p class="mb-2 inline-block mt-4 hover:text-sky-600 underline text-sky-700">
-Explore <strong><?= $topic->name ?></strong></p>
-                                        </div>
+                                <div class="rounded-md shadow-lg border-2 border-sky-700 mb-4 group-hover:border-sky-700/80">
+                                    <div class="bg-sky-700 p-2 group-hover:bg-sky-700/80 flex justify-between items-center">
+                                        <h3 class="text-xl text-white flex-1">
+                                            <?= h($topic->name) ?>
+                                        </h3>
+                                        <?php if (empty($category->featured)) : ?>
+                                            <span class="bg-orange-400 py-1 px-2 rounded-full text-slate-900 text-sm" title="Edit to set to publish">DRAFT</span>
+                                        <?php endif ?>
+                                    </div>
+                                    <div class="p-3 text-lg">
+                                        <div class="autop"><?= $this->Text->autoParagraph(h($topic->description)); ?></div>
+
+                                        <p class="mb-2 inline-block hover:text-sky-700/80 underline text-sky-700 ">
+                                            Explore <span class="font-bold"><?= h($topic->name) ?></span>
+                                        </p>
+
                                     </div>
                                 </div>
+
                             </a>
 
                         <?php endif ?>

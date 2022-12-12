@@ -20,7 +20,7 @@
                 </label>
             </div>
             <label>Category
-                <select name="categories[_ids][]" id="categories" class="block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3 border text-base">
+                <select name="categories[_ids][]" id="categories" class="form-field mb-3 text-base">
                     <?php foreach ($categories as $c) : ?>
                         <?php if ($topic->categories[0]->id == $c['value']) : ?>
                             <option selected value="<?= $c['value'] ?>"><?= $c['text'] ?></option>
@@ -38,12 +38,14 @@
             //echo $this->Form->control('image_path');
             //echo $this->Form->control('color');
             //echo $this->Form->control('user_id', ['options' => $users]);
-            echo $this->Form->control('name', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3']);
-            echo $this->Form->hidden('slug');
-            echo $this->Form->control('description', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3']);
-            ?>
+            echo $this->Form->control('name', ['class' => 'form-field mb-3']);
+            echo $this->Form->hidden('slug');    ?>
+          <label for="description">Topic Description</label>
+            <small class="text-slate-600 block mt-0" id="descriptionHelp"><i class="bi bi-info-circle"></i> A brief description of the topic within the category (1&nbsp;to&nbsp;2&nbsp;sentences).</small>
+           <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
+         
         </fieldset>
-        <?= $this->Form->button(__('Save Topic'), ['class' => 'my-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg']) ?>
+        <?= $this->Form->button(__('Save Topic'), ['class' => 'my-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
         <?= $this->Form->end() ?>
         <?= $this->Form->postLink(
             __('Delete Topic'),

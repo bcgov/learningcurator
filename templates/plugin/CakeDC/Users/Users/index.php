@@ -22,19 +22,19 @@
                 <form method="get" action="/users/search" class="mt-2">
                     <label class="">
                         <input class="px-3 py-2 m-0 border rounded-l-lg" type="search" placeholder="first or last name ..." aria-label="User Search" name="q"></label><button class="px-3 py-2 m-0 bg-slate-400 hover:bg-slate-300 rounded-r-lg" type="submit">User Search</button>
-                </form>
+                        <div class="inline-block ml-2 text-sky-700 hover:underline text-base"><a href="/users/search">Show All Users</a></div></form>
                 <h3 class="mt-4 font-bold">View</h3>
                 <ul class="list-disc pl-8 mt-2">
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/reports/index">Open Issue Reports</a></li>
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/reports/closed">Closed Issue Reports</a></li>
-                    <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/activity-types">Activity Types</a></li>
+                    <!-- <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/activity-types">Activity Types</a></li> -->
                     <!--<li class="px-2"><a class="hover:underline hover:text-sky-700" href="/ministries">Ministries</a></li> -->
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/profile/contributions">
                             My Contributions
                         </a></li>
-                    <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/activities/audit">
+                    <!-- <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/activities/audit">
                             "Auto" Link Audit
-                        </a></li>
+                        </a></li> -->
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/activities/flagged">
                             Manual Link Review
                         </a></li>
@@ -69,7 +69,7 @@
                                     <blockquote class="border-l-2 p-2 m-2">
                                         <?= h($report->issue) ?>
                                     </blockquote>
-                                    <a title="View this report" href="/reports/view/<?= $report->id ?>" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:text-slate-900 focus:text-slate-900 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none focus:shadow-outline hover:no-underline rounded-lg mt-3 mb-1">
+                                    <a title="View this report" href="/reports/view/<?= $report->id ?>" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg mt-3 mb-1">
                                         View Report
                                     </a>
                                 </div>
@@ -98,7 +98,7 @@
             <div class="text-xl">
                 <p class="mt-2"><span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $totalfollowcount ?></span> Pathway Follows</p>
                 <h3 class="mt-4 font-semibold">Top 5 Followed Pathways</h3>
-                <!-- TODO Nori add styling to the follows piece of the link -->
+                <!-- TODO Nori add styling to the follows piece of the link - formatting in SimpleCrudTrait.php -->
                 <ol class="pl-8 text-base mt-2 list-decimal leading-snug">
                     <?php
                     // these links are templated/built within the controller for noted reasons there
