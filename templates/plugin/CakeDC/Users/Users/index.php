@@ -9,6 +9,14 @@
  * @copyright Copyright 2010 - 2018, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+
+$this->loadHelper('Authentication.Identity');
+$uid = 0;
+$role = 0;
+if ($this->Identity->isLoggedIn()) {
+    $role = $this->Identity->get('role');
+    $uid = $this->Identity->get('id');
+}
 ?>
 <header class="w-full h-32 md:h-52 bg-darkblue px-8 flex items-center">
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
@@ -22,7 +30,8 @@
                 <form method="get" action="/users/search" class="mt-2">
                     <label class="">
                         <input class="px-3 py-2 m-0 border rounded-l-lg" type="search" placeholder="first or last name ..." aria-label="User Search" name="q"></label><button class="px-3 py-2 m-0 bg-slate-400 hover:bg-slate-300 rounded-r-lg" type="submit">User Search</button>
-                        <div class="inline-block ml-2 text-sky-700 hover:underline text-base"><a href="/users/search">Show All Users</a></div></form>
+                    <div class="inline-block ml-2 text-sky-700 hover:underline text-base"><a href="/users/search">Show All Users</a></div>
+                </form>
                 <h3 class="mt-4 font-bold">View</h3>
                 <ul class="list-disc pl-8 mt-2">
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/reports/index">Open Issue Reports</a></li>
@@ -41,7 +50,7 @@
                 </ul>
                 <h3 class="mt-4 font-semibold">Create New</h3>
                 <ul class="list-disc pl-8 mt-2">
-                    <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/categories/add">Category</a></li>
+                    <?php if ($role == 'superuser') : ?><li class="px-2"><a class="hover:underline hover:text-sky-700" href="/categories/add">Category</a></li> <?php endif ?>
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/topics/add">Topic</a></li>
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/pathways/add">Pathway</a></li>
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/activities/add">Activity</a></li>
