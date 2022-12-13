@@ -11,9 +11,14 @@ $this->loadHelper('Authentication.Identity');
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
 <div class="p-8 text-lg" id="mainContent">
-    <h2 class="text-2xl text-darkblue font-semibold mb-3">Edit Step: <span class="text-slate-900"><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
-                <?= $step->pathways[0]->name ?>, <?= $step->name ?>
-            </a></span></h2>
+    <div class="max-w-prose">
+        <h2 class="text-2xl text-darkblue font-semibold mb-3">Edit Step: <span class="text-slate-900"><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
+                    <?= $step->pathways[0]->name ?>, <?= $step->name ?>
+                </a></span></h2>
+                <h3 class="text-xl"><span class="font-bold">Step Objective: </span>
+                <?= h($step->description) ?>
+                </h3>
+    </div>
     <div x-data="{openTab: 0}">
         <div class="flex justify-start gap-4 my-5">
             <button @click="openTab = 1" :class="{ 'bg-slate-200 text-slate-900' : openTab === 1 }" class="px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg">
