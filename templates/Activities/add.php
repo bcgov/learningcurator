@@ -29,6 +29,13 @@ $this->loadHelper('Authentication.Identity');
     <div class="max-w-prose outline outline-1 outline-slate-500 p-6 my-3 rounded-md block">
 
         <?= $this->Form->create($activity) ?>
+        <?php echo $this->Form->control('hyperlink', ['class' => 'form-field mb-3']); ?>
+        <div id="linkcheck"></div>
+        <?php
+        if ($this->Form->isFieldError('hyperlink')) {
+            echo $this->Form->error('hyperlink', 'This link may already exist in the system.');
+        }
+        ?>
         <?php
         // echo $this->Form->control('ministry_id', ['class' => 'form-field mb-3', 'options' => $ministries, 'empty' => true]);
         // echo $this->Form->control('category_id', ['class' => 'form-field mb-3', 'options' => $categories, 'empty' => true]);
@@ -40,13 +47,7 @@ $this->loadHelper('Authentication.Identity');
         <label for="description">Activity Description</label>
         <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> You can replace the automated description text with your own. Keep the description general and not specific to your pathway. This field will be displayed every time the item is included in a pathway everywhere in the Curator—not just on the step to which you add it.</span>
         <?php echo $this->Form->textarea('description', ['class' => 'form-field mb-3']) ?>
-        <?php echo $this->Form->control('hyperlink', ['class' => 'form-field mb-3']); ?>
-        <div id="linkcheck"></div>
-        <?php
-        if ($this->Form->isFieldError('hyperlink')) {
-            echo $this->Form->error('hyperlink', 'This link may already exist in the system.');
-        }
-        ?>
+
         <?php //echo $this->Form->control('steps._ids', ['class' => 'form-field mb-3', 'options' => $steps]); 
         ?>
         <?php //echo $this->Form->control('licensing', ['class' => 'form-field mb-3']); 
