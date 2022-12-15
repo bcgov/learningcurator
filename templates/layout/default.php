@@ -21,8 +21,7 @@
     <div class="flex flex-col max-w-7xl mx-auto min-h-screen justify-between">
         <div class="flex flex-col md:flex-row grow">
             <div @click.away="open = false" class="flex flex-col flex-shrink-0 justify-between w-full md:w-60 text-slate-700 bg-sagegreen" x-data="{ open: false }">
-                <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 " role="banner">
-                    <!-- sticky top-0 bg-slate-200-->
+                <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16" role="banner">
                     <span class="leading-3 text-xl tracking-widest text-slate-900 uppercase rounded-lg focus:outline-none focus:shadow-outline">
                         <span class="text-xs">Learning</span>
                         <br>
@@ -89,7 +88,7 @@ label>
 pan class="text-sm text-gray-400">Dark</span>
 nput id="toggle" type="checkbox" class="hidden" :value="darkMode" @change="darkMode = !darkMode" />
 v> -->
-                <img class="hidden md:block my-3 px-2 self-end mt-auto" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
+                <img class="hidden md:block my-3 px-2 justify-self-end" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
 
             </div>
             <div class="bg-white w-full" role="main"> <?= $this->fetch('content') ?> </div>
