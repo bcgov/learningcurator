@@ -1,6 +1,6 @@
 
 <?php foreach($activities as $activity): ?>
-<div class="mb-3 p-3 bg-white dark:bg-black rounded-lg">
+<div class="mb-3 p-3 bg-white rounded-lg">
 <div class="font-semibold"><?= $this->Html->link($activity->name, ['action' => 'view', $activity->id]) ?></div>
 <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps','action' => 'add', 'class' => '']]) ?>
 <?php //$this->Form->control('pathway_id',['type' => 'hidden', 'value' => '' ]) ?>

@@ -69,7 +69,7 @@ if ($this->Identity->isLoggedIn()) {
                 </div>
             <?php else : ?>
                 <?php if ($role == 'curator' || $role == 'superuser') : ?>
-                    <div class="p-3 my-3 bg-white dark:bg-slate-900/80 rounded-lg">
+                    <div class="p-3 my-3 bg-white rounded-lg">
                         <div><span class="badge badge-warning"><?= h($question->status->name) ?></span></div>
                         <h2 class="text-2xl" id="<?= h($question->slug) ?>"><?= h($question->title) ?></h2>
                         <div><?= $question->content ?></div>
