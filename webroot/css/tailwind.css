@@ -621,12 +621,12 @@ video {
   top: 1rem;
 }
 
-.bottom-2 {
-  bottom: 0.5rem;
-}
-
 .top-0 {
   top: 0px;
+}
+
+.bottom-2 {
+  bottom: 0.5rem;
 }
 
 .z-50 {
@@ -959,10 +959,6 @@ video {
   flex: 1 1 0%;
 }
 
-.flex-shrink-0 {
-  flex-shrink: 0;
-}
-
 .shrink-0 {
   flex-shrink: 0;
 }
@@ -1093,10 +1089,6 @@ video {
 
 .justify-self-end {
   justify-self: end;
-}
-
-.overflow-auto {
-  overflow: auto;
 }
 
 .scroll-smooth {
@@ -2132,7 +2124,7 @@ p {
   }
 }
 
-@media (max-height: 600px) {
+@media (max-height: 740px) {
   .short\:mb-4 {
     margin-bottom: 1rem;
   }
