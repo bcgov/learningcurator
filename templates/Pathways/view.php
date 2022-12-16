@@ -212,7 +212,7 @@ $this->assign('title', h($pathway->name));
 
 
                                     <!-- <?php if ($role == 'curator' || $role == 'superuser') : ?>
-                                    <span class="text-xs px-4 bg-slate-100/80 dark:bg-emerald-700 rounded-lg"><?= $steps->status->name ?></span>
+                                    <span class="text-xs px-4 bg-slate-100/80 rounded-lg"><?= $steps->status->name ?></span>
                                 <?php endif ?> -->
                                 </div>
                             </div>
@@ -269,7 +269,7 @@ $this->assign('title', h($pathway->name));
 
 
                                             <!-- <?php if ($role == 'curator' || $role == 'superuser') : ?>
-                                    <span class="text-xs px-4 bg-slate-100/80 dark:bg-emerald-700 rounded-lg"><?= $steps->status->name ?></span>
+                                    <span class="text-xs px-4 bg-slate-100/80 rounded-lg"><?= $steps->status->name ?></span>
                                 <?php endif ?> -->
                                         </div>
 

@@ -17,7 +17,7 @@ $this->loadHelper('Authentication.Identity');
         <div class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
 
 
-            <!-- <a href="/pathways/<?= $pathway->slug ?>/export" class="float-right ml-3 p-3 bg-slate-100/80 dark:bg-black hover:no-underline rounded-lg">Export Pathway</a> -->
+            <!-- <a href="/pathways/<?= $pathway->slug ?>/export" class="float-right ml-3 p-3 bg-slate-100/80 hover:no-underline rounded-lg">Export Pathway</a> -->
 
             <?= $this->Form->create($pathway) ?>
 
