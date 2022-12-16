@@ -20,10 +20,9 @@
  $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" -->
     <div class="flex flex-col max-w-7xl mx-auto min-h-screen justify-between">
         <div class="flex flex-col md:flex-row grow">
-            <div @click.away="open = false" class="flex flex-col flex-shrink-0 justify-between w-full md:w-60 text-slate-700 bg-sagegreen" x-data="{ open: false }">
+            <div @click.away="open = false" class="flex flex-col shrink-0 justify-between w-full md:w-60 text-slate-700 bg-sagegreen" x-data="{ open: false }">
                 <div class="sticky top-0">
-                    <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 " role="banner">
-                        <!-- sticky top-0 bg-slate-200-->
+                    <div class="shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16" role="banner">
                         <span class="leading-3 text-xl tracking-widest text-slate-900 uppercase rounded-lg focus:outline-none focus:shadow-outline">
                             <span class="text-xs">Learning</span>
                             <br>
@@ -35,10 +34,14 @@
                                 <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                    </div> <?php if (!empty($this->Identity->get('id'))) : ?> <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto" role="navigation"> <?php
-                                                                                                                                                                                                                $active = 'border-slate-400';
-                                                                                                                                                                                                                $currentpage = $_SERVER["REQUEST_URI"];
-                                                                                                                                                                                                                ?> <?php if ($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'superuser') : ?> <?php if (strpos($currentpage, '/users/index') !== false) $active = 'text-white bg-sagedark'; ?> <a class="hover:no-underline block px-4 py-1 mt-2 mb-4 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?= $active ?>" href="/users/index"> Curator Dashboard </a> <?php endif; ?> <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
+                    </div>
+                    <?php if (!empty($this->Identity->get('id'))) : ?>
+                        <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto" role="navigation"> <?php
+                                                                                                                                                            $active = 'border-slate-400';
+                                                                                                                                                            $currentpage = $_SERVER["REQUEST_URI"];
+                                                                                                                                                            ?> <?php if ($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'superuser') : ?> <?php if (strpos($currentpage, '/users/index') !== false) $active = 'text-white bg-sagedark'; ?> <a class="hover:no-underline block px-4 py-1 mt-2 mb-4 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?= $active ?>" href="/users/index"> Curator Dashboard </a>
+                            <?php endif; ?>
+                            <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
                             <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/categories') {
                                                                                                                                                                 echo 'text-white bg-sagedark';
                                                                                                                                                             } ?>">All Categories</a>
@@ -64,33 +67,35 @@
                             <a href="/logout" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg">Logout</a>
                             <!-- search box -->
                             <!-- <form method="get" action="/find" class="w-3/4 inline-block" role="search">
-    <label for="search" class="sr-only">Search</label>
-    <input class="px-3 py-2 m-0 bg-slate-100/80 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search" id="search"><button class="px-3 py-2 m-0 bg-slate-200 rounded-r-lg" type="submit">Search</button>
-  </form> -->
-                            <div class="relative pointer-events-auto mx-3 m-2 rounded-md"><button type="button" class="hidden bg-white w-full lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300"><svg width="24" height="24" fill="none" aria-hidden="true" class="mr-3 flex-none">
+<label for="search" class="sr-only">Search</label>
+<input class="px-3 py-2 m-0 bg-slate-100/80 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search" id="search"><button class="px-3 py-2 m-0 bg-slate-200 rounded-r-lg" type="submit">Search</button>
+form> -->
+                            <div class="relative pointer-events-auto short:mb-4 mx-3 m-2 rounded-md"><button type="button" class="hidden bg-white w-full lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300"><svg width="24" height="24" fill="none" aria-hidden="true" class="mr-3 flex-none">
                                         <path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                                         <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
                                     </svg>Quick search...<span class="ml-auto pl-3 flex-none text-xs font-semibold">Ctrl K</span></button></div>
                             <!-- TODO Allan add working search modal like on Tailwind CSS site -->
                             <!-- end search box -->
-                        </nav> <?php endif ?>
+                        </nav>
+                    <?php endif ?>
                     <!-- <div class="flex items-center justify-center space-x-2">
-  <span class="text-sm text-gray-800">Light</span>
-  <label for="toggle"
-    class="flex items-center h-5 p-1 duration-300 ease-in-out bg-gray-300 rounded-full cursor-pointer w-9">
-    <div
-  class="w-4 h-4 duration-300 ease-in-out transform bg-white rounded-full shadow-md toggle-dot">
-    </div>
-  </label>
-  <span class="text-sm text-gray-400">Dark</span>
-  <input id="toggle" type="checkbox" class="hidden" :value="darkMode" @change="darkMode = !darkMode" />
-</div> -->
+pan class="text-sm text-gray-800">Light</span>
+abel for="toggle"
+class="flex items-center h-5 p-1 duration-300 ease-in-out bg-gray-300 rounded-full cursor-pointer w-9">
+<div
+ass="w-4 h-4 duration-300 ease-in-out transform bg-white rounded-full shadow-md toggle-dot">
+</div>
+label>
+pan class="text-sm text-gray-400">Dark</span>
+nput id="toggle" type="checkbox" class="hidden" :value="darkMode" @change="darkMode = !darkMode" />
+v> -->
                 </div>
-                <img class="hidden md:block my-3 px-2 sticky bottom-4" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
+                <img class="hidden short:hidden md:block my-3 px-2 justify-self-end sticky bottom-2" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
+
             </div>
             <div class="bg-white w-full" role="main"> <?= $this->fetch('content') ?> </div>
         </div>
-        <div class="p-6 bg-slate-200 " role="contentinfo">
+        <div class="p-6 bg-slate-200" role="contentinfo">
             <img class="md:hidden my-3 px-2 max-w-[75%] mx-auto" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
             <div class="mb-6 max-w-prose text-lg text-slate-700 mx-auto italic text-center"> We acknowledge with respect that the Learning Curator operates throughout B.C. on the traditional lands of Indigenous peoples. </div>
             <div x-data="{ open: false }" class="leading-snug my-4 mx-8 text-center">
