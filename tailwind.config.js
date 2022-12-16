@@ -12,8 +12,8 @@ module.exports = {
                 darkblue: '#234075'
             },
             screens: {
-                'short': { 'raw': '(max-height: 600px)' },
-                // => @media (min-height: 600px) 
+                'short': { 'raw': '(max-height: 740px)' },
+                // => @media (max-height: 740px) 
             },
         },
     },
