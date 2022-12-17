@@ -43,10 +43,10 @@ $this->loadHelper('Authentication.Identity');
         echo $this->Form->hidden('createdby_id', ['value' => $activity->createdby_id, 'class' => 'form-field mb-3']);
         echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'), 'class' => 'form-field mb-3']);
         ?>
-        <?php echo $this->Form->control('name', ['class' => 'form-field mb-3', 'label' => 'Activity Title']); ?>
+        <?php echo $this->Form->control('name', ['class' => 'form-field mb-3 newname', 'label' => 'Activity Title']); ?>
         <label for="description">Activity Description</label>
         <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> You can replace the automated description text with your own. Keep the description general and not specific to your pathway. This field will be displayed every time the item is included in a pathway everywhere in the Curator—not just on the step to which you add it.</span>
-        <?php echo $this->Form->textarea('description', ['class' => 'form-field mb-3']) ?>
+        <?php echo $this->Form->textarea('description', ['class' => 'note-editable form-field mb-3']) ?>
 
         <?php //echo $this->Form->control('steps._ids', ['class' => 'form-field mb-3', 'options' => $steps]); 
         ?>
@@ -81,59 +81,60 @@ $this->loadHelper('Authentication.Identity');
         ?>
         <?= $this->Form->button(__('Save Activity'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700  hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg']) ?>
         <?= $this->Form->end() ?>
+    </div>
+</div>
 
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" crossorigin="anonymous"></script>
 
-        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" crossorigin="anonymous"></script>
+<script>
+    $(function() {
 
-        <script>
-            $(function() {
+        $('#hyperlink').on('change', function(e) {
 
-                $('#hyperlink').on('change', function(e) {
+            e.preventDefault();
 
-                    e.preventDefault();
+            let urlto = this.value;
 
-                    let urlto = this.value;
-
-                    let checkurl = '/activities/linkcheck?search=' + urlto;
-                    $.ajax({
-                        type: "GET",
-                        url: checkurl,
-                        success: function(data) {
-                            let foo = $.parseJSON(data);
-                            if (foo[0]) {
-                                if (foo[0].id) {
-                                    $('#linkcheck').html('This link already exists in the system.');
-                                }
-                            } else {
-                                $('#linkcheck').html('');
-                            }
-                        },
-                        statusCode: {
-                            403: function() {
-                                // oh no
-                            }
+            let checkurl = '/activities/linkcheck?search=' + urlto;
+            $.ajax({
+                type: "GET",
+                url: checkurl,
+                success: function(data) {
+                    let foo = $.parseJSON(data);
+                    if (foo[0]) {
+                        if (foo[0].id) {
+                            $('#linkcheck').html('This link already exists in the system.');
                         }
-                    });
-
-
-                    let infourl = '/activities/getinfo?url=' + urlto;
-                    $.ajax({
-                        type: "GET",
-                        url: infourl,
-                        success: function(data) {
-                            let foo = $.parseJSON(data);
-                            $('.newname').val(foo.title);
-                            $('.note-editable').html(foo.description);
-                        },
-                        statusCode: {
-                            403: function() {
-                                // oh no
-                            }
-                        }
-                    });
-                });
-
+                    } else {
+                        $('#linkcheck').html('');
+                    }
+                },
+                statusCode: {
+                    403: function() {
+                        // oh no
+                    }
+                }
             });
-        </script>
+
+
+            let infourl = '/activities/getinfo?url=' + urlto;
+            $.ajax({
+                type: "GET",
+                url: infourl,
+                success: function(data) {
+                    let foo = $.parseJSON(data);
+                    $('.newname').val(foo.title);
+                    $('.note-editable').html(foo.description);
+                },
+                statusCode: {
+                    403: function() {
+                        // oh no
+                    }
+                }
+            });
+        });
+
+    });
+</script>

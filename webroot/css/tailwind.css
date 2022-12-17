@@ -2007,6 +2007,12 @@ p {
   }
 }
 
+@media (min-width: 640px) {
+  .sm\:mr-2 {
+    margin-right: 0.5rem;
+  }
+}
+
 @media (min-width: 768px) {
   .md\:mx-0 {
     margin-left: 0px;
