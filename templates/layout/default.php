@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?= $this->fetch('title') ?> | Learning Curator</title>
     <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.x.x/dist/alpine-clipboard.js" defer></script>
-    <link rel="preload">
+    
     <link href="/css/tailwind.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
@@ -62,17 +62,71 @@
                                                                                                                                                                         echo 'text-white bg-sagedark';
                                                                                                                                                                     } ?>">Issues Reported</a>
                             <a href="/logout" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg">Logout</a>
-                            <!-- search box -->
-                            <!-- <form method="get" action="/find" class="w-3/4 inline-block" role="search">
-    <label for="search" class="sr-only">Search</label>
-    <input class="px-3 py-2 m-0 bg-slate-100/80 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search" id="search"><button class="px-3 py-2 m-0 bg-slate-200 rounded-r-lg" type="submit">Search</button>
-  </form> -->
-                            <div class="relative pointer-events-auto mx-3 m-2 rounded-md"><button type="button" class="hidden bg-white w-full lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300"><svg width="24" height="24" fill="none" aria-hidden="true" class="mr-3 flex-none">
-                                        <path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
-                                    </svg>Quick search...<span class="ml-auto pl-3 flex-none text-xs font-semibold">Ctrl K</span></button></div>
-                            <!-- TODO Allan add working search modal like on Tailwind CSS site -->
-                            <!-- end search box -->
+                           
+                           
+                           
+                           
+
+
+
+                            <div
+                                x-data="{ 'showModal': false }"
+                                @keydown.escape="showModal = false"
+                            >
+                                <!-- Trigger for Modal -->
+                                
+                                <div class="xpointer-events-auto mx-3 m-2 rounded-md">
+                                        <button type="button" class="hidden bg-white w-full lg:flex items-center text-sm leading-6 text-slate-700 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700"
+                                                @click="showModal =! showModal; if (showModal) $nextTick(()=>{$refs.input.focus()});">
+                                            <svg width="24" height="24" fill="none" aria-hidden="true" class="mr-3 flex-none">
+                                                <path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                            </svg>
+                                            Search
+                                            <!-- <span class="ml-auto pl-3 flex-none text-xs font-semibold">Ctrl K</span> -->
+                                        </button>
+                                    </div>
+                                <!-- Modal -->
+                                <div x-cloak="hidden"
+                                    class="fixed inset-0 z-30 flex items-center justify-top overflow-auto bg-black bg-opacity-50"
+                                    x-show="showModal" 
+                                >
+                                    <!-- Modal inner -->
+                                    <div 
+                                        class="w-1/2 px-6 py-4 mx-auto text-left bg-white rounded shadow-lg"
+                                        @click.away="showModal = false"
+                                        x-transition:enter="motion-safe:ease-out duration-300"
+                                        x-transition:enter-start="opacity-0 scale-90"
+                                        x-transition:enter-end="opacity-100 scale-100"
+                                        
+                                    >
+                                        <!-- Title / Close-->
+                                        <div class="flex items-center justify-between">
+                                            <h5 class="mr-3 text-black max-w-none">Curator Search</h5>
+                                            
+                                            <button type="button" class="z-50 cursor-pointer" @click="showModal = false">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <p>Find what you're looking for&hellip; </p>
+                                        <!-- content -->
+                                        <!-- search box -->
+                                            <form method="get" action="/find" class="p-6" role="search">
+                                                <label for="search" class="sr-only">Search</label>
+                                                <input x-ref="input" class="w-100 px-3 py-2 m-0 bg-slate-100/80 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search" id="search">
+                                                <button class="px-3 py-2 m-0 bg-slate-200 rounded-r-lg" type="submit">Search</button>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
                         </nav> <?php endif ?>
                     <!-- <div class="flex items-center justify-center space-x-2">
   <span class="text-sm text-gray-800">Light</span>
@@ -88,7 +142,13 @@
                 </div>
                 <img class="hidden md:block my-3 px-2 sticky bottom-4" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
             </div>
-            <div class="bg-white w-full" role="main"> <?= $this->fetch('content') ?> </div>
+
+
+            <main class="bg-white w-full"> 
+                
+            <?= $this->fetch('content') ?> 
+        
+            </main>
         </div>
         <div class="p-6 bg-slate-200 " role="contentinfo">
             <img class="md:hidden my-3 px-2 max-w-[75%] mx-auto" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
@@ -99,7 +159,9 @@
             </div>
         </div>
     </div>
+    <!-- <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script> -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
 </body>
 
 </html>
