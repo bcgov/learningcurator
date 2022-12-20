@@ -35,10 +35,23 @@
                                 <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                    </div> <?php if (!empty($this->Identity->get('id'))) : ?> <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto" role="navigation"> <?php
-                                                                                                                                                                                                                $active = 'border-slate-400';
-                                                                                                                                                                                                                $currentpage = $_SERVER["REQUEST_URI"];
-                                                                                                                                                                                                                ?> <?php if ($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'superuser') : ?> <?php if (strpos($currentpage, '/users/index') !== false) $active = 'text-white bg-sagedark'; ?> <a class="hover:no-underline block px-4 py-1 mt-2 mb-4 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?= $active ?>" href="/users/index"> Curator Dashboard </a> <?php endif; ?> <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
+                    </div> 
+                    <?php if (!empty($this->Identity->get('id'))) : ?> 
+                    <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto" role="navigation"> 
+                        <?php
+                        $active = 'border-slate-400';
+                        $currentpage = $_SERVER["REQUEST_URI"]; 
+                        ?>
+                        <?php if ($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'superuser') : ?> 
+
+                            <?php if (strpos($currentpage, '/users/index') !== false) $active = 'text-white bg-sagedark'; ?> 
+                            <a class="hover:no-underline block px-4 py-1 mt-2 mb-4 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?= $active ?>" 
+                                href="/users/index">
+                                    Curator Dashboard
+                            </a> 
+                            <?php endif; ?> 
+                        
+                            <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
                             <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/categories') {
                                                                                                                                                                 echo 'text-white bg-sagedark';
                                                                                                                                                             } ?>">All Categories</a>
@@ -69,7 +82,7 @@
 
 
 
-                            <div
+                            <div class=""
                                 x-data="{ 'showModal': false }"
                                 @keydown.escape="showModal = false"
                             >
@@ -88,12 +101,12 @@
                                     </div>
                                 <!-- Modal -->
                                 <div x-cloak="hidden"
-                                    class="fixed inset-0 z-30 flex items-center justify-top overflow-auto bg-black bg-opacity-50"
+                                    class="fixed inset-0 z-[100] flex items-center justify-center overflow-auto bg-black bg-opacity-50"
                                     x-show="showModal" 
                                 >
                                     <!-- Modal inner -->
                                     <div 
-                                        class="w-1/2 px-6 py-4 mx-auto text-left bg-white rounded shadow-lg"
+                                        class="w-fit mx-auto text-left bg-gray-100 rounded-lg shadow-lg"
                                         @click.away="showModal = false"
                                         x-transition:enter="motion-safe:ease-out duration-300"
                                         x-transition:enter-start="opacity-0 scale-90"
@@ -101,22 +114,22 @@
                                         
                                     >
                                         <!-- Title / Close-->
-                                        <div class="flex items-center justify-between">
-                                            <h5 class="mr-3 text-black max-w-none">Curator Search</h5>
+                                        <div class="flex items-center justify-between bg-gray-100 rounded-lg">
+                                            <h5 class="mx-6 my-3 text-black max-w-none">Curator Search</h5>
                                             
-                                            <button type="button" class="z-50 cursor-pointer" @click="showModal = false">
+                                            <button type="button" class="z-50 cursor-pointer mr-3" @click="showModal = false">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                                 </svg>
                                             </button>
                                         </div>
-                                        <p>Find what you're looking for&hellip; </p>
+                                        <p class="mx-6 my-3">Find categories, pathways, and activities&hellip; </p>
                                         <!-- content -->
                                         <!-- search box -->
-                                            <form method="get" action="/find" class="p-6" role="search">
+                                            <form method="get" action="/find" class="flex mx-6 mb-6 w-96" role="search">
                                                 <label for="search" class="sr-only">Search</label>
-                                                <input x-ref="input" class="w-100 px-3 py-2 m-0 bg-slate-100/80 rounded-l-lg" type="search" placeholder="" aria-label="Search" name="search" id="search">
-                                                <button class="px-3 py-2 m-0 bg-slate-200 rounded-r-lg" type="submit">Search</button>
+                                                <input x-ref="input" class="w-80 bg-white text-sm leading-6 text-slate-700 rounded-l-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700" type="search" placeholder="" aria-label="Search" name="search" id="search">
+                                                <button class="bg-white text-sm leading-6 text-slate-700 ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700 rounded-r-lg" type="submit">Search</button>
                                             </form>
                                     </div>
                                 </div>
