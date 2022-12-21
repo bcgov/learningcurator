@@ -35,7 +35,6 @@ $this->loadHelper('Authentication.Identity');
              <label for="description">Pathway Description</label>
              <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> A brief description of your pathway. This appears on the pathway overview page. (1&nbsp;to&nbsp;2&nbsp;sentences).</span>
            <?php echo $this->Form->textarea('description', ['class' => 'form-field mb-3', 'aria-describedby' => 'descriptionHelp']); ?>
-            <?php // echo $this->Form->control('estimated_time', ['class' => 'form-field mb-3']); ?>
             <label for="objective">Pathway Goal</label>
              <span class="text-slate-600 block mb-1 text-sm" id="goalHelp"><i class="bi bi-info-circle"></i> What learning goal will your learners work toward over the course of the whole pathway? (1&nbsp;sentence).</span>
             <?php echo $this->Form->textarea('objective', ['class' => 'form-field mb-3', 'aria-describedby' => 'goalHelp']); 
