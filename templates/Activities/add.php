@@ -57,22 +57,6 @@ $this->loadHelper('Authentication.Identity');
         <?php echo $this->Form->control('isbn', ['class' => 'form-field mb-3', 'label' => 'ISBN']); ?>
         <?php echo $this->Form->control('activity_types_id', ['class' => 'form-field mb-3  text-base border', 'options' => $activityTypes]); ?>
         <?php echo $this->Form->control('status_id', ['class' => 'form-field mb-3 text-base border', 'options' => $statuses, 'empty' => true]); ?>
-        <?php //echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-field mb-3']); 
-        ?>
-        <label>Estimated Time
-            <select name="estimated_time" id="estimated_time_id" class="form-field text-base border">
-                <option>Under 5 mins</option>
-                <option>Under 10 mins</option>
-                <option>Under 15 mins </option>
-                <option>Under 20 mins</option>
-                <option>Under 30 mins</option>
-                <option>Under 1 hour</option>
-                <option>Half day or less</option>
-                <option>1 day </option>
-                <option>More than 1 day </option>
-                <option>Variable</option>
-            </select>
-        </label>
         <?php //echo $this->Form->control('tag_string', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Tags']); 
         ?>
         <?php //echo $this->Form->control('users._ids', ['class' => 'form-field mb-3', 'options' => $users]); 
