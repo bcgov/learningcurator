@@ -84,11 +84,8 @@ if ($this->Identity->isLoggedIn()) {
                                 </a>
                             </div>
                         <?php elseif ($activity->status_id == 3) : ?>
-                            <div class="p-6 text-xl">
-                                <p><strong>Archived</strong></p>
-                                <p>This activity has been archived, so its link will not be shown. If you are a curator you can still access the hyperlink by editing this activity.
-                                </p>
-                            </div>
+                            <h4 class="font-semibold mb-1">Archived Activity</h4>
+                            <p class="mb-1">This activity has been archived, so its link will not be shown. If you are a curator you can still access the hyperlink by editing this activity.</p>
                         <?php endif ?>
                     </div>
                     <!-- click count increment container -->
@@ -100,9 +97,9 @@ if ($this->Identity->isLoggedIn()) {
                 <?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'inline-block px-3 py-1 text-white text-base bg-slate-700 focus:bg-slate-700/80 hover:no-underline rounded-lg']) ?>
                 <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $activity->id], ['confirm' => __('Really delete?'), 'class' => 'inline-block px-3 py-1 text-base hover:bg-red-700/80 text-white bg-red-700 hover:no-underline rounded-lg']) ?>
             </div>
-
+<!-- TODO maybe change this from a label to a different format. Looks out of place here. -->
             <?php if ($activity->status_id == 3) : ?>
-                <span class="bg-red-500 text-slate-900 py-1 px-2 rounded-full mr-3">DEFUNCT</span>
+                <span class="bg-red-500 text-slate-900 mt-3 py-1 px-2 rounded-full mr-3 text-base uppercase inline-block">Archived</span>
             <?php endif ?>
             <?php if ($activity->moderation_flag == 1) : ?>
                 <!-- <span class="bg-orange-400 text-slate-900 py-1 px-2 rounded-full mr-3">INVESTIGATE</span> -->

@@ -42,6 +42,7 @@ $this->loadHelper('Authentication.Identity');
             <?php echo $this->Form->control('isbn', ['class' => 'form-field mb-3', 'label' => 'ISBN']); ?>
             <?php echo $this->Form->control('activity_types_id', ['class' => 'form-field mb-3 text-base', 'options' => $activityTypes]); ?>
             <?php echo $this->Form->control('status_id', ['class' => 'form-field mb-3 text-base', 'options' => $statuses, 'empty' => true]); ?>
+            <!-- TODO change defunct status to archived -->
             <?php //echo $this->Form->control('tag_string', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Tags']); 
             ?>
             <?php //echo $this->Form->control('users._ids', ['class' => 'form-field mb-3', 'options' => $users]); 
