@@ -11,6 +11,10 @@ module.exports = {
                 bluegreen: '#2F6173',
                 darkblue: '#234075'
             },
+            screens: {
+                'short': { 'raw': '(max-height: 740px)' },
+                // => @media (max-height: 740px) 
+            },
         },
     },
     //darkMode: 'class',

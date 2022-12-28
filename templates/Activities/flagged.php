@@ -34,7 +34,7 @@ $this->loadHelper('Authentication.Identity');
         <!--
 <?= $this->Form->create(null, ['url' => ['controller' => 'Activities', 'action' => 'edit/' . $a->id], 'class' => 'inline']) ?>
 <?= $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')]); ?>
-<?= $this->Form->control('hyperlink', ['value' => $a->hyperlink, 'label' => '', 'class' => 'inline-block px-3 py-2 m-0 dark:text-white dark:bg-slate-900/80 rounded-lg']); ?>
+<?= $this->Form->control('hyperlink', ['value' => $a->hyperlink, 'label' => '', 'class' => 'inline-block px-3 py-2 m-0 rounded-lg']); ?>
 <?= $this->Form->button(__('Update Link'), ['class' => 'inline-block']) ?>
 <?= $this->Form->end() ?>
 -->

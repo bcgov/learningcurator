@@ -47,7 +47,7 @@ if ($this->Identity->isLoggedIn()) {
         <?php endif ?>
 
 
-    <h3 class="text-xl text-darkblue font-semibold">Frequently Asked Questions</h3>
+        <h3 class="text-xl text-darkblue font-semibold">Frequently Asked Questions</h3>
         <?php foreach ($questions as $question) : ?>
             <?php if ($question->status_id == 2) : ?>
                 <div class="p-3 my-3 border border-sky-700 rounded-lg hover:cursor-pointer">
@@ -69,7 +69,7 @@ if ($this->Identity->isLoggedIn()) {
                 </div>
             <?php else : ?>
                 <?php if ($role == 'curator' || $role == 'superuser') : ?>
-                    <div class="p-3 my-3 bg-white dark:bg-slate-900/80 rounded-lg">
+                    <div class="p-3 my-3 bg-white rounded-lg">
                         <div><span class="badge badge-warning"><?= h($question->status->name) ?></span></div>
                         <h2 class="text-2xl" id="<?= h($question->slug) ?>"><?= h($question->title) ?></h2>
                         <div><?= $question->content ?></div>
@@ -81,7 +81,7 @@ if ($this->Identity->isLoggedIn()) {
                 <?php endif ?>
             <?php endif ?>
         <?php endforeach; ?>
-
+        <h4 class="text-xl font-semibold mt-5">Still need help?</h4>
+        <p>If you have unanswered questions about the Learning Curator, we're here to help. Please submit an <a href="https://sfs7.gov.bc.ca/affwebservices/public/saml2sso?SPID=urn:ca:bc:gov:customerportal:prod" class="text-sky-700 hover:underline hover:cursor-pointer" target="_blank">AskMyHR ticket</a> using the "Learning Centre" service category.</p>
     </div>
-</div>
 </div>

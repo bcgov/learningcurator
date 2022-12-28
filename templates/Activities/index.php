@@ -172,7 +172,7 @@ if ($this->Identity->isLoggedIn()) {
                                             </li>
                                         </ul>
 
-                                        <!-- <div class="mb-3 p-3bg-white dark:bg-slate-800 rounded-lg">
+                                        <!-- <div class="mb-3 p-3 bg-white rounded-lg">
                     <strong>Activity type:</strong> <?= $activity->activity_type->name ?>
                     </div> -->
 

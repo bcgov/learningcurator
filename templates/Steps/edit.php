@@ -77,7 +77,7 @@ $this->loadHelper('Authentication.Identity');
                     <label for="name">Step Title</label>
                     <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span> <?= $this->Form->input('name', ['type' => 'text', 'class' => 'form-field', 'aria-describedby' => 'nameHelp']) ?>
                 </div>
-                <?php  //$this->Form->control('slug', ['class' => 'p-3 bg-slate-300 dark:bg-slate-800 rounded-lg']);
+                <?php  //$this->Form->control('slug', ['class' => 'p-3 bg-slate-300 rounded-lg']);
                 ?>
                 <div class="mt-2"><label for="description">Step Objective</label>
                     <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1 phrase/sentence).</span><?= $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']) ?>

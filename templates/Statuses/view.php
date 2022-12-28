@@ -74,7 +74,6 @@
                             <th><?= __('Modified') ?></th>
                             <th><?= __('Modifiedby Id') ?></th>
                             <th><?= __('Activity Types Id') ?></th>
-                            <th><?= __('Estimated Time') ?></th>
                             <th><?= __('Slug') ?></th>
                             <th class="actions"><?= __('Actions') ?></th>
                         </tr>
@@ -103,7 +102,6 @@
                             <td><?= h($activities->modified) ?></td>
                             <td><?= h($activities->modifiedby_id) ?></td>
                             <td><?= h($activities->activity_types_id) ?></td>
-                            <td><?= h($activities->estimated_time) ?></td>
                             <td><?= h($activities->slug) ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('View'), ['controller' => 'Activities', 'action' => 'view', $activities->id]) ?>
@@ -138,7 +136,6 @@
                             <th><?= __('Modifiedby') ?></th>
                             <th><?= __('Status Id') ?></th>
                             <th><?= __('Slug') ?></th>
-                            <th><?= __('Estimated Time') ?></th>
                             <th class="actions"><?= __('Actions') ?></th>
                         </tr>
                         <?php foreach ($status->pathways as $pathways) : ?>
@@ -159,7 +156,6 @@
                             <td><?= h($pathways->modifiedby) ?></td>
                             <td><?= h($pathways->status_id) ?></td>
                             <td><?= h($pathways->slug) ?></td>
-                            <td><?= h($pathways->estimated_time) ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('View'), ['controller' => 'Pathways', 'action' => 'view', $pathways->id]) ?>
                                 <?= $this->Html->link(__('Edit'), ['controller' => 'Pathways', 'action' => 'edit', $pathways->id]) ?>

@@ -19,10 +19,9 @@
  $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" -->
     <div class="flex flex-col max-w-7xl mx-auto min-h-screen justify-between">
         <div class="flex flex-col md:flex-row grow">
-            <div @click.away="open = false" class="flex flex-col flex-shrink-0 justify-between w-full md:w-60 text-slate-700 bg-sagegreen" x-data="{ open: false }">
+            <div @click.away="open = false" class="flex flex-col shrink-0 justify-between w-full md:w-60 text-slate-700 bg-sagegreen" x-data="{ open: false }">
                 <div class="sticky top-0">
-                    <div class="flex-shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16 " role="banner">
-                        <!-- sticky top-0 bg-slate-200-->
+                    <div class="shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16" role="banner">
                         <span class="leading-3 text-xl tracking-widest text-slate-900 uppercase rounded-lg focus:outline-none focus:shadow-outline">
                             <span class="text-xs">Learning</span>
                             <br>
@@ -49,7 +48,7 @@
                                     Curator Dashboard
                             </a> 
                             <?php endif; ?> 
-                        
+
                             <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
                             <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/categories') {
                                                                                                                                                                 echo 'text-white bg-sagedark';
@@ -74,6 +73,7 @@
                                                                                                                                                                         echo 'text-white bg-sagedark';
                                                                                                                                                                     } ?>">Issues Reported</a>
                             <a href="/logout" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg">Logout</a>
+
                            
                            
 
@@ -118,8 +118,10 @@
                     <span class="text-sm text-gray-400">Dark</span>
                     <input id="toggle" type="checkbox" class="hidden" :value="darkMode" @change="darkMode = !darkMode" />
                     </div> -->
+
                 </div>
-                <img class="hidden md:block my-3 px-2 sticky bottom-4" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
+                <img class="hidden short:hidden md:block my-3 px-2 justify-self-end sticky bottom-2" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
+
             </div>
 
 
@@ -129,7 +131,7 @@
         
             </main>
         </div>
-        <div class="p-6 bg-slate-200 " role="contentinfo">
+        <div class="p-6 bg-slate-200" role="contentinfo">
             <img class="md:hidden my-3 px-2 max-w-[75%] mx-auto" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
             <div class="mb-6 max-w-prose text-lg text-slate-700 mx-auto italic text-center">
                 We acknowledge with respect that the Learning Curator operates throughout B.C. on the traditional lands of Indigenous peoples. 

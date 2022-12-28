@@ -10,7 +10,7 @@ if ($this->Identity->isLoggedIn()) {
 
 ?>
 
-<div class="p-6 dark:text-white">
+<div class="p-6">
 <h1 class="text-3xl">Searching for &quot;<?= $search ?>&quot;</h1>
 
 <div class="">
@@ -19,7 +19,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="p-3">
 <h2 class="text-2xl">Found <span class="badge badge-dark"><?= $numcats ?></span> categories</h2>
 <?php foreach($categories as $c): ?>
-<div class="p-3 my-3 rounded-lg bg-slate-200 dark:bg-slate-900">
+<div class="p-3 my-3 rounded-lg bg-slate-200">
 	<h3 class="text-xl">
 		<a href="/categories/view/<?= $c->id ?>">
 			<?= $c->name ?>
@@ -37,7 +37,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="p-3">
 <h2 class="text-2xl">Found <span class="badge badge-dark"><?= $numpaths ?></span> pathways</h2>
 <?php foreach($pathways as $p): ?>
-<div class="p-3 my-3 rounded-lg bg-slate-200 dark:bg-slate-900">
+<div class="p-3 my-3 rounded-lg bg-slate-200">
 	<h3 class="text-xl">
 		<a href="/pathways/<?= $p->slug ?>">
 			<?= $p->name ?>
@@ -52,7 +52,7 @@ if ($this->Identity->isLoggedIn()) {
 <div class="p-3">
 <h2 class="text-2xl">Found <span class="badge badge-dark"><?= $numsteps ?></span> steps</h2>
 <?php foreach($steps as $s): ?>
-<div class="p-3 my-3 rounded-lg bg-slate-200 dark:bg-slate-900">
+<div class="p-3 my-3 rounded-lg bg-slate-200">
 	<h3 class="text-xl">
 		<a href="/pathways/<?= $s->slug ?>">
 			<?= $s->name ?>
@@ -73,7 +73,7 @@ if ($this->Identity->isLoggedIn()) {
 	foreach($activities as $activity): 
 		//print_r($activity); continue;
 	?>
-	<div class="p-3 my-3 rounded-lg bg-slate-200 dark:bg-slate-900">
+	<div class="p-3 my-3 rounded-lg bg-slate-200">
 
 	<h3 class="text-xl">
 		<a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>

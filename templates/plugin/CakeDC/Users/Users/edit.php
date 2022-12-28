@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
 	$uid = $this->Identity->get('id');
 }
 ?>
-<div class="p-6 dark:text-white">
+<div class="p-6">
 
             <?php
             echo $this->Form->postLink(
@@ -31,7 +31,7 @@ if ($this->Identity->isLoggedIn()) {
     <?= $this->Form->create($Users); ?>
     <fieldset>
         <legend class="text-4xl"><?= __d('cake_d_c/users', 'Edit') . ' ' . $Users->first_name ?></legend>
-        <div class="mt-3 p-6 bg-slate-200 dark:bg-slate-900/80 rounded-lg">
+        <div class="mt-3 p-6 bg-slate-200 rounded-lg">
             Activated on <?= $Users->activation_date ?>
         <?php
         if($role == 'superuser') {
@@ -40,39 +40,39 @@ if ($this->Identity->isLoggedIn()) {
                 ['text' => 'Curator', 'value' => 'curator'],
                 ['text' => 'Super User', 'value' => 'superuser'],
             ];
-            echo $this->Form->control('role', ['label' => __d('cake_d_c/users', 'Role'), 'options' => $roles, 'class' => 'p-2 m-1 dark:bg-slate-800']);
+            echo $this->Form->control('role', ['label' => __d('cake_d_c/users', 'Role'), 'options' => $roles, 'class' => 'p-2 m-1']);
             //echo $this->Form->control('is_superuser', ['label' => __d('cake_d_c/users', 'Is Superuser?')]);
         }
-        echo $this->Form->control('first_name', ['label' => __d('cake_d_c/users', 'First name'), 'class' => 'p-2 m-1 dark:bg-slate-800']);
-        echo $this->Form->control('last_name', ['label' => __d('cake_d_c/users', 'Last name'), 'class' => 'p-2 m-1 dark:bg-slate-800']);
+        echo $this->Form->control('first_name', ['label' => __d('cake_d_c/users', 'First name'), 'class' => 'p-2 m-1']);
+        echo $this->Form->control('last_name', ['label' => __d('cake_d_c/users', 'Last name'), 'class' => 'p-2 m-1']);
 
 
-        echo $this->Form->control('email', ['label' => __d('cake_d_c/users', 'Email'), 'class' => 'p-2 m-1 dark:bg-slate-800']);
-        echo $this->Form->control('username', ['label' => __d('cake_d_c/users', 'Username'), 'class' => 'p-2 m-1 dark:bg-slate-800']);
-        echo $this->Form->control('ministry_id',['options' => $ministries, 'class' => 'p-2 m-1 dark:bg-slate-800']);
+        echo $this->Form->control('email', ['label' => __d('cake_d_c/users', 'Email'), 'class' => 'p-2 m-1']);
+        echo $this->Form->control('username', ['label' => __d('cake_d_c/users', 'Username'), 'class' => 'p-2 m-1']);
+        echo $this->Form->control('ministry_id',['options' => $ministries, 'class' => 'p-2 m-1']);
     
         
         // echo $this->Form->control('activation_date', [
-        //     'label' => __d('cake_d_c/users', 'Activation date'), 'class' => 'p-2 m-1 dark:bg-slate-800'
+        //     'label' => __d('cake_d_c/users', 'Activation date'), 'class' => 'p-2 m-1'
         // ]);
 
-        // echo $this->Form->control('additional_data', ['label' => __d('cake_d_c/users', 'BC Gov GUID'), 'class' => 'p-2 m-1 dark:bg-slate-800']);
-        // echo $this->Form->control('token', ['label' => __d('cake_d_c/users', 'Token'), 'class' => 'p-2 m-1 dark:bg-slate-800']);
+        // echo $this->Form->control('additional_data', ['label' => __d('cake_d_c/users', 'BC Gov GUID'), 'class' => 'p-2 m-1']);
+        // echo $this->Form->control('token', ['label' => __d('cake_d_c/users', 'Token'), 'class' => 'p-2 m-1']);
         // echo $this->Form->control('token_expires', [
-        //     'label' => __d('cake_d_c/users', 'Token expires'), 'class' => 'p-2 m-1 dark:bg-slate-800'
+        //     'label' => __d('cake_d_c/users', 'Token expires'), 'class' => 'p-2 m-1'
         // ]);
         // echo $this->Form->control('api_token', [
-        //     'label' => __d('cake_d_c/users', 'API token'), 'class' => 'p-2 m-1 dark:bg-slate-800'
+        //     'label' => __d('cake_d_c/users', 'API token'), 'class' => 'p-2 m-1'
         // ]);
 
         // echo $this->Form->control('tos_date', [
-        //     'label' => __d('cake_d_c/users', 'TOS date'), 'class' => 'p-2 m-1 dark:bg-slate-800'
+        //     'label' => __d('cake_d_c/users', 'TOS date'), 'class' => 'p-2 m-1'
         // ]);
         // echo $this->Form->control('active', [
-        //     'label' => __d('cake_d_c/users', 'Active'), 'class' => 'p-2 m-1 dark:bg-slate-800'
+        //     'label' => __d('cake_d_c/users', 'Active'), 'class' => 'p-2 m-1'
         // ]);
         ?>
-        <?= $this->Form->button(__d('cake_d_c/users', 'Save User Info'),['class' => 'p-3 my-1 text-xl dark:bg-sky-700 rounded-lg']) ?>
+        <?= $this->Form->button(__d('cake_d_c/users', 'Save User Info'),['class' => 'p-3 my-1 text-xl rounded-lg']) ?>
         </div>
         
     </fieldset>

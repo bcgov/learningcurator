@@ -216,7 +216,7 @@ foreach ($step->pathways as $pathways) {
                     ?>
                     <div class="rounded-md bg-sagedark mb-4 p-0.5">
                         <div class="flex flex-row justify-between">
-                        <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($activity->activity_type->name) ?>"></i>
+                            <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($activity->activity_type->name) ?>"></i>
                             <div class="bg-white inset-1 rounded-r-sm flex-1">
                                 <div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
                                     <div class="p-3 text-lg">
@@ -279,7 +279,7 @@ foreach ($step->pathways as $pathways) {
                                                         </a>
                                                     </li>
                                                 </ul>
-                                                <!-- <div class="mb-3 p-3bg-white dark:bg-slate-800 rounded-lg">
+                                                <!-- <div class="mb-3 p-3 bg-white rounded-lg">
     <strong>Activity type:</strong> <?= $activity->activity_type->name ?>
     </div> -->
 
@@ -388,7 +388,7 @@ foreach ($step->pathways as $pathways) {
                     ?>
                     <div class="rounded-md bg-sagedark mb-4 p-0.5">
                         <div class="flex flex-row justify-between">
-                        <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($activity->activity_type->name) ?>"></i>
+                            <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($activity->activity_type->name) ?>"></i>
                             <div class="bg-white inset-1 rounded-r-sm flex-1">
                                 <div x-data="{ count: <?= $completed ?> }">
                                     <div class="p-3 text-lg">
@@ -435,7 +435,7 @@ foreach ($step->pathways as $pathways) {
                                                             </a>
                                                         </li>
                                                     </ul>
-                                                    <!-- <div class="mb-3 p-3bg-white dark:bg-slate-800 rounded-lg">
+                                                    <!-- <div class="mb-3 p-3 bg-white rounded-lg">
     <strong>Activity type:</strong> <?= $activity->activity_type->name ?>
     </div> -->
 
@@ -523,20 +523,39 @@ foreach ($step->pathways as $pathways) {
             <?php endif ?>
             <?php if (!empty($archivedacts)) : ?>
                 <div x-data="{ open: false }">
-                    <h4>Archived Activities</h4>
-                    <p>This step used to have these activities assigned to them, but they are no
-                        longer considered relevant or appropriate for one reason or another. They
-                        are listed here for posterity. <a class="underline text-sky-700" @click="open = !open">View archived activities</a>.
+                    <h4 class="font-semibold">Archived Activities</h4>
+                    <p>This step used to have additional activities assigned to it, but they are no
+                        longer considered relevant or appropriate for one reason or another. These activities
+                        are listed here for posterity. <a class="underline text-sky-700 hover:cursor-pointer" @click="open = !open">View archived activities</a>.
                     </p>
                     <div x-cloak x-show="open">
                         <?php foreach ($archivedacts as $activity) : ?>
-                            <h5>
-                                <a href="/activities/view/<?= $activity->id ?>">
-                                    <i class="bi <?= $activity->activity_type->image_path ?>"></i>
-                                    <?= $activity->name ?>
-                                </a>
-                            </h5>
-                            <?= $activity->description ?>
+                            <div class="rounded-md bg-slate-400 mb-4 p-0.5">
+                                <div class="flex flex-row justify-between">
+                                    <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($activity->activity_type->name) ?>"></i>
+                                    <div class="bg-white inset-1 rounded-r-sm flex-1">
+                                        <div class="p-3 text-lg">
+                                            <span class="inline-block p-0.5 px-2 bg-red-500 text-slate-900 text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-red-500/80">
+                                                Archived
+                                            </span>
+                                            <h4 class="mb-3 mt-1 text-xl font-semibold">
+                                                <?= $activity->name ?>
+                                            </h4>
+                                            <div class="text-lg">
+                                                <?php if (!empty($activity->description)) : ?>
+                                                    <p><?= h($activity->description) ?></p>
+                                                <?php else : ?>
+                                                    <p><em>No description provided&hellip;</em></p>
+                                                <?php endif ?>
+                                                <a class="text-lg text-sky-700 hover:underline" href="/activities/view/<?= $activity->id ?>">
+                                                    View Activity Record
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div><!-- end white inner box -->
+                                </div>
+                            </div>
+
                         <?php endforeach ?>
                     </div>
                 </div>
