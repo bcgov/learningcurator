@@ -357,7 +357,19 @@ class ActivitiesController extends AppController
 
     
     /**
-     * Find method for activities; this is super-duper basic and search deserves better thab
+     * The main search results for the primary search form.
+     * 
+     * This is #janky because of my sub-par SQL skills, I think.
+     * What we actually need here is a proper search index; until we get that 
+     * in place, I don't know of a query that would be able to 
+     * encompass what we're looking for here. We'll certainly be adding 
+     * a search function along the lines of ElasticSearch, but we're holding
+     * off here until an "official government solution" is put forward.
+     * Until we can get a proper index in place, and because my SQL 
+     * skills are in development, but not fast enough for this project,
+     * we are writing below in a very naive and malperformant way, manually 
+     * combining the results from multiple queries to produce acceptable
+     * arrays for the template.
      *
      * @param string|null $search search pararmeters to lookup activities.
      * @return \Cake\Http\Response|null
@@ -365,11 +377,13 @@ class ActivitiesController extends AppController
      */
     public function find()
     {
+        
         $search = $this->request->getQuery('search');
         
         $activities = $this->Activities->find('search', ['search' => $this->request->getQuery()])
                                         ->contain(['ActivityTypes','Steps.Pathways']);
         $numacts = $activities->count();
+        //echo '<pre>'; print_r($activities); exit;
 
         // We've searched for activities and that's great and all, but we also
         // want to return results for categories.
@@ -384,8 +398,13 @@ class ActivitiesController extends AppController
                                 )));
         $numcats = $categories->count();
 
-        // We've searched for activities and categories and that's great and all, but we also
-        // want to return results for pathways. 
+        // We don't want to show results for pathways and steps separately in the UI;
+        // instead, we will merge the step results into the pathway results and
+        // only show "Pathways" results in the UI, like so:
+        // Personal Development - goal blha blah blah
+        //   > Step 3 - objective 
+        //   > Step 6 - objective 
+
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
         // $pathways = $allpaths->find()->where(function ($exp, $query) use($search) {
         //     return $exp->like('name', '%'.$search.'%');
@@ -396,10 +415,11 @@ class ActivitiesController extends AppController
                                     array('OR' => 
                                         array(
                                             'name LIKE' => '%'.$search.'%',
-                                            'description LIKE' => '%'.$search.'%'
+                                            'description LIKE' => '%'.$search.'%',
+                                            'objective LIKE' => '%'.$search.'%'
                                         )
-                                )));
-        $numpaths = $pathways->count();
+                                )))->toList();
+        //$numpaths = $pathways->count();
 
         // We've searched for activities, categories, and pathways and that's
         // great and all, but we also want to return results for steps as well. 
@@ -408,27 +428,51 @@ class ActivitiesController extends AppController
         //     return $exp->like('name', '%'.$search.'%');
         // })->order(['name' => 'ASC']);
 
-        $steps = $allpaths->find('all',
+        $steps = $allsteps->find('all',
                                     array('conditions' => 
                                     array('OR' => 
                                         array(
                                             'name LIKE' => '%'.$search.'%',
                                             'description LIKE' => '%'.$search.'%'
                                         )
-                                )));
-        $numsteps = $steps->count();
+                                )))->contain(['Pathways'])->toList();
 
 
 
-        $this->set(compact('categories', 
-                            'pathways', 
-                            'steps',
+        
+        
+        $justpathways = []; // Minimal pathways array to loop through to gather steps
+        $pathwaywithsteps = []; // Main array to pass to template
+
+        // Loop through the intial results and parse out the ID, name, slug, desc, objective
+        foreach($pathways as $p) {
+            $newp = [$p['id'],$p['name'],$p['slug'],$p['objective']];
+            array_push($justpathways,$newp);
+        }
+        // Now loop through the paths and on each pass, we loop through all the steps 
+        // and do a quick check to see if the steps parent pathway id matches and if it
+        // does then we add the step to a temp array (gets reset on each new path loop)
+        // and after each path it adds the steps to the final array, creating the 
+        // structure that makes it easy to loop through in the template file.
+        $numpaths = 0;
+        foreach($justpathways as $jp) {
+            $stepdeets = []; // reset step details after we've looked at the current step
+            foreach($steps as $s) {
+                if(!empty($s['pathways'][0])) { // Apparently there are orphaned steps that don't have a parent pathway
+                    if($jp[0] == $s['pathways'][0]['id']) { // does current path id match steps parent path id?
+                        array_push($stepdeets,[$s['id'],$s['name'],$s['slug'],$s['description']]); // Add this steps details to temp array
+                    }
+                }
+            }
+            array_push($pathwaywithsteps,[$jp,$stepdeets]); // write the temp array and the current pathway details to final array
+            $numpaths++;
+        }
+        
+        $this->set(compact('numacts','numcats','numpaths','categories', 
+                            'pathwaywithsteps', 
                             'activities', 
-                            'search', 
-                            'numcats', 
-                            'numsteps', 
-                            'numacts', 
-                            'numpaths'));
+                            'search'
+                        ));
     }
 
     /**
