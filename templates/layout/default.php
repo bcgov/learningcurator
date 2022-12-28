@@ -86,7 +86,6 @@
                                             required 
                                             class="w-40 bg-white text-sm text-slate-700 rounded-l-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700" 
                                             type="search" 
-                                            results="5" 
                                             aria-label="Search" 
                                             name="search" 
                                             id="search">
