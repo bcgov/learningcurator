@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?= $this->fetch('title') ?> | Learning Curator</title>
-    <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.x.x/dist/alpine-clipboard.js" defer></script>
     
     <link href="/css/tailwind.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
@@ -77,62 +76,29 @@
                             <a href="/logout" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg">Logout</a>
                            
                            
-                           
-                           
 
-
-
-                            <div class=""
-                                x-data="{ 'showModal': false }"
-                                @keydown.escape="showModal = false"
-                            >
-                                <!-- Trigger for Modal -->
-                                
-                                <div class="xpointer-events-auto mx-3 m-2 rounded-md">
-                                        <button type="button" class="hidden bg-white w-full lg:flex items-center text-sm leading-6 text-slate-700 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700"
-                                                @click="showModal =! showModal; if (showModal) $nextTick(()=>{$refs.input.focus()});">
-                                            <svg width="24" height="24" fill="none" aria-hidden="true" class="mr-3 flex-none">
-                                                <path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
-                                            </svg>
-                                            Search
-                                            <!-- <span class="ml-auto pl-3 flex-none text-xs font-semibold">Ctrl K</span> -->
-                                        </button>
-                                    </div>
-                                <!-- Modal -->
-                                <div x-cloak="hidden"
-                                    class="fixed inset-0 z-[100] flex items-center justify-center overflow-auto bg-black bg-opacity-50"
-                                    x-show="showModal" 
-                                >
-                                    <!-- Modal inner -->
-                                    <div 
-                                        class="w-fit mx-auto text-left bg-gray-100 rounded-lg shadow-lg"
-                                        @click.away="showModal = false"
-                                        x-transition:enter="motion-safe:ease-out duration-300"
-                                        x-transition:enter-start="opacity-0 scale-90"
-                                        x-transition:enter-end="opacity-100 scale-100"
-                                        
-                                    >
-                                        <!-- Title / Close-->
-                                        <div class="flex items-center justify-between bg-gray-100 rounded-lg">
-                                            <h5 class="mx-6 my-3 text-black max-w-none">Curator Search</h5>
-                                            
-                                            <button type="button" class="z-50 cursor-pointer mr-3" @click="showModal = false">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <p class="mx-6 my-3">Find categories, pathways, and activities&hellip; </p>
-                                        <!-- content -->
-                                        <!-- search box -->
-                                            <form method="get" action="/find" class="flex mx-6 mb-6 w-96" role="search">
-                                                <label for="search" class="sr-only">Search</label>
-                                                <input x-ref="input" class="w-80 bg-white text-sm leading-6 text-slate-700 rounded-l-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700" type="search" placeholder="" aria-label="Search" name="search" id="search">
-                                                <button class="bg-white text-sm leading-6 text-slate-700 ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700 rounded-r-lg" type="submit">Search</button>
-                                            </form>
-                                    </div>
-                                </div>
+        
+                            <div class="p-2 mt-3">
+                                <form method="get" action="/find" class="w-fit flex" role="search">
+                                    <label for="search" class="sr-only">Search</label>
+                                    <input x-ref="input" 
+                                            placeholder="Search"
+                                            required 
+                                            class="w-40 bg-white text-sm text-slate-700 rounded-l-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700" 
+                                            type="search" 
+                                            results="5" 
+                                            aria-label="Search" 
+                                            name="search" 
+                                            id="search">
+                                    <button title="Click here or press Enter to search" 
+                                            class="bg-white text-sm leading-6 text-slate-700 ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700 rounded-r-lg" 
+                                            type="submit">
+                                        <svg width="24" height="24" fill="none" aria-hidden="true" class="flex-none">
+                                            <path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                        </svg>
+                                    </button>
+                                </form>
                             </div>
 
 
@@ -141,17 +107,18 @@
 
 
                         </nav> <?php endif ?>
+
                     <!-- <div class="flex items-center justify-center space-x-2">
-  <span class="text-sm text-gray-800">Light</span>
-  <label for="toggle"
-    class="flex items-center h-5 p-1 duration-300 ease-in-out bg-gray-300 rounded-full cursor-pointer w-9">
-    <div
-  class="w-4 h-4 duration-300 ease-in-out transform bg-white rounded-full shadow-md toggle-dot">
-    </div>
-  </label>
-  <span class="text-sm text-gray-400">Dark</span>
-  <input id="toggle" type="checkbox" class="hidden" :value="darkMode" @change="darkMode = !darkMode" />
-</div> -->
+                    <span class="text-sm text-gray-800">Light</span>
+                    <label for="toggle"
+                        class="flex items-center h-5 p-1 duration-300 ease-in-out bg-gray-300 rounded-full cursor-pointer w-9">
+                        <div
+                    class="w-4 h-4 duration-300 ease-in-out transform bg-white rounded-full shadow-md toggle-dot">
+                        </div>
+                    </label>
+                    <span class="text-sm text-gray-400">Dark</span>
+                    <input id="toggle" type="checkbox" class="hidden" :value="darkMode" @change="darkMode = !darkMode" />
+                    </div> -->
                 </div>
                 <img class="hidden md:block my-3 px-2 sticky bottom-4" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
             </div>
@@ -165,14 +132,23 @@
         </div>
         <div class="p-6 bg-slate-200 " role="contentinfo">
             <img class="md:hidden my-3 px-2 max-w-[75%] mx-auto" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
-            <div class="mb-6 max-w-prose text-lg text-slate-700 mx-auto italic text-center"> We acknowledge with respect that the Learning Curator operates throughout B.C. on the traditional lands of Indigenous peoples. </div>
+            <div class="mb-6 max-w-prose text-lg text-slate-700 mx-auto italic text-center">
+                We acknowledge with respect that the Learning Curator operates throughout B.C. on the traditional lands of Indigenous peoples. 
+            </div>
             <div x-data="{ open: false }" class="leading-snug my-4 mx-8 text-center">
                 <button @click="open = ! open" class="inline text-darkblue text-sm hover:underline">Privacy Statement<span x-show="open">:</span></button>
-                <div x-show="open" @click.outside="open = false" class="inline text-sm">Your personal information is collected by the BC Public Service Agency in accordance with section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes of managing and administering employee development and training. If you have any questions, submit an AskMyHR request at www.gov.bc.ca/myhr/contact or call 250-952-6000. </div>
+                <div x-show="open" @click.outside="open = false" class="inline text-sm">
+                    Your personal information is collected by the BC Public Service Agency 
+                    in accordance with section 26(c) of the Freedom of Information and 
+                    Protection of Privacy Act for the purposes of managing and administering 
+                    employee development and training. If you have any questions, submit an 
+                    AskMyHR request at www.gov.bc.ca/myhr/contact or call 250-952-6000. 
+                </div>
             </div>
         </div>
     </div>
-    <!-- <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script> -->
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.x.x/dist/alpine-clipboard.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
 </body>
