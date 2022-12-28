@@ -414,11 +414,11 @@ class ActivitiesController extends AppController
                                     array('conditions' => 
                                     array('OR' => 
                                         array(
-                                            'name LIKE' => '%'.$search.'%',
-                                            'description LIKE' => '%'.$search.'%',
-                                            'objective LIKE' => '%'.$search.'%'
+                                            'Pathways.name LIKE' => '%'.$search.'%',
+                                            'Pathways.description LIKE' => '%'.$search.'%',
+                                            'Pathways.objective LIKE' => '%'.$search.'%'
                                         )
-                                )))->toList();
+                                )))->contain(['Topics.Categories'])->toList();
         //$numpaths = $pathways->count();
 
         // We've searched for activities, categories, and pathways and that's
@@ -438,15 +438,22 @@ class ActivitiesController extends AppController
                                 )))->contain(['Pathways'])->toList();
 
 
-
         
         
         $justpathways = []; // Minimal pathways array to loop through to gather steps
         $pathwaywithsteps = []; // Main array to pass to template
 
-        // Loop through the intial results and parse out the ID, name, slug, desc, objective
+        // Loop through the intial results and parse out the info need to reconstruct the links in the template
+        // /category-slug/topic-slug/pathway/path-slug/s/stepid/step-slug
         foreach($pathways as $p) {
-            $newp = [$p['id'],$p['name'],$p['slug'],$p['objective']];
+            $newp = [
+                        'category' => $p['topic']['categories'][0]['slug'],
+                        'topic' => $p['topic']['slug'],
+                        'id' => $p['id'],
+                        'name' => $p['name'],
+                        'slug' => $p['slug'],
+                        'goal' => $p['objective']
+                    ];
             array_push($justpathways,$newp);
         }
         // Now loop through the paths and on each pass, we loop through all the steps 
@@ -459,8 +466,14 @@ class ActivitiesController extends AppController
             $stepdeets = []; // reset step details after we've looked at the current step
             foreach($steps as $s) {
                 if(!empty($s['pathways'][0])) { // Apparently there are orphaned steps that don't have a parent pathway
-                    if($jp[0] == $s['pathways'][0]['id']) { // does current path id match steps parent path id?
-                        array_push($stepdeets,[$s['id'],$s['name'],$s['slug'],$s['description']]); // Add this steps details to temp array
+                    if($jp['id'] == $s['pathways'][0]['id']) { // does current path id match steps parent path id?
+                        array_push($stepdeets,[
+                                                'id' => $s['id'],
+                                                'name' => $s['name'],
+                                                'slug' => $s['slug'],
+                                                'objective' => $s['description']
+                                                ]
+                                ); // Add this steps details to temp array
                     }
                 }
             }
@@ -468,7 +481,10 @@ class ActivitiesController extends AppController
             $numpaths++;
         }
         
-        $this->set(compact('numacts','numcats','numpaths','categories', 
+        $this->set(compact('numacts',
+                            'numcats',
+                            'numpaths',
+                            'categories', 
                             'pathwaywithsteps', 
                             'activities', 
                             'search'

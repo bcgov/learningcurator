@@ -63,15 +63,19 @@ if ($this->Identity->isLoggedIn()) {
 <div class="p-3">
 <h2 class="text-2xl">Found <span class="badge badge-dark"><?= $numpaths ?></span> pathways</h2>
 <?php foreach($pathwaywithsteps as $p): ?>
+	<!-- <pre><?php print_r($p) ?></pre> -->
 <div class="p-3 my-3 rounded-lg bg-slate-200">
 	<h3 class="text-xl">
-		<a href="/pathways/<?= $p[0][2] ?>">
-			<?= $p[0][1] ?>
+		<a href="/<?= $p[0]['category'] ?>/<?= $p[0]['topic'] ?>/pathway/<?= $p[0]['slug'] ?>">
+			<?= $p[0]['name'] ?>
 		</a>
 	</h3>
-	<div><?= $p[0][3] ?></div>
+	<!-- <div><?= $p[0][5] ?></div> -->
 	<?php foreach($p[1] as $step): ?>
-		<?= $step[1] ?> - <?= $step[3] ?><br>
+	
+	<a class="inline-block py-1 px-2 bg-gray-100 rounded-lg" href="/<?= $p[0]['category'] ?>/<?= $p[0]['topic'] ?>/pathway/<?= $p[0]['slug'] ?>/s/<?= $step['id'] ?>/<?= $step['slug'] ?>">
+		<?= $step['name'] ?>
+	</a>
 	<?php endforeach ?>
 </div>
 <?php endforeach ?>

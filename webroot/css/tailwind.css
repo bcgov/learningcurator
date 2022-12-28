@@ -971,6 +971,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   list-style-type: decimal;
 }
 
+.columns-3 {
+  -moz-columns: 3;
+       columns: 3;
+}
+
 .flex-row {
   flex-direction: row;
 }
