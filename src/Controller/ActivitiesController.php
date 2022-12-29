@@ -361,7 +361,7 @@ class ActivitiesController extends AppController
      * 
      * This is #janky because of my sub-par SQL skills, I think.
      * What we actually need here is a proper search index; until we get that 
-     * in place, I don't know of a query that would be able to 
+     * in place, I don't know how to construct a query that would be able to 
      * encompass what we're looking for here. We'll certainly be adding 
      * a search function along the lines of ElasticSearch, but we're holding
      * off here until an "official government solution" is put forward.
@@ -401,15 +401,10 @@ class ActivitiesController extends AppController
         // We don't want to show results for pathways and steps separately in the UI;
         // instead, we will merge the step results into the pathway results and
         // only show "Pathways" results in the UI, like so:
-        // Personal Development - goal blha blah blah
-        //   > Step 3 - objective 
-        //   > Step 6 - objective 
+        // Personal Development
+        //   - Step 3, Step 6
 
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
-        // $pathways = $allpaths->find()->where(function ($exp, $query) use($search) {
-        //     return $exp->like('name', '%'.$search.'%');
-        // })->order(['name' => 'ASC']);
-
         $pathways = $allpaths->find('all',
                                     array('conditions' => 
                                     array('OR' => 
@@ -419,15 +414,10 @@ class ActivitiesController extends AppController
                                             'Pathways.objective LIKE' => '%'.$search.'%'
                                         )
                                 )))->contain(['Topics.Categories'])->toList();
-        //$numpaths = $pathways->count();
 
-        // We've searched for activities, categories, and pathways and that's
-        // great and all, but we also want to return results for steps as well. 
+        // This is the start of the janky bits where I have to make a separate query to the 
+        // steps table
         $allsteps = TableRegistry::getTableLocator()->get('Steps');
-        // $pathways = $allpaths->find()->where(function ($exp, $query) use($search) {
-        //     return $exp->like('name', '%'.$search.'%');
-        // })->order(['name' => 'ASC']);
-
         $steps = $allsteps->find('all',
                                     array('conditions' => 
                                     array('OR' => 
@@ -435,11 +425,8 @@ class ActivitiesController extends AppController
                                             'name LIKE' => '%'.$search.'%',
                                             'description LIKE' => '%'.$search.'%'
                                         )
-                                )))->contain(['Pathways'])->toList();
+                                )))->contain(['Pathways','Pathways.Topics','Pathways.Topics.Categories'])->toList();
 
-
-        
-        
         $justpathways = []; // Minimal pathways array to loop through to gather steps
         $pathwaywithsteps = []; // Main array to pass to template
 
@@ -462,6 +449,7 @@ class ActivitiesController extends AppController
         // and after each path it adds the steps to the final array, creating the 
         // structure that makes it easy to loop through in the template file.
         $numpaths = 0;
+        $stepnotp = []; // detect results from steps/paths that aren't in the org paths []
         foreach($justpathways as $jp) {
             $stepdeets = []; // reset step details after we've looked at the current step
             foreach($steps as $s) {
@@ -474,11 +462,62 @@ class ActivitiesController extends AppController
                                                 'objective' => $s['description']
                                                 ]
                                 ); // Add this steps details to temp array
+                    } else {
+                        array_push($stepnotp,$s);
                     }
                 }
             }
             array_push($pathwaywithsteps,[$jp,$stepdeets]); // write the temp array and the current pathway details to final array
             $numpaths++;
+        }
+
+        // We still need to account for all the step results that don't have also have a pathway
+        // that was found. If we just passed $pathwaywithsteps now, it would be stripping results
+        // and not showing pathways that just don't have the search term in the path title/desc
+        // (but do have it in the step).
+        // To do this, we now loop through all the steps first and check for matching paths,
+        // and if we don't find a match, then we reconstruct the pathway info from the step
+        // and add it to $pathwaywithsteps.
+        // Note that this does mean that these results will *always* come below the other 
+        // initial pathway results unless with add a new sort into things below.
+        foreach($steps as $s) {
+            $stepdeets = []; // reset step details after we've looked at the current step
+            // Apparently there are orphaned steps that don't have a parent pathway
+            // This is a result of improper database design that allows the deletion
+            // of pathways, even though there are still steps attached to it
+            if(!empty($s['pathways'][0])) { 
+                // For each step found we loop through all the found pathways and 
+                // look for a matching ID. If we don't find a match, then we add 
+                // the step with it's path 
+                $matchfound = 0;
+                foreach($justpathways as $jp) {
+                    if($jp['id'] == $s['pathways'][0]['id']) {
+                        $matchfound = 1;
+                    }
+                }
+                if(!$matchfound) {
+                    // Recreate the pathway info
+                    $inpath = [
+                        'category' => $s['pathways'][0]['topic']['categories'][0]['slug'],
+                        'topic' => $s['pathways'][0]['topic']['slug'],
+                        'id' => $s['pathways'][0]['id'],
+                        'name' => $s['pathways'][0]['name'],
+                        'slug' => $s['pathways'][0]['slug'],
+                        'goal' => $s['pathways'][0]['objective']
+                    ];
+                    // Create the necessary step details
+                    array_push($stepdeets,[
+                                            'id' => $s['id'],
+                                            'name' => $s['name'],
+                                            'slug' => $s['slug'],
+                                            'objective' => $s['description']
+                                        ]
+                    );
+                    // write the temp array and the current pathway details to final array
+                    array_push($pathwaywithsteps,[$inpath,$stepdeets]);
+                    $numpaths++;
+                }
+            }
         }
         
         $this->set(compact('numacts',
