@@ -370,6 +370,11 @@ class ActivitiesController extends AppController
      * we are writing below in a very naive and malperformant way, manually 
      * combining the results from multiple queries to produce acceptable
      * arrays for the template.
+     * 
+     * #TODO These queries attempt to restrict results to activities and 
+     * pathways and steps that are published (status_id == 2), but it fails
+     * when there are published steps on an unpublished pathway (still shows the path)
+     * for unknown reasons. Fix this.
      *
      * @param string|null $search search pararmeters to lookup activities.
      * @return \Cake\Http\Response|null
@@ -381,21 +386,23 @@ class ActivitiesController extends AppController
         $search = $this->request->getQuery('search');
         
         $activities = $this->Activities->find('search', ['search' => $this->request->getQuery()])
+                                        ->where(['status_id = ' => 2])
                                         ->contain(['ActivityTypes','Steps.Pathways']);
         $numacts = $activities->count();
-        //echo '<pre>'; print_r($activities); exit;
 
         // We've searched for activities and that's great and all, but we also
         // want to return results for categories.
         $allcats = TableRegistry::getTableLocator()->get('Categories');
         $categories = $allcats->find('all',
                                     array('conditions' => 
-                                    array('OR' => 
-                                        array(
-                                            'name LIKE' => '%'.$search.'%',
-                                            'description LIKE' => '%'.$search.'%'
+                                        array('OR' => 
+                                            array(
+                                                'name LIKE' => '%'.$search.'%',
+                                                'description LIKE' => '%'.$search.'%'
+                                            )
                                         )
-                                )));
+                                    )
+                                );
         $numcats = $categories->count();
 
         // We don't want to show results for pathways and steps separately in the UI;
@@ -403,30 +410,38 @@ class ActivitiesController extends AppController
         // only show "Pathways" results in the UI, like so:
         // Personal Development
         //   - Step 3, Step 6
-
         $allpaths = TableRegistry::getTableLocator()->get('Pathways');
         $pathways = $allpaths->find('all',
                                     array('conditions' => 
-                                    array('OR' => 
-                                        array(
-                                            'Pathways.name LIKE' => '%'.$search.'%',
-                                            'Pathways.description LIKE' => '%'.$search.'%',
-                                            'Pathways.objective LIKE' => '%'.$search.'%'
+                                        array('OR' => 
+                                            array(
+                                                'Pathways.name LIKE' => '%'.$search.'%',
+                                                'Pathways.description LIKE' => '%'.$search.'%',
+                                                'Pathways.objective LIKE' => '%'.$search.'%'
+                                            )
                                         )
-                                )))->contain(['Topics.Categories'])->toList();
-
+                                    )
+                                )->where(['Pathways.status_id =' => 2])
+                                ->contain(['Topics.Categories'])
+                                ->toList();
+        //echo '<pre>'; print_r($pathways); exit;
         // This is the start of the janky bits where I have to make a separate query to the 
         // steps table
         $allsteps = TableRegistry::getTableLocator()->get('Steps');
         $steps = $allsteps->find('all',
                                     array('conditions' => 
-                                    array('OR' => 
-                                        array(
-                                            'name LIKE' => '%'.$search.'%',
-                                            'description LIKE' => '%'.$search.'%'
+                                        array('OR' => 
+                                            array(
+                                                'name LIKE' => '%'.$search.'%',
+                                                'description LIKE' => '%'.$search.'%'
+                                            )
                                         )
-                                )))->contain(['Pathways','Pathways.Topics','Pathways.Topics.Categories'])->toList();
-
+                                    )
+                                )
+                                ->where(['Steps.status_id =' => 2])
+                                ->contain(['Pathways','Pathways.Topics','Pathways.Topics.Categories'])
+                                ->toList();
+        //echo '<pre>'; print_r($steps); exit;
         $justpathways = []; // Minimal pathways array to loop through to gather steps
         $pathwaywithsteps = []; // Main array to pass to template
 
@@ -454,16 +469,18 @@ class ActivitiesController extends AppController
             $stepdeets = []; // reset step details after we've looked at the current step
             foreach($steps as $s) {
                 if(!empty($s['pathways'][0])) { // Apparently there are orphaned steps that don't have a parent pathway
-                    if($jp['id'] == $s['pathways'][0]['id']) { // does current path id match steps parent path id?
-                        array_push($stepdeets,[
-                                                'id' => $s['id'],
-                                                'name' => $s['name'],
-                                                'slug' => $s['slug'],
-                                                'objective' => $s['description']
-                                                ]
-                                ); // Add this steps details to temp array
-                    } else {
-                        array_push($stepnotp,$s);
+                    if($s['status_id'] == 2) {
+                        if($jp['id'] == $s['pathways'][0]['id']) { // does current path id match steps parent path id?
+                            array_push($stepdeets,[
+                                                    'id' => $s['id'],
+                                                    'name' => $s['name'],
+                                                    'slug' => $s['slug'],
+                                                    'objective' => $s['description']
+                                                    ]
+                                    ); // Add this steps details to temp array
+                        } else {
+                            array_push($stepnotp,$s);
+                        }
                     }
                 }
             }
@@ -481,6 +498,7 @@ class ActivitiesController extends AppController
         // Note that this does mean that these results will *always* come below the other 
         // initial pathway results unless with add a new sort into things below.
         foreach($steps as $s) {
+        if($s['status_id'] == 2) {
             $stepdeets = []; // reset step details after we've looked at the current step
             // Apparently there are orphaned steps that don't have a parent pathway
             // This is a result of improper database design that allows the deletion
@@ -518,6 +536,7 @@ class ActivitiesController extends AppController
                     $numpaths++;
                 }
             }
+        } // end status check
         }
         
         $this->set(compact('numacts',

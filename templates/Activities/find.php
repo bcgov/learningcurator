@@ -9,11 +9,12 @@ if ($this->Identity->isLoggedIn()) {
 }
 
 ?>
-
+<header class="w-full h-32 md:h-52 bg-darkblue px-8 flex items-center">
+    <h1 class="text-white text-3xl font-bold tracking-wide">Searching Curator for &quot;<?= $search ?>&quot;</h1>
+</header>
 <div class="p-6">
-<h1 class="text-3xl">Searching for &quot;<?= $search ?>&quot;</h1>
 <?php if(!$numcats && !$numpaths && !$numacts): ?>
-	<div class="py-3">
+	
 
 		<div class="mb-3 bg-gray-100 p-3 border-2 rounded-lg">No results found.</div>
 		
@@ -37,7 +38,7 @@ if ($this->Identity->isLoggedIn()) {
 			</button>
 		</form>
 	
-	</div>
+	
 <?php endif ?>
 <div class="flex flex-col">
 
