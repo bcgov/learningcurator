@@ -638,9 +638,10 @@ let launchlinks = document.getElementsByClassName('launch');
 Array.from(launchlinks).forEach(function(element) {
     element.addEventListener('click', (e) => { 
         e.preventDefault();
+        
         let indicator = e.target.getAttribute('data-activity');
         document.querySelector('.'+indicator).classList.remove('hidden');
-        //indicator.classList.remove('hidden');
+
         let url = e.target.href;
         window.open(url);
         // Wait 5 seconds before re-loading the status so the click
