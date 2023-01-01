@@ -634,17 +634,22 @@ foreach ($step->pathways as $pathways) {
 window.onload = function(event) {
     loadStatus();
 }
+// Left to itself, the launch link on activites works just fine 
+// with target=_blank set, but we want to update the UI of this 
+// page while the learner visits the activity so that when they
+// come back, their current state on the pathway is reflected 
+// without having to refresh the page. 
 let launchlinks = document.getElementsByClassName('launch');
 Array.from(launchlinks).forEach(function(element) {
     element.addEventListener('click', (e) => { 
         e.preventDefault();
-        
+        // Set the "Launched" badge on the activity
         let indicator = e.target.getAttribute('data-activity');
         document.querySelector('.'+indicator).classList.remove('hidden');
-
+        // actually open the link
         let url = e.target.href;
         window.open(url);
-        // Wait 5 seconds before re-loading the status so the click
+        // Wait 5 seconds before re-loading the status so the launch
         // event gets properly registered in the background
         setTimeout(function(){
             loadStatus();
@@ -671,6 +676,7 @@ function loadStatus() {
     .then((json) => {
 
         if (json.percentage > 0) {
+            // Phrasing
             let launched = json.completed + ' launched';
             let remaining = (json.requiredacts - json.completed) + ' to go';
 
@@ -686,7 +692,6 @@ function loadStatus() {
                 document.querySelector('.pro_sm_<?= $step->pathways[0]->id ?>').innerHTML = '';
                 document.querySelector('.total_<?= $step->pathways[0]->id ?>').innerHTML = '';
                 document.querySelector('.pro_<?= $step->pathways[0]->id ?>').innerHTML = launched + ', ' + remaining;
-                //document.querySelector('.total_<?= $step->pathways[0]->id ?>').innerHTML = remaining;
             } else {
                 document.querySelector('.pro_<?= $step->pathways[0]->id ?>').innerHTML = launched;
                 document.querySelector('.total_<?= $step->pathways[0]->id ?>').innerHTML = remaining;
