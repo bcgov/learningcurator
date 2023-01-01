@@ -90,33 +90,40 @@ $this->assign('title', h($pathway->name));
             </div>
             <script>
                 fetch('/pathways/status/<?= $pathway->id ?>', {
-                        method: 'GET'
-                    })
-                    .then((res) => res.json())
-                    .then((json) => {
-                        if (json.percentage > 0) {
-                            let launched = json.completed + ' launched';
-                            let remaining = (json.requiredacts - json.completed) + ' to go';
+                    method: 'GET'
+                })
+                .then((res) => res.json())
+                .then((json) => {
 
-                            document.querySelector('.pbar').style.width = json.percentage + '%';
+                    if (json.percentage > 0) {
+                        let launched = json.completed + ' launched';
+                        let remaining = (json.requiredacts - json.completed) + ' to go';
 
-                            if (json.percentage == 100) {
-                                document.querySelector('.pro').innerHTML = 'Pathway completed!';
-                            }
-                            if (json.percentage < 20) {
-                                document.querySelector('.pro_sm').innerHTML = launched;
-                                document.querySelector('.total').innerHTML = remaining;
-                            } else {
-                                document.querySelector('.pro').innerHTML = launched;
-                                document.querySelector('.total').innerHTML = remaining;
-                            }
+                        document.querySelector('.pbar').style.width = json.percentage + '%';
 
+                        if (json.percentage == 100) {
+                            document.querySelector('.pro').innerHTML = 'Pathway completed!';
+                        } else if (json.percentage < 20) {
+                            document.querySelector('.pro').innerHTML = '';
+                            document.querySelector('.pro_sm').innerHTML = launched;
+                            document.querySelector('.total').innerHTML = remaining;
+                        } else if (json.percentage > 90) {
+                            document.querySelector('.pro_sm').innerHTML = '';
+                            document.querySelector('.total').innerHTML = '';
+                            document.querySelector('.pro').innerHTML = launched + ', ' + remaining;
+                            //document.querySelector('.total_').innerHTML = remaining;
                         } else {
-                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities to go</span>';
+                            document.querySelector('.pro').innerHTML = launched;
+                            document.querySelector('.total').innerHTML = remaining;
+                            document.querySelector('.pro_sm').innerHTML = '';
                         }
-                        //console.log(json);
-                    })
-                    .catch((err) => console.error("error:", err));
+
+                    } else {
+                        document.querySelector('.pbarcontainer_').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities to go</span>';
+                    }
+                    console.log(json);
+                })
+                .catch((err) => console.error("error:", err));
             </script>
 
 
