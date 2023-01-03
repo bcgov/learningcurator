@@ -24,7 +24,7 @@ if ($this->Identity->isLoggedIn()) {
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Activity Record: <span class="text-slate-900"><?= $activity->name ?></span></h2>
 
 
-        <div class="w-full inline-block mb-4 p-0.5 rounded-md bg-sagedark hover:bg-sagedark/80 ">
+        <div class="w-full inline-block mb-4 p-0.5 rounded-md bg-sagedark">
             <div class="flex flex-row justify-between">
             <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($activity->activity_type->name) ?>"></i>
                 <div class="bg-white inset-1 rounded-r-sm flex-1">
