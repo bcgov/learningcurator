@@ -25,7 +25,8 @@ if ($this->Identity->isLoggedIn()) {
     <div class="lg:grid lg:grid-cols-3 lg:gap-4 items-start">
         <div class="lg:col-span-2">
             <div class="p-3 rounded-lg bg-slate-100">
-                <h2 class="text-2xl text-darkblue font-semibold">Admin Options</h2>
+                <h2 class="text-2xl text-darkblue font-semibold mb-2">Admin Options</h2>
+                <p><i class="bi bi-info-circle"></i> <strong>Not sure where to start?</strong> Read the <a href="https://bcgov.sharepoint.com/:f:/r/teams/00404/Shared%20Documents/Curators/Handbook%20-%20Documentation%20for%20Curators?csf=1&web=1&e=Y7b0BO" target="_blank" class="text-sky-700 hover:underline">Curator's Handbook</a>.</p>
                 <h3 class="mt-4 font-semibold">Search for a User</h3>
                 <form method="get" action="/users/search" class="mt-2">
                     <label class="">
@@ -57,7 +58,7 @@ if ($this->Identity->isLoggedIn()) {
                     <!-- <li class="px-2"> <a class="hover:underline hover:text-sky-700" href=" /activities/addtostep">Add Activity to Step</a></li> -->
                 </ul>
             </div>
-            <!-- TODO Nori move stats to second position on small screen sizes. Change to flexbox? -->
+            <!-- TODO #234 Nori move stats to second position on small screen sizes. Change to flexbox? -->
             <?php $rcount = $noresponses->count() ?? 0 ?>
             <h2 class="text-2xl text-darkblue font-semibold mt-6"><span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2 mr-2"><?= $rcount ?></span> Open Reports</h2>
             <div class="max-w-prose">
