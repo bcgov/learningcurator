@@ -68,6 +68,12 @@ if ($this->Identity->isLoggedIn()) {
 
 
                     <h3 class="mt-4 mb-1 text-darkblue font-semibold">Pathway Activity Progress</h3>
+                    <div class="flex pbarcontainer_<?= $path->pathway->id ?> mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
+                        <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar_<?= $path->pathway->id ?> flex-none"></span>
+                        <span class="py-2 px-3 text-base pbar_<?= $path->pathway->id ?> pro_sm_<?= $path->pathway->id ?> flex-none"></span>
+                        <span class="py-2 px-3 text-base total_<?= $path->pathway->id ?> flex-1 text-right"></span>
+                        <span class="zero_<?= $path->pathway->id ?> hidden py-2 px-3 text-base text-right"></span>
+                    </div>
                     <script>
                         
                         fetch('/pathways/status/<?= $path->pathway->id ?>', {
@@ -77,40 +83,43 @@ if ($this->Identity->isLoggedIn()) {
                         .then((json) => {
 
                             if (json.percentage > 0) {
+                                // Phrasing
                                 let launched = json.completed + ' launched';
                                 let remaining = (json.requiredacts - json.completed) + ' to go';
-
+                                document.querySelector('.zero_<?= $path->pathway->id ?>').classList.add('hidden');
+                                document.querySelector('.pbar_<?= $path->pathway->id ?>').classList.remove('hidden');
                                 document.querySelector('.pbar_<?= $path->pathway->id ?>').style.width = json.percentage + '%';
 
                                 if (json.percentage == 100) {
-                                    document.querySelector('.pro_<?= $path->pathway->id ?>').innerHTML = 'Pathway completed!';
+                                    
+                                    document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = 'Pathway completed!';
+                                    document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
                                 } else if (json.percentage < 20) {
-                                    document.querySelector('.pro_<?= $path->pathway->id ?>').innerHTML = '';
+                                    
+                                    document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = '';
                                     document.querySelector('.pro_sm_<?= $path->pathway->id ?>').innerHTML = launched;
                                     document.querySelector('.total_<?= $path->pathway->id ?>').innerHTML = remaining;
+                                    document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
                                 } else if (json.percentage > 90) {
                                     document.querySelector('.pro_sm_<?= $path->pathway->id ?>').innerHTML = '';
                                     document.querySelector('.total_<?= $path->pathway->id ?>').innerHTML = '';
-                                    document.querySelector('.pro_<?= $path->pathway->id ?>').innerHTML = launched + ', ' + remaining;
-                                    //document.querySelector('.total_<?= $path->pathway->id ?>').innerHTML = remaining;
+                                    document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = launched + ', ' + remaining;
+                                    document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
                                 } else {
-                                    document.querySelector('.pro_<?= $path->pathway->id ?>').innerHTML = launched;
+                                    document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = launched;
                                     document.querySelector('.total_<?= $path->pathway->id ?>').innerHTML = remaining;
                                     document.querySelector('.pro_sm_<?= $path->pathway->id ?>').innerHTML = '';
+                                    document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
                                 }
 
                             } else {
-                                document.querySelector('.pbarcontainer_<?= $path->pathway->id ?>').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities to go</span>';
+                                document.querySelector('.zero_<?= $path->pathway->id ?>').classList.remove('hidden');
+                                document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '' + json.requiredacts + ' activities to go';
                             }
-                            console.log(json);
                         })
                         .catch((err) => console.error("error:", err));
                     </script>
-                    <div class="flex pbarcontainer_<?= h($path->pathway->id) ?> mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
-                        <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar_<?= h($path->pathway->id) ?> pro_<?= h($path->pathway->id) ?> flex-none"></span>
-                        <span class="py-2 px-3 text-base pbar_<?= h($path->pathway->id) ?> pro_sm_<?= h($path->pathway->id) ?> flex-none"></span>
-                        <span class="py-2 px-3 text-base total_<?= h($path->pathway->id) ?> flex-1 text-right"></span>
-                    </div>
+
                     <p class="my-4"> <a href="/<?= h($path->pathway->topic->categories[0]->slug) ?>/<?= $path->pathway->topic->slug ?>/pathway/<?= h($path->pathway->slug) ?>" class="text-sky-700 underline">
                             View the <strong><?= h($path->pathway->name) ?></strong> pathway
                         </a> </p>

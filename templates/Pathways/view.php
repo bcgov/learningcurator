@@ -83,10 +83,11 @@ $this->assign('title', h($pathway->name));
             <?php endif ?>
 
             <h3 class="mt-4 mb-1 text-darkblue font-semibold text-lg">Pathway Activity Progress</h3>
-            <div class="flex pbarcontainer mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
-                <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
-                <span class="py-2 px-1 text-base pbar pro_sm flex-none"></span>
+            <div class="flex pbarcontainer mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
+                <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar flex-none"></span>
+                <span class="py-2 px-3 text-base pbar pro_sm flex-none"></span>
                 <span class="py-2 px-3 text-base total flex-1 text-right"></span>
+                <span class="zero hidden py-2 px-3 text-base text-right"></span>
             </div>
             <script>
                 fetch('/pathways/status/<?= $pathway->id ?>', {
@@ -96,32 +97,39 @@ $this->assign('title', h($pathway->name));
                 .then((json) => {
 
                     if (json.percentage > 0) {
+                        // Phrasing
                         let launched = json.completed + ' launched';
                         let remaining = (json.requiredacts - json.completed) + ' to go';
-
+                        document.querySelector('.zero').classList.add('hidden');
+                        document.querySelector('.pbar').classList.remove('hidden');
                         document.querySelector('.pbar').style.width = json.percentage + '%';
 
                         if (json.percentage == 100) {
-                            document.querySelector('.pro').innerHTML = 'Pathway completed!';
+                            
+                            document.querySelector('.pbar').innerHTML = 'Pathway completed!';
+                            document.querySelector('.zero').innerHTML = '';
                         } else if (json.percentage < 20) {
-                            document.querySelector('.pro').innerHTML = '';
+                            
+                            document.querySelector('.pbar').innerHTML = '';
                             document.querySelector('.pro_sm').innerHTML = launched;
                             document.querySelector('.total').innerHTML = remaining;
+                            document.querySelector('.zero').innerHTML = '';
                         } else if (json.percentage > 90) {
                             document.querySelector('.pro_sm').innerHTML = '';
                             document.querySelector('.total').innerHTML = '';
-                            document.querySelector('.pro').innerHTML = launched + ', ' + remaining;
-                            //document.querySelector('.total_').innerHTML = remaining;
+                            document.querySelector('.pbar').innerHTML = launched + ', ' + remaining;
+                            document.querySelector('.zero').innerHTML = '';
                         } else {
-                            document.querySelector('.pro').innerHTML = launched;
+                            document.querySelector('.pbar').innerHTML = launched;
                             document.querySelector('.total').innerHTML = remaining;
                             document.querySelector('.pro_sm').innerHTML = '';
+                            document.querySelector('.zero').innerHTML = '';
                         }
 
                     } else {
-                        document.querySelector('.pbarcontainer_').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities to go</span>';
+                        document.querySelector('.zero').classList.remove('hidden');
+                        document.querySelector('.zero').innerHTML = '' + json.requiredacts + ' activities to go';
                     }
-                    console.log(json);
                 })
                 .catch((err) => console.error("error:", err));
             </script>
@@ -191,8 +199,7 @@ $this->assign('title', h($pathway->name));
 
                                                     if (json.steppercent == 100) {
                                                         document.querySelector('.pro_<?= h($steps->id) ?>').innerHTML = 'Step completed!';
-                                                    }
-                                                    if (json.steppercent < 20) {
+                                                    } else if (json.steppercent < 20) {
                                                         document.querySelector('.pro_sm_<?= h($steps->id) ?>').innerHTML = launched;
                                                         document.querySelector('.total_<?= h($steps->id) ?>').innerHTML = remaining;
                                                     } else {
@@ -207,7 +214,7 @@ $this->assign('title', h($pathway->name));
                                             })
                                             .catch((err) => console.error("error:", err));
                                     </script>
-                                    <div class="flex pbarcontainer_<?= h($steps->id) ?> mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
+                                    <div class="flex pbarcontainer_<?= h($steps->id) ?> mb-3 w-full bg-slate-200 rounded-lg content-center justify-start">
                                         <span class="py-1 px-3 bg-bluegreen text-white rounded-lg text-sm pbar_<?= h($steps->id) ?> pro_<?= h($steps->id) ?> flex-none"></span>
                                         <span class="py-1 px-1 text-sm pbar_<?= h($steps->id) ?> pro_sm_<?= h($steps->id) ?> flex-none"></span>
                                         <span class="py-1 px-3 text-sm total_<?= h($steps->id) ?> flex-1 text-right"></span>

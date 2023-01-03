@@ -128,10 +128,11 @@ foreach ($step->pathways as $pathways) {
    
 
             <div class="flex pbarcontainer_<?= $step->pathways[0]->id ?> mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
-                        <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar_<?= $step->pathways[0]->id ?> pro_<?= $step->pathways[0]->id ?> flex-none"></span>
-                        <span class="py-2 px-3 text-base pbar_<?= $step->pathways[0]->id ?> pro_sm_<?= $step->pathways[0]->id ?> flex-none"></span>
-                        <span class="py-2 px-3 text-base total_<?= $step->pathways[0]->id ?> flex-1 text-right"></span>
-                    </div>
+                <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar_<?= $step->pathways[0]->id ?> flex-none"></span>
+                <span class="py-2 px-3 text-base pbar_<?= $step->pathways[0]->id ?> pro_sm_<?= $step->pathways[0]->id ?> flex-none"></span>
+                <span class="py-2 px-3 text-base total_<?= $step->pathways[0]->id ?> flex-1 text-right"></span>
+                <span class="zero_<?= $step->pathways[0]->id ?> hidden py-2 px-3 text-base text-right"></span>
+            </div>
 
 
 
@@ -240,10 +241,6 @@ foreach ($step->pathways as $pathways) {
                                     <a href="/profile/launches"  class="act-<?= $activity->id ?> <?= $completed ?> p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80">
                                         Launched
                                     </a>
-
-
-
-
 
 
 
@@ -425,11 +422,11 @@ foreach ($step->pathways as $pathways) {
                     <?php
                     // #TODO Allan move this back into the controller and simplify
                     // this was an attempt at requiring two launches to satify a complete
-                    $completed = 0;
+                    $completed = 'hidden';
                     $actlist = array_count_values($useractivitylist);
                     foreach ($actlist as $k => $v) {
                         if ($k == $activity->id) {
-                            if ($v > 0) $completed = $v;
+                            if ($v > 0) $completed = 'inline-block';
                         }
                     }
                     ?>
@@ -439,7 +436,8 @@ foreach ($step->pathways as $pathways) {
                             <div class="bg-white inset-1 rounded-r-sm flex-1">
                                 <div x-data="{ count: <?= $completed ?> }">
                                     <div class="p-3 text-lg">
-                                        <a href="/profile/launches" class="inline-block p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
+
+                                        <a href="/profile/launches"  class="act-<?= $activity->id ?> <?= $completed ?> p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80">
                                             Launched
                                         </a>
                                         <h4 class="mb-3 mt-1 text-xl font-semibold">
@@ -457,13 +455,18 @@ foreach ($step->pathways as $pathways) {
 
                                             <?php endif ?>
                                             <div class="">
-                                                <a target="_blank" x-on:click="count++;" rel="noopener" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $activity->id ?>" class="launch inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
+                                            <a target="_blank" 
+                                                rel="noopener" 
+                                                title="Launch this activity" 
+                                                data-activity="act-<?= $activity->id ?>" 
+                                                href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
+                                                class="launch inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
                                                     Launch
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="ml-1 inline align-baseline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
                                                         <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
                                                         <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
                                                     </svg>
-                                                </a>
+                                            </a>
                                             </div>
                                             <div x-data="{ open: false }">
                                                 <button @click="open = !open" class="text-sm text-sky-700 text-right">
@@ -649,14 +652,14 @@ Array.from(launchlinks).forEach(function(element) {
         // actually open the link
         let url = e.target.href;
         window.open(url);
-        // Wait 5 seconds before re-loading the status so the launch
+        // Wait 3 seconds before re-loading the status so the launch
         // event gets properly registered in the background
         setTimeout(function(){
             loadStatus();
-        }, 5000);
+        }, 3000);
     });
 });
-// This queries an internal API endpoint that returns the status for 
+// This queries an internal RPC endpoint that returns the status for 
 // individual pathway given its ID. It takes the user ID from the current
 // session and returns JSON like so:
 // {
@@ -679,29 +682,36 @@ function loadStatus() {
             // Phrasing
             let launched = json.completed + ' launched';
             let remaining = (json.requiredacts - json.completed) + ' to go';
-
+            document.querySelector('.zero_<?= $step->pathways[0]->id ?>').classList.add('hidden');
+            document.querySelector('.pbar_<?= $step->pathways[0]->id ?>').classList.remove('hidden');
             document.querySelector('.pbar_<?= $step->pathways[0]->id ?>').style.width = json.percentage + '%';
 
             if (json.percentage == 100) {
-                document.querySelector('.pro_<?= $step->pathways[0]->id ?>').innerHTML = 'Pathway completed!';
+                
+                document.querySelector('.pbar_<?= $step->pathways[0]->id ?>').innerHTML = 'Pathway completed!';
+                document.querySelector('.zero_<?= $step->pathways[0]->id ?>').innerHTML = '';
             } else if (json.percentage < 20) {
-                document.querySelector('.pro_<?= $step->pathways[0]->id ?>').innerHTML = '';
+                
+                document.querySelector('.pbar_<?= $step->pathways[0]->id ?>').innerHTML = '';
                 document.querySelector('.pro_sm_<?= $step->pathways[0]->id ?>').innerHTML = launched;
                 document.querySelector('.total_<?= $step->pathways[0]->id ?>').innerHTML = remaining;
+                document.querySelector('.zero_<?= $step->pathways[0]->id ?>').innerHTML = '';
             } else if (json.percentage > 90) {
                 document.querySelector('.pro_sm_<?= $step->pathways[0]->id ?>').innerHTML = '';
                 document.querySelector('.total_<?= $step->pathways[0]->id ?>').innerHTML = '';
-                document.querySelector('.pro_<?= $step->pathways[0]->id ?>').innerHTML = launched + ', ' + remaining;
+                document.querySelector('.pbar_<?= $step->pathways[0]->id ?>').innerHTML = launched + ', ' + remaining;
+                document.querySelector('.zero_<?= $step->pathways[0]->id ?>').innerHTML = '';
             } else {
-                document.querySelector('.pro_<?= $step->pathways[0]->id ?>').innerHTML = launched;
+                document.querySelector('.pbar_<?= $step->pathways[0]->id ?>').innerHTML = launched;
                 document.querySelector('.total_<?= $step->pathways[0]->id ?>').innerHTML = remaining;
                 document.querySelector('.pro_sm_<?= $step->pathways[0]->id ?>').innerHTML = '';
+                document.querySelector('.zero_<?= $step->pathways[0]->id ?>').innerHTML = '';
             }
 
         } else {
-            document.querySelector('.pbarcontainer_<?= $step->pathways[0]->id ?>').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities to go</span>';
+            document.querySelector('.zero_<?= $step->pathways[0]->id ?>').classList.remove('hidden');
+            document.querySelector('.zero_<?= $step->pathways[0]->id ?>').innerHTML = '' + json.requiredacts + ' activities to go';
         }
-        console.log(json);
     })
     .catch((err) => console.error("error:", err));
 }
