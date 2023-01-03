@@ -13,11 +13,10 @@ $this->loadHelper('Authentication.Identity');
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Add Category</h2>
     <div class="max-w-prose outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
         <?= $this->Form->create($category) ?>
-        <!-- TODO Nori/Allan add more guidance about each field? tooltip or placeholder or both? -->
         <fieldset>
             <?php
-            echo $this->Form->control('name', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3']);
-            echo $this->Form->control('description', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg']);
+            echo $this->Form->control('name', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3', 'label' => 'Category Name']);
+            echo $this->Form->control('description', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg', 'label' => 'Category Description']);
             //echo $this->Form->control('image_path');
             //echo $this->Form->control('color');
             //echo $this->Form->control('featured');

@@ -15,18 +15,13 @@
 
         <?= $this->Form->create($step) ?>
         <fieldset>
-
-
-        <label for="name">Step Title</label>
-            <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span>   
-        <?php echo $this->Form->input('name', ['class' => 'form-field max-w-prose', 'type' => 'text', 'aria-describedby' => 'nameHelp']);  ?>
-            
+            <label for="name">Step Title</label>
+            <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span>
+            <?php echo $this->Form->input('name', ['class' => 'form-field max-w-prose', 'type' => 'text', 'aria-describedby' => 'nameHelp']);  ?>
             <div class="mt-2"><?php echo $this->Form->control('slug', ['class' => 'form-field  max-w-prose']); ?></div>
             <label for="description">Step Objective</label>
             <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1 phrase/sentence).</span>
-           <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
-            <div class="mt-2"><?php // echo $this->Form->control('image_path', ['class' => 'form-field max-w-prose']); 
-                                ?></div>
+            <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
             <div class="mt-2"><?php echo $this->Form->control('featured', ['class' => 'form-field max-w-prose']); ?></div>
             <div class="mt-2"><?php echo $this->Form->control('createdby', ['class' => 'form-field max-w-prose', 'label' => 'Created By']); ?></div>
             <div class="mt-2"><?php echo $this->Form->control('modifiedby', ['class' => 'form-field max-w-prose', 'label' => 'Modified By']); ?></div>

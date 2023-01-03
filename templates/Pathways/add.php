@@ -30,7 +30,7 @@ $this->loadHelper('Authentication.Identity');
             //echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true,'class'=>'form-control']);
             ?>
             <?php
-            echo $this->Form->control('name', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Pathway Name']);
+            echo $this->Form->control('name', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Pathway Title']);
             ?>
 
             <label for="description">Pathway Description</label>
