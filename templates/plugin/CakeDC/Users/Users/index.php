@@ -57,7 +57,7 @@ if ($this->Identity->isLoggedIn()) {
                     <!-- <li class="px-2"> <a class="hover:underline hover:text-sky-700" href=" /activities/addtostep">Add Activity to Step</a></li> -->
                 </ul>
             </div>
-            <!-- TODO Nori move stats to second position on small screen sizes. Change to flexbox? -->
+            <!-- TODO #234 Nori move stats to second position on small screen sizes. Change to flexbox? -->
             <?php $rcount = $noresponses->count() ?? 0 ?>
             <h2 class="text-2xl text-darkblue font-semibold mt-6"><span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2 mr-2"><?= $rcount ?></span> Open Reports</h2>
             <div class="max-w-prose">
