@@ -151,7 +151,7 @@ if ($this->Identity->isLoggedIn()) {
                 </div>
                 <input type="hidden" name="activity_types_id" id="activity_types_id" value="2">
                 <?php echo $this->Form->control('hyperlink', ['class' => 'form-control', 'value' => $linktoact]); ?>
-                <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg newname']); ?>
+                <?php echo $this->Form->control('name', ['class' => 'form-control form-control-lg newname', 'label' => 'Activity Title']); ?>
                 <label for="description">Description</label>
                 <?php echo $this->Form->textarea('description', ['class' => 'form-control summernote']) ?>
                 <?php //echo $this->Form->control('licensing', ['class' => 'form-control']); 

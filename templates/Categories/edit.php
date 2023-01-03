@@ -20,9 +20,9 @@ $this->loadHelper('Authentication.Identity');
                 <label class="mb-3 inline-block">Published? <?= $this->Form->checkbox('featured') ?></label>
                 <?php
                 //echo $this->Form->control('topics._ids', ['options' => $topics]);
-                echo $this->Form->control('name', ['class' => 'form-field mb-3']);
+                echo $this->Form->control('name', ['class' => 'form-field mb-3', 'label' => 'Category Name']);
                 //echo $this->Form->control('slug');
-                echo $this->Form->control('description', ['class' => 'form-field mb-3 h-content']);
+                echo $this->Form->control('description', ['class' => 'form-field mb-3', 'label' => 'Category Description']);
                 //echo $this->Form->control('image_path', ['class' => 'form-field mb-3']);
                 echo $this->Form->control('sortorder', ['class' => 'form-field mb-3', 'label' => 'Sort Order']);
                 // echo $this->Form->control('color');
