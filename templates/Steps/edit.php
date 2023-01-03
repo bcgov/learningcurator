@@ -24,7 +24,6 @@ $this->loadHelper('Authentication.Identity');
             <button @click="openTab = 1" :class="{ 'bg-slate-200 text-slate-900' : openTab === 1 }" class="px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg">
                 Add Existing Activity
             </button>
-
             <button @click="openTab = 2" :class="{ 'bg-slate-200 text-slate-900' : openTab === 2 }" class=" px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg">
                 Add New Activity
             </button>
@@ -35,7 +34,6 @@ $this->loadHelper('Authentication.Identity');
                 Add New Step
             </button>
         </div>
-        <!-- TODO Nori decide if this should toggle the fields rather than close on click outside - toggle vs tab -->
         <div class="max-w-prose">
             <div xcloak x-show="openTab === 1" @click.outside="openTab = 0" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
                 <h3 class="font-semibold">Add Existing Activity to this Step</h3>
