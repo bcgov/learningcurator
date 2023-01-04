@@ -99,10 +99,10 @@ if ($this->Identity->isLoggedIn()) {
             </div>
 <!-- TODO maybe change this from a label to a different format. Looks out of place here. -->
             <?php if ($activity->status_id == 3) : ?>
-                <span class="bg-red-500 text-slate-900 mt-3 py-1 px-2 rounded-full mr-3 text-base uppercase inline-block">Archived</span>
+                <span class="bg-red-400 text-slate-900 mt-3 py-1 px-2 rounded-full mr-3 text-base uppercase inline-block">Archived</span>
             <?php endif ?>
             <?php if ($activity->moderation_flag == 1) : ?>
-                <!-- <span class="bg-orange-400 text-slate-900 py-1 px-2 rounded-full mr-3">INVESTIGATE</span> -->
+                <!-- <span class="bg-orange-400 text-slate-900 py-1 px-2 rounded-full mr-2 text-sm">INVESTIGATE</span> -->
             <?php endif ?>
         <?php endif; // role check 
         ?>

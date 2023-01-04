@@ -37,7 +37,7 @@ if ($this->Identity->isLoggedIn()) {
                                 <span class="bg-orange-400 text-slate-900 rounded-full px-2 py-1 text-sm" title="Edit to set to publish">DRAFT</span>
                             <?php endif ?>
                             <?php if ($pathway->featured == 1) : ?>
-                                <span class="bg-green-500 text-slate-900 rounded-full px-2 py-1 text-sm">Featured</span>
+                                <span class="bg-green-400 text-slate-900 rounded-full px-2 py-1 text-sm">Featured</span>
                             <?php endif ?>
                             <!-- <span class="text-sm ml-3 justify-self-end flex-none"><?= $pathway->stepcount ?> steps | <?= $pathway->requiredacts ?> activities</span> -->
                             <!-- TODO Allan - will need to calculate... fix steps/activity count here -->
