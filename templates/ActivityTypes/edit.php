@@ -13,7 +13,7 @@
                 <?= h($activityType->name) ?></a>
         </span> <a href="/activity-types/" class="inline-block ml-2 text-sky-700 hover:underline text-base font-normal">View all Activity Types</a></h2>
     <div class="max-w-prose">
-        <div class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+        <div class="border border-slate-500 p-6 my-3 rounded-md block">
 
             <?= $this->Form->create($activityType) ?>
             <fieldset>

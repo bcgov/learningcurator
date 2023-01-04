@@ -10,7 +10,7 @@
 </header>
 <div class="p-8 text-lg" id="mainContent">
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Edit Topic: <span class="text-slate-900"><?= h($topic->name) ?></span> </h2>
-    <div class="max-w-prose outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+    <div class="max-w-prose border border-slate-500 p-6 my-3 rounded-md block">
         <?= $this->Form->create($topic) ?>
         <fieldset>
             <div class="mb-5">

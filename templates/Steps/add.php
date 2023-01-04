@@ -11,7 +11,7 @@
 <!-- TODO delete this page eventually - added from pathway index -->
 <div class="p-8 text-lg" id="mainContent">
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Add Step <span class="inline-block ml-2 text-sky-700 hover:underline text-base font-normal"><?= $this->Html->link(__('List Steps'), ['action' => 'index']) ?></span></h2>
-    <div class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block max-w-[70ch]">
+    <div class="border border-slate-500 p-6 my-3 rounded-md block max-w-[70ch]">
 
         <?= $this->Form->create($step) ?>
         <fieldset>
