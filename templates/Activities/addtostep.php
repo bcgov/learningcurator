@@ -43,7 +43,7 @@ if ($this->Identity->isLoggedIn()) {
                         <?php endif ?>
                         <?php if (!empty($activity[0]->_joinData->stepcontext)) : ?>
                             <div class="alert alert-light text-dark mt-3 shadow-sm">
-                                <i class="bi bi-person-badge-fill"></i>
+                                
                                 Curator says:<br>
                                 <?= $activity[0]->_joinData->stepcontext ?>
                             </div>

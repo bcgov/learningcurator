@@ -83,7 +83,7 @@ if ($this->Identity->isLoggedIn()) {
         <ul class="list-disc pl-8 mt-2">
             <?php foreach ($Users->pathways_users as $path) : ?>
                 <li class="px-2"><a href="/pathways/<?= $path->pathway->slug ?>">
-                        <i class="bi bi-pin-map-fill"></i>
+                        <i class="bi bi-signpost-2"></i>
                         <?= $path->pathway->name ?>
                     </a></li>
 
