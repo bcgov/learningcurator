@@ -586,20 +586,12 @@ video {
   border-width: 0;
 }
 
-.pointer-events-auto {
-  pointer-events: auto;
-}
-
 .visible {
   visibility: visible;
 }
 
 .collapse {
   visibility: collapse;
-}
-
-.relative {
-  position: relative;
 }
 
 .sticky {
@@ -663,10 +655,6 @@ video {
 
 .m-1 {
   margin: 0.25rem;
-}
-
-.m-4 {
-  margin: 1rem;
 }
 
 .my-3 {
@@ -831,10 +819,6 @@ video {
   margin-left: -1rem;
 }
 
-.ml-auto {
-  margin-left: auto;
-}
-
 .block {
   display: block;
 }
@@ -895,18 +879,8 @@ video {
   max-height: 100px;
 }
 
-.min-h-fit {
-  min-height: -moz-fit-content;
-  min-height: fit-content;
-}
-
 .min-h-screen {
   min-height: 100vh;
-}
-
-.min-h-min {
-  min-height: -moz-min-content;
-  min-height: min-content;
 }
 
 .w-full {
@@ -1078,10 +1052,6 @@ video {
 
 .justify-between {
   justify-content: space-between;
-}
-
-.justify-items-center {
-  justify-items: center;
 }
 
 .justify-items-stretch {
@@ -1355,15 +1325,6 @@ video {
   background-color: rgb(15 23 42 / 0.9);
 }
 
-.bg-bluegreen\/30 {
-  background-color: rgb(47 97 115 / 0.3);
-}
-
-.bg-red-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 202 202 / var(--tw-bg-opacity));
-}
-
 .bg-cover {
   background-size: cover;
 }
@@ -1540,10 +1501,6 @@ video {
 
 .pb-0 {
   padding-bottom: 0px;
-}
-
-.pl-3 {
-  padding-left: 0.75rem;
 }
 
 .text-left {
@@ -1738,11 +1695,6 @@ video {
 .text-slate-300 {
   --tw-text-opacity: 1;
   color: rgb(203 213 225 / var(--tw-text-opacity));
-}
-
-.text-slate-400 {
-  --tw-text-opacity: 1;
-  color: rgb(148 163 184 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1969,11 +1921,6 @@ p {
   --tw-ring-color: rgb(51 65 85 / var(--tw-ring-opacity));
 }
 
-.hover\:ring-slate-300:hover {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(203 213 225 / var(--tw-ring-opacity));
-}
-
 .focus\:not-sr-only:focus {
   position: static;
   width: auto;
@@ -2095,10 +2042,6 @@ p {
     margin-top: 2rem;
   }
 
-  .lg\:flex {
-    display: flex;
-  }
-
   .lg\:grid {
     display: grid;
   }
@@ -2144,10 +2087,6 @@ p {
 }
 
 @media (max-height: 740px) {
-  .short\:mb-4 {
-    margin-bottom: 1rem;
-  }
-
   .short\:hidden {
     display: none;
   }
