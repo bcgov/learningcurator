@@ -78,7 +78,7 @@ $this->loadHelper('Authentication.Identity');
                 <?php  //$this->Form->control('slug', ['class' => 'p-3 bg-slate-300 rounded-lg']);
                 ?>
                 <div class="mt-2"><label for="description">Step Objective</label>
-                    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1 phrase/sentence).</span><?= $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']) ?>
+                    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1&nbsp;phrase/sentence).</span><?= $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']) ?>
                 </div>
 
                 <?= $this->Form->button(__('Save Step Details'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
@@ -104,7 +104,7 @@ $this->loadHelper('Authentication.Identity');
                     <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span> <?= $this->Form->input('name', ['type' => 'text', 'class' => 'form-field', 'aria-describedby' => 'nameHelp']) ?>
                 </div>
                 <div class="mt-2"><label for="description">Step Objective</label>
-                    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1 phrase/sentence).</span><?= $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']);
+                    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1&nbsp;phrase/sentence).</span><?= $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']);
                     echo $this->Form->hidden('createdby', ['value' => $this->Identity->get('id')]);
                     echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]);
                     echo $this->Form->hidden('pathways.0.id', ['value' => $step->pathways[0]->id]);
