@@ -6,7 +6,7 @@
         target="_blank"
         rel="noopener" 
         class="font-weight-bold">
-            <i class="bi bi-pin-map-fill"></i>
+            <i class="bi bi-signpost-2"></i>
             <?= $path->name ?>
     </a>
 </div>

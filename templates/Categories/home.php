@@ -63,7 +63,7 @@ BC Public Service learning curators.</p>
 	<div class="p-3 mb-3 bg-white rounded-lg shadow-sm">
 		<div>
 			<a href="/pathways/<?= $path->slug ?>" class="font-weight-bold">
-				<i class="bi bi-pin-map-fill"></i>
+				<i class="bi bi-signpost-2"></i>
 				<?= $path->name ?>
 			</a>
 		</div>
