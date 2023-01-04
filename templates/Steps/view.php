@@ -167,7 +167,7 @@ foreach ($step->pathways as $pathways) {
         <!-- TODO Allan/Nori - Title vs step name/subtitle -->
         <div class="basis-6/7 flex-1 border-2 border-bluegreen rounded-r-lg p-6 max-w-prose">
             <?php if ($step->status_id == 1) : ?> 
-                <span class="bg-orange-400 text-white text-xs rounded-full px-2 py-1 align-middle">DRAFT</span>
+                <span class="bg-orange-400 text-slate-900 text-xs rounded-full px-2 py-1 align-middle">DRAFT</span>
             <?php endif ?>
             <h2 class="mb-4 text-2xl">
                 <strong><?= $step->name ?></strong>

@@ -77,7 +77,7 @@ if ($this->Identity->isLoggedIn()) {
                                 <h3 class="text-2xl flex-1">
                                     <?= h($pathway->name) ?>
                                 </h3>
-                                <span class="bg-orange-400 text-white rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
+                                <span class="bg-orange-400 text-slate-900 rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
                             </div>
                         </a>
                         <div class="pl-10">

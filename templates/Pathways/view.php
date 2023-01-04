@@ -41,10 +41,9 @@ $this->assign('title', h($pathway->name));
             </svg>
             <h2 class="text-2xl flex-1">
                 <?= h($pathway->name) ?>
-                <?php if ($pathway->status_id == 1) : ?>
-                    <span class="bg-orange-400 text-white rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
+            </h2><?php if ($pathway->status_id == 1) : ?>
+                    <span class="bg-orange-400 text-slate-900 rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
                 <?php endif ?>
-            </h2>
             <span class="text-sm ml-3 justify-self-end flex-none"><?= $stepcount ?> steps | <?= $requiredacts ?> activities</span>
         </div>
 
@@ -235,7 +234,7 @@ $this->assign('title', h($pathway->name));
 
                                         <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3"><?= $count ?></h3>
                                         <div class="flex-1 basis-6/7 p-3">
-                                            <span class="bg-orange-400 text-white rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
+                                            <span class="bg-orange-400 text-slate-900 rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
                                             <h4 class="text-xl font-semibold mb-2"><?= h($steps->name) ?></h4>
                                             <p class="text-bluegreen font-semibold text-base mb-1">
                                             Step Activity Progress</p>
