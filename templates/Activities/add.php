@@ -26,7 +26,7 @@ $this->loadHelper('Authentication.Identity');
     </div>
 
 
-    <div class="max-w-prose outline outline-1 outline-slate-500 p-6 my-3 rounded-md block">
+    <div class="max-w-prose border border-slate-500 p-6 my-3 rounded-md block">
 
         <?= $this->Form->create($activity) ?>
         <?php echo $this->Form->control('hyperlink', ['class' => 'form-field mb-3']); ?>

@@ -14,7 +14,7 @@ $this->loadHelper('Authentication.Identity');
                 <?= $pathway->name ?>
             </a></span></h2>
     <div class="max-w-prose">
-        <div class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+        <div class="border border-slate-500 p-6 my-3 rounded-md block">
 
 
             <!-- <a href="/pathways/<?= $pathway->slug ?>/export" class="float-right ml-3 p-3 bg-slate-100/80 hover:no-underline rounded-lg">Export Pathway</a> -->

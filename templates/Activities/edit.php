@@ -13,7 +13,7 @@ $this->loadHelper('Authentication.Identity');
 <div class="p-8 text-lg" id="mainContent">
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Edit Activity: <span class="text-slate-900"><a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a></span></h2>
     <div class="max-w-prose">
-        <div class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+        <div class="border border-slate-500 p-6 my-3 rounded-md block">
             <?= $this->Form->create($activity) ?>
             <?php
             // echo $this->Form->control('ministry_id', ['class' => 'form-field mb-3', 'options' => $ministries, 'empty' => true]);

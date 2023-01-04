@@ -137,7 +137,7 @@ $this->assign('title', h($pathway->name));
                         </button>
                     </div>
 
-                    <div xcloak x-show="open" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+                    <div xcloak x-show="open" class="border border-slate-500 p-6 my-3 rounded-md block">
                         <?= $this->Form->create(null, ['url' => [
                             'controller' => 'Steps',
                             'action' => 'add'
