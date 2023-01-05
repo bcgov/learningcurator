@@ -22,7 +22,7 @@ class ActivitiesUsersController extends AppController
     {
         $user = $this->request->getAttribute('authentication')->getIdentity();
         $activities = $this->ActivitiesUsers->find()
-                                        ->contain(['Activities'])
+                                        ->contain(['Activities','Activities.ActivityTypes'])
                                         ->where(['user_id' => $user->id])
                                        ->order(['ActivitiesUsers.id' => 'desc']);
         // This returns a list of activities, but there's one activity
@@ -45,15 +45,23 @@ class ActivitiesUsersController extends AppController
             $name = '';
             $thisone = [];
             $launches = [];
+        
             foreach($acts as $aid) {
+                
                 if($aid->activity->id == $id) {
                     $name = $aid->activity->name;
+                    $type = [
+                                'name' => $aid->activity->activity_type->name,
+                                'iconclass' => $aid->activity->activity_type->image_path,
+                                'color' => $aid->activity->activity_type->color
+                            ];
                     array_push($launches,['date' => $aid['created']]);
                 }
             }
-            $thisone = ['id' => $id, 'name' => $name, 'launches' => $launches];
+            $thisone = ['id' => $id, 'name' => $name, 'type' => $type, 'launches' => $launches];
             array_push($alllaunches, $thisone);
         }
+        
         $this->set(compact('alllaunches'));
 
     }
