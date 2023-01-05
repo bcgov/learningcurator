@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com
+! tailwindcss v3.0.13 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -30,7 +30,6 @@
 2. Prevent adjustments of font size after orientation changes in iOS.
 3. Use a more readable tab size.
 4. Use the user's configured `sans` font-family by default.
-5. Use the user's configured `sans` font-feature-settings by default.
 */
 
 html {
@@ -45,8 +44,6 @@ html {
   /* 3 */
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   /* 4 */
-  font-feature-settings: normal;
-  /* 5 */
 }
 
 /*
@@ -189,8 +186,6 @@ textarea {
   font-family: inherit;
   /* 1 */
   font-size: 100%;
-  /* 1 */
-  font-weight: inherit;
   /* 1 */
   line-height: inherit;
   /* 1 */
@@ -358,6 +353,13 @@ input::-moz-placeholder, textarea::-moz-placeholder {
   /* 2 */
 }
 
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  opacity: 1;
+  /* 1 */
+  color: #9ca3af;
+  /* 2 */
+}
+
 input::placeholder,
 textarea::placeholder {
   opacity: 1;
@@ -413,62 +415,15 @@ video {
   height: auto;
 }
 
-/* Make elements with the HTML hidden attribute stay hidden by default */
+/*
+Ensure the default browser behavior of the `hidden` attribute.
+*/
 
 [hidden] {
   display: none;
 }
 
 *, ::before, ::after {
-  --tw-border-spacing-x: 0;
-  --tw-border-spacing-y: 0;
-  --tw-translate-x: 0;
-  --tw-translate-y: 0;
-  --tw-rotate: 0;
-  --tw-skew-x: 0;
-  --tw-skew-y: 0;
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  --tw-pan-x:  ;
-  --tw-pan-y:  ;
-  --tw-pinch-zoom:  ;
-  --tw-scroll-snap-strictness: proximity;
-  --tw-ordinal:  ;
-  --tw-slashed-zero:  ;
-  --tw-numeric-figure:  ;
-  --tw-numeric-spacing:  ;
-  --tw-numeric-fraction:  ;
-  --tw-ring-inset:  ;
-  --tw-ring-offset-width: 0px;
-  --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgb(59 130 246 / 0.5);
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-  --tw-blur:  ;
-  --tw-brightness:  ;
-  --tw-contrast:  ;
-  --tw-grayscale:  ;
-  --tw-hue-rotate:  ;
-  --tw-invert:  ;
-  --tw-saturate:  ;
-  --tw-sepia:  ;
-  --tw-drop-shadow:  ;
-  --tw-backdrop-blur:  ;
-  --tw-backdrop-brightness:  ;
-  --tw-backdrop-contrast:  ;
-  --tw-backdrop-grayscale:  ;
-  --tw-backdrop-hue-rotate:  ;
-  --tw-backdrop-invert:  ;
-  --tw-backdrop-opacity:  ;
-  --tw-backdrop-saturate:  ;
-  --tw-backdrop-sepia:  ;
-}
-
-::backdrop {
-  --tw-border-spacing-x: 0;
-  --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
   --tw-translate-y: 0;
   --tw-rotate: 0;
@@ -567,8 +522,14 @@ video {
   .form-field {
     --tw-border-opacity: 1;
     border-color: rgb(0 0 0 / var(--tw-border-opacity));
+  }
+
+  .form-field {
     --tw-bg-opacity: 1;
     background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+  }
+
+  .form-field {
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
   }
@@ -588,10 +549,6 @@ video {
 
 .visible {
   visibility: visible;
-}
-
-.collapse {
-  visibility: collapse;
 }
 
 .sticky {
@@ -707,6 +664,16 @@ video {
   margin-bottom: 0.25rem;
 }
 
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
 .mb-3 {
   margin-bottom: 0.75rem;
 }
@@ -743,6 +710,10 @@ video {
   margin-right: 0.5rem;
 }
 
+.ml-6 {
+  margin-left: 1.5rem;
+}
+
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -761,10 +732,6 @@ video {
 
 .ml-1 {
   margin-left: 0.25rem;
-}
-
-.ml-6 {
-  margin-left: 1.5rem;
 }
 
 .mr-3 {
@@ -1146,6 +1113,11 @@ video {
   border-left-width: 2px;
 }
 
+.border-slate-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(100 116 139 / var(--tw-border-opacity));
+}
+
 .border-slate-700 {
   --tw-border-opacity: 1;
   border-color: rgb(51 65 85 / var(--tw-border-opacity));
@@ -1181,11 +1153,6 @@ video {
   border-color: rgb(35 64 117 / var(--tw-border-opacity));
 }
 
-.border-slate-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(100 116 139 / var(--tw-border-opacity));
-}
-
 .bg-darkblue {
   --tw-bg-opacity: 1;
   background-color: rgb(35 64 117 / var(--tw-bg-opacity));
@@ -1215,23 +1182,22 @@ video {
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
-.bg-slate-200 {
+.bg-sky-700 {
   --tw-bg-opacity: 1;
-  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+  background-color: rgb(3 105 161 / var(--tw-bg-opacity));
 }
 
 .bg-sagedark\/90 {
   background-color: rgb(41 115 94 / 0.9);
 }
 
+.bg-black\/20 {
+  background-color: rgb(0 0 0 / 0.2);
+}
+
 .bg-sagedark {
   --tw-bg-opacity: 1;
   background-color: rgb(41 115 94 / var(--tw-bg-opacity));
-}
-
-.bg-sky-700 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(3 105 161 / var(--tw-bg-opacity));
 }
 
 .bg-black\/50 {
@@ -1243,17 +1209,18 @@ video {
   background-color: rgb(185 28 28 / var(--tw-bg-opacity));
 }
 
-.bg-red-500 {
+.bg-red-400 {
   --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
+}
+
+.bg-slate-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
 }
 
 .bg-bluegreen\/90 {
   background-color: rgb(47 97 115 / 0.9);
-}
-
-.bg-black\/20 {
-  background-color: rgb(0 0 0 / 0.2);
 }
 
 .bg-sky-700\/90 {
@@ -1263,11 +1230,6 @@ video {
 .bg-bluegreen {
   --tw-bg-opacity: 1;
   background-color: rgb(47 97 115 / var(--tw-bg-opacity));
-}
-
-.bg-green-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
 }
 
 .bg-green-400 {
@@ -1292,6 +1254,11 @@ video {
 .bg-gray-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+}
+
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
 .bg-slate-50 {
@@ -1330,31 +1297,12 @@ video {
   background-color: rgb(15 23 42 / 0.9);
 }
 
-.bg-orange-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(234 88 12 / var(--tw-bg-opacity));
-}
-
-.bg-orange-700 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(194 65 12 / var(--tw-bg-opacity));
-}
-
-.bg-red-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
-}
-
 .bg-cover {
   background-size: cover;
 }
 
 .bg-center {
   background-position: center;
-}
-
-.bg-\[center_top_65\%\] {
-  background-position: center top 65%;
 }
 
 .p-8 {
@@ -1432,9 +1380,9 @@ video {
   padding-bottom: 0.375rem;
 }
 
-.py-3 {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .px-3 {
@@ -1442,9 +1390,9 @@ video {
   padding-right: 0.75rem;
 }
 
-.px-1 {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
 .py-0\.5 {
@@ -1501,10 +1449,6 @@ video {
 
 .pl-10 {
   padding-left: 2.5rem;
-}
-
-.pb-8 {
-  padding-bottom: 2rem;
 }
 
 .pl-16 {
@@ -1673,6 +1617,11 @@ video {
   color: rgb(3 105 161 / var(--tw-text-opacity));
 }
 
+.text-bluegreen {
+  --tw-text-opacity: 1;
+  color: rgb(47 97 115 / var(--tw-text-opacity));
+}
+
 .text-red-500 {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
@@ -1681,11 +1630,6 @@ video {
 .text-slate-500 {
   --tw-text-opacity: 1;
   color: rgb(100 116 139 / var(--tw-text-opacity));
-}
-
-.text-bluegreen {
-  --tw-text-opacity: 1;
-  color: rgb(47 97 115 / var(--tw-text-opacity));
 }
 
 .text-sagedark {
@@ -1703,10 +1647,6 @@ video {
   color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
-.text-\[\@003366\] {
-  color: @003366;
-}
-
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
@@ -1718,7 +1658,8 @@ video {
 }
 
 .underline {
-  text-decoration-line: underline;
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
 }
 
 .opacity-25 {
@@ -1793,9 +1734,9 @@ video {
 }
 
 .transition {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
@@ -1826,6 +1767,27 @@ video {
 
 .ease-in-out {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-4 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 @font-face {
@@ -1862,6 +1824,24 @@ p {
 
 .autop>p {
   margin-bottom: 0.5em;
+}
+
+.before\:content-\[\\F3D7\]::before {
+  --tw-content: \F3D7;
+  content: var(--tw-content);
+}
+
+.before\:content-\[\'test\'\]::before {
+  --tw-content: 'test';
+  content: var(--tw-content);
+}
+
+.first\:mt-0:first-child {
+  margin-top: 0px;
+}
+
+.last\:mb-0:last-child {
+  margin-bottom: 0px;
 }
 
 .hover\:cursor-pointer:hover {
@@ -1929,11 +1909,13 @@ p {
 }
 
 .hover\:underline:hover {
-  text-decoration-line: underline;
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
 }
 
 .hover\:no-underline:hover {
-  text-decoration-line: none;
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
 }
 
 .hover\:ring-slate-700:hover {

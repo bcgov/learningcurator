@@ -12,7 +12,7 @@ if ($this->Identity->isLoggedIn()) {
 <header class="w-full h-32 md:h-52 bg-darkblue px-8 flex items-center">
     <h1 class="text-white text-3xl font-bold tracking-wide">Searching Curator for &quot;<?= $search ?>&quot;</h1>
 </header>
-<div class="p-6">
+<div class="p-8">
     <?php if (!$numcats && !$numpaths && !$numacts) : ?>
         <div class="mb-3 bg-gray-100 p-3 border-2 rounded-lg">No results found.</div>
 
@@ -30,122 +30,120 @@ if ($this->Identity->isLoggedIn()) {
     <div class="flex flex-col">
 
         <?php if ($numcats === 1) : ?>
-            <div class="p-3">
-                <h2 class="text-2xl">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numcats ?></span> category</h2>
-                <ul class="list-disc pl-8 mt-2">
-                    <?php foreach ($categories as $c) : ?>
-                        <li class="text-xl px-2">
+            <h2 class="text-2xl">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numcats ?></span> category</h2>
+            <?php foreach ($categories as $c) : ?>
+                <div class="flex flex-row justify-start mt-3 mb-0">
+                    <i class="bi bi-folder mr-2 flex-none" style="font-size: 1.25rem; color: rgb(3 105 161);" aria-label="Category"></i>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-xl text-sky-700 ">
                             <a href="/categories/view/<?= $c->id ?>">
                                 <?= $c->name ?>
                             </a>
-                        </li>
-                    <?php endforeach ?>
-                </ul>
-            </div>
+                        </h3>
+                        <p class="line-clamp-4 mb-0"><?= h($c->description) ?></p>
+                    </div>
+                </div>
+            <?php endforeach ?>
         <?php else : ?>
-            <div class="p-3">
-                <h2 class="text-2xl">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numcats ?></span> categories</h2>
-                <ul class="list-disc pl-8 mt-2">
-                <?php foreach ($categories as $c) : ?>
-                    <li class="text-xl px-2">
-                        <a href="/categories/view/<?= $c->id ?>">
-                            <?= $c->name ?>
-                        </a>
-                    </li>
-                <?php endforeach ?>
-                </ul>
-            </div>
+            <h2 class="text-2xl">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numcats ?></span> category</h2>
+            <?php foreach ($categories as $c) : ?>
+                <div class="flex flex-row justify-start first:mt-0 mt-3 last:mb-0">
+                    <i class="bi bi-folder mr-2 flex-none" style="font-size: 1.25rem; color: rgb(3 105 161);" aria-label="Category"></i>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-xl text-sky-700 ">
+                            <a href="/categories/view/<?= $c->id ?>">
+                                <?= $c->name ?>
+                            </a>
+                        </h3>
+                        <p class="line-clamp-4 mb-0"><?= h($c->description) ?></p>
+                    </div>
+                </div>
+            <?php endforeach ?>
         <?php endif ?>
 
 
 
         <?php if ($numpaths === 1) : ?>
-            <div class="p-3">
-                <h2 class="text-2xl">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numpaths ?></span> pathways</h2>
-                <?php foreach ($pathwaywithsteps as $p) : ?>
-                    <!-- <pre><?php print_r($p) ?></pre> -->
-                    <div class="p-3 mb-1">
-                        <h3 class="text-bluegreen text-xl">
-                            <i class="bi bi-signpost-2"></i> <a href="/<?= $p[0]['category'] ?>/<?= $p[0]['topic'] ?>/pathway/<?= $p[0]['slug'] ?>">
+            <h2 class="text-2xl mt-5">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numpaths ?></span> pathway</h2>
+            <?php foreach ($pathwaywithsteps as $p) : ?>
+                <!-- <pre><?php print_r($p) ?></pre> -->
+                <div class="flex flex-row justify-start mt-3 last:mb-0">
+                    <i class="bi bi-signpost-2 mr-2 flex-none" style="font-size: 1.25rem; color: rgb(3 105 161);" aria-label="Pathway"></i>
+                    <div class="flex-1">
+                        <h3 class="text-sky-700 text-xl font-semibold ">
+                            <a href="/<?= $p[0]['category'] ?>/<?= $p[0]['topic'] ?>/pathway/<?= $p[0]['slug'] ?>">
                                 <?= $p[0]['name'] ?>
                             </a>
                         </h3>
+                        <p class="line-clamp-3 "><?= h($p[0]['goal']) ?></p>
                         <!-- <div><?= $p[0][5] ?></div> -->
-                        <div class="ml-6">
-                            <?php foreach ($p[1] as $step) : ?>
-                                &bull;<a class="px-1" href="/<?= $p[0]['category'] ?>/<?= $p[0]['topic'] ?>/pathway/<?= $p[0]['slug'] ?>/s/<?= $step['id'] ?>/<?= $step['slug'] ?>">
-                                    <?= $step['name'] ?>
-                                </a>
-                            <?php endforeach ?>
-                        </div>
+                        <?php foreach ($p[1] as $step) : ?>
+                            &bull;<a class="px-1" href="/<?= $p[0]['category'] ?>/<?= $p[0]['topic'] ?>/pathway/<?= $p[0]['slug'] ?>/s/<?= $step['id'] ?>/<?= $step['slug'] ?>"><?= $step['name'] ?></a>
+                        <?php endforeach ?>
                     </div>
-                <?php endforeach ?>
-            </div>
+                </div>
+            <?php endforeach ?>
         <?php else : ?>
-            <div class="p-3">
-                <h2 class="text-2xl">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numpaths ?></span> pathways</h2>
-                <?php foreach ($pathwaywithsteps as $p) : ?>
-                    <!-- <pre><?php print_r($p) ?></pre> -->
-                    <div class="p-3 mb-1">
-                        <h3 class="text-bluegreen text-xl">
-                            <i class="bi bi-signpost-2"></i> <a href="/<?= $p[0]['category'] ?>/<?= $p[0]['topic'] ?>/pathway/<?= $p[0]['slug'] ?>">
+            <h2 class="text-2xl mt-5">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numpaths ?></span> pathways</h2>
+            <?php foreach ($pathwaywithsteps as $p) : ?>
+                <!-- <pre><?php print_r($p) ?></pre> -->
+                <div class="flex flex-row justify-start mt-3 last:mb-0">
+                    <i class="bi bi-signpost-2 mr-2 flex-none" style="font-size: 1.25rem; color: rgb(3 105 161);" aria-label="Pathway"></i>
+                    <div class="flex-1">
+                        <h3 class="text-sky-700 text-xl font-semibold ">
+                            <a href="/<?= $p[0]['category'] ?>/<?= $p[0]['topic'] ?>/pathway/<?= $p[0]['slug'] ?>">
                                 <?= $p[0]['name'] ?>
                             </a>
                         </h3>
+                        <p class="line-clamp-3 mb-1"><?= h($p[0]['goal']) ?></p>
                         <!-- <div><?= $p[0][5] ?></div> -->
-                        <div class="ml-6">
-                            <?php foreach ($p[1] as $step) : ?>
-                                &bull;<a class="px-1" href="/<?= $p[0]['category'] ?>/<?= $p[0]['topic'] ?>/pathway/<?= $p[0]['slug'] ?>/s/<?= $step['id'] ?>/<?= $step['slug'] ?>">
-                                    <?= $step['name'] ?>
-                                </a>
-                            <?php endforeach ?>
-                        </div>
+                        <?php foreach ($p[1] as $step) : ?>
+                            &bull;<a class="px-1" href="/<?= $p[0]['category'] ?>/<?= $p[0]['topic'] ?>/pathway/<?= $p[0]['slug'] ?>/s/<?= $step['id'] ?>/<?= $step['slug'] ?>"><?= $step['name'] ?></a>
+                        <?php endforeach ?>
                     </div>
-                <?php endforeach ?>
-            </div>
+                </div>
+            <?php endforeach ?>
         <?php endif ?>
 
 
-        <?php if ($numacts === 0) : ?>
-            <div class="p-3">
-                <h2 class="text-2xl">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numacts ?></span> activities</h2>
-                <ul class="list-disc pl-8 mt-2">
-                <?php
-                //echo '<pre>';
-                foreach ($activities as $activity) :
-                    //print_r($activity); continue;
-                ?>
-                    <li class="text-xl px-2">
+        <?php if ($numacts === 1) : ?>
+            <h2 class="text-2xl mt-5">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numacts ?></span> activity</h2>
+            <?php
+            //echo '<pre>';
+            foreach ($activities as $activity) :
+                //print_r($activity); continue;
+            ?>
+                <div class="flex flex-row justify-start mt-3">
+                    <i class="<?= h($activity->activity_type->image_path) ?> flex-none mr-2" style="font-size: 1.25rem;" aria-label="<?= h($activity->activity_type->name) ?>"></i>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-semibold">
                             <a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
                             <?php //$this->Html->link($activity->name, ['action' => 'view', $activity->id]) 
                             ?>
-                        </li>
-                        <!-- <div class="py-3 ">
-		<?= $activity->description ?>
-	</div> -->
-                <?php endforeach; ?>
-                </ul>
-            </div>
+                        </h3>
+                        <p class="line-clamp-2 mb-0"><?= h($activity->description) ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         <?php else : ?>
-            <div class="p-3">
-                <h2 class="text-2xl">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numacts ?></span> activities</h2>
-                <ul class="list-disc pl-8 mt-2">
-                <?php
-                //echo '<pre>';
-                foreach ($activities as $activity) :
-                    //print_r($activity); continue;
-                ?>
-                    <li class="text-xl px-2">
+            <h2 class="text-2xl mt-5">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numacts ?></span> activities</h2>
+            <?php
+            //echo '<pre>';
+            foreach ($activities as $activity) :
+                //print_r($activity); continue;
+            ?>
+                <div class="flex flex-row justify-start mt-3">
+                    <i class="<?= h($activity->activity_type->image_path) ?> flex-none mr-2" style="font-size: 1.25rem;" aria-label="<?= h($activity->activity_type->name) ?>"></i>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-semibold">
                             <a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a>
                             <?php //$this->Html->link($activity->name, ['action' => 'view', $activity->id]) 
                             ?>
-                        </li>
-                        <!-- <div class="py-3 ">
-		<?= $activity->description ?>
-	</div> -->
-                <?php endforeach; ?>
-                </ul>
-            </div>
+                        </h3>
+                        <p class="line-clamp-2 mb-1 last:mb-0"><?= h($activity->description) ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         <?php endif ?>
     </div> <!-- /.row -->
 </div> <!-- /.container -->
