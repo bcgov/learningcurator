@@ -516,7 +516,8 @@ class ActivitiesController extends AppController
             $activity = $this->Activities->find()->contain(['ActivityTypes','Tags','Steps.Pathways'])->where(function ($exp, $query) use($linktoact) {
                 return $exp->like('hyperlink', '%'.$linktoact.'%');
             })->toList();
-            $this->set(compact('activity','linktoact'));
+            $activityTypes = $this->Activities->ActivityTypes->find('list', ['limit' => 200]);
+            $this->set(compact('activity','linktoact','activityTypes'));
 
         } else {
 
@@ -554,10 +555,10 @@ class ActivitiesController extends AppController
                         'activitystepid' => $activitiesStep->id,
                         'stepid' => $this->request->getData()['step_id']
                     );
-                    // echo json_encode($actstep);
+                    return json_encode($actstep);
                     // exit;
-                    $return = '/steps/edit/' . $this->request->getData()['step_id'];
-                    return $this->redirect($return);
+                    //$return = '/steps/edit/' . $this->request->getData()['step_id'];
+                    //return $this->redirect($return);
                 }
     
             } // if POST method used

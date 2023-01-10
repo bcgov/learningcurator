@@ -129,7 +129,14 @@ if ($this->Identity->isLoggedIn()) {
                 <h3 class="mb-3 text-xl font-semibold">Add Activity to Pathway Step</h3>
                 <h4 class="font-semibold">Find Pathway and Step</h4>
                 <form method="get" id="pathfind" action="/pathways/find" class="mt-2">
-                    <input id="q" class="px-3 py-2 m-0 border rounded-l-lg w-3/4" type="search" placeholder="Pathway title or keyword..." aria-label="Pathway Search" name="q"><button class="px-3 py-2 m-0 bg-slate-400 hover:bg-slate-300 rounded-r-lg" type="submit">Search</button>
+                    <input id="q" 
+                            class="px-3 py-2 m-0 border rounded-l-lg w-3/4" 
+                            type="search" 
+                            placeholder="Pathway title or keyword..." 
+                            aria-label="Pathway Search" name="q">
+                                <button class="px-3 py-2 m-0 bg-slate-400 hover:bg-slate-300 rounded-r-lg" type="submit">
+                                    Search
+                                </button>
                 </form>
                 <!-- TODO highlight selected step and hide rest of results onces selected -->
                 <div id="results"></div>
@@ -142,38 +149,25 @@ if ($this->Identity->isLoggedIn()) {
                     echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'), 'class' => 'form-field']);
                     echo $this->Form->hidden('step_id', ['value' => 0, 'id' => 'step_id']);
                     ?>
-                    <!-- TODO can you deselect an activity type once selected? -->
-                    <p class="mb-1 italic">Select an activity type:</p>
-                    <div class="flex mb-3 justify-start justify-items-center gap-4" id="acttypes">
-                        <div class="flex-none">
-                            <a href="#watch" data-id="1">
-                                <i class="bi bi-play-btn mr-1"></i>Watch
-                            </a>
-                        </div>
-                        <div class="flex-none">
-                            <a href="#read" data-id="2">
-                                <i class="bi bi-journal-text mr-1"></i>Read
-                            </a>
-                        </div>
-                        <div class="flex-none">
-                            <a href="#listen" data-id="3">
-                                <i class="bi bi-headphones mr-1"></i>Listen
-                            </a>
-                        </div>
-                        <div class="flex-none">
-                            <a href="#participate" data-id="4">
-                                <i class="bi bi-puzzle mr-1"></i>Participate
-                            </a>
-                        </div>
+                    
+                    <div class="my-2"><?php echo $this->Form->control('activity_types_id', 
+                                                                                    [
+                                                                                        'options' => $activityTypes, 
+                                                                                        'class' => 'form-field', 
+                                                                                        'label' => 'Select an activity type:'
+                                                                                    ]); ?>
                     </div>
-                    <p class="mb-1 italic">Review the hyperlink, name and description:</p>
-
-                    <input type="hidden" name="activity_types_id" id="activity_types_id" value="2">
-
-                    <div class="mt-2"><?php echo $this->Form->control('hyperlink', ['class' => 'form-field', 'value' => $linktoact]); ?></div>
+                    <div class="mt-2"><?php echo $this->Form->control('hyperlink', ['class' => 'form-field', 'value' => $linktoact, 'Review the hyperlink, name and description:']); ?></div>
                     <div class="mt-2"><?php echo $this->Form->control('name', ['class' => 'form-field newname']); ?></div>
                     <div class="mt-2"><label for="description">Activity Description</label>
-                        <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> You can replace the automated description text with your own. Keep the description general and not specific to your pathway. This field will be displayed every time the item is included in a pathway everywhere in the Curator—not just on the step to which you add it.</span>
+                        <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp">
+                            <i class="bi bi-info-circle"></i> 
+                            You can replace the automated description text with your own. 
+                            Keep the description general and not specific to your pathway. 
+                            This field will be displayed every time the item is included 
+                            in a pathway everywhere in the Curator—not just on the step to 
+                            which you add it.
+                        </span>
                         <?php echo $this->Form->textarea('description', ['class' => 'form-field note-editable']) ?>
                     </div>
 
@@ -268,12 +262,6 @@ if ($this->Identity->isLoggedIn()) {
 
         <?php endif ?>
 
-        $('#acttypes a').on('click', function(e) {
-            e.preventDefault();
-            let actid = $(this).data('id');
-            $('#activity_types_id').val(actid);
-            $(this).addClass('bg-darkblue rounded-md py-1 px-2 text-white')
-        });
 
         $('#pathfind').on('submit', function(e) {
 
@@ -294,6 +282,10 @@ if ($this->Identity->isLoggedIn()) {
                 }
             });
         });
+
+
+
+
 
         $('#addacttostep').on('submit', function(e) {
 
@@ -318,6 +310,12 @@ if ($this->Identity->isLoggedIn()) {
                 }
             });
         });
+
+
+
+
+
+
 
         $('#hyperlink').on('change', function(e) {
 
