@@ -664,16 +664,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 0.25rem;
 }
 
-.mx-1 {
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
-}
-
-.mx-2 {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-}
-
 .mb-3 {
   margin-bottom: 0.75rem;
 }
@@ -710,10 +700,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-right: 0.5rem;
 }
 
-.ml-6 {
-  margin-left: 1.5rem;
-}
-
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -732,6 +718,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .ml-1 {
   margin-left: 0.25rem;
+}
+
+.ml-6 {
+  margin-left: 1.5rem;
 }
 
 .mr-3 {
@@ -1057,6 +1047,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .scroll-smooth {
   scroll-behavior: smooth;
+}
+
+.break-all {
+  word-break: break-all;
 }
 
 .rounded-md {
@@ -1617,11 +1611,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(3 105 161 / var(--tw-text-opacity));
 }
 
-.text-bluegreen {
-  --tw-text-opacity: 1;
-  color: rgb(47 97 115 / var(--tw-text-opacity));
-}
-
 .text-red-500 {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
@@ -1630,6 +1619,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-slate-500 {
   --tw-text-opacity: 1;
   color: rgb(100 116 139 / var(--tw-text-opacity));
+}
+
+.text-bluegreen {
+  --tw-text-opacity: 1;
+  color: rgb(47 97 115 / var(--tw-text-opacity));
 }
 
 .text-sagedark {
@@ -1769,13 +1763,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.line-clamp-2 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
 .line-clamp-4 {
   overflow: hidden;
   display: -webkit-box;
@@ -1788,6 +1775,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 @font-face {
@@ -1824,16 +1818,6 @@ p {
 
 .autop>p {
   margin-bottom: 0.5em;
-}
-
-.before\:content-\[\\F3D7\]::before {
-  --tw-content: \F3D7;
-  content: var(--tw-content);
-}
-
-.before\:content-\[\'test\'\]::before {
-  --tw-content: 'test';
-  content: var(--tw-content);
 }
 
 .first\:mt-0:first-child {
