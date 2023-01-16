@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?= $this->fetch('title') ?> | Learning Curator</title>
-    
+
     <link href="/css/tailwind.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
@@ -33,21 +33,20 @@
                                 <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                    </div> 
-                    <?php if (!empty($this->Identity->get('id'))) : ?> 
-                    <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto" role="navigation"> 
-                        <?php
-                        $active = 'border-slate-400';
-                        $currentpage = $_SERVER["REQUEST_URI"]; 
-                        ?>
-                        <?php if ($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'superuser') : ?> 
+                    </div>
+                    <?php if (!empty($this->Identity->get('id'))) : ?>
+                        <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto" role="navigation">
+                            <?php
+                            $active = 'border-slate-400';
+                            $currentpage = $_SERVER["REQUEST_URI"];
+                            ?>
+                            <?php if ($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'superuser') : ?>
 
-                            <?php if (strpos($currentpage, '/users/index') !== false) $active = 'text-white bg-sagedark'; ?> 
-                            <a class="hover:no-underline block px-4 py-1 mt-2 mb-4 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?= $active ?>" 
-                                href="/users/index">
+                                <?php if (strpos($currentpage, '/users/index') !== false) $active = 'text-white bg-sagedark'; ?>
+                                <a class="hover:no-underline block px-4 py-1 mt-2 mb-4 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?= $active ?>" href="/users/index">
                                     Curator Dashboard
-                            </a> 
-                            <?php endif; ?> 
+                                </a>
+                            <?php endif; ?>
 
                             <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
                             <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/categories') {
@@ -74,24 +73,12 @@
                                                                                                                                                                     } ?>">Issues Reported</a>
                             <a href="/logout" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg">Logout</a>
 
-                           
-                           
 
-        
-                            <div class="p-2 mt-3">
-                                <form method="get" action="/find" class="w-fit flex" role="search">
+                            <div class="py-2 px-4 mt-3 w-full">
+                                <form method="get" action="/find" class="flex gap-[1px]" role="search">
                                     <label for="search" class="sr-only">Search</label>
-                                    <input x-ref="input" 
-                                            placeholder="Search"
-                                            required 
-                                            class="w-40 bg-white text-sm text-slate-700 rounded-l-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700" 
-                                            type="search" 
-                                            aria-label="Search" 
-                                            name="search" 
-                                            id="search">
-                                    <button title="Click here or press Enter to search" 
-                                            class="bg-white text-sm leading-6 text-slate-700 ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700 rounded-r-lg" 
-                                            type="submit">
+                                    <input x-ref="input" placeholder="Search" required class="w-40 bg-white text-sm text-slate-700 rounded-l-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700 flex-1" type="search" aria-label="Search" name="search" id="search">
+                                    <button title="Click here or press Enter to search" class="bg-white text-sm leading-6 text-slate-700 ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700 rounded-r-lg" type="submit">
                                         <svg width="24" height="24" fill="none" aria-hidden="true" class="flex-none">
                                             <path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                                             <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
@@ -99,12 +86,6 @@
                                     </button>
                                 </form>
                             </div>
-
-
-
-
-
-
                         </nav> <?php endif ?>
 
                     <!-- <div class="flex items-center justify-center space-x-2">
@@ -125,33 +106,33 @@
             </div>
 
 
-            <main class="bg-white w-full"> 
-                
-            <?= $this->fetch('content') ?> 
-        
+            <main class="bg-white w-full">
+
+                <?= $this->fetch('content') ?>
+
             </main>
         </div>
         <div class="p-6 bg-slate-200" role="contentinfo">
             <img class="md:hidden my-3 px-2 max-w-[75%] mx-auto" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
             <div class="mb-6 max-w-prose text-lg text-slate-700 mx-auto italic text-center">
-                We acknowledge with respect that the Learning Curator operates throughout B.C. on the traditional lands of Indigenous peoples. 
+                We acknowledge with respect that the Learning Curator operates throughout B.C. on the traditional lands of Indigenous peoples.
             </div>
             <div x-data="{ open: false }" class="leading-snug my-4 mx-8 text-center">
                 <button @click="open = ! open" class="inline text-darkblue text-sm hover:underline">Privacy Statement<span x-show="open">:</span></button>
                 <div x-show="open" @click.outside="open = false" class="inline text-sm">
-                    Your personal information is collected by the BC Public Service Agency 
-                    in accordance with section 26(c) of the Freedom of Information and 
-                    Protection of Privacy Act for the purposes of managing and administering 
-                    employee development and training. If you have any questions, submit an 
-                    AskMyHR request at www.gov.bc.ca/myhr/contact or call 250-952-6000. 
+                    Your personal information is collected by the BC Public Service Agency
+                    in accordance with section 26(c) of the Freedom of Information and
+                    Protection of Privacy Act for the purposes of managing and administering
+                    employee development and training. If you have any questions, submit an
+                    AskMyHR request at www.gov.bc.ca/myhr/contact or call 250-952-6000.
                 </div>
             </div>
         </div>
     </div>
-    
+
     <script defer src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.x.x/dist/alpine-clipboard.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
+
 </body>
 
 </html>
