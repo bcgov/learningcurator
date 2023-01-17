@@ -22,8 +22,8 @@ if ($this->Identity->isLoggedIn()) {
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
 <div class="p-8 text-lg" id="mainContent">
-    <div class="lg:grid lg:grid-cols-3 lg:gap-4 items-start">
-        <div class="lg:col-span-2">
+    <div class="lg:grid lg:grid-cols-5 lg:gap-4 items-start">
+        <div class="lg:col-span-3">
             <div class="p-3 rounded-lg bg-slate-100">
                 <h2 class="text-2xl text-darkblue font-semibold mb-2">Admin Options</h2>
                 <p><i class="bi bi-info-circle"></i> <strong>Not sure where to start?</strong> Read the <a href="https://bcgov.sharepoint.com/:f:/r/teams/00404/Shared%20Documents/Curators/Handbook%20-%20Documentation%20for%20Curators?csf=1&web=1&e=Y7b0BO" target="_blank" class="text-sky-700 hover:underline">Curator's Handbook</a>.</p>
@@ -58,7 +58,36 @@ if ($this->Identity->isLoggedIn()) {
                     <!-- <li class="px-2"> <a class="hover:underline hover:text-sky-700" href=" /activities/addtostep">Add Activity to Step</a></li> -->
                 </ul>
             </div>
-            <!-- TODO #234 Nori move stats to second position on small screen sizes. Change to flexbox? -->
+            <div class="border-2 border-darkblue p-3 rounded-lg block mt-6 lg:hidden">
+                <h2 class="text-2xl text-darkblue">Today's Stats</h2>
+
+                <div class="text-xl">
+                    <p class="mt-2"><span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $totalfollowcount ?></span> Pathway Follows</p>
+                    <h3 class="mt-4 font-semibold">Top 5 Followed Pathways</h3>
+                    <!-- TODO Nori add styling to the follows piece of the link - formatting in SimpleCrudTrait.php -->
+                    <ol class="pl-8 text-base mt-2 list-decimal leading-snug">
+                        <?php
+                        // these links are templated/built within the controller for noted reasons there
+                        ?>
+                        <?php foreach ($top5follows as $link) : ?>
+                            <li class="px-2 "><?= $link ?></li>
+                        <?php endforeach ?>
+                    </ol>
+
+                    <p class="mt-4"><span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $launchcount ?></span> Activity Launches
+                    </p>
+                    <h3 class="mt-2 font-semibold">Top 5 Launched Activities</h3>
+                    <ol class="pl-8 text-base mt-2 list-decimal leading-snug">
+                        <?php
+                        // these links are templated/built within the controller for noted reasons there
+
+                        ?>
+                        <?php foreach ($top5links as $link) : ?>
+                            <li class="px-2 "><?= $link ?></li>
+                        <?php endforeach ?>
+                    </ol>
+                </div>
+            </div>
             <?php $rcount = $noresponses->count() ?? 0 ?>
             <h2 class="text-2xl text-darkblue font-semibold mt-6"><span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2 mr-2"><?= $rcount ?></span> Open Reports</h2>
             <div class="max-w-prose">
@@ -99,10 +128,8 @@ if ($this->Identity->isLoggedIn()) {
                 </div>
 
             </div>
-
-
         </div>
-        <div class="border-2 border-darkblue p-3 rounded-lg">
+        <div class="border-2 border-darkblue p-3 rounded-lg lg:col-span-2 lg:grid hidden">
             <h2 class="text-2xl text-darkblue">Today's Stats</h2>
 
             <div class="text-xl">
