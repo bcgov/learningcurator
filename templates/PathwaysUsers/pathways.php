@@ -53,20 +53,21 @@ if ($this->Identity->isLoggedIn()) {
                             <?= $topiclink ?>
                         </a></span>
                     </div>
-                    <p class="text-base"><strong>Followed on:</strong>
-                        <?= $this->Time->format($path->date_start, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
-                    </p>
-
+                    <div class="flex gap-2">
+                        <p class="text-base mb-0 flex-none"><strong>Followed on:</strong>
+                            <?= $this->Time->format($path->date_start, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
+                        </p>
+                        <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users', 'action' => 'delete/' . $path->id]]) ?>
+                        <button class="block text-slate-500 underline hover:text-slate-700 hover:cursor-pointer mt-0 text-base mb-3 flex-none">Un-Follow Pathway</button>
+                        <?= $this->Form->end(); ?>
+                    </div>
                     <?php if (!empty($path->date_complete)) : ?>
                         <p class="text-base">
                             <strong>Completed:</strong>
                             <?= $this->Time->format($path->date_complete, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
                         </p>
                     <?php endif ?>
-
-                    <div class="autop"><?= $this->Text->autoParagraph(h($path->pathway->description)); ?></div>
-
-
+                    <p><span class="font-bold">Pathway Goal: </span><?= $path->pathway->objective ?></p>
                     <h3 class="mt-4 mb-1 text-darkblue font-semibold">Pathway Activity Progress</h3>
                     <div class="flex pbarcontainer_<?= $path->pathway->id ?> mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
                         <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar_<?= $path->pathway->id ?> flex-none"></span>
@@ -75,64 +76,55 @@ if ($this->Identity->isLoggedIn()) {
                         <span class="zero_<?= $path->pathway->id ?> hidden py-2 px-3 text-base text-right"></span>
                     </div>
                     <script>
-                        
                         fetch('/pathways/status/<?= $path->pathway->id ?>', {
-                            method: 'GET'
-                        })
-                        .then((res) => res.json())
-                        .then((json) => {
+                                method: 'GET'
+                            })
+                            .then((res) => res.json())
+                            .then((json) => {
 
-                            if (json.percentage > 0) {
-                                // Phrasing
-                                let launched = json.completed + ' launched';
-                                let remaining = (json.requiredacts - json.completed) + ' to go';
-                                document.querySelector('.zero_<?= $path->pathway->id ?>').classList.add('hidden');
-                                document.querySelector('.pbar_<?= $path->pathway->id ?>').classList.remove('hidden');
-                                document.querySelector('.pbar_<?= $path->pathway->id ?>').style.width = json.percentage + '%';
+                                if (json.percentage > 0) {
+                                    // Phrasing
+                                    let launched = json.completed + ' launched';
+                                    let remaining = (json.requiredacts - json.completed) + ' to go';
+                                    document.querySelector('.zero_<?= $path->pathway->id ?>').classList.add('hidden');
+                                    document.querySelector('.pbar_<?= $path->pathway->id ?>').classList.remove('hidden');
+                                    document.querySelector('.pbar_<?= $path->pathway->id ?>').style.width = json.percentage + '%';
 
-                                if (json.percentage == 100) {
-                                    
-                                    document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = 'Pathway completed!';
-                                    document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
-                                } else if (json.percentage < 20) {
-                                    
-                                    document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = '';
-                                    document.querySelector('.pro_sm_<?= $path->pathway->id ?>').innerHTML = launched;
-                                    document.querySelector('.total_<?= $path->pathway->id ?>').innerHTML = remaining;
-                                    document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
-                                } else if (json.percentage > 90) {
-                                    document.querySelector('.pro_sm_<?= $path->pathway->id ?>').innerHTML = '';
-                                    document.querySelector('.total_<?= $path->pathway->id ?>').innerHTML = '';
-                                    document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = launched + ', ' + remaining;
-                                    document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
+                                    if (json.percentage == 100) {
+
+                                        document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = 'Pathway completed!';
+                                        document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
+                                    } else if (json.percentage < 20) {
+
+                                        document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = '';
+                                        document.querySelector('.pro_sm_<?= $path->pathway->id ?>').innerHTML = launched;
+                                        document.querySelector('.total_<?= $path->pathway->id ?>').innerHTML = remaining;
+                                        document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
+                                    } else if (json.percentage > 90) {
+                                        document.querySelector('.pro_sm_<?= $path->pathway->id ?>').innerHTML = '';
+                                        document.querySelector('.total_<?= $path->pathway->id ?>').innerHTML = '';
+                                        document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = launched + ', ' + remaining;
+                                        document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
+                                    } else {
+                                        document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = launched;
+                                        document.querySelector('.total_<?= $path->pathway->id ?>').innerHTML = remaining;
+                                        document.querySelector('.pro_sm_<?= $path->pathway->id ?>').innerHTML = '';
+                                        document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
+                                    }
+
                                 } else {
-                                    document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = launched;
-                                    document.querySelector('.total_<?= $path->pathway->id ?>').innerHTML = remaining;
-                                    document.querySelector('.pro_sm_<?= $path->pathway->id ?>').innerHTML = '';
-                                    document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
+                                    document.querySelector('.zero_<?= $path->pathway->id ?>').classList.remove('hidden');
+                                    document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '' + json.requiredacts + ' activities to go';
                                 }
-
-                            } else {
-                                document.querySelector('.zero_<?= $path->pathway->id ?>').classList.remove('hidden');
-                                document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '' + json.requiredacts + ' activities to go';
-                            }
-                        })
-                        .catch((err) => console.error("error:", err));
+                            })
+                            .catch((err) => console.error("error:", err));
                     </script>
 
                     <p class="my-4"> <a href="/<?= h($path->pathway->topic->categories[0]->slug) ?>/<?= $path->pathway->topic->slug ?>/pathway/<?= h($path->pathway->slug) ?>" class="text-sky-700 underline">
                             View the <strong><?= h($path->pathway->name) ?></strong> pathway
                         </a> </p>
 
-                    <div class="my-3">
-                        <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users', 'action' => 'delete/' . $path->id]]) ?>
-                        <button class="py-2 px-4 bg-darkblue text-white rounded-lg hover:bg-darkblue/80">
-                            Un-Follow Pathway <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pin-angle inline" viewBox="0 0 16 16">
-                                <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146zm.122 2.112v-.002.002zm0-.002v.002a.5.5 0 0 1-.122.51L6.293 6.878a.5.5 0 0 1-.511.12H5.78l-.014-.004a4.507 4.507 0 0 0-.288-.076 4.922 4.922 0 0 0-.765-.116c-.422-.028-.836.008-1.175.15l5.51 5.509c.141-.34.177-.753.149-1.175a4.924 4.924 0 0 0-.192-1.054l-.004-.013v-.001a.5.5 0 0 1 .12-.512l3.536-3.535a.5.5 0 0 1 .532-.115l.096.022c.087.017.208.034.344.034.114 0 .23-.011.343-.04L9.927 2.028c-.029.113-.04.23-.04.343a1.779 1.779 0 0 0 .062.46z"/>
-                            </svg>
-                        </button>
-                        <?= $this->Form->end(); ?>
-                    </div>
+
                 </div>
             <?php endforeach; ?>
         </div>
