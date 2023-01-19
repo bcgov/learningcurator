@@ -9,6 +9,7 @@
  * @copyright Copyright 2010 - 2018, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+
 ?>
 
 <header class="w-full h-32 md:h-52 bg-darkblue px-8 flex items-center">
@@ -23,6 +24,7 @@
 
     </form>
 
+
     <h3 class="text-xl mt-4 font-semibold">All Users</h3>
     <p>Click on any username to see information about that user and their contributions to the Learning Curator.</p>
     <p class="mt-3 text-base">Page <?= $this->Paginator->counter() ?></p>
@@ -33,6 +35,7 @@
                 <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left">First Name</th>
                 <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left">Last Name</th>
                 <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left">Email</th>
+                <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left">Role</th>
             </tr>
         </thead>
         <tbody class="text-base">
@@ -49,9 +52,10 @@
                     <td class="px-2 py-1 border border-slate-300">
                         <a href="mailto:<?= h($user->email) ?>" class="hover:underline"><?= h($user->email) ?></a>
                     </td>
+                    <td class="px-2 py-1 border border-slate-300">
+                        <?= ucfirst($user->role) ?>
+                    </td>
                 </tr>
-
-
             <?php endforeach; ?>
 
         </tbody>
