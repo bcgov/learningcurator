@@ -96,9 +96,9 @@ if ($this->Identity->isLoggedIn()) {
         </div> <!-- formatting container -->
 
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
+        <!-- #TODO come back to this when there's more capacity to implement properly
         <div class="lg:mt-8 lg:basis-1/5">
             <div class="flex justify-end lg:justify-start gap-4 top-4">
-                <!-- TODO Allan add working sort and filter options -->
                 <a href="" class="hover:text-sky-700">
                     <div class="flex flex-col justify items-center gap-1">
 
@@ -134,6 +134,6 @@ if ($this->Identity->isLoggedIn()) {
                     </div>
                 </a>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
