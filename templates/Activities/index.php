@@ -108,9 +108,18 @@ if ($this->Identity->isLoggedIn()) {
                     <div class="bg-white inset-1 rounded-r-sm flex-1">
                         <div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
                             <div class="p-3 text-lg">
-                                <a href="/profile/launches" class="inline-block p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
-                                    Launched
-                                </a>
+                                <div class="flex justify-between justify-items-end text-xs text-slate-500 mt-0 mb-2 gap-2">
+                                    <span class="flex-none justify-self-start">
+                                        <a href="/profile/launches" x-cloak class="inline-block p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
+                                            Launched
+                                        </a>
+                                    </span>
+
+                                    <span class="self-end"><i class="bi bi-clock-history mr-1"></i>
+                                        Activity added:&nbsp;<?= $this->Time->format($activity->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
+                                    </span>
+                                </div>
+
                                 <h4 class="mb-2 mt-1 text-xl font-semibold">
                                     <?= $activity->name ?>
                                 </h4>
@@ -153,7 +162,7 @@ if ($this->Identity->isLoggedIn()) {
                                         </svg>
                                     </a>
                                 </div>
-                                <!-- TODO Allan Long hyperlinks breaking cards on more info. Add to site js, see https://css-tricks.com/better-line-breaks-for-long-urls/ -->
+
                                 <div x-data="{ open: false }">
                                     <button @click="open = !open" class="text-sm text-sky-700 text-right">
                                         <span>More info</span>
