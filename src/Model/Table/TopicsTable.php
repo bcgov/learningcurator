@@ -77,13 +77,13 @@ class TopicsTable extends Table
 
         $validator
             ->scalar('name')
-            ->maxLength('name', 40)
+            ->maxLength('name', 150)
             ->requirePresence('name', 'create')
             ->notEmptyString('name');
 
         $validator
             ->scalar('slug')
-            ->maxLength('slug', 40)
+            ->maxLength('slug', 150)
             ->requirePresence('slug', 'create')
             ->notEmptyString('slug');
 
@@ -93,17 +93,16 @@ class TopicsTable extends Table
 
         $validator
             ->scalar('image_path')
-            ->maxLength('image_path', 255)
             ->allowEmptyFile('image_path');
 
         $validator
             ->scalar('color')
-            ->maxLength('color', 255)
+            ->maxLength('color', 100)
             ->allowEmptyString('color');
 
         $validator
             ->scalar('featured')
-            ->maxLength('featured', 255)
+            ->maxLength('featured', 10)
             ->allowEmptyString('featured');
 
         return $validator;
