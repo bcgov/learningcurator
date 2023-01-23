@@ -225,7 +225,7 @@ foreach ($step->pathways as $pathways) {
                                     </h4>
                                     <div class="text-lg">
                                         <?php if (!empty($activity->description)) : ?>
-                                            <?= $activity->description ?>
+                                            <div class="autop"><?= $this->Text->autoParagraph(h($activity->description)); ?></div>
                                         <?php else : ?>
                                             <p><em>No description provided&hellip;</em></p>
                                         <?php endif ?>
@@ -234,7 +234,7 @@ foreach ($step->pathways as $pathways) {
                                             <blockquote class="border-l-2 p-2 m-2"><?= h($activity->_joinData->stepcontext) ?></blockquote>
                                         <?php endif ?>
                                         <?php if (!empty($activity->isbn)) : ?>
-                                            ISBN: <?= $activity->isbn ?>
+                                            <p>ISBN: <?= $activity->isbn ?></p>
                                         <?php endif ?>
                                     </div>
                                     <!-- <form action="/activities/like/<?= $activity->id ?>"
@@ -418,7 +418,7 @@ foreach ($step->pathways as $pathways) {
                                         </h4>
                                         <div class="text-lg">
                                             <?php if (!empty($activity->description)) : ?>
-                                                <p><?= h($activity->description) ?></p>
+                                                <div class="autop"><?= $this->Text->autoParagraph(h($activity->description)); ?></div>
                                             <?php else : ?>
                                                 <p><em>No description provided&hellip;</em></p>
                                             <?php endif ?>
@@ -566,7 +566,7 @@ foreach ($step->pathways as $pathways) {
                                             </h4>
                                             <div class="text-lg">
                                                 <?php if (!empty($activity->description)) : ?>
-                                                    <p><?= h($activity->description) ?></p>
+                                                    <div class="autop"><?= $this->Text->autoParagraph(h($activity->description)); ?></div>
                                                 <?php else : ?>
                                                     <p><em>No description provided&hellip;</em></p>
                                                 <?php endif ?>

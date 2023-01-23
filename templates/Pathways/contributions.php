@@ -84,7 +84,7 @@ if ($this->Identity->isLoggedIn()) {
                                 </h4>
                                 <div class="">
                                     <?php if (!empty($a->description)) : ?>
-                                        <?= $a->description ?>
+                                        <div class="autop"><?= $this->Text->autoParagraph(h($a->description)); ?></div>
 
                                     <?php else : ?>
                                         <p><em>No description provided&hellip;</em></p>

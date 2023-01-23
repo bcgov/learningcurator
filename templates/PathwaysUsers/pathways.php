@@ -67,7 +67,7 @@ if ($this->Identity->isLoggedIn()) {
                             <?= $this->Time->format($path->date_complete, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
                         </p>
                     <?php endif ?>
-                    <p><span class="font-bold">Pathway Goal: </span><?= $path->pathway->objective ?></p>
+                    <p><span class="font-bold">Pathway Goal: </span><?= h($path->pathway->objective); ?></p>
                     <h3 class="mt-4 mb-1 text-darkblue font-semibold">Pathway Activity Progress</h3>
                     <div class="flex pbarcontainer_<?= $path->pathway->id ?> mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
                         <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar_<?= $path->pathway->id ?> flex-none"></span>
