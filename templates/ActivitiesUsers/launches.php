@@ -34,14 +34,18 @@ if ($this->Identity->isLoggedIn()) {
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
             <div class="text-sm text-sky-700">
 
-                Pagination placeholder
+                <!-- Pagination placeholder -->
+                <!-- #TODO the controller isn't currently set with a limit at 
+                        so this page will always list all the launches from a user
+                     -->
 
             </div>
         </div>
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
         <div class="lg:basis-1/5">
+            <!--
             <div class="flex justify-end lg:justify-start gap-4">
-                <!-- TODO Allan add working sort and filter options -->
+                
                 <a href="" class="hover:text-sky-700">
                     <div class="flex flex-col justify items-center gap-1">
 
@@ -76,7 +80,7 @@ if ($this->Identity->isLoggedIn()) {
                         <p class="text-xs text-center">Sort</p>
                     </div>
                 </a>
-            </div>
+            </div> -->
         </div>
     </div>
 
