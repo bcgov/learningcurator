@@ -78,6 +78,7 @@ if ($this->Identity->isLoggedIn()) {
         <div class="lg:basis-1/5">
             <div class="flex justify-end lg:justify-start gap-4 sticky top-4">
                 <!-- TODO Allan add working sort and filter options -->
+                <!--
                 <a href="" class="hover:text-sky-700">
                     <div class="flex flex-col justify items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-view-stacked" viewBox="0 0 16 16">
@@ -111,6 +112,6 @@ if ($this->Identity->isLoggedIn()) {
                     </div>
                 </a>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>

@@ -47,9 +47,9 @@ if ($this->Identity->isLoggedIn()) {
             </div>
         </div>
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
+        <!--
         <div class="lg:basis-1/5">
             <div class="flex justify-end lg:justify-start gap-4">
-                <!-- TODO Allan add working sort and filter options -->
                 <a href="" class="hover:text-sky-700">
                     <div class="flex flex-col justify items-center gap-1">
 
@@ -85,8 +85,8 @@ if ($this->Identity->isLoggedIn()) {
                     </div>
                 </a>
             </div>
-        </div>
-    </div>
+        </div> -->
+    </div> 
     <div class="lg:columns-2 gap-4">
         <?php foreach ($activities as $activity) : ?>
             <?php
