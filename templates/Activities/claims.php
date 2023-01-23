@@ -58,8 +58,7 @@ if ($this->Identity->isLoggedIn()) {
 		<a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a> 
 		<?php endforeach ?>
 		</div>
-
-		<?= $activity->description ?>
+        <div class="autop"><?= $this->Text->autoParagraph(h($activity->description)); ?></div>
 		<?php if (!empty($activity->_joinData->stepcontext)) : ?>
 		<div class="alert alert-light text-dark mt-3 shadow-sm">
 				

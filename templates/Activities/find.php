@@ -40,7 +40,7 @@ if ($this->Identity->isLoggedIn()) {
                                 <?= $c->name ?>
                             </a>
                         </h3>
-                        <p class="line-clamp-4 mb-0"><?= h($c->description) ?></p>
+                        <p class="line-clamp-4 mb-0"><?= $this->Text->autoParagraph(h($c->description)); ?></p>
                     </div>
                 </div>
             <?php endforeach ?>
@@ -55,7 +55,7 @@ if ($this->Identity->isLoggedIn()) {
                                 <?= $c->name ?>
                             </a>
                         </h3>
-                        <p class="line-clamp-4 mb-0"><?= h($c->description) ?></p>
+                        <p class="line-clamp-4 mb-0"><?= $this->Text->autoParagraph(h($c->description)); ?></p>
                     </div>
                 </div>
             <?php endforeach ?>
@@ -121,7 +121,7 @@ if ($this->Identity->isLoggedIn()) {
                             <?php //$this->Html->link($activity->name, ['action' => 'view', $activity->id]) 
                             ?>
                         </h3>
-                        <p class="line-clamp-2 mb-0"><?= h($activity->description) ?></p>
+                        <p class="line-clamp-2 mb-0"><?= $this->Text->autoParagraph(h($activity->description)); ?></p>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -140,7 +140,7 @@ if ($this->Identity->isLoggedIn()) {
                             <?php //$this->Html->link($activity->name, ['action' => 'view', $activity->id]) 
                             ?>
                         </h3>
-                        <p class="line-clamp-2 mb-1 last:mb-0"><?= h($activity->description) ?></p>
+                        <p class="line-clamp-2 mb-1 last:mb-0"><?= $this->Text->autoParagraph(h($activity->description)); ?></p>
                     </div>
                 </div>
             <?php endforeach; ?>

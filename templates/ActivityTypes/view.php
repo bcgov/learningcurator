@@ -14,7 +14,7 @@
     <!-- TODO alphabetize the list or sort options? -->
     <div class="mt-0 mb-3 text-xl">
         <h3 class="font-semibold text-2xl"><i class="<?= h($activityType->image_path) ?> text-2xl mr-2" aria-hidden="true"></i><?= h($activityType->name) ?></h3>
-        <?= $activityType->description; ?>
+        <?= h($activityType->description); ?>
     </div>
     <div class="mt-2">
         <a title="View this activity type" href="/activity-types/" class="mb-3 inline-block px-3 py-1 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg">

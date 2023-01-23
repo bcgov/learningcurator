@@ -34,8 +34,7 @@ if ($this->Identity->isLoggedIn()) {
                                 <a href="/tags/view/<?= h($tag->id) ?>" class="badge badge-light"><?= $tag->name ?></a>
                             <?php endforeach ?>
                         </div>
-
-                        <?= $activity[0]->description ?>
+                        <div class="autop"><?= $this->Text->autoParagraph(h($activity[0]->description)); ?></div>
                         <?php if (!empty($activity[0]->isbn)) : ?>
                             <div class="bg-white p-2 isbn">
                                 ISBN: <?= $activity[0]->isbn ?>
