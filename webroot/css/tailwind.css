@@ -551,6 +551,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   visibility: visible;
 }
 
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
 .sticky {
   position: sticky;
 }
@@ -564,6 +572,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .-top-\[2px\] {
   top: -2px;
+}
+
+.top-32 {
+  top: 8rem;
+}
+
+.left-32 {
+  left: 8rem;
 }
 
 .top-4 {
