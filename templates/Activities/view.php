@@ -29,9 +29,14 @@ if ($this->Identity->isLoggedIn()) {
             <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($activity->activity_type->name) ?>"></i>
                 <div class="bg-white inset-1 rounded-r-sm flex-1">
                     <div class="p-3 text-lg">
-                        <a href="/profile/launches" class="inline-block p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
+                        <?php 
+                        $show = 'hidden'; 
+                        if($claimid > 0) $show = 'inline-block';
+                        ?>
+                        <a href="/profile/launches" id="launchbadge" class="<?= $show ?> p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80">
                             Launched
                         </a>
+                        
                         <h4 class="mb-2 mt-1 text-xl font-semibold">
                             <?= $activity->name ?>
                         </h4>
@@ -75,13 +80,23 @@ if ($this->Identity->isLoggedIn()) {
                         <?php if ($activity->status_id == 2) : ?>
 
                             <div class="">
-                                <a target="_blank" x-on:click="count++;" onclick="loadStatus();" rel="noopener" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $activity->id ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
-                                    Launch
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
-                                        <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
-                                    </svg>
+                                <a target="_blank" 
+                                    rel="noopener" 
+                                    title="Launch this activity" 
+                                    href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
+                                    onclick="showBadge()"
+                                    class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
+                                        Launch
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+                                            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+                                        </svg>
                                 </a>
+                                <script>
+                                    function showBadge() {
+                                        document.querySelector('#launchbadge').classList.remove('hidden');
+                                    }
+                                </script>
                             </div>
                         <?php elseif ($activity->status_id == 3) : ?>
                             <h4 class="font-semibold mb-1">Archived Activity</h4>
