@@ -247,10 +247,13 @@ foreach ($step->pathways as $pathways) {
                                     preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $youtube);
                                     if (!empty($youtube[1])) :
                                     ?>
-                                        <!-- <img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
-                                        <div class="hidden w-full z-50 h-auto bg-black/50" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
-                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $youtube[1] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                        </div> -->
+                                    <div class="placehold<?= $activity->id ?> videoplace relative">
+                                        <img class="" alt="Embedded video placeholder" src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" onclick="showembed(<?= $activity->id ?>)">
+                                        <img class="absolute z-100 top-32 left-32" alt="Embedded video play button" src="/img/video-play.png" onclick="showembed(<?= $activity->id ?>)">
+                                    </div>
+                                    <div class="embed<?= $activity->id ?> hidden w-full z-50 h-auto bg-black/50">
+                                        <iframe width="100%" height="240" src="https://www.youtube.com/embed/<?= $youtube[1] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    </div>
                                     <?php endif ?>
 
 
@@ -688,4 +691,19 @@ function loadStatus() {
     })
     .catch((err) => console.error("error:", err));
 }
+
+function showembed(actid) {
+    
+    fetch('/activities-users/launch?activity_id=' + actid, {
+        method: 'GET'
+    })
+    .then((res) => { return false })
+    .catch((err) => console.error("error:", err));
+
+    document.querySelector('.act-'+actid).classList.remove('hidden');
+    document.querySelector('.embed'+actid).classList.remove('hidden');
+    document.querySelector('.placehold'+actid).classList.add('hidden');
+    return true;
+}
+
 </script>

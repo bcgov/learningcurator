@@ -33,7 +33,7 @@ if ($this->Identity->isLoggedIn()) {
                         $show = 'hidden'; 
                         if($claimid > 0) $show = 'inline-block';
                         ?>
-                        <a href="/profile/launches" id="launchbadge" class="<?= $show ?> p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80">
+                        <a href="/profile/launches" class="lbad<?= $activity->id ?> <?= $show ?> p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80">
                             Launched
                         </a>
                         
@@ -67,15 +67,17 @@ if ($this->Identity->isLoggedIn()) {
                                     </svg>
                                     <span class="lcount"><?= h($activity->recommended) ?> likes</span>
                                 </a> -->
-                        <!-- TODO Allan to update video preview embed functionality -->
                         <?php
                         preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $youtube);
                         if (!empty($youtube[1])) :
                         ?>
-                            <img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
-                            <div class="hidden w-full z-50 h-auto bg-black/50" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $youtube[1] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </div>
+                        <div class="placehold<?= $activity->id ?> videoplace relative">
+                            <img class="" alt="Embedded video placeholder" src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" onclick="showembed(<?= $activity->id ?>)">
+                            <img class="absolute z-100 top-32 left-32" alt="Embedded video play button" src="/img/video-play.png" onclick="showembed(<?= $activity->id ?>)">
+                        </div>
+                        <div class="embed<?= $activity->id ?> hidden w-full z-50 h-auto bg-black/50">
+                            <iframe width="100%" height="240" src="https://www.youtube.com/embed/<?= $youtube[1] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
                         <?php endif ?>
                         <?php if ($activity->status_id == 2) : ?>
 
@@ -254,3 +256,18 @@ if ($this->Identity->isLoggedIn()) {
         </div>
     </div>
 </div>
+<script>
+function showembed(actid) {
+    
+    fetch('/activities-users/launch?activity_id=' + actid, {
+        method: 'GET'
+    })
+    .then((res) => { return false })
+    .catch((err) => console.error("error:", err));
+
+    document.querySelector('.lbad'+actid).classList.remove('hidden');
+    document.querySelector('.embed'+actid).classList.remove('hidden');
+    document.querySelector('.placehold'+actid).classList.add('hidden');
+    return true;
+}
+</script>

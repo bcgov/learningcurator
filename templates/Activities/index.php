@@ -102,26 +102,31 @@ if ($this->Identity->isLoggedIn()) {
 
             <div class="w-full inline-block mb-4 p-0.5 rounded-md bg-sagedark hover:bg-sagedark/80 ">
                 <div class="flex flex-row justify-between">
-                    <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($activity->activity_type->name) ?>"></i>
+                    <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;"></i>
 
                     <div class="bg-white inset-1 rounded-r-sm flex-1">
                         <div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
                             <div class="p-3 text-lg">
                                 <div class="flex justify-between justify-items-end text-xs text-slate-500 mt-0 mb-2 gap-2">
+                                    
                                     <span class="flex-none justify-self-start">
-                                        <a href="/profile/launches" x-cloak class="inline-block p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
+                                    <?php
+                                    $showbadge = 'hidden';
+                                    if($completed > 0) $showbadge = 'inline-block'; 
+                                    ?>
+                                        <a href="/profile/launches" class="lbad<?= $activity->id ?> <?= $showbadge ?> p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80">
                                             Launched
                                         </a>
                                     </span>
-
+                                    
                                     <span class="self-end"><i class="bi bi-clock-history mr-1"></i>
                                         Activity added:&nbsp;<?= $this->Time->format($activity->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
                                     </span>
                                 </div>
 
-                                <h4 class="mb-2 mt-1 text-xl font-semibold">
+                                <h3 class="mb-2 mt-1 text-xl font-semibold">
                                     <?= $activity->name ?>
-                                </h4>
+                                </h3>
                                 <div class="">
                                     <?php if (!empty($activity->description)) : ?>
                                         <div class="autop"><?= $this->Text->autoParagraph(h($activity->description)); ?></div>
@@ -142,18 +147,21 @@ if ($this->Identity->isLoggedIn()) {
                         @submit.prevent="submitData">
                     <button><span x-text="liked"></span> likes</button>
                     </form> -->
-                                <!-- TODO Allan to update video preview embed functionality -->
-                                <?php
-                                preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $youtube);
-                                if (!empty($youtube[1])) :
-                                ?>
-                                    <img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
-                                    <div class="hidden w-full z-50 h-auto bg-black/50" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $youtube[1] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                    </div>
-                                <?php endif ?>
+                                
+                            <?php
+                            preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $youtube);
+                            if (!empty($youtube[1])) :
+                            ?>
+                            <div class="placehold<?= $activity->id ?> videoplace relative">
+                                <img class="" alt="Embedded video placeholder" src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" onclick="showembed(<?= $activity->id ?>)">
+                                <img class="absolute z-100 top-32 left-32" alt="Embedded video play button" src="/img/video-play.png" onclick="showembed(<?= $activity->id ?>)">
+                            </div>
+                            <div class="embed<?= $activity->id ?> hidden w-full z-50 h-auto bg-black/50">
+                                <iframe width="100%" height="240" src="https://www.youtube.com/embed/<?= $youtube[1] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <?php endif ?>
                                 <div class="">
-                                    <a target="_blank" x-on:click="count++;" onclick="loadStatus();" rel="noopener" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $activity->id ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
+                                    <a target="_blank" x-on:click="count++;" rel="noopener" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $activity->id ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
                                         Launch
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
@@ -263,7 +271,21 @@ if ($this->Identity->isLoggedIn()) {
                     </div> <!-- end white inner box -->
                 </div>
             </div>
-        <?php endforeach; // end of activities loop for this step 
-        ?>
+        <?php endforeach; // end of activities loop for this step ?>
     </div>
 </div>
+<script>
+function showembed(actid) {
+    
+    fetch('/activities-users/launch?activity_id=' + actid, {
+        method: 'GET'
+    })
+    .then((res) => { return false })
+    .catch((err) => console.error("error:", err));
+
+    document.querySelector('.lbad'+actid).classList.remove('hidden');
+    document.querySelector('.embed'+actid).classList.remove('hidden');
+    document.querySelector('.placehold'+actid).classList.add('hidden');
+    return true;
+}
+</script>
