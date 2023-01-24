@@ -105,7 +105,7 @@ if ($this->Identity->isLoggedIn()) {
                     <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;"></i>
 
                     <div class="bg-white inset-1 rounded-r-sm flex-1">
-                        <div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
+                        <div>
                             <div class="p-3 text-lg">
                                 <div class="flex justify-between justify-items-end text-xs text-slate-500 mt-0 mb-2 gap-2">
                                     
@@ -160,15 +160,36 @@ if ($this->Identity->isLoggedIn()) {
                                 <iframe width="100%" height="240" src="https://www.youtube.com/embed/<?= $youtube[1] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             </div>
                             <?php endif ?>
+
+
+
+
+
+
+
+
+
                                 <div class="">
-                                    <a target="_blank" x-on:click="count++;" rel="noopener" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $activity->id ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
-                                        Launch
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
-                                            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
-                                        </svg>
+                                    <a target="_blank" 
+                                        rel="noopener" 
+                                        title="Launch this activity" 
+                                        data-activity="lbad<?= $activity->id ?>" 
+                                        href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
+                                        class="launch inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
+                                            Launch
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+                                                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+                                            </svg>
                                     </a>
                                 </div>
+
+
+
+
+
+
+
 
                                 <div x-data="{ open: false }">
                                     <button @click="open = !open" class="text-sm text-sky-700 text-right">
@@ -275,6 +296,24 @@ if ($this->Identity->isLoggedIn()) {
     </div>
 </div>
 <script>
+// Left to itself, the launch link on activites works just fine 
+// with target=_blank set, but we want to update the UI of this 
+// page while the learner visits the activity so that when they
+// come back, their current state on the pathway is reflected 
+// without having to refresh the page. 
+let launchlinks = document.getElementsByClassName('launch');
+Array.from(launchlinks).forEach(function(element) {
+    element.addEventListener('click', (e) => { 
+        e.preventDefault();
+        // Set the "Launched" badge on the activity
+        let indicator = e.target.getAttribute('data-activity');
+        document.querySelector('.'+indicator).classList.remove('hidden');
+        // actually open the link
+        let url = e.target.href;
+        window.open(url);
+        
+    });
+});
 function showembed(actid) {
     
     fetch('/activities-users/launch?activity_id=' + actid, {
