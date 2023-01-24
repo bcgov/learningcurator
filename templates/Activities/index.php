@@ -29,22 +29,21 @@ if ($this->Identity->isLoggedIn()) {
 
 
     </div>
-    <div class="max-w-full flex flex-col lg:flex-row lg:gap-4 sticky bg-white -top-[2px] z-50 py-2">
+    <div class="max-w-full flex flex-col lg:flex-row lg:gap-4 sticky bg-white -top-[2px] z-50 pb-2">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
-            <div class="text-sm text-sky-700">
-                <!-- TODO Allan update pagination and styling -->
-                <?= $this->Paginator->first('<< ' . __('first')) ?>
-                <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                <?php $this->Paginator->numbers()
-                ?>
-                <?= $this->Paginator->next(__('next') . ' >') ?>
-                <?= $this->Paginator->last(__('last') . ' >>') ?>
-                <div class="mb-3 text-slate-700">
-                    <?= $this->Paginator->counter(__('Page {{page}} of {{pages}} | {{count}} total activities')) ?>
-                </div>
-
-
+        <div class="text-sm my-3">
+            
+            <?= $this->Paginator->first('<< ' . __('first')) ?>
+            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?php //echo $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next(__('next') . ' >') ?>
+            <?= $this->Paginator->last(__('last') . ' >>') ?>
+            <div class="mt-3 text-slate-700">
+                <?= $this->Paginator->counter(__('Page {{page}} of {{pages}} | {{count}} total activities')) ?>
             </div>
+        </div>
+
+            
         </div>
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
         <!--

@@ -37,3 +37,10 @@ p {
         clip-path: polygon(5% 0%, 100% 0%, 100% 100%, 5% 100%, 0% 50%);
     }
 }
+
+.pagfirst,
+.pagnextactive,
+.pagprevactive,
+.paglast {
+    @apply inline-block py-2 px-4 m-0 bg-slate-100 hover:bg-gray-100 hover:no-underline rounded-lg;
+}
