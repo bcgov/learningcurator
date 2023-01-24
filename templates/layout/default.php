@@ -12,7 +12,37 @@
 </head>
 
 <body class="bg-slate-50 font-BCSans">
-    <a href="#mainContent" class="sr-only focus:not-sr-only"><span class="p-3">Skip to Content</span></a>
+<a href="#mainContent" class="sr-only focus:not-sr-only"><span class="p-3">Skip to Content</span></a>
+<?php $environment = $_SERVER['SERVER_NAME'] ?>
+<?php if($environment == 'learningcurator.ca') : ?>
+<div class="px-3 py-2 bg-yellow-100 font-bold text-center">
+    You're in ALLAN'S LOCAL ENVIRONMENT - 
+    <a href="https://learningcurator.apps.silver.devops.gov.bc.ca" target="_blank">
+        Production
+    </a>
+</div>
+<?php elseif($environment == 'nori.learningcurator.ca') : ?>
+<div class="px-3 py-2 bg-yellow-100 font-bold text-center">
+    You're in NORI'S LOCAL ENVIRONMENT - 
+    <a href="https://learningcurator.apps.silver.devops.gov.bc.ca" target="_blank">
+        Production
+    </a>
+</div>
+<?php elseif($environment == 'learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca') : ?>
+<div class="px-3 py-2 bg-yellow-100 font-bold text-center">
+    You're in the OpenShift DEVELOPMENT ENVIRONMENT - 
+    <a href="https://learningcurator.apps.silver.devops.gov.bc.ca" target="_blank">
+        Production
+    </a>
+</div>
+<?php elseif($environment == 'learningcurator-a58ce1-test.apps.silver.devops.gov.bc.ca') : ?>
+<div class="px-3 py-2 bg-yellow-100 font-bold text-center">
+    You're in the OpenShift TEST ENVIRONMENT - 
+    <a href="https://learningcurator.apps.silver.devops.gov.bc.ca" target="_blank">
+        Production
+    </a>
+</div>
+<?php endif ?>
     <!-- :class="{'dark': darkMode === true}"
   x-data="{'darkMode': false}" 
   x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
