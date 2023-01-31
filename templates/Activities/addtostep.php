@@ -86,9 +86,6 @@ if ($this->Identity->isLoggedIn()) {
                     <input id="q" class="px-3 py-2 m-0 border rounded-l-lg w-3/4" type="search" placeholder="Pathway title or keyword..." aria-label="Pathway Search" name="q"><button class="px-3 py-2 m-0 bg-slate-400 hover:bg-slate-300 rounded-r-lg" type="submit">Search</button>
                 </form>
                 <div id="results"></div>
-                <!-- Results come from find.php page -->
-                <!-- TODO why aren't the results pulling in if not found? -->
-                <div id="results"></div>
 
                 <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'add', 'disabled' => 'disabled']]) ?>
                 <?php //$this->Form->control('pathway_id',['type' => 'hidden', 'value' => '' ]) 
@@ -171,26 +168,17 @@ if ($this->Identity->isLoggedIn()) {
                         <?php echo $this->Form->textarea('description', ['class' => 'form-field note-editable']) ?>
                     </div>
 
-                    <?php //echo $this->Form->control('licensing', ['class' => 'form-control']); 
-                    ?>
-                    <?php //echo $this->Form->control('activity_type_id', ['class' => 'form-control', 'options' => $atypes]); 
-                    ?>
-                    <?php //echo $this->Form->control('stepcontext', ['class' => 'form-control', 'label' => 'Set Context for this step']); 
-                    ?>
-                    <?php //echo $this->Form->control('moderator_notes', ['class' => 'form-control']); 
-                    ?>
-                    <?php //echo $this->Form->control('isbn', ['class' => 'form-control']); 
-                    ?>
-                    <?php //echo $this->Form->control('status_id', ['class' => 'form-control', 'options' => $statuses, 'empty' => true]); 
-                    ?>
-                    <?php //echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); 
-                    ?>
-                    <?php //echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text', 'label' => 'Tags']); 
-                    ?>
-                    <?php //echo $this->Form->control('users._ids', ['class' => 'form-control', 'options' => $users]); 
-                    ?>
-                    <?php //echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); 
-                    ?>
+                    <?php //echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
+                    <?php //echo $this->Form->control('activity_type_id', ['class' => 'form-control', 'options' => $atypes]); ?>
+                    <?php //echo $this->Form->control('stepcontext', ['class' => 'form-control', 'label' => 'Set Context for this step']); ?>
+                    <?php //echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
+                    <?php //echo $this->Form->control('isbn', ['class' => 'form-control']); ?>
+                    <?php //echo $this->Form->control('status_id', ['class' => 'form-control', 'options' => $statuses, 'empty' => true]); ?>
+                    <?php //echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
+                    <?php //echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text', 'label' => 'Tags']); ?>
+                    <?php //echo $this->Form->control('users._ids', ['class' => 'form-control', 'options' => $users]); ?>
+                    <?php //echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); ?>
+                    
                     <?= $this->Form->button(__('Save Activity'), ['class' => 'mt-3 block px-4 py-2 text-white text-md bg-slate-700  hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg savebut']) ?>
                     <?= $this->Form->end() ?>
                 </div>
@@ -218,16 +206,27 @@ if ($this->Identity->isLoggedIn()) {
     <div class="m-4 bg-bluegreen/30 p-3 rounded-md text-base">
         <p><strong>Bookmarklet:</strong> Drag the "Add to Curator" button to your bookmarks bar to save it as a shortcut. </p>
         <a class="inline-block px-4 py-2 mb-3 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg mr-2" href="javascript: (() => {const destination = 'https://learningcurator.apps.silver.devops.gov.bc.ca/activities/addtostep?url=' + window.location.href;window.open(destination);})();">Add to Curator</a>
-        <p>A "bookmarklet" is a special type of bookmark that allows you to take special action when you click it. In this case, if you click the "Add to Curator" bookmarklet while visiting any website, you will open up this "Add to Step" form, with the link to that page pre-populated, saving you from having to copy the URL and paste it here manually; furthermore, after you add a link to this page, the system will automatically reach out to that page and attempt to bring in its title and description (based on its meta tags).</p>
+        <p>A "bookmarklet" is a special type of bookmark that allows you to take special action when you click it.
+             In this case, if you click the "Add to Curator" bookmarklet while visiting any website, you will open 
+             up this "Add to Step" form, with the link to that page pre-populated, saving you from having to copy the 
+             URL and paste it here manually; furthermore, after you add a link to this page, the system will automatically 
+             reach out to that page and attempt to bring in its title and description (based on its meta tags).</p>
     </div>
 </div>
+
+
+
+
+
+
+
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" crossorigin="anonymous"></script>
 
 <script>
     $(function() {
-
+        // LOL a year later looking at this I deserve some sort of medal for this crap:
         $("#loading").fadeOut(800).fadeIn(800).fadeOut(800).fadeIn(800).fadeOut(800).fadeIn(800);
         //$("#loading").delay(5000).html('<div><strong>There seems to be something wrong. Please proceed and fill in the details yourself.</strong></div>');
 
@@ -307,6 +306,9 @@ if ($this->Identity->isLoggedIn()) {
                     $('#scontext').removeClass('opacity-25');
                     //$('.addcon').removeClass('hidden');
                     //$('.savebut').remove();
+                },
+                error: function (error) {
+                    console.log('Nope it did not work');
                 }
             });
         });

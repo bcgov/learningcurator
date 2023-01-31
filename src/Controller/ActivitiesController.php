@@ -532,7 +532,7 @@ class ActivitiesController extends AppController
                 $activity->modifiedby_id = $user->id;
                 $activity->approvedby_id = $user->id;
                 $activity->status_id = 2;
-                $activity->activity_types_id = 1;
+                $activity->activity_types_id = $this->request->getData()['activity_types_id'];
 
                 $sluggedTitle = Text::slug($activity->name);
                 // trim slug to maximum length defined in schema
@@ -555,6 +555,7 @@ class ActivitiesController extends AppController
                         'activitystepid' => $activitiesStep->id,
                         'stepid' => $this->request->getData()['step_id']
                     );
+                    
                     return json_encode($actstep);
                     // exit;
                     //$return = '/steps/edit/' . $this->request->getData()['step_id'];

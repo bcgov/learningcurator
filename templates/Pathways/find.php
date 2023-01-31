@@ -13,18 +13,25 @@
             </div>
         </div>
     <?php endforeach ?>
+    <style>
+        .chosenstep {
+            background-color: #F3F3F3;
+        }
+    </style>
     <script>
-        $(function() {
-            $('.stepid').on('click', function(e) {
+        let steplinks = document.getElementsByClassName('stepid');
+        Array.from(steplinks).forEach(function(element) {
+            element.addEventListener('click', (e) => { 
                 e.preventDefault();
-                let stepid = $(this).data('stepid');
-                let savetext = 'Save this activity to ';
-                savetext += $(this).data('steptit');
-                $('.stepid').removeClass('chosenstep');
-                $('.addform').removeClass('opacity-25');
-                $('.savebut').removeClass('d-none').html(savetext);
-                $('#step_id').val(stepid);
-                $(this).addClass('chosenstep');
+                let sid = e.target.getAttribute('data-stepid');
+                document.querySelector('#step_id').value = sid;
+                // #TODO This doesn't quite work yet as it doesn't remove the 
+                // chosenstep class from all of them first so the highlight
+                // remains even after you select another option
+                // Might just make this a select box?
+                e.target.classList.toggle('chosenstep');
+                document.querySelector('.addform').classList.remove('opacity-25');
+                
             });
         });
     </script>
