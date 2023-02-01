@@ -83,7 +83,7 @@ if ($this->Identity->isLoggedIn()) {
                 <h3 class="mb-3 text-xl font-semibold">Add Activity to Pathway Step</h3>
                 <h4 class="font-semibold">Find Pathway and Step</h4>
                 <form method="get" id="pathfind" action="/pathways/find" class="mt-2">
-                    <input id="q" class="px-3 py-2 m-0 border rounded-l-lg w-3/4" type="search" placeholder="Pathway title or keyword..." aria-label="Pathway Search" name="q"><button class="px-3 py-2 m-0 bg-slate-400 hover:bg-slate-300 rounded-r-lg" type="submit">Search</button>
+                    <input required="required" id="q" class="px-3 py-2 m-0 border rounded-l-lg w-3/4" type="search" placeholder="Pathway title or keyword..." aria-label="Pathway Search" name="q"><button class="px-3 py-2 m-0 bg-slate-400 hover:bg-slate-300 rounded-r-lg" type="submit">Search</button>
                 </form>
                 <div id="results"></div>
 
@@ -126,7 +126,7 @@ if ($this->Identity->isLoggedIn()) {
                 <h3 class="mb-3 text-xl font-semibold">Add Activity to Pathway Step</h3>
                 <h4 class="font-semibold">Find Pathway and Step</h4>
                 <form method="get" id="pathfind" action="/pathways/find" class="mt-2">
-                    <input id="q" 
+                    <input required="required" id="q" 
                             class="px-3 py-2 m-0 border rounded-l-lg w-3/4" 
                             type="search" 
                             placeholder="Pathway title or keyword..." 
@@ -203,9 +203,12 @@ if ($this->Identity->isLoggedIn()) {
             </div>
         <?php endif ?>
     </div>
-    <div class="m-4 bg-bluegreen/30 p-3 rounded-md text-base">
+    <div class="bg-bluegreen/30 p-3 rounded-md text-base">
         <p><strong>Bookmarklet:</strong> Drag the "Add to Curator" button to your bookmarks bar to save it as a shortcut. </p>
-        <a class="inline-block px-4 py-2 mb-3 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg mr-2" href="javascript: (() => {const destination = 'https://learningcurator.apps.silver.devops.gov.bc.ca/activities/addtostep?url=' + window.location.href;window.open(destination);})();">Add to Curator</a>
+        <a class="inline-block px-4 py-2 mb-3 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg mr-2" 
+            href="javascript: (() => {const destination = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/activities/addtostep?url=' + window.location.href;window.open(destination);})();">
+                Add to Curator
+        </a>
         <p>A "bookmarklet" is a special type of bookmark that allows you to take special action when you click it.
              In this case, if you click the "Add to Curator" bookmarklet while visiting any website, you will open 
              up this "Add to Step" form, with the link to that page pre-populated, saving you from having to copy the 
