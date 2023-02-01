@@ -140,7 +140,7 @@ if ($this->Identity->isLoggedIn()) {
                 <!-- Results come from find.php page -->
                 <div class="addform mt-3 opacity-25">
                     <h4 class="mb-3 font-semibold">Fill in the Activity Details</h4>
-                    <?= $this->Form->create(null, ['url' => ['controller' => 'Activities', 'action' => 'addtostep'], 'id' => 'addacttostep']) ?>
+                    <?= $this->Form->create(null, ['url' => ['controller' => 'Activities', 'action' => 'addacttostep'], 'id' => 'addacttostep']) ?>
                     <?php
                     echo $this->Form->hidden('createdby_id', ['value' => $this->Identity->get('id'), 'class' => 'form-field']);
                     echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'), 'class' => 'form-field']);
@@ -178,11 +178,11 @@ if ($this->Identity->isLoggedIn()) {
                     <?php //echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text', 'label' => 'Tags']); ?>
                     <?php //echo $this->Form->control('users._ids', ['class' => 'form-control', 'options' => $users]); ?>
                     <?php //echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); ?>
-                    
+
                     <?= $this->Form->button(__('Save Activity'), ['class' => 'mt-3 block px-4 py-2 text-white text-md bg-slate-700  hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg savebut']) ?>
                     <?= $this->Form->end() ?>
                 </div>
-                <!-- TODO opacity not turning off here when save button is submitted -->
+                <div id="savestatus"></div>
                 <div id="scontext" class="opacity-25 mt-3">
 
                     <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'edit/'], 'class' => 'contextform']) ?>
@@ -293,7 +293,7 @@ if ($this->Identity->isLoggedIn()) {
             let url = $(this).attr('action');
 
             $.ajax({
-                type: "POST",
+                type: 'POST',
                 url: url,
                 data: form.serialize(),
                 success: function(data) {
@@ -304,6 +304,7 @@ if ($this->Identity->isLoggedIn()) {
                     $('#actid').val(deets.activityid);
                     $('#step-id').val(deets.stepid);
                     $('#scontext').removeClass('opacity-25');
+                    $('#savestatus').html('<div class="alert alert-success">Your activity has been saved to the step!</div>');
                     //$('.addcon').removeClass('hidden');
                     //$('.savebut').remove();
                 },

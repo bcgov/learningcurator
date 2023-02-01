@@ -15,7 +15,9 @@
     <?php endforeach ?>
     <style>
         .chosenstep {
-            background-color: #F3F3F3;
+            background-color: #333;
+            border-radius: 3px;
+            color: #FFF;
         }
     </style>
     <script>
