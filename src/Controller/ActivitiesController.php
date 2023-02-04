@@ -612,78 +612,134 @@ class ActivitiesController extends AppController
         }
     }
 
+    
     /**
-     * Add-to-step method
+     * Add-to-step view that looks up whether the provided link exists 
+     * or doesn't 
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function addtostep()
     {
 
-	    $user = $this->request->getAttribute('authentication')->getIdentity();
-        $linktoact = $this->request->getQuery('url');
-        $pathway_id = $this->request->getQuery('pathway_id');
-
-        
-        if($pathway_id) {
-            
-        }
-        if($linktoact) {
-
+        if($this->request->is('get')) {
+            $user = $this->request->getAttribute('authentication')->getIdentity();            
+            $linktoact = $this->request->getQuery('url') ?? '';
             // If it exists return the one we've already got.
             $activity = $this->Activities->find()->contain(['ActivityTypes','Tags','Steps.Pathways'])->where(function ($exp, $query) use($linktoact) {
                 return $exp->like('hyperlink', '%'.$linktoact.'%');
             })->toList();
-            $this->set(compact('activity','linktoact'));
+            $activityTypes = $this->Activities->ActivityTypes->find('list', ['limit' => 200]);
+            $this->set(compact('activity','linktoact','activityTypes'));
 
-        } else {
-
-            $activity = $this->Activities->newEmptyEntity();
-
-            if ($this->request->is('post')) {
-
-                //echo '<pre>'; print_r($this->request->getData()); exit;
-
-                $activity = $this->Activities->patchEntity($activity, $this->request->getData());
-                $activity->createdby_id = $user->id;
-                $activity->modifiedby_id = $user->id;
-                $activity->approvedby_id = $user->id;
-                $activity->status_id = 2;
-                $activity->activity_types_id = 1;
-
-                $sluggedTitle = Text::slug($activity->name);
-                // trim slug to maximum length defined in schema
-                $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
-
-                if ($this->Activities->save($activity)) {
-
-                    $asteptable = TableRegistry::getTableLocator()->get('ActivitiesSteps');
-                    $activitiesStep = $asteptable->newEmptyEntity();
-                    $activitiesStep->step_id = $this->request->getData()['step_id'];
-                    $activitiesStep->activity_id = $activity->id;
-
-                    if (!$asteptable->save($activitiesStep)) {
-                        echo 'Cannot add to step! Contact an admin. Sorry :)';
-                        echo '' . $activity->id;
-                        exit;
-                    }
-                    $actstep = array(
-                        'activityid' => $activity->id,
-                        'activitystepid' => $activitiesStep->id,
-                        'stepid' => $this->request->getData()['step_id']
-                    );
-                    // echo json_encode($actstep);
-                    // exit;
-                    $return = '/steps/edit/' . $this->request->getData()['step_id'];
-                    return $this->redirect($return);
-                }
-    
-            } // if POST method used
-        } // endif does the link alreayd exist?
+        } 
 
     
     }
 
+
+    /**
+     * Add-to-path view that looks up whether the provided link exists 
+     * or doesn't and lets the curator add it to a step within the given
+     * pathway. This will attempt to supercede addtostep above as the 
+     * process of having to search for a pathway is cumbersome and this
+     * will allow for per-pathway bookmarklets
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function addtopath()
+    {
+
+        if($this->request->is('get')) {
+
+            $user = $this->request->getAttribute('authentication')->getIdentity();            
+            
+            $pathwayid = $this->request->getQuery('pathwayid') ?? 1;
+            $linktoact = $this->request->getQuery('url') ?? '';
+            
+            $paths = TableRegistry::getTableLocator()->get('Pathways');
+            $pathway = $paths->find()->where(['id = ' => $pathwayid])->contain(['Steps'])->toList();
+
+            $activity = $this->Activities->find()->contain(['ActivityTypes','Tags','Steps.Pathways'])->where(function ($exp, $query) use($linktoact) {
+                return $exp->like('hyperlink', '%'.$linktoact.'%');
+            })->toList();
+
+            // check to see if this activity is already on this pathway
+            // because we don't allow duplicate activities on a pathway
+            $dupealert = 0;
+            $onsteps = [];
+            if(!empty($activity[0]->steps)) {
+                foreach($activity[0]->steps as $s) {
+                    foreach($s['pathways'] as $p) {
+                        if($pathwayid == $p['id']) {
+                            $dupealert = 1;
+                            // create an array of IDs so that we can exclude
+                            // those steps from the UI and make it impossible
+                            // to add the same activity to a step twice
+                            array_push($onsteps,$s['id']);
+                        } 
+                    }
+                }
+            }
+
+            $activityTypes = $this->Activities->ActivityTypes->find('list', ['limit' => 200]);
+            $this->set(compact('pathway', 'dupealert', 'onsteps', 'activity','linktoact','activityTypes'));
+
+        } 
+
+    
+    }
+
+
+    /**
+     * Add an activity directly to a step and return the necessary details to expose
+     * the curator context and required flag form 
+     *
+     * @return \Cake\Http\Response|null Returns activity_step details on successful add.
+     */
+    public function addacttostep ()
+    {
+
+        if ($this->request->is('post')) {
+
+            $user = $this->request->getAttribute('authentication')->getIdentity();
+                
+            $activity = $this->Activities->newEmptyEntity();
+            $activity = $this->Activities->patchEntity($activity, $this->request->getData());
+            $activity->createdby_id = $user->id;
+            $activity->modifiedby_id = $user->id;
+            $activity->approvedby_id = $user->id;
+            // Defaulting to publishing the activity for the user experience
+            $activity->status_id = 2;
+            $activity->activity_types_id = $this->request->getData()['activity_types_id'];
+
+            $sluggedTitle = Text::slug($activity->name);
+            // trim slug to maximum length defined in schema
+            $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
+
+            if ($this->Activities->save($activity)) {
+
+                $asteptable = TableRegistry::getTableLocator()->get('ActivitiesSteps');
+                $activitiesStep = $asteptable->newEmptyEntity();
+                $activitiesStep->step_id = $this->request->getData()['step_id'];
+                $activitiesStep->activity_id = $activity->id;
+
+                if (!$asteptable->save($activitiesStep)) {
+                    echo 'Cannot add to step! Contact an admin. Sorry :)';
+                    echo '' . $activity->id;
+                    exit;
+                }
+                $actst = array(
+                    'activityid' => $activity->id,
+                    'activitystepid' => $activitiesStep->id,
+                    'stepid' => $this->request->getData()['step_id']
+                );
+
+                return $this->response->withStringBody(json_encode($actst));
+
+            } 
+        }
+    }
     /**
      * Get activity title and description from URL so we can populate that info 
      * for curators.

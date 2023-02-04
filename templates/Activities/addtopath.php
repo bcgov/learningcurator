@@ -7,21 +7,40 @@ if ($this->Identity->isLoggedIn()) {
     $uid = $this->Identity->get('id');
 }
 ?>
-
 <header class="w-full h-32 md:h-52 bg-darkblue px-8 flex items-center">
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
 <div class="p-8 text-lg" id="mainContent">
-    <h2 class="text-2xl text-darkblue font-semibold mb-3">Add Activity to Step</h2>
+    <h2 class="text-2xl text-darkblue font-semibold mb-3">
+        Add Activity to <a href="/pathways/<?= $pathway[0]->slug ?>" class="underline"><?= $pathway[0]->name ?></a>
+    </h2>
     <div class="max-w-prose">
+
+
+
+
+
+
+        
         <?php if (!empty($activity)) : ?>
+
+
+
+
+
             <div class="max-w-prose flex justify-between gap-4 border-2 p-3 rounded-md my-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-info-circle-fill flex-none" viewBox="0 0 16 16">
                     <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
                 </svg>
                 <div class="grow">
                     <h3 class="mb-3 text-xl font-semibold">Existing Activity</h3>
+                    <?php if($dupealert): ?>
+                        <h4 class="font-semibold">This activity is already on this pathway.</h4>
+                    <p class="mb-0">You <em>can</em> add it again to 
+                        a step that it's not already on, but please be mindful of unecessary repetition.</p>
+                    <?php else: ?>
                     <p class="mb-0">This activity already exists in the Curator. Let's add it to your step.</p>
+                    <?php endif ?>
                 </div>
             </div>
             <div class="w-full inline-block mb-3 p-0.5 rounded-md bg-sagedark hover:bg-sagedark/80 ">
@@ -81,41 +100,91 @@ if ($this->Identity->isLoggedIn()) {
                 <?php endif ?>
             </div>
             <div class="max-w-prose outline outline-1 outline-slate-500 p-6 my-3 rounded-md block">
-                <h3 class="mb-3 text-xl font-semibold">Add Activity to Pathway Step</h3>
-                <h4 class="font-semibold">Find Pathway and Step</h4>
-                <form method="get" id="pathfind" action="/pathways/find" class="mt-2">
-                    <input required="required" id="q" class="px-3 py-2 m-0 border rounded-l-lg w-3/4" type="search" placeholder="Pathway title or keyword..." aria-label="Pathway Search" name="q"><button class="px-3 py-2 m-0 bg-slate-400 hover:bg-slate-300 rounded-r-lg" type="submit">Search</button>
-                </form>
-                <div id="results"></div>
 
+                <h3 class="mb-3 text-xl font-semibold">Step 1: Add this activity to a step</h3>
+                <div class="my-2 p-3 bg-slate-100 shadow-sm">
+                <label>Steps on <a href="/pathways/<?= $pathway[0]->slug ?>" class="underline"><?= $pathway[0]->name ?></a> pathway:<br>
+                <select class="m-3" id="stepselect">
+                    <option>Select a step to proceed</option>
+                <?php foreach ($pathway[0]->steps as $step) : ?>
+                <?php if(!in_array($step->id,$onsteps)): // exclude the step the acitivity is already on ?>
+                    <option class="stepid px-1" value="<?= $step->id ?>">
+                        <?= $step->name ?>
+                    </option>
+                <?php endif ?>
+                <?php endforeach ?>
+                </select>
+                </label>
+                </div>
+                <script>
+                    let stepselect = document.querySelector('#stepselect');
+                    
+                    stepselect.addEventListener('change', (e) => { 
+                        e.preventDefault();
+                        let sid = e.target.value;
+                        console.log(sid);
+                        document.querySelector('#step_id').value = sid;
+                        document.querySelector('.addtostep').classList.remove('opacity-25');
+                        
+                    });
+                    
+                </script>
 
-                <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'add', 'disabled' => 'disabled']]) ?>
-                <?php //$this->Form->control('pathway_id',['type' => 'hidden', 'value' => '' ]) 
-                ?>
+                <?= $this->Form->create(null, 
+                                        [
+                                            'url' => ['controller' => 'activities-steps', 'action' => 'add', 'disabled' => 'disabled'],
+                                            'class' => 'addtostep opacity-25'
+                                        ]) ?>
+
                 <?= $this->Form->hidden('step_id', ['value' => 0, 'id' => 'step_id']) ?>
                 <?= $this->Form->hidden('activity_id', ['type' => 'hidden', 'value' => $activity[0]->id]) ?>
-
+                <?= $this->Form->hidden('addtopath', ['type' => 'hidden', 'value' => 1]) ?>
+                <div class="mb-3">
+                <label>
+                        <h4 class="font-semibold">Step 2: Required or Supplemental?</h4> Is this activity required for the step?
+                        <?= $this->Form->checkbox('required', ['label' => 'Is this activity required for the step?', 'checked' => 'checked']) ?>
+                    </label>
+                    <div class="text-slate-600 mb-1 text-sm" id="reqorsuppContext">
+                        <i class="bi bi-info-circle"></i> 
+                        When a learner launches a supplemental activity it does not count towards their progress
+                        along the pathway. Only required activities "count". </div>
+                </div>
+                <div class="mb-3">
 
                 <label for="stepcontext">
-                    <h4 class="font-semibold mt-2">Curator Context</h4><span class="text-slate-600 block mb-1 text-sm" id="curatorContext"><i class="bi bi-info-circle"></i> This is where you’ll add what the learners will do, need to pay attention to, etc. Elaborate on the context—why you chose this item for this step/pathway. Example: “Just read pages 20-34 of this chapter, which sheds light on how you can adopt a servant leadership approach.” </span>
+                    <h4 class="font-semibold mt-2">Optional Step 3: Add Curator context</h4>
+                    <span class="text-slate-600 block mb-1 text-sm" id="curatorContext">
+                        <i class="bi bi-info-circle"></i> 
+                        This is where you’ll add what the learners will do, need to pay attention to, etc. 
+                        Elaborate on the context—why you chose this item for this step/pathway. Example: 
+                            “Just read pages 20-34 of this chapter, which sheds light on how you can adopt 
+                            a servant leadership approach.” </span>
 
                     <?= $this->Form->textarea('stepcontext', ['class' => 'form-field mb-2', 'rows' => 2]) ?>
                 </label>
-                <label class="mt-2">
-                    <h4 class="font-semibold">Required or Supplemental?</h4> Is this activity required for the step?
-                    <?= $this->Form->checkbox('required', ['label' => 'Is this activity required for the step?']) ?>
-                </label>
+                </div>
                 <?= $this->Form->button(__('Assign to step'), ['class' => 'mt-3 block px-4 py-2 text-white text-md bg-slate-700  hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg']) ?>
                 <?= $this->Form->end() ?>
-                <!-- TODO success message once assigned to step? -->
+                
 
-
-              
             </div>
         <?php else : ?>
 
-            <div id="linkdeets">
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div id="linkdeets">
                 <div class="max-w-prose flex justify-between gap-4 border-2 p-3 rounded-md my-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-info-circle-fill flex-none" viewBox="0 0 16 16">
                         <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
@@ -129,23 +198,36 @@ if ($this->Identity->isLoggedIn()) {
                 </div>
             </div>
             <div class="max-w-prose outline outline-1 outline-slate-500 p-6 my-3 rounded-md block">
-                <h3 class="mb-3 text-xl font-semibold">Add Activity to Pathway Step</h3>
-                <h4 class="font-semibold">Find Pathway and Step</h4>
-                <form method="get" id="pathfind" action="/pathways/find" class="mt-2">
-                    <input required="required" id="q" 
-                            class="px-3 py-2 m-0 border rounded-l-lg w-3/4" 
-                            type="search" 
-                            placeholder="Pathway title or keyword..." 
-                            aria-label="Pathway Search" name="q">
-                                <button class="px-3 py-2 m-0 bg-slate-400 hover:bg-slate-300 rounded-r-lg" type="submit">
-                                    Search
-                                </button>
-                </form>
-                <!-- TODO highlight selected step and hide rest of results onces selected -->
-                <div id="results"></div>
-                <!-- Results come from find.php page -->
+
+                <h3 class="mb-3 text-xl font-semibold">Step 1: Add this activity to a step</h3>
+                <div class="my-2 p-3 bg-slate-100 shadow-sm">
+                <label>Steps on <a href="/pathways/<?= $pathway[0]->slug ?>" class="underline"><?= $pathway[0]->name ?></a> pathway:<br>
+                <select class="m-3" id="stepselect">
+                    <option>Select a step to proceed</option>
+                <?php foreach ($pathway[0]->steps as $step) : ?>
+                    <option class="stepid px-1" value="<?= $step->id ?>">
+                        <?= $step->name ?>
+                    </option>
+                <?php endforeach ?>
+                </select>
+                </label>
+                </div>
+                <script>
+                    let stepselect = document.querySelector('#stepselect');
+                    
+                    stepselect.addEventListener('change', (e) => { 
+                        e.preventDefault();
+                        let sid = e.target.value;
+                        console.log(sid);
+                        document.querySelector('#step_id').value = sid;
+                        document.querySelector('.addform').classList.remove('opacity-25');
+                        
+                    });
+                    
+                </script>
+                
                 <div class="addform mt-3 opacity-25">
-                    <h4 class="mb-3 font-semibold">Fill in the Activity Details</h4>
+                    <h4 class="mb-3 font-semibold">Step 2: Review activity details</h4>
                     <?= $this->Form->create(null, ['url' => ['controller' => 'Activities', 'action' => 'addacttostep'], 'id' => 'addacttostep']) ?>
                     <?php
                     echo $this->Form->hidden('createdby_id', ['value' => $this->Identity->get('id'), 'class' => 'form-field']);
@@ -174,45 +256,62 @@ if ($this->Identity->isLoggedIn()) {
                         <?php echo $this->Form->textarea('description', ['class' => 'form-field note-editable']) ?>
                     </div>
 
-                    <?php //echo $this->Form->control('licensing', ['class' => 'form-control']); ?>
-                    <?php //echo $this->Form->control('activity_type_id', ['class' => 'form-control', 'options' => $atypes]); ?>
-                    <?php //echo $this->Form->control('stepcontext', ['class' => 'form-control', 'label' => 'Set Context for this step']); ?>
-                    <?php //echo $this->Form->control('moderator_notes', ['class' => 'form-control']); ?>
-                    <?php //echo $this->Form->control('isbn', ['class' => 'form-control']); ?>
-                    <?php //echo $this->Form->control('status_id', ['class' => 'form-control', 'options' => $statuses, 'empty' => true]); ?>
-                    <?php //echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-control']); ?>
-                    <?php //echo $this->Form->control('tag_string', ['class' => 'form-control', 'type' => 'text', 'label' => 'Tags']); ?>
-                    <?php //echo $this->Form->control('users._ids', ['class' => 'form-control', 'options' => $users]); ?>
-                    <?php //echo $this->Form->control('competencies._ids', ['class' => 'form-control', 'options' => $competencies]); ?>
 
                     <?= $this->Form->button(__('Save Activity'), ['class' => 'mt-3 block px-4 py-2 text-white text-md bg-slate-700  hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg savebut']) ?>
                     <?= $this->Form->end() ?>
                 </div>
                 <div id="savestatus"></div>
+
                 <div id="scontext" class="opacity-25 mt-3">
 
                     <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'edit/'], 'class' => 'contextform']) ?>
                     <?= $this->Form->control('activity_id', ['type' => 'hidden', 'value' => 1, 'id' => 'actid']) ?>
                     <?= $this->Form->control('step_id', ['type' => 'hidden', 'value' => 1]) ?>
+                    <label class="mt-2">
+                        <h4 class="font-semibold">Step 3: Required or Supplemental?</h4> Is this activity required for the step?
+                        <?= $this->Form->checkbox('required', ['label' => 'Is this activity required for the step?', 'checked' => 'checked']) ?>
+                    </label>
+                    <div class="text-sm">When a learner launches a supplemental activity it does not count towards their progress
+                        along the pathway. Only required activities "count".</div>
+
                     <label for="stepcontext">
-                        <h4 class="font-semibold mt-2">Curator Context</h4><span class="text-slate-600 block mb-1 text-sm" id="curatorContext"><i class="bi bi-info-circle"></i> This is where you’ll add what the learners will do, need to pay attention to, etc. Elaborate on the context—why you chose this item for this step/pathway. Example: “Just read pages 20-34 of this chapter, which sheds light on how you can adopt a servant leadership approach.” </span>
+                        <h4 class="font-semibold mt-2">Optional Step 4: Add Curator context</h4>
+                        <span class="text-slate-600 block mb-1 text-sm" id="curatorContext">
+                            <i class="bi bi-info-circle"></i> 
+                            This is where you’ll add what the learners will do, need to pay attention to, etc. 
+                            Elaborate on the context—why you chose this item for this step/pathway. Example: 
+                                “Just read pages 20-34 of this chapter, which sheds light on how you can adopt 
+                                a servant leadership approach.” </span>
 
                         <?= $this->Form->textarea('stepcontext', ['class' => 'form-field mb-2', 'rows' => 2]) ?>
                     </label>
-                    <label class="mt-2">
-                        <h4 class="font-semibold">Required or Supplemental?</h4> Is this activity required for the step?
-                        <?= $this->Form->checkbox('required', ['label' => 'Is this activity required for the step?']) ?>
-                    </label>
-                    <button class="mt-3 px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg block addcon">Add context</button>
+
+                    <button class="mt-3 px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg block addcon">
+                        Add context and proceed
+                    </button>
                     <?= $this->Form->end() ?>
                 </div>
             </div>
         <?php endif ?>
+
+
+
+
+
+
+
+
+
+
+
+
+        
     </div>
     <div class="bg-bluegreen/30 p-3 rounded-md text-base">
         <p><strong>Bookmarklet:</strong> Drag the "Add to Curator" button to your bookmarks bar to save it as a shortcut. </p>
         <a class="inline-block px-4 py-2 mb-3 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg mr-2" 
-            href="javascript: (() => {const destination = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/activities/addtostep?url=' + window.location.href;window.open(destination);})();">
+            rel="bookmarklet" 
+            href="javascript: (() => {const destination = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/activities/addtopath?url=' + window.location.href;window.open(destination);})();">
                 Add to Curator
         </a>
         <p>A "bookmarklet" is a special type of bookmark that allows you to take special action when you click it.
@@ -229,18 +328,16 @@ if ($this->Identity->isLoggedIn()) {
 
 
 
-
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" crossorigin="anonymous"></script>
 
 <script>
     $(function() {
-
         // LOL a year later looking at this I deserve some sort of medal for this crap:
+        $("#loading").fadeOut(800).fadeIn(800).fadeOut(800).fadeIn(800).fadeOut(800).fadeIn(800).fadeOut(800);
 
-        $("#loading").fadeOut(800).fadeIn(800).fadeOut(800).fadeIn(800).fadeOut(800).fadeIn(800);
-        //$("#loading").delay(5000).html('<div><strong>There seems to be something wrong. Please proceed and fill in the details yourself.</strong></div>');
+        
 
         <?php if ($linktoact) : ?>
 
@@ -254,16 +351,12 @@ if ($this->Identity->isLoggedIn()) {
                     $('.newname').val(deets.title);
                     let descr = '';
                     if (deets.description == '') {
-
                         descr = 'No description found.';
-
                     } else {
                         descr = deets.description;
                     }
                     $('.note-editable').html(descr);
-
                     $('#linkdeets').html('<div class="max-w-prose outline outline-1 outline-slate-500 p-6 my-3 rounded-md block"><h3 class="text-xl font-semibold mb-1">Automated Activity Details</h3><p class="mb-2"><strong>Title:</strong> ' + deets.title + '</p><p class="mb-2"><strong>Description:</strong> ' + descr + '</p><p class="mb-0"><strong>Hyperlink:</strong> ' + '<?= urldecode($linktoact) ?>' + '</p></div>');
-
                 },
                 statusCode: {
                     403: function() {
@@ -274,29 +367,8 @@ if ($this->Identity->isLoggedIn()) {
 
 
 
+
         <?php endif ?>
-
-
-        $('#pathfind').on('submit', function(e) {
-
-            e.preventDefault();
-            let form = $(this);
-            let url = $(this).attr('action');
-            $.ajax({
-                type: "GET",
-                url: url,
-                data: form.serialize(),
-                success: function(data) {
-                    $('#results').html(data);
-                },
-                statusCode: {
-                    403: function() {
-
-                        form.after('<div class="bg-red-200 p-2">You must be logged in.</div>');
-                    }
-                }
-            });
-        });
 
 
 
@@ -319,10 +391,13 @@ if ($this->Identity->isLoggedIn()) {
                     $('.contextform').attr('action', '/activities-steps/edit/' + deets.activitystepid);
                     $('#actid').val(deets.activityid);
                     $('#step-id').val(deets.stepid);
+                    $('#addacttostep').addClass('opacity-25');
                     $('#scontext').removeClass('opacity-25');
-                    $('#savestatus').html('<div style="background: #F1F1F1; border-radius: 5px; margin: 1em 0; padding: 1em;">Your activity has been saved to the step!</div>');
-                    //$('.addcon').removeClass('hidden');
-                    //$('.savebut').remove();
+                    let message = '<div style="background: #F1F1F1; border-radius: 5px; margin: 1em 0; padding: 1em;">';
+                    message += 'Your activity has been saved to the step! Please proceed.';
+                    message += '</div>';
+                    $('#savestatus').html(message);
+                    $('.savebut').remove();
                 },
                 error: function (error) {
                     console.log('Nope it did not work');
@@ -332,34 +407,8 @@ if ($this->Identity->isLoggedIn()) {
 
 
 
-        $('#hyperlink').on('change', function(e) {
 
-            e.preventDefault();
 
-            let urltoscrape = this.value;
-            let url = '/activities/getinfo?url=' + urltoscrape;
-
-            $.ajax({
-                type: "GET",
-                url: url,
-                success: function(data) {
-                    let deets = $.parseJSON(data);
-                    $('.newname').val(deets.title);
-                    let descr = '';
-                    if (deets.description == '') {
-                        descr = '<em>No description found.</em>';
-                    } else {
-                        descr = deets.description;
-                    }
-                    $('.note-editable').html(descr);
-                },
-                statusCode: {
-                    403: function() {
-                        // oh no
-                    }
-                }
-            });
-        });
 
 
         $('#hyperlink').on('change', function(e) {
@@ -390,7 +439,6 @@ if ($this->Identity->isLoggedIn()) {
                 }
             });
         });
-
 
     });
 </script>
