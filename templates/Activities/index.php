@@ -18,7 +18,7 @@ if ($this->Identity->isLoggedIn()) {
     <div class="bg-sagedark/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Activities</h1>
     </div>
-    <p class="text-xs text-white float-right -mt-3 mb-0">Photo: <a href="https://www.pexels.com/photo/brown-wooden-pathway-in-the-middle-of-green-grass-and-trees-3988366/" target="_blank">Tofino Pathway</a> by <a href="https://www.pexels.com/@souvenirpixels/" target="_blank">James Wheeler on Pexels</a></p>
+    <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://www.pexels.com/photo/brown-wooden-pathway-in-the-middle-of-green-grass-and-trees-3988366/" target="_blank">Tofino Pathway</a> by <a href="https://www.pexels.com/@souvenirpixels/" target="_blank">James Wheeler on Pexels</a></p>
 </header>
 <div class="p-8 text-lg" id="mainContent">
     <div class="max-w-prose">
@@ -29,27 +29,26 @@ if ($this->Identity->isLoggedIn()) {
 
 
     </div>
-    <div class="max-w-full flex flex-col lg:flex-row lg:gap-4 sticky bg-white -top-[2px] z-50 py-2">
+    <div class="max-w-full flex flex-col lg:flex-row lg:gap-4 sticky bg-white -top-[2px] z-50 pb-2">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
-            <div class="text-sm text-sky-700">
-                <!-- TODO Allan update pagination and styling -->
-                <?= $this->Paginator->first('<< ' . __('first')) ?>
-                <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                <?php $this->Paginator->numbers()
-                ?>
-                <?= $this->Paginator->next(__('next') . ' >') ?>
-                <?= $this->Paginator->last(__('last') . ' >>') ?>
-                <div class="mb-3 text-slate-700">
-                    <?= $this->Paginator->counter(__('Page {{page}} of {{pages}} | {{count}} total activities')) ?>
-                </div>
-
-
+        <div class="text-sm my-3">
+            
+            <?= $this->Paginator->first('<< ' . __('first')) ?>
+            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?php //echo $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next(__('next') . ' >') ?>
+            <?= $this->Paginator->last(__('last') . ' >>') ?>
+            <div class="mt-3 text-slate-700">
+                <?= $this->Paginator->counter(__('Page {{page}} of {{pages}} | {{count}} total activities')) ?>
             </div>
         </div>
+
+            
+        </div>
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
+        <!--
         <div class="lg:basis-1/5">
             <div class="flex justify-end lg:justify-start gap-4">
-                <!-- TODO Allan add working sort and filter options -->
                 <a href="" class="hover:text-sky-700">
                     <div class="flex flex-col justify items-center gap-1">
 
@@ -85,8 +84,8 @@ if ($this->Identity->isLoggedIn()) {
                     </div>
                 </a>
             </div>
-        </div>
-    </div>
+        </div> -->
+    </div> 
     <div class="lg:columns-2 gap-4">
         <?php foreach ($activities as $activity) : ?>
             <?php
@@ -103,20 +102,34 @@ if ($this->Identity->isLoggedIn()) {
 
             <div class="w-full inline-block mb-4 p-0.5 rounded-md bg-sagedark hover:bg-sagedark/80 ">
                 <div class="flex flex-row justify-between">
-                    <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($activity->activity_type->name) ?>"></i>
+                    <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;"></i>
 
                     <div class="bg-white inset-1 rounded-r-sm flex-1">
-                        <div x-data="{ count: <?= $completed ?>, liked: <?= $activity->recommended ?> }">
+                        <div>
                             <div class="p-3 text-lg">
-                                <a href="/profile/launches" class="inline-block p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
-                                    Launched
-                                </a>
-                                <h4 class="mb-2 mt-1 text-xl font-semibold">
+                                <div class="flex justify-between justify-items-end text-xs text-slate-500 mt-0 mb-2 gap-2">
+                                    
+                                    <span class="flex-none justify-self-start">
+                                    <?php
+                                    $showbadge = 'hidden';
+                                    if($completed > 0) $showbadge = 'inline-block'; 
+                                    ?>
+                                        <a href="/profile/launches" class="lbad<?= $activity->id ?> <?= $showbadge ?> p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80">
+                                            Launched
+                                        </a>
+                                    </span>
+                                    
+                                    <span class="self-end"><i class="bi bi-clock-history mr-1"></i>
+                                        Activity added:&nbsp;<?= $this->Time->format($activity->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
+                                    </span>
+                                </div>
+
+                                <h3 class="mb-2 mt-1 text-xl font-semibold">
                                     <?= $activity->name ?>
-                                </h4>
+                                </h3>
                                 <div class="">
                                     <?php if (!empty($activity->description)) : ?>
-                                        <?= $activity->description ?>
+                                        <div class="autop"><?= $this->Text->autoParagraph(h($activity->description)); ?></div>
                                     <?php else : ?>
                                         <p><em>No description provided&hellip;</em></p>
                                     <?php endif ?>
@@ -134,26 +147,50 @@ if ($this->Identity->isLoggedIn()) {
                         @submit.prevent="submitData">
                     <button><span x-text="liked"></span> likes</button>
                     </form> -->
-                                <!-- TODO Allan to update video preview embed functionality -->
-                                <?php
-                                preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $youtube);
-                                if (!empty($youtube[1])) :
-                                ?>
-                                    <img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
-                                    <div class="hidden w-full z-50 h-auto bg-black/50" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $youtube[1] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                    </div>
-                                <?php endif ?>
+                                
+                            <?php
+                            preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $youtube);
+                            if (!empty($youtube[1])) :
+                            ?>
+                            <div class="placehold<?= $activity->id ?> videoplace relative">
+                                <img class="" alt="Embedded video placeholder" src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" onclick="showembed(<?= $activity->id ?>)">
+                                <img class="absolute z-100 top-32 left-32" alt="Embedded video play button" src="/img/video-play.png" onclick="showembed(<?= $activity->id ?>)">
+                            </div>
+                            <div class="embed<?= $activity->id ?> hidden w-full z-50 h-auto bg-black/50">
+                                <iframe width="100%" height="240" src="https://www.youtube.com/embed/<?= $youtube[1] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <?php endif ?>
+
+
+
+
+
+
+
+
+
                                 <div class="">
-                                    <a target="_blank" x-on:click="count++;" onclick="loadStatus();" rel="noopener" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $activity->id ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
-                                        Launch
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
-                                            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
-                                        </svg>
+                                    <a target="_blank" 
+                                        rel="noopener" 
+                                        title="Launch this activity" 
+                                        data-activity="lbad<?= $activity->id ?>" 
+                                        href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
+                                        class="launch inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
+                                            Launch
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+                                                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+                                            </svg>
                                     </a>
                                 </div>
-                                <!-- TODO Allan Long hyperlinks breaking cards on more info. Add to site js, see https://css-tricks.com/better-line-breaks-for-long-urls/ -->
+
+
+
+
+
+
+
+
                                 <div x-data="{ open: false }">
                                     <button @click="open = !open" class="text-sm text-sky-700 text-right">
                                         <span>More info</span>
@@ -163,8 +200,8 @@ if ($this->Identity->isLoggedIn()) {
                                     </button>
                                     <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full">
                                         <ul class="list-disc pl-6 mt-2">
-                                            <li x-data="{ input: '<?= $activity->hyperlink ?>', tooltip: 'Click to copy link', showMsg: false }" class="px-1"><strong>Hyperlink: </strong>
-                                                <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true" class="bg-sky-700 text-white rounded-lg py-1 px-2 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link"></i> <span x-show="!showMsg">Copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></li>
+                                            <li x-data="{ input: '<?= $activity->hyperlink ?>', tooltip: 'Click to copy link', showMsg: false }" class="px-1 break-all"><strong>Hyperlink: </strong>
+                                                <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true" class="bg-sky-700 text-white rounded-lg py-1 px-2 ml-1 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link"></i> <span x-show="!showMsg">Copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></li>
                                             <li class="px-1">
                                                 <a class="text-lg text-sky-700 hover:underline" href="/activities/view/<?= $activity->id ?>">
                                                     View Activity Record
@@ -255,7 +292,39 @@ if ($this->Identity->isLoggedIn()) {
                     </div> <!-- end white inner box -->
                 </div>
             </div>
-        <?php endforeach; // end of activities loop for this step 
-        ?>
+        <?php endforeach; // end of activities loop for this step ?>
     </div>
 </div>
+<script>
+// Left to itself, the launch link on activites works just fine 
+// with target=_blank set, but we want to update the UI of this 
+// page while the learner visits the activity so that when they
+// come back, their current state on the pathway is reflected 
+// without having to refresh the page. 
+let launchlinks = document.getElementsByClassName('launch');
+Array.from(launchlinks).forEach(function(element) {
+    element.addEventListener('click', (e) => { 
+        e.preventDefault();
+        // Set the "Launched" badge on the activity
+        let indicator = e.target.getAttribute('data-activity');
+        document.querySelector('.'+indicator).classList.remove('hidden');
+        // actually open the link
+        let url = e.target.href;
+        window.open(url);
+        
+    });
+});
+function showembed(actid) {
+    
+    fetch('/activities-users/launch?activity_id=' + actid, {
+        method: 'GET'
+    })
+    .then((res) => { return false })
+    .catch((err) => console.error("error:", err));
+
+    document.querySelector('.lbad'+actid).classList.remove('hidden');
+    document.querySelector('.embed'+actid).classList.remove('hidden');
+    document.querySelector('.placehold'+actid).classList.add('hidden');
+    return true;
+}
+</script>

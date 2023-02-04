@@ -17,27 +17,32 @@ if ($this->Identity->isLoggedIn()) {
     <div class="bg-sagedark/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Activities</h1>
     </div>
-    <p class="text-xs text-white float-right -mt-3 mb-0">Photo: <a href="https://www.pexels.com/photo/brown-wooden-pathway-in-the-middle-of-green-grass-and-trees-3988366/" target="_blank">Tofino Pathway</a> by <a href="https://www.pexels.com/@souvenirpixels/" target="_blank">James Wheeler on Pexels</a></p>
+    <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://www.pexels.com/photo/brown-wooden-pathway-in-the-middle-of-green-grass-and-trees-3988366/" target="_blank">Tofino Pathway</a> by <a href="https://www.pexels.com/@souvenirpixels/" target="_blank">James Wheeler on Pexels</a></p>
 </header>
 <div class="p-8 text-lg" id="mainContent">
     <div class="max-w-prose">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Activity Record: <span class="text-slate-900"><?= $activity->name ?></span></h2>
 
 
-        <div class="w-full inline-block mb-4 p-0.5 rounded-md bg-sagedark hover:bg-sagedark/80 ">
+        <div class="w-full inline-block mb-4 p-0.5 rounded-md bg-sagedark">
             <div class="flex flex-row justify-between">
             <i class="<?= h($activity->activity_type->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($activity->activity_type->name) ?>"></i>
                 <div class="bg-white inset-1 rounded-r-sm flex-1">
                     <div class="p-3 text-lg">
-                        <a href="/profile/launches" class="inline-block p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80" :class="[count > '0' ? 'show' : 'hidden']">
+                        <?php 
+                        $show = 'hidden'; 
+                        if($claimid > 0) $show = 'inline-block';
+                        ?>
+                        <a href="/profile/launches" class="lbad<?= $activity->id ?> <?= $show ?> p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80">
                             Launched
                         </a>
+                        
                         <h4 class="mb-2 mt-1 text-xl font-semibold">
                             <?= $activity->name ?>
                         </h4>
                         <div class="">
                             <?php if (!empty($activity->description)) : ?>
-                                <?= $activity->description ?>
+                                <div class="autop"><?= $this->Text->autoParagraph(h($activity->description)); ?></div>
                             <?php else : ?>
                                 <p><em>No description provided&hellip;</em></p>
                             <?php endif ?>
@@ -62,33 +67,42 @@ if ($this->Identity->isLoggedIn()) {
                                     </svg>
                                     <span class="lcount"><?= h($activity->recommended) ?> likes</span>
                                 </a> -->
-                        <!-- TODO Allan to update video preview embed functionality -->
                         <?php
                         preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $activity->hyperlink, $youtube);
                         if (!empty($youtube[1])) :
                         ?>
-                            <img src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
-                            <div class="hidden w-full z-50 h-auto bg-black/50" x-on:click="count++; fetch('/activities-users/launch?activity_id=<?= $activity->id ?>')">
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $youtube[1] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </div>
+                        <div class="placehold<?= $activity->id ?> videoplace relative">
+                            <img class="" alt="Embedded video placeholder" src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" onclick="showembed(<?= $activity->id ?>)">
+                            <img class="absolute z-100 top-32 left-32" alt="Embedded video play button" src="/img/video-play.png" onclick="showembed(<?= $activity->id ?>)">
+                        </div>
+                        <div class="embed<?= $activity->id ?> hidden w-full z-50 h-auto bg-black/50">
+                            <iframe width="100%" height="240" src="https://www.youtube.com/embed/<?= $youtube[1] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
                         <?php endif ?>
                         <?php if ($activity->status_id == 2) : ?>
 
                             <div class="">
-                                <a target="_blank" x-on:click="count++;" onclick="loadStatus();" rel="noopener" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $activity->id ?>" class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
-                                    Launch
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
-                                        <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
-                                    </svg>
+                                <a target="_blank" 
+                                    rel="noopener" 
+                                    title="Launch this activity" 
+                                    href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
+                                    onclick="showBadge()"
+                                    class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
+                                        Launch
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+                                            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+                                        </svg>
                                 </a>
+                                <script>
+                                    function showBadge() {
+                                        document.querySelector('#launchbadge').classList.remove('hidden');
+                                    }
+                                </script>
                             </div>
                         <?php elseif ($activity->status_id == 3) : ?>
-                            <div class="p-6 text-xl">
-                                <p><strong>Archived</strong></p>
-                                <p>This activity has been archived, so its link will not be shown. If you are a curator you can still access the hyperlink by editing this activity.
-                                </p>
-                            </div>
+                            <h4 class="font-semibold mb-1">Archived Activity</h4>
+                            <p class="mb-1">This activity has been archived, so its link will not be shown. If you are a curator you can still access the hyperlink by editing this activity.</p>
                         <?php endif ?>
                     </div>
                     <!-- click count increment container -->
@@ -100,12 +114,12 @@ if ($this->Identity->isLoggedIn()) {
                 <?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'inline-block px-3 py-1 text-white text-base bg-slate-700 focus:bg-slate-700/80 hover:no-underline rounded-lg']) ?>
                 <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $activity->id], ['confirm' => __('Really delete?'), 'class' => 'inline-block px-3 py-1 text-base hover:bg-red-700/80 text-white bg-red-700 hover:no-underline rounded-lg']) ?>
             </div>
-
+<!-- TODO maybe change this from a label to a different format. Looks out of place here. -->
             <?php if ($activity->status_id == 3) : ?>
-                <span class="bg-red-500 text-slate-900 py-1 px-2 rounded-full mr-3">DEFUNCT</span>
+                <span class="bg-red-400 text-slate-900 mt-3 py-1 px-2 rounded-full mr-3 text-base uppercase inline-block">Archived</span>
             <?php endif ?>
             <?php if ($activity->moderation_flag == 1) : ?>
-                <!-- <span class="bg-orange-400 text-slate-900 py-1 px-2 rounded-full mr-3">INVESTIGATE</span> -->
+                <!-- <span class="bg-orange-400 text-slate-900 py-1 px-2 rounded-full mr-2 text-sm">INVESTIGATE</span> -->
             <?php endif ?>
         <?php endif; // role check 
         ?>
@@ -122,7 +136,7 @@ if ($this->Identity->isLoggedIn()) {
             <?php endif ?>
             <li class="px-2"><strong>Last Automatic Audit:</strong> <?= $this->Time->format($activity->audited, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></li>
             <li class="px-2" x-data="{ input: '<?= $activity->hyperlink ?>', tooltip: 'Click to copy link', showMsg: false }"><strong>Hyperlink: </strong>
-                <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true" class="bg-sky-700 text-white rounded-lg py-1 px-2 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link"></i> <span x-show="!showMsg">Copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></li>
+                <?= $activity->hyperlink ?> <button @click="$clipboard(input), showMsg = true" class="bg-sky-700 text-white rounded-lg py-1 px-2 ml-1 text-base hover:cursor-pointer hover:bg-sky-700/80"><i class="" :class="{'bi bi-clipboard2 ': !showMsg, 'bi bi-clipboard2-check': showMsg }" alt="Copy link"></i> <span x-show="!showMsg">Copy link</span><span x-cloak x-show="showMsg">Copied!</span></button></li>
         </ul>
 
         <?php if (count($activitylaunches) > 0) : ?>
@@ -242,3 +256,18 @@ if ($this->Identity->isLoggedIn()) {
         </div>
     </div>
 </div>
+<script>
+function showembed(actid) {
+    
+    fetch('/activities-users/launch?activity_id=' + actid, {
+        method: 'GET'
+    })
+    .then((res) => { return false })
+    .catch((err) => console.error("error:", err));
+
+    document.querySelector('.lbad'+actid).classList.remove('hidden');
+    document.querySelector('.embed'+actid).classList.remove('hidden');
+    document.querySelector('.placehold'+actid).classList.add('hidden');
+    return true;
+}
+</script>

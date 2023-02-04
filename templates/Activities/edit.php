@@ -13,7 +13,7 @@ $this->loadHelper('Authentication.Identity');
 <div class="p-8 text-lg" id="mainContent">
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Edit Activity: <span class="text-slate-900"><a href="/activities/view/<?= $activity->id ?>"><?= $activity->name ?></a></span></h2>
     <div class="max-w-prose">
-        <div class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+        <div class="border border-slate-500 p-6 my-3 rounded-md block">
             <?= $this->Form->create($activity) ?>
             <?php
             // echo $this->Form->control('ministry_id', ['class' => 'form-field mb-3', 'options' => $ministries, 'empty' => true]);
@@ -22,6 +22,7 @@ $this->loadHelper('Authentication.Identity');
             echo $this->Form->hidden('createdby_id', ['value' => $activity->createdby_id, 'class' => 'form-field mb-3']);
             echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id'), 'class' => 'form-field mb-3']);
             ?>
+        <?php echo $this->Form->control('activity_types_id', ['class' => 'form-field mb-3 text-base', 'options' => $activityTypes]); ?>
         <?php echo $this->Form->control('name', ['class' => 'form-field mb-3', 'label' => 'Activity Title']); ?>
             <label for="description">Activity Description</label>
                     <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> You can replace the automated description text with your own. Keep the description general and not specific to your pathway. This field will be displayed every time the item is included in a pathway everywhere in the Curator—not just on the step to which you add it.</span>
@@ -40,24 +41,8 @@ $this->loadHelper('Authentication.Identity');
             <?php //echo $this->Form->control('moderator_notes', ['class' => 'form-field mb-3']); 
             ?>
             <?php echo $this->Form->control('isbn', ['class' => 'form-field mb-3', 'label' => 'ISBN']); ?>
-            <?php echo $this->Form->control('activity_types_id', ['class' => 'form-field mb-3 text-base', 'options' => $activityTypes]); ?>
             <?php echo $this->Form->control('status_id', ['class' => 'form-field mb-3 text-base', 'options' => $statuses, 'empty' => true]); ?>
-            <?php //echo $this->Form->control('estimated_time', ['type' => 'text', 'label' => 'Estimated Time', 'class' => 'form-field mb-3']); 
-            ?>
-            <label>Estimated Time
-                <select name="estimated_time" id="estimated_time_id" class="form-field text-base">
-                    <option>Under 5 mins</option>
-                    <option>Under 10 mins</option>
-                    <option>Under 15 mins </option>
-                    <option>Under 20 mins</option>
-                    <option>Under 30 mins</option>
-                    <option>Under 1 hour</option>
-                    <option>Half day or less</option>
-                    <option>1 day </option>
-                    <option>More than 1 day </option>
-                    <option>Variable</option>
-                </select>
-            </label>
+            <!-- TODO change defunct status to archived -->
             <?php //echo $this->Form->control('tag_string', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Tags']); 
             ?>
             <?php //echo $this->Form->control('users._ids', ['class' => 'form-field mb-3', 'options' => $users]); 

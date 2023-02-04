@@ -34,6 +34,7 @@
                 e.target.classList.toggle('chosenstep');
                 document.querySelector('.addform').classList.remove('opacity-25');
                 
+
             });
         });
     </script>

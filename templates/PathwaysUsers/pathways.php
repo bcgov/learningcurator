@@ -53,59 +53,77 @@ if ($this->Identity->isLoggedIn()) {
                             <?= $topiclink ?>
                         </a></span>
                     </div>
-                    <p class="text-base"><strong>Followed on:</strong>
-                        <?= $this->Time->format($path->date_start, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
-                    </p>
-
+                    <div class="flex gap-2">
+                        <p class="text-base mb-0 flex-none"><strong>Followed on:</strong>
+                            <?= $this->Time->format($path->date_start, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
+                        </p>
+                        <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users', 'action' => 'delete/' . $path->id]]) ?>
+                        <button class="block text-slate-500 underline hover:text-slate-700 hover:cursor-pointer mt-0 text-base mb-3 flex-none">Un-Follow Pathway</button>
+                        <?= $this->Form->end(); ?>
+                    </div>
                     <?php if (!empty($path->date_complete)) : ?>
                         <p class="text-base">
                             <strong>Completed:</strong>
                             <?= $this->Time->format($path->date_complete, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?>
                         </p>
                     <?php endif ?>
-
-                    <div class="autop"><?= $this->Text->autoParagraph(h($path->pathway->description)); ?></div>
-
-
+                    <p><span class="font-bold">Pathway Goal: </span><?= h($path->pathway->objective); ?></p>
                     <h3 class="mt-4 mb-1 text-darkblue font-semibold">Pathway Activity Progress</h3>
+                    <div class="flex pbarcontainer_<?= $path->pathway->id ?> mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
+                        <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar_<?= $path->pathway->id ?> flex-none"></span>
+                        <span class="py-2 px-3 text-base pbar_<?= $path->pathway->id ?> pro_sm_<?= $path->pathway->id ?> flex-none"></span>
+                        <span class="py-2 px-3 text-base total_<?= $path->pathway->id ?> flex-1 text-right"></span>
+                        <span class="zero_<?= $path->pathway->id ?> hidden py-2 px-3 text-base text-right"></span>
+                    </div>
                     <script>
                         fetch('/pathways/status/<?= $path->pathway->id ?>', {
                                 method: 'GET'
                             })
                             .then((res) => res.json())
                             .then((json) => {
+
                                 if (json.percentage > 0) {
+                                    // Phrasing
                                     let launched = json.completed + ' launched';
                                     let remaining = (json.requiredacts - json.completed) + ' to go';
-
-                                    document.querySelector('.pbar_<?= h($path->pathway->id) ?>').style.width = json.percentage + '%';
+                                    document.querySelector('.zero_<?= $path->pathway->id ?>').classList.add('hidden');
+                                    document.querySelector('.pbar_<?= $path->pathway->id ?>').classList.remove('hidden');
+                                    document.querySelector('.pbar_<?= $path->pathway->id ?>').style.width = json.percentage + '%';
 
                                     if (json.percentage == 100) {
-                                        document.querySelector('.pro_<?= h($path->pathway->id) ?>').innerHTML = 'Pathway completed!';
-                                    }
-                                    if (json.percentage < 20) {
-                                        document.querySelector('.pro_sm_<?= h($path->pathway->id) ?>').innerHTML = launched;
-                                        document.querySelector('.total_<?= h($path->pathway->id) ?>').innerHTML = remaining;
+
+                                        document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = 'Pathway completed!';
+                                        document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
+                                    } else if (json.percentage < 20) {
+
+                                        document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = '';
+                                        document.querySelector('.pro_sm_<?= $path->pathway->id ?>').innerHTML = launched;
+                                        document.querySelector('.total_<?= $path->pathway->id ?>').innerHTML = remaining;
+                                        document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
+                                    } else if (json.percentage > 90) {
+                                        document.querySelector('.pro_sm_<?= $path->pathway->id ?>').innerHTML = '';
+                                        document.querySelector('.total_<?= $path->pathway->id ?>').innerHTML = '';
+                                        document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = launched + ', ' + remaining;
+                                        document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
                                     } else {
-                                        document.querySelector('.pro_<?= h($path->pathway->id) ?>').innerHTML = launched;
-                                        document.querySelector('.total_<?= h($path->pathway->id) ?>').innerHTML = remaining;
+                                        document.querySelector('.pbar_<?= $path->pathway->id ?>').innerHTML = launched;
+                                        document.querySelector('.total_<?= $path->pathway->id ?>').innerHTML = remaining;
+                                        document.querySelector('.pro_sm_<?= $path->pathway->id ?>').innerHTML = '';
+                                        document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '';
                                     }
 
                                 } else {
-                                    document.querySelector('.pbarcontainer_<?= h($path->pathway->id) ?>').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities to go</span>';
+                                    document.querySelector('.zero_<?= $path->pathway->id ?>').classList.remove('hidden');
+                                    document.querySelector('.zero_<?= $path->pathway->id ?>').innerHTML = '' + json.requiredacts + ' activities to go';
                                 }
-                                //console.log(json);
                             })
                             .catch((err) => console.error("error:", err));
                     </script>
-                    <div class="flex pbarcontainer_<?= h($path->pathway->id) ?> mb-4 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
-                        <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar_<?= h($path->pathway->id) ?> pro_<?= h($path->pathway->id) ?> flex-none"></span>
-                        <span class="py-2 px-3 text-base pbar_<?= h($path->pathway->id) ?> pro_sm_<?= h($path->pathway->id) ?> flex-none"></span>
-                        <span class="py-2 px-3 text-base total_<?= h($path->pathway->id) ?> flex-1 text-right"></span>
-                    </div>
+
                     <p class="my-4"> <a href="/<?= h($path->pathway->topic->categories[0]->slug) ?>/<?= $path->pathway->topic->slug ?>/pathway/<?= h($path->pathway->slug) ?>" class="text-sky-700 underline">
                             View the <strong><?= h($path->pathway->name) ?></strong> pathway
                         </a> </p>
+
 
                 </div>
             <?php endforeach; ?>
@@ -115,11 +133,11 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php else : ?>
 
-    <header class="w-full h-52 bg-cover bg-center pb-8 px-8" style="background-image: url(/img/categories/cape-scott-trail-n-r-t-on-flckr.jpg);">
-        <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg p-4 flex">
+    <header class="w-full h-52 bg-cover bg-center pb-2 px-2" style="background-image: url(/img/categories/cape-scott-trail-n-r-t-on-flckr.jpg);">
+        <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
             <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Getting Started</h1>
         </div>
-        <p class="text-xs text-white float-right -mt-3 mb-0">Photo: <a href="https://www.flickr.com/photos/n-r-t/1200374518/" target="_blank">Cape Scott Trail</a> by <a href="https://www.flickr.com/photos/n-r-t/" target="_blank">Nick Thompson on Flickr</a> (<a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC BY-NC-ND 2.0</a>)</p>
+        <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://www.flickr.com/photos/n-r-t/1200374518/" target="_blank">Cape Scott Trail</a> by <a href="https://www.flickr.com/photos/n-r-t/" target="_blank">Nick Thompson on Flickr</a> (<a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC BY-NC-ND 2.0</a>)</p>
     </header>
     <div class="p-8 text-xl max-w-prose" id="mainContent">
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Find your path</h2>

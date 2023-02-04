@@ -11,7 +11,7 @@ $this->loadHelper('Authentication.Identity');
 </header>
 <div class="p-8 text-lg" id="mainContent">
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Add Topic</h2>
-    <div class="max-w-prose outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+    <div class="max-w-prose border border-slate-500 p-6 my-3 rounded-md block">
 
         <?= $this->Form->create($topic) ?>
         <fieldset>
@@ -19,7 +19,7 @@ $this->loadHelper('Authentication.Identity');
             <label>Published? <?= $this->Form->checkbox('featured', ['class' => 'inline-block mb-5']); ?></label>
             <?php
             echo $this->Form->control('categories._ids[]', ['type' => 'select', 'options' => $categories, 'class' => 'form-field mb-3 border text-base', 'label' => 'Category']);
-            echo $this->Form->control('name', ['class' => 'form-field mb-3']);
+            echo $this->Form->control('name', ['class' => 'form-field mb-3', 'label' => 'Topic Name']);
             //echo $this->Form->hidden('slug');?>
             <label for="description">Topic Description</label>
             <span class="text-slate-600 block mt-0 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> A brief description of the topic within the category (1&nbsp;to&nbsp;2&nbsp;sentences).</span>

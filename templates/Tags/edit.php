@@ -10,7 +10,7 @@
 </header>
 <div class="p-8 text-lg" id="mainContent">
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Edit Tag: <span class="text-slate-900"><?= h($tag->name) ?></span> <?= $this->Html->link(__('View All Tags'), ['action' => 'index'], ['class' => 'inline-block ml-2 text-sky-700 hover:underline text-base font-normal']) ?></h2>
-    <div class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block max-w-prose">
+    <div class="border border-slate-500 p-6 my-3 rounded-md block max-w-prose">
         <?= $this->Form->create($tag) ?>
         <fieldset>
             <?php

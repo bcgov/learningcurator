@@ -7,6 +7,7 @@ if ($this->Identity->isLoggedIn()) {
     $uid = $this->Identity->get('id');
 }
 ?>
+
 <header class="w-full h-32 md:h-52 bg-darkblue px-8 flex items-center">
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
@@ -87,11 +88,13 @@ if ($this->Identity->isLoggedIn()) {
                 </form>
                 <div id="results"></div>
 
+
                 <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'add', 'disabled' => 'disabled']]) ?>
                 <?php //$this->Form->control('pathway_id',['type' => 'hidden', 'value' => '' ]) 
                 ?>
                 <?= $this->Form->hidden('step_id', ['value' => 0, 'id' => 'step_id']) ?>
                 <?= $this->Form->hidden('activity_id', ['type' => 'hidden', 'value' => $activity[0]->id]) ?>
+
 
                 <label for="stepcontext">
                     <h4 class="font-semibold mt-2">Curator Context</h4><span class="text-slate-600 block mb-1 text-sm" id="curatorContext"><i class="bi bi-info-circle"></i> This is where you’ll add what the learners will do, need to pay attention to, etc. Elaborate on the context—why you chose this item for this step/pathway. Example: “Just read pages 20-34 of this chapter, which sheds light on how you can adopt a servant leadership approach.” </span>
@@ -106,10 +109,13 @@ if ($this->Identity->isLoggedIn()) {
                 <?= $this->Form->end() ?>
                 <!-- TODO success message once assigned to step? -->
 
+
+              
             </div>
         <?php else : ?>
 
             <div id="linkdeets">
+
                 <div class="max-w-prose flex justify-between gap-4 border-2 p-3 rounded-md my-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-info-circle-fill flex-none" viewBox="0 0 16 16">
                         <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
@@ -223,13 +229,16 @@ if ($this->Identity->isLoggedIn()) {
 
 
 
+
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" crossorigin="anonymous"></script>
 
 <script>
     $(function() {
+
         // LOL a year later looking at this I deserve some sort of medal for this crap:
+
         $("#loading").fadeOut(800).fadeIn(800).fadeOut(800).fadeIn(800).fadeOut(800).fadeIn(800);
         //$("#loading").delay(5000).html('<div><strong>There seems to be something wrong. Please proceed and fill in the details yourself.</strong></div>');
 
@@ -245,12 +254,16 @@ if ($this->Identity->isLoggedIn()) {
                     $('.newname').val(deets.title);
                     let descr = '';
                     if (deets.description == '') {
+
                         descr = 'No description found.';
+
                     } else {
                         descr = deets.description;
                     }
                     $('.note-editable').html(descr);
+
                     $('#linkdeets').html('<div class="max-w-prose outline outline-1 outline-slate-500 p-6 my-3 rounded-md block"><h3 class="text-xl font-semibold mb-1">Automated Activity Details</h3><p class="mb-2"><strong>Title:</strong> ' + deets.title + '</p><p class="mb-2"><strong>Description:</strong> ' + descr + '</p><p class="mb-0"><strong>Hyperlink:</strong> ' + '<?= urldecode($linktoact) ?>' + '</p></div>');
+
                 },
                 statusCode: {
                     403: function() {
@@ -258,7 +271,6 @@ if ($this->Identity->isLoggedIn()) {
                     }
                 }
             });
-
 
 
 
@@ -279,6 +291,7 @@ if ($this->Identity->isLoggedIn()) {
                 },
                 statusCode: {
                     403: function() {
+
                         form.after('<div class="bg-red-200 p-2">You must be logged in.</div>');
                     }
                 }
@@ -319,8 +332,34 @@ if ($this->Identity->isLoggedIn()) {
 
 
 
+        $('#hyperlink').on('change', function(e) {
 
+            e.preventDefault();
 
+            let urltoscrape = this.value;
+            let url = '/activities/getinfo?url=' + urltoscrape;
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function(data) {
+                    let deets = $.parseJSON(data);
+                    $('.newname').val(deets.title);
+                    let descr = '';
+                    if (deets.description == '') {
+                        descr = '<em>No description found.</em>';
+                    } else {
+                        descr = deets.description;
+                    }
+                    $('.note-editable').html(descr);
+                },
+                statusCode: {
+                    403: function() {
+                        // oh no
+                    }
+                }
+            });
+        });
 
 
         $('#hyperlink').on('change', function(e) {
@@ -351,6 +390,7 @@ if ($this->Identity->isLoggedIn()) {
                 }
             });
         });
+
 
     });
 </script>

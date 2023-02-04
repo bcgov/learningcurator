@@ -14,15 +14,15 @@ $this->loadHelper('Authentication.Identity');
                 <?= h($category->name) ?>
             </a></span></h2>
     <div class="max-w-prose">
-        <div class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+        <div class="border border-slate-500 p-6 my-3 rounded-md block">
             <?= $this->Form->create($category) ?>
             <fieldset>
                 <label class="mb-3 inline-block">Published? <?= $this->Form->checkbox('featured') ?></label>
                 <?php
                 //echo $this->Form->control('topics._ids', ['options' => $topics]);
-                echo $this->Form->control('name', ['class' => 'form-field mb-3']);
+                echo $this->Form->control('name', ['class' => 'form-field mb-3', 'label' => 'Category Name']);
                 //echo $this->Form->control('slug');
-                echo $this->Form->control('description', ['class' => 'form-field mb-3 h-content']);
+                echo $this->Form->control('description', ['class' => 'form-field mb-3', 'label' => 'Category Description']);
                 //echo $this->Form->control('image_path', ['class' => 'form-field mb-3']);
                 echo $this->Form->control('sortorder', ['class' => 'form-field mb-3', 'label' => 'Sort Order']);
                 // echo $this->Form->control('color');

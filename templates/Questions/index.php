@@ -17,7 +17,7 @@ if ($this->Identity->isLoggedIn()) {
     <div class="bg-darkblue/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">About</h1>
     </div>
-    <p class="text-xs text-white float-right -mt-3 mb-0">Photo: <a href="https://www.flickr.com/photos/n-r-t/1200374518/" target="_blank">Cape Scott Trail</a> by <a href="https://www.flickr.com/photos/n-r-t/" target="_blank">Nick Thompson on Flickr</a> (<a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC BY-NC-ND 2.0</a>)</p>
+    <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://www.flickr.com/photos/n-r-t/1200374518/" target="_blank">Cape Scott Trail</a> by <a href="https://www.flickr.com/photos/n-r-t/" target="_blank">Nick Thompson on Flickr</a> (<a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC BY-NC-ND 2.0</a>)</p>
 </header>
 <div class="p-8 text-lg" id="mainContent">
 
@@ -47,7 +47,7 @@ if ($this->Identity->isLoggedIn()) {
         <?php endif ?>
 
 
-    <h3 class="text-xl text-darkblue font-semibold">Frequently Asked Questions</h3>
+        <h3 class="text-xl text-darkblue font-semibold">Frequently Asked Questions</h3>
         <?php foreach ($questions as $question) : ?>
             <?php if ($question->status_id == 2) : ?>
                 <div class="p-3 my-3 border border-sky-700 rounded-lg hover:cursor-pointer">
@@ -81,7 +81,7 @@ if ($this->Identity->isLoggedIn()) {
                 <?php endif ?>
             <?php endif ?>
         <?php endforeach; ?>
-
+        <h4 class="text-xl font-semibold mt-5">Still need help?</h4>
+        <p>If you have unanswered questions about the Learning Curator, we're here to help. Please submit an <a href="https://sfs7.gov.bc.ca/affwebservices/public/saml2sso?SPID=urn:ca:bc:gov:customerportal:prod" class="text-sky-700 hover:underline hover:cursor-pointer" target="_blank">AskMyHR ticket</a> using the "Learning Centre" service category.</p>
     </div>
-</div>
 </div>

@@ -73,7 +73,15 @@ class ReportsController extends AppController
     }
 
     /**
-     * Add method
+     * A user adds a new report to an activity, indicating some sort of issue
+     * with the activity. When a new report is added, the user/reporter can see
+     * the report on their profile, all curators can see the report in the curator dashboard,
+     * and an email is sent to the owner/creator/curator
+     * of the pathways to which this activity is assigned, as well as the person who
+     * created/curated the activity in the first place.
+     * 
+     * Curators may provide a single response to reports. It is intentionally not a threaded
+     * discussion. If a discussion needs to happen, it needs to happen elsewhere (e.g., Teams)
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
@@ -81,18 +89,57 @@ class ReportsController extends AppController
     {
         $report = $this->Reports->newEmptyEntity();
         if ($this->request->is('post')) {
-            //print_r($this->request->getData()); exit;
+            // echo $this->request->getData()['activity_id'] . '<br><br>';
+            // print_r($this->request->getData()); exit;
+            // We need to look up the details of the activity that we're reporting
+            // so that we can send the details to the curators involved.
+            $act = TableRegistry::getTableLocator()->get('Activities');
+            // OK so here is some dumb stuff. Because I cannot seem to tie together
+            // createdby_id to the users table properly through the ORM, when I do
+            // the pathway query, all I get is the raw ID for the user back, and 
+            // not any other info such as the email address that we require here.
+            // As a result, I need to loop through each of the pathways
+            // and run a query to get the email address. #stupidbutworks
+            // #thiswontscale
+            $use = TableRegistry::getTableLocator()->get('Users');
+
+            // Let's get the activity details, including the steps and pathways it's on
+            $actid = $this->request->getData()['activity_id'];
+            $actdeets = $act->find()->contain(['Steps','Steps.Pathways'])->where(['id = ' => $actid]);
+            // #dumbstuff setup an array of email addresses to send to
+            // as we loop through the pathways on which this activity is included
+            // we'll add to this and then use it to send the emails
+            $curatoremails = [];
+            foreach($actdeets as $a) {
+                foreach($a->steps as $s) {
+                    foreach($s->pathways as $path) {
+                        $curator = $use->find()->where(['id = ' => $path->createdby])->all()->toList();
+                        array_push($curatoremails,$curator[0]['email']);
+                    }
+                }
+            }
+            // All this because I just cannot seem to grok this framework; 
+            // don't blame the framework, I don't really understand 
+            
             $report = $this->Reports->patchEntity($report, $this->request->getData());
 
             if ($this->Reports->save($report)) {
+
                 echo __('The report has been saved.');
                 $mailer = new Mailer('default');
-                $mailer->setFrom(['NO_REPLY@gov.bc.ca' => 'Learning Curator'])
+                $mailer->setFrom(['allan.haggett@gov.bc.ca' => 'Learning Curator'])
                         ->setTo('allan.haggett@gov.bc.ca')
-                        ->setSubject('Curator Activity Report')
-                        ->deliver('Someone filed an activity report. Go check it out.');
+                        ->setSubject('Curator Activity Report');
+                foreach($curatoremails as $ce) {
+                    $mailer->addTo($ce);
+                }
+                //print_r($mailer); exit;
+                $message = 'Someone filed an report on activity #' . $actid . ' ';
+                $message .= '<a href="https://learningcurator.apps.silver.devops.gov.bc.ca/activities/view/' . $actid . '">';
+                $message .= 'Go check it out';
+                $message .= '</a>';
+                $mailer->deliver($message);
                 
-                exit;
             
             }
             echo __('The report could not be saved. Please, try again.');

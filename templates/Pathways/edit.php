@@ -14,7 +14,7 @@ $this->loadHelper('Authentication.Identity');
                 <?= $pathway->name ?>
             </a></span></h2>
     <div class="max-w-prose">
-        <div class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+        <div class="border border-slate-500 p-6 my-3 rounded-md block">
 
 
             <!-- <a href="/pathways/<?= $pathway->slug ?>/export" class="float-right ml-3 p-3 bg-slate-100/80 hover:no-underline rounded-lg">Export Pathway</a> -->
@@ -29,13 +29,12 @@ $this->loadHelper('Authentication.Identity');
             echo $this->Form->control('createdby', ['type' => 'select', 'options' => $users, 'class' => 'form-field mb-3', 'label' => 'Created By']) ?>
             <?php echo $this->Form->control('topic_id', ['type' => 'select', 'options' => $areas, 'class' => 'form-field mb-3', 'label' => 'Topic']); ?>
             <?php
-            echo $this->Form->control('name', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Pathway Name']);
+            echo $this->Form->control('name', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Pathway Title']);
             //echo $this->Form->control('slug', ['class' => 'form-field mb-3']); ?>
             
              <label for="description">Pathway Description</label>
              <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> A brief description of your pathway. This appears on the pathway overview page. (1&nbsp;to&nbsp;2&nbsp;sentences).</span>
            <?php echo $this->Form->textarea('description', ['class' => 'form-field mb-3', 'aria-describedby' => 'descriptionHelp']); ?>
-            <?php // echo $this->Form->control('estimated_time', ['class' => 'form-field mb-3']); ?>
             <label for="objective">Pathway Goal</label>
              <span class="text-slate-600 block mb-1 text-sm" id="goalHelp"><i class="bi bi-info-circle"></i> What learning goal will your learners work toward over the course of the whole pathway? (1&nbsp;sentence).</span>
             <?php echo $this->Form->textarea('objective', ['class' => 'form-field mb-3', 'aria-describedby' => 'goalHelp']); 

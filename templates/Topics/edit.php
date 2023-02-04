@@ -10,8 +10,7 @@
 </header>
 <div class="p-8 text-lg" id="mainContent">
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Edit Topic: <span class="text-slate-900"><?= h($topic->name) ?></span> </h2>
-    <div class="max-w-prose outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
-        <!-- TODO Nori/Allan add additional guidance to form -->
+    <div class="max-w-prose border border-slate-500 p-6 my-3 rounded-md block">
         <?= $this->Form->create($topic) ?>
         <fieldset>
             <div class="mb-5">
@@ -38,7 +37,7 @@
             //echo $this->Form->control('image_path');
             //echo $this->Form->control('color');
             //echo $this->Form->control('user_id', ['options' => $users]);
-            echo $this->Form->control('name', ['class' => 'form-field mb-3']);
+            echo $this->Form->control('name', ['class' => 'form-field mb-3', 'label' => 'Topic Name']);
             echo $this->Form->hidden('slug');    ?>
           <label for="description">Topic Description</label>
             <small class="text-slate-600 block mt-0" id="descriptionHelp"><i class="bi bi-info-circle"></i> A brief description of the topic within the category (1&nbsp;to&nbsp;2&nbsp;sentences).</small>

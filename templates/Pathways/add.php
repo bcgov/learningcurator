@@ -11,7 +11,7 @@ $this->loadHelper('Authentication.Identity');
 </header>
 <div class="p-8 text-lg" id="mainContent">
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Add Pathway</h2>
-    <div class="max-w-prose outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+    <div class="max-w-prose border border-slate-500 p-6 my-3 rounded-md block">
         <?= $this->Form->create($pathway) ?>
         <fieldset>
             <div>
@@ -30,18 +30,16 @@ $this->loadHelper('Authentication.Identity');
             //echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true,'class'=>'form-control']);
             ?>
             <?php
-            echo $this->Form->control('name', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Pathway Name']);
+            echo $this->Form->control('name', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Pathway Title']);
             ?>
 
             <label for="description">Pathway Description</label>
             <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> A brief description of your pathway. This appears on the pathway overview page. (1&nbsp;to&nbsp;2&nbsp;sentences).</span>
             <?php echo $this->Form->textarea('description', ['class' => 'form-field mb-3', 'aria-describedby' => 'descriptionHelp']); ?>
-            <?php // echo $this->Form->control('estimated_time', ['class' => 'form-field mb-3']); 
-            ?>
+
             <label for="objective">Pathway Goal</label>
             <span class="text-slate-600 block mb-1 text-sm" id="goalHelp"><i class="bi bi-info-circle"></i> What learning goal will your learners work toward over the course of the whole pathway? (1&nbsp;sentence).</span>
             <?php echo $this->Form->textarea('objective', ['class' => 'form-field mb-3', 'aria-describedby' => 'goalHelp']);
-            echo $this->Form->control('estimated_time', ['class' => 'form-field']);
             echo $this->Form->hidden('status_id', ['value' => 1]);
             //echo $this->Form->control('color');
             //echo $this->Form->control('file_path');

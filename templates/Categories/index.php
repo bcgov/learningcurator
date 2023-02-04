@@ -15,7 +15,7 @@ if ($this->Identity->isLoggedIn()) {
 }
 ?>
 <header class="w-full h-52 bg-cover bg-[center_top_65%] pb-2 px-2" style="background-image: url(/img/categories/1200w/Path_at_French_Beach_BC_Canada_-_panoramio_1200w.jpg);">
-    <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg mb-6 mx-6p-4 flex">
+    <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Categories</h1>
     </div>
     <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://commons.wikimedia.org/wiki/File:Path_at_French_Beach_BC_Canada_-_panoramio.jpg">Path at French Beach</a> by MaryConverse via Wikimedia Commons (<a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>)</p>
@@ -59,9 +59,9 @@ if ($this->Identity->isLoggedIn()) {
             <?php endforeach; ?>
         </div>
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
+        <!-- #TODO come back to this when there's more capacity to implement properly
         <div class="lg:my-3 lg:basis-1/5">
-            <div class="flex justify-end lg:justify-start gap-4 sticky top-4">
-                <!-- TODO Allan add working sort and filter options -->
+            <div class="flex justify-end lg:justify-start gap-4 top-4">
                 <a href="" class="hover:text-sky-700">
                     <div class="flex flex-col justify items-center gap-1">
 
@@ -97,6 +97,6 @@ if ($this->Identity->isLoggedIn()) {
                     </div>
                 </a>
             </div>
-        </div>
+        </div>-->
     </div>
 </div><!-- formatting container -->

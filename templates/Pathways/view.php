@@ -41,82 +41,88 @@ $this->assign('title', h($pathway->name));
             </svg>
             <h2 class="text-2xl flex-1">
                 <?= h($pathway->name) ?>
-                <?php if ($pathway->status_id == 1) : ?>
-                    <span class="bg-orange-400 text-white rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
+            </h2><?php if ($pathway->status_id == 1) : ?>
+                    <span class="bg-orange-400 text-slate-900 rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
                 <?php endif ?>
-            </h2>
             <span class="text-sm ml-3 justify-self-end flex-none"><?= $stepcount ?> steps | <?= $requiredacts ?> activities</span>
         </div>
 
         <div class="pl-8 text-xl">
 
             <div class="mb-5 block">
-            <p><span class="font-bold">Pathway Goal: </span><?= $pathway->objective ?></p></div>
+            <p><span class="font-bold">Pathway Goal: </span><?= h($pathway->objective); ?></p></div>
             <?php if (empty($followid)) : ?>
                 <div class="my-3">
                     <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users', 'action' => 'follow']]) ?>
                     <?= $this->Form->control('pathway_id', ['type' => 'hidden', 'value' => $pathway->id]) ?>
                     <button class="py-2 px-4 bg-darkblue text-white rounded-lg hover:bg-darkblue/80">
-                        Follow Pathway<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pin ml-2 inline" viewBox="0 0 16 16">
+                        Follow Pathway <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pin ml-2 inline" viewBox="0 0 16 16">
                             <path d="M4.146.146A.5.5 0 0 1 4.5 0h7a.5.5 0 0 1 .5.5c0 .68-.342 1.174-.646 1.479-.126.125-.25.224-.354.298v4.431l.078.048c.203.127.476.314.751.555C12.36 7.775 13 8.527 13 9.5a.5.5 0 0 1-.5.5h-4v4.5c0 .276-.224 1.5-.5 1.5s-.5-1.224-.5-1.5V10h-4a.5.5 0 0 1-.5-.5c0-.973.64-1.725 1.17-2.189A5.921 5.921 0 0 1 5 6.708V2.277a2.77 2.77 0 0 1-.354-.298C4.342 1.674 4 1.179 4 .5a.5.5 0 0 1 .146-.354zm1.58 1.408-.002-.001.002.001zm-.002-.001.002.001A.5.5 0 0 1 6 2v5a.5.5 0 0 1-.276.447h-.002l-.012.007-.054.03a4.922 4.922 0 0 0-.827.58c-.318.278-.585.596-.725.936h7.792c-.14-.34-.407-.658-.725-.936a4.915 4.915 0 0 0-.881-.61l-.012-.006h-.002A.5.5 0 0 1 10 7V2a.5.5 0 0 1 .295-.458 1.775 1.775 0 0 0 .351-.271c.08-.08.155-.17.214-.271H5.14c.06.1.133.191.214.271a1.78 1.78 0 0 0 .37.282z" />
                         </svg></button>
                     <?= $this->Form->end(); ?>
                 </div>
             <?php else : ?>
                 <div class="my-3">
-                    <!-- TODO Allan add pin-angle to unfollow button to match follow button-->
-                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pin-angle" viewBox="0 0 16 16">
-                    <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146zm.122 2.112v-.002.002zm0-.002v.002a.5.5 0 0 1-.122.51L6.293 6.878a.5.5 0 0 1-.511.12H5.78l-.014-.004a4.507 4.507 0 0 0-.288-.076 4.922 4.922 0 0 0-.765-.116c-.422-.028-.836.008-1.175.15l5.51 5.509c.141-.34.177-.753.149-1.175a4.924 4.924 0 0 0-.192-1.054l-.004-.013v-.001a.5.5 0 0 1 .12-.512l3.536-3.535a.5.5 0 0 1 .532-.115l.096.022c.087.017.208.034.344.034.114 0 .23-.011.343-.04L9.927 2.028c-.029.113-.04.23-.04.343a1.779 1.779 0 0 0 .062.46z"/>
-                  </svg> -->
-                    <?php
-                    echo $this->Form->postLink(
-                        __('Un-Follow Pathway'),
-                        ['controller' => 'PathwaysUsers', 'action' => 'delete/' . $followid],
-                        [
-                            'class' => 'p-2 bg-darkblue text-white rounded-lg hover:no-underline',
-                            'title' => 'Stop seeing this pathway on your profile',
-                            'confirm' => ''
-                        ]
-                    );
-                    ?>
+                    <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-users', 'action' => 'delete/' . $followid]]) ?>
+                    <button class="py-2 px-4 bg-darkblue text-white rounded-lg hover:bg-darkblue/80">
+                        Un-Follow Pathway <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pin-angle inline" viewBox="0 0 16 16">
+                            <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146zm.122 2.112v-.002.002zm0-.002v.002a.5.5 0 0 1-.122.51L6.293 6.878a.5.5 0 0 1-.511.12H5.78l-.014-.004a4.507 4.507 0 0 0-.288-.076 4.922 4.922 0 0 0-.765-.116c-.422-.028-.836.008-1.175.15l5.51 5.509c.141-.34.177-.753.149-1.175a4.924 4.924 0 0 0-.192-1.054l-.004-.013v-.001a.5.5 0 0 1 .12-.512l3.536-3.535a.5.5 0 0 1 .532-.115l.096.022c.087.017.208.034.344.034.114 0 .23-.011.343-.04L9.927 2.028c-.029.113-.04.23-.04.343a1.779 1.779 0 0 0 .062.46z"/>
+                        </svg>
+                    </button>
+                    <?= $this->Form->end(); ?>
                 </div>
             <?php endif ?>
 
             <h3 class="mt-4 mb-1 text-darkblue font-semibold text-lg">Pathway Activity Progress</h3>
-            <div class="flex pbarcontainer mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
-                <span class="py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar pro flex-none"></span>
-                <span class="py-2 px-1 text-base pbar pro_sm flex-none"></span>
+            <div class="flex pbarcontainer mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
+                <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar flex-none"></span>
+                <span class="py-2 px-3 text-base pbar pro_sm flex-none"></span>
                 <span class="py-2 px-3 text-base total flex-1 text-right"></span>
+                <span class="zero hidden py-2 px-3 text-base text-right"></span>
             </div>
             <script>
                 fetch('/pathways/status/<?= $pathway->id ?>', {
-                        method: 'GET'
-                    })
-                    .then((res) => res.json())
-                    .then((json) => {
-                        if (json.percentage > 0) {
-                            let launched = json.completed + ' launched';
-                            let remaining = (json.requiredacts - json.completed) + ' to go';
+                    method: 'GET'
+                })
+                .then((res) => res.json())
+                .then((json) => {
 
-                            document.querySelector('.pbar').style.width = json.percentage + '%';
+                    if (json.percentage > 0) {
+                        // Phrasing
+                        let launched = json.completed + ' launched';
+                        let remaining = (json.requiredacts - json.completed) + ' to go';
+                        document.querySelector('.zero').classList.add('hidden');
+                        document.querySelector('.pbar').classList.remove('hidden');
+                        document.querySelector('.pbar').style.width = json.percentage + '%';
 
-                            if (json.percentage == 100) {
-                                document.querySelector('.pro').innerHTML = 'Pathway completed!';
-                            }
-                            if (json.percentage < 20) {
-                                document.querySelector('.pro_sm').innerHTML = launched;
-                                document.querySelector('.total').innerHTML = remaining;
-                            } else {
-                                document.querySelector('.pro').innerHTML = launched;
-                                document.querySelector('.total').innerHTML = remaining;
-                            }
-
+                        if (json.percentage == 100) {
+                            
+                            document.querySelector('.pbar').innerHTML = 'Pathway completed!';
+                            document.querySelector('.zero').innerHTML = '';
+                        } else if (json.percentage < 20) {
+                            
+                            document.querySelector('.pbar').innerHTML = '';
+                            document.querySelector('.pro_sm').innerHTML = launched;
+                            document.querySelector('.total').innerHTML = remaining;
+                            document.querySelector('.zero').innerHTML = '';
+                        } else if (json.percentage > 90) {
+                            document.querySelector('.pro_sm').innerHTML = '';
+                            document.querySelector('.total').innerHTML = '';
+                            document.querySelector('.pbar').innerHTML = launched + ', ' + remaining;
+                            document.querySelector('.zero').innerHTML = '';
                         } else {
-                            document.querySelector('.pbarcontainer').innerHTML = '<span class="py-2 px-3 text-base text-right flex-1">' + json.requiredacts + ' activities to go</span>';
+                            document.querySelector('.pbar').innerHTML = launched;
+                            document.querySelector('.total').innerHTML = remaining;
+                            document.querySelector('.pro_sm').innerHTML = '';
+                            document.querySelector('.zero').innerHTML = '';
                         }
-                        //console.log(json);
-                    })
-                    .catch((err) => console.error("error:", err));
+
+                    } else {
+                        document.querySelector('.zero').classList.remove('hidden');
+                        document.querySelector('.zero').innerHTML = '' + json.requiredacts + ' activities to go';
+                    }
+                })
+                .catch((err) => console.error("error:", err));
             </script>
 
 
@@ -130,14 +136,20 @@ $this->assign('title', h($pathway->name));
                         </button>
                     </div>
 
-                    <div xcloak x-show="open" class="outline outline-1 outline-offset-2 outline-slate-500 p-6 my-3 rounded-md block">
+                    <div xcloak x-show="open" class="border border-slate-500 p-6 my-3 rounded-md block">
                         <?= $this->Form->create(null, ['url' => [
                             'controller' => 'Steps',
                             'action' => 'add'
                         ]]) ?>
+                            <label for="name">Step Title</label>
+            <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span>   
+        <?php echo $this->Form->input('name', ['class' => 'form-field max-w-prose mb-2', 'type' => 'text', 'aria-describedby' => 'nameHelp']);  ?>
+            <label for="description">Step Objective</label>
+            <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1&nbsp;phrase/sentence).</span>
+           <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
+            
+                        
                         <?php
-                        echo $this->Form->control('name', ['class' => 'block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg mb-3']);
-                        echo $this->Form->control('description', ['class' => ' block w-full px-3 py-2 m-0 bg-slate-100/80 rounded-lg', 'type' => 'textarea', 'label' => 'Objective']);
                         echo $this->Form->hidden('createdby', ['value' => $uid]);
                         echo $this->Form->hidden('modifiedby', ['value' => $uid]);
                         echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
@@ -184,8 +196,7 @@ $this->assign('title', h($pathway->name));
 
                                                     if (json.steppercent == 100) {
                                                         document.querySelector('.pro_<?= h($steps->id) ?>').innerHTML = 'Step completed!';
-                                                    }
-                                                    if (json.steppercent < 20) {
+                                                    } else if (json.steppercent < 20) {
                                                         document.querySelector('.pro_sm_<?= h($steps->id) ?>').innerHTML = launched;
                                                         document.querySelector('.total_<?= h($steps->id) ?>').innerHTML = remaining;
                                                     } else {
@@ -200,7 +211,7 @@ $this->assign('title', h($pathway->name));
                                             })
                                             .catch((err) => console.error("error:", err));
                                     </script>
-                                    <div class="flex pbarcontainer_<?= h($steps->id) ?> mb-3 w-full bg-slate-200 rounded-lg outline-slate-500 outline outline-1 outline-offset-2 content-center justify-start">
+                                    <div class="flex pbarcontainer_<?= h($steps->id) ?> mb-3 w-full bg-slate-200 rounded-lg content-center justify-start">
                                         <span class="py-1 px-3 bg-bluegreen text-white rounded-lg text-sm pbar_<?= h($steps->id) ?> pro_<?= h($steps->id) ?> flex-none"></span>
                                         <span class="py-1 px-1 text-sm pbar_<?= h($steps->id) ?> pro_sm_<?= h($steps->id) ?> flex-none"></span>
                                         <span class="py-1 px-3 text-sm total_<?= h($steps->id) ?> flex-1 text-right"></span>
@@ -223,7 +234,7 @@ $this->assign('title', h($pathway->name));
 
                                         <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3"><?= $count ?></h3>
                                         <div class="flex-1 basis-6/7 p-3">
-                                            <span class="bg-orange-400 text-white rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
+                                            <span class="bg-orange-400 text-slate-900 rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
                                             <h4 class="text-xl font-semibold mb-2"><?= h($steps->name) ?></h4>
                                             <p class="text-bluegreen font-semibold text-base mb-1">
                                             Step Activity Progress</p>
@@ -262,7 +273,7 @@ $this->assign('title', h($pathway->name));
                                                 <span class="py-1 px-1 text-sm pbar_<?= h($steps->id) ?> pro_sm_<?= h($steps->id) ?> flex-none"></span>
                                                 <span class="py-1 px-3 text-sm total_<?= h($steps->id) ?> flex-1 text-right"></span>
                                             </div>
-                                            <div class="mb-2"><?= $steps->description ?></div>
+                                            <div class="mb-2"><?= h($steps->description) ?></div>
                                             <p class="mb-2 text-sky-700 underline">
                                                 View <strong><?= h($steps->name) ?></strong>
                                             </p>

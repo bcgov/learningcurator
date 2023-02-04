@@ -19,6 +19,13 @@ if ($this->Identity->isLoggedIn()) {
     </div>
     <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://commons.wikimedia.org/wiki/File:Path_at_French_Beach_BC_Canada_-_panoramio.jpg">Path at French Beach</a> by MaryConverse via Wikimedia Commons (<a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>)</p>
 </header>
+<?php if ($role == 'curator' || $role == 'superuser') : ?>
+    <div class="p-4 float-right">
+        <?= $this->Html->link(__('Edit Topic'), ['action' => 'edit', $topic->id], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
+        <?= $this->Html->link(__('Add Pathway'), ['controller' => 'Pathways', 'action' => 'add'], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
+    </div>
+<?php endif;  // curator or admin? 
+?>
 
 <div class="p-8 pt-4 w-full text-lg" id="mainContent">
     <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
@@ -26,12 +33,7 @@ if ($this->Identity->isLoggedIn()) {
         <a href="/category/<?= h($topic->categories[0]->id) ?>/<?= h($topic->categories[0]->slug) ?>"><?= h($topic->categories[0]->name) ?></a> >
         <?= h($topic->name) ?>
     </nav>
-    <?php if ($role == 'curator' || $role == 'superuser') : ?>
-        <div class="p-4 float-right">
-            <?= $this->Html->link(__('Edit Topic'), ['action' => 'edit', $topic->id], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
 
-        </div>
-    <?php endif ?>
 
     <div class="max-w-prose">
 
@@ -77,7 +79,7 @@ if ($this->Identity->isLoggedIn()) {
                                 <h3 class="text-2xl flex-1">
                                     <?= h($pathway->name) ?>
                                 </h3>
-                                <span class="bg-orange-400 text-white rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
+                                <span class="bg-orange-400 text-slate-900 rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
                             </div>
                         </a>
                         <div class="pl-10">
@@ -94,9 +96,9 @@ if ($this->Identity->isLoggedIn()) {
         </div> <!-- formatting container -->
 
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
+        <!-- #TODO come back to this when there's more capacity to implement properly
         <div class="lg:mt-8 lg:basis-1/5">
-            <div class="flex justify-end lg:justify-start gap-4 sticky top-4">
-                <!-- TODO Allan add working sort and filter options -->
+            <div class="flex justify-end lg:justify-start gap-4 top-4">
                 <a href="" class="hover:text-sky-700">
                     <div class="flex flex-col justify items-center gap-1">
 
@@ -132,6 +134,6 @@ if ($this->Identity->isLoggedIn()) {
                     </div>
                 </a>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>

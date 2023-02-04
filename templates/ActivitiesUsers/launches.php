@@ -30,18 +30,22 @@ if ($this->Identity->isLoggedIn()) {
                 along with the date and time when you clicked the launch button.</p>
     </div>
     <!-- TODO Allan show pagination/sort options here for 10+ items? -->
-    <div class="max-w-full flex flex-col lg:flex-row lg:gap-4 sticky bg-white -top-[2px] z-50 py-2">
+    <div class="max-w-full flex flex-col lg:flex-row lg:gap-4 bg-white -top-[2px] py-2">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
             <div class="text-sm text-sky-700">
 
-                Pagination placeholder
+                <!-- Pagination placeholder -->
+                <!-- #TODO the controller isn't currently set with a limit at 
+                        so this page will always list all the launches from a user
+                     -->
 
             </div>
         </div>
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
         <div class="lg:basis-1/5">
+            <!--
             <div class="flex justify-end lg:justify-start gap-4">
-                <!-- TODO Allan add working sort and filter options -->
+                
                 <a href="" class="hover:text-sky-700">
                     <div class="flex flex-col justify items-center gap-1">
 
@@ -76,7 +80,7 @@ if ($this->Identity->isLoggedIn()) {
                         <p class="text-xs text-center">Sort</p>
                     </div>
                 </a>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -86,9 +90,12 @@ if ($this->Identity->isLoggedIn()) {
 
             <div class="w-full inline-block mb-4 rounded-md bg-sagedark p-0.5">
                 <div class="flex flex-row justify-between">
-                    <!-- TODO fix the path to get to the right data for activity types. Couldn't figure it out -->
-                    <div class="mx-3 my-4 flex-none"></div>
-                    <!-- <i class="<?= h($a->image_path) ?> mx-3 my-4 flex-none" style="color:white; font-size: 2rem;" aria-label="<?= h($a->activity_type->name) ?>"></i> -->
+                
+                    
+                    <i class="<?= h($a['type']['iconclass']) ?> mx-3 my-4 flex-none" 
+                        style="color:white; font-size: 2rem;" 
+                        aria-label="<?= h($a['type']['name']) ?>">
+                    </i>
                     <div class="bg-white inset-1 rounded-r-sm flex-1">
                         <div class="p-3 text-lg">
                             <h4 class="mb-2 mt-1 text-xl font-semibold">
@@ -103,8 +110,14 @@ if ($this->Identity->isLoggedIn()) {
                                     </a>
                                 </li>
                                 <li>
-                                    <a target="_blank" rel="noopener" data-toggle="tooltip" data-placement="bottom" title="Launch this activity" href="/activities-users/launch?activity_id=<?= $a['id'] ?>" class="hover:underline hover:text-sky-700">
-                                        Launch Activity
+                                    <a target="_blank" 
+                                        rel="noopener" 
+                                        data-toggle="tooltip" 
+                                        data-placement="bottom" 
+                                        title="Launch this activity" 
+                                        href="/activities-users/launch?activity_id=<?= $a['id'] ?>" 
+                                        class="hover:underline hover:text-sky-700">
+                                            Launch Activity
                                     </a>
                                 </li>
                             </ul>
