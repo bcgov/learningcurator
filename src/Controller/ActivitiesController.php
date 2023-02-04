@@ -549,18 +549,23 @@ class ActivitiesController extends AppController
             // check to see if this activity is already on this pathway
             // because we don't allow duplicate activities on a pathway
             $dupealert = 0;
+            $onsteps = [];
             if(!empty($activity[0]->steps)) {
                 foreach($activity[0]->steps as $s) {
                     foreach($s['pathways'] as $p) {
                         if($pathwayid == $p['id']) {
                             $dupealert = 1;
-                        }
+                            // create an array of IDs so that we can exclude
+                            // those steps from the UI and make it impossible
+                            // to add the same activity to a step twice
+                            array_push($onsteps,$s['id']);
+                        } 
                     }
                 }
             }
 
             $activityTypes = $this->Activities->ActivityTypes->find('list', ['limit' => 200]);
-            $this->set(compact('pathway', 'dupealert', 'activity','linktoact','activityTypes'));
+            $this->set(compact('pathway', 'dupealert', 'onsteps', 'activity','linktoact','activityTypes'));
 
         } 
 

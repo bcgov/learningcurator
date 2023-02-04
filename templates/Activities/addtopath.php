@@ -35,8 +35,9 @@ if ($this->Identity->isLoggedIn()) {
                 <div class="grow">
                     <h3 class="mb-3 text-xl font-semibold">Existing Activity</h3>
                     <?php if($dupealert): ?>
-                    <p class="mb-0"><strong>This activity is already on this pathway.</strong> You can add it again, 
-                        but please be mindful of unecessary repetition.</p>
+                        <h4 class="font-semibold">This activity is already on this pathway.</h4>
+                    <p class="mb-0">You <em>can</em> add it again to 
+                        a step that it's not already on, but please be mindful of unecessary repetition.</p>
                     <?php else: ?>
                     <p class="mb-0">This activity already exists in the Curator. Let's add it to your step.</p>
                     <?php endif ?>
@@ -99,23 +100,22 @@ if ($this->Identity->isLoggedIn()) {
                 <?php endif ?>
             </div>
             <div class="max-w-prose outline outline-1 outline-slate-500 p-6 my-3 rounded-md block">
-                <h3 class="mb-3 text-xl font-semibold">Add Activity to Pathway Step</h3>
 
-
-
-
-
-                <h4 class="font-semibold"><?= $pathway[0]->name ?></h4>
-                <label>Select a step to proceed
-                <select id="stepselect">
-                    <option>Pathway Steps:</option>
+                <h3 class="mb-3 text-xl font-semibold">Step 1: Add this activity to a step</h3>
+                <div class="my-2 p-3 bg-slate-100 shadow-sm">
+                <label>Steps on <a href="/pathways/<?= $pathway[0]->slug ?>" class="underline"><?= $pathway[0]->name ?></a> pathway:<br>
+                <select class="m-3" id="stepselect">
+                    <option>Select a step to proceed</option>
                 <?php foreach ($pathway[0]->steps as $step) : ?>
+                <?php if(!in_array($step->id,$onsteps)): // exclude the step the acitivity is already on ?>
                     <option class="stepid px-1" value="<?= $step->id ?>">
                         <?= $step->name ?>
                     </option>
+                <?php endif ?>
                 <?php endforeach ?>
                 </select>
                 </label>
+                </div>
                 <script>
                     let stepselect = document.querySelector('#stepselect');
                     
@@ -124,38 +124,45 @@ if ($this->Identity->isLoggedIn()) {
                         let sid = e.target.value;
                         console.log(sid);
                         document.querySelector('#step_id').value = sid;
-                        document.querySelector('.addform').classList.remove('opacity-25');
+                        document.querySelector('.addtostep').classList.remove('opacity-25');
                         
                     });
                     
                 </script>
 
-
-
-
-
-                <?= $this->Form->create(null, ['url' => ['controller' => 'activities-steps', 'action' => 'add', 'disabled' => 'disabled']]) ?>
+                <?= $this->Form->create(null, 
+                                        [
+                                            'url' => ['controller' => 'activities-steps', 'action' => 'add', 'disabled' => 'disabled'],
+                                            'class' => 'addtostep opacity-25'
+                                        ]) ?>
 
                 <?= $this->Form->hidden('step_id', ['value' => 0, 'id' => 'step_id']) ?>
                 <?= $this->Form->hidden('activity_id', ['type' => 'hidden', 'value' => $activity[0]->id]) ?>
+                <?= $this->Form->hidden('addtopath', ['type' => 'hidden', 'value' => 1]) ?>
+                <div class="mb-3">
+                <label>
+                        <h4 class="font-semibold">Step 2: Required or Supplemental?</h4> Is this activity required for the step?
+                        <?= $this->Form->checkbox('required', ['label' => 'Is this activity required for the step?', 'checked' => 'checked']) ?>
+                    </label>
+                    <div class="text-slate-600 mb-1 text-sm" id="reqorsuppContext">
+                        <i class="bi bi-info-circle"></i> 
+                        When a learner launches a supplemental activity it does not count towards their progress
+                        along the pathway. Only required activities "count". </div>
+                </div>
+                <div class="mb-3">
 
                 <label for="stepcontext">
-                    <h4 class="font-semibold mt-2">Curator Context</h4>
+                    <h4 class="font-semibold mt-2">Optional Step 3: Add Curator context</h4>
                     <span class="text-slate-600 block mb-1 text-sm" id="curatorContext">
                         <i class="bi bi-info-circle"></i> 
                         This is where you’ll add what the learners will do, need to pay attention to, etc. 
                         Elaborate on the context—why you chose this item for this step/pathway. Example: 
                             “Just read pages 20-34 of this chapter, which sheds light on how you can adopt 
-                                                                                                                                                                                                                                                       a servant leadership approach.” </span>
+                            a servant leadership approach.” </span>
 
                     <?= $this->Form->textarea('stepcontext', ['class' => 'form-field mb-2', 'rows' => 2]) ?>
                 </label>
-                <label class="mt-2">
-                    <h4 class="font-semibold">Required or Supplemental?</h4> Is this activity required for the step?
-                    <?= $this->Form->checkbox('required', ['label' => 'Is this activity required for the step?']) ?>
-                </label>
-                <div>When a learner launches a supplemental activity it does not count towards their progress
-                        along the pathway. Only required activities "count".</div>
+                </div>
                 <?= $this->Form->button(__('Assign to step'), ['class' => 'mt-3 block px-4 py-2 text-white text-md bg-slate-700  hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg']) ?>
                 <?= $this->Form->end() ?>
                 
@@ -303,7 +310,8 @@ if ($this->Identity->isLoggedIn()) {
     <div class="bg-bluegreen/30 p-3 rounded-md text-base">
         <p><strong>Bookmarklet:</strong> Drag the "Add to Curator" button to your bookmarks bar to save it as a shortcut. </p>
         <a class="inline-block px-4 py-2 mb-3 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg mr-2" 
-            href="javascript: (() => {const destination = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/activities/addtostep?url=' + window.location.href;window.open(destination);})();">
+            rel="bookmarklet" 
+            href="javascript: (() => {const destination = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/activities/addtopath?url=' + window.location.href;window.open(destination);})();">
                 Add to Curator
         </a>
         <p>A "bookmarklet" is a special type of bookmark that allows you to take special action when you click it.
