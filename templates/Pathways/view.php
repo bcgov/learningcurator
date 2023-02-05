@@ -128,16 +128,28 @@ $this->assign('title', h($pathway->name));
 
 
             <?php if ($role == 'curator' || $role == 'superuser') : ?>
+
                 <div x-data="{ open: false }" class="mb-8">
                     <div class="flex justify-start gap-4">
+                        
                         <?= $this->Html->link(__('Edit Pathway'), ['action' => 'edit', $pathway->id], ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg flex-none justify-self-start']) ?>
+
                         <button @click="open = ! open" class=" px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg">
                             Add a Step
                         </button>
+
+                        <a class="px-4 whitespace-nowrap w-40 overflow-hidden text-ellipsis py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg" 
+                            rel="bookmarklet" 
+                            href="javascript: (() => {const destination = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/activities/addtopath?pathwayid=<?= $pathway->id ?>&url=' + window.location.href;window.open(destination);})();"
+                            title="Drag to bookmarks bar or right-click and add to bookmarks">
+                                Add to <?= $pathway->name ?> Bookmarklet
+                        </a>
                     </div>
 
+
+
                     <div xcloak x-show="open" class="border border-slate-500 p-6 my-3 rounded-md block">
-                        <?= $this->Form->create(null, ['url' => [
+                    <?= $this->Form->create(null, ['url' => [
                             'controller' => 'Steps',
                             'action' => 'add'
                         ]]) ?>
@@ -160,6 +172,9 @@ $this->assign('title', h($pathway->name));
                 </div>
 
             <?php endif ?>
+
+
+
             <!-- TODO Nori/Allan add code for subtitle in box -->
             <?php if (!empty($pathway->steps)) : ?>
                 <?php $count = 0 ?>
