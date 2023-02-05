@@ -309,12 +309,14 @@ if ($this->Identity->isLoggedIn()) {
     </div>
     <div class="bg-bluegreen/30 p-3 rounded-md text-base">
         <p><strong>Bookmarklet:</strong> Drag the "Add to Curator" button to your bookmarks bar to save it as a shortcut. </p>
+        <div class="my-3">
         <a class="px-4 whitespace-nowrap w-40 overflow-hidden text-ellipsis py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg" 
                 rel="bookmarklet" 
                 href="javascript: (() => {const destination = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/activities/addtopath?pathwayid=<?= $pathway[0]->id ?>&url=' + window.location.href;window.open(destination);})();"
                 title="Drag to bookmarks bar or right-click and add to bookmarks">
                     Add to <?= $pathway[0]->name ?> Bookmarklet
             </a>
+                            </div>
         <p>A "bookmarklet" is a special type of bookmark that allows you to take special action when you click it.
              In this case, if you click the "Add to Curator" bookmarklet while visiting any website, you will open 
              up this "Add to Step" form, with the link to that page pre-populated, saving you from having to copy the 
