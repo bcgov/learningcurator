@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 use Cake\Mailer\Mailer;
+Use Cake\ORM\TableRegistry;
 
 /**
  * Reports Controller
@@ -140,7 +141,6 @@ class ReportsController extends AppController
                 $message .= '</a>';
                 $mailer->deliver($message);
                 
-            
             }
             echo __('The report could not be saved. Please, try again.');
         }
