@@ -47,20 +47,49 @@ $this->loadHelper('Authentication.Identity');
             </div>
             <div xcloak x-show="openTab === 2" @click.outside="openTab = 0" class="border border-slate-500 p-6 my-3 rounded-md block">
                 <h3 class="font-semibold">Add New Activity to this Step</h3>
-                <?= $this->Form->create(null, ['url' => ['controller' => 'Activities', 'action' => 'addtostep']]) ?>
+                <?= $this->Form->create(null, ['url' => ['controller' => 'Activities', 'action' => 'addacttostep']]) ?>
                 <?php
                 echo $this->Form->hidden('createdby_id', ['value' => $this->Identity->get('id')]);
                 echo $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')]);
                 echo $this->Form->hidden('step_id', ['value' => $step->id]);
+                echo $this->Form->hidden('directadd', ['value' => 1]);
                 ?>
+                <?php echo $this->Form->control('activity_types_id', ['class' => 'form-field mb-3  text-base border', 'options' => $atypes]); ?>
                 <div class="mt-2"> <?php echo $this->Form->control('hyperlink', ['class' => 'form-field']); ?></div>
 
-                <div class="mt-2"><?php echo $this->Form->control('name', ['class' => 'form-field', 'label' => 'Activity Title']); ?></div>
+                <div class="mt-2"><?php echo $this->Form->control('name', ['class' => 'form-field newname', 'label' => 'Activity Title']); ?></div>
 
                 <div class="mt-2"><label for="description">Activity Description</label>
-                    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> You can replace the automated description text with your own. Keep the description general and not specific to your pathway. This field will be displayed every time the item is included in a pathway everywhere in the Curator—not just on the step to which you add it.</span>
-                    <?php echo $this->Form->textarea('description', ['class' => 'form-field note-editable']) ?>
+                    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp">
+                        <i class="bi bi-info-circle"></i> 
+                        You can replace the automated description text with your own. 
+                        Keep the description general and not specific to your pathway. 
+                        This field will be displayed every time the item is included in 
+                        a pathway everywhere in the Curator—not just on the step to which 
+                        you add it.</span>
+                    <?php echo $this->Form->textarea('description', ['class' => 'form-field note-editable','id'=>'description']) ?>
                 </div>
+                <div class="mt-2">
+                <label>
+                    <?= $this->Form->checkbox('required', ['label' => 'Is this activity required for the step?', 'checked' => 'checked']) ?>
+                    Is this activity required for the step?
+                </label>
+                <div class="text-slate-600 mb-1 text-sm" id="reqorsuppContext">
+                        <i class="bi bi-info-circle"></i> 
+                        When a learner launches a supplemental activity it does not count towards their progress
+                        along the pathway. Only required activities "count". </div>
+                </div>
+                <div class="mt-2">
+                    <label for="stepcontext">Curator Context <br>
+                    <span class="text-slate-600 block mb-1 text-sm" id="curatorContext">
+                        <i class="bi bi-info-circle"></i> 
+                        This is where you’ll add what the learners will do, need to pay attention 
+                        to, etc. Elaborate on the context—why you chose this item for this step/pathway. 
+                        Example: "Just read pages 20-34 of this chapter, which sheds light on how you 
+                        can adopt a servant leadership approach." </span>
+                    <?php echo $this->Form->textarea('stepcontext', ['class' => 'form-field','id'=>'stepcontext']) ?>
+                </div>
+
                 <?= $this->Form->button(__('Save Activity'), ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg mt-3']) ?>
                 <?= $this->Form->end() ?>
             </div>

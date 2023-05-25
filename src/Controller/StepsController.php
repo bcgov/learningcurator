@@ -198,7 +198,7 @@ class StepsController extends AppController
         $activities = $this->Steps->Activities->find('list', ['limit' => 200]);
         
         $types = TableRegistry::getTableLocator()->get('ActivityTypes');
-        $atypes = $types->find('all');
+        $atypes = $types->find('list');
 
         $pathways = $this->Steps->Pathways->find('list', ['limit' => 200]);
         $statuses = $this->Steps->Statuses->find('list', ['limit' => 200]);
