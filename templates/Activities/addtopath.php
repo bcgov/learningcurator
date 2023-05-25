@@ -16,16 +16,8 @@ if ($this->Identity->isLoggedIn()) {
     </h2>
     <div class="max-w-prose">
 
-
-
-
-
-
         
         <?php if (!empty($activity)) : ?>
-
-
-
 
 
             <div class="max-w-prose flex justify-between gap-4 border-2 p-3 rounded-md my-3">
