@@ -38,6 +38,7 @@ if ($this->Identity->isLoggedIn()) {
             $roles = [
                 ['text' => 'Regular User', 'value' => 'user'],
                 ['text' => 'Curator', 'value' => 'curator'],
+                ['text' => 'Manager', 'value' => 'manager'],
                 ['text' => 'Super User', 'value' => 'superuser'],
             ];
             echo $this->Form->control('role', ['label' => __d('cake_d_c/users', 'Role'), 'options' => $roles, 'class' => 'p-2 m-1']);
