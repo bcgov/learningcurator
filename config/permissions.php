@@ -165,6 +165,11 @@ return [
             'action' => ['edit','add','delete','export','import'],
         ],
         [
+            'role' => 'manager',
+            'controller' => 'Pathways',
+            'action' => ['publish'],
+        ],
+        [
             'role' => '*',
             'controller' => 'PathwaysUsers',
             'action' => ['follow','delete','pathways','complete'],

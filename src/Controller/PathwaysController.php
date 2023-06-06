@@ -241,6 +241,31 @@ class PathwaysController extends AppController
 
     }
 
+    /**
+     * Publish method
+     *
+     * @param string|null $id Pathway id.
+     * @return \Cake\Http\Response|null|void Renders view
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function publish ($slug = null)
+    {
+        $pathway = $this->Pathways->findBySlug($slug)->contain([
+                            'Topics',
+                            'Topics.Categories', 
+                            'Ministries', 
+                            'Steps' => ['sort' => ['Steps.id' => 'asc']],
+                            'Steps.Statuses', 
+                            'Steps.Activities', 
+                            'Steps.Activities.ActivityTypes'])->firstOrFail();
+        $p = json_encode($pathway);
+        $now = date('YmdHi');
+        $filename = $pathway->id . '-' . $now . '-' . $pathway->slug . '.json';
+        $fp = '/mnt/published/' . $filename;
+        file_put_contents($fp, $p);
+
+        echo 'Success!';
+    }
 
 
 
