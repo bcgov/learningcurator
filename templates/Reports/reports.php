@@ -44,7 +44,7 @@ if ($this->Identity->isLoggedIn()) {
                         <?php endif ?>
 
 
-                        <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                        <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
 
 
                             <div x-data="{ open: false }">

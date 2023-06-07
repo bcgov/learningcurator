@@ -42,7 +42,7 @@ $this->loadHelper('Authentication.Identity');
                     <div class="" id="curatorresponse<?= $report->id ?>">
 
 
-                        <?php if ($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'superuser') : ?>
+                        <?php if ($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'manager' || $this->Identity->get('role') == 'superuser') : ?>
 
 
                             <?= $this->Form->create(null, ['url' => ['controller' => 'reports', 'action' => 'edit', $report->id]]) ?>

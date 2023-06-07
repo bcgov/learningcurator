@@ -127,7 +127,7 @@ $this->assign('title', h($pathway->name));
 
 
 
-            <?php if ($role == 'curator' || $role == 'superuser') : ?>
+            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
 
                 <div x-data="{ open: false }" class="mb-8">
                     <div class="flex justify-start gap-4">
@@ -237,13 +237,13 @@ $this->assign('title', h($pathway->name));
                                     </p>
 
 
-                                    <!-- <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                                    <!-- <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                                     <span class="text-xs px-4 bg-slate-100/80 rounded-lg"><?= $steps->status->name ?></span>
                                 <?php endif ?> -->
                                 </div>
                             </div>
                         <?php else : ?>
-                            <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                                 <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
                                     <div class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
 
@@ -294,7 +294,7 @@ $this->assign('title', h($pathway->name));
                                             </p>
 
 
-                                            <!-- <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                                            <!-- <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                                     <span class="text-xs px-4 bg-slate-100/80 rounded-lg"><?= $steps->status->name ?></span>
                                 <?php endif ?> -->
                                         </div>

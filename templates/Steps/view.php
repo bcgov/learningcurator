@@ -125,7 +125,7 @@ foreach ($step->pathways as $pathways) {
 
 
 
-            <?php if ($role == 'curator' || $role == 'superuser') : ?>
+            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                 <?= $this->Html->link(
                     __('Edit Step'),
                     ['controller' => 'Steps', 'action' => 'edit', $step->id],
@@ -152,7 +152,7 @@ foreach ($step->pathways as $pathways) {
                                 Step <?= $count ?>
                             </a>
                         <?php else : ?>
-                            <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                                 <?php $c = 'bg-gray-500' ?>
                                 <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
                                     DRAFT

@@ -42,7 +42,7 @@ if ($this->Identity->isLoggedIn()) {
     which have specific objectives, and are further organized into logic steps, revealing
     a progression of concepts that blends formal and informal learning resources into a 
     single stream.</p> -->
-        <?php if ($role == 'curator' || $role == 'superuser') : ?>
+        <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
             <?= $this->Html->link(__('Add New Question'), ['action' => 'add'], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg mb-5']) ?>
         <?php endif ?>
 
@@ -58,7 +58,7 @@ if ($this->Identity->isLoggedIn()) {
                             <?= $question->content ?>
                         </div>
 
-                        <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                        <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                             <div class="mt-3 text-right">
                                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id], ['class' => 'inline-block px-3 py-1 text-white text-base bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg']) ?>
                                 <?= $this->Form->postLink(__('Delete Question'), ['action' => 'delete', $question->id], ['confirm' => __('Are you sure you want to delete # {0}?', $question->id), 'class' => 'inline-block px-3 py-1 text-base hover:bg-red-700/80 text-white bg-red-700 hover:no-underline rounded-lg']) ?>
@@ -68,7 +68,7 @@ if ($this->Identity->isLoggedIn()) {
                     </details>
                 </div>
             <?php else : ?>
-                <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                     <div class="p-3 my-3 bg-white rounded-lg">
                         <div><span class="badge badge-warning"><?= h($question->status->name) ?></span></div>
                         <h2 class="text-2xl" id="<?= h($question->slug) ?>"><?= h($question->title) ?></h2>

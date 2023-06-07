@@ -67,7 +67,7 @@ if ($this->Identity->isLoggedIn()) {
                 <h4 class="font-semibold text-xl mt-3">Activity Details</h4>
                 <ul class="list-disc pl-8 mt-2">
                     <li class="px-2"><strong>Activity added:</strong> <?= $this->Time->format($activity[0]->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?> </li>
-                    <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                    <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                         <li class="px-2"><strong>Added by:</strong> <a href="/users/view/<?= $activity[0]->createdby_id ?>"><?= $activity[0]->username ?></a></li>
                     <?php endif ?>
                     <li class="px-2" x-data="{ input: '<?= $activity[0]->hyperlink ?>', tooltip: 'Click to copy link', showMsg: false }"><strong>Hyperlink: </strong>

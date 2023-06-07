@@ -115,6 +115,12 @@ return [
             'action' => ['index', 'view','api','search'],
         ],
         [
+            'role' => 'manager',
+            'plugin' => 'CakeDC/Users',
+            'controller' => 'Users',
+            'action' => ['index', 'view','api','search'],
+        ],
+        [
             'role' => '*',
             'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
@@ -167,7 +173,7 @@ return [
         [
             'role' => 'manager',
             'controller' => 'Pathways',
-            'action' => ['publish'],
+            'action' => ['publish','edit','add','delete','export','import'],
         ],
         [
             'role' => '*',
@@ -181,6 +187,11 @@ return [
         ],
         [
             'role' => 'curator',
+            'controller' => 'Steps',
+            'action' => ['edit','add','delete','publishtoggle'],
+        ],
+        [
+            'role' => 'manager',
             'controller' => 'Steps',
             'action' => ['edit','add','delete','publishtoggle'],
         ],
@@ -200,6 +211,16 @@ return [
             'action' => ['edit','add','sort','requiredToggle','delete'],
         ],
         [
+            'role' => 'manager',
+            'controller' => 'Activities',
+            'action' => ['edit','delete','add','addtopath','addacttostep','stepfind','getinfo','linkcheck','audit','flagged'],
+        ],
+        [
+            'role' => 'manager',
+            'controller' => 'ActivitiesSteps',
+            'action' => ['edit','add','sort','requiredToggle','delete'],
+        ],
+        [
             'role' => '*',
             'controller' => 'ActivitiesUsers',
             'action' => ['delete','launches','complete','launch'],
@@ -213,6 +234,11 @@ return [
             'role' => 'curator',
             'controller' => 'Reports',
             'action' => ['index','edit','add','closed','view'],
+        ],
+        [
+            'role' => 'manager',
+            'controller' => 'Reports',
+            'action' => ['index','edit','add','closed','view','delete'],
         ],
         [
             'role' => 'user',
@@ -233,6 +259,11 @@ return [
             'action' => ['edit','add'],
         ],
         [
+            'role' => 'manager',
+            'controller' => 'Tags',
+            'action' => ['edit','add'],
+        ],
+        [
             'role' => '*',
             'controller' => 'ActivityTypes',
             'action' => ['index','view'],
@@ -243,6 +274,11 @@ return [
             'action' => ['edit','add'],
         ],
         [
+            'role' => 'manager',
+            'controller' => 'ActivityTypes',
+            'action' => ['edit','add','delete'],
+        ],
+        [
             'role' => '*',
             'controller' => 'Questions',
             'action' => ['index','view'],
@@ -251,6 +287,11 @@ return [
             'role' => 'curator',
             'controller' => 'Questions',
             'action' => ['edit','add'],
+        ],
+        [
+            'role' => 'manager',
+            'controller' => 'Questions',
+            'action' => ['edit','add','delete'],
         ],
         [
             'role' => '*',

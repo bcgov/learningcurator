@@ -19,7 +19,7 @@ if ($this->Identity->isLoggedIn()) {
     </div>
     <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://commons.wikimedia.org/wiki/File:Path_at_French_Beach_BC_Canada_-_panoramio.jpg">Path at French Beach</a> by MaryConverse via Wikimedia Commons (<a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>)</p>
 </header>
-<?php if ($role == 'curator' || $role == 'superuser') : ?>
+<?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
     <div class="p-4 float-right">
         <?= $this->Html->link(__('Edit Topic'), ['action' => 'edit', $topic->id], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
         <?= $this->Html->link(__('Add Pathway'), ['controller' => 'Pathways', 'action' => 'add'], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
@@ -70,7 +70,7 @@ if ($this->Identity->isLoggedIn()) {
 
 
                 <?php else : ?>
-                    <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                    <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                         <a href="/<?= h($topic->categories[0]->slug) ?>/<?= $topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
                             <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-l-full flex items-center justify-between">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3 flex-none" viewBox="0 0 16 16">

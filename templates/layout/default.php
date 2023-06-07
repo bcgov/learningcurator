@@ -71,7 +71,7 @@
                             $active = 'border-slate-400';
                             $currentpage = $_SERVER["REQUEST_URI"];
                             ?>
-                            <?php if ($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'superuser') : ?>
+                            <?php if ($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'manager' || $this->Identity->get('role') == 'superuser') : ?>
 
                                 <?php if (strpos($currentpage, '/users/index') !== false) $active = 'text-white bg-sagedark'; ?>
                                 <a class="hover:no-underline block px-4 py-1 mt-2 mb-4 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?= $active ?>" href="/users/index">

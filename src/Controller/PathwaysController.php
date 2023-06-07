@@ -260,11 +260,12 @@ class PathwaysController extends AppController
                             'Steps.Activities.ActivityTypes'])->firstOrFail();
         $p = json_encode($pathway);
         $now = date('YmdHi');
-        $filename = $pathway->id . '-' . $now . '-' . $pathway->slug . '.json';
+        $code = $pathway->id . '-' . $now;
+        $filename = $code . '.json'; //-' . $pathway->slug . '.json';
         $fp = '/mnt/published/' . $filename;
         file_put_contents($fp, $p);
 
-        echo 'Success!';
+        $this->set($code);
     }
 
 
