@@ -265,7 +265,7 @@ class PathwaysController extends AppController
         $fp = '/mnt/published/' . $filename;
         file_put_contents($fp, $p);
 
-        $this->set($code);
+        $this->set(compact('code'));
     }
 
 
@@ -277,12 +277,14 @@ class PathwaysController extends AppController
      */
     public function import ($topicid = 0)
     {
-        // #TODO sanitize this somehow and perhaps only accept urls from a 
-        // whitelist
-        $importfile = $this->request->getQuery('pathimportfile');
+        
+        $importfile = $this->request->getQuery('importcode');
+
+        $importurl = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/published/' . $importfile . '.json';
+
         $this->viewBuilder()->setLayout('ajax');
         $user = $this->request->getAttribute('authentication')->getIdentity();
-        $feed = file_get_contents($importfile);
+        $feed = file_get_contents($importurl);
         $path = json_decode($feed);
 
         $pathpast = $path->file_path . '';

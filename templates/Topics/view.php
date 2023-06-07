@@ -24,8 +24,7 @@ if ($this->Identity->isLoggedIn()) {
         <?= $this->Html->link(__('Edit Topic'), ['action' => 'edit', $topic->id], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
         <?= $this->Html->link(__('Add Pathway'), ['controller' => 'Pathways', 'action' => 'add'], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
     </div>
-<?php endif;  // curator or admin? 
-?>
+<?php endif;  // curator or admin? ?>
 
 <div class="p-8 pt-4 w-full text-lg" id="mainContent">
     <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
@@ -33,8 +32,12 @@ if ($this->Identity->isLoggedIn()) {
         <a href="/category/<?= h($topic->categories[0]->id) ?>/<?= h($topic->categories[0]->slug) ?>"><?= h($topic->categories[0]->name) ?></a> >
         <?= h($topic->name) ?>
     </nav>
-
-
+    <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+    <form method="get" action="/pathways/import/<?= h($topic->id) ?>">
+        <input type="text" name="importcode" id="importcode" class="bg-slate-100 p-2" placeholder="Paste import code here">
+        <button class="bg-emerald-600 text-white p-2">Import</button>
+    </form>
+    <?php endif;  // curator or admin? ?>
     <div class="max-w-prose">
 
         <h2 class="text-2xl text-darkblue font-semibold mb-3"> <?= h($topic->name) ?></h2>
