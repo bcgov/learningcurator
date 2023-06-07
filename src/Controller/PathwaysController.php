@@ -250,6 +250,18 @@ class PathwaysController extends AppController
      */
     public function publish ($slug = null)
     {
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+
+        $guid = $user->additional_data;
+
+        // Let's first check to see if this pathway has been published before
+        // If it has been published
+        //  - Stop? Warn? 
+        // If it has NOT been published
+        //  - Go through every activity and put the hyperlinks into a string
+        //  - Take a hash of the links
+        //  - Update version number, hash, and published_on
+        
         $pathway = $this->Pathways->findBySlug($slug)->contain([
                             'Topics',
                             'Topics.Categories', 
@@ -258,6 +270,9 @@ class PathwaysController extends AppController
                             'Steps.Statuses', 
                             'Steps.Activities', 
                             'Steps.Activities.ActivityTypes'])->firstOrFail();
+        
+        
+        
         $p = json_encode($pathway);
         $now = date('YmdHi');
         $code = $pathway->id . '-' . $now;

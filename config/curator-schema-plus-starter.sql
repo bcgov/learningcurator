@@ -469,6 +469,7 @@ CREATE TABLE `pathways` (
   `slug` varchar(255) DEFAULT NULL,
   `estimated_time` varchar(255) DEFAULT NULL,
   `sortorder` int(11) DEFAULT '0',
+  
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `idx_pathways_pathway_topic_ibfk_1` (`topic_id`),
@@ -481,6 +482,21 @@ CREATE TABLE `pathways` (
   CONSTRAINT `pathway_topic_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+
+
+alter table pathways add column published_on datetime DEFAULT NULL;
+alter table pathways add column published_by char(36) DEFAULT NULL, ADD CONSTRAINT `pathway_publish_user` FOREIGN KEY (`published_by`) REFERENCES `users` (`id`);
+alter table pathways add column version char(36) DEFAULT NULL;
+
+
+
+
+
+
+
+
+
 
 --
 -- Dumping data for table `pathways`
@@ -857,6 +873,10 @@ LOCK TABLES `topics` WRITE;
 INSERT INTO `topics` VALUES (1,'Leadership in the BCPS','fundamentals','These pathways focus on building your leadership skills wherever you are, and wherever you plan to go. For all levels and roles.','boo','','','2020-07-05 02:35:12','fab197ca-eaa7-4418-960d-d8e8cf40231a'),(7,'Fundamentals','fundamentals','Basic, foundational knowledge about diversity and inclusion in the BC Public Service.','','','','2020-08-10 16:43:54','fab197ca-eaa7-4418-960d-d8e8cf40231a'),(11,'Project Management Program','pmp','Pathways related to project management in the BC Public Service',NULL,NULL,NULL,'2021-01-22 18:45:22','fab197ca-eaa7-4418-960d-d8e8cf40231a'),(14,'Governance','governance','All the things that make up the BC government and how it runs.',NULL,NULL,NULL,'2021-08-17 05:10:01','fab197ca-eaa7-4418-960d-d8e8cf40231a');
 /*!40000 ALTER TABLE `topics` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+
+
 
 --
 -- Table structure for table `users`

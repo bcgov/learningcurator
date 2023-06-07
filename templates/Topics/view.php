@@ -32,12 +32,21 @@ if ($this->Identity->isLoggedIn()) {
         <a href="/category/<?= h($topic->categories[0]->id) ?>/<?= h($topic->categories[0]->slug) ?>"><?= h($topic->categories[0]->name) ?></a> >
         <?= h($topic->name) ?>
     </nav>
-    <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
-    <form method="get" action="/pathways/import/<?= h($topic->id) ?>">
+
+    <?php if ($role == 'manager' || $role == 'superuser') : ?>
+    <form class="my-2" method="get" action="/pathways/import/<?= h($topic->id) ?>">
         <input type="text" name="importcode" id="importcode" class="bg-slate-100 p-2" placeholder="Paste import code here">
-        <button class="bg-emerald-600 text-white p-2">Import</button>
+        <button class="bg-emerald-600 text-white p-2">Publish New Pathway</button>
+        <div class="text-sm">
+            When you clicked "Publish" in the development environment 
+            you were given a code.<br>
+            Please paste that code in the field
+            above and click the Publish New Pathway button to bring your
+            pathway over and fully publish it here.
+        </div>
     </form>
     <?php endif;  // curator or admin? ?>
+
     <div class="max-w-prose">
 
         <h2 class="text-2xl text-darkblue font-semibold mb-3"> <?= h($topic->name) ?></h2>
