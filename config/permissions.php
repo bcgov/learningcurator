@@ -151,12 +151,22 @@ return [
             'action' => ['edit','add'],
         ],
         [
+            'role' => 'manager',
+            'controller' => 'Categories',
+            'action' => ['edit','add'],
+        ],
+        [
             'role' => '*',
             'controller' => 'Topics',
             'action' => ['index','view'],
         ],
         [
             'role' => 'curator',
+            'controller' => 'Topics',
+            'action' => ['edit','add'],
+        ],
+        [
+            'role' => 'manager',
             'controller' => 'Topics',
             'action' => ['edit','add'],
         ],
