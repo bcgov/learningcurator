@@ -43,10 +43,12 @@ trait SimpleCrudTrait
      */
     public function index()
     {
-        // The initial query to pull out the user list
-        // $table = $this->loadModel();
-        // $alphabetized = $table->find('all')->order(['last_name' => 'asc']);
-        // $tableAlias = $table->getAlias();
+        // Pull out the user list and filter for curator, manager, supers
+        // #TODO refactor to single query figure out orwhere 
+        $users = $this->loadModel();
+        $curators = $users->find('all')->where(['role' => 'curator'])->order(['last_name' => 'asc']);
+        $managers = $users->find('all')->where(['role' => 'manager'])->order(['last_name' => 'asc']);
+        $supers = $users->find('all')->where(['role' => 'superuser'])->order(['last_name' => 'asc']);
 
         // Get top 5 launched activities and a count for total launches
         $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
@@ -147,6 +149,9 @@ trait SimpleCrudTrait
             ->contain(['Activities', 'Users'])
             ->order(['Reports.created' => 'desc']);
 
+        $this->set('supers', $supers);
+        $this->set('curators', $curators);
+        $this->set('managers', $managers);
         $this->set('totalfollowcount', $totalfollowcount);
         $this->set('launchcount', $launchcount);
         $this->set('top5links', $top5links);
