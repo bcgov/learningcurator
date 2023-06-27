@@ -889,10 +889,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 66.666667%;
 }
 
-.w-96 {
-  width: 24rem;
-}
-
 .w-6 {
   width: 1.5rem;
 }
@@ -951,6 +947,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .grow-0 {
   flex-grow: 0;
+}
+
+.basis-1\/2 {
+  flex-basis: 50%;
 }
 
 .border-collapse {

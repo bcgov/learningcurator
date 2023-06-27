@@ -248,39 +248,70 @@ class PathwaysController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function publish ($slug = null)
+    public function publish ($id = null)
     {
         $user = $this->request->getAttribute('authentication')->getIdentity();
 
-        $guid = $user->additional_data;
+        // Is the person a manager or superuser? Only those roles can publish.
+        if($user->role == 'superuser' || $user->role == 'manager') {
+            
+            
+            $guid = $user->additional_data;
 
-        // Let's first check to see if this pathway has been published before
-        // If it has been published
-        //  - Stop? Warn? 
-        // If it has NOT been published
-        //  - Go through every activity and put the hyperlinks into a string
-        //  - Take a hash of the links
-        //  - Update version number, hash, and published_on
-        
-        $pathway = $this->Pathways->findBySlug($slug)->contain([
-                            'Topics',
-                            'Topics.Categories', 
-                            'Ministries', 
-                            'Steps' => ['sort' => ['Steps.id' => 'asc']],
-                            'Steps.Statuses', 
-                            'Steps.Activities', 
-                            'Steps.Activities.ActivityTypes'])->firstOrFail();
-        
-        
-        
-        $p = json_encode($pathway);
-        $now = date('YmdHi');
-        $code = $pathway->id . '-' . $now;
-        $filename = $code . '.json'; //-' . $pathway->slug . '.json';
-        $fp = '/mnt/published/' . $filename;
-        file_put_contents($fp, $p);
+            // Let's first check to see if this pathway has been published before
+            // If it has been published
+            //  - Stop
+            // If it has NOT been published
+            //  - Go through every activity and put the hyperlinks into a string
+            //  - Take a hash of the links
+            //  - Update version number, hash, and published_on
+            $pathway = $this->Pathways->get($id, [
+                'contain' => ['Topics',
+                                'Topics.Categories', 
+                                'Ministries', 
+                                'Steps' => ['sort' => ['Steps.id' => 'asc']],
+                                'Steps.Statuses', 
+                                'Steps.Activities', 
+                                'Steps.Activities.ActivityTypes'],
+            ]);
+            // $pathway = $this->Pathways->findBySlug($slug)->contain([
+            //                     'Topics',
+            //                     'Topics.Categories', 
+            //                     'Ministries', 
+            //                     'Steps' => ['sort' => ['Steps.id' => 'asc']],
+            //                     'Steps.Statuses', 
+            //                     'Steps.Activities', 
+            //                     'Steps.Activities.ActivityTypes'])->firstOrFail();
+            
+            // Because I've not related my tables togther properly, I'm not able to 
+            // pull in the curators details and can only see their user ID, but what
+            // we really want is the GUID value. 
+            // $pathway->createdby
 
-        $this->set(compact('code'));
+            $now = date('YmdHi');
+            $code = $pathway->id . '-' . $now;
+            
+            $savepathway = [];
+            $savepathway['published_on'] = FrozenTime::now();
+            $savepathway['published_by'] = $user->id;
+            $savepathway['version'] = $code;
+
+            $pathway = $this->Pathways->patchEntity($pathway, $savepathway);
+            $this->Pathways->save($pathway);
+
+            $p = json_encode($pathway);
+
+            $filename = $code . '.json'; //-' . $pathway->slug . '.json';
+            $fp = '/mnt/published/' . $filename;
+            file_put_contents($fp, $p);
+
+            $this->set(compact('code'));
+
+        } else { // If they're not a manager or super
+            
+            echo '<p>Sorry, but you have to be a manager to publish pathways.</p>';
+            
+        } // end check for super or manager role
     }
 
 
@@ -293,9 +324,11 @@ class PathwaysController extends AppController
     public function import ($topicid = 0)
     {
         
-        $importfile = $this->request->getQuery('importcode');
+        $importcode = $this->request->getQuery('importcode');
 
-        $importurl = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/published/' . $importfile . '.json';
+        // #TODO We're hard-coding the following URL to the dev instance, but this 
+        // should be a constant defined elsewhere.
+        $importurl = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/published/' . $importcode . '.json';
 
         $this->viewBuilder()->setLayout('ajax');
         $user = $this->request->getAttribute('authentication')->getIdentity();
@@ -371,7 +404,7 @@ class PathwaysController extends AppController
                             $newact = $act->newEmptyEntity();
                             $actdeets = [
                                 'status_id' => 2,
-                                'activity_types_id' => 2,
+                                'activity_types_id' => $a->activity_type->id,
                                 'hyperlink' => $a->hyperlink,
                                 'name' => $a->name,
                                 'slug' => $a->slug,
@@ -437,7 +470,7 @@ class PathwaysController extends AppController
             return $this->redirect($redir);
 
         } else {
-            echo 'Something went wrong importing this pathway.';
+            echo 'Something went wrong importing this pathway. Please contact Allan.Haggett@gov.bc.ca for assistance.';
             exit;
         }
             
@@ -507,7 +540,7 @@ class PathwaysController extends AppController
             // trim slug to maximum length defined in schema
             $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
             if ($this->Pathways->save($pathway)) {
-                $this->Flash->success(__('The pathway has been saved.'));
+                //$this->Flash->success(__('The pathway has been saved.'));
                 $redir = '/pathways/' . $sluggedTitle;
                 return $this->redirect($redir);
             }

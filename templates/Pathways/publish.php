@@ -1,5 +1,5 @@
 
-
+<div class="p-5">
 <h1 class="text-2xl">Step 2</h1>
 
 <p>To proceed, please proceed to the production site, 
@@ -7,3 +7,4 @@
     code to the import box:</p>
     
 <div class="text-xl"><?= $code ?></div>
+</div>

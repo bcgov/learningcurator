@@ -67,5 +67,8 @@ class Pathway extends Entity
         'competencies' => true,
         'steps' => true,
         'users' => true,
+        'published_on' => true,
+        'published_by' => true,
+        'version' => true,
     ];
 }

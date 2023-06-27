@@ -487,7 +487,7 @@ CREATE TABLE `pathways` (
 
 alter table pathways add column published_on datetime DEFAULT NULL;
 alter table pathways add column published_by char(36) DEFAULT NULL, ADD CONSTRAINT `pathway_publish_user` FOREIGN KEY (`published_by`) REFERENCES `users` (`id`);
-alter table pathways add column version char(36) DEFAULT NULL;
+alter table pathways add column version varchar(100) DEFAULT NULL;
 
 
 

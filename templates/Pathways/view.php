@@ -72,9 +72,48 @@ $this->assign('title', h($pathway->name));
                     <?= $this->Form->end(); ?>
                 </div>
             <?php endif ?>
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <?php if(!$pathway->version): ?>
+            <div class="p-3 bg-slate-300 rounded-lg">
             <?php if ($role == 'manager' || $role == 'superuser') : ?>
-            <a href="/pathways/<?= h($pathway->slug); ?>/publish" class="py-2 px-4 bg-emerald-700 text-white rounded-lg hover:bg-darkblue/80">Publish</a>
+            <div>As a manager, you can choose to publish this pathway:</div>
+            <div><a href="/pathways/<?= h($pathway->id); ?>/publish" class="py-2 inline-block px-4 bg-emerald-700 text-white rounded-lg hover:bg-darkblue/80">Publish</a></div>
+            <?php else: ?>
+            <div>This pathway has been published to production.<br> Version: <?= h($pathway->version); ?></div>
             <?php endif ?>
+            </div>
+            <?php endif ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <h3 class="mt-4 mb-1 text-darkblue font-semibold text-lg">Pathway Activity Progress</h3>
             <div class="flex pbarcontainer mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
                 <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar flex-none"></span>

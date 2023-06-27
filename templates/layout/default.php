@@ -65,59 +65,60 @@
                             </svg>
                         </button>
                     </div>
-                    <?php if (!empty($this->Identity->get('id'))) : ?>
-                        <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto" role="navigation">
-                            <?php
-                            $active = 'border-slate-400';
-                            $currentpage = $_SERVER["REQUEST_URI"];
-                            ?>
-                            <?php if ($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'manager' || $this->Identity->get('role') == 'superuser') : ?>
+                
+                    <nav :class="{'block': open, 'hidden': !open}" class="mt-4 flex-grow md:block pb-4 md:pb-0 md:overflow-y-auto" role="navigation">
+                        <?php
+                        $active = 'border-slate-400';
+                        $currentpage = $_SERVER["REQUEST_URI"];
+                        ?>
+                        <?php if ($this->Identity->get('role') == 'curator' || $this->Identity->get('role') == 'manager' || $this->Identity->get('role') == 'superuser') : ?>
 
-                                <?php if (strpos($currentpage, '/users/index') !== false) $active = 'text-white bg-sagedark'; ?>
-                                <a class="hover:no-underline block px-4 py-1 mt-2 mb-4 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?= $active ?>" href="/users/index">
-                                    Curator Dashboard
-                                </a>
-                            <?php endif; ?>
+                            <?php if (strpos($currentpage, '/users/index') !== false) $active = 'text-white bg-sagedark'; ?>
+                            <a class="hover:no-underline block px-4 py-1 mt-2 mb-4 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?= $active ?>" href="/users/index">
+                                Curator Dashboard
+                            </a>
+                        <?php endif; ?>
+                        
 
-                            <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
-                            <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/categories') {
+                        <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
+                        <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/categories') {
+                                                                                                                                                            echo 'text-white bg-sagedark';
+                                                                                                                                                        } ?>">All Categories</a>
+                        <a href="/pathways" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/pathways') {
                                                                                                                                                                 echo 'text-white bg-sagedark';
-                                                                                                                                                            } ?>">All Categories</a>
-                            <a href="/pathways" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/pathways') {
-                                                                                                                                                                    echo 'text-white bg-sagedark';
-                                                                                                                                                                } ?>">Recent Pathways</a>
-                            <a href="/activities" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/activities') {
-                                                                                                                                                                    echo 'text-white bg-sagedark';
-                                                                                                                                                                } ?>">Recent Activities</a>
-                            <a href="/questions" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/questions') {
-                                                                                                                                                                    echo 'text-white bg-sagedark';
-                                                                                                                                                                } ?>">About</a>
-                            <p class="font-semibold block mt-4 mb-1 mx-4 text-base">My Curator</p>
-                            <a href="/profile/follows" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/follows') {
-                                                                                                                                                                    echo 'text-white bg-sagedark';
-                                                                                                                                                                } ?>">Followed Pathways</a>
-                            <a href="/profile/launches" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/launches') {
-                                                                                                                                                                            echo 'text-white bg-sagedark';
-                                                                                                                                                                        } ?>">Launched Activities</a>
-                            <a href="/profile/reports" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/reports') {
+                                                                                                                                                            } ?>">Recent Pathways</a>
+                        <a href="/activities" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/activities') {
+                                                                                                                                                                echo 'text-white bg-sagedark';
+                                                                                                                                                            } ?>">Recent Activities</a>
+                        <a href="/questions" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/questions') {
+                                                                                                                                                                echo 'text-white bg-sagedark';
+                                                                                                                                                            } ?>">About</a>
+                        <p class="font-semibold block mt-4 mb-1 mx-4 text-base">My Curator</p>
+                        <a href="/profile/follows" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/follows') {
+                                                                                                                                                                echo 'text-white bg-sagedark';
+                                                                                                                                                            } ?>">Followed Pathways</a>
+                        <a href="/profile/launches" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/launches') {
                                                                                                                                                                         echo 'text-white bg-sagedark';
-                                                                                                                                                                    } ?>">Issues Reported</a>
-                            <a href="/logout" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg">Logout</a>
+                                                                                                                                                                    } ?>">Launched Activities</a>
+                        <a href="/profile/reports" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/reports') {
+                                                                                                                                                                    echo 'text-white bg-sagedark';
+                                                                                                                                                                } ?>">Issues Reported</a>
+                        <a href="/logout" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg">Logout</a>
 
 
-                            <div class="py-2 px-4 mt-3 w-full">
-                                <form method="get" action="/find" class="flex gap-[1px]" role="search">
-                                    <label for="search" class="sr-only">Search</label>
-                                    <input x-ref="input" placeholder="Search" required class="w-40 bg-white text-sm text-slate-700 rounded-l-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700 flex-1" type="search" aria-label="Search" name="search" id="search">
-                                    <button title="Click here or press Enter to search" class="bg-white text-sm leading-6 text-slate-700 ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700 rounded-r-lg" type="submit">
-                                        <svg width="24" height="24" fill="none" aria-hidden="true" class="flex-none">
-                                            <path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
-                                        </svg>
-                                    </button>
-                                </form>
-                            </div>
-                        </nav> <?php endif ?>
+                        <div class="py-2 px-4 mt-3 w-full">
+                            <form method="get" action="/find" class="flex gap-[1px]" role="search">
+                                <label for="search" class="sr-only">Search</label>
+                                <input x-ref="input" placeholder="Search" required class="w-40 bg-white text-sm text-slate-700 rounded-l-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700 flex-1" type="search" aria-label="Search" name="search" id="search">
+                                <button title="Click here or press Enter to search" class="bg-white text-sm leading-6 text-slate-700 ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-700 rounded-r-lg" type="submit">
+                                    <svg width="24" height="24" fill="none" aria-hidden="true" class="flex-none">
+                                        <path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </nav> 
 
                     <!-- <div class="flex items-center justify-center space-x-2">
                     <span class="text-sm text-gray-800">Light</span>
