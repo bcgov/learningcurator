@@ -58,6 +58,8 @@ if ($this->Identity->isLoggedIn()) {
                 </ul>
                 </div>
                 </div>
+                <div class="flex">
+                <div class="basis-1/2">
                 <h3 class="mt-4 font-bold">View</h3>
                 <ul class="list-disc pl-8 mt-2">
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/reports/index">Open Issue Reports</a></li>
@@ -74,6 +76,8 @@ if ($this->Identity->isLoggedIn()) {
                             Manual Link Review
                         </a></li>
                 </ul>
+                </div>
+                <div class="basis-1/2">
                 <h3 class="mt-4 font-semibold">Create New</h3>
                 <ul class="list-disc pl-8 mt-2">
                     <?php if ($role == 'superuser') : ?><li class="px-2"><a class="hover:underline hover:text-sky-700" href="/categories/add">Category</a></li> <?php endif ?>
@@ -82,9 +86,11 @@ if ($this->Identity->isLoggedIn()) {
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/activities/add">Activity</a></li>
                     <!-- <li class="px-2"> <a class="hover:underline hover:text-sky-700" href=" /activities/addtostep">Add Activity to Step</a></li> -->
                 </ul>
+                </div>
+                </div>
             </div>
             <div class="border-2 border-darkblue p-3 rounded-lg block mt-6 lg:hidden">
-                <h2 class="text-2xl text-darkblue">Today's Stats</h2>
+                <h2 class="text-2xl text-darkblue">Stats To Date</h2>
 
                 <div class="text-xl">
                     <p class="mt-2"><span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $totalfollowcount ?></span> Pathway Follows</p>
@@ -155,7 +161,7 @@ if ($this->Identity->isLoggedIn()) {
             </div>
         </div>
         <div class="border-2 border-darkblue p-3 rounded-lg lg:col-span-2 lg:grid hidden">
-            <h2 class="text-2xl text-darkblue">Today's Stats</h2>
+            <h2 class="text-2xl text-darkblue">Stats To Date</h2>
 
             <div class="text-xl">
                 <p class="mt-2"><span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $totalfollowcount ?></span> Pathway Follows</p>
