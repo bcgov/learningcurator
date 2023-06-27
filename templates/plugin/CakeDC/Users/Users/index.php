@@ -53,7 +53,7 @@ if ($this->Identity->isLoggedIn()) {
                 <?php endforeach ?>
                 <?php foreach($supers as $s): ?>
                     <?php if($s->username == 'superadmin') continue ?>
-                    <li><a href="/users/view/<?= $s->id ?>"><?= $s->first_name ?> <?= $s->last_name ?></a> (super)</li>
+                    <li><a href="/users/view/<?= $s->id ?>"><?= $s->first_name ?> <?= $s->last_name ?></a> <span title="Super User">&#8902;</span> <!-- flag: &#128681;--> <!--(super)--></li>
                 <?php endforeach ?>
                 </ul>
                 </div>
