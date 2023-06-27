@@ -22,7 +22,7 @@ $this->assign('title', $pagetitle);
     </div>
     <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://commons.wikimedia.org/wiki/File:Path_at_French_Beach_BC_Canada_-_panoramio.jpg">Path at French Beach</a> by MaryConverse via Wikimedia Commons (<a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>)</p>
 </header>
-<?php if ($role == 'curator' || $role == 'superuser') : ?>
+<?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
     <div class="p-4 float-right">
         <?= $this->Html->link(__('Edit Category'), ['action' => 'edit', $category->id], ['class' => 'inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg mr-2']) ?>
         <?= $this->Html->link(__('Add Topic'), ['controller' => 'Topics', 'action' => 'add'], ['class' => 'inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
@@ -62,7 +62,7 @@ $this->assign('title', $pagetitle);
                         </a> <!-- formatting container -->
 
                     <?php else : ?>
-                        <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                        <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                             <a href="/category/<?= h($category->id) ?>/<?= h($category->slug) ?>/topic/<?= $topic->id ?>/<?= $topic->slug ?>" class="hover:no-underline group">
                                 <div class="rounded-md shadow-lg border-2 border-sky-700 mb-4 group-hover:border-sky-700/80">
                                     <div class="bg-sky-700 p-2 group-hover:bg-sky-700/80 flex justify-between items-center">

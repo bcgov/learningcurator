@@ -18,8 +18,9 @@ if ($this->Identity->isLoggedIn()) {
     $uid = $this->Identity->get('id');
 }
 ?>
-<header class="w-full h-32 md:h-52 bg-darkblue px-8 flex items-center">
+<header class="w-full h-32 md:h-52 bg-darkblue px-8 flex flex-col justify-center">
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
+    <p class="flex-none text-white">Welcome <?= $this->Identity->get('first_name') ?> <?= $this->Identity->get('last_name') ?></p>
 </header>
 <div class="p-8 text-lg" id="mainContent">
     <div class="lg:grid lg:grid-cols-5 lg:gap-4 items-start">
@@ -33,6 +34,32 @@ if ($this->Identity->isLoggedIn()) {
                         <input class="px-3 py-2 m-0 border rounded-l-lg" type="search" placeholder="first or last name ..." aria-label="User Search" name="q"></label><button class="px-3 py-2 m-0 bg-slate-400 hover:bg-slate-300 rounded-r-lg" type="submit">User Search</button>
                     <div class="inline-block ml-2 text-sky-700 hover:underline text-base"><a href="/users/search">Show All Users</a></div>
                 </form>
+                <div class="flex">
+                <div class="basis-1/2">
+                <h3 class="mt-4 font-bold">Curators</h3> 
+                <p>Curators have full access to create draft pathways but cannot publish.</p>
+                <ul class="list-disc pl-8 mt-2">
+                <?php foreach($curators as $cur): ?>
+                    <li><a href="/users/view/<?= $cur->id ?>"><?= $cur->first_name ?> <?= $cur->last_name ?></a></li>
+                <?php endforeach ?>
+                </ul>
+                </div>
+                <div class="basis-1/2">
+                <h3 class="mt-4 font-bold">Managers</h3> 
+                <p>Managers can do what Curators do, but they can also publish pathways to production.</p>
+                <ul class="list-disc pl-8 mt-2">
+                <?php foreach($managers as $man): ?>
+                    <li><a href="/users/view/<?= $man->id ?>"><?= $man->first_name ?> <?= $man->last_name ?></a></li>
+                <?php endforeach ?>
+                <?php foreach($supers as $s): ?>
+                    <?php if($s->username == 'superadmin') continue ?>
+                    <li><a href="/users/view/<?= $s->id ?>"><?= $s->first_name ?> <?= $s->last_name ?></a> <span title="Super User">&#8902;</span> <!-- flag: &#128681;--> <!--(super)--></li>
+                <?php endforeach ?>
+                </ul>
+                </div>
+                </div>
+                <div class="flex">
+                <div class="basis-1/2">
                 <h3 class="mt-4 font-bold">View</h3>
                 <ul class="list-disc pl-8 mt-2">
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/reports/index">Open Issue Reports</a></li>
@@ -49,6 +76,8 @@ if ($this->Identity->isLoggedIn()) {
                             Manual Link Review
                         </a></li>
                 </ul>
+                </div>
+                <div class="basis-1/2">
                 <h3 class="mt-4 font-semibold">Create New</h3>
                 <ul class="list-disc pl-8 mt-2">
                     <?php if ($role == 'superuser') : ?><li class="px-2"><a class="hover:underline hover:text-sky-700" href="/categories/add">Category</a></li> <?php endif ?>
@@ -57,9 +86,11 @@ if ($this->Identity->isLoggedIn()) {
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/activities/add">Activity</a></li>
                     <!-- <li class="px-2"> <a class="hover:underline hover:text-sky-700" href=" /activities/addtostep">Add Activity to Step</a></li> -->
                 </ul>
+                </div>
+                </div>
             </div>
             <div class="border-2 border-darkblue p-3 rounded-lg block mt-6 lg:hidden">
-                <h2 class="text-2xl text-darkblue">Today's Stats</h2>
+                <h2 class="text-2xl text-darkblue">Stats To Date</h2>
 
                 <div class="text-xl">
                     <p class="mt-2"><span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $totalfollowcount ?></span> Pathway Follows</p>
@@ -130,7 +161,7 @@ if ($this->Identity->isLoggedIn()) {
             </div>
         </div>
         <div class="border-2 border-darkblue p-3 rounded-lg lg:col-span-2 lg:grid hidden">
-            <h2 class="text-2xl text-darkblue">Today's Stats</h2>
+            <h2 class="text-2xl text-darkblue">Stats To Date</h2>
 
             <div class="text-xl">
                 <p class="mt-2"><span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $totalfollowcount ?></span> Pathway Follows</p>

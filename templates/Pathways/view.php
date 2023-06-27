@@ -72,6 +72,47 @@ $this->assign('title', h($pathway->name));
                     <?= $this->Form->end(); ?>
                 </div>
             <?php endif ?>
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <?php if(!$pathway->version): ?>
+            <div class="p-3 bg-slate-300 rounded-lg">
+            <?php if ($role == 'manager' || $role == 'superuser') : ?>
+            <div>As a manager, you can choose to publish this pathway:</div>
+            <div><a href="/pathways/<?= h($pathway->id); ?>/publish" class="py-2 inline-block px-4 bg-emerald-700 text-white rounded-lg hover:bg-darkblue/80">Publish</a></div>
+            <?php else: ?>
+            <div>This pathway has been published to production.<br> Version: <?= h($pathway->version); ?></div>
+            <?php endif ?>
+            </div>
+            <?php endif ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <h3 class="mt-4 mb-1 text-darkblue font-semibold text-lg">Pathway Activity Progress</h3>
             <div class="flex pbarcontainer mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
@@ -127,7 +168,7 @@ $this->assign('title', h($pathway->name));
 
 
 
-            <?php if ($role == 'curator' || $role == 'superuser') : ?>
+            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
 
                 <div x-data="{ open: false }" class="mb-8">
                     <div class="flex justify-start gap-4">
@@ -237,13 +278,13 @@ $this->assign('title', h($pathway->name));
                                     </p>
 
 
-                                    <!-- <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                                    <!-- <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                                     <span class="text-xs px-4 bg-slate-100/80 rounded-lg"><?= $steps->status->name ?></span>
                                 <?php endif ?> -->
                                 </div>
                             </div>
                         <?php else : ?>
-                            <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                                 <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
                                     <div class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
 
@@ -294,7 +335,7 @@ $this->assign('title', h($pathway->name));
                                             </p>
 
 
-                                            <!-- <?php if ($role == 'curator' || $role == 'superuser') : ?>
+                                            <!-- <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                                     <span class="text-xs px-4 bg-slate-100/80 rounded-lg"><?= $steps->status->name ?></span>
                                 <?php endif ?> -->
                                         </div>

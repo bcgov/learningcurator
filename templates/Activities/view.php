@@ -109,7 +109,7 @@ if ($this->Identity->isLoggedIn()) {
                 </div> <!-- end white inner box -->
             </div>
         </div>
-        <?php if ($role == 'curator' || $role == 'superuser') : ?>
+        <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
             <div class="my-3">
                 <?= $this->Html->link(__('Edit'), ['controller' => 'Activities', 'action' => 'edit', $activity->id], ['class' => 'inline-block px-3 py-1 text-white text-base bg-slate-700 focus:bg-slate-700/80 hover:no-underline rounded-lg']) ?>
                 <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $activity->id], ['confirm' => __('Really delete?'), 'class' => 'inline-block px-3 py-1 text-base hover:bg-red-700/80 text-white bg-red-700 hover:no-underline rounded-lg']) ?>
@@ -131,7 +131,7 @@ if ($this->Identity->isLoggedIn()) {
 
         <ul class="list-disc pl-8 mt-2">
             <li class="px-2"><strong>Activity added:</strong> <?= $this->Time->format($activity->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?> </li>
-            <?php if ($role == 'curator' || $role == 'superuser') : ?>
+            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                 <li class="px-2"><strong>Added by:</strong> <a href="/users/view/<?= $activity->createdby_id ?>"><?= $curator[0]->username ?></a></li>
             <?php endif ?>
             <li class="px-2"><strong>Last Automatic Audit:</strong> <?= $this->Time->format($activity->audited, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></li>
@@ -152,7 +152,7 @@ if ($this->Identity->isLoggedIn()) {
             </ul>
         <?php endif ?>
 
-        <?php if ($role == 'curator' || $role == 'superuser') : ?>
+        <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
             <?php if (!empty($activity->moderator_notes)) : ?>
                 <h4 class="font-semibold text-xl mt-5"><?= __('Curator Notes') ?></h4>
                 <blockquote class="border-l-2 p-2 m-2">
