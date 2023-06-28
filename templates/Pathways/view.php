@@ -72,43 +72,6 @@ $this->assign('title', h($pathway->name));
                     <?= $this->Form->end(); ?>
                 </div>
             <?php endif ?>
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <?php if(!$pathway->version): ?>
-            <div class="p-3 bg-slate-300 rounded-lg">
-            <?php if ($role == 'manager' || $role == 'superuser') : ?>
-            <div>As a manager, you can choose to publish this pathway:</div>
-            <div><a href="/pathways/<?= h($pathway->id); ?>/publish" class="py-2 inline-block px-4 bg-emerald-700 text-white rounded-lg hover:bg-darkblue/80">Publish</a></div>
-            <?php else: ?>
-            <div>This pathway has been published to production.<br> Version: <?= h($pathway->version); ?></div>
-            <?php endif ?>
-            </div>
-            <?php endif ?>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -168,51 +131,130 @@ $this->assign('title', h($pathway->name));
 
 
 
-            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
 
-                <div x-data="{ open: false }" class="mb-8">
-                    <div class="flex justify-start gap-4">
-                        
-                        <?= $this->Html->link(__('Edit Pathway'), ['action' => 'edit', $pathway->id], ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg flex-none justify-self-start']) ?>
 
-                        <button @click="open = ! open" class=" px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg">
-                            Add a Step
-                        </button>
 
-                        <a class="px-4 whitespace-nowrap w-40 overflow-hidden text-ellipsis py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg" 
-                            rel="bookmarklet" 
-                            href="javascript: (() => {const destination = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/activities/addtopath?pathwayid=<?= $pathway->id ?>&url=' + window.location.href;window.open(destination);})();"
-                            title="Drag to bookmarks bar or right-click and add to bookmarks">
-                                Add to <?= $pathway->name ?> Bookmarklet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <?php $environment = $_SERVER['SERVER_NAME'] ?>
+            <?php if($environment != 'learningcurator.apps.silver.devops.gov.bc.ca' && $environment != 'learningcurator.gww.gov.bc.ca') : ?>
+
+            <?php if(!empty($pathway->version)): ?>
+            <div class="mb-3 p-3 bg-yellow-100 rounded-lg">
+                <div>
+                    <div>
+                        This pathway has been 
+                        <a href="https://learningcurator.apps.silver.devops.gov.bc.ca/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" 
+                            class="underline font-bold">
+                                published to production
                         </a>
+                        and should no longer be edited here.
                     </div>
-
-
-
-                    <div xcloak x-show="open" class="border border-slate-500 p-6 my-3 rounded-md block">
-                    <?= $this->Form->create(null, ['url' => [
-                            'controller' => 'Steps',
-                            'action' => 'add'
-                        ]]) ?>
-                            <label for="name">Step Title</label>
-            <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span>   
-        <?php echo $this->Form->input('name', ['class' => 'form-field max-w-prose mb-2', 'type' => 'text', 'aria-describedby' => 'nameHelp']);  ?>
-            <label for="description">Step Objective</label>
-            <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1&nbsp;phrase/sentence).</span>
-           <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
-            
-                        
-                        <?php
-                        echo $this->Form->hidden('createdby', ['value' => $uid]);
-                        echo $this->Form->hidden('modifiedby', ['value' => $uid]);
-                        echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
-                        ?>
-                        <?= $this->Form->button(__('Add Step'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
-                        <?= $this->Form->end() ?>
-                    </div>
+                    <!-- <div class="text-sm">Version: <?= h($pathway->version); ?></div> -->
                 </div>
+            </div>
+            <?php else: ?>
 
-            <?php endif ?>
+            <div class="mb-3 p-3 bg-yellow-100 rounded-lg">
+            <div><strong>This pathway has not be published.</strong></div>
+
+            <?php if ($role == 'manager' || $role == 'superuser') : ?>
+            <div>As a manager, you can choose to publish this pathway:</div>
+            <div>
+                <a href="/pathways/<?= h($pathway->id); ?>/publish" class="py-2 inline-block px-4 bg-emerald-700 text-white rounded-lg hover:bg-darkblue/80">
+                    Publish Pathway
+                </a>
+            </div>
+            <?php else: ?>
+                <div>Only a manager can publish pathways.</div>
+            <?php endif; // role check ?>
+            </div>
+            <?php endif; // version exists check ?>
+            <?php endif; // enviromnent check ?>
+
+
+
+
+
+
+            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+            
+            <div x-data="{ open: false }" class="mb-8">
+                <div class="flex justify-start gap-4">
+                    
+                    <?= $this->Html->link(__('Edit Pathway'), ['action' => 'edit', $pathway->id], ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg flex-none justify-self-start']) ?>
+
+                    <button @click="open = ! open" class=" px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg">
+                        Add a Step
+                    </button>
+
+                    <a class="px-4 whitespace-nowrap w-40 overflow-hidden text-ellipsis py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg" 
+                        rel="bookmarklet" 
+                        href="javascript: (() => {const destination = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/activities/addtopath?pathwayid=<?= $pathway->id ?>&url=' + window.location.href;window.open(destination);})();"
+                        title="Drag to bookmarks bar or right-click and add to bookmarks">
+                            Add to <?= $pathway->name ?> Bookmarklet
+                    </a>
+                </div>
+                <div xcloak x-show="open" class="border border-slate-500 p-6 my-3 rounded-md block">
+                <?= $this->Form->create(null, ['url' => [
+                        'controller' => 'Steps',
+                        'action' => 'add'
+                    ]]) ?>
+                    <label for="name">Step Title</label>
+                    <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span>   
+                    <?php echo $this->Form->input('name', ['class' => 'form-field max-w-prose mb-2', 'type' => 'text', 'aria-describedby' => 'nameHelp']);  ?>
+                    <label for="description">Step Objective</label>
+                    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1&nbsp;phrase/sentence).</span>
+                    <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
+
+                    
+                    <?php
+                    echo $this->Form->hidden('createdby', ['value' => $uid]);
+                    echo $this->Form->hidden('modifiedby', ['value' => $uid]);
+                    echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
+                    ?>
+                    <?= $this->Form->button(__('Add Step'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
+                    <?= $this->Form->end() ?>
+                </div>
+            </div>
+            
+            <?php endif; // role check ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
+
+
+
+
+
+            
 
 
 
