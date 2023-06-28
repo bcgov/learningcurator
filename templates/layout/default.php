@@ -175,9 +175,9 @@ n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,"script","https://www2.
 
 <?php $environment = $_SERVER['SERVER_NAME'] ?>
 <?php if($environment == 'learningcurator.apps.silver.devops.gov.bc.ca' || $environment == 'learningcurator.gww.gov.bc.ca') : ?>
-var collector = 'spm.apps.gov.bc.ca';
-<?php else: ?>
 var collector = 'spt.apps.gov.bc.ca';
+<?php else: ?>
+var collector = 'spm.apps.gov.bc.ca';
 <?php endif ?>
 
 window.snowplow('newTracker','rt',collector, {
