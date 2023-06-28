@@ -362,8 +362,8 @@ class PathwaysController extends AppController
             'description' => $path->description,
             'objective' => $path->objective,
             'slug' => $pathslug,
-            'createdby' => $user->id,
-            'modifiedby' => $user->id
+            'createdby' => $pathway->createdby,
+            'modifiedby' => $pathway->modifiedby
         ];
         //echo '<pre>'; print_r($pathdeets); exit;
         
@@ -382,8 +382,8 @@ class PathwaysController extends AppController
                     'name' => $step->name,
                     'slug' => $step->slug,
                     'description' => $step->description,
-                    'createdby' => $user->id,
-                    'modifiedby' => $user->id
+                    'createdby' => $step->createdby,
+                    'modifiedby' => $step->modifiedby
                 ];
                 
                 $newstep = $st->patchEntity($newstep,$stepdeets, [
@@ -409,9 +409,9 @@ class PathwaysController extends AppController
                                 'name' => $a->name,
                                 'slug' => $a->slug,
                                 'description' => $a->description,
-                                'createdby_id' => $user->id,
-                                'approvedby_id' => $user->id,
-                                'modifiedby_id' => $user->id
+                                'createdby_id' => $a->createdby_id,
+                                'approvedby_id' => $a->createdby_id,
+                                'modifiedby_id' => $a->modifiedby_id
                             ];
                             
                             $newact = $act->patchEntity($newact,$actdeets);
