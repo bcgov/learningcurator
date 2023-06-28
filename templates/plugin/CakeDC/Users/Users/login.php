@@ -96,7 +96,13 @@ p.GlobalSnowplowNamespace.push(i);p[i]=function(){(p[i].q=p[i].q||[]).push(argum
 };p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;
 n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,"script","https://www2.gov.bc.ca/StaticWebResources/static/sp/sp-2-14-0.js","snowplow"));
 
+<?php $environment = $_SERVER['SERVER_NAME'] ?>
+<?php if($environment == 'learningcurator.apps.silver.devops.gov.bc.ca' || $environment == 'learningcurator.gww.gov.bc.ca') : ?>
 var collector = 'spm.apps.gov.bc.ca';
+<?php else: ?>
+var collector = 'spt.apps.gov.bc.ca';
+<?php endif ?>
+
 window.snowplow('newTracker','rt',collector, {
  appId: 'Snowplow_standalone_PSA',
  cookieLifetime: 86400 * 548,
