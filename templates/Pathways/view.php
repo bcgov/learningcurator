@@ -134,11 +134,6 @@ $this->assign('title', h($pathway->name));
 
 
 
-
-
-
-
-
             <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
             <div class="mb-3 p-3 bg-yellow-100 rounded-lg">
                 <?php if(!empty($createdby[0]->first_name)): ?>
