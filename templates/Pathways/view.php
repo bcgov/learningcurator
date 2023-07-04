@@ -140,7 +140,61 @@ $this->assign('title', h($pathway->name));
 
 
 
-
+                <div class="mb-3 p-3 bg-yellow-100 rounded-lg">
+                <?php if(!empty($createdby[0]->first_name)): ?>
+                <div>
+                    <strong>Created by:</strong><br>
+                    <details>
+                        <summary><?= $createdby[0]->first_name ?> <?= $createdby[0]->last_name ?> </summary>
+                        Curator ID: <?= $createdby[0]->id ?><br>
+                        BC Gov GUID: <?= $createdby[0]->additional_data ?>
+                    </details>
+                </div>
+                <?php if(!empty($modifiedby[0]->first_name)): ?>
+                <?php if($createdby[0]->id != $modifiedby[0]->id): ?>
+                <div>
+                    <strong>Last modified by:</strong><br>
+                    <?= $modifiedby[0]->first_name ?>
+                    <?= $modifiedby[0]->last_name ?> 
+                    <?= $modifiedby[0]->additional_data ?>
+                </div>
+                <?php endif ?>
+                <?php endif ?>
+                <?php else: ?>
+                <div>
+                    <strong>Created by:</strong><br>
+                    The user who created this pathway no longer 
+                    appears to be in the system.
+                </div>
+                <?php endif ?>
+                <div>
+                    <strong>Published by:</strong><br>
+                    <details>
+                        <summary><?= $publishedby[0]->first_name ?> <?= $publishedby[0]->last_name ?> </summary>
+                        Curator ID: <?= $publishedby[0]->id ?><br>
+                        GUID: <?= $publishedby[0]->additional_data ?>
+                    </details>
+                </div>
+                <div>
+                    <?php $unrec_count = 0 ?>
+                    <strong>Curators:</strong><br>
+                    <?php foreach($contributors as $c): ?>
+                        <?php //print_r($c) ?>
+                        <?php if(!empty($c[0]->first_name)): ?>
+                        <details>
+                            <summary><?= $c[0]->first_name ?> <?= $c[0]->last_name ?></summary>
+                            Curator ID: <?= $c[0]->id ?><br>
+                            GUID: <?= $c[0]->additional_data ?><br>
+                        </details>
+                        <?php else: ?>
+                        <?php $unrec_count++ ?>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                    <?php if($unrec_count > 0): ?>
+                        <div><?= $unrec_count ?> unrecognized contributors to this pathway.</div>
+                    <?php endif ?>
+                </div>
+            </div>
 
 
 
@@ -150,13 +204,20 @@ $this->assign('title', h($pathway->name));
 
             <?php $environment = $_SERVER['SERVER_NAME'] ?>
             <?php if($environment != 'learningcurator.apps.silver.devops.gov.bc.ca' && $environment != 'learningcurator.gww.gov.bc.ca') : ?>
+            
 
-            <?php if(!empty($pathway->version)): ?>
-            <div class="mb-3 p-3 bg-yellow-100 rounded-lg">
-                <div>
-                    <div>
-                        This pathway has been 
-                        <a href="https://learningcurator.apps.silver.devops.gov.bc.ca/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" 
+
+ 
+                        
+                        
+                        
+                        
+                        <?php if(!empty($pathway->version)): ?>
+                            <div class="mb-3 p-3 bg-yellow-100 rounded-lg">
+                                <div>
+                                    <div>
+                                        This pathway has been 
+                                        <a href="https://learningcurator.apps.silver.devops.gov.bc.ca/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" 
                             class="underline font-bold">
                                 published to production
                         </a>
