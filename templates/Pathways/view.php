@@ -134,13 +134,8 @@ $this->assign('title', h($pathway->name));
 
 
 
-
-
-
-
-
-
-                <div class="mb-3 p-3 bg-yellow-100 rounded-lg">
+            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+            <div class="mb-3 p-3 bg-yellow-100 rounded-lg">
                 <?php if(!empty($createdby[0]->first_name)): ?>
                 <div>
                     <strong>Created by:</strong><br>
@@ -195,7 +190,7 @@ $this->assign('title', h($pathway->name));
                     <?php endif ?>
                 </div>
             </div>
-
+            <?php endif ?>
 
 
 
