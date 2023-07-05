@@ -353,13 +353,15 @@ class PathwaysController extends AppController
     public function import ($topicid = 0)
     {
         
+        // Check to see if this pathway already exists and message if it does
+
         $importcode = $this->request->getQuery('importcode');
 
         // #TODO We're hard-coding the following URL to the dev instance, but this 
         // should be a constant defined elsewhere.
         $importurl = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/published/' . $importcode . '.json';
 
-        $this->viewBuilder()->setLayout('ajax');
+        //$this->viewBuilder()->setLayout('ajax');
         $user = $this->request->getAttribute('authentication')->getIdentity();
         $feed = file_get_contents($importurl);
         $path = json_decode($feed);
@@ -384,15 +386,18 @@ class PathwaysController extends AppController
         $pathway = $this->Pathways->newEmptyEntity();
         
         $pathdeets = [
-            'status_id' => 1,
+            'status_id' => 2,
             'topic_id' => $topicid, //33,
             'name' => $pathname,
             'file_path' => $pathpast, // we are repurposing file_path here to create a log mostly because Allan is afraid of database migrations
             'description' => $path->description,
             'objective' => $path->objective,
             'slug' => $pathslug,
-            'createdby' => $pathway->createdby,
-            'modifiedby' => $pathway->modifiedby
+            'createdby' => $path->createdby,
+            'modifiedby' => $path->modifiedby,
+            'published_by' => $path->published_by,
+            'published_on' => $path->published_on,
+            'version' => $path->version
         ];
         //echo '<pre>'; print_r($pathdeets); exit;
         
@@ -410,6 +415,7 @@ class PathwaysController extends AppController
                     'pathways' => [['id' => $pathid]],
                     'name' => $step->name,
                     'slug' => $step->slug,
+                    'status_id' => 2,
                     'description' => $step->description,
                     'createdby' => $step->createdby,
                     'modifiedby' => $step->modifiedby
@@ -564,6 +570,7 @@ class PathwaysController extends AppController
             'contain' => ['Competencies', 'Steps', 'Users'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+            //echo '<pre>'; print_r($this->request->getData()); exit;
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
             $sluggedTitle = Text::slug($pathway->name);
             // trim slug to maximum length defined in schema

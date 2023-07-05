@@ -162,6 +162,7 @@ $this->assign('title', h($pathway->name));
                     appears to be in the system.
                 </div>
                 <?php endif ?>
+                <?php if(!empty($pathway->publishedby)): ?>
                 <div>
                     <strong>Published by:</strong><br>
                     <details>
@@ -170,6 +171,7 @@ $this->assign('title', h($pathway->name));
                         GUID: <?= $publishedby[0]->additional_data ?>
                     </details>
                 </div>
+                <?php endif ?>
                 <div>
                     <?php $unrec_count = 0 ?>
                     <strong>Curators:</strong><br>
