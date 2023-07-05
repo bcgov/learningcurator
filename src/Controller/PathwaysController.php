@@ -371,6 +371,11 @@ class PathwaysController extends AppController
         $pathpast .= 'on ' . $path->created . '. Last modified by ' . $path->modifiedby . ' ';
         $pathpast .= 'on ' . $path->modified;
 
+
+
+
+
+        $version = $path->version;
         $pathslugtocheck = $path->slug;
         $namecheck = $this->Pathways->find()->where(function ($exp, $query) use($pathslugtocheck) {
                                         return $exp->like('Pathways.slug', '%'.$pathslugtocheck.'%');
@@ -382,6 +387,17 @@ class PathwaysController extends AppController
             $sluggedtitle = Text::slug($pathname);
             $pathslug = strtolower(substr($sluggedtitle, 0, 191));
         }
+
+
+
+
+
+
+
+
+
+
+
 
         $pathway = $this->Pathways->newEmptyEntity();
         
