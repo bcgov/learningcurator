@@ -126,6 +126,8 @@ class ReportsController extends AppController
 
             if ($this->Reports->save($report)) {
 
+                $chesapicredential = env('CHES_CRED', null);
+                
                 echo __('The report has been saved.');
                 // $mailer = new Mailer('default');
                 // $mailer->setFrom(['allan.haggett@gov.bc.ca' => 'Learning Curator'])
@@ -157,7 +159,7 @@ class ReportsController extends AppController
                 CURLOPT_POSTFIELDS => 'grant_type=client_credentials',
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/x-www-form-urlencoded',
-                    'Authorization: Basic Q0RBQ0M5REYtQjlDNTg3NUM5NEM6OTRlYzdjNTctNGZmZi00ZmRmLWE0MzktMzViMmRkYjZiNzJi'
+                    'Authorization: Basic ' . $chesapicredential
                 ),
                 ));
 
