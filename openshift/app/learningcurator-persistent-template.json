@@ -25,6 +25,7 @@
                       "template.openshift.io/expose-password": "{.data['database-password']}",
                       "template.openshift.io/expose-root_password": "{.data['database-root-password']}",
                       "template.openshift.io/expose-username": "{.data['database-user']}",
+                      "template.openshift.io/expose-ches-cred": "{.data['ches-cred']}",
                       "template.openshift.io/expose-azuread-clientId": "{.data['azuread-clientId']}",
                       "template.openshift.io/expose-azuread-clientSecret": "{.data['azuread-clientSecret']}"
                   },
@@ -35,6 +36,7 @@
                   "database-password": "${DB_PASSWORD}",
                   "database-root-password": "${DB_ROOT_PASSWORD}",
                   "database-user": "${DB_USER}",
+                  "ches-cred": "${CHES_CRED}",
                   "azuread-clientId": "${AZURE_AD_CLIENT_ID}",
                   "azuread-clientSecret": "${AZURE_AD_CLIENT_SECRET}"
               }
@@ -184,6 +186,15 @@
                     {
                       "name": "SITE_URL",
                       "value": "https://${SITE_URL}"
+                    },
+                    {
+                      "name": "CHES_CRED",
+                      "valueFrom": {
+                        "secretKeyRef": {
+                          "name": "${APP_NAME}-secrets",
+                          "key": "ches-credential"
+                        }
+                      }
                     },
                     {
                       "name": "AZURE_AD_CLIENT_ID",
