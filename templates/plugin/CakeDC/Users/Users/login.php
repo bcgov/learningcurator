@@ -14,6 +14,12 @@ use Cake\Core\Configure;
 
 $this->layout = 'ajax';
 $this->assign('title', 'Learning on demand');
+
+$go = $_GET['redirect'] ?? '';
+if($go) {
+    setcookie("RedirectionTo", $go, time()+3600);  /* expire in 1 hour */
+}
+
 ?>
 <?php $this->loadHelper('Authentication.Identity') ?>
 <!DOCTYPE html>

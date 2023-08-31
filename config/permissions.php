@@ -142,6 +142,11 @@ return [
         ],
         [
             'role' => '*',
+            'controller' => 'Redirect',
+            'action' => 'index',
+        ],
+        [
+            'role' => '*',
             'controller' => 'Categories',
             'action' => ['index','view','api','home'],
         ],

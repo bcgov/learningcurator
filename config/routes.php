@@ -58,6 +58,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/pages/*', 'Pages::display');
 
     $builder->connect('/find', ['controller' => 'Activities', 'action' => 'find'])->setPass(['search']);
+    
+    $builder->connect('/loginredirect', ['controller' => 'Redirect', 'action' => 'index']);
 
     // main category view
     $builder->connect('/category/{id}/{slug}', ['controller' => 'Categories', 'action' => 'view'])->setPass(['id']);
