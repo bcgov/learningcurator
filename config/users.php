@@ -28,7 +28,7 @@ $config = ['Users' =>
                 'Auth' => [
                         'AuthenticationComponent' => [
                                 'load' => true,
-                                'loginRedirect' => '/categories',
+                                'loginRedirect' => '/loginredirect',
                                 'requireIdentity' => false
                         ],
                 ]
