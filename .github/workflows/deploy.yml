@@ -107,6 +107,7 @@ jobs:
                 -p SITE_URL=${APP_HOST} \
                 -p AZURE_AD_CLIENT_ID=${{ secrets.AZURE_AD_CLIENT_ID }} \
                 -p AZURE_AD_CLIENT_SECRET=${{ secrets.AZURE_AD_CLIENT_SECRET }} \
+                -p CHES_CRED=${{ secrets.CHES_CRED }} \
                 -p DB_HOST=mysql-0.mysql \
                 -p DB_SECONDARY_NAME=mysql-read \
                 -p LEARNINGCURATOR_MEMORY_LIMIT=1Gi \
