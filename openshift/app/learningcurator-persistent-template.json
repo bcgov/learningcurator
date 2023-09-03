@@ -36,7 +36,7 @@
                   "database-password": "${DB_PASSWORD}",
                   "database-root-password": "${DB_ROOT_PASSWORD}",
                   "database-user": "${DB_USER}",
-                  "ches-cred": "${CHES_CRED}",
+                  "ches-credential": "${CHES_CRED}",
                   "azuread-clientId": "${AZURE_AD_CLIENT_ID}",
                   "azuread-clientSecret": "${AZURE_AD_CLIENT_SECRET}"
               }
