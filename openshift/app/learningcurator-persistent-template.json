@@ -512,6 +512,13 @@
         "value": "${AZURE_AD_CLIENT_SECRET}"
       },
       {
+        "description": "API credential for CHES.",
+        "displayName": "API credential for CHES",
+        "name": "CHES_CRED",
+        "required": false,
+        "value": "${CHES_CRED}"
+      },
+      {
         "description": "Git project URL, where project source can be found.",
         "displayName": "Git Project",
         "name": "GIT_PROJECT",
