@@ -28,8 +28,11 @@ class RedirectController extends AppController
         // #TODO this is maybe insecure? Should probably strip the 
         // domain off and only store the relative path, then hardcode
         // the domain and add the path ... you know?
-        if($_COOKIE["RedirectionTo"]) {
-            return $this->redirect($_COOKIE["RedirectionTo"]);
+        if(isset($_COOKIE['RedirectionTo'])) {
+            $goto = $_COOKIE['RedirectionTo'];
+            setcookie('RedirectionTo', '', time()-3600);
+            unset($_COOKIE['RedirectionTo']);
+            return $this->redirect($goto);
         } else {
             return $this->redirect(['Categories' => 'index']);
         }
