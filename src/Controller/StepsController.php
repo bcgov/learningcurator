@@ -90,12 +90,12 @@ class StepsController extends AppController
         // Use the tmp array to sort steps list
         array_multisort($steporder, SORT_ASC, $othersteps);
         
-        $last = 0;
-        $previousid = 0;
         $next = 0;
-        $nextid = 0;
-        $previousslug = '';
+        $last = 0;
+        $upnextid = 0;
         $upnextslug = '';
+        $previousid = 0;
+        $previousslug = '';
         foreach($othersteps as $ss) {
             $next = next($othersteps);
             if ($ss->id == $step->id) {
