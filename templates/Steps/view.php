@@ -17,28 +17,7 @@ $this->assign('title', h($pagetitle));
 $stepacts = count($requiredacts);
 $supplmentalcount = count($supplementalacts);
 
-
-#TODO Allan move this into the controller
-$last = 0;
-$previousid = 0;
-$next = 0;
-$nextid = 0;
-foreach ($step->pathways as $pathways) {
-    foreach ($pathways->steps as $s) {
-        $next = next($pathways->steps);
-        if ($s->id == $step->id) {
-            if ($last) {
-                $previousid = $last->id;
-                $previousslug = $last->slug;
-            }
-            if ($next) {
-                $upnextid = $next->id;
-                $upnextslug = $next->slug;
-            }
-        }
-        $last = $s;
-    }
-}
+foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me why it all breaks when this pointlessness is removed?
 ?>
 
 <header class="w-full h-52 bg-cover bg-center pb-2 px-2" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
@@ -141,27 +120,26 @@ foreach ($step->pathways as $pathways) {
         <div class="basis-1/7 flex-none">
             <nav class="flex flex-col gap-2">
 
-                <?php foreach ($step->pathways as $pathways) : ?>
-                    <?php $count = 0 ?>
-                    <?php foreach ($pathways->steps as $s) : ?>
-                        <?php if ($s->status_id == 2) : ?>
-                            <?php $count++ ?>
-                            <?php $c = 'bg-gray-500' ?>
-                            <?php if ($s->id == $step->id)  $c = 'active bg-bluegreen -ml-4' ?>
-                            <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                                Step <?= $count ?>
-                            </a>
-                        <?php else : ?>
-                            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
-                                <?php $c = 'bg-gray-500' ?>
-                                <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                                    DRAFT
-                                </a>
-                            <?php endif; // are you a curator?
-                            ?>
-                        <?php endif; // is published?
-                        ?> <?php endforeach ?>
+                
+                <?php $count = 0 ?>
+                <?php foreach ($othersteps as $s) : ?>
+                <?php if ($s->status_id == 2) : ?>
+                    <?php $count++ ?>
+                    <?php $c = 'bg-gray-500' ?>
+                    <?php if ($s->id == $step->id)  $c = 'active bg-bluegreen -ml-4' ?>
+                    <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+                        Step <?= $count ?>
+                    </a>
+                <?php else : ?>
+                    <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+                        <?php $c = 'bg-gray-500' ?>
+                        <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+                            DRAFT
+                        </a>
+                    <?php endif; // are you a curator? ?>
+                <?php endif; // is published? ?> 
                 <?php endforeach ?>
+                
             </nav>
         </div>
         <!-- TODO Allan/Nori - Title vs step name/subtitle -->

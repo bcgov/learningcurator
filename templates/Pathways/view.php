@@ -215,9 +215,9 @@ $this->assign('title', h($pathway->name));
                                     <div>
                                         This pathway has been 
                                         <a href="https://learningcurator.apps.silver.devops.gov.bc.ca/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" 
-                            class="underline font-bold">
-                                published to production
-                        </a>
+                                            class="underline font-bold">
+                                                published to production
+                                        </a>
                         and should no longer be edited here.
                     </div>
                     <!-- <div class="text-sm">Version: <?= h($pathway->version); ?></div> -->
@@ -319,6 +319,13 @@ $this->assign('title', h($pathway->name));
             <!-- TODO Nori/Allan add code for subtitle in box -->
             <?php if (!empty($pathway->steps)) : ?>
                 <?php $count = 0 ?>
+
+
+                <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+                <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-steps', 'action' => 'reorder']]) ?>
+                <?= $this->Form->control('pathway_id', ['type' => 'hidden', 'value' => $pathway->id]) ?>
+                <?php endif ?>
+
                 <?php foreach ($pathway->steps as $steps) : ?>
                     <?php $requiredacts = 0; ?>
                     <?php foreach ($steps->activities as $act) : ?>
@@ -329,11 +336,22 @@ $this->assign('title', h($pathway->name));
                     <!-- count required activities -->
                     <?php if ($steps->status->name == 'Published') : ?>
                         <?php $count++ ?>
-                        <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
+                        
                             <div class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
-                                <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3"><?= $count ?></h3>
+
+
+                                <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3">
+                                    <?= $count ?>
+                                </h3>
+                                
+                                
+                
                                 <div class="flex-1 basis-6/7 p-3">
-                                    <h4 class="text-xl font-semibold mb-2"><?= h($steps->name) ?></h4>
+                                    <h4 class="text-xl font-semibold mb-2">
+                                        <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
+                                            <?= h($steps->name) ?>
+                                        </a>
+                                    </h4>
                                    
                                         <p class="text-bluegreen font-semibold text-base mb-1">
                                             Step Activity Progress</p>
@@ -374,24 +392,36 @@ $this->assign('title', h($pathway->name));
                                     </div>
                                     <div class="mb-2"><p><span class="font-bold">Objective: </span><?= h($steps->description) ?></p></div>
                                     <p class="mb-2 text-sky-700 underline">
+                                    <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
                                         View <strong><?= h($steps->name) ?></strong>
+                                    </a>
                                     </p>
 
 
                                     <!-- <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                                     <span class="text-xs px-4 bg-slate-100/80 rounded-lg"><?= $steps->status->name ?></span>
                                 <?php endif ?> -->
+                                <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+                                <?= $this->Form->control('steporder[]', ['class' => 'ml-2 bg-bluegreen group-hover:bg-bluegreen/80 text-white text-center rounded-lg', 'style' => 'width: 30px;', 'type' => 'text', 'value' => $steps->_joinData->sortorder, 'label' => 'Sort order']) ?>
+                                <?= $this->Form->control('steps[]', ['type' => 'hidden', 'value' => $steps->_joinData->id]) ?>
+                                <?php endif ?>
                                 </div>
                             </div>
                         <?php else : ?>
                             <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
-                                <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
+                                
                                     <div class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
 
-                                        <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3"><?= $count ?></h3>
+                                        <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3">
+                                            <?= $count ?>
+                                        </h3>
                                         <div class="flex-1 basis-6/7 p-3">
                                             <span class="bg-orange-400 text-slate-900 rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
-                                            <h4 class="text-xl font-semibold mb-2"><?= h($steps->name) ?></h4>
+                                            <h4 class="text-xl font-semibold mb-2">
+                                                <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
+                                                    <?= h($steps->name) ?>
+                                                </a>
+                                            </h4>
                                             <p class="text-bluegreen font-semibold text-base mb-1">
                                             Step Activity Progress</p>
                                             <script>
@@ -438,6 +468,10 @@ $this->assign('title', h($pathway->name));
                                             <!-- <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                                     <span class="text-xs px-4 bg-slate-100/80 rounded-lg"><?= $steps->status->name ?></span>
                                 <?php endif ?> -->
+                                <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+                                <?= $this->Form->control('steporder[]', ['class' => 'ml-2 bg-bluegreen group-hover:bg-bluegreen/80 text-white text-center rounded-lg', 'style' => 'width: 30px;', 'type' => 'text', 'value' => $steps->_joinData->sortorder, 'label' => 'Sort order']) ?>
+                                <?= $this->Form->control('steps[]', ['type' => 'hidden', 'value' => $steps->_joinData->id]) ?>
+                                <?php endif ?>
                                         </div>
 
                                     </div>
@@ -446,7 +480,14 @@ $this->assign('title', h($pathway->name));
                             <?php endif; // if published 
                             ?>
                         <?php endforeach ?>
-                        </nav>
+                <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+                <button class="mt-3 py-2 px-4 bg-bluegreen group-hover:bg-bluegreen/80 text-white rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up inline-block mr-2" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"/>
+                </svg>Re-order Steps
+                </button>
+                <?= $this->Form->end(); ?>
+                <?php endif ?>
         </div>
 
 

@@ -135,7 +135,7 @@ class PathwaysController extends AppController
                             contain([
                                 'Topics',
                                 'Topics.Categories', 
-                                'Steps' => ['sort' => ['PathwaysSteps.sortorder' => 'desc']],
+                                'Steps' => ['sort' => ['PathwaysSteps.sortorder' => 'asc']],
                                 'Steps.Statuses', 
                                 'Steps.Activities',
                                 'Users'])->firstOrFail();
