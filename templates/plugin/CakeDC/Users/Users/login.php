@@ -11,7 +11,7 @@
  */
 
 use Cake\Core\Configure;
-
+$this->loadHelper('Authentication.Identity');
 $this->layout = 'ajax';
 $this->assign('title', 'Learning on demand');
 
@@ -21,7 +21,6 @@ if($go) {
 }
 
 ?>
-<?php $this->loadHelper('Authentication.Identity') ?>
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 
