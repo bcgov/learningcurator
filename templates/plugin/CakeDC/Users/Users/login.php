@@ -15,7 +15,7 @@ use Cake\Core\Configure;
 $this->layout = 'ajax';
 $this->assign('title', 'Learning on demand');
 
-$go = $_GET['redirect'] ?? '';
+$go = $_GET['redirect'] ?? 'https://' . $_SERVER['HTTP_HOST'] . '/categories';
 if($go) {
     setcookie("RedirectionTo", $go, time()+3600);  /* expire in 1 hour */
 }
