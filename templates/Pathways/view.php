@@ -392,7 +392,9 @@ $this->assign('title', h($pathway->name));
                                     </div>
                                     <div class="mb-2"><p><span class="font-bold">Objective: </span><?= h($steps->description) ?></p></div>
                                     <p class="mb-2 text-sky-700 underline">
+                                    <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
                                         View <strong><?= h($steps->name) ?></strong>
+                                    </a>
                                     </p>
 
 
