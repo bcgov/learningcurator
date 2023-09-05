@@ -17,28 +17,7 @@ $this->assign('title', h($pagetitle));
 $stepacts = count($requiredacts);
 $supplmentalcount = count($supplementalacts);
 
-
-#TODO Allan move this into the controller
-$last = 0;
-$previousid = 0;
-$next = 0;
-$nextid = 0;
-foreach ($step->pathways as $pathways) {
-    foreach ($pathways->steps as $s) {
-        $next = next($pathways->steps);
-        if ($s->id == $step->id) {
-            if ($last) {
-                $previousid = $last->id;
-                $previousslug = $last->slug;
-            }
-            if ($next) {
-                $upnextid = $next->id;
-                $upnextslug = $next->slug;
-            }
-        }
-        $last = $s;
-    }
-}
+foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me why it all breaks when this pointlessness is removed?
 ?>
 
 <header class="w-full h-52 bg-cover bg-center pb-2 px-2" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
