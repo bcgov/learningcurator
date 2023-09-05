@@ -34,6 +34,36 @@ if($go) {
 </head>
 
 <body class="bg-cover bg-center font-BCSans" style="background-image: url('/img/cape-scott-trail-n-r-t-on-flckr.jpg')">
+<?php $environment = $_SERVER['SERVER_NAME'] ?>
+<?php if($environment == 'learningcurator.ca') : ?>
+<div class="px-3 py-2 bg-yellow-100 font-bold text-center">
+    You're in ALLAN'S LOCAL ENVIRONMENT - 
+    <a href="https://learningcurator.gww.gov.bc.ca" target="_blank">
+        Production
+    </a>
+</div>
+<?php elseif($environment == 'nori.learningcurator.ca') : ?>
+<div class="px-3 py-2 bg-yellow-100 font-bold text-center">
+    You're in NORI'S LOCAL ENVIRONMENT - 
+    <a href="https://learningcurator.gww.gov.bc.ca" target="_blank">
+        Production
+    </a>
+</div>
+<?php elseif($environment == 'learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca') : ?>
+<div class="px-3 py-2 bg-yellow-100 font-bold text-center">
+    You're in the OpenShift DEVELOPMENT ENVIRONMENT - 
+    <a href="https://learningcurator.gww.gov.bc.ca" target="_blank">
+        Production
+    </a>
+</div>
+<?php elseif($environment == 'learningcurator-a58ce1-test.apps.silver.devops.gov.bc.ca') : ?>
+<div class="px-3 py-2 bg-yellow-100 font-bold text-center">
+    You're in the OpenShift TEST ENVIRONMENT - 
+    <a href="https://learningcurator.gww.gov.bc.ca" target="_blank">
+        Production
+    </a>
+</div>
+<?php endif ?>
     <div class="flex flex-col  min-h-screen justify-start">
         <div class="p-5 bg-white/95 flex justify-between flex-none" role="banner">
             <span class="leading-3 text-xl tracking-widest text-slate-900 uppercase rounded-lg focus:outline-none focus:shadow-outline ">

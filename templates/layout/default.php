@@ -18,28 +18,28 @@
 <?php if($environment == 'learningcurator.ca') : ?>
 <div class="px-3 py-2 bg-yellow-100 font-bold text-center">
     You're in ALLAN'S LOCAL ENVIRONMENT - 
-    <a href="https://learningcurator.apps.silver.devops.gov.bc.ca" target="_blank">
+    <a href="https://learningcurator.gww.gov.bc.ca" target="_blank">
         Production
     </a>
 </div>
 <?php elseif($environment == 'nori.learningcurator.ca') : ?>
 <div class="px-3 py-2 bg-yellow-100 font-bold text-center">
     You're in NORI'S LOCAL ENVIRONMENT - 
-    <a href="https://learningcurator.apps.silver.devops.gov.bc.ca" target="_blank">
+    <a href="https://learningcurator.gww.gov.bc.ca" target="_blank">
         Production
     </a>
 </div>
 <?php elseif($environment == 'learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca') : ?>
 <div class="px-3 py-2 bg-yellow-100 font-bold text-center">
     You're in the OpenShift DEVELOPMENT ENVIRONMENT - 
-    <a href="https://learningcurator.apps.silver.devops.gov.bc.ca" target="_blank">
+    <a href="https://learningcurator.gww.gov.bc.ca" target="_blank">
         Production
     </a>
 </div>
 <?php elseif($environment == 'learningcurator-a58ce1-test.apps.silver.devops.gov.bc.ca') : ?>
 <div class="px-3 py-2 bg-yellow-100 font-bold text-center">
     You're in the OpenShift TEST ENVIRONMENT - 
-    <a href="https://learningcurator.apps.silver.devops.gov.bc.ca" target="_blank">
+    <a href="https://learningcurator.gww.gov.bc.ca" target="_blank">
         Production
     </a>
 </div>
