@@ -77,6 +77,20 @@ class StepsController extends AppController
             }
         }
 
+
+
+        $steporder = [];
+        $othersteps = [];
+        foreach ($step->pathways as $pathways){
+            foreach ($pathways->steps as $s) {
+                $steporder[] = $s->_joinData->sortorder;
+                array_push($othersteps,$s);
+            }
+        }
+        // Use the tmp array to sort steps list
+        array_multisort($steporder, SORT_ASC, $othersteps);
+
+
         /**
          * Loop through the activities on this step and process them into
          * ordered lists for required, supplemental, and archived 
@@ -128,7 +142,7 @@ class StepsController extends AppController
 
         $pagetitle = $step->name . ' - ' . $step->pathways[0]->name;
         
-        $this->set(compact('step','pagetitle','requiredacts','supplementalacts','archivedacts','totalacts','followid','useractivitylist'));
+        $this->set(compact('step','pagetitle','requiredacts','supplementalacts','archivedacts','totalacts','followid','useractivitylist','othersteps'));
     }
 
     /**

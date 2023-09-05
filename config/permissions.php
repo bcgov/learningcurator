@@ -191,6 +191,16 @@ return [
             'action' => ['publish','edit','add','delete','export','import'],
         ],
         [
+            'role' => 'curator',
+            'controller' => 'PathwaysSteps',
+            'action' => ['reorder'],
+        ],
+        [
+            'role' => 'manager',
+            'controller' => 'PathwaysSteps',
+            'action' => ['reorder'],
+        ],
+        [
             'role' => '*',
             'controller' => 'PathwaysUsers',
             'action' => ['follow','delete','pathways','complete'],

@@ -141,27 +141,26 @@ foreach ($step->pathways as $pathways) {
         <div class="basis-1/7 flex-none">
             <nav class="flex flex-col gap-2">
 
-                <?php foreach ($step->pathways as $pathways) : ?>
-                    <?php $count = 0 ?>
-                    <?php foreach ($pathways->steps as $s) : ?>
-                        <?php if ($s->status_id == 2) : ?>
-                            <?php $count++ ?>
-                            <?php $c = 'bg-gray-500' ?>
-                            <?php if ($s->id == $step->id)  $c = 'active bg-bluegreen -ml-4' ?>
-                            <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                                Step <?= $count ?>
-                            </a>
-                        <?php else : ?>
-                            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
-                                <?php $c = 'bg-gray-500' ?>
-                                <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                                    DRAFT
-                                </a>
-                            <?php endif; // are you a curator?
-                            ?>
-                        <?php endif; // is published?
-                        ?> <?php endforeach ?>
+                
+                <?php $count = 0 ?>
+                <?php foreach ($othersteps as $s) : ?>
+                <?php if ($s->status_id == 2) : ?>
+                    <?php $count++ ?>
+                    <?php $c = 'bg-gray-500' ?>
+                    <?php if ($s->id == $step->id)  $c = 'active bg-bluegreen -ml-4' ?>
+                    <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+                        Step <?= $count ?>
+                    </a>
+                <?php else : ?>
+                    <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+                        <?php $c = 'bg-gray-500' ?>
+                        <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
+                            DRAFT
+                        </a>
+                    <?php endif; // are you a curator? ?>
+                <?php endif; // is published? ?> 
                 <?php endforeach ?>
+                
             </nav>
         </div>
         <!-- TODO Allan/Nori - Title vs step name/subtitle -->
