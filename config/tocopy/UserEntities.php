@@ -40,7 +40,7 @@ class User extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false,
+        'id' => true,
         'is_superuser' => false,
         'role' => true,
     ];
