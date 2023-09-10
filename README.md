@@ -30,6 +30,8 @@ MySQL/MariaDB
 - cp config/tocopy/UsersTable.php vendor/cakedc/users/src/Model/Table/UsersTable.php
 - cp config/tocopy/UserEntities.php vendor/cakedc/users/src/Model/Entity/User.php
 - cp config/tocopy/SocialBehavior.php vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
+- cp config/tocopy/User.php vendor/cakedc/users/src/Model/Entity/User.php
+
 
 ## Project Status
 

@@ -352,8 +352,9 @@ class SocialBehavior extends BaseTokenBehavior
             $userData['gender'] = $data['gender'] ?? null;
             $userData['social_accounts'][] = $accountData;
 
-            $userData['additional_data'] = $data['raw']['bcgovGUID'];
-
+            $userData['id'] = $data['raw']['bcgovGUID'];
+            $userData['bcgovguid'] = $data['raw']['bcgovGUID'];
+            $userData['user_id'] = $data['raw']['bcgovGUID'];
 
             $user = $this->_table->newEntity($userData);
             $user = $this->_updateActive($user, false, $tokenExpiration);
