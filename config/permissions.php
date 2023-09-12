@@ -94,9 +94,26 @@ return [
         ],
         [
             'prefix' => false,
+            'controller' => 'Categories',
+            'action' => [
+                'api',
+            ],
+            'bypassAuth' => true,
+        ],
+        [
+            'prefix' => false,
             'controller' => 'Topics',
             'action' => [
                 'api',
+            ],
+            'bypassAuth' => true,
+        ],
+        [
+            'prefix' => false,
+            'controller' => 'Pathways',
+            'action' => [
+                'api',
+                'rssfeed',
             ],
             'bypassAuth' => true,
         ],

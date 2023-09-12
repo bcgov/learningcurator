@@ -51,6 +51,17 @@ class CategoriesController extends AppController
 
         $this->set(compact('category'));
     }
+    /**
+     * API method
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function api()
+    {
+        $categories = $this->Categories->find()->where(['featured = ' => 1])->contain(['Topics'])->toList();
+        $this->viewBuilder()->setLayout('ajax');
+        $this->set(compact('categories'));
+    }
 
     /**
      * Add method

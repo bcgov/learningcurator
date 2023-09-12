@@ -334,7 +334,12 @@ class PathwaysController extends AppController
             $fp = '/mnt/published/' . $filename;
             file_put_contents($fp, $p);
 
-            $this->set(compact('code'));
+            // Redirect to production with the topic ID and import code 
+
+            $go = 'https://learningcurator.gww.gov.bc.ca/pathway/import/' . $id . '?importcode=' . $code;
+            return $this->redirect($go);
+
+            //$this->set(compact('code'));
 
         } else { // If they're not a manager or super
             
