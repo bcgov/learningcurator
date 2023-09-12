@@ -93,7 +93,7 @@
                         <a href="/questions" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/questions') {
                                                                                                                                                                 echo 'text-white bg-sagedark';
                                                                                                                                                             } ?>">About</a>
-                        <p class="font-semibold block mt-4 mb-1 mx-4 text-base"><?= $this->Identity->get('first_name') ?> <?= $this->Identity->get('last_name') ?> </p>
+                        <p class="font-semibold block mt-4 mb-1 mx-4 text-base"><?= $this->Identity->get('username') ?> </p>
                         <a href="/profile/follows" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/profile/follows') {
                                                                                                                                                                 echo 'text-white bg-sagedark';
                                                                                                                                                             } ?>">Followed Pathways</a>

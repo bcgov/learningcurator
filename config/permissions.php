@@ -92,6 +92,14 @@ return [
             ],
             'bypassAuth' => true,
         ],
+        [
+            'prefix' => false,
+            'controller' => 'Topics',
+            'action' => [
+                'api',
+            ],
+            'bypassAuth' => true,
+        ],
         //admin role allowed to all the things
         [
             'role' => 'admin',

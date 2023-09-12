@@ -28,6 +28,18 @@ class TopicsController extends AppController
     }
 
     /**
+     * API method
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function api()
+    {
+        $topics = $this->Topics->find()->where(['featured = ' => 1])->toList();
+        $this->viewBuilder()->setLayout('ajax');
+        $this->set(compact('topics'));
+    }
+
+    /**
      * View method
      *
      * @param string|null $slug Topic slug.
