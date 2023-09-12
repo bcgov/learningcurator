@@ -33,8 +33,13 @@ if ($this->Identity->isLoggedIn()) {
         <?= h($topic->name) ?>
     </nav>
 
+
+
+
+
+
     <?php if ($role == 'manager' || $role == 'superuser') : ?>
-    <form class="my-2" method="get" action="/pathways/import/<?= h($topic->id) ?>">
+    <!-- <form class="my-2" method="get" action="/pathways/import/<?= h($topic->id) ?>">
         <input type="text" name="importcode" id="importcode" class="bg-slate-100 p-2" placeholder="Paste import code here">
         <button class="bg-emerald-600 text-white p-2">Publish New Pathway</button>
         <div class="text-sm">
@@ -44,8 +49,13 @@ if ($this->Identity->isLoggedIn()) {
             above and click the Publish New Pathway button to bring your
             pathway over and fully publish it here.
         </div>
-    </form>
+    </form> -->
     <?php endif;  // curator or admin? ?>
+
+
+
+
+
 
     <div class="max-w-prose">
 
