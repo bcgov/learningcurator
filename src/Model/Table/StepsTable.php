@@ -100,16 +100,25 @@ class StepsTable extends Table
         $validator
             ->integer('featured')
             ->allowEmptyString('featured');
+            
+        // #TODO Investigate re-enabling these validators to 
+        // simply not check for UUID validity as 
+        // BC Gov GUID doesn't conform to any standard
+        // that CakePHP (or internet validators) finds 
+        // acceptable. The creation of BC Gov GUID may
+        // predate the creation of standards in this 
+        // area, but in any case, we have to disable
+        // the following for the system to work with 
+        // BC Gov GUID as the primary key.
+        // $validator
+        //     ->uuid('createdby')
+        //     ->requirePresence('createdby', 'create')
+        //     ->notEmptyString('createdby');
 
-        $validator
-            ->uuid('createdby')
-            ->requirePresence('createdby', 'create')
-            ->notEmptyString('createdby');
-
-        $validator
-            ->uuid('modifiedby')
-            ->requirePresence('modifiedby', 'create')
-            ->notEmptyString('modifiedby');
+        // $validator
+        //     ->uuid('modifiedby')
+        //     ->requirePresence('modifiedby', 'create')
+        //     ->notEmptyString('modifiedby');
 
         return $validator;
     }

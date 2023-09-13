@@ -217,31 +217,31 @@ $this->assign('title', h($pathway->name));
             <?php if ($role == 'manager' || $role == 'superuser') : ?>
 
             <?php
-            $prodTopics = file_get_contents('https://learningcurator.ca/topics/api');
+            $prodTopics = file_get_contents('https://learningcurator.gww.gov.bc.ca/topics/api');
             $pt = json_decode($prodTopics); 
+            $matchingProdTop = [];
             foreach($pt->topics as $t) {
                 if($t->slug == $pathway->topic->slug) {
-                    echo '' . $t->id . ' - ' . $t->name;
-                }
-                // } else {
-                //     echo '<p>There doesn\'t seem to be a matching topic in the production environment.</p>';
-                // }
+                    $matchingProdTop = [$t->id,$t->name];
+                } 
             }
             ?>
+            <?php if(empty($matchingProdTop)): ?>
 
-                <!--<?= h($pathway->topic->categories[0]->id) ?>
-                <?= h($pathway->topic->categories[0]->slug) ?>
-                <?= h($pathway->topic->id) ?>
-                <?= h($pathway->topic->slug) ?>
-                <?= h($pathway->topic->name) ?>-->
+                <p>There doesn't seem to be a matching topic in the production environment.
+                    To publish, this pathway needs to be in a topic that also exists in prod.
+                </p>
 
+            <?php else: ?>
+                
                 <div>As a manager, you can choose to publish this pathway:</div>
                 <div>
-                    <a href="/pathways/<?= h($pathway->id); ?>/publish" class="py-2 inline-block px-4 bg-emerald-700 text-white rounded-lg hover:bg-darkblue/80">
+                    <a href="/pathways/<?= h($pathway->id); ?>/publish/<?= $matchingProdTop[0] ?>" class="py-2 inline-block px-4 bg-emerald-700 text-white rounded-lg hover:bg-darkblue/80">
                         Publish Pathway
                     </a>
                 </div>
-
+                
+            <?php endif ?>
 
 
 
