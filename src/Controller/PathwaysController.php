@@ -31,8 +31,9 @@ class PathwaysController extends AppController
      */
     public function rssfeed()
     {
-        $pathways = $this->Pathways->find('all');
-        //$this->RequestHandler->renderAs($this, 'rss');
+        $pathways = $this->Pathways->find('all')->where(['status_id' => 2]);
+        $this->viewBuilder()->setLayout('ajax');
+        $this->RequestHandler->respondAs('xml');
         $this->set(compact('pathways'));
     }
     /**
@@ -543,17 +544,18 @@ class PathwaysController extends AppController
         
         $pathway = $this->Pathways->newEmptyEntity();
         if ($this->request->is('post')) {
+            //echo '<pre>'; print_r($this->request->getData()); exit;
             $pathway = $this->Pathways->patchEntity($pathway, $this->request->getData());
             $sluggedTitle = Text::slug($pathway->name);
             // trim slug to maximum length defined in schema
             $pathway->slug = strtolower(substr($sluggedTitle, 0, 191));
-            //echo '<pre>'; print_r($this->request->getData()); exit;
+            //echo '<pre>'; print_r($pathway); exit;
             if ($this->Pathways->save($pathway)) {
                 //$this->Flash->success(__('The pathway has been saved.'));
                 $redir = '/pathways/' . $sluggedTitle;
                 return $this->redirect($redir);
             }
-            $this->Flash->error(__('The pathway could not be saved. Please, try again.'));
+            echo 'The pathway could not be saved. Please, try again.';
         }
         
         $categories = $this->Pathways->Topics->Categories->find('all', ['contain' =>['Topics'], 'limit' => 200]);
