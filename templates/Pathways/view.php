@@ -192,10 +192,6 @@ $this->assign('title', h($pathway->name));
             <?php if($environment != 'learningcurator.apps.silver.devops.gov.bc.ca' && $environment != 'learningcurator.gww.gov.bc.ca') : ?>
             
 
-
- 
-                        
-                        
                         
                         
             <?php if(!empty($pathway->version)): ?>
@@ -217,7 +213,17 @@ $this->assign('title', h($pathway->name));
             <?php if ($role == 'manager' || $role == 'superuser') : ?>
 
             <?php
-            $prodTopics = file_get_contents('https://learningcurator.gww.gov.bc.ca/topics/api');
+            $p2 = $_GET['publishto'] ?? '';
+            if($p2 == 'test') {
+                $targeturl = 'https://learningcurator.ca';
+                $targetapi = '/topics/api';
+                $targetname = 'Test System';
+            } else  {
+                $targeturl = 'https://learningcurator.gww.gov.bc.ca';
+                $targetapi = '/topics/api';
+                $targetname = 'Production System';
+            }
+            $prodTopics = file_get_contents($targeturl.$targetapi);
             $pt = json_decode($prodTopics); 
             $matchingProdTop = [];
             foreach($pt->topics as $t) {
@@ -226,6 +232,9 @@ $this->assign('title', h($pathway->name));
                 } 
             }
             ?>
+            
+            <div>Publishing target: <a href="<?= $targeturl ?>"><?= $targetname ?></a></div>
+
             <?php if(empty($matchingProdTop)): ?>
 
                 <p>There doesn't seem to be a matching topic in the production environment.
@@ -236,8 +245,9 @@ $this->assign('title', h($pathway->name));
                 
                 <div>As a manager, you can choose to publish this pathway:</div>
                 <div>
-                    <a href="/pathways/<?= h($pathway->id); ?>/publish/<?= $matchingProdTop[0] ?>" class="py-2 inline-block px-4 bg-emerald-700 text-white rounded-lg hover:bg-darkblue/80">
-                        Publish Pathway
+                    <a href="/pathways/<?= h($pathway->id); ?>/publish/<?= $matchingProdTop[0] ?>?publishto=<?= $p2 ?>" 
+                        class="py-2 inline-block px-4 bg-emerald-700 text-white rounded-lg hover:bg-darkblue/80">
+                            Publish Pathway
                     </a>
                 </div>
                 

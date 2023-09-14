@@ -336,8 +336,13 @@ class PathwaysController extends AppController
             file_put_contents($fp, $p);
 
             // Redirect to production with the topic ID and import code 
-
-            $go = 'https://learningcurator.gww.gov.bc.ca/pathway/import/' . $id . '?importcode=' . $code;
+            $p2 = $this->request->getData()['publishto'] ?? '';
+            if($p2 == 'test') {
+                $targeturl = 'https://learningcurator.ca';
+            } else  {
+                $targeturl = 'https://learningcurator.gww.gov.bc.ca';
+            }
+            $go = $targeturl . '/pathway/import/' . $id . '?importcode=' . $code;
             return $this->redirect($go);
 
             //$this->set(compact('code'));
