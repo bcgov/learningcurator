@@ -286,7 +286,7 @@ class PathwaysController extends AppController
         if($user->role == 'superuser' || $user->role == 'manager') {
             
             
-            $guid = $user->additional_data;
+            $guid = $user->id;
 
             // Let's first check to see if this pathway has been published before
             // If it has been published
@@ -301,7 +301,7 @@ class PathwaysController extends AppController
                                 'Ministries', 
                                 'Steps' => ['sort' => ['Steps.id' => 'asc']],
                                 'Steps.Statuses', 
-                                'Steps.Activities', 
+                                'Steps.Activities' => ['sort' => ['ActivitiesUsers.steporder' => 'desc']], 
                                 'Steps.Activities.ActivityTypes'],
             ]);
             // $pathway = $this->Pathways->findBySlug($slug)->contain([
@@ -327,6 +327,8 @@ class PathwaysController extends AppController
             $savepathway['version'] = $code;
 
             $pathway = $this->Pathways->patchEntity($pathway, $savepathway);
+
+            echo '<pre>'; print_r($pathway); exit;
             $this->Pathways->save($pathway);
 
             $p = json_encode($pathway);

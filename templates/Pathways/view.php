@@ -214,13 +214,12 @@ $this->assign('title', h($pathway->name));
 
             <?php
             $p2 = $_GET['publishto'] ?? '';
+            $targetapi = '/topics/api';
             if($p2 == 'test') {
                 $targeturl = 'https://learningcurator.ca';
-                $targetapi = '/topics/api';
                 $targetname = 'Test System';
             } else  {
                 $targeturl = 'https://learningcurator.gww.gov.bc.ca';
-                $targetapi = '/topics/api';
                 $targetname = 'Production System';
             }
             $prodTopics = file_get_contents($targeturl.$targetapi);
@@ -232,8 +231,19 @@ $this->assign('title', h($pathway->name));
                 } 
             }
             ?>
-            
-            <div>Publishing target: <a href="<?= $targeturl ?>"><?= $targetname ?></a></div>
+            <div>
+                Publishing target: 
+                <a href="<?= $targeturl ?>"><?= $targetname ?></a>
+                <?php if($p2 != 'test'): ?>
+                <a class="inline-block px-2 mx-1 bg-slate-100" href="/<?= $pathway->topic->categories[0]->slug ?>/<?= $pathway->topic->categories[0]->slug ?>/pathway/<?= $pathway->slug ?>?publishto=test">
+                    Switch to test
+                </a>
+                <?php else: ?>
+                <a class="inline-block px-2 mx-1 bg-slate-100" href="/<?= $pathway->topic->categories[0]->slug ?>/<?= $pathway->topic->categories[0]->slug ?>/pathway/<?= $pathway->slug ?>">
+                    Switch to Production
+                </a>
+                <?php endif ?>
+            </div>
 
             <?php if(empty($matchingProdTop)): ?>
 
@@ -258,7 +268,9 @@ $this->assign('title', h($pathway->name));
 
 
             <?php else: ?>
+
                 <div>Only a manager can publish pathways.</div>
+
             <?php endif; // role check ?>
             </div>
             <?php endif; // version exists check ?>
