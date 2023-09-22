@@ -36,7 +36,8 @@ class TopicsController extends AppController
     {
         $topics = $this->Topics->find()->where(['featured = ' => 1])->toList();
         $this->viewBuilder()->setLayout('ajax');
-        $this->set(compact('topics'));
+        $this->response->withType(‘application/json’)->withStringBody(json_encode($topics));
+        //$this->set(compact('topics'));
     }
 
     /**

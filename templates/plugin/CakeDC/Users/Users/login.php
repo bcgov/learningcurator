@@ -10,14 +10,21 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
+
+$go = $_GET['redirect'] ?? 'https://' . $_SERVER['HTTP_HOST'] . '/categories';
+$rediroldprodtonew = str_replace('learningcurator.apps.silver.devops.gov.bc.ca','learningcurator.gww.gov.bc.ca',$go);
+if($_SERVER['HTTP_HOST'] == 'learningcurator.apps.silver.devops.gov.bc.ca') {
+    header('Location: https://learningcurator.gww.gov.bc.ca/login?redirect=' . $rediroldprodtonew);
+}
+
+
 use Cake\Core\Configure;
 $this->loadHelper('Authentication.Identity');
 $this->layout = 'ajax';
 $this->assign('title', 'Learning on demand');
 
-$go = $_GET['redirect'] ?? 'https://' . $_SERVER['HTTP_HOST'] . '/categories';
 if($go) {
-    setcookie("RedirectionTo", $go, time()+3600);  /* expire in 1 hour */
+    setcookie("RedirectionTo", $rediroldprodtonew, time()+3600);  /* expire in 1 hour */
 }
 
 ?>
