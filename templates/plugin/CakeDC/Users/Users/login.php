@@ -10,7 +10,8 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-
+// This should happen at the controller level, likely, but I'm hoping this works
+// as a band-aid until I can figure this out properly.
 $go = $_GET['redirect'] ?? 'https://' . $_SERVER['HTTP_HOST'] . '/categories';
 $rediroldprodtonew = str_replace('learningcurator.apps.silver.devops.gov.bc.ca','learningcurator.gww.gov.bc.ca',$go);
 if($_SERVER['HTTP_HOST'] == 'learningcurator.apps.silver.devops.gov.bc.ca') {
