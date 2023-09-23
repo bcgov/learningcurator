@@ -10,10 +10,12 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-
-$go = $_GET['redirect'] ?? 'https://' . $_SERVER['HTTP_HOST'] . '/categories';
+// This should happen at the controller level, likely, but I'm hoping this works
+// as a band-aid until I can figure this out properly.
+$environment = $_SERVER['SERVER_NAME'];
+$go = $_GET['redirect'] ?? 'https://' . $environment . '/categories';
 $rediroldprodtonew = str_replace('learningcurator.apps.silver.devops.gov.bc.ca','learningcurator.gww.gov.bc.ca',$go);
-if($_SERVER['HTTP_HOST'] == 'learningcurator.apps.silver.devops.gov.bc.ca') {
+if($environment == 'learningcurator.apps.silver.devops.gov.bc.ca') {
     header('Location: https://learningcurator.gww.gov.bc.ca/login?redirect=' . $rediroldprodtonew);
 }
 
@@ -41,7 +43,7 @@ if($go) {
 </head>
 
 <body class="bg-cover bg-center font-BCSans" style="background-image: url('/img/cape-scott-trail-n-r-t-on-flckr.jpg')">
-<?php $environment = $_SERVER['SERVER_NAME'] ?>
+
 <?php if($environment == 'learningcurator.ca') : ?>
 <div class="px-3 py-2 bg-yellow-100 font-bold text-center">
     You're in ALLAN'S LOCAL ENVIRONMENT - 
