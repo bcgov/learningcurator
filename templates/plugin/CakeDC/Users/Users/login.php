@@ -17,6 +17,7 @@ $go = $_GET['redirect'] ?? 'https://' . $environment . '/categories';
 $rediroldprodtonew = str_replace('learningcurator.apps.silver.devops.gov.bc.ca','learningcurator.gww.gov.bc.ca',$go);
 if($environment == 'learningcurator.apps.silver.devops.gov.bc.ca') {
     header('Location: https://learningcurator.gww.gov.bc.ca/login?redirect=' . $rediroldprodtonew);
+    exit;
 }
 
 
