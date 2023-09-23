@@ -14,11 +14,12 @@
 // as a band-aid until I can figure this out properly.
 $environment = $_SERVER['SERVER_NAME'];
 $go = $_GET['redirect'] ?? 'https://' . $environment . '/categories';
-$rediroldprodtonew = str_replace('learningcurator.ca','learningcurator.gww.gov.bc.ca',$go);
-if($environment == 'learningcurator.ca') {
+$rediroldprodtonew = str_replace('learningcurator.apps.silver.devops.gov.bc.ca','learningcurator.gww.gov.bc.ca',$go);
+if($environment == 'learningcurator.apps.silver.devops.gov.bc.ca') {
     header('Location: https://learningcurator.gww.gov.bc.ca/login?redirect=' . $rediroldprodtonew);
     exit;
 }
+
 
 use Cake\Core\Configure;
 $this->loadHelper('Authentication.Identity');
