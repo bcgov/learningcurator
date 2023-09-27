@@ -208,16 +208,21 @@ $this->assign('title', h($pathway->name));
             <?php else: ?>
 
             <div class="mb-3 p-3 bg-yellow-100 rounded-lg">
+
             <div><strong>This pathway has not be published.</strong></div>
 
             <?php if ($role == 'manager' || $role == 'superuser') : ?>
 
             <?php
+            // #TODO move to controller
             $p2 = $_GET['publishto'] ?? '';
             $targetapi = '/topics/api';
-            if($p2 == 'test') {
+            if($p2 == 'localtest') {
                 $targeturl = 'https://learningcurator.ca';
-                $targetname = 'Test System';
+                $targetname = 'Allan Local';
+            } else if($p2 == 'dev') {
+                $targeturl = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca';
+                $targetname = 'Dev System';
             } else  {
                 $targeturl = 'https://learningcurator.gww.gov.bc.ca';
                 $targetname = 'Production System';
@@ -225,30 +230,41 @@ $this->assign('title', h($pathway->name));
             $prodTopics = file_get_contents($targeturl.$targetapi);
             $pt = json_decode($prodTopics); 
             $matchingProdTop = [];
-            foreach($pt->topics as $t) {
-                if($t->slug == $pathway->topic->slug) {
-                    $matchingProdTop = [$t->id,$t->name];
-                } 
+            if(!empty($pt->topics)) {
+                foreach($pt->topics as $t) {
+                    if($t->slug == $pathway->topic->slug) {
+                        $matchingProdTop = [$t->id,$t->name];
+                    } 
+                }
+            } else {
+                echo 'Something is wrong with the target system.<br> Please contact an admin.';
             }
+        
+
+                //print_r($matchingProdTop);
             ?>
             <div>
                 Publishing target: 
                 <a href="<?= $targeturl ?>"><?= $targetname ?></a>
-                <?php if($p2 != 'test'): ?>
-                <a class="inline-block px-2 mx-1 bg-slate-100" href="/<?= $pathway->topic->categories[0]->slug ?>/<?= $pathway->topic->categories[0]->slug ?>/pathway/<?= $pathway->slug ?>?publishto=test">
-                    Switch to test
-                </a>
-                <?php else: ?>
-                <a class="inline-block px-2 mx-1 bg-slate-100" href="/<?= $pathway->topic->categories[0]->slug ?>/<?= $pathway->topic->categories[0]->slug ?>/pathway/<?= $pathway->slug ?>">
-                    Switch to Production
-                </a>
-                <?php endif ?>
+                <div>
+                    <a class="inline-block px-2 mx-1 bg-slate-100" href="/<?= $pathway->topic->categories[0]->slug ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>?publishto=localtest">
+                        Allan Local
+                    </a>
+                    <a class="inline-block px-2 mx-1 bg-slate-100" href="/<?= $pathway->topic->categories[0]->slug ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>?publishto=dev">
+                        Dev
+                    </a>
+                    <a class="inline-block px-2 mx-1 bg-slate-100" href="/<?= $pathway->topic->categories[0]->slug ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>">
+                        Production
+                    </a>
+                </div>
+        
             </div>
 
             <?php if(empty($matchingProdTop)): ?>
 
-                <p>There doesn't seem to be a matching topic in the production environment.
-                    To publish, this pathway needs to be in a topic that also exists in prod.
+                <p>There doesn't seem to be a matching topic in the target 
+                    environment. To publish, this pathway needs to be within 
+                    a topic that also exists in the target.
                 </p>
 
             <?php else: ?>
@@ -261,13 +277,9 @@ $this->assign('title', h($pathway->name));
                     </a>
                 </div>
                 
-            <?php endif ?>
+            <?php endif; // matching topic? ?>
 
-
-
-
-
-            <?php else: ?>
+            <?php else: // role check ?>
 
                 <div>Only a manager can publish pathways.</div>
 
