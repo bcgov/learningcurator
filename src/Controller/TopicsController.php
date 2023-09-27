@@ -34,10 +34,10 @@ class TopicsController extends AppController
      */
     public function api()
     {
-        $topics = $this->Topics->find()->where(['featured = ' => 1])->toList();
+        $topics = $this->Topics->find()->where(['featured = ' => 1]);
         $this->viewBuilder()->setLayout('ajax');
-        $this->response->withType(‘application/json’)->withStringBody(json_encode($topics));
-        //$this->set(compact('topics'));
+        // $this->response->withType('application/json')->withStringBody(json_encode($topics));
+        $this->set(compact('topics'));
     }
 
     /**
