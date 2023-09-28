@@ -346,7 +346,13 @@ class PathwaysController extends AppController
             } else  {
                 $targeturl = 'https://learningcurator.gww.gov.bc.ca';
             }
-            $go = $targeturl . '/pathways/import/' . $topid . '?importcode=' . $code . '&publisher=' . $p2;
+            $environment = $_SERVER['SERVER_NAME'];
+            if($environment == 'learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca') {
+                $publisher = 'dev';
+            } elseif ($environment == 'learningcurator.ca') {
+                $publisher = 'localtest';
+            } // we won't ever want to publish from prod would we??
+            $go = $targeturl . '/pathways/import/' . $topid . '?importcode=' . $code . '&publisher=' . $publisher;
             return $this->redirect($go);
 
             //$this->set(compact('code'));
