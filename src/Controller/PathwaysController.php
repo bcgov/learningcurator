@@ -301,7 +301,7 @@ class PathwaysController extends AppController
                                 'Ministries', 
                                 'Steps' => ['sort' => ['Steps.id' => 'asc']],
                                 'Steps.Statuses', 
-                                'Steps.Activities' => ['sort' => ['ActivitiesUsers.steporder' => 'desc']], 
+                                'Steps.Activities' => ['sort' => ['ActivitiesSteps.steporder' => 'desc']], 
                                 'Steps.Activities.ActivityTypes'],
             ]);
             // $pathway = $this->Pathways->findBySlug($slug)->contain([
@@ -328,7 +328,6 @@ class PathwaysController extends AppController
 
             $pathway = $this->Pathways->patchEntity($pathway, $savepathway);
 
-            echo '<pre>'; print_r($pathway); exit;
             $this->Pathways->save($pathway);
 
             $p = json_encode($pathway);
@@ -338,13 +337,16 @@ class PathwaysController extends AppController
             file_put_contents($fp, $p);
 
             // Redirect to production with the topic ID and import code 
-            $p2 = $this->request->getData()['publishto'] ?? '';
-            if($p2 == 'test') {
+            $p2 = $this->request->getQuery('publishto') ?? '';
+            $topid = $this->request->getQuery('topicid') ?? '';
+            if($p2 == 'localtest') {
                 $targeturl = 'https://learningcurator.ca';
+            } elseif($p2 == 'dev') {
+                $targeturl = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca';
             } else  {
                 $targeturl = 'https://learningcurator.gww.gov.bc.ca';
             }
-            $go = $targeturl . '/pathway/import/' . $id . '?importcode=' . $code;
+            $go = $targeturl . '/pathways/import/' . $topid . '?importcode=' . $code . '&publisher=' . $p2;
             return $this->redirect($go);
 
             //$this->set(compact('code'));
@@ -369,10 +371,15 @@ class PathwaysController extends AppController
         // Check to see if this pathway already exists and message if it does
 
         $importcode = $this->request->getQuery('importcode');
+        $publishercode = $this->request->getQuery('publisher');
+        
+        if($publishercode == 'localtest') {
+            $publisherurl = 'https://learningcurator.ca';
+        } elseif($publishercode == 'dev') {
+            $publisherurl = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca';
+        }
 
-        // #TODO We're hard-coding the following URL to the dev instance, but this 
-        // should be a constant defined elsewhere.
-        $importurl = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/published/' . $importcode . '.json';
+        $importurl = $publisherurl . '//published/' . $importcode . '.json';
 
         //$this->viewBuilder()->setLayout('ajax');
         $user = $this->request->getAttribute('authentication')->getIdentity();
@@ -383,10 +390,6 @@ class PathwaysController extends AppController
         $pathpast .= 'Imported pathway originally created by ' . $path->createdby . ' ';
         $pathpast .= 'on ' . $path->created . '. Last modified by ' . $path->modifiedby . ' ';
         $pathpast .= 'on ' . $path->modified;
-
-
-
-
 
         $version = $path->version;
         $pathslugtocheck = $path->slug;
@@ -400,15 +403,6 @@ class PathwaysController extends AppController
             $sluggedtitle = Text::slug($pathname);
             $pathslug = strtolower(substr($sluggedtitle, 0, 191));
         }
-
-
-
-
-
-
-
-
-
 
 
 
