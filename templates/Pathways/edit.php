@@ -29,6 +29,8 @@ $this->loadHelper('Authentication.Identity');
             echo $this->Form->control('createdby', ['type' => 'select', 'options' => $users, 'class' => 'form-field mb-3', 'label' => 'Created By']) ?>
             <?php echo $this->Form->control('topic_id', ['type' => 'select', 'options' => $areas, 'class' => 'form-field mb-3', 'label' => 'Topic']); ?>
             <?php
+            echo $this->Form->control('version', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Version']);
+            
             echo $this->Form->control('name', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Pathway Title']);
             //echo $this->Form->control('slug', ['class' => 'form-field mb-3']); ?>
             
