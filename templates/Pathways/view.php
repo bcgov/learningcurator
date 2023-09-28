@@ -271,7 +271,7 @@ $this->assign('title', h($pathway->name));
                 
                 <div>As a manager, you can choose to publish this pathway:</div>
                 <div>
-                    <a href="/pathways/<?= h($pathway->id); ?>/publish/<?= $matchingProdTop[0] ?>?publishto=<?= $p2 ?>" 
+                    <a href="/pathways/<?= h($pathway->id); ?>/publish?topicid=<?= $matchingProdTop[0] ?>&publishto=<?= $p2 ?>" 
                         class="py-2 inline-block px-4 bg-emerald-700 text-white rounded-lg hover:bg-darkblue/80">
                             Publish Pathway
                     </a>
