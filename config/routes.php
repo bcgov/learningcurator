@@ -78,6 +78,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     /** 
      * 
      * THE NEW HOTNESS
+     * https://www.hanselman.com/blog/urls-are-ui
      * 
      */
     $builder->connect('/topic/{slug}', ['controller' => 'Topics', 'action' => 'view'])->setPass(['slug']);

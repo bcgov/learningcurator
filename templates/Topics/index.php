@@ -12,17 +12,21 @@
     <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://commons.wikimedia.org/wiki/File:Path_at_French_Beach_BC_Canada_-_panoramio.jpg">Path at French Beach</a> by MaryConverse via Wikimedia Commons (<a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>)</p>
 </header>
 
-<p class="m-3">
+<p class="m-5">
     Topics align with the 
     <a href="https://learningcentre.gww.gov.bc.ca/learninghub/what-is-corp-learning-framework/" target="_blank" rel="noopener">
-        Corporate Learning Framework
-    </a>.
+        Corporate Learning Framework.
+    </a>
 </p>
-<div class="grid grid-cols-2 gap-2">
+<div class="grid grid-cols-2 gap-4 m-4">
 <?php foreach ($topics as $topic) : ?>
-<div class="p-4 m-3 bg-slate-50">
-    <h2 class="text-xl"><a href="/topic/<?= h($topic->slug) ?>"><?= h($topic->name) ?></a></h2>
+<div class="">
     <div>
+        <a href="/topic/<?= h($topic->slug) ?>" class="block text-xl pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white hover:bg-bluegreen/80  w-full rounded-lg">
+            <?= h($topic->name) ?>
+        </a>
+    </div>
+    <div class="px-3 pb-3">
         <?= h($topic->description) ?>
     </div>
 </div>

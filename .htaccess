@@ -9,4 +9,7 @@
     RewriteRule    ^(\.well-known/.*)$ $1 [L]
     RewriteRule    ^$    webroot/    [L]
     RewriteRule    (.*) webroot/$1    [L]
+    Redirect 302 /categories /topics
+    Redirect 302 /equity-diversity-and-inclusion/remove-systemic-barriers/pathway/understand-barriers-to-improve-access /topic/equity-diversity-and-inclusion/84/understand-barriers-to-improve-access
+    Redirect 302 /equity-diversity-and-inclusion/remove-systemic-barriers/pathway/remove-barriers-to-shift-culture /topic/equity-diversity-and-inclusion/85/remove-barriers-to-shift-culture
 </IfModule>
