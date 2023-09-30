@@ -119,10 +119,13 @@ if($go) {
         </div>
         <div class="p-10 pb-0 bg-slate-900/90 text-white flex-none" role="contentinfo">
             <div class="flex flex-col md:flex-row justify-between">
-                <div class="max-w-prose text-lg">
-                    <p> We acknowledge with respect that the Learning Curator operates throughout B.C. on the traditional lands of Indigenous peoples. </p>
-
-                </div>
+            <div class="my-5 max-w-prose text-slate-700 mx-auto text-center">
+                The BC Public Service acknowledges the territories of First Nations 
+                around B.C. and is grateful to carry out our work on these lands. 
+                We acknowledge the rights, interests, priorities and concerns of all 
+                Indigenous Peoples (First Nations, Métis and Inuit), respecting and 
+                acknowledging their distinct cultures, histories, rights, laws and governments.
+            </div>
 
                 <img class="max-h-[100px] md:-mt-4 md:-mr-4 mx-auto md:mx-0" src="/img/where-ideas-work-whitetext.svg" height="100px" width="380px" alt="Where Ideas Work logo">
             </div>
