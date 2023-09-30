@@ -20,7 +20,7 @@
 </p>
 <div class="grid grid-cols-2 gap-2">
 <?php foreach ($topics as $topic) : ?>
-<div class="p-2 m-3 bg-slate-50">
+<div class="p-4 m-3 bg-slate-50">
     <h2 class="text-xl"><a href="/topic/<?= h($topic->slug) ?>"><?= h($topic->name) ?></a></h2>
     <div>
         <?= h($topic->description) ?>

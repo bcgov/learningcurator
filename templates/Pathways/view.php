@@ -449,7 +449,7 @@ $this->assign('title', h($pathway->name));
                                 <?php endif ?> -->
                                 <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                                 <?= $this->Form->control('steporder[]', ['class' => 'ml-2 bg-bluegreen group-hover:bg-bluegreen/80 text-white text-center rounded-lg', 'style' => 'width: 30px;', 'type' => 'text', 'value' => $steps->_joinData->sortorder, 'label' => 'Sort order']) ?>
-                                <?= $this->Form->control('steps[]', ['type' => 'hidden', 'value' => $steps->_joinData->id]) ?>
+                                <?= $this->Form->control('steps[]', ['type' => 'hidden', 'value' => $count]) ?>
                                 <?php endif ?>
                                 </div>
                             </div>
