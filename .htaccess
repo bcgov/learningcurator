@@ -4,6 +4,7 @@
 #    RequestHeader unset Proxy
 #</IfModule>
 
+# TODO don't forget to update these all to permanent 301 redirects when everything is tested.
 <IfModule mod_rewrite.c>
     RewriteEngine on
     RewriteRule    ^(\.well-known/.*)$ $1 [L]

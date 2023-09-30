@@ -26,8 +26,9 @@
             <?= h($topic->name) ?>
         </a>
     </div>
-    <div class="px-3 pb-3">
+    <div class="px-3">
         <?= h($topic->description) ?>
+        <div class="mt-3 font-bold"><?php echo count($topic->pathways) ?> Pathways</div>
     </div>
 </div>
 <?php endforeach; ?>
