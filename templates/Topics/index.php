@@ -5,58 +5,26 @@
  * @var \App\Model\Entity\Topic[]|\Cake\Collection\CollectionInterface $topics
  */
 ?>
-<header class="w-full h-32 md:h-52 bg-darkblue px-8 flex items-center">
-    <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
-</header>
-<div class="p-8 text-lg" id="mainContent">
-    <h2 class="text-2xl text-darkblue font-semibold mb-3">All Topics <?= $this->Html->link(__('Add Topic'), ['action' => 'add'], ['class' => 'inline-block ml-2 text-sky-700 hover:underline text-base font-normal']) ?></h2>
-
-    <p class="mt-3 text-base"><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-    <table class="border-collapse border border-slate-400">
-        <thead>
-            <tr>
-                <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left"><?= $this->Paginator->sort('id') ?></th>
-                <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left"><?= $this->Paginator->sort('name') ?></th>
-                <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left"><?= $this->Paginator->sort('slug') ?></th>
-                <!-- <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left"><?= $this->Paginator->sort('image_path') ?></th>
-                <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left"><?= $this->Paginator->sort('color') ?></th> -->
-                <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left"><?= $this->Paginator->sort('feat') ?></th>
-                <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left"><?= $this->Paginator->sort('created') ?></th>
-                <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left"><?= $this->Paginator->sort('user_id') ?></th>
-                <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left"><?= __('Actions') ?></th>
-
-            </tr>
-        </thead>
-        <tbody class="text-base">
-            <?php foreach ($topics as $topic) : ?>
-                <tr>
-                    <td class="px-2 py-1 border border-slate-300"><?= $this->Number->format($topic->id) ?></td>
-                    <td class="px-2 py-1 border border-slate-300"><?= h($topic->name) ?></td>
-                    <td class="px-2 py-1 border border-slate-300"><?= h($topic->slug) ?></td>
-                    <!-- <td class="px-2 py-1 border border-slate-300"><?= h($topic->image_path) ?></td>
-                    <td class="px-2 py-1 border border-slate-300"><?= h($topic->color) ?></td> -->
-                    <td class="px-2 py-1 border border-slate-300"><?= h($topic->featured) ?></td>
-                    <td class="px-2 py-1 border border-slate-300"><?= $this->Time->format($topic->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></td>
-                    <td class="px-2 py-1 border border-slate-300"><?= $topic->has('user') ? $this->Html->link($topic->user->username, ['controller' => 'Users', 'action' => 'view', $topic->user->id]) : '' ?></td>
-                    <td class="px-2 py-1 border border-slate-300 text-sm">
-                        <span class="inline-block text-sky-700 hover:underline  hover:cursor-pointer"><?= $this->Html->link(__('View'), ['action' => 'view', $topic->id]) ?> </span>
-                        <span class="inline-block hover:underline hover:cursor-pointer"><?= $this->Html->link(__('Edit'), ['action' => 'edit', $topic->id]) ?> </span>
-                        <span class="inline-block text-red-500 hover:underline hover:cursor-pointer"><?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $topic->id], ['confirm' => __('Are you sure you want to delete # {0}?', $topic->id)]) ?></span>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-
-        </tbody>
-    </table>
-    <!-- TODO Nori/Allan update pagination to match others -->
-    <div class="paginator">
-        <ul class="flex items-center gap-2">
-            <li><?= $this->Paginator->first('<< ' . __('first')) ?></li>
-            <li><?= $this->Paginator->prev('< ' . __('previous')) ?></li>
-            <li><?= $this->Paginator->numbers() ?></li>
-            <li><?= $this->Paginator->next(__('next') . ' >') ?></li>
-            <li><?= $this->Paginator->last(__('last') . ' >>') ?></li>
-        </ul>
-
+<header class="w-full h-52 bg-cover bg-[center_top_65%] pb-2 px-2" style="background-image: url(/img/categories/1200w/Path_at_French_Beach_BC_Canada_-_panoramio_1200w.jpg);">
+    <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
+        <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Topics</h1>
     </div>
+    <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://commons.wikimedia.org/wiki/File:Path_at_French_Beach_BC_Canada_-_panoramio.jpg">Path at French Beach</a> by MaryConverse via Wikimedia Commons (<a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>)</p>
+</header>
+
+<p class="m-3">
+    Topics align with the 
+    <a href="https://learningcentre.gww.gov.bc.ca/learninghub/what-is-corp-learning-framework/" target="_blank" rel="noopener">
+        Corporate Learning Framework
+    </a>.
+</p>
+<div class="grid grid-cols-2 gap-2">
+<?php foreach ($topics as $topic) : ?>
+<div class="p-2 m-3 bg-slate-50">
+    <h2 class="text-xl"><a href="/topic/<?= h($topic->slug) ?>"><?= h($topic->name) ?></a></h2>
+    <div>
+        <?= h($topic->description) ?>
+    </div>
+</div>
+<?php endforeach; ?>
 </div>

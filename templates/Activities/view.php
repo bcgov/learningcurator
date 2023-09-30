@@ -169,13 +169,14 @@ if ($this->Identity->isLoggedIn()) {
                     <?php foreach ($step->pathways as $path) : ?>
                         <?php if ($path->status_id == 2) : ?>
                             <li class="px-2">
-                                <a href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a>
+                                <pre><?php print_r($path) ?></pre>
+                                <a href="/topic/<?= $path->id ?>/<?= $path->slug ?>/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a>
                             </li>
 
                         <?php else : ?>
                             <li class="px-2">
                                 <span class="bg-orange-400 text-slate-900 py-1 px-2 rounded-full mr-2 text-sm">DRAFT</span>
-                                <a href="/pathways/<?= $path->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a>
+                                <a href="/topic/<?= $path->topic->slug ?>/<?= $path->id ?>/<?= $path->slug ?>/<?= $step->id ?>/<?= $step->slug ?>"><?= $path->name ?> - <?= $step->name ?></a>
                             </li>
 
                         <?php endif ?>

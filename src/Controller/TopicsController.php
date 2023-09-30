@@ -19,11 +19,7 @@ class TopicsController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Users'],
-        ];
-        $topics = $this->paginate($this->Topics);
-
+        $topics = $this->Topics->find()->where(['featured = ' => 1]);
         $this->set(compact('topics'));
     }
 
@@ -47,12 +43,12 @@ class TopicsController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($slug = null)
     {
-        //$topic = $this->Topics->findBySlug($slug)->contain(['Users', 'Categories', 'Pathways'])->firstOrFail();
-        $topic = $this->Topics->get($id, [
-            'contain' => ['Users', 'Categories', 'Pathways', 'Pathways.Statuses'],
-        ]);
+        $topic = $this->Topics->findBySlug($slug)->contain(['Users', 'Categories', 'Pathways'])->firstOrFail();
+        // $topic = $this->Topics->get($id, [
+        //     'contain' => ['Users', 'Categories', 'Pathways', 'Pathways.Statuses'],
+        // ]);
 
         $this->set(compact('topic'));
     }
@@ -73,7 +69,7 @@ class TopicsController extends AppController
             $topic->slug = strtolower(substr($sluggedTitle, 0, 191));
             $topic->user_id = $user->id;
             if ($this->Topics->save($topic)) {
-                $redirect = '/category/' . $topic->categories[0]->id . '/' . $topic->categories[0]->slug . '/topic/' . $topic->id . '/' . $topic->slug;
+                $redirect = '/topic/' . $topic->slug;
                 return $this->redirect($redirect);
             }
             $this->Flash->error(__('The topic could not be saved. Please, try again.'));
@@ -99,7 +95,7 @@ class TopicsController extends AppController
             $topic = $this->Topics->patchEntity($topic, $this->request->getData());
             if ($this->Topics->save($topic)) {
 
-                $redirect = '/category/' . $topic->categories[0]->id . '/' . $topic->categories[0]->slug . '/topic/' . $topic->id . '/' . $topic->slug;
+                $redirect = '/topic/' . $topic->slug;
                 return $this->redirect($redirect);
                 
             }

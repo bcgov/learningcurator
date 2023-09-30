@@ -12,24 +12,15 @@
     <h2 class="text-2xl text-darkblue font-semibold mb-3">Edit Topic: <span class="text-slate-900"><?= h($topic->name) ?></span> </h2>
     <div class="max-w-prose border border-slate-500 p-6 my-3 rounded-md block">
         <?= $this->Form->create($topic) ?>
+        <input type="hidden" name="categories[_ids][]" id="categories" value="1">
         <fieldset>
             <div class="mb-5">
                 <label>Published?
                     <?= $this->Form->checkbox('featured', ['class' => 'inline-block']) ?>
                 </label>
             </div>
-            <label>Category
-                <select name="categories[_ids][]" id="categories" class="form-field mb-3 text-base">
-                    <?php foreach ($categories as $c) : ?>
-                        <?php if ($topic->categories[0]->id == $c['value']) : ?>
-                            <option selected value="<?= $c['value'] ?>"><?= $c['text'] ?></option>
-                        <?php else : ?>
-                            <option value="<?= $c['value'] ?>"><?= $c['text'] ?></option>
-                        <?php endif ?>
-                    <?php endforeach ?>
-                </select>
-            </label>
-
+         
+         
             <?php
             // echo $this->Form->radio('categories._ids', $categories);
             //echo $this->Form->control('categories._ids', ['options' => $categories]);

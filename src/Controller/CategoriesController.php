@@ -76,6 +76,7 @@ class CategoriesController extends AppController
             $sluggedTitle = Text::slug($category->name);
             // trim slug to maximum length defined in schema
             $category->slug = strtolower(substr($sluggedTitle, 0, 191));
+            print_r($category); exit;
             if ($this->Categories->save($category)) {
                 $redir = '/category/' . $category->id . '/' . $category->slug;
                 return $this->redirect($redir);

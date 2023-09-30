@@ -25,8 +25,8 @@ $this->assign('title', h($pathway->name));
 <div class="p-8 pt-4 w-full text-lg" id="mainContent">
 
     <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
-        <a href="/category/<?= h($pathway->topic->categories[0]->id) ?>/<?= h($pathway->topic->categories[0]->slug) ?>" class="hover:underline"><?= h($pathway->topic->categories[0]->name) ?></a> >
-        <a href="/category/<?= h($pathway->topic->categories[0]->id) ?>/<?= h($pathway->topic->categories[0]->slug) ?>/topic/<?= h($pathway->topic->id) ?>/<?= h($pathway->topic->slug) ?>" class="hover:underline"><?= h($pathway->topic->name) ?></a> >
+        <a href="/topics">All Topics</a> > 
+        <a href="/topic/<?= h($pathway->topic->slug) ?>" class="hover:underline"><?= h($pathway->topic->name) ?></a> >
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-signpost-2 mr-1 inline-block" viewBox="0 0 16 16">
             <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
         </svg><?= h($pathway->name) ?>
@@ -394,7 +394,7 @@ $this->assign('title', h($pathway->name));
                 
                                 <div class="flex-1 basis-6/7 p-3">
                                     <h4 class="text-xl font-semibold mb-2">
-                                        <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
+                                        <a href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
                                             <?= h($steps->name) ?>
                                         </a>
                                     </h4>
@@ -438,7 +438,7 @@ $this->assign('title', h($pathway->name));
                                     </div>
                                     <div class="mb-2"><p><span class="font-bold">Objective: </span><?= h($steps->description) ?></p></div>
                                     <p class="mb-2 text-sky-700 underline">
-                                    <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
+                                    <a href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
                                         View <strong><?= h($steps->name) ?></strong>
                                     </a>
                                     </p>
