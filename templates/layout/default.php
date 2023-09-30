@@ -146,8 +146,12 @@
         </div>
         <div class="p-6 bg-slate-200" role="contentinfo">
             <img class="md:hidden my-3 px-2 max-w-[75%] mx-auto" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
-            <div class="mb-6 max-w-prose text-lg text-slate-700 mx-auto italic text-center">
-                We acknowledge with respect that the Learning Curator operates throughout B.C. on the traditional lands of Indigenous peoples.
+            <div class="my-5 max-w-prose text-slate-700 mx-auto text-center">
+                The BC Public Service acknowledges the territories of First Nations 
+                around B.C. and is grateful to carry out our work on these lands. 
+                We acknowledge the rights, interests, priorities and concerns of all 
+                Indigenous Peoples (First Nations, Métis and Inuit), respecting and 
+                acknowledging their distinct cultures, histories, rights, laws and governments.
             </div>
             <div x-data="{ open: false }" class="leading-snug my-4 mx-8 text-center">
                 <button @click="open = ! open" class="inline text-darkblue text-sm hover:underline">Privacy Statement<span x-show="open">:</span></button>
