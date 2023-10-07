@@ -198,7 +198,7 @@ $this->assign('title', h($pathway->name));
             <div class="mb-3 p-3 bg-yellow-100 rounded-lg">
           
                 This pathway has been 
-                <a href="https://learningcurator.apps.silver.devops.gov.bc.ca/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" 
+                <a href="https://learningcurator.gww.gov.bc.ca/topic/<?= h($pathway->topic->slug) ?>/<?= h($pathway->id) ?>/<?= h($pathway->slug) ?>" 
                     class="underline font-bold">
                         published to production
                 </a>
@@ -247,13 +247,13 @@ $this->assign('title', h($pathway->name));
                 Publishing target: 
                 <a href="<?= $targeturl ?>"><?= $targetname ?></a>
                 <div>
-                    <a class="inline-block px-2 mx-1 bg-slate-100" href="/<?= $pathway->topic->categories[0]->slug ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>?publishto=localtest">
+                    <a class="inline-block px-2 mx-1 bg-slate-100" href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>?publishto=localtest">
                         Allan Local
                     </a>
-                    <a class="inline-block px-2 mx-1 bg-slate-100" href="/<?= $pathway->topic->categories[0]->slug ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>?publishto=dev">
+                    <a class="inline-block px-2 mx-1 bg-slate-100" href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>?publishto=dev">
                         Dev
                     </a>
-                    <a class="inline-block px-2 mx-1 bg-slate-100" href="/<?= $pathway->topic->categories[0]->slug ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>">
+                    <a class="inline-block px-2 mx-1 bg-slate-100" href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>">
                         Production
                     </a>
                 </div>
@@ -464,7 +464,7 @@ $this->assign('title', h($pathway->name));
                                         <div class="flex-1 basis-6/7 p-3">
                                             <span class="bg-orange-400 text-slate-900 rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
                                             <h4 class="text-xl font-semibold mb-2">
-                                                <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
+                                                <a href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
                                                     <?= h($steps->name) ?>
                                                 </a>
                                             </h4>
