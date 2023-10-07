@@ -19,7 +19,7 @@ class TopicsController extends AppController
      */
     public function index()
     {
-        $topics = $this->Topics->find()->contain(['Pathways']); // ->where(['featured = ' => 1])
+        $topics = $this->Topics->find()->contain(['Pathways'])->where(['featured = ' => 1]); 
         $this->set(compact('topics'));
     }
 
