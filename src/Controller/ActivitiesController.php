@@ -392,9 +392,9 @@ class ActivitiesController extends AppController
         $numacts = $activities->count();
 
         // We've searched for activities and that's great and all, but we also
-        // want to return results for categories.
-        $allcats = TableRegistry::getTableLocator()->get('Categories');
-        $categories = $allcats->find('all',
+        // want to return results for topics.
+        $alltops = TableRegistry::getTableLocator()->get('Topics');
+        $topics = $alltops->find('all',
                                     array('conditions' => 
                                         array('OR' => 
                                             array(
@@ -404,7 +404,7 @@ class ActivitiesController extends AppController
                                         )
                                     )
                                 );
-        $numcats = $categories->count();
+        $numtops = $topics->count();
 
         // We don't want to show results for pathways and steps separately in the UI;
         // instead, we will merge the step results into the pathway results and
@@ -423,7 +423,7 @@ class ActivitiesController extends AppController
                                         )
                                     )
                                 )->where(['Pathways.status_id =' => 2])
-                                ->contain(['Topics.Categories'])
+                                ->contain(['Topics'])
                                 ->toList();
         //echo '<pre>'; print_r($pathways); exit;
         // This is the start of the janky bits where I have to make a separate query to the 
@@ -440,7 +440,7 @@ class ActivitiesController extends AppController
                                     )
                                 )
                                 ->where(['Steps.status_id =' => 2])
-                                ->contain(['Pathways','Pathways.Topics','Pathways.Topics.Categories'])
+                                ->contain(['Pathways','Pathways.Topics'])
                                 ->toList();
         //echo '<pre>'; print_r($steps); exit;
         $justpathways = []; // Minimal pathways array to loop through to gather steps
@@ -450,7 +450,6 @@ class ActivitiesController extends AppController
         // /category-slug/topic-slug/pathway/path-slug/s/stepid/step-slug
         foreach($pathways as $p) {
             $newp = [
-                        'category' => $p['topic']['categories'][0]['slug'],
                         'topic' => $p['topic']['slug'],
                         'id' => $p['id'],
                         'name' => $p['name'],
@@ -517,7 +516,6 @@ class ActivitiesController extends AppController
                 if(!$matchfound) {
                     // Recreate the pathway info
                     $inpath = [
-                        'category' => $s['pathways'][0]['topic']['categories'][0]['slug'],
                         'topic' => $s['pathways'][0]['topic']['slug'],
                         'id' => $s['pathways'][0]['id'],
                         'name' => $s['pathways'][0]['name'],
@@ -541,9 +539,9 @@ class ActivitiesController extends AppController
         }
         
         $this->set(compact('numacts',
-                            'numcats',
+                            'numtops',
                             'numpaths',
-                            'categories', 
+                            'topics', 
                             'pathwaywithsteps', 
                             'activities', 
                             'search'

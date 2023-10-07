@@ -13,7 +13,7 @@ if ($this->Identity->isLoggedIn()) {
     <h1 class="text-white text-3xl font-bold tracking-wide">Searching Curator for &quot;<?= $search ?>&quot;</h1>
 </header>
 <div class="p-8">
-    <?php if (!$numcats && !$numpaths && !$numacts) : ?>
+    <?php if (!$numtops && !$numpaths && !$numacts) : ?>
         <div class="mb-3 bg-gray-100 p-3 border-2 rounded-lg">No results found.</div>
 
         <form method="get" action="/find" class="w-fit flex" role="search">
@@ -29,33 +29,18 @@ if ($this->Identity->isLoggedIn()) {
     <?php endif ?>
     <div class="flex flex-col">
 
-        <?php if ($numcats === 1) : ?>
-            <h2 class="text-2xl">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numcats ?></span> category</h2>
-            <?php foreach ($categories as $c) : ?>
+        <?php if ($numtops) : ?>
+            <h2 class="text-2xl">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numtops ?></span> topics</h2>
+            <?php foreach ($topics as $t) : ?>
                 <div class="flex flex-row justify-start mt-3 mb-0">
-                    <i class="bi bi-folder mr-2 flex-none" style="font-size: 1.25rem; color: rgb(3 105 161);" aria-label="Category"></i>
+                    <i class="bi bi-folder mr-2 flex-none" style="font-size: 1.25rem; color: rgb(3 105 161);" aria-label="Topic"></i>
                     <div class="flex-1">
                         <h3 class="font-semibold text-xl text-sky-700 ">
-                            <a href="/categories/view/<?= $c->id ?>">
-                                <?= $c->name ?>
+                            <a href="/topic/<?= $t->slug ?>">
+                                <?= $t->name ?>
                             </a>
                         </h3>
-                        <p class="line-clamp-4 mb-0"><?= $this->Text->autoParagraph(h($c->description)); ?></p>
-                    </div>
-                </div>
-            <?php endforeach ?>
-        <?php else : ?>
-            <h2 class="text-2xl">Found <span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $numcats ?></span> category</h2>
-            <?php foreach ($categories as $c) : ?>
-                <div class="flex flex-row justify-start first:mt-0 mt-3 last:mb-0">
-                    <i class="bi bi-folder mr-2 flex-none" style="font-size: 1.25rem; color: rgb(3 105 161);" aria-label="Category"></i>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-xl text-sky-700 ">
-                            <a href="/categories/view/<?= $c->id ?>">
-                                <?= $c->name ?>
-                            </a>
-                        </h3>
-                        <p class="line-clamp-4 mb-0"><?= $this->Text->autoParagraph(h($c->description)); ?></p>
+                        <p class="line-clamp-4 mb-0"><?= $this->Text->autoParagraph(h($t->description)); ?></p>
                     </div>
                 </div>
             <?php endforeach ?>
@@ -71,14 +56,14 @@ if ($this->Identity->isLoggedIn()) {
                     <i class="bi bi-signpost-2 mr-2 flex-none" style="font-size: 1.25rem; color: rgb(3 105 161);" aria-label="Pathway"></i>
                     <div class="flex-1">
                         <h3 class="text-sky-700 text-xl font-semibold ">
-                            <a href="/<?= $p[0]['category'] ?>/<?= $p[0]['topic'] ?>/pathway/<?= $p[0]['slug'] ?>">
+                            <a href="/topic/<?= $p[0]['topic'] ?>/<?= $p[0]['id'] ?>/<?= $p[0]['slug'] ?>">
                                 <?= $p[0]['name'] ?>
                             </a>
                         </h3>
                         <p class="line-clamp-3 "><?= h($p[0]['goal']) ?></p>
                         <!-- <div><?= $p[0][5] ?></div> -->
                         <?php foreach ($p[1] as $step) : ?>
-                            &bull;<a class="px-1" href="/<?= $p[0]['category'] ?>/<?= $p[0]['topic'] ?>/pathway/<?= $p[0]['slug'] ?>/s/<?= $step['id'] ?>/<?= $step['slug'] ?>"><?= $step['name'] ?></a>
+                            &bull;<a class="px-1" href="/topic/<?= $p[0]['topic'] ?>/<?= $p[0]['id'] ?>/<?= $p[0]['slug'] ?>/<?= $step['id'] ?>/<?= $step['slug'] ?>"><?= $step['name'] ?></a>
                         <?php endforeach ?>
                     </div>
                 </div>
@@ -91,14 +76,14 @@ if ($this->Identity->isLoggedIn()) {
                     <i class="bi bi-signpost-2 mr-2 flex-none" style="font-size: 1.25rem; color: rgb(3 105 161);" aria-label="Pathway"></i>
                     <div class="flex-1">
                         <h3 class="text-sky-700 text-xl font-semibold ">
-                            <a href="/<?= $p[0]['category'] ?>/<?= $p[0]['topic'] ?>/pathway/<?= $p[0]['slug'] ?>">
+                            <a href="/topic/<?= $p[0]['topic'] ?>/<?= $p[0]['id'] ?>/<?= $p[0]['slug'] ?>">
                                 <?= $p[0]['name'] ?>
                             </a>
                         </h3>
                         <p class="line-clamp-3 mb-1"><?= h($p[0]['goal']) ?></p>
                         <!-- <div><?= $p[0][5] ?></div> -->
                         <?php foreach ($p[1] as $step) : ?>
-                            &bull;<a class="px-1" href="/<?= $p[0]['category'] ?>/<?= $p[0]['topic'] ?>/pathway/<?= $p[0]['slug'] ?>/s/<?= $step['id'] ?>/<?= $step['slug'] ?>"><?= $step['name'] ?></a>
+                            &bull;<a class="px-1" href="/topic/<?= $p[0]['topic'] ?>/<?= $p[0]['id'] ?>/<?= $p[0]['slug'] ?>/<?= $step['id'] ?>/<?= $step['slug'] ?>"><?= $step['name'] ?></a>
                         <?php endforeach ?>
                     </div>
                 </div>
