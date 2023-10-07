@@ -137,13 +137,13 @@ return [
             'role' => 'curator',
             'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
-            'action' => ['index', 'view','api','search'],
+            'action' => ['index','view','api','search'],
         ],
         [
             'role' => 'manager',
             'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
-            'action' => ['index', 'view','api','search'],
+            'action' => ['index','view','api','search'],
         ],
         [
             'role' => '*',
@@ -176,34 +176,14 @@ return [
             'action' => ['index','view','api','home'],
         ],
         [
-            'role' => 'curator',
-            'controller' => 'Categories',
-            'action' => ['edit','add'],
-        ],
-        [
-            'role' => 'manager',
-            'controller' => 'Categories',
-            'action' => ['edit','add'],
-        ],
-        [
             'role' => '*',
             'controller' => 'Topics',
             'action' => ['index','view'],
         ],
         [
-            'role' => 'curator',
-            'controller' => 'Topics',
-            'action' => ['edit','add'],
-        ],
-        [
-            'role' => 'manager',
-            'controller' => 'Topics',
-            'action' => ['edit','add'],
-        ],
-        [
             'role' => '*',
             'controller' => 'Pathways',
-            'action' => ['index','view','follow','status','rssfeed','contributions','search','find'],
+            'action' => ['index','view','follow','status','contributions','search','find'],
         ],
         [
             'role' => 'curator',

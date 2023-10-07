@@ -249,6 +249,7 @@ class ActivitiesController extends AppController
                             'Competencies', 
                             'Steps', 
                             'Steps.Pathways', 
+                            'Steps.Pathways.Topics',
                             'Tags',
                             'Reports',
                             'Reports.Users'],

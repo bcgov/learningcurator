@@ -63,8 +63,6 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
     // main category view
     $builder->connect('/category/{id}/{slug}', ['controller' => 'Categories', 'action' => 'view'])->setPass(['id']);
-    // Main topic view
-    $builder->connect('/category/{categoryid}/{categoryslug}/topic/{id}/{slug}', ['controller' => 'Topics', 'action' => 'view'])->setPass(['id']);
 
     //$builder->connect('/pathways-users/delete', ['controller' => 'PathwaysUsers', 'action' => 'delete']);
     $builder->connect('/pathways/add', ['controller' => 'Pathways', 'action' => 'add']);
@@ -74,11 +72,36 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/pathways-steps/reorder', ['controller' => 'PathwaysSteps', 'action' => 'reorder']);
     $builder->connect('/pathways/import/{topicid}', ['controller' => 'Pathways', 'action' => 'import'])->setPass(['topicid']);
     
+    
+    
+    
+    /** 
+     * 
+     * THE NEW HOTNESS
+     * https://www.hanselman.com/blog/urls-are-ui
+     * 
+     */
+    $builder->connect('/topic/{slug}', ['controller' => 'Topics', 'action' => 'view'])->setPass(['slug']);
+    $builder->connect('/topic/{topicslug}/{pathwayid}/{pathwayslug}', ['controller' => 'Pathways', 'action' => 'view'])->setPass(['pathwayslug']);
+    $builder->connect('/topic/{topicslug}/{pathwayid}/{pathwayslug}/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
+    /** 
+     * 
+     * END THE NEW HOTNESS
+     * 
+     */
+
+
+
+
+
+
     $builder->connect('/{categoryslug}/{topicslug}/pathway/{slug}', ['controller' => 'Pathways', 'action' => 'view'])->setPass(['slug']);
     $builder->connect('/pathways/{slug}', ['controller' => 'Pathways', 'action' => 'view'])->setPass(['slug']);
+    $builder->connect('/pathways/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
+
+
     $builder->connect('/pathways/{slug}/export', ['controller' => 'Pathways', 'action' => 'export'])->setPass(['slug']);
     $builder->connect('/pathways/{id}/publish', ['controller' => 'Pathways', 'action' => 'publish'])->setPass(['id']);
-    $builder->connect('/pathways/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
     $builder->connect('/{categoryslug}/{topicslug}/pathway/{pathslug}/s/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
 
     $builder->connect('/profile/launches', ['controller' => 'ActivitiesUsers', 'action' => 'launches']);

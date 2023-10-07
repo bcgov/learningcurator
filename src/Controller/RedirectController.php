@@ -34,7 +34,7 @@ class RedirectController extends AppController
             unset($_COOKIE['RedirectionTo']);
             return $this->redirect($goto);
         } else {
-            return $this->redirect(['Categories' => 'index']);
+            return $this->redirect(['Topics' => 'index']);
         }
     }
 

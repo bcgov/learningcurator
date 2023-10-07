@@ -4,9 +4,26 @@
 #    RequestHeader unset Proxy
 #</IfModule>
 
+# TODO don't forget to update these all to permanent 301 redirects when everything is tested.
 <IfModule mod_rewrite.c>
     RewriteEngine on
     RewriteRule    ^(\.well-known/.*)$ $1 [L]
     RewriteRule    ^$    webroot/    [L]
     RewriteRule    (.*) webroot/$1    [L]
+
+    Redirect 302 /categories /topics
+
+    Redirect 302 /category/15/the-house-of-indigenous-learning /topic/house-of-indigenous-learning
+    Redirect 302 /category/15/the-house-of-indigenous-learning/topic/40/indigenous-relations-behavioural-compete /topic/house-of-indigenous-learning
+    Redirect 302 /category/15/the-house-of-indigenous-learning/topic/41/bc-declaration-act /topic/house-of-indigenous-learning
+
+    Redirect 302 /category/16/equity-diversity-and-inclusion /topic/equity-diversity-and-inclusion
+    Redirect 302 /category/16/equity-diversity-and-inclusion/topic/37/support-a-diverse-workforce /topic/equity-diversity-and-inclusion
+    Redirect 302 /category/16/equity-diversity-and-inclusion/topic/38/enhance-inclusion-in-the-workplace /topic/equity-diversity-and-inclusion
+    Redirect 302 /category/16/equity-diversity-and-inclusion/topic/39/remove-systemic-barriers /topic/equity-diversity-and-inclusion
+    
+    Redirect 302 /equity-diversity-and-inclusion/remove-systemic-barriers/pathway/understand-barriers-to-improve-access /topic/equity-diversity-and-inclusion/84/understand-barriers-to-improve-access
+    Redirect 302 /equity-diversity-and-inclusion/remove-systemic-barriers/pathway/remove-barriers-to-shift-culture /topic/equity-diversity-and-inclusion/85/remove-barriers-to-shift-culture
+    Redirect 302 /equity-diversity-and-inclusion/support-a-diverse-workforce/pathway/basics-of-diversity-in-the-bcps /topic/equity-diversity-and-inclusion/79/basics-of-diversity-in-the-bcps
+    Redirect 302 /equity-diversity-and-inclusion/support-a-diverse-workforce/pathway/hiring-for-diversity /
 </IfModule>

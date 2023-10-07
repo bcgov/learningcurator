@@ -31,7 +31,7 @@ if ($this->Identity->isLoggedIn()) {
 
             <?php foreach ($pathways as $path) : ?>
 
-                <a href="/<?= h($path->pathway->topic->categories[0]->slug) ?>/<?= h($path->pathway->topic->slug) ?>/pathway/<?= h($path->pathway->slug) ?>" class="hover:no-underline">
+                <a href="/topic/<?= $path->pathway->topic->slug ?>/<?= h($path->pathway->id) ?>/<?= h($path->pathway->slug) ?>" class="hover:no-underline">
 
                     <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-l-full flex items-center justify-between">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3 flex-none" viewBox="0 0 16 16">
@@ -48,9 +48,9 @@ if ($this->Identity->isLoggedIn()) {
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tag inline-block mr-1" viewBox="0 0 16 16">
                             <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z" />
                             <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z" />
-                        </svg><?php $topiclink = $path->pathway->topic->categories[0]->name . ' > ' . $path->pathway->topic->name ?>
-                        <a href="/category/<?= $path->pathway->topic->categories[0]->id ?>/<?= $path->pathway->topic->categories[0]->slug ?>/topic/<?= $path->pathway->topic->id ?>/<?= $path->pathway->topic->slug ?>">
-                            <?= $topiclink ?>
+                        </svg>
+                        <a href="/topic/<?= $path->pathway->topic->slug ?>">
+                            <?= $path->pathway->topic->name ?>
                         </a></span>
                     </div>
                     <div class="flex gap-2">
@@ -120,7 +120,7 @@ if ($this->Identity->isLoggedIn()) {
                             .catch((err) => console.error("error:", err));
                     </script>
 
-                    <p class="my-4"> <a href="/<?= h($path->pathway->topic->categories[0]->slug) ?>/<?= $path->pathway->topic->slug ?>/pathway/<?= h($path->pathway->slug) ?>" class="text-sky-700 underline">
+                    <p class="my-4"> <a href="/topic/<?= $path->pathway->topic->slug ?>/<?= h($path->pathway->id) ?>/<?= h($path->pathway->slug) ?>" class="text-sky-700 underline">
                             View the <strong><?= h($path->pathway->name) ?></strong> pathway
                         </a> </p>
 

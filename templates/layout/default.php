@@ -81,9 +81,9 @@
                         
 
                         <p class="font-semibold block mt-2 mb-1 mx-4 text-base">Explore</p>
-                        <a href="/categories" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/categories') {
+                        <a href="/topics" class="hover:no-underline block px-4 py-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/topics') {
                                                                                                                                                             echo 'text-white bg-sagedark';
-                                                                                                                                                        } ?>">All Categories</a>
+                                                                                                                                                        } ?>">All Topics</a>
                         <a href="/pathways" class="hover:no-underline block px-4 py-1 mt-1 mx-4 text-sm hover:bg-sagedark/60 hover:text-white rounded-lg <?php if ($currentpage == '/pathways') {
                                                                                                                                                                 echo 'text-white bg-sagedark';
                                                                                                                                                             } ?>">Recent Pathways</a>

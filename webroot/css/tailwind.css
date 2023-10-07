@@ -634,6 +634,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin: 1.25rem;
 }
 
+.m-4 {
+  margin: 1rem;
+}
+
 .m-1 {
   margin: 0.25rem;
 }
@@ -825,6 +829,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: table;
 }
 
+.grid {
+  display: grid;
+}
+
 .hidden {
   display: none;
 }
@@ -1002,6 +1010,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .list-decimal {
   list-style-type: decimal;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .flex-row {
@@ -1331,6 +1343,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
+.bg-yellow-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 240 138 / var(--tw-bg-opacity));
+}
+
 .bg-red-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(239 68 68 / var(--tw-bg-opacity));
@@ -1532,6 +1549,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pr-4 {
   padding-right: 1rem;
+}
+
+.pb-3 {
+  padding-bottom: 0.75rem;
 }
 
 .pb-4 {

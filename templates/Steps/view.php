@@ -28,8 +28,8 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
 </header>
 <div class="p-8 pt-4 w-full text-xl" id="mainContent">
     <nav class="mb-4 ml-4 text-slate-500 text-sm" aria-label="breadcrumb">
-        <a href="/category/<?= h($step->pathways[0]->topic->categories[0]->id) ?>/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>" class="hover:underline"><?= h($step->pathways[0]->topic->categories[0]->name) ?></a> >
-        <a href="/category/<?= h($step->pathways[0]->topic->categories[0]->id) ?>/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/topic/<?= h($step->pathways[0]->topic->id) ?>/<?= h($step->pathways[0]->topic->slug) ?>" class="hover:underline"><?= h($step->pathways[0]->topic->name) ?></a> >
+        <a href="/topics">All Topics</a> > 
+        <a href="/topic/<?= h($step->pathways[0]->topic->slug) ?>" class="hover:underline"><?= h($step->pathways[0]->topic->name) ?></a> >
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-signpost-2 mr-1 inline-block" viewBox="0 0 16 16">
             <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
         </svg><a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= h($step->pathways[0]->slug) ?>"><?= h($step->pathways[0]->name) ?></a> >
@@ -37,7 +37,7 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
     </nav>
 
     <div class="max-w-3xl ml-8">
-        <div class="p-3 mb-3 mt-8 bg-bluegreen text-white rounded-l-full  flex justify-end items-center">
+        <div class="p-3 mb-3 mt-8 bg-bluegreen text-white rounded-lg flex justify-end items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 mx-4 grow-0" viewBox="0 0 16 16">
                 <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
             </svg>
@@ -127,14 +127,16 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                     <?php $count++ ?>
                     <?php $c = 'bg-gray-500' ?>
                     <?php if ($s->id == $step->id)  $c = 'active bg-bluegreen -ml-4' ?>
-                    <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                        Step <?= $count ?>
+                    <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" 
+                        href="/topic/<?= h($step->pathways[0]->topic->slug) ?>/<?= $pathways->id ?>/<?= $pathways->slug ?>/<?= $s->id ?>/<?= $s->slug ?>">
+                            Step <?= $count ?>
                     </a>
                 <?php else : ?>
                     <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                         <?php $c = 'bg-gray-500' ?>
-                        <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $s->id ?>/<?= $s->slug ?>">
-                            DRAFT
+                        <a class="border border-slate-200 rounded-l-lg py-3 px-4 hover:bg-bluegreen/80 text-white hover:no-underline <?= $c ?>" 
+                            href="/topic/<?= h($step->pathways[0]->topic->slug) ?>/<?= $pathways->id ?>/<?= $pathways->slug ?>/<?= $s->id ?>/<?= $s->slug ?>">
+                                <span class="bg-yellow-200">Step <?= $count ?></span>
                         </a>
                     <?php endif; // are you a curator? ?>
                 <?php endif; // is published? ?> 
@@ -568,15 +570,17 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                 <div class="flex justify-items-stretch">
                     <div class="flex-1 justify-self-start">
                         <?php if (!empty($previousid)) : ?>
-                            <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $previousid ?>/<?= $previousslug ?>" class="inline-block p-2 bg-darkblue hover:darkblue/80 rounded-lg text-white text-lg hover:no-underline">
-                                Previous Step
+                            <a href="/topic/<?= h($step->pathways[0]->topic->slug) ?>/<?= $pathways->id ?>/<?= $pathways->slug ?>/<?= $previousid ?>/<?= $previousslug ?>" 
+                                class="inline-block p-2 bg-darkblue hover:darkblue/80 rounded-lg text-white text-lg hover:no-underline">
+                                    Previous Step
                             </a>
                         <?php endif ?>
                     </div>
                     <div class="flex-none justify-self-end">
                         <?php if (!empty($upnextid)) : ?>
-                            <a href="/<?= h($step->pathways[0]->topic->categories[0]->slug) ?>/<?= h($step->pathways[0]->topic->slug) ?>/pathway/<?= $pathways->slug ?>/s/<?= $upnextid ?>/<?= $upnextslug ?>" class="inline-block p-2 bg-darkblue hover:darkblue/80  rounded-lg text-white text-lg hover:no-underline">
-                                Next Step
+                            <a href="/topic/<?= h($step->pathways[0]->topic->slug) ?>/<?= $pathways->id ?>/<?= $pathways->slug ?>/<?= $upnextid ?>/<?= $upnextslug ?>" 
+                                class="inline-block p-2 bg-darkblue hover:darkblue/80  rounded-lg text-white text-lg hover:no-underline">
+                                    Next Step
                             </a>
                         <?php endif ?>
                     </div>

@@ -27,7 +27,7 @@ $this->loadHelper('Authentication.Identity');
 
             echo $this->Form->control('status_id', ['type' => 'select', 'options' => $statuses, 'class' => 'form-field mb-3']);
             echo $this->Form->control('createdby', ['type' => 'select', 'options' => $users, 'class' => 'form-field mb-3', 'label' => 'Created By']) ?>
-            <?php echo $this->Form->control('topic_id', ['type' => 'select', 'options' => $areas, 'class' => 'form-field mb-3', 'label' => 'Topic']); ?>
+            <?php echo $this->Form->control('topic_id', ['type' => 'select', 'options' => $topics, 'class' => 'form-field mb-3', 'label' => 'Topic']); ?>
             <?php
             echo $this->Form->control('version', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Version']);
             

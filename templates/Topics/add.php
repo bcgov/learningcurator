@@ -18,7 +18,7 @@ $this->loadHelper('Authentication.Identity');
 
             <label>Published? <?= $this->Form->checkbox('featured', ['class' => 'inline-block mb-5']); ?></label>
             <?php
-            echo $this->Form->control('categories._ids[]', ['type' => 'select', 'options' => $categories, 'class' => 'form-field mb-3 border text-base', 'label' => 'Category']);
+            echo $this->Form->control('categories._ids[]', ['type' => 'hidden','value' => 1]);
             echo $this->Form->control('name', ['class' => 'form-field mb-3', 'label' => 'Topic Name']);
             //echo $this->Form->hidden('slug');?>
             <label for="description">Topic Description</label>

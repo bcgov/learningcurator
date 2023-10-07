@@ -29,7 +29,7 @@ if ($this->Identity->isLoggedIn()) {
             <!-- TODO Allan sort alphabetically as initial view? -->
             <!-- TODO Nori add mobile collapse options -->
             <?php foreach ($pathways as $pathway) : ?>
-                <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= h($pathway->topic->slug) ?>/pathway/<?= h($pathway->slug) ?>" class="hover:no-underline">
+                <a href="/topic/<?= h($pathway->topic->slug) ?>/<?= h($pathway->id) ?>/<?= h($pathway->slug) ?>" class="hover:no-underline">
 
                     <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-l-full flex items-center justify-between">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3 flex-none" viewBox="0 0 16 16">
@@ -53,9 +53,9 @@ if ($this->Identity->isLoggedIn()) {
                             <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z" />
                             <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z" />
                         </svg>
-                        <?php $topiclink = $pathway->topic->categories[0]->name . ' > ' . $pathway->topic->name ?>
-                        <a href="/category/<?= $pathway->topic->categories[0]->id ?>/<?= $pathway->topic->categories[0]->slug ?>/topic/<?= $pathway->topic->id ?>/<?= $pathway->topic->slug ?>">
-                            <?= $topiclink ?>
+                        
+                        <a href="/topic/<?= $pathway->topic->slug ?>">
+                            <?= $pathway->topic->name ?>
                         </a>
                     </div>
                     <div class="flex justify-end items-center text-xs text-slate-500 mt-1 mb-3">
@@ -67,7 +67,7 @@ if ($this->Identity->isLoggedIn()) {
 
                     <div class="autop"><?= $this->Text->autoParagraph(h($pathway->description)); ?></div>
 
-                    <p class="mb-4"> <a href="/<?= h($pathway->topic->categories[0]->slug) ?>/<?= $pathway->topic->slug ?>/pathway/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
+                    <p class="mb-4"> <a href="/pathways/<?= h($pathway->slug) ?>" class="text-sky-700 underline">
                             View the <strong><?= h($pathway->name) ?></strong> pathway
                         </a> </p>
                 </div>
