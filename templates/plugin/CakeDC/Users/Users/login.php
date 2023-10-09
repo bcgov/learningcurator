@@ -119,7 +119,7 @@ if($go) {
         </div>
         <div class="p-10 pb-0 bg-slate-900/90 text-white flex-none" role="contentinfo">
             <div class="flex flex-col md:flex-row justify-between">
-            <div class="my-5 max-w-prose text-slate-50 mx-auto text-center">
+            <div class="my-5 max-w-prose text-slate-50">
                 The BC Public Service acknowledges the territories of First Nations 
                 around B.C. and is grateful to carry out our work on these lands. 
                 We acknowledge the rights, interests, priorities and concerns of all 
