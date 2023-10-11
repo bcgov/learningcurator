@@ -36,6 +36,7 @@
                 <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left">Last Name</th>
                 <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left">Email</th>
                 <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left">Role</th>
+                <th class="border border-slate-300 px-2 py-1 bg-slate-200 text-left">Last Login</th>
             </tr>
         </thead>
         <tbody class="text-base">
@@ -54,6 +55,9 @@
                     </td>
                     <td class="px-2 py-1 border border-slate-300">
                         <?= ucfirst($user->role) ?>
+                    </td>
+                    <td class="px-2 py-1 border border-slate-300">
+                        <?= $user->last_login ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
