@@ -169,7 +169,7 @@ trait SimpleCrudTrait
     {
         $table = $this->loadModel();
 
-        $findusers = $table->find('search', ['search' => $this->request->getQuery()])->orderby('last_login desc');
+        $findusers = $table->find('search', ['search' => $this->request->getQuery()])->order('last_login desc');
         $q = $this->request->getQuery('q');
         $numresults = $findusers->count();
 
