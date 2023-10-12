@@ -14,7 +14,7 @@
   <channel>
 	<title>Learning Curator Pathways</title>
 	<link>https://learningcurator.gww.gov.bc.ca</link>
-  <atom:link href="https://learningcurator.ca/pathways/rssfeed" rel="self" type="application/rss+xml" />
+  <atom:link href="https://learningcurator.gww.gov.bc.ca/pathways/rssfeed" rel="self" type="application/rss+xml" />
 	<description>Curated pathways of learning.</description>
 	<lastBuildDate>Sun, 10 Sep 2023 13:19:30 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -23,8 +23,8 @@
   <?php foreach($pathways as $p): ?>
   <item>
     <title><?= $p->name ?></title>
-    <link>https://learningcurator.ca/pathways/<?= $p->slug ?></link>
-    <guid isPermaLink="false">https://learningcurator.ca/pathways/<?= $p->slug ?></guid>
+    <link>https://learningcurator.gww.gov.bc.ca/p/<?= $p->slug ?></link>
+    <guid isPermaLink="false">https://learningcurator.gww.gov.bc.ca/p/<?= $p->slug ?></guid>
     <description><![CDATA[<?= $p->description ?>]]></description>
     <dc:creator><![CDATA[Curator]]></dc:creator>
 		<pubDate><?= date('r', strtotime($p->created)) ?></pubDate>

@@ -31,7 +31,7 @@ if ($this->Identity->isLoggedIn()) {
             <?php foreach ($pathways as $pathway) : ?>
                 <a href="/topic/<?= h($pathway->topic->slug) ?>/<?= h($pathway->id) ?>/<?= h($pathway->slug) ?>" class="hover:no-underline">
 
-                    <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-l-full flex items-center justify-between">
+                    <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-lg flex items-center justify-between">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3 flex-none" viewBox="0 0 16 16">
                             <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
                         </svg>
@@ -39,10 +39,10 @@ if ($this->Identity->isLoggedIn()) {
                             <?= h($pathway->name) ?>
                         </h3>
                         <?php if ($pathway->status_id == 1) : ?>
-                            <span class="bg-orange-400 text-slate-900 rounded-full px-2 py-1 text-sm" title="Edit to set to publish">DRAFT</span>
+                            <span class="bg-orange-400 text-slate-900 rounded-lg px-2 py-1 text-sm" title="Edit to set to publish">DRAFT</span>
                         <?php endif ?>
                         <?php if ($pathway->featured == 1) : ?>
-                            <span class="bg-green-400 text-slate-900 rounded-full px-2 py-1 text-sm">Featured</span>
+                            <span class="bg-green-400 text-slate-900 rounded-lg px-2 py-1 text-sm">Featured</span>
                         <?php endif ?>
                         <!-- <span class="text-sm justify-self-end flex-none">8 steps | 23 activities</span> -->
                     </div>

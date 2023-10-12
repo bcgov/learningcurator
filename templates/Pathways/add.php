@@ -18,7 +18,7 @@ $this->loadHelper('Authentication.Identity');
                 <label>Topic
                     <?php echo $this->Form->select(
                         'topic_id',
-                        $areas,
+                        $topics,
                         ['class' => 'form-field mb-3 text-base'],
                     );
                     ?></label>
