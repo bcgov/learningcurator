@@ -133,7 +133,7 @@
                     </div> -->
 
                 </div>
-                <img class="hidden short:hidden md:block my-3 px-2 justify-self-end sticky bottom-2" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
+                
 
             </div>
 
@@ -144,26 +144,47 @@
 
             </main>
         </div>
-        <div class="p-6 bg-slate-200" role="contentinfo">
-            <img class="md:hidden my-3 px-2 max-w-[75%] mx-auto" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
-            <div class="my-5 max-w-prose text-slate-700 mx-auto text-center">
+        <div class="grid gap-4 grid-cols-3 p-6 bg-slate-200">
+        
+        
+            <div class="p-6 bg-slate-100 rounded-lg text-slate-600">
+        
                 The BC Public Service acknowledges the territories of First Nations 
                 around B.C. and is grateful to carry out our work on these lands. 
                 We acknowledge the rights, interests, priorities and concerns of all 
                 Indigenous Peoples (First Nations, Métis and Inuit), respecting and 
                 acknowledging their distinct cultures, histories, rights, laws and governments.
             </div>
-            <div x-data="{ open: false }" class="leading-snug my-4 mx-8 text-center">
-                <button @click="open = ! open" class="inline text-darkblue text-sm hover:underline">Privacy Statement<span x-show="open">:</span></button>
-                <div x-show="open" @click.outside="open = false" class="inline text-sm">
+        
+        
+            
+            <div class="p-6 bg-slate-100 rounded-lg text-slate-600">
+                <div class="text-lg">Your one-stop-shop for learning that is available to 
+                    public service employees from any ministry:</div>
+                <a class="inline-block my-3 px-5 py-2 rounded-lg text-white bg-slate-700 hover:no-underline hover:bg-slate-800" 
+                    href="https://learningcentre.gww.gov.bc.ca/learninghub/"
+                    target="_blank"
+                    rel="noopener">
+                        Visit the Learning<span class="text-yellow-500 font-bold">HUB</span>
+                </a>
+            </div>
+        <div class="p-3 bg-slate-100 rounded-lg text-slate-700">
+
+            <img class="block" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
+
+            <details class="leading-snug my-4 mx-8">
+                <summary class="text-darkblue text-sm hover:underline hover:cursor-pointer">Privacy Statement</summary>
+                <div class="text-sm my-3">
                     Your personal information is collected by the BC Public Service Agency
                     in accordance with section 26(c) of the Freedom of Information and
                     Protection of Privacy Act for the purposes of managing and administering
                     employee development and training. If you have any questions, submit an
                     AskMyHR request at www.gov.bc.ca/myhr/contact or call 250-952-6000.
                 </div>
-            </div>
+            </details>
+            
         </div>
+
     </div>
 
     <script defer src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.x.x/dist/alpine-clipboard.js"></script>

@@ -529,7 +529,7 @@ class PathwaysController extends AppController
 
             }
 
-            $redir = '/pathways/' . $path->slug;
+            $redir = '/p/' . $pathslug;
             return $this->redirect($redir);
 
         } else {

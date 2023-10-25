@@ -49,7 +49,7 @@ if ($this->Identity->isLoggedIn()) {
             <li class="px-2"><strong>Ministry:</strong> <?= h($Users->ministry->name) ?></li>
             <li class="px-2"><strong>Username:</strong> <?= h($Users->username) ?></li>
             <?php if($role == 'superuser' || $role == 'manager'): ?>
-            <li class="px-2"><strong>BC Gov GUID:</strong> <?= h($Users->additional_data) ?></li>
+            <li class="px-2"><strong>BC Gov GUID:</strong> <?= h($Users->id) ?></li>
             <?php endif ?>
             <li class="px-2"><strong>Email:</strong> <a href="mailto:<?= h($Users->email) ?>" class="font-weight-bold"><?= h($Users->email) ?></a></li>
             <li class="px-2"><strong>User Created:</strong> <?= $this->Time->format($Users->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></li>
