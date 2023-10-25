@@ -12,7 +12,7 @@ $this->loadHelper('Authentication.Identity');
 </header>
 <div class="p-8 text-lg" id="mainContent">
     <div class="max-w-prose">
-        <h2 class="text-2xl text-darkblue font-semibold mb-3">Edit Step: <span class="text-slate-900"><a href="/pathways/<?= $step->pathways[0]->slug ?>/s/<?= $step->id ?>/<?= $step->slug ?>">
+        <h2 class="text-2xl text-darkblue font-semibold mb-3">Edit Step: <span class="text-slate-900"><a href="/topic/<?= $step->pathways[0]->topic->slug ?>/<?= $step->pathways[0]->id ?>/<?= $step->pathways[0]->slug ?>/<?= $step->id ?>/<?= $step->slug ?>">
                     <?= $step->pathways[0]->name ?>, <?= $step->name ?>
                 </a></span></h2>
                 <h3 class="text-xl"><span class="font-bold">Step Objective: </span>

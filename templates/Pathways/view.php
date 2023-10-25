@@ -50,6 +50,9 @@ $this->assign('title', h($pathway->name));
         <div class="pl-8 text-xl">
 
             <div class="mb-5 block">
+            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+            <?= $this->Html->link(__('Edit Pathway'), ['action' => 'edit', $pathway->id], ['class' => 'float-right ml-3 px-4 py-2 text-md bg-slate-200 hover:bg-slate-200/80 focus:bg-slate-300/80 hover:no-underline rounded-lg']) ?>
+            <?php endif ?>
             <p><span class="font-bold">Pathway Goal: </span><?= h($pathway->objective); ?></p></div>
             <?php if (empty($followid)) : ?>
                 <div class="my-3">
@@ -134,18 +137,51 @@ $this->assign('title', h($pathway->name));
 
 
 
-            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
-            <div class="mb-3 p-3">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+<details>
+    <summary>Curator Details</summary>
+            <div class="p-3 text-sm">
                 <?php if(!empty($createdby[0]->first_name)): ?>
                 
-                    <strong>Created by:</strong>
-                    <a class="inline-block text-sm bg-slate-100 p-3 rounded-lg" href="/users/view/<?= $createdby[0]->id ?>"><?= $createdby[0]->username ?> </a>
+                    Created by:
+                    <a class="inline-block px-3 py-2 underline" href="/users/view/<?= $createdby[0]->id ?>"><?= $createdby[0]->username ?> </a>
                 
                 <?php if(!empty($modifiedby[0]->first_name)): ?>
                 <?php if($createdby[0]->id != $modifiedby[0]->id): ?>
                 
                     <strong>Last modified by:</strong>
-                    <a class="inline-block text-sm bg-slate-100 p-3 rounded-lg" href="/users/view/<?= $modifiedby[0]->id ?>"><?= $modifiedby[0]->username ?></a>
+                    <a class="inline-block px-3 py-2 underline" href="/users/view/<?= $modifiedby[0]->id ?>"><?= $modifiedby[0]->username ?></a>
                 
                 <?php endif ?>
                 <?php endif ?>
@@ -156,19 +192,20 @@ $this->assign('title', h($pathway->name));
                     appears to be in the system.
                 
                 <?php endif ?>
+
                 <?php if(!empty($pathway->publishedby)): ?>
                 
                     <strong>Published by:</strong>
-                    <a class="inline-block text-sm bg-slate-100 p-3 rounded-lg" href="/users/view/<?= $publishedby[0]->id ?>"><?= $publishedby[0]->username ?> </a>
+                    <a class="inline-block bg-slate-100 p-3 rounded-lg underline" href="/users/view/<?= $publishedby[0]->id ?>"><?= $publishedby[0]->username ?> </a>
                 
                 <?php endif ?>
-                <div>
+                
                     <?php $unrec_count = 0 ?>
-                    <strong>Curators:</strong>
+                    Curators:
                     <?php foreach($contributors as $c): ?>
                         <?php //print_r($c) ?>
                         <?php if(!empty($c[0]->username)): ?>
-                        <a class="inline-block text-sm bg-slate-100 p-3 rounded-lg" 
+                        <a class="inline-block px-3 py-2 underline" 
                             href="/users/view/<?= $c[0]->id ?>">
                                 <?= $c[0]->username ?>
                         </a>
@@ -179,12 +216,9 @@ $this->assign('title', h($pathway->name));
                     <?php if($unrec_count > 0): ?>
                         <div><?= $unrec_count ?> unrecognized contributors to this pathway.</div>
                     <?php endif ?>
-                </div>
+                
             </div>
-            <?php endif ?>
-
-
-
+            
 
 
 
@@ -223,7 +257,7 @@ $this->assign('title', h($pathway->name));
             } else if($p2 == 'dev') {
                 $targeturl = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca';
                 $targetname = 'Dev System';
-            } else  {
+            } else if($p2 == 'prod') {
                 $targeturl = 'https://learningcurator.gww.gov.bc.ca';
                 $targetname = 'Production System';
             }
@@ -253,7 +287,7 @@ $this->assign('title', h($pathway->name));
                     <a class="inline-block px-2 mx-1 bg-slate-100" href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>?publishto=dev">
                         Dev
                     </a>
-                    <a class="inline-block px-2 mx-1 bg-slate-100" href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>">
+                    <a class="inline-block px-2 mx-1 bg-slate-100" href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>?publishto=prod">
                         Production
                     </a>
                 </div>
@@ -294,47 +328,63 @@ $this->assign('title', h($pathway->name));
 
 
             <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
-            
-            <div x-data="{ open: false }" class="mb-8">
-                <div class="flex justify-start gap-4">
-                    
-                    <?= $this->Html->link(__('Edit Pathway'), ['action' => 'edit', $pathway->id], ['class' => 'px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg flex-none justify-self-start']) ?>
-
-                    <button @click="open = ! open" class=" px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg">
-                        Add a Step
-                    </button>
-
-                    <a class="px-4 whitespace-nowrap w-40 overflow-hidden text-ellipsis py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 hover:no-underline rounded-lg" 
-                        rel="bookmarklet" 
-                        href="javascript: (() => {const destination = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/activities/addtopath?pathwayid=<?= $pathway->id ?>&url=' + window.location.href;window.open(destination);})();"
-                        title="Drag to bookmarks bar or right-click and add to bookmarks">
-                            Add to <?= $pathway->name ?> Bookmarklet
-                    </a>
+            <details class="mb-3">
+                <summary>Bookmarklet</summary>
+                <div class="p-4 bg-slate-50 rounded-lg">
+                    <div class="">
+                        <a class="inline-block underline mb-2" 
+                            rel="bookmarklet" 
+                            href="javascript: (() => {const destination = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/activities/addtopath?pathwayid=<?= $pathway->id ?>&url=' + window.location.href;window.open(destination);})();"
+                            title="Drag to bookmarks bar or right-click and add to bookmarks">
+                                Add to "<?= $pathway->name ?>" Bookmarklet
+                        </a>
+                    </div>
+                    <p>A "bookmarklet" is a special kind of bookmark. Add the above bookmarklet to your
+                        browser and make it easy to add new activities to this pathway.</p>
                 </div>
-                <div xcloak x-show="open" class="border border-slate-500 p-6 my-3 rounded-md block">
-                <?= $this->Form->create(null, ['url' => [
-                        'controller' => 'Steps',
-                        'action' => 'add'
-                    ]]) ?>
-                    <label for="name">Step Title</label>
-                    <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span>   
-                    <?php echo $this->Form->input('name', ['class' => 'form-field max-w-prose mb-2', 'type' => 'text', 'aria-describedby' => 'nameHelp']);  ?>
-                    <label for="description">Step Objective</label>
-                    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1&nbsp;phrase/sentence).</span>
-                    <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
+            </details>
+           
 
-                    
-                    <?php
-                    echo $this->Form->hidden('createdby', ['value' => $uid]);
-                    echo $this->Form->hidden('modifiedby', ['value' => $uid]);
-                    echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
-                    ?>
-                    <?= $this->Form->button(__('Add Step'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
-                    <?= $this->Form->end() ?>
-                </div>
-            </div>
             
-            <?php endif; // role check ?>
+            
+            
+            
+        </details>
+        
+    <?php endif; // role check ?>
+    <?php endif; // role check ?>
+
+
+
+<?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+<details>
+    <summary>Add Step</summary>
+    <div class="px-4 py-3">
+    <?= $this->Form->create(null, ['url' => [
+        'controller' => 'Steps',
+        'action' => 'add'
+    ]]) ?>
+    <label for="name">Step Title</label>
+    <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span>   
+    <?php echo $this->Form->input('name', ['class' => 'form-field max-w-prose mb-2', 'type' => 'text', 'aria-describedby' => 'nameHelp']);  ?>
+    <label for="description">Step Objective</label>
+    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1&nbsp;phrase/sentence).</span>
+    <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
+
+
+    <?php
+    echo $this->Form->hidden('createdby', ['value' => $uid]);
+    echo $this->Form->hidden('modifiedby', ['value' => $uid]);
+    echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
+    ?>
+    <?= $this->Form->button(__('Add Step'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
+    <?= $this->Form->end() ?>
+    </div>
+</details>
+<?php endif ?>
+
+
+
 
 
 
@@ -448,7 +498,7 @@ $this->assign('title', h($pathway->name));
                                     <span class="text-xs px-4 bg-slate-100/80 rounded-lg"><?= $steps->status->name ?></span>
                                 <?php endif ?> -->
                                 <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
-                                <?= $this->Form->control('steporder[]', ['class' => 'ml-2 bg-bluegreen group-hover:bg-bluegreen/80 text-white text-center rounded-lg', 'style' => 'width: 30px;', 'type' => 'text', 'value' => $steps->_joinData->sortorder, 'label' => 'Sort order']) ?>
+                                <?= $this->Form->control('steporder[]', ['class' => 'ml-2 bg-bluegreen group-hover:bg-bluegreen/80 text-white text-center rounded-lg', 'style' => 'width: 30px;', 'type' => 'text', 'value' => $count, 'label' => 'Sort order']) ?>
                                 <?= $this->Form->control('steps[]', ['type' => 'hidden', 'value' => $count]) ?>
                                 <?php endif ?>
                                 </div>
@@ -464,7 +514,7 @@ $this->assign('title', h($pathway->name));
                                         <div class="flex-1 basis-6/7 p-3">
                                             <span class="bg-orange-400 text-slate-900 rounded-full px-2 py-1 text-sm align-middle" title="Edit to set to publish">DRAFT</span>
                                             <h4 class="text-xl font-semibold mb-2">
-                                                <a href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>/s/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
+                                                <a href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
                                                     <?= h($steps->name) ?>
                                                 </a>
                                             </h4>
@@ -507,7 +557,9 @@ $this->assign('title', h($pathway->name));
                                             </div>
                                             <div class="mb-2"><?= h($steps->description) ?></div>
                                             <p class="mb-2 text-sky-700 underline">
+                                            <a href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
                                                 View <strong><?= h($steps->name) ?></strong>
+                                            </a>
                                             </p>
 
 
