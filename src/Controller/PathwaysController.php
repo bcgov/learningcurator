@@ -25,7 +25,7 @@ class PathwaysController extends AppController
         ]);
     }
     /**
-     * API method outputs JSON of the index listing of newly published pathways
+     * API method outputs RSS XML of the index listing of newly published pathways
      *
      * @return \Cake\Http\Response|null
      */
@@ -35,6 +35,29 @@ class PathwaysController extends AppController
         $this->viewBuilder()->setLayout('ajax');
         $this->RequestHandler->respondAs('xml');
         $this->set(compact('pathways'));
+    }
+    /**
+     * API method outputs JSON of the index listing of newly published pathways
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function jsonfeed()
+    {
+        $pathways = $this->Pathways->find('all')->contain(['Topics'])->where(['status_id' => 2]);
+        // $this->viewBuilder()->setLayout('ajax');
+        // //$this->RequestHandler->respondAs('xml');
+        // $this->set(compact('pathways'));
+    
+        // Set Out Format View
+        $this->viewBuilder()->setClassName('Json');
+
+        $this->viewBuilder()->setOption('serialize', ['pathways']);
+        // Set Data View
+        $this->set(compact('pathways'));
+
+        // Set Force Download
+        //return $this->response->withDownload('report-' . date('YmdHis') . '.' . $format);
+        
     }
     /**
      * Show Curators their own pathways and activities

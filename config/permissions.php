@@ -114,6 +114,7 @@ return [
             'action' => [
                 'api',
                 'rssfeed',
+                'jsonfeed',
             ],
             'bypassAuth' => true,
         ],

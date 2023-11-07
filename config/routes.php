@@ -68,6 +68,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/pathways/add', ['controller' => 'Pathways', 'action' => 'add']);
     $builder->connect('/pathways/find', ['controller' => 'Pathways', 'action' => 'find']);
     $builder->connect('/pathways/rssfeed', ['controller' => 'Pathways', 'action' => 'rssfeed']);
+    $builder->connect('/pathways/jsonfeed', ['controller' => 'Pathways', 'action' => 'jsonfeed']);
     $builder->connect('/pathways/search', ['controller' => 'Pathways', 'action' => 'search']);
     $builder->connect('/pathways-steps/reorder', ['controller' => 'PathwaysSteps', 'action' => 'reorder']);
     $builder->connect('/pathways/import/{topicid}', ['controller' => 'Pathways', 'action' => 'import'])->setPass(['topicid']);
