@@ -348,40 +348,36 @@ $this->assign('title', h($pathway->name));
             
             
             
+            <details>
+            <summary>Add Step</summary>
+            <div class="px-4 py-3">
+            <?= $this->Form->create(null, ['url' => [
+                'controller' => 'Steps',
+                'action' => 'add'
+            ]]) ?>
+            <label for="name">Step Title</label>
+            <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span>   
+            <?php echo $this->Form->input('name', ['class' => 'form-field max-w-prose mb-2', 'type' => 'text', 'aria-describedby' => 'nameHelp']);  ?>
+            <label for="description">Step Objective</label>
+            <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1&nbsp;phrase/sentence).</span>
+            <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
+
+
+            <?php
+            echo $this->Form->hidden('createdby', ['value' => $uid]);
+            echo $this->Form->hidden('modifiedby', ['value' => $uid]);
+            echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
+            ?>
+            <?= $this->Form->button(__('Add Step'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
+            <?= $this->Form->end() ?>
+            </div>
+        </details>
             
         </details>
         
     <?php endif; // role check ?>
     <?php endif; // role check ?>
 
-
-
-<?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
-<details>
-    <summary>Add Step</summary>
-    <div class="px-4 py-3">
-    <?= $this->Form->create(null, ['url' => [
-        'controller' => 'Steps',
-        'action' => 'add'
-    ]]) ?>
-    <label for="name">Step Title</label>
-    <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span>   
-    <?php echo $this->Form->input('name', ['class' => 'form-field max-w-prose mb-2', 'type' => 'text', 'aria-describedby' => 'nameHelp']);  ?>
-    <label for="description">Step Objective</label>
-    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1&nbsp;phrase/sentence).</span>
-    <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
-
-
-    <?php
-    echo $this->Form->hidden('createdby', ['value' => $uid]);
-    echo $this->Form->hidden('modifiedby', ['value' => $uid]);
-    echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
-    ?>
-    <?= $this->Form->button(__('Add Step'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
-    <?= $this->Form->end() ?>
-    </div>
-</details>
-<?php endif ?>
 
 
 
