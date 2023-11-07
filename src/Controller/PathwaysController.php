@@ -44,20 +44,9 @@ class PathwaysController extends AppController
     public function jsonfeed()
     {
         $pathways = $this->Pathways->find('all')->contain(['Topics'])->where(['status_id' => 2]);
-        // $this->viewBuilder()->setLayout('ajax');
-        // //$this->RequestHandler->respondAs('xml');
-        // $this->set(compact('pathways'));
-    
-        // Set Out Format View
         $this->viewBuilder()->setClassName('Json');
-
         $this->viewBuilder()->setOption('serialize', ['pathways']);
-        // Set Data View
         $this->set(compact('pathways'));
-
-        // Set Force Download
-        //return $this->response->withDownload('report-' . date('YmdHis') . '.' . $format);
-        
     }
     /**
      * Show Curators their own pathways and activities
