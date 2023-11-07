@@ -43,12 +43,68 @@ class PathwaysController extends AppController
      */
     public function jsonfeed()
     {
+        // {
+        //     "version": "https://jsonfeed.org/version/1",
+        //     "title": "Learning Curator Pathways",
+        //     "home_page_url": "https://learningcurator.gww.gov.bc.ca/",
+        //     "feed_url": "https://learningcurator.gww.gov.bc.ca/pathways/jsonfeed",
+        //     "items": [
+        //     foreach($pathways as $p):
+        //       {
+        //         "id":"",
+        //         "title":"",
+        //         "summary":"",
+        //         "content_text":"",
+        //         "content_html":"",
+        //         "_pathway_id":"",
+        //         "_learning_partner":"Learning Centre",
+        //         "author":"Allan Haggett",
+        //         "date_published":"",
+        //         "date_modified":"",
+        //         "tags":"",
+        //         "url":"https://learningcurator.gww.gov.bc.ca/p/"
+        //       },
+        //     endforeach
+        //     ]
+        //   }
         $pathways = $this->Pathways->find('all')->contain(['Topics'])->where(['status_id' => 2]);
+
+        // $jsonfeed = [
+        //                 'version' => 'https://jsonfeed.org/version/1',
+        //                 'title' => 'Learning Curator Pathways',
+        //                 'home_page_url' => 'https://learningcurator.gww.gov.bc.ca/',
+        //                 'feed_url' => 'https://learningcurator.gww.gov.bc.ca/pathways/jsonfeed',
+        //                 'items' => []
+        //             ];
+        // $pathsreduced = [];
+        // foreach($pathways as $p) {
+        //     // $pubdate = strval(date('r', strtotime($p->created)));
+        //     // $moddate = strval(date('r', strtotime($p->modified)));
+        //     $pinfo = [
+        //                 'id' => $p->version, 
+        //                 'title' => $p->name,
+        //                 'summary' => $p->objective,
+        //                 'content_text' => $p->objective,
+        //                 'content_html' => $p->objective,
+        //                 '_pathway_id' => $p->id,
+        //                 '_learning_partner' => 'Learning Centre',
+        //                 'author' => 'Allan Haggett',
+        //                 'date_published' => '',
+        //                 'date_modified' => '',
+        //                 'tags' => '',
+        //                 'url' => 'https://learningcurator.gww.gov.bc.ca/p/' . $p->id
+        //             ];
+        //     array_push($pathsreduced, $pinfo);
+
+        // }
+        // array_push($jsonfeed['items'],$pathsreduced);
+        // //echo '<pre>';print_r($jsonfeed); exit;
         $this->viewBuilder()->setClassName('Json');
         $this->viewBuilder()->setOption('serialize', ['pathways']);
         $this->set(compact('pathways'));
     }
     /**
+     * 
      * Show Curators their own pathways and activities
      *
      * @return \Cake\Http\Response|null|void Renders view
