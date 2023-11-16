@@ -52,6 +52,7 @@ RUN set -eux; \
 	; \
 	\
 	docker-php-ext-install -j "$(nproc)" \
+        curl
 		pdo_mysql \
 		zip \
 		bcmath \
