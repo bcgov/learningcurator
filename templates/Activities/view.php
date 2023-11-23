@@ -187,39 +187,7 @@ if ($this->Identity->isLoggedIn()) {
         <div class="border-2 border-slate-700 rounded-md mt-5">
             <h4 class="bg-slate-700 text-white p-2">Report an Issue with this Activity</h4>
             <div class="p-3 pb-1">
-                <script>
-                    var message = '';
-
-                    function report<?= $activity->id ?>Form() {
-                        return {
-                            form<?= $activity->id ?>Data: {
-                                activity_id: '<?= $activity->id ?>',
-                                user_id: '<?= $uid ?>',
-                                issue: '',
-                                csrfToken: <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>,
-                            },
-                            message: '',
-                            submitData() {
-                                this.message = ''
-                                fetch('/reports/add', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'X-CSRF-Token': <?php echo json_encode($this->request->getAttribute('csrfToken')); ?>
-                                        },
-                                        body: JSON.stringify(this.form<?= $activity->id ?>Data)
-                                    })
-                                    .then(() => {
-                                        this.message = 'Report sucessfully submitted!';
-                                        this.form<?= $activity->id ?>Data.issue = '';
-                                    })
-                                    .catch(() => {
-                                        this.message = 'Ooops! Something went wrong!';
-                                    })
-                            }
-                        }
-                    }
-                </script>
+                
                 <?= $this->Form->create(
                     null,
                     [
@@ -228,8 +196,8 @@ if ($this->Identity->isLoggedIn()) {
                             'action' => 'add'
                         ],
                         'class' => '',
-                        'x-data' => 'report' . $activity->id . 'Form()',
-                        '@submit.prevent' => 'submitData'
+                        // 'x-data' => 'report' . $activity->id . 'Form()',
+                        // '@submit.prevent' => 'submitData'
                     ]
                 ) ?>
                 <?php
@@ -242,7 +210,7 @@ if ($this->Identity->isLoggedIn()) {
                         'issue',
                         [
                             'class' => 'form-field',
-                            'x-model' => 'form' . $activity->id . 'Data.issue',
+                            // 'x-model' => 'form' . $activity->id . 'Data.issue',
                             'placeholder' => 'Type here ...',
                             'required' => 'required'
                         ]
