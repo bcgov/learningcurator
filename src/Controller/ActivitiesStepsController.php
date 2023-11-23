@@ -38,7 +38,7 @@ class ActivitiesStepsController extends AppController
         if ($this->request->is('post')) {
             $activitiesStep = $this->ActivitiesSteps->patchEntity($activitiesStep, $this->request->getData());
             if ($this->ActivitiesSteps->save($activitiesStep)) {
-                if($this->request->getData()['addtopath']) {
+                if(!empty($this->request->getData()['addtopath'])) {
                     $stepedit = '/steps/edit/' . $this->request->getData()['step_id'];
                     return $this->redirect($stepedit);
                 } else {
