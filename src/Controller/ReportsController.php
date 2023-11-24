@@ -167,6 +167,8 @@ class ReportsController extends AppController
                     $tokenres = curl_exec($curl);
                     $token = json_decode($tokenres);
 
+                    echo '<pre>'; print_r($token); exit;
+
                     curl_setopt_array($curl, array(
                     CURLOPT_URL => 'https://ches-dev.api.gov.bc.ca/api/v1/email',
                     CURLOPT_RETURNTRANSFER => true,
