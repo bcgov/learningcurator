@@ -149,54 +149,53 @@ class ReportsController extends AppController
 
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
-                    CURLOPT_URL => 'https://dev.loginproxy.gov.bc.ca/auth/realms/comsvcauth/protocol/openid-connect/token',
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => '',
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 0,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => 'POST',
-                    CURLOPT_POSTFIELDS => 'grant_type=client_credentials',
-                    CURLOPT_HTTPHEADER => array(
-                        'Content-Type: application/x-www-form-urlencoded',
-                        'Authorization: Basic ' . $chesapicredential
-                    ),
+                        CURLOPT_URL => 'https://dev.loginproxy.gov.bc.ca/auth/realms/comsvcauth/protocol/openid-connect/token',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => 'grant_type=client_credentials',
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/x-www-form-urlencoded',
+                            'Authorization: Basic ' . $chesapicredential
+                        ),
                     ));
 
                     $tokenres = curl_exec($curl);
                     $token = json_decode($tokenres);
-
+                    echo $chesapicredential . '<br>';
                     echo '<pre>'; print_r($token); exit;
 
                     curl_setopt_array($curl, array(
-                    CURLOPT_URL => 'https://ches-dev.api.gov.bc.ca/api/v1/email',
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => '',
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 0,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => 'POST',
-                    CURLOPT_POSTFIELDS =>'{
-                    "bcc": [],
-                    "bodyType": "html",
-                    "body": ' . $message . ',
-                    "cc": [],
-                    "delayTS": 0,
-                    "encoding": "utf-8",
-                    "from": "noreply_curator@gov.bc.ca",
-                    "priority": "normal",
-                    "subject": "Curator Activity Report",
-                    "to": ["allan.haggett@gov.bc.ca"],
-                    "tag": "email_0b7565ca"
-                    }
-                    ',
-                    CURLOPT_HTTPHEADER => array(
-                        'Content-Type: application/json',
-                        'Authorization: Bearer ' . $token->access_token,
-                        'Cookie: 0662357d14092c112d042bc0007de896=0103b8f16bed8abcb82235ad88974279'
-                    ),
+                        CURLOPT_URL => 'https://ches-dev.api.gov.bc.ca/api/v1/email',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS =>'{
+                            "bcc": [],
+                            "bodyType": "html",
+                            "body": ' . $message . ',
+                            "cc": [],
+                            "delayTS": 0,
+                            "encoding": "utf-8",
+                            "from": "noreply_curator@gov.bc.ca",
+                            "priority": "normal",
+                            "subject": "Curator Activity Report",
+                            "to": ["allan.haggett@gov.bc.ca"],
+                            "tag": "email_0b7565ca"
+                        }',
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/json',
+                            'Authorization: Bearer ' . $token->access_token,
+                            'Cookie: 0662357d14092c112d042bc0007de896=0103b8f16bed8abcb82235ad88974279'
+                        ),
                     ));
 
                     $response = curl_exec($curl);
