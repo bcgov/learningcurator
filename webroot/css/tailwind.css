@@ -1315,11 +1315,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(74 222 128 / var(--tw-bg-opacity));
 }
 
-.bg-slate-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(71 85 105 / var(--tw-bg-opacity));
-}
-
 .bg-yellow-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 249 195 / var(--tw-bg-opacity));
@@ -1932,6 +1927,11 @@ p {
           text-decoration-line: none;
 }
 
+label {
+  display: inline-block;
+  margin-right: .5em;
+}
+
 .last\:mb-0:last-child {
   margin-bottom: 0px;
 }
@@ -1969,8 +1969,8 @@ p {
   background-color: rgb(47 97 115 / 0.8);
 }
 
-.hover\:bg-slate-600\/80:hover {
-  background-color: rgb(71 85 105 / 0.8);
+.hover\:bg-slate-200\/80:hover {
+  background-color: rgb(226 232 240 / 0.8);
 }
 
 .hover\:bg-red-700\/70:hover {
@@ -2046,6 +2046,10 @@ p {
 
 .focus\:bg-slate-700\/80:focus {
   background-color: rgb(51 65 85 / 0.8);
+}
+
+.focus\:bg-slate-300\/80:focus {
+  background-color: rgb(203 213 225 / 0.8);
 }
 
 .focus\:outline-none:focus {

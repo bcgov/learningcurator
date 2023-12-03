@@ -19,7 +19,7 @@ class TopicsController extends AppController
      */
     public function index()
     {
-        $topics = $this->Topics->find()->contain(['Pathways'])->where(['featured = ' => 1]); 
+        $topics = $this->Topics->find()->contain(['Users','Pathways'])->where(['featured = ' => 1]); 
         $this->set(compact('topics'));
     }
 
@@ -45,7 +45,7 @@ class TopicsController extends AppController
      */
     public function view($slug = null)
     {
-        $topic = $this->Topics->findBySlug($slug)->contain(['Users', 'Categories', 'Pathways'])->firstOrFail();
+        $topic = $this->Topics->findBySlug($slug)->contain(['Users', 'Pathways'])->firstOrFail();
         // $topic = $this->Topics->get($id, [
         //     'contain' => ['Users', 'Categories', 'Pathways', 'Pathways.Statuses'],
         // ]);
@@ -89,7 +89,7 @@ class TopicsController extends AppController
     public function edit($id = null)
     {
         $topic = $this->Topics->get($id, [
-            'contain' => ['Categories'],
+            'contain' => ['Users'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $topic = $this->Topics->patchEntity($topic, $this->request->getData());
@@ -101,7 +101,11 @@ class TopicsController extends AppController
             }
             echo __('The topic could not be saved. Please, try again.');
         }
-        $users = $this->Topics->Users->find('list', ['limit' => 200]);
+        $users = $this->Topics->Users->find('list', ['limit' => 200])->where(['OR' => [
+                                                                                ['Users.role' => 'Manager'],
+                                                                                ['Users.role' => 'superuser']
+                                                                            ]
+                                                                            ]);
         $cats = $this->Topics->Categories->find('all', ['limit' => 200]);
         //$categories = $cats->combine('id', 'name');
         $categories = $cats->all()->map(function ($value, $key) {

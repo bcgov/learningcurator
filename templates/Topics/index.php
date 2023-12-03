@@ -4,6 +4,13 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Topic[]|\Cake\Collection\CollectionInterface $topics
  */
+$this->loadHelper('Authentication.Identity');
+$uid = 0;
+$role = 0;
+if ($this->Identity->isLoggedIn()) {
+    $role = $this->Identity->get('role');
+    $uid = $this->Identity->get('id');
+}
 ?>
 <header class="w-full h-52 bg-cover bg-[center_top_65%] pb-2 px-2" style="background-image: url(/img/categories/1200w/Path_at_French_Beach_BC_Canada_-_panoramio_1200w.jpg);">
     <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
@@ -41,6 +48,14 @@
                 <?php echo count($topic->pathways) ?> Pathways
             </a>
         </div>
+        <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+        <div class="my-3 p-3 bg-slate-100 rounded-lg">
+            Topic Manager: 
+            <a href="/users/view/<?= $topic->user->id ?>">
+                <?= $topic->user->username ?>
+            </a>
+        </div>
+        <?php endif ?>
     </div>
 
 <?php endforeach; ?>
