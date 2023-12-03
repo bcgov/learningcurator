@@ -46,11 +46,17 @@ if ($this->Identity->isLoggedIn()) {
                 </ul>
                 </div>
                 <div class="basis-1/2">
+                
                 <h3 class="mt-4 font-bold">Managers</h3> 
                 <p>Managers can do what Curators do, but they can also publish pathways to production.</p>
                 <ul class="list-disc pl-8 mt-2">
                 <?php foreach($managers as $man): ?>
-                    <li><a href="/users/view/<?= $man->id ?>"><?= $man->first_name ?> <?= $man->last_name ?></a></li>
+                    <li>
+                        <a href="/users/view/<?= $man->id ?>">
+                            <?= $man->first_name ?> <?= $man->last_name ?>
+                            <?= $man->topics ?>
+                        </a>
+                    </li>
                 <?php endforeach ?>
                 <?php foreach($supers as $s): ?>
                     <?php if($s->username == 'superadmin') continue ?>

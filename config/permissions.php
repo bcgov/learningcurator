@@ -182,6 +182,11 @@ return [
             'action' => ['index','view'],
         ],
         [
+            'role' => 'curator',
+            'controller' => 'Topics',
+            'action' => ['manage'],
+        ],
+        [
             'role' => '*',
             'controller' => 'Pathways',
             'action' => ['index','view','follow','status','contributions','search','find'],

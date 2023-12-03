@@ -24,6 +24,17 @@ class TopicsController extends AppController
     }
 
     /**
+     * Management page for curators 
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function manage()
+    {
+        $topics = $this->Topics->find()->contain(['Users','Pathways','Pathways.Steps']); 
+        $this->set(compact('topics'));
+    }
+
+    /**
      * API method
      *
      * @return \Cake\Http\Response|null|void Renders view
