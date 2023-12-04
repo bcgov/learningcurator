@@ -26,37 +26,36 @@ if ($this->Identity->isLoggedIn()) {
     </a>
 </p>
 <div class="flex flex-col lg:flex-row lg:gap-4 w-full">
-<div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
+<div class="order-last lg:order-first">
 <?php foreach ($topics as $topic) : ?>
-
-    <a href="/topic/<?= $topic->slug ?>" class="hover:no-underline">
-        <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-lg flex items-center justify-between">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-tag inline-block mr-1" viewBox="0 0 16 16">
-                <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z" />
-                <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z" />
-            </svg>
-            <h3 class="text-2xl flex-1">
-                <?= h($topic->name) ?>
-            </h3>
-            
+    <details class="mb-2 p-3 bg-slate-100 rounded-lg w-full">
+        <summary>
+            <?= h($topic->name) ?>
+            <?php if($topic->featured == 1): ?>
+                <span class="inline-block px-3 text-sm bg-white rounded-lg">Published</span>
+            <?php endif ?>
+        </summary>
+        <div>
+            <?= h($topic->description) ?>
         </div>
-    </a>
-    <div class="px-3">
-        <?= h($topic->description) ?>
-        <div class="mt-3 font-bold">
-            <a href="/topic/<?= h($topic->slug) ?>">
-                <?php echo count($topic->pathways) ?> Pathways
-            </a>
-        </div>
-        <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
-        <div class="my-3 p-3 bg-slate-100 rounded-lg">
+        <div class="my-3 p-3 bg-white rounded-lg">
             Topic Manager: 
             <a href="/users/view/<?= $topic->user->id ?>">
                 <?= $topic->user->username ?>
             </a>
         </div>
-        <?php endif ?>
-    </div>
+        <div class="m-3 p-3 bg-white rounded-lg">
+        <?php foreach($topic->pathways as $path): ?>
+            <details>
+                <summary><?= $path->name ?></summary>
+                <?php foreach($path->steps as $step): ?>
+                    <div><strong><?= $step->name ?></strong></div>
+                    <div><?= $step->description ?></div>
+                <?php endforeach ?>
+            </details>
+        <?php endforeach ?>
+        </div>
+    </details>
 
 <?php endforeach; ?>
 </div>

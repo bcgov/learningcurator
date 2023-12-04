@@ -19,7 +19,7 @@
                     <?= $this->Form->checkbox('featured', ['class' => 'inline-block']) ?>
                 </label>
             </div>
-         
+         <!--<pre><?php print_r($topic) ?></pre>-->
          
             <?php
             // echo $this->Form->radio('categories._ids', $categories);
@@ -27,13 +27,23 @@
             //echo $this->Form->control('featured');
             //echo $this->Form->control('image_path');
             //echo $this->Form->control('color');
-            //echo $this->Form->control('user_id', ['options' => $users]);
             echo $this->Form->control('name', ['class' => 'form-field mb-3', 'label' => 'Topic Name']);
             echo $this->Form->hidden('slug');    ?>
-          <label for="description">Topic Description</label>
-            <small class="text-slate-600 block mt-0" id="descriptionHelp"><i class="bi bi-info-circle"></i> A brief description of the topic within the category (1&nbsp;to&nbsp;2&nbsp;sentences).</small>
-           <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
-         
+    <!--<div class="my-3 p-3 bg-slate-100 rounded-lg">
+        <label for="user_id">Manager:</label>
+        <input list="userlist" id="user-id" name="user_id" class="" value="<?= $topic->user->username ?>">
+        <datalist id="userlist">
+            <?php foreach($users as $u): ?>
+                <option><?= $u ?></option>
+                <?php endforeach ?> 
+            </datalist>
+        </div>-->
+        <label for="description">Topic Description</label>
+        <small class="text-slate-600 block mt-0" id="descriptionHelp"><i class="bi bi-info-circle"></i> A brief description of the topic within the category (1&nbsp;to&nbsp;2&nbsp;sentences).</small>
+        <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
+        <div class="my-3 p-3 bg-slate-100 rounded-lg">
+        <?php echo $this->Form->control('user_id', ['options' => $users, 'label' => 'Manager', 'id' => 'user-id']); ?>
+        </div>
         </fieldset>
         <?= $this->Form->button(__('Save Topic'), ['class' => 'my-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
         <?= $this->Form->end() ?>

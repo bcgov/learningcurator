@@ -251,16 +251,15 @@ $this->assign('title', h($pathway->name));
             // #TODO move to controller
             $p2 = $_GET['publishto'] ?? '';
             $targetapi = '/topics/api';
+            $targeturl = 'https://learningcurator.gww.gov.bc.ca';
+            $targetname = 'Production System';
             if($p2 == 'localtest') {
                 $targeturl = 'https://learningcurator.ca';
                 $targetname = 'Allan Local';
             } else if($p2 == 'dev') {
                 $targeturl = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca';
                 $targetname = 'Dev System';
-            } else if($p2 == 'prod') {
-                $targeturl = 'https://learningcurator.gww.gov.bc.ca';
-                $targetname = 'Production System';
-            }
+            } 
             $prodTopics = file_get_contents($targeturl.$targetapi);
             $pt = json_decode($prodTopics); 
             $matchingProdTop = [];
@@ -274,10 +273,8 @@ $this->assign('title', h($pathway->name));
                 echo 'Something is wrong with the target system.<br> Please contact an admin.';
             }
         
-
-                //print_r($matchingProdTop);
             ?>
-            <div>
+            <!-- <div>
                 Publishing target: 
                 <a href="<?= $targeturl ?>"><?= $targetname ?></a>
                 <div>
@@ -292,7 +289,7 @@ $this->assign('title', h($pathway->name));
                     </a>
                 </div>
         
-            </div>
+            </div> -->
 
             <?php if(empty($matchingProdTop)): ?>
 
@@ -324,10 +321,8 @@ $this->assign('title', h($pathway->name));
 
 
 
-
-
-
             <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+
             <details class="mb-3">
                 <summary>Bookmarklet</summary>
                 <div class="p-4 bg-slate-50 rounded-lg">

@@ -60,7 +60,14 @@ if ($this->Identity->isLoggedIn()) {
 
         <h2 class="text-2xl text-darkblue font-semibold mb-3"> <?= h($topic->name) ?></h2>
         <div class="text-xl autop"><?= $this->Text->autoParagraph(h($topic->description)); ?></div>
-
+        <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+        <div class="my-3 p-3 bg-slate-100 rounded-lg">
+            Topic Manager: 
+            <a href="/users/view/<?= $topic->user->id ?>">
+                <?= $topic->user->username ?>
+            </a>
+        </div>
+        <?php endif ?>
     </div>
     <div class="flex flex-col lg:flex-row lg:gap-4 w-full">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
