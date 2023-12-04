@@ -49,7 +49,7 @@ if ($this->Identity->isLoggedIn()) {
             <details>
                 <summary><?= $path->name ?></summary>
                 <?php foreach($path->steps as $step): ?>
-                    <div><?= $step->name ?></div>
+                    <div><strong><?= $step->name ?></strong></div>
                     <div><?= $step->description ?></div>
                 <?php endforeach ?>
             </details>
