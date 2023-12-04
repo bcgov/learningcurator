@@ -143,14 +143,18 @@ if ($this->Identity->isLoggedIn()) {
         <h2 class="mb-3 text-2xl text-darkblue font-semibold">Find your path</h2>
 
         <p class="mb-3">
-            Curator pathways are organized into <a href="/categories" class="underline font-medium">categories</a> and then <span class="font-italic">topics</span>. You can explore all the <a href="/pathways" class="underline font-medium">pathways</a> we have to offer and when you see one you like, you can follow it.</p>
+            Curator pathways are organized into <a href="/topics" class="underline font-medium">topics</a>. 
+            You can explore all the <a href="/pathways" class="underline font-medium">pathways</a> we have 
+            to offer and when you see one you like, you can follow it.
+        </p>
+
         <p>When you follow a pathway, it will be listed here, so the next time you login, you can jump right to it.
         </p>
         <p>As you launch activities contained in a pathway you'll be able to see your progress here too.</p>
 
 
-        <a href="/categories" class="inline-block p-3 mt-4 mr-4 bg-sagedark text-white text-xl hover:no-underline rounded-lg">
-            Explore Categories
+        <a href="/topics" class="inline-block p-3 mt-4 mr-4 bg-sagedark text-white text-xl hover:no-underline rounded-lg">
+            Explore Topics
         </a>
         <a href="/pathways" class="inline-block p-3 mt-4 bg-darkblue text-white text-xl hover:no-underline rounded-lg">
             Explore Pathways
