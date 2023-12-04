@@ -196,6 +196,8 @@ trait SimpleCrudTrait
             ->where(['Activities.createdby_id' => $id]);
         $paths = TableRegistry::getTableLocator()->get('Pathways');
         $pathsadded = $paths->find('all')->where(['Pathways.createdby' => $id]);
+        $topics = TableRegistry::getTableLocator()->get('Topics');
+        $topicsmanaged = $topics->find('all')->where(['Topics.user_id' => $id]);
 
         $table = $this->loadModel();
         $tableAlias = $table->getAlias();
@@ -209,6 +211,7 @@ trait SimpleCrudTrait
                 'ActivitiesUsers.Activities.ActivityTypes'
             ],
         ]);
+        $this->set('topicsmanaged', $topicsmanaged);
         $this->set('actsadded', $actsadded);
         $this->set('pathsadded', $pathsadded);
         $this->set($tableAlias, $entity);

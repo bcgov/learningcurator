@@ -56,6 +56,15 @@ if ($this->Identity->isLoggedIn()) {
             <li class="px-2"><strong>Last Modified:</strong> <?= $this->Time->format($Users->modified, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></li>
         </ul>
     </div>
+    <?php if (!empty($topicsmanaged)) : ?>
+        <h3 class="mt-4 font-semibold text-xl">Topics Managed</h3>
+        <ul class="list-disc pl-8 mt-2">
+            <?php foreach ($topicsmanaged as $topic) : ?>
+                <li class="px-2"><a href="/topic/<?= $topic->slug ?>"><?= h($topic->name) ?></a>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    <?php endif ?>
     <h3 class="mt-4 font-semibold text-xl">Activities Claimed</h3>
     <?php if (!empty($Users->activities_users)) : ?>
         <ul class="list-disc pl-8 mt-2">
