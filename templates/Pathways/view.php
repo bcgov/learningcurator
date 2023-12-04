@@ -362,7 +362,7 @@ $this->assign('title', h($pathway->name));
 
             
 
-        <?php if($environment != 'learningcurator.gov.bc.ca' && empty($pathway->version)) : ?>
+        <?php if($environment != 'learningcurator.gov.bc.ca' && !empty($pathway->version)) : ?>
 
 
             <!-- TODO Nori/Allan add code for subtitle in box -->
