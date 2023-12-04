@@ -13,6 +13,8 @@ if ($this->Identity->isLoggedIn()) {
     $uid = $this->Identity->get('id');
 }
 
+$environment = $_SERVER['SERVER_NAME'];
+
 $this->assign('title', h($pathway->name));
 
 ?>
@@ -220,26 +222,11 @@ $this->assign('title', h($pathway->name));
             </div>
             
 
-
-
-            <?php $environment = $_SERVER['SERVER_NAME'] ?>
             <?php if($environment != 'learningcurator.apps.silver.devops.gov.bc.ca' && $environment != 'learningcurator.gww.gov.bc.ca') : ?>
-            
+                        
+            <?php if(empty($pathway->version)): ?>
 
-                        
-                        
-            <?php if(!empty($pathway->version)): ?>
-            <div class="mb-3 p-3 bg-yellow-100 rounded-lg">
-          
-                This pathway has been 
-                <a href="https://learningcurator.gww.gov.bc.ca/topic/<?= h($pathway->topic->slug) ?>/<?= h($pathway->id) ?>/<?= h($pathway->slug) ?>" 
-                    class="underline font-bold">
-                        published to production
-                </a>
-                and should no longer be edited here.
-                    
-            </div>
-            <?php else: ?>
+
 
             <div class="mb-3 p-3 bg-yellow-100 rounded-lg">
 
@@ -249,17 +236,9 @@ $this->assign('title', h($pathway->name));
 
             <?php
             // #TODO move to controller
-            $p2 = $_GET['publishto'] ?? '';
             $targetapi = '/topics/api';
             $targeturl = 'https://learningcurator.gww.gov.bc.ca';
             $targetname = 'Production System';
-            if($p2 == 'localtest') {
-                $targeturl = 'https://learningcurator.ca';
-                $targetname = 'Allan Local';
-            } else if($p2 == 'dev') {
-                $targeturl = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca';
-                $targetname = 'Dev System';
-            } 
             $prodTopics = file_get_contents($targeturl.$targetapi);
             $pt = json_decode($prodTopics); 
             $matchingProdTop = [];
@@ -274,35 +253,20 @@ $this->assign('title', h($pathway->name));
             }
         
             ?>
-            <!-- <div>
-                Publishing target: 
-                <a href="<?= $targeturl ?>"><?= $targetname ?></a>
-                <div>
-                    <a class="inline-block px-2 mx-1 bg-slate-100" href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>?publishto=localtest">
-                        Allan Local
-                    </a>
-                    <a class="inline-block px-2 mx-1 bg-slate-100" href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>?publishto=dev">
-                        Dev
-                    </a>
-                    <a class="inline-block px-2 mx-1 bg-slate-100" href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>?publishto=prod">
-                        Production
-                    </a>
-                </div>
-        
-            </div> -->
 
             <?php if(empty($matchingProdTop)): ?>
 
-                <p>There doesn't seem to be a matching topic in the target 
-                    environment. To publish, this pathway needs to be within 
-                    a topic that also exists in the target.
+                <p>There doesn't seem to be a matching topic 
+                    <a href="https://learningcurator.gww.gov.bc.ca/" target="_blank">in production</a>. 
+                    To publish, this pathway needs to be within a topic that also exists 
+                    <a href="https://learningcurator.gww.gov.bc.ca/" target="_blank">in production</a>.
                 </p>
 
             <?php else: ?>
                 
-                <div>As a manager, you can choose to publish this pathway:</div>
+                <div>As a manager, you can choose to publish this pathway to production:</div>
                 <div>
-                    <a href="/pathways/<?= h($pathway->id); ?>/publish?topicid=<?= $matchingProdTop[0] ?>&publishto=<?= $p2 ?>" 
+                    <a href="/pathways/<?= h($pathway->id); ?>/publish?topicid=<?= $matchingProdTop[0] ?>" 
                         class="py-2 inline-block px-4 bg-emerald-700 text-white rounded-lg hover:bg-darkblue/80">
                             Publish Pathway
                     </a>
@@ -312,7 +276,7 @@ $this->assign('title', h($pathway->name));
 
             <?php else: // role check ?>
 
-                <div>Only a manager can publish pathways.</div>
+                <div>Only a Topic Manager can publish pathways.</div>
 
             <?php endif; // role check ?>
             </div>
@@ -320,7 +284,7 @@ $this->assign('title', h($pathway->name));
             <?php endif; // enviromnent check ?>
 
 
-
+            <?php if(empty($pathway->version)): ?>
             <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
 
             <details class="mb-3">
@@ -338,10 +302,6 @@ $this->assign('title', h($pathway->name));
                         browser and make it easy to add new activities to this pathway.</p>
                 </div>
             </details>
-           
-
-            
-            
             
             <details>
             <summary>Add Step</summary>
@@ -366,12 +326,13 @@ $this->assign('title', h($pathway->name));
             <?= $this->Form->button(__('Add Step'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
             <?= $this->Form->end() ?>
             </div>
-        </details>
+            </details>
+            <?php endif; // published status check ?>
             
-        </details>
         
-    <?php endif; // role check ?>
-    <?php endif; // role check ?>
+        <?php endif; // role check ?>
+        </details>
+        <?php endif; // role check ?>
 
 
 
@@ -401,6 +362,7 @@ $this->assign('title', h($pathway->name));
 
             
 
+        <?php if($environment != 'learningcurator.gov.bc.ca' && empty($pathway->version)) : ?>
 
 
             <!-- TODO Nori/Allan add code for subtitle in box -->
@@ -588,8 +550,22 @@ $this->assign('title', h($pathway->name));
 
 <?php else : ?>
     <div>There don't appear to be any steps assigned to this pathway yet.</div>
-<?php endif; // are there any steps at all? 
-?>
+<?php endif; // are there any steps at all? ?>
+    
+<?php else : ?>
+
+    <div class="my-3 p-3 bg-yellow-100 rounded-lg">
+          
+          This pathway has been 
+          <a href="https://learningcurator.gww.gov.bc.ca/p/<?= h($pathway->slug) ?>" 
+              class="underline font-bold">
+                  published to production
+          </a>
+          and can no longer be edited here.
+              
+      </div>
+
+<?php endif ?>
 
 </div>
 </div>
