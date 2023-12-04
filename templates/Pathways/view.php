@@ -362,7 +362,7 @@ $this->assign('title', h($pathway->name));
 
             
 
-        <?php if(empty($pathway->version) || $environment == 'learningcurator.gov.bc.ca') : ?>
+        <?php //if(empty($pathway->version) || $environment == 'learningcurator.gov.bc.ca') : ?>
 
 
             <!-- TODO Nori/Allan add code for subtitle in box -->
@@ -552,9 +552,9 @@ $this->assign('title', h($pathway->name));
     <div>There don't appear to be any steps assigned to this pathway yet.</div>
 <?php endif; // are there any steps at all? ?>
     
-<?php else : ?>
+<?php //else : ?>
 
-    <div class="my-3 p-3 bg-yellow-100 rounded-lg">
+    <!-- <div class="my-3 p-3 bg-yellow-100 rounded-lg">
           
           This pathway has been 
           <a href="https://learningcurator.gww.gov.bc.ca/p/<?= h($pathway->slug) ?>" 
@@ -563,9 +563,9 @@ $this->assign('title', h($pathway->name));
           </a>
           and can no longer be edited here.
               
-      </div>
+      </div> -->
 
-<?php endif ?>
+<?php //endif ?>
 
 </div>
 </div>
