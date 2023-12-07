@@ -167,6 +167,11 @@ class PathwaysTable extends Table
             ->scalar('estimated_time')
             ->maxLength('estimated_time', 255)
             ->allowEmptyString('estimated_time');
+        
+        $validator
+            ->scalar('keywords')
+            ->maxLength('keywords', 500)
+            ->allowEmptyString('keywords');
 
         return $validator;
     }
