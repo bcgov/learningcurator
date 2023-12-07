@@ -32,6 +32,7 @@ $this->loadHelper('Authentication.Identity');
             echo $this->Form->control('version', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Version']);
             
             echo $this->Form->control('name', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Pathway Title']);
+            
             //echo $this->Form->control('slug', ['class' => 'form-field mb-3']); ?>
             
              <!-- <label for="description">Pathway Description</label> -->
@@ -52,6 +53,7 @@ $this->loadHelper('Authentication.Identity');
             <?php if (!empty($pathway->file_path)) : ?>
                 <!-- <div class="form-field mb-3"><?= $pathway->file_path ?></div> -->
             <?php endif ?>
+            <?= $this->Form->control('keywords', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Keywords']); ?>
             <?= $this->Form->button(__('Save Pathway'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
             <?= $this->Form->end() ?>
             <?= $this->Form->postLink(__('Delete Pathway'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'inline-block mt-3 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base']) ?>
