@@ -76,14 +76,14 @@ class ActivitiesController extends AppController
         //$this->viewBuilder()->setLayout('ajax');
         $now = FrozenTime::now();
         $weeksago = $now->subDays(14);
-        
+        $auditdate = $now->i18nFormat('yyyy-MM-dd HH:mm:ss');
         $activities = $this->Activities->find('all')
                                         ->where(['Activities.status_id' => 2])
-                                        ->where(['Activities.audited < ' => $weeksago])
+                                        ->where(['Activities.audited < ' => $weeksago->i18nFormat('yyyy-MM-dd HH:mm:ss')])
                                         ->where(['Activities.moderation_flag' => 1])
                                         ->limit(10);
         
-        $this->set(compact('activities','now'));
+        $this->set(compact('activities','auditdate'));
     }
     /**
      * Check all links in the site for 404 or redirect.
@@ -111,13 +111,13 @@ class ActivitiesController extends AppController
         //$this->viewBuilder()->setLayout('ajax');
         $now = FrozenTime::now();
         $weekago = $now->subDays(7);
+        // echo '<pre>'; echo $weekago->i18nFormat('yyyy-MM-dd HH:mm:ss'); exit;
         
         $activities = $this->Activities->find('all')
                                         ->where(['Activities.status_id' => 2])
-                                        ->where(['Activities.audited < ' => $weekago])
+                                        ->where(['Activities.audited < ' => $weekago->i18nFormat('yyyy-MM-dd HH:mm:ss')])
                                         ->where(['Activities.moderation_flag' => 0])
                                         ->limit(10)
-                                        ->all()
                                         ->toList();
 
         $report = TableRegistry::getTableLocator()->get('Reports');
@@ -125,6 +125,7 @@ class ActivitiesController extends AppController
         $count200 = 0;
         $reportcount = 0;
         $excludedcount = 0;
+        // echo '<pre>'; print_r($activities); exit;
         
         foreach($activities as $a) {
     
@@ -160,31 +161,43 @@ class ActivitiesController extends AppController
                 } else {
                     // It's a good URL and isn't one that we know can't be
                     // checked this way, so let's go ahead and check it
-                    $headers = get_headers($url);
-                    $code = explode(' ', $headers[0]);
-                    // Anything other than 200 OK gets reported
-                    if ($code[1] != 200) {
-                        $newreport = $report->newEmptyEntity();
-                        $reportdata = [
-                            'activity_id' => $a->id,
-                            'user_id' => 'fab197ca-eaa7-4418-960d-d8e8cf40231a', // always as superadmin
-                            'issue' => $headers[0]
-                        ];
-                        $newreport = $report->patchEntity($newreport, $reportdata);
-                        if ($report->save($newreport)) {
-                            $reportcount++;
-                            //echo $headers[0] . ' WARNING - Report Filed<br>';
-                        } 
-                        
-                    } else {
-                        $count200++;
-                    }
-                    // Whether it's 200 OK or not, we still log the time that we checked
-                    $act = $this->Activities->get($a->id);
-                    $act->audited = $now;
-                    if ($this->Activities->save($act)) {
-                        //echo $headers[0] . ' audited<br>';
-                    }
+                    // $context = stream_context_create(
+                    //     [
+                    //         'http' => array(
+                    //             'method' => 'HEAD'
+                    //         )
+                    //     ]
+                    // );
+                    $headers = @get_headers($url); // ,false, $context
+                    if($headers) {
+                        $code = explode(' ', $headers[0]);
+                        // Anything other than 
+                        // * 200 OK
+                        // * 302 Moved Temporarily??
+                        // gets reported
+                        if ($code[1] != 200) {
+                            $newreport = $report->newEmptyEntity();
+                            $reportdata = [
+                                'activity_id' => $a->id,
+                                'user_id' => '00001FC1A510420B9A19A46D24069FFD', // always as superadmin
+                                'issue' => $headers[0]
+                            ];
+                            $newreport = $report->patchEntity($newreport, $reportdata);
+                            if ($report->save($newreport)) {
+                                $reportcount++;
+                                //echo $headers[0] . ' WARNING - Report Filed<br>';
+                            } 
+                            
+                        } else {
+                            $count200++;
+                        }
+                        // Whether it's 200 OK or not, we still log the time that we checked
+                        $act = $this->Activities->get($a->id);
+                        $act->audited = $now;
+                        if ($this->Activities->save($act)) {
+                            //echo $headers[0] . ' audited<br>';
+                        }
+                    } 
                 }
             }
         }
@@ -320,8 +333,13 @@ class ActivitiesController extends AppController
             // trim slug to maximum length defined in schema
             $activity->slug = strtolower(substr($sluggedTitle, 0, 191));
             if ($this->Activities->save($activity)) {
-                $this->Flash->success(__('The activity has been saved.'));
-                $go = '/activities/view/' . $id;
+                // $this->Flash->success(__('The activity has been saved.'));
+                if($this->request->getData('redirectback') == 1) {
+                    $go = $this->referer();
+                } else {
+                    $go = '/activities/view/' . $id;
+                }
+                // echo $go;
                 return $this->redirect($go);
             }
             $this->Flash->error(__('The activity could not be saved. Please, try again.'));
@@ -704,6 +722,11 @@ class ActivitiesController extends AppController
 
         if ($this->request->is('post')) {
 
+            $this->request->getData()['hyperlink'];
+            $activity = $this->Activities->find()->contain(['ActivityTypes','Tags','Steps.Pathways'])->where(function ($exp, $query) use($linktoact) {
+                return $exp->like('hyperlink', '%'.$linktoact.'%');
+            })->toList();
+
             $user = $this->request->getAttribute('authentication')->getIdentity();
                 
             $activity = $this->Activities->newEmptyEntity();
@@ -747,7 +770,10 @@ class ActivitiesController extends AppController
                     return $this->redirect($this->referer());
                 }
 
-            } 
+            } else {
+                $message = 'Something went wrong.';
+                $this->set(compact('message'));
+            }
         }
     }
     /**

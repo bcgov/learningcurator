@@ -1,0 +1,1 @@
+<div class="p-6"><?php echo $message ?></div>
