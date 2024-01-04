@@ -54,6 +54,11 @@ $this->loadHelper('Authentication.Identity');
                 <!-- <div class="form-field mb-3"><?= $pathway->file_path ?></div> -->
             <?php endif ?>
             <?= $this->Form->control('keywords', ['class' => 'form-field mb-3', 'type' => 'text', 'label' => 'Keywords']); ?>
+            <span class="text-slate-600 block mb-1 text-sm" id="keywordsHelp">
+                <i class="bi bi-info-circle"></i> 
+                A comma-separated list of keywords that don't appear in the title 
+                or goal that you wish this pathway to be found by in a search.
+            </span>
             <?= $this->Form->button(__('Save Pathway'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
             <?= $this->Form->end() ?>
             <?= $this->Form->postLink(__('Delete Pathway'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'inline-block mt-3 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base']) ?>
