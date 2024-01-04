@@ -87,6 +87,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/p/{pathwayslug}', ['controller' => 'Pathways', 'action' => 'view'])->setPass(['pathwayslug']);
     $builder->connect('/topic/{topicslug}/{pathwayid}/{pathwayslug}/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
     $builder->connect('/s/{stepid}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
+    $builder->connect('/a/{pathwayslug}', ['controller' => 'Pathways', 'action' => 'all'])->setPass(['pathwayslug']);
+    
     /** 
      * 
      * END THE NEW HOTNESS
