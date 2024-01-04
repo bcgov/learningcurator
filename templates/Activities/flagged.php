@@ -22,14 +22,17 @@ $this->loadHelper('Authentication.Identity');
         issue and be able to rectify it.</p>
     <p>These are links which have not been audited in the past 2 weeks.</p>
     <?php foreach ($activities as $a) : ?>
-        <div><a href="/activities/view/<?= h($a->id) ?>" target="_blank"><?= h($a->name) ?></a></div>
+        <div class="mb-2 p-3 bg-slate-100">
+        <div class="text-xl"><a href="/activities/view/<?= h($a->id) ?>" target="_blank"><?= h($a->name) ?></a></div>
         <div>
             <a href="<?= h($a->hyperlink) ?>" target="_blank">Visit website to verify</a>
             <?= $this->Form->create(null, ['url' => ['controller' => 'Activities', 'action' => 'edit/' . $a->id], 'class' => 'inline']) ?>
             <?= $this->Form->hidden('modifiedby_id', ['value' => $this->Identity->get('id')]); ?>
-            <?= $this->Form->hidden('audited', ['value' => '2022-04-25 10:30:00']); ?>
+            <?= $this->Form->hidden('audited', ['value' => $auditdate]); ?>
+            <?= $this->Form->hidden('redirectback', ['value' => 1]); ?>
             <?= $this->Form->button(__('Succesfully Audited'), ['class' => '']) ?>
             <?= $this->Form->end() ?>
+        </div>
         </div>
         <!--
 <?= $this->Form->create(null, ['url' => ['controller' => 'Activities', 'action' => 'edit/' . $a->id], 'class' => 'inline']) ?>
