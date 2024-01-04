@@ -298,6 +298,115 @@ class PathwaysController extends AppController
                             'followid'));
 
     }
+    /**
+     * All method
+     *
+     * @param string|null $id Pathway id.
+     * @return \Cake\Http\Response|null|void Renders view
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function all($slug = null)
+    {
+
+        $pathway = $this->Pathways->
+                            findBySlug($slug)->
+                            contain([
+                                'Topics',
+                                'Topics.Categories', 
+                                'Steps' => ['sort' => ['PathwaysSteps.sortorder' => 'asc']],
+                                'Steps.Statuses', 
+                                'Steps.Activities',
+                                'Users'])->firstOrFail();
+        
+        $user = $this->request->getAttribute('authentication')->getIdentity();
+        // We need to count how many activities this person has claimed 
+        // from each step (we loop through them below)
+        $useractivitylist = array();
+
+        $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
+        // Select based on currently logged in person
+        $useractivities = $au->find()->where(['user_id = ' => $user->id])->all()->toList();
+        // Loop through the resources and add just the ID to the 
+        foreach($useractivities as $uact) {
+            array_push($useractivitylist, $uact['activity_id']);
+        }
+        $followid = 0;
+        foreach($pathway->users as $pu) {
+            // Is the current user following this pathway? If so, then 
+            // we record the pathways_users ID number so we can remove
+            // the association (unfollow) if the user clicks the "Unfollow"
+            // button.
+            if($pu->id == $user->id) {
+                $followid = $pu->_joinData->id;
+            }
+        }
+        $percentage = 0;
+        $totalclaimed = 0;
+        $totalacts = 0;
+        $requiredacts = 0;
+        $suppacts = 0;
+        $curators = [];
+        if (!empty($pathway->steps)):
+
+            foreach ($pathway->steps as $steps):
+                foreach ($steps->activities as $activity):
+                    if($activity->status_id == 2) {
+
+                        array_push($curators,$activity->createdby_id);
+
+                        $totalacts++;
+                        if($activity->_joinData->required == 1) {
+                            $requiredacts++;
+                            if(in_array($activity->id, $useractivitylist)) {
+                                $totalclaimed++;
+                            }
+                        } else {
+                            $suppacts++;
+                        }
+                    }
+                endforeach; // activities
+            endforeach; // steps
+            if($totalclaimed > 0) {
+                $percentage = floor(($totalclaimed / $requiredacts) * 100);
+            } else {
+                $percentage = 0;
+            }
+        endif;
+        $stepcount = count($pathway->steps);
+
+
+        $attribution = TableRegistry::getTableLocator()->get('Users');
+        $createdby = $attribution->find()->where(['id = ' => $pathway->createdby])->all()->toList();
+        if($pathway->modifiedby == $pathway->createdby) {
+            $modifiedby = $attribution->find()->where(['id = ' => $pathway->modifiedby])->all()->toList();
+        } else {
+            $modifiedby = $createdby;
+        }
+        $curators = array_unique($curators);
+        $contributors = [];
+        foreach($curators as $c) {
+            $actcurators = $attribution->find()->where(['id = ' => $c])->all()->toList();
+            array_push($contributors,$actcurators);
+        }
+        if($pathway->published_by) {
+            $publishedby = $attribution->find()->where(['id = ' => $pathway->published_by])->all()->toList();
+        } else {
+            $publishedby = '';
+        }
+
+        $this->set(compact('pathway', 
+                            'contributors', 
+                            'createdby', 
+                            'publishedby', 
+                            'modifiedby', 
+                            'totalacts', 
+                            'stepcount', 
+                            'requiredacts', 
+                            'suppacts', 
+                            'percentage', 
+                            'followid'));
+
+    }
 
     /**
      * Export method

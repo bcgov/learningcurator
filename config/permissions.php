@@ -189,7 +189,7 @@ return [
         [
             'role' => '*',
             'controller' => 'Pathways',
-            'action' => ['index','view','follow','status','contributions','search','find'],
+            'action' => ['index','view','follow','status','contributions','search','find','all'],
         ],
         [
             'role' => 'curator',
@@ -219,7 +219,7 @@ return [
         [
             'role' => '*',
             'controller' => 'Steps',
-            'action' => ['index','view','status'],
+            'action' => ['index','view','status','v'],
         ],
         [
             'role' => 'curator',
