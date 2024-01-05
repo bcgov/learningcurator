@@ -12,7 +12,7 @@ if ($this->Identity->isLoggedIn()) {
     $role = $this->Identity->get('role');
     $uid = $this->Identity->get('id');
 }
-
+$actcount = 0;
 $environment = $_SERVER['SERVER_NAME'];
 
 $this->assign('title', h($pathway->name));
@@ -82,7 +82,7 @@ $this->assign('title', h($pathway->name));
 
 
 
-            <h3 class="mt-4 mb-1 text-darkblue font-semibold text-lg">Pathway Activity Progress</h3>
+
             <div class="flex pbarcontainer mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
                 <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar flex-none"></span>
                 <span class="py-2 px-3 text-base pbar pro_sm flex-none"></span>
@@ -376,13 +376,22 @@ $this->assign('title', h($pathway->name));
 
                 <?php foreach ($pathway->steps as $steps) : ?>
                     <?php $requiredacts = 0; ?>
+                    <script>
+                    var stepactids = [
                     <?php foreach ($steps->activities as $act) : ?>
-                        <?php if ($act->_joinData->required == 1) $requiredacts++; ?>
+                        <?php if ($act->_joinData->required == 1): ?>
+                            <?= $act->id ?>,
+                            <?php $requiredacts++; ?>
+                        <?php endif ?>
                     <?php endforeach ?>
+                        ];
+
+                    
+                    </script>
 
                     <?php $count++ ?>
                     
-                    <div class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
+                    <div id="step-<?= $steps->id ?>" class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
 
                         <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3">
                             <?= $count ?>
@@ -394,53 +403,48 @@ $this->assign('title', h($pathway->name));
                                     <?= h($steps->name) ?>
                                 </a>
                             </h4>
-                            
-                                <p class="text-bluegreen font-semibold text-base mb-1">
-                                    Step Activity Progress</p>
-                        <!-- TODO step completed not showing correctly with 1 activity -->
-                            <script>
-                            fetch('/steps/status/<?= $steps->id ?>', {
-                                method: 'GET'
-                            })
-                            .then((res) => res.json())
-                            .then((json) => {
-                                if (json.steppercent > 0) {
-                                    let launched = json.stepclaimcount + ' launched';
-                                    let remaining = (json.requiredacts - json.stepclaimcount) + ' to go';
-
-                                    document.querySelector('.pbar_<?= h($steps->id) ?>').style.width = json.steppercent + '%';
-
-                                    if (json.steppercent == 100) {
-                                        document.querySelector('.pro_<?= h($steps->id) ?>').innerHTML = 'Step completed!';
-                                    } else if (json.steppercent < 20) {
-                                        document.querySelector('.pro_sm_<?= h($steps->id) ?>').innerHTML = launched;
-                                        document.querySelector('.total_<?= h($steps->id) ?>').innerHTML = remaining;
-                                    } else {
-                                        document.querySelector('.pro_<?= h($steps->id) ?>').innerHTML = launched;
-                                        document.querySelector('.total_<?= h($steps->id) ?>').innerHTML = remaining;
-                                    }
-
-                                } else {
-                                    document.querySelector('.pbarcontainer_<?= h($steps->id) ?>').innerHTML = '<span class="py-1 px-3 text-sm text-right flex-1">' + json.requiredacts + ' activities to go</span>';
-                                }
-                                //console.log(json);
-                            })
-                            .catch((err) => console.error("error:", err));
-                            </script>
-                            <div class="flex pbarcontainer_<?= h($steps->id) ?> mb-3 w-full bg-slate-200 rounded-lg content-center justify-start">
-                                <span class="py-1 px-3 bg-bluegreen text-white rounded-lg text-sm pbar_<?= h($steps->id) ?> pro_<?= h($steps->id) ?> flex-none"></span>
-                                <span class="py-1 px-1 text-sm pbar_<?= h($steps->id) ?> pro_sm_<?= h($steps->id) ?> flex-none"></span>
-                                <span class="py-1 px-3 text-sm total_<?= h($steps->id) ?> flex-1 text-right"></span>
+                            <div class="mb-2">
+                                <p>
+                                    <span class="font-bold">Objective: </span>
+                                    <?= h($steps->description) ?>
+                                </p>
                             </div>
-                            <div class="mb-2"><p><span class="font-bold">Objective: </span><?= h($steps->description) ?></p></div>
+                                
+                      
+                            
                         
             
                             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         <details  class="p-3 bg-slate-100 rounded-lg">
                             <summary class="font-bold">Activities</summary>
-                        <?php foreach($steps->activities as $a): ?>
-                            <details class="px-4 py-2">
-                                <summary class="text-xl"><?= $a->name ?></summary>
+                            <?php foreach($steps->activities as $a): ?>
+                            <?php $actcount++ ?>
+                            <details id="activity-<?= $a->id ?>" class="activity px-4 py-2">
+                                <summary class="text-xl">
+                                    <span id="launched-<?= $a->id ?>" class="launched"></span>
+                                    <?= $a->name ?>
+                                </summary>
                                 <div class="p-3 bg-white rounded-lg">
                                 <div><?= $a->description ?></div>
                                 <div>
@@ -459,8 +463,44 @@ $this->assign('title', h($pathway->name));
                                 </div>
                                 </div>
                             </details>
-                        <?php endforeach ?>
+                            <?php endforeach ?>
                         </details>
+
+<!-- <?= $actcount ?> activities -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         </div>
                         </div>
                 <?php endforeach ?>
@@ -468,7 +508,30 @@ $this->assign('title', h($pathway->name));
     </div>
 </div>
 
+<script type="module">
 
+var activities = document.getElementsByClassName('activity');
+
+fetch('/users/api', {
+    method: 'GET'
+})
+.then((res) => res.json())
+.then((json) => {
+    var followed = json['followed'];
+    var launched = json['launched'];
+    Array.from(activities).forEach(function(element) {
+        let actid = element.id;
+        let aid = actid.split('-');
+        if(launched.includes(parseInt(aid[1]))) {
+            let badge = element.getElementsByClassName('launched');
+            badge[0].innerHTML = '<span class="p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80">Launched!</span>'
+        }
+        
+    });
+})
+.catch((err) => console.error("error:", err));
+
+</script>
 
 
 <?php else : ?>

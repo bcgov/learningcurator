@@ -1,3 +1,3 @@
 <?php 
 
-echo json_encode(compact(['ActivitiesCompleted','PathwaysPinned']));
+echo json_encode(compact(['launched','followed']));
