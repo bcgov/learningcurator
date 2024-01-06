@@ -346,12 +346,14 @@ class PathwaysController extends AppController
         $requiredacts = 0;
         $suppacts = 0;
         $curators = [];
+        $activityids = [];
         if (!empty($pathway->steps)):
 
             foreach ($pathway->steps as $steps):
                 foreach ($steps->activities as $activity):
                     if($activity->status_id == 2) {
 
+                        array_push($activityids,$activity->id);
                         array_push($curators,$activity->createdby_id);
 
                         $totalacts++;
@@ -404,7 +406,8 @@ class PathwaysController extends AppController
                             'requiredacts', 
                             'suppacts', 
                             'percentage', 
-                            'followid'));
+                            'followid',
+                            'activityids'));
 
     }
 

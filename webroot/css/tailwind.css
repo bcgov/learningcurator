@@ -1167,6 +1167,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-left-width: 2px;
 }
 
+.border-b-2 {
+  border-bottom-width: 2px;
+}
+
 .border-slate-500 {
   --tw-border-opacity: 1;
   border-color: rgb(100 116 139 / var(--tw-border-opacity));
@@ -1303,6 +1307,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-bluegreen {
   --tw-bg-opacity: 1;
   background-color: rgb(47 97 115 / var(--tw-bg-opacity));
+}
+
+.bg-slate-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(100 116 139 / var(--tw-bg-opacity));
 }
 
 .bg-yellow-100 {

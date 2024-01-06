@@ -132,7 +132,7 @@ return [
             'role' => '*',
             'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
-            'action' => ['profile', 'logout', 'linkSocial', 'callbackLinkSocial'],
+            'action' => ['profile', 'logout', 'linkSocial', 'callbackLinkSocial','api'],
         ],
         [
             'role' => 'curator',

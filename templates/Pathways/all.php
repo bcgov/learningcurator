@@ -36,7 +36,7 @@ $this->assign('title', h($pathway->name));
 
 
 
-    <div class="max-w-prose">
+    <div class="">
         <div class="p-3 mb-3 mt-8 bg-bluegreen text-white rounded-lg flex justify-start items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 mx-3 grow-0" viewBox="0 0 16 16">
                 <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
@@ -83,56 +83,37 @@ $this->assign('title', h($pathway->name));
 
 
 
-            <div class="flex pbarcontainer mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="flex pbarcontainer mb-4 w-full bg-slate-200 rounded-lg content-center justify-start sticky">
                 <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar flex-none"></span>
-                <span class="py-2 px-3 text-base pbar pro_sm flex-none"></span>
+                <span id="progressbar" class="py-1 px-3 text-base pbar pro_sm flex-none bg-slate-500 rounded-lg text-center text-white"></span>
                 <span class="py-2 px-3 text-base total flex-1 text-right"></span>
                 <span class="zero hidden py-2 px-3 text-base text-right"></span>
             </div>
-            <script>
-                fetch('/pathways/status/<?= $pathway->id ?>', {
-                    method: 'GET'
-                })
-                .then((res) => res.json())
-                .then((json) => {
 
-                    if (json.percentage > 0) {
-                        // Phrasing
-                        let launched = json.completed + ' launched';
-                        let remaining = (json.requiredacts - json.completed) + ' to go';
-                        document.querySelector('.zero').classList.add('hidden');
-                        document.querySelector('.pbar').classList.remove('hidden');
-                        document.querySelector('.pbar').style.width = json.percentage + '%';
-
-                        if (json.percentage == 100) {
-                            
-                            document.querySelector('.pbar').innerHTML = 'Pathway completed!';
-                            document.querySelector('.zero').innerHTML = '';
-                        } else if (json.percentage < 20) {
-                            
-                            document.querySelector('.pbar').innerHTML = '';
-                            document.querySelector('.pro_sm').innerHTML = launched;
-                            document.querySelector('.total').innerHTML = remaining;
-                            document.querySelector('.zero').innerHTML = '';
-                        } else if (json.percentage > 90) {
-                            document.querySelector('.pro_sm').innerHTML = '';
-                            document.querySelector('.total').innerHTML = '';
-                            document.querySelector('.pbar').innerHTML = launched + ', ' + remaining;
-                            document.querySelector('.zero').innerHTML = '';
-                        } else {
-                            document.querySelector('.pbar').innerHTML = launched;
-                            document.querySelector('.total').innerHTML = remaining;
-                            document.querySelector('.pro_sm').innerHTML = '';
-                            document.querySelector('.zero').innerHTML = '';
-                        }
-
-                    } else {
-                        document.querySelector('.zero').classList.remove('hidden');
-                        document.querySelector('.zero').innerHTML = '' + json.requiredacts + ' activities to go';
-                    }
-                })
-                .catch((err) => console.error("error:", err));
-            </script>
 
 
 
@@ -436,16 +417,16 @@ $this->assign('title', h($pathway->name));
 
 
 
-                        <details  class="p-3 bg-slate-100 rounded-lg">
-                            <summary class="font-bold">Activities</summary>
+                        <details  class="p-4 bg-slate-100 rounded-lg">
+                            <summary class="font-bold"><?= count($steps->activities) ?> Activities</summary>
                             <?php foreach($steps->activities as $a): ?>
                             <?php $actcount++ ?>
-                            <details id="activity-<?= $a->id ?>" class="activity px-4 py-2">
-                                <summary class="text-xl">
-                                    <span id="launched-<?= $a->id ?>" class="launched"></span>
+                            <details id="activity-<?= $a->id ?>" class="activity px-4 py-2 border-b-2">
+                                <summary class="text-lg">
+                                    <span id="launched-<?= $a->id ?>" class="launched text-xs"></span>
                                     <?= $a->name ?>
                                 </summary>
-                                <div class="p-3 bg-white rounded-lg">
+                                <div class="p-3 ml-6 bg-white rounded-lg">
                                 <div><?= $a->description ?></div>
                                 <div>
                                     <a target="_blank" 
@@ -510,27 +491,82 @@ $this->assign('title', h($pathway->name));
 
 <script type="module">
 
+var pathacts = [<?php foreach($activityids as $a) { echo $a . ','; } ?>];
 var activities = document.getElementsByClassName('activity');
 
-fetch('/users/api', {
-    method: 'GET'
-})
-.then((res) => res.json())
-.then((json) => {
-    var followed = json['followed'];
-    var launched = json['launched'];
+getLearnerData ();
+
+// Left to itself, the launch link on activites works just fine 
+// with target=_blank set, but we want to update the UI of this 
+// page while the learner visits the activity so that when they
+// come back, their current state on the pathway is reflected 
+// without having to refresh the page. 
+let launchlinks = document.getElementsByClassName('launch');
+Array.from(launchlinks).forEach(function(element) {
+    element.addEventListener('click', (e) => { 
+        e.preventDefault();
+        // Set the "Launched" badge on the activity
+        let indicator = e.target.getAttribute('data-activity');
+        console.log(indicator);
+        // document.querySelector('.'+indicator).classList.remove('hidden');
+        // actually open the link
+        let url = e.target.href;
+        window.open(url);
+        // Wait 3 seconds before re-loading the status so the launch
+        // event gets properly registered in the background
+        setTimeout(function(){
+            getLearnerData();
+        }, 3000);
+    });
+});
+
+function getLearnerData () {
+    let learner = fetch('/users/api', {
+                        method: 'GET'
+                    })
+                    .then((res) => res.json())
+                    .then((json) => {
+                        
+                        // Pathway follow statuses
+                        var followed = json['followed'];
+
+                        // Activity launch statuses
+                        var launched = json['launched'];
+                        // Update UI with launch statuses.
+                        updateLaunches(launched);
+                        // Now calculate pathway progress and update the UI
+                        updateProgress(launched);
+
+                    })
+                    .catch((err) => console.error("error:", err));
+
+}
+function updateProgress (launched) {
+       // Now calculate pathway progress and update the UI
+    let intersection = pathacts.filter(x => launched.includes(x));
+    let progress = (intersection.length / pathacts.length) * 100;
+    let perc = Math.floor(progress) + '%';
+    let pbar = document.getElementById('progressbar');
+    pbar.setAttribute('style','width:' + perc);
+    pbar.innerHTML = '<span class="text-xs">' + perc + '</span>';
+}
+function updateLaunches (launched) {
+
     Array.from(activities).forEach(function(element) {
+        
+        // 
         let actid = element.id;
         let aid = actid.split('-');
+        // Does this listed activity exist in the list of activities the 
+        // learner has launched?
         if(launched.includes(parseInt(aid[1]))) {
+            // Set the badge so that it says "Launched!" in the UI so that 
+            // learner can easily see where they've been before.
             let badge = element.getElementsByClassName('launched');
-            badge[0].innerHTML = '<span class="p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80">Launched!</span>'
+            badge[0].innerHTML = '<span class="p-0.5 px-2 bg-sky-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-sky-700/80">Launched!</span>';
         }
-        
     });
-})
-.catch((err) => console.error("error:", err));
-
+}
 </script>
 
 
