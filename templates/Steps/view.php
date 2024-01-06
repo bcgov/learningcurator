@@ -190,7 +190,6 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
 
 
 
-
                                     <a href="/profile/launches"  class="act-<?= $activity->id ?> <?= $completed ?> p-0.5 px-2 bg-sky-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80">
                                         Launched
                                     </a>

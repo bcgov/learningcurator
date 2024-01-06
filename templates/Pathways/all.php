@@ -12,7 +12,7 @@ if ($this->Identity->isLoggedIn()) {
     $role = $this->Identity->get('role');
     $uid = $this->Identity->get('id');
 }
-
+$actcount = 0;
 $environment = $_SERVER['SERVER_NAME'];
 
 $this->assign('title', h($pathway->name));
@@ -36,7 +36,7 @@ $this->assign('title', h($pathway->name));
 
 
 
-    <div class="max-w-prose">
+    <div class="">
         <div class="p-3 mb-3 mt-8 bg-bluegreen text-white rounded-lg flex justify-start items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 mx-3 grow-0" viewBox="0 0 16 16">
                 <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
@@ -82,57 +82,38 @@ $this->assign('title', h($pathway->name));
 
 
 
-            <h3 class="mt-4 mb-1 text-darkblue font-semibold text-lg">Pathway Activity Progress</h3>
-            <div class="flex pbarcontainer mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="flex pbarcontainer mb-4 w-full bg-slate-200 rounded-lg content-center justify-start sticky">
                 <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar flex-none"></span>
-                <span class="py-2 px-3 text-base pbar pro_sm flex-none"></span>
+                <span id="progressbar" class="py-1 px-3 text-base pbar pro_sm flex-none bg-slate-500 rounded-lg text-center text-white"></span>
                 <span class="py-2 px-3 text-base total flex-1 text-right"></span>
                 <span class="zero hidden py-2 px-3 text-base text-right"></span>
             </div>
-            <script>
-                fetch('/pathways/status/<?= $pathway->id ?>', {
-                    method: 'GET'
-                })
-                .then((res) => res.json())
-                .then((json) => {
 
-                    if (json.percentage > 0) {
-                        // Phrasing
-                        let launched = json.completed + ' launched';
-                        let remaining = (json.requiredacts - json.completed) + ' to go';
-                        document.querySelector('.zero').classList.add('hidden');
-                        document.querySelector('.pbar').classList.remove('hidden');
-                        document.querySelector('.pbar').style.width = json.percentage + '%';
-
-                        if (json.percentage == 100) {
-                            
-                            document.querySelector('.pbar').innerHTML = 'Pathway completed!';
-                            document.querySelector('.zero').innerHTML = '';
-                        } else if (json.percentage < 20) {
-                            
-                            document.querySelector('.pbar').innerHTML = '';
-                            document.querySelector('.pro_sm').innerHTML = launched;
-                            document.querySelector('.total').innerHTML = remaining;
-                            document.querySelector('.zero').innerHTML = '';
-                        } else if (json.percentage > 90) {
-                            document.querySelector('.pro_sm').innerHTML = '';
-                            document.querySelector('.total').innerHTML = '';
-                            document.querySelector('.pbar').innerHTML = launched + ', ' + remaining;
-                            document.querySelector('.zero').innerHTML = '';
-                        } else {
-                            document.querySelector('.pbar').innerHTML = launched;
-                            document.querySelector('.total').innerHTML = remaining;
-                            document.querySelector('.pro_sm').innerHTML = '';
-                            document.querySelector('.zero').innerHTML = '';
-                        }
-
-                    } else {
-                        document.querySelector('.zero').classList.remove('hidden');
-                        document.querySelector('.zero').innerHTML = '' + json.requiredacts + ' activities to go';
-                    }
-                })
-                .catch((err) => console.error("error:", err));
-            </script>
 
 
 
@@ -365,7 +346,7 @@ $this->assign('title', h($pathway->name));
         <?php //if(empty($pathway->version) || $environment == 'learningcurator.gov.bc.ca') : ?>
 
 
-            <!-- TODO Nori/Allan add code for subtitle in box -->
+
             <?php if (!empty($pathway->steps)) : ?>
                 <?php $count = 0 ?>
 
@@ -376,13 +357,22 @@ $this->assign('title', h($pathway->name));
 
                 <?php foreach ($pathway->steps as $steps) : ?>
                     <?php $requiredacts = 0; ?>
+                    <script>
+                    var stepactids = [
                     <?php foreach ($steps->activities as $act) : ?>
-                        <?php if ($act->_joinData->required == 1) $requiredacts++; ?>
+                        <?php if ($act->_joinData->required == 1): ?>
+                            <?= $act->id ?>,
+                            <?php $requiredacts++; ?>
+                        <?php endif ?>
                     <?php endforeach ?>
+                        ];
+
+                    
+                    </script>
 
                     <?php $count++ ?>
                     
-                    <div class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
+                    <div id="step-<?= $steps->id ?>" class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
 
                         <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3">
                             <?= $count ?>
@@ -390,59 +380,61 @@ $this->assign('title', h($pathway->name));
         
                         <div class="flex-1 basis-6/7 p-3">
                             <h4 class="text-xl font-semibold mb-2">
-                                <a href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
-                                    <?= h($steps->name) ?>
+                                <?= h($steps->name) ?>
+                                <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+                                <a href="/steps/edit/<?= $steps->id ?>" class="group float-right text-xs">
+                                    Edit
                                 </a>
+                                <?php endif ?>
                             </h4>
-                            
-                                <p class="text-bluegreen font-semibold text-base mb-1">
-                                    Step Activity Progress</p>
-                        <!-- TODO step completed not showing correctly with 1 activity -->
-                            <script>
-                            fetch('/steps/status/<?= $steps->id ?>', {
-                                method: 'GET'
-                            })
-                            .then((res) => res.json())
-                            .then((json) => {
-                                if (json.steppercent > 0) {
-                                    let launched = json.stepclaimcount + ' launched';
-                                    let remaining = (json.requiredacts - json.stepclaimcount) + ' to go';
-
-                                    document.querySelector('.pbar_<?= h($steps->id) ?>').style.width = json.steppercent + '%';
-
-                                    if (json.steppercent == 100) {
-                                        document.querySelector('.pro_<?= h($steps->id) ?>').innerHTML = 'Step completed!';
-                                    } else if (json.steppercent < 20) {
-                                        document.querySelector('.pro_sm_<?= h($steps->id) ?>').innerHTML = launched;
-                                        document.querySelector('.total_<?= h($steps->id) ?>').innerHTML = remaining;
-                                    } else {
-                                        document.querySelector('.pro_<?= h($steps->id) ?>').innerHTML = launched;
-                                        document.querySelector('.total_<?= h($steps->id) ?>').innerHTML = remaining;
-                                    }
-
-                                } else {
-                                    document.querySelector('.pbarcontainer_<?= h($steps->id) ?>').innerHTML = '<span class="py-1 px-3 text-sm text-right flex-1">' + json.requiredacts + ' activities to go</span>';
-                                }
-                                //console.log(json);
-                            })
-                            .catch((err) => console.error("error:", err));
-                            </script>
-                            <div class="flex pbarcontainer_<?= h($steps->id) ?> mb-3 w-full bg-slate-200 rounded-lg content-center justify-start">
-                                <span class="py-1 px-3 bg-bluegreen text-white rounded-lg text-sm pbar_<?= h($steps->id) ?> pro_<?= h($steps->id) ?> flex-none"></span>
-                                <span class="py-1 px-1 text-sm pbar_<?= h($steps->id) ?> pro_sm_<?= h($steps->id) ?> flex-none"></span>
-                                <span class="py-1 px-3 text-sm total_<?= h($steps->id) ?> flex-1 text-right"></span>
+                            <div class="mb-2">
+                                <p>
+                                    <span class="font-bold">Objective: </span>
+                                    <?= h($steps->description) ?>
+                                </p>
                             </div>
-                            <div class="mb-2"><p><span class="font-bold">Objective: </span><?= h($steps->description) ?></p></div>
+                                
+                      
+                            
                         
             
                             
-                        <details  class="p-3 bg-slate-100 rounded-lg">
-                            <summary class="font-bold">Activities</summary>
-                        <?php foreach($steps->activities as $a): ?>
-                            <details class="px-4 py-2">
-                                <summary class="text-xl"><?= $a->name ?></summary>
-                                <div class="p-3 bg-white rounded-lg">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <details class="py-2 px-4 bg-slate-100 rounded-lg">
+                            <summary class="font-bold hover:cursor-pointer"><?= count($steps->activities) ?> Activities</summary>
+                            <?php foreach($steps->activities as $a): ?>
+                            <?php $actcount++ ?>
+                            <details id="activity-<?= $a->id ?>" class="activity px-4 py-2 border-b-2">
+                                <summary class="text-lg hover:cursor-pointer hover:text-blue-700">
+                                    <span id="launched-<?= $a->id ?>" class="launched text-xs"></span>
+                                    <?= $a->name ?>
+                                </summary>
+                                <div class="p-3 ml-6 bg-white rounded-lg">
                                 <div><?= $a->description ?></div>
+                                <?php if (!empty($a->_joinData->stepcontext)) : ?>
+                                <div class="text-sm italic mt-2">Curator says:</div>
+                                <blockquote class="border-l-2 p-2 m-2"><?= h($a->_joinData->stepcontext) ?></blockquote>
+                                <?php endif ?>
                                 <div>
                                     <a target="_blank" 
                                         rel="noopener" 
@@ -456,11 +448,48 @@ $this->assign('title', h($pathway->name));
                                                 <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
                                             </svg>
                                     </a>
+                                    <a href="/activities/view/<?= $a->id ?>" class="inline-block ml-3 underline hover:text-blue-700">Details</a>
                                 </div>
                                 </div>
                             </details>
-                        <?php endforeach ?>
+                            <?php endforeach ?>
                         </details>
+
+<!-- <?= $actcount ?> activities -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         </div>
                         </div>
                 <?php endforeach ?>
@@ -468,7 +497,84 @@ $this->assign('title', h($pathway->name));
     </div>
 </div>
 
+<script type="module">
 
+let pathacts = [<?php foreach($activityids as $a) { echo $a . ','; } ?>];
+let activities = document.getElementsByClassName('activity');
+
+getLearnerData ();
+
+// Left to itself, the launch link on activites works just fine 
+// with target=_blank set, but we want to update the UI of this 
+// page while the learner visits the activity so that when they
+// come back, their current state on the pathway is reflected 
+// without having to refresh the page. 
+let launchlinks = document.getElementsByClassName('launch');
+Array.from(launchlinks).forEach(function(element) {
+    element.addEventListener('click', (e) => { 
+        e.preventDefault();
+        // Set the "Launched" badge on the activity
+        let indicator = e.target.getAttribute('data-activity');
+        console.log(indicator);
+        // document.querySelector('.'+indicator).classList.remove('hidden');
+        // actually open the link
+        let url = e.target.href;
+        window.open(url);
+        // Wait 3 seconds before re-loading the status so the launch
+        // event gets properly registered in the background
+        setTimeout(function(){
+            getLearnerData();
+        }, 3000);
+    });
+});
+
+function getLearnerData () {
+    let learner = fetch('/users/api', {
+                        method: 'GET'
+                    })
+                    .then((res) => res.json())
+                    .then((json) => {
+                        
+                        // Pathway follow statuses
+                        let followed = json['followed'];
+
+                        // Activity launch statuses
+                        let launched = json['launched'];
+                        // Update UI with launch statuses.
+                        updateLaunches(launched);
+                        // Now calculate pathway progress and update the UI
+                        updateProgress(launched);
+
+                    })
+                    .catch((err) => console.error("error:", err));
+
+}
+function updateProgress (launched) {
+    // Calculate pathway progress and update the UI.
+    let intersection = pathacts.filter(x => launched.includes(x));
+    let progress = (intersection.length / pathacts.length) * 100;
+    let perc = Math.floor(progress) + '%';
+    let pbar = document.getElementById('progressbar');
+    pbar.setAttribute('style','width:' + perc);
+    pbar.innerHTML = '<span class="text-xs">' + perc + '</span>';
+}
+function updateLaunches (launched) {
+
+    Array.from(activities).forEach(function(element) {
+        
+        let actid = element.id;
+        let aid = actid.split('-');
+        // Does this listed activity exist in the list of activities the 
+        // learner has launched?
+        if(launched.includes(parseInt(aid[1]))) {
+            // Set the badge so that it says "Launched!" in the UI so that 
+            // learner can easily see where they've been before.
+            let badge = element.getElementsByClassName('launched');
+            badge[0].innerHTML = '<span class="p-0.5 px-2 bg-emerald-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-emerald-700/80">Launched</span>';
+        }
+    });
+}
+</script>
 
 
 <?php else : ?>
