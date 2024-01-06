@@ -380,9 +380,12 @@ $this->assign('title', h($pathway->name));
         
                         <div class="flex-1 basis-6/7 p-3">
                             <h4 class="text-xl font-semibold mb-2">
-                                <a href="/topic/<?= $pathway->topic->slug ?>/<?= $pathway->id ?>/<?= $pathway->slug ?>/<?= $steps->id ?>/<?= $steps->slug ?>" class="group hover:no-underline">
-                                    <?= h($steps->name) ?>
+                                <?= h($steps->name) ?>
+                                <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+                                <a href="/steps/edit/<?= $steps->id ?>" class="group float-right text-xs">
+                                    Edit
                                 </a>
+                                <?php endif ?>
                             </h4>
                             <div class="mb-2">
                                 <p>
@@ -417,7 +420,7 @@ $this->assign('title', h($pathway->name));
 
 
 
-                        <details  class="p-4 bg-slate-100 rounded-lg">
+                        <details  class="py-2 px-4 bg-slate-100 rounded-lg">
                             <summary class="font-bold"><?= count($steps->activities) ?> Activities</summary>
                             <?php foreach($steps->activities as $a): ?>
                             <?php $actcount++ ?>
@@ -428,6 +431,10 @@ $this->assign('title', h($pathway->name));
                                 </summary>
                                 <div class="p-3 ml-6 bg-white rounded-lg">
                                 <div><?= $a->description ?></div>
+                                <?php if (!empty($activity->_joinData->stepcontext)) : ?>
+                                <div class="text-sm italic mt-2">Curator says:</div>
+                                <blockquote class="border-l-2 p-2 m-2"><?= h($activity->_joinData->stepcontext) ?></blockquote>
+                                <?php endif ?>
                                 <div>
                                     <a target="_blank" 
                                         rel="noopener" 
@@ -441,6 +448,7 @@ $this->assign('title', h($pathway->name));
                                                 <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
                                             </svg>
                                     </a>
+                                    <a href="/activities/view/<?= $a->id ?>" class="inline-block ml-3 underline hover:text-blue-700">Details</a>
                                 </div>
                                 </div>
                             </details>
@@ -491,8 +499,8 @@ $this->assign('title', h($pathway->name));
 
 <script type="module">
 
-var pathacts = [<?php foreach($activityids as $a) { echo $a . ','; } ?>];
-var activities = document.getElementsByClassName('activity');
+let pathacts = [<?php foreach($activityids as $a) { echo $a . ','; } ?>];
+let activities = document.getElementsByClassName('activity');
 
 getLearnerData ();
 
@@ -528,10 +536,10 @@ function getLearnerData () {
                     .then((json) => {
                         
                         // Pathway follow statuses
-                        var followed = json['followed'];
+                        let followed = json['followed'];
 
                         // Activity launch statuses
-                        var launched = json['launched'];
+                        let launched = json['launched'];
                         // Update UI with launch statuses.
                         updateLaunches(launched);
                         // Now calculate pathway progress and update the UI
@@ -542,7 +550,7 @@ function getLearnerData () {
 
 }
 function updateProgress (launched) {
-       // Now calculate pathway progress and update the UI
+    // Calculate pathway progress and update the UI.
     let intersection = pathacts.filter(x => launched.includes(x));
     let progress = (intersection.length / pathacts.length) * 100;
     let perc = Math.floor(progress) + '%';
@@ -554,7 +562,6 @@ function updateLaunches (launched) {
 
     Array.from(activities).forEach(function(element) {
         
-        // 
         let actid = element.id;
         let aid = actid.split('-');
         // Does this listed activity exist in the list of activities the 
@@ -563,7 +570,7 @@ function updateLaunches (launched) {
             // Set the badge so that it says "Launched!" in the UI so that 
             // learner can easily see where they've been before.
             let badge = element.getElementsByClassName('launched');
-            badge[0].innerHTML = '<span class="p-0.5 px-2 bg-sky-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-sky-700/80">Launched!</span>';
+            badge[0].innerHTML = '<span class="p-0.5 px-2 bg-emerald-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-emerald-700/80">Launched</span>';
         }
     });
 }
