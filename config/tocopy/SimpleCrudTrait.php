@@ -240,17 +240,18 @@ trait SimpleCrudTrait
                 'ActivitiesUsers.Activities'
             ],
         ]);
-        $completed = [];
+        
+        $launched = [];
         foreach ($entity->activities_users as $act) {
-            array_push($completed, $act->activity_id);
+            array_push($launched, $act->activity_id);
         }
-        $pathspinned = [];
+        $pathsfollowed = [];
         foreach ($entity->pathways_users as $path) {
-            array_push($pathspinned, $path->pathway_id);
+            array_push($pathsfollowed, $path->pathway_id);
         }
         $this->viewBuilder()->setLayout('ajax');
-        $this->set('ActivitiesCompleted', $completed);
-        $this->set('PathwaysPinned', $pathspinned);
+        $this->set('launched', $launched);
+        $this->set('followed', $pathsfollowed);
     }
 
     /**
