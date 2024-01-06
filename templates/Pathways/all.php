@@ -83,65 +83,12 @@ $this->assign('title', h($pathway->name));
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <div class="flex pbarcontainer mb-4 w-full bg-slate-200 rounded-lg content-center justify-start sticky">
                 <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar flex-none"></span>
                 <span id="progressbar" class="py-1 px-3 text-base pbar pro_sm flex-none bg-slate-500 rounded-lg text-center text-white"></span>
                 <span class="py-2 px-3 text-base total flex-1 text-right"></span>
                 <span class="zero hidden py-2 px-3 text-base text-right"></span>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -372,7 +319,7 @@ $this->assign('title', h($pathway->name));
 
                     <?php $count++ ?>
                     
-                    <div id="step-<?= $steps->id ?>" class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
+                    <div id="step-<?= $count ?>" class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
 
                         <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3">
                             <?= $count ?>
@@ -420,13 +367,13 @@ $this->assign('title', h($pathway->name));
 
 
 
-                        <details class="py-2 px-4 bg-slate-100 rounded-lg">
+                        <details class="activitylist py-2 px-4 bg-slate-100 rounded-lg">
                             <summary class="font-bold hover:cursor-pointer"><?= count($steps->activities) ?> Activities</summary>
                             <?php foreach($steps->activities as $a): ?>
                             <?php $actcount++ ?>
                             <details id="activity-<?= $a->id ?>" class="activity px-4 py-2 border-b-2">
                                 <summary class="text-lg hover:cursor-pointer hover:text-blue-700">
-                                    <span id="launched-<?= $a->id ?>" class="launched text-xs"></span>
+                                    <span id="launched-<?= $a->id ?>" class="hidden launched p-0.5 px-2 bg-emerald-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-emerald-700/80"></span>
                                     <?= $a->name ?>
                                 </summary>
                                 <div class="p-3 ml-6 bg-white rounded-lg">
@@ -499,9 +446,27 @@ $this->assign('title', h($pathway->name));
 
 <script type="module">
 
+// If we are linking directly to a step via a URL hash then open the 
+// activities for that step automatically by adding an open attribute
+// to the details/summary container.
+if(window.location.hash) {
+    let stepopen = window.location.hash;
+    let step = stepopen.replace('#','');
+    let stepacts = document.getElementById(step);
+    let toopen = stepacts.getElementsByClassName('activitylist');
+    console.log(toopen);
+    toopen[0].setAttribute('open','open');
+    
+}
+
+// This is a list of all the activity IDs on this pathway from every step.
 let pathacts = [<?php foreach($activityids as $a) { echo $a . ','; } ?>];
+
+// Grab the list of activities in the DOM so we can iterate over them
+// assigning launched status.
 let activities = document.getElementsByClassName('activity');
 
+// Setup the statuses on the initial page load.
 getLearnerData ();
 
 // Left to itself, the launch link on activites works just fine 
@@ -513,10 +478,6 @@ let launchlinks = document.getElementsByClassName('launch');
 Array.from(launchlinks).forEach(function(element) {
     element.addEventListener('click', (e) => { 
         e.preventDefault();
-        // Set the "Launched" badge on the activity
-        let indicator = e.target.getAttribute('data-activity');
-        console.log(indicator);
-        // document.querySelector('.'+indicator).classList.remove('hidden');
         // actually open the link
         let url = e.target.href;
         window.open(url);
@@ -529,26 +490,31 @@ Array.from(launchlinks).forEach(function(element) {
 });
 
 function getLearnerData () {
+    // The '/users/api' endpoint returns two simple arrays:
+    //  1. The IDs of all activities launched
+    //  2. The IDs of all pathways followed
+    // For launch statuses, the pathway has a list of all activity IDs
+    // that are contained on it in the 'pathacts' variable defined above
+    // (via PHP). We use that to compare the difference with acts launched
+    // to derive overall progress and individual activity status.
     let learner = fetch('/users/api', {
                         method: 'GET'
                     })
                     .then((res) => res.json())
                     .then((json) => {
-                        
                         // Pathway follow statuses
                         let followed = json['followed'];
-
                         // Activity launch statuses
                         let launched = json['launched'];
                         // Update UI with launch statuses.
                         updateLaunches(launched);
                         // Now calculate pathway progress and update the UI
                         updateProgress(launched);
-
                     })
                     .catch((err) => console.error("error:", err));
 
 }
+// Update the progress bar UI with the info returned by getLearnerData()
 function updateProgress (launched) {
     // Calculate pathway progress and update the UI.
     let intersection = pathacts.filter(x => launched.includes(x));
@@ -558,10 +524,15 @@ function updateProgress (launched) {
     pbar.setAttribute('style','width:' + perc);
     pbar.innerHTML = '<span class="text-xs">' + perc + '</span>';
 }
-function updateLaunches (launched) {
 
+// Update the status of individual activities with the info returned 
+// by getLearnerData()
+function updateLaunches (launched) {
+    // Grab all the activities on the page and loop through them.
     Array.from(activities).forEach(function(element) {
-        
+        // we take the id of the div which is in the format "activity-999"
+        // and we need to split the "activity-" part out so that we can address
+        // the numeric value only.
         let actid = element.id;
         let aid = actid.split('-');
         // Does this listed activity exist in the list of activities the 
@@ -570,7 +541,11 @@ function updateLaunches (launched) {
             // Set the badge so that it says "Launched!" in the UI so that 
             // learner can easily see where they've been before.
             let badge = element.getElementsByClassName('launched');
-            badge[0].innerHTML = '<span class="p-0.5 px-2 bg-emerald-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-emerald-700/80">Launched</span>';
+            // I had issues with getting the element by ID for some reason
+            // so we get by class and refer to the first (and expected to be
+            // only) instance of it with [0].
+            badge[0].classList.remove('hidden');
+            badge[0].innerHTML = 'Launched';
         }
     });
 }
