@@ -346,7 +346,7 @@ $this->assign('title', h($pathway->name));
         <?php //if(empty($pathway->version) || $environment == 'learningcurator.gov.bc.ca') : ?>
 
 
-            <!-- TODO Nori/Allan add code for subtitle in box -->
+
             <?php if (!empty($pathway->steps)) : ?>
                 <?php $count = 0 ?>
 
@@ -420,20 +420,20 @@ $this->assign('title', h($pathway->name));
 
 
 
-                        <details  class="py-2 px-4 bg-slate-100 rounded-lg">
-                            <summary class="font-bold"><?= count($steps->activities) ?> Activities</summary>
+                        <details class="py-2 px-4 bg-slate-100 rounded-lg">
+                            <summary class="font-bold hover:cursor-pointer"><?= count($steps->activities) ?> Activities</summary>
                             <?php foreach($steps->activities as $a): ?>
                             <?php $actcount++ ?>
                             <details id="activity-<?= $a->id ?>" class="activity px-4 py-2 border-b-2">
-                                <summary class="text-lg">
+                                <summary class="text-lg hover:cursor-pointer hover:text-blue-700">
                                     <span id="launched-<?= $a->id ?>" class="launched text-xs"></span>
                                     <?= $a->name ?>
                                 </summary>
                                 <div class="p-3 ml-6 bg-white rounded-lg">
                                 <div><?= $a->description ?></div>
-                                <?php if (!empty($activity->_joinData->stepcontext)) : ?>
+                                <?php if (!empty($a->_joinData->stepcontext)) : ?>
                                 <div class="text-sm italic mt-2">Curator says:</div>
-                                <blockquote class="border-l-2 p-2 m-2"><?= h($activity->_joinData->stepcontext) ?></blockquote>
+                                <blockquote class="border-l-2 p-2 m-2"><?= h($a->_joinData->stepcontext) ?></blockquote>
                                 <?php endif ?>
                                 <div>
                                     <a target="_blank" 

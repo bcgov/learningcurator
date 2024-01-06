@@ -2002,6 +2002,10 @@ details[open] > summary {
   background-color: rgb(226 232 240 / 0.8);
 }
 
+.hover\:bg-emerald-700\/80:hover {
+  background-color: rgb(4 120 87 / 0.8);
+}
+
 .hover\:bg-bluegreen\/80:hover {
   background-color: rgb(47 97 115 / 0.8);
 }
@@ -2035,6 +2039,11 @@ details[open] > summary {
 
 .hover\:text-sky-700\/80:hover {
   color: rgb(3 105 161 / 0.8);
+}
+
+.hover\:text-blue-600:hover {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
 .hover\:text-blue-700:hover {
