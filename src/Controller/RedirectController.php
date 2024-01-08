@@ -29,7 +29,7 @@ class RedirectController extends AppController
         // domain off and only store the relative path, then hardcode
         // the domain and add the path ... you know?
         if(isset($_COOKIE['RedirectionTo'])) {
-            $goto = $_COOKIE['RedirectionTo'];
+            $goto = $_COOKIE['RedirectionTo'] . $_COOKIE['hash'];
             setcookie('RedirectionTo', '', time()-3600);
             unset($_COOKIE['RedirectionTo']);
             return $this->redirect($goto);
