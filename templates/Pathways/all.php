@@ -339,8 +339,7 @@ $this->assign('title', h($pathway->name));
                             <?php $actcount++ ?>
                             <details id="activity-<?= $a->id ?>" class="activity px-4 py-2 border-b-2">
                                 <summary class="text-lg hover:cursor-pointer hover:text-blue-700">
-                                    <span id="launched-<?= $a->id ?>" class="hidden launched"></span> 
-                                    <!-- p-0.5 px-2 bg-emerald-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-emerald-700/80 -->
+                                    <span id="launched-<?= $a->id ?>" class="hidden launched p-0.5 px-2 bg-emerald-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-emerald-700/80"></span> 
                                     <?= $a->name ?>
                                 </summary>
                                 <div class="p-3 ml-6 bg-white rounded-lg">
@@ -491,8 +490,8 @@ function updateLaunches (launched) {
             // so we get by class and refer to the first (and expected to be
             // only) instance of it with [0].
             badge[0].classList.remove('hidden');
-            // badge[0].innerHTML = 'Launched';
-            badge[0].innerHTML = '🚀';
+            badge[0].innerHTML = 'Launched';
+            // badge[0].innerHTML = '🚀';
         }
     });
 }
