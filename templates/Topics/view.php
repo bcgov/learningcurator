@@ -12,6 +12,7 @@ if ($this->Identity->isLoggedIn()) {
     $role = $this->Identity->get('role');
     $uid = $this->Identity->get('id');
 }
+$followcount = 0;
 ?>
 <header class="w-full h-52 bg-cover bg-[center_top_65%] pb-2 px-2" style="background-image: url(/img/categories/1200w/Path_at_French_Beach_BC_Canada_-_panoramio_1200w.jpg);">
     <div class="bg-sky-700/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
@@ -72,17 +73,24 @@ if ($this->Identity->isLoggedIn()) {
     <div class="flex flex-col lg:flex-row lg:gap-4 w-full">
         <div class="lg:basis-4/5 max-w-prose order-last lg:order-first">
             <!-- TODO Nori add mobile collapse options -->
+            
             <?php foreach ($topic->pathways as $pathway) : ?>
+                <?php if(!empty($pathway->users)): ?>
+                <?php foreach($pathway->users as $u) { $followcount++; } ?>
+                <?php endif ?>
                 <?php if ($pathway->status_id == 2) : ?>
                     <a href="/topic/<?= $topic->slug ?>/<?= h($pathway->id) ?>/<?= h($pathway->slug) ?>" class="hover:no-underline">
-                    <!-- <a href="/a/<?= h($pathway->slug) ?>" class="hover:no-underline"> -->
-                        <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-lg flex items-center justify-between">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3 flex-none" viewBox="0 0 16 16">
-                                <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
-                            </svg>
-                            <h3 class="text-2xl flex-1">
-                                <?= h($pathway->name) ?>
-                            </h3>
+                        <!-- <a href="/a/<?= h($pathway->slug) ?>" class="hover:no-underline"> -->
+                            <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-lg flex items-center justify-between">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3 flex-none" viewBox="0 0 16 16">
+                                    <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
+                                </svg>
+                                <h3 class="text-2xl flex-1">
+                                    <?= h($pathway->name) ?>
+                                </h3>
+                                <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+                                <div><?= $followcount ?> followers</div>
+                                <?php endif ?>
                             <!-- <span class="text-sm ml-3 justify-self-end flex-none"><?= h($pathway->stepcount) ?> steps | <?= h($pathway->requiredacts) ?> activities</span> -->
 
 
@@ -123,7 +131,9 @@ if ($this->Identity->isLoggedIn()) {
                         </div>
                     <?php endif ?>
                 <?php endif ?>
+                <?php $followcount = 0 ?>
             <?php endforeach ?>
+            
         </div> <!-- formatting container -->
 
         <!-- sort options appear to the side on larger screens, but on top on smaller screens -->
