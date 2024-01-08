@@ -29,9 +29,11 @@ $this->assign('title', h($pathway->name));
     <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
         <a href="/topics">All Topics</a> > 
         <a href="/topic/<?= h($pathway->topic->slug) ?>" class="hover:underline"><?= h($pathway->topic->name) ?></a> >
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-signpost-2 mr-1 inline-block" viewBox="0 0 16 16">
-            <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
-        </svg><?= h($pathway->name) ?>
+        <a href="/a/<?= h($pathway->slug) ?>" class="hover:underline">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-signpost-2 mr-1 inline-block" viewBox="0 0 16 16">
+                <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
+            </svg><?= h($pathway->name) ?>
+        </a>
     </nav>
 
 
@@ -82,36 +84,14 @@ $this->assign('title', h($pathway->name));
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <div class="flex pbarcontainer mb-4 w-full bg-slate-200 rounded-lg content-center justify-start sticky">
+            <div class="py-3 sticky top-0 bg-white">
+            <div class="flex pbarcontainer w-full bg-slate-200 rounded-lg content-center justify-start">
                 <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar flex-none"></span>
-                <span id="progressbar" class="py-1 px-3 text-base pbar pro_sm flex-none bg-slate-500 rounded-lg text-center text-white"></span>
-                <span class="py-2 px-3 text-base total flex-1 text-right"></span>
-                <span class="zero hidden py-2 px-3 text-base text-right"></span>
+                <span id="progressbar" 
+                        class="hidden py-1 px-3 text-base pbar pro_sm flex-none bg-slate-500 rounded-lg text-center text-white">
+                    </span>
+                <span id="zero" class="py-1 px-3 text-base text-right">0 of <?= $totalacts ?></span>
+            </div>
             </div>
 
 
@@ -122,36 +102,31 @@ $this->assign('title', h($pathway->name));
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+<details>
+    <summary>Add Step</summary>
+    <div class="px-4 py-3">
+    <?= $this->Form->create(null, ['url' => [
+        'controller' => 'Steps',
+        'action' => 'add'
+    ]]) ?>
+    <label for="name">Step Title</label>
+    <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span>   
+    <?php echo $this->Form->input('name', ['class' => 'form-field max-w-prose mb-2', 'type' => 'text', 'aria-describedby' => 'nameHelp']);  ?>
+    <label for="description">Step Objective</label>
+    <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1&nbsp;phrase/sentence).</span>
+    <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
+
+
+    <?php
+    echo $this->Form->hidden('createdby', ['value' => $uid]);
+    echo $this->Form->hidden('modifiedby', ['value' => $uid]);
+    echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
+    ?>
+    <?= $this->Form->button(__('Add Step'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
+    <?= $this->Form->end() ?>
+    </div>
+</details>
 <details>
     <summary>Curator Details</summary>
             <div class="p-3 text-sm">
@@ -271,6 +246,10 @@ $this->assign('title', h($pathway->name));
             <details class="mb-3">
                 <summary>Bookmarklet</summary>
                 <div class="p-4 bg-slate-50 rounded-lg">
+                    <p>A "bookmarklet" is a special kind of bookmark. Add the bookmarklet (below) to your
+                        browser and make it easy to add new activities to this pathway.</p>
+                    <p>Once you've got the bookmarklet added to your bookmarks, adding a new activity
+                        to this pathway is one click away.</p> 
                     <div class="">
                         <a class="inline-block underline mb-2" 
                             rel="bookmarklet" 
@@ -279,62 +258,17 @@ $this->assign('title', h($pathway->name));
                                 Add to "<?= $pathway->name ?>" Bookmarklet
                         </a>
                     </div>
-                    <p>A "bookmarklet" is a special kind of bookmark. Add the above bookmarklet to your
-                        browser and make it easy to add new activities to this pathway.</p>
+                    
                 </div>
             </details>
             
-            <details>
-            <summary>Add Step</summary>
-            <div class="px-4 py-3">
-            <?= $this->Form->create(null, ['url' => [
-                'controller' => 'Steps',
-                'action' => 'add'
-            ]]) ?>
-            <label for="name">Step Title</label>
-            <span class="text-slate-600 block mb-1 text-sm" id="nameHelp"><i class="bi bi-info-circle"></i> If your step has a title, include it here (or leave it as a number). </span>   
-            <?php echo $this->Form->input('name', ['class' => 'form-field max-w-prose mb-2', 'type' => 'text', 'aria-describedby' => 'nameHelp']);  ?>
-            <label for="description">Step Objective</label>
-            <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1&nbsp;phrase/sentence).</span>
-            <?php echo $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']); ?>
-
-
-            <?php
-            echo $this->Form->hidden('createdby', ['value' => $uid]);
-            echo $this->Form->hidden('modifiedby', ['value' => $uid]);
-            echo $this->Form->hidden('pathways.0.id', ['value' => $pathway->id]);
-            ?>
-            <?= $this->Form->button(__('Add Step'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
-            <?= $this->Form->end() ?>
-            </div>
-            </details>
+            <?php endif; // role check ?>
+            
             <?php endif; // published status check ?>
             
         
-        <?php endif; // role check ?>
         </details>
         <?php endif; // role check ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
 
 
 
@@ -372,7 +306,7 @@ $this->assign('title', h($pathway->name));
 
                     <?php $count++ ?>
                     
-                    <div id="step-<?= $steps->id ?>" class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
+                    <div id="step-<?= $count ?>" class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
 
                         <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3">
                             <?= $count ?>
@@ -393,40 +327,19 @@ $this->assign('title', h($pathway->name));
                                     <?= h($steps->description) ?>
                                 </p>
                             </div>
-                                
-                      
-                            
-                        
-            
-                            
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <details class="py-2 px-4 bg-slate-100 rounded-lg">
+                        <details class="activitylist py-2 px-4 bg-slate-100 rounded-lg">
                             <summary class="font-bold hover:cursor-pointer"><?= count($steps->activities) ?> Activities</summary>
                             <?php foreach($steps->activities as $a): ?>
                             <?php $actcount++ ?>
                             <details id="activity-<?= $a->id ?>" class="activity px-4 py-2 border-b-2">
                                 <summary class="text-lg hover:cursor-pointer hover:text-blue-700">
-                                    <span id="launched-<?= $a->id ?>" class="launched text-xs"></span>
+                                    <span id="launched-<?= $a->id ?>" class="hidden launched"></span> 
+                                    <!-- p-0.5 px-2 bg-emerald-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-emerald-700/80 -->
                                     <?= $a->name ?>
                                 </summary>
                                 <div class="p-3 ml-6 bg-white rounded-lg">
@@ -441,12 +354,8 @@ $this->assign('title', h($pathway->name));
                                         title="Launch this activity" 
                                         data-activity="act-<?= $a->id ?>" 
                                         href="/activities-users/launch?activity_id=<?= $a->id ?>" 
-                                        class="launch inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
+                                        class="launch inline-block my-2 py-2 px-5 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-xl hover:no-underline">
                                             Launch
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="ml-1 inline align-baseline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
-                                                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
-                                            </svg>
                                     </a>
                                     <a href="/activities/view/<?= $a->id ?>" class="inline-block ml-3 underline hover:text-blue-700">Details</a>
                                 </div>
@@ -454,35 +363,6 @@ $this->assign('title', h($pathway->name));
                             </details>
                             <?php endforeach ?>
                         </details>
-
-<!-- <?= $actcount ?> activities -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -499,9 +379,26 @@ $this->assign('title', h($pathway->name));
 
 <script type="module">
 
+// If we are linking directly to a step via a URL hash then open the 
+// activities for that step automatically by adding an open attribute
+// to the details/summary container.
+if(window.location.hash) {
+    let stepopen = window.location.hash;
+    let step = stepopen.replace('#','');
+    let stepacts = document.getElementById(step);
+    let toopen = stepacts.getElementsByClassName('activitylist');
+    toopen[0].setAttribute('open','open');
+    
+}
+
+// This is a list of all the activity IDs on this pathway from every step.
 let pathacts = [<?php foreach($activityids as $a) { echo $a . ','; } ?>];
+
+// Grab the list of activities in the DOM so we can iterate over them
+// assigning launched status.
 let activities = document.getElementsByClassName('activity');
 
+// Setup the statuses on the initial page load.
 getLearnerData ();
 
 // Left to itself, the launch link on activites works just fine 
@@ -513,10 +410,6 @@ let launchlinks = document.getElementsByClassName('launch');
 Array.from(launchlinks).forEach(function(element) {
     element.addEventListener('click', (e) => { 
         e.preventDefault();
-        // Set the "Launched" badge on the activity
-        let indicator = e.target.getAttribute('data-activity');
-        console.log(indicator);
-        // document.querySelector('.'+indicator).classList.remove('hidden');
         // actually open the link
         let url = e.target.href;
         window.open(url);
@@ -528,40 +421,63 @@ Array.from(launchlinks).forEach(function(element) {
     });
 });
 
+// The '/users/api' endpoint returns two simple arrays:
+//  1. The IDs of all activities launched
+//  2. The IDs of all pathways followed
+// For launch statuses, the pathway has a list of all activity IDs
+// that are contained on it in the 'pathacts' variable defined above
+// (via PHP). We use that to compare the difference with acts launched
+// to derive overall progress and individual activity status.
 function getLearnerData () {
+
+    // Make the call
     let learner = fetch('/users/api', {
                         method: 'GET'
                     })
                     .then((res) => res.json())
                     .then((json) => {
-                        
                         // Pathway follow statuses
                         let followed = json['followed'];
-
                         // Activity launch statuses
                         let launched = json['launched'];
                         // Update UI with launch statuses.
                         updateLaunches(launched);
                         // Now calculate pathway progress and update the UI
                         updateProgress(launched);
-
                     })
                     .catch((err) => console.error("error:", err));
 
 }
+// Update the progress bar UI with the info returned by getLearnerData()
 function updateProgress (launched) {
     // Calculate pathway progress and update the UI.
     let intersection = pathacts.filter(x => launched.includes(x));
     let progress = (intersection.length / pathacts.length) * 100;
     let perc = Math.floor(progress) + '%';
     let pbar = document.getElementById('progressbar');
+    let zero = document.getElementById('zero');
     pbar.setAttribute('style','width:' + perc);
-    pbar.innerHTML = '<span class="text-xs">' + perc + '</span>';
-}
-function updateLaunches (launched) {
+    if(intersection.length > 3) {
+        zero.innerHTML = '';
+        pbar.classList.remove('hidden');
+        pbar.innerHTML = '<span class="text-xs">' + intersection.length + ' of ' + pathacts.length + '</span>';
+    } else {
+        if(intersection.length > 0) {
+            pbar.classList.remove('hidden');
+        }
+        zero.innerHTML = '<span class="text-xs">' + intersection.length + ' of ' + pathacts.length + '</span>';
 
+    }
+}
+
+// Update the status of individual activities with the info returned 
+// by getLearnerData()
+function updateLaunches (launched) {
+    // Grab all the activities on the page and loop through them.
     Array.from(activities).forEach(function(element) {
-        
+        // we take the id of the div which is in the format "activity-999"
+        // and we need to split the "activity-" part out so that we can address
+        // the numeric value only.
         let actid = element.id;
         let aid = actid.split('-');
         // Does this listed activity exist in the list of activities the 
@@ -570,7 +486,12 @@ function updateLaunches (launched) {
             // Set the badge so that it says "Launched!" in the UI so that 
             // learner can easily see where they've been before.
             let badge = element.getElementsByClassName('launched');
-            badge[0].innerHTML = '<span class="p-0.5 px-2 bg-emerald-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-emerald-700/80">Launched</span>';
+            // I had issues with getting the element by ID for some reason
+            // so we get by class and refer to the first (and expected to be
+            // only) instance of it with [0].
+            badge[0].classList.remove('hidden');
+            // badge[0].innerHTML = 'Launched';
+            badge[0].innerHTML = '🚀';
         }
     });
 }

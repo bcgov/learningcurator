@@ -31,7 +31,7 @@ if ($this->Identity->isLoggedIn()) {
             service employees learn on their own time, at their own pace.</p>
         <p class="mb-3">
             Curator pathways are organized into
-            <a href="/categories" class="underline font-semibold">categories</a> and then topics.
+            <a href="/topics" class="underline font-semibold">topics</a>.
             You can explore
             <a href="/pathways" class="underline font-semibold">all the pathways</a>
             we have to offer and when you see one you like, you can
