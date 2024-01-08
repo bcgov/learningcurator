@@ -222,7 +222,9 @@ class PathwaysController extends AppController
             array_push($useractivitylist, $uact['activity_id']);
         }
         $followid = 0;
+        $followcount = 0;
         foreach($pathway->users as $pu) {
+            $followcount++;
             // Is the current user following this pathway? If so, then 
             // we record the pathways_users ID number so we can remove
             // the association (unfollow) if the user clicks the "Unfollow"
@@ -286,6 +288,7 @@ class PathwaysController extends AppController
         }
 
         $this->set(compact('pathway', 
+                            'followcount', 
                             'contributors', 
                             'createdby', 
                             'publishedby', 
@@ -331,7 +334,9 @@ class PathwaysController extends AppController
             array_push($useractivitylist, $uact['activity_id']);
         }
         $followid = 0;
+        $followcount = 0;
         foreach($pathway->users as $pu) {
+            $followcount++;
             // Is the current user following this pathway? If so, then 
             // we record the pathways_users ID number so we can remove
             // the association (unfollow) if the user clicks the "Unfollow"
@@ -376,7 +381,6 @@ class PathwaysController extends AppController
         endif;
         $stepcount = count($pathway->steps);
 
-
         $attribution = TableRegistry::getTableLocator()->get('Users');
         $createdby = $attribution->find()->where(['id = ' => $pathway->createdby])->all()->toList();
         if($pathway->modifiedby == $pathway->createdby) {
@@ -397,6 +401,7 @@ class PathwaysController extends AppController
         }
 
         $this->set(compact('pathway', 
+                            'followcount', 
                             'contributors', 
                             'createdby', 
                             'publishedby', 
