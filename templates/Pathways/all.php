@@ -283,26 +283,20 @@ $this->assign('title', h($pathway->name));
 
 
             <?php if (!empty($pathway->steps)) : ?>
-                <?php $count = 0 ?>
+                
+            <button id="expcol" class="px-6 py-1 bg-slate-50 text-sm">Expand All</button>
 
-                <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
-                <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-steps', 'action' => 'reorder']]) ?>
-                <?= $this->Form->control('pathway_id', ['type' => 'hidden', 'value' => $pathway->id]) ?>
-                <?php endif ?>
+            <?php $count = 0 ?>
 
+            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+            <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-steps', 'action' => 'reorder']]) ?>
+            <?= $this->Form->control('pathway_id', ['type' => 'hidden', 'value' => $pathway->id]) ?>
+            <?php endif ?>
+            <div id="steplist">
                 <?php foreach ($pathway->steps as $steps) : ?>
                     <?php $requiredacts = 0; ?>
                     <script>
-                    var stepactids = [
-                    <?php foreach ($steps->activities as $act) : ?>
-                        <?php if ($act->_joinData->required == 1): ?>
-                            <?= $act->id ?>,
-                            <?php $requiredacts++; ?>
-                        <?php endif ?>
-                    <?php endforeach ?>
-                        ];
-
-                    
+                    var stepactids = [<?php foreach ($steps->activities as $act) : ?><?php if ($act->_joinData->required == 1): ?><?= $act->id ?>,<?php $requiredacts++; ?><?php endif ?><?php endforeach ?>];
                     </script>
 
                     <?php $count++ ?>
@@ -314,7 +308,9 @@ $this->assign('title', h($pathway->name));
                         </h3>
         
                         <div class="flex-1 basis-6/7 p-3">
+
                             <h4 class="text-xl font-semibold mb-2">
+                                <a href="/a/<?= h($pathway->slug) ?>#step-<?= $count ?>">#</a>
                                 <?= h($steps->name) ?>
                                 <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                                 <a href="/steps/edit/<?= $steps->id ?>" class="group float-right text-xs">
@@ -373,11 +369,33 @@ $this->assign('title', h($pathway->name));
                         </div>
                         </div>
                 <?php endforeach ?>
+            </div>
         </div>
     </div>
 </div>
 
 <script type="module">
+
+// By default, all the activities are hidden behind a details/summary
+// and subsequently the description/launch links are as well.
+// This supports allowing the learner to choose to "expand all" and 
+// show everything on the page all at once. 
+// It toggles to "collapse all."
+let expcol = document.getElementById('expcol');
+expcol.addEventListener('click', (e) => {
+    let steplist = document.getElementById('steplist');
+    let deets = steplist.querySelectorAll('details');
+    Array.from(deets).forEach(function(element) {
+        let stat = element.getAttribute('open');
+        if(stat == 'open') {
+            expcol.innerHTML = 'Expand All';
+            element.removeAttribute('open');
+        } else {
+            expcol.innerHTML = 'Collapse All';
+            element.setAttribute('open','open');
+        }
+    });
+});
 
 // If we are linking directly to a step via a URL hash then open the 
 // activities for that step automatically by adding an open attribute
@@ -388,7 +406,6 @@ if(window.location.hash) {
     let stepacts = document.getElementById(step);
     let toopen = stepacts.getElementsByClassName('activitylist');
     toopen[0].setAttribute('open','open');
-    
 }
 
 // This is a list of all the activity IDs on this pathway from every step.
