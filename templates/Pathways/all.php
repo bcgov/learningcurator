@@ -90,7 +90,7 @@ $this->assign('title', h($pathway->name));
                 <span id="progressbar" 
                         class="hidden py-1 px-3 text-base pbar pro_sm flex-none bg-slate-500 rounded-lg text-center text-white">
                     </span>
-                <span id="zero" class="py-2 px-3 text-base text-right">0 of <?= $totalacts ?></span>
+                <span id="zero" class="py-1 px-3 text-base text-right">0 of <?= $totalacts ?></span>
             </div>
             </div>
 
