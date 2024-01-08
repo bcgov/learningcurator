@@ -173,6 +173,7 @@ $this->assign('title', h($pathway->name));
 <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
 <details>
     <summary>Curator Details</summary>
+        <div class="p-3 pb-0"><?= $followcount ?> follows</div>
             <div class="p-3 text-sm">
                 <?php if(!empty($createdby[0]->first_name)): ?>
                 

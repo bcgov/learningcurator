@@ -129,53 +129,54 @@ $this->assign('title', h($pathway->name));
 </details>
 <details>
     <summary>Curator Details</summary>
-            <div class="p-3 text-sm">
-                <?php if(!empty($createdby[0]->first_name)): ?>
-                
-                    Created by:
-                    <a class="inline-block px-3 py-2 underline" href="/users/view/<?= $createdby[0]->id ?>"><?= $createdby[0]->username ?> </a>
-                
-                <?php if(!empty($modifiedby[0]->first_name)): ?>
-                <?php if($createdby[0]->id != $modifiedby[0]->id): ?>
-                
-                    <strong>Last modified by:</strong>
-                    <a class="inline-block px-3 py-2 underline" href="/users/view/<?= $modifiedby[0]->id ?>"><?= $modifiedby[0]->username ?></a>
-                
-                <?php endif ?>
-                <?php endif ?>
-                <?php else: ?>
-                
-                    <strong>Created by:</strong>
-                    The user who created this pathway no longer 
-                    appears to be in the system.
-                
-                <?php endif ?>
+        <div class="p-3 pb-0"><?= $followcount ?> follows</div>
+        <div class="p-3 text-sm">
+            <?php if(!empty($createdby[0]->first_name)): ?>
+            
+                Created by:
+                <a class="inline-block px-3 py-2 underline" href="/users/view/<?= $createdby[0]->id ?>"><?= $createdby[0]->username ?> </a>
+            
+            <?php if(!empty($modifiedby[0]->first_name)): ?>
+            <?php if($createdby[0]->id != $modifiedby[0]->id): ?>
+            
+                <strong>Last modified by:</strong>
+                <a class="inline-block px-3 py-2 underline" href="/users/view/<?= $modifiedby[0]->id ?>"><?= $modifiedby[0]->username ?></a>
+            
+            <?php endif ?>
+            <?php endif ?>
+            <?php else: ?>
+            
+                <strong>Created by:</strong>
+                The user who created this pathway no longer 
+                appears to be in the system.
+            
+            <?php endif ?>
 
-                <?php if(!empty($pathway->publishedby)): ?>
-                
-                    <strong>Published by:</strong>
-                    <a class="inline-block bg-slate-100 p-3 rounded-lg underline" href="/users/view/<?= $publishedby[0]->id ?>"><?= $publishedby[0]->username ?> </a>
-                
-                <?php endif ?>
-                
-                    <?php $unrec_count = 0 ?>
-                    Curators:
-                    <?php foreach($contributors as $c): ?>
-                        <?php //print_r($c) ?>
-                        <?php if(!empty($c[0]->username)): ?>
-                        <a class="inline-block px-3 py-2 underline" 
-                            href="/users/view/<?= $c[0]->id ?>">
-                                <?= $c[0]->username ?>
-                        </a>
-                        <?php else: ?>
-                        <?php $unrec_count++ ?>
-                        <?php endif ?>
-                    <?php endforeach ?>
-                    <?php if($unrec_count > 0): ?>
-                        <div><?= $unrec_count ?> unrecognized contributors to this pathway.</div>
+            <?php if(!empty($pathway->publishedby)): ?>
+            
+                <strong>Published by:</strong>
+                <a class="inline-block bg-slate-100 p-3 rounded-lg underline" href="/users/view/<?= $publishedby[0]->id ?>"><?= $publishedby[0]->username ?> </a>
+            
+            <?php endif ?>
+            
+                <?php $unrec_count = 0 ?>
+                Curators:
+                <?php foreach($contributors as $c): ?>
+                    <?php //print_r($c) ?>
+                    <?php if(!empty($c[0]->username)): ?>
+                    <a class="inline-block px-3 py-2 underline" 
+                        href="/users/view/<?= $c[0]->id ?>">
+                            <?= $c[0]->username ?>
+                    </a>
+                    <?php else: ?>
+                    <?php $unrec_count++ ?>
                     <?php endif ?>
-                
-            </div>
+                <?php endforeach ?>
+                <?php if($unrec_count > 0): ?>
+                    <div><?= $unrec_count ?> unrecognized contributors to this pathway.</div>
+                <?php endif ?>
+            
+        </div>
             
 
             <?php if($environment != 'learningcurator.apps.silver.devops.gov.bc.ca' && $environment != 'learningcurator.gww.gov.bc.ca') : ?>
