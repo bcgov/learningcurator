@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
 
-<body class="bg-slate-50 font-BCSans">
+<body class="bg-slate-50 font-BCSans dark:bg-slate-900">
 <a href="#mainContent" class="sr-only focus:not-sr-only"><span class="p-3">Skip to Content</span></a>
 <?php $environment = $_SERVER['SERVER_NAME'] ?>
 <?php if($environment == 'learningcurator.ca') : ?>
@@ -53,11 +53,12 @@
             <div @click.away="open = false" class="flex flex-col shrink-0 justify-between w-full md:w-60 text-slate-700 bg-sagegreen" x-data="{ open: false }">
                 <div class="sticky top-0">
                     <div class="shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16" role="banner">
-                        <span class="leading-3 text-xl tracking-widest text-slate-900 uppercase rounded-lg focus:outline-none focus:shadow-outline">
+                        <a class="leading-3 text-xl tracking-widest text-slate-900 uppercase rounded-lg focus:outline-none focus:shadow-outline hover:no-underline"
+                            href="/">
                             <span class="text-xs">Learning</span>
                             <br>
                             <span class="text-darkblue">Curator</span>
-                        </span>
+                        </a>
                         <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open" aria-label="Menu Toggle">
                             <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
                                 <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
@@ -138,8 +139,8 @@
             </div>
 
 
-            <main class="bg-white w-full">
-
+            <main class="bg-white w-full"> 
+            <!-- dark:bg-slate-900 dark:text-white -->
                 <?= $this->fetch('content') ?>
 
             </main>
