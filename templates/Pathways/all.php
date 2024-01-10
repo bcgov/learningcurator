@@ -104,6 +104,30 @@ $this->assign('title', h($pathway->name));
 
 <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
 <details>
+    <summary>Re-order Steps</summary>
+    <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-steps', 'action' => 'reorder']]) ?>
+    <?= $this->Form->control('pathway_id', ['type' => 'hidden', 'value' => $pathway->id]) ?>
+    <?php $count = 0 ?>
+    <div id="items">
+    <?php foreach($pathway->steps as $s): ?>
+    <div class="flex mb-2 p-2 bg-slate-100 rounded-lg" data-id="<?= $s->id ?>">
+    <?php $count++ ?>
+    <div class="handle hover:cursor-pointer" style="height: 1em; width: 3em;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" style="margin: .5em 0 0 1em" viewBox="0 0 320 512">
+            <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/>
+        </svg>
+    </div>
+    <?= $this->Form->control('steporder[]', ['type' => 'hidden', 'class' => 'stepcount step' . $s->id, 'value' => $count]) ?>
+    <div><?= $s->name ?></div>
+    <?= $this->Form->control('steps[]', ['type' => 'hidden', 'value' => $s->_joinData->id]) ?>
+    </div>
+    <?php endforeach ?>
+    </div>
+    <?= $this->Form->button(__('Update Step Order'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
+    <?= $this->Form->end() ?>
+</details>
+<details>
     <summary>Add Step</summary>
     <div class="px-4 py-3">
     <?= $this->Form->create(null, ['url' => [
@@ -349,6 +373,7 @@ $this->assign('title', h($pathway->name));
                         <details class="activitylist py-2 px-4 bg-slate-100 rounded-lg">
                             <summary class="font-bold hover:cursor-pointer"><?= count($steps->activities) ?> Activities</summary>
                             <?php foreach($steps->activities as $a): ?>
+                            <?php //if ($a->_joinData->required == 1) : ?>
                             <?php $actcount++ ?>
                             <details id="activity-<?= $a->id ?>" class="activity px-4 py-2 border-b-2">
                                 <summary class="text-lg hover:cursor-pointer hover:text-blue-700">
@@ -374,6 +399,7 @@ $this->assign('title', h($pathway->name));
                                 </div>
                                 </div>
                             </details>
+                            <?php //endif ?>
                             <?php endforeach ?>
                         </details>
 
@@ -390,9 +416,26 @@ $this->assign('title', h($pathway->name));
         </div>
     </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="module">
-
+<?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+var el = document.getElementById('items');
+var sortable = Sortable.create(el, {
+  animation: 150,
+  handle: ".handle",
+  onEnd: function (/**Event*/evt) {
+        resort();
+	},
+});
+function resort () {
+    let stepcount = document.getElementsByClassName('stepcount');
+    let count = 1;
+    Array.from(stepcount).forEach(function(element) {
+        element.setAttribute('value', count);
+        count++;
+    });
+}
+<?php endif ?>
 // By default, all the activities are hidden behind a details/summary
 // and subsequently the description/launch links are as well.
 // This supports allowing the learner to choose to "expand all" and 

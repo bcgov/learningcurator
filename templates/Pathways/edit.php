@@ -76,6 +76,12 @@ $this->loadHelper('Authentication.Identity');
             <?php foreach($sortedsteps as $s): ?>
             <div class="flex mb-2 p-2 bg-slate-100 rounded-lg" data-id="<?= $s->id ?>">
             <?php $count++ ?>
+            <div class="handle hover:cursor-pointer" style="height: 2em; width: 3em;">
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" style="margin: .5em 0 0 1em" viewBox="0 0 320 512">
+                    <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                    <path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/>
+                </svg>
+            </div>
             <?= $this->Form->control('steporder[]', ['type' => 'hidden', 'class' => 'stepcount step' . $s->id, 'value' => $count]) ?>
             <div><?= $s->name ?></div>
             <?= $this->Form->control('steps[]', ['type' => 'hidden', 'value' => $s->_joinData->id]) ?>
@@ -95,31 +101,14 @@ $this->loadHelper('Authentication.Identity');
     </div>
 </div>
 
-<!-- jsDelivr :: Sortable :: Latest (https://www.jsdelivr.com/package/npm/sortablejs) -->
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script>
 var el = document.getElementById('items');
 var sortable = Sortable.create(el, {
   animation: 150,
+  handle: ".handle",
   onEnd: function (/**Event*/evt) {
-		var itemEl = evt.item;  // dragged HTMLElement
-		evt.to;    // target list
-		evt.from;  // previous list
-		evt.oldIndex;  // element's old index within old parent
-		evt.newIndex;  // element's new index within new parent
-		evt.oldDraggableIndex; // element's old index within old parent, only counting draggable elements
-		evt.newDraggableIndex; // element's new index within new parent, only counting draggable elements
-		evt.clone // the clone element
-		evt.pullMode;  // when item is in another sortable: `"clone"` if cloning, `true` if moving
-        // console.log(evt.newIndex);
-        // let x = itemEl.getAttribute('data-id');
-        // let step = 'step' + x;
-        // let orderval = itemEl.getElementsByClassName(step);
-        // console.log(orderval);
-        //let neworder = parseInt(evt.newIndex) + 1;
-        //orderval[0].setAttribute('value',neworder);
         resort();
-
 	},
 });
 function resort () {
