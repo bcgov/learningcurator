@@ -366,10 +366,6 @@ $this->assign('title', h($pathway->name));
                                 </p>
                             </div>
 
-
-
-
-
                         <details class="activitylist py-2 px-4 bg-slate-100 rounded-lg">
                             <summary class="font-bold hover:cursor-pointer"><?= count($steps->activities) ?> Activities</summary>
                             <?php foreach($steps->activities as $a): ?>
@@ -404,11 +400,6 @@ $this->assign('title', h($pathway->name));
                             <?php //endif ?>
                             <?php endforeach ?>
                         </details>
-
-
-
-
-
 
 
                         </div>
@@ -459,6 +450,7 @@ expcol.addEventListener('click', (e) => {
     });
 });
 
+
 // If we are linking directly to a step via a URL hash then open the 
 // activities for that step automatically by adding an open attribute
 // to the details/summary container.
@@ -479,6 +471,18 @@ let activities = document.getElementsByClassName('activity');
 
 // Setup the statuses on the initial page load.
 getLearnerData ();
+
+// When you click the permalink it will open the activities on that step.
+let permalinks = document.getElementsByClassName('permalink');
+Array.from(permalinks).forEach(function(element) {
+    element.addEventListener('click', (e) => { 
+
+        // This is a bit fragile as it depends on the structure of the HTML
+        // being in a certain order...
+        let openacts = element.parentNode.nextElementSibling.nextElementSibling;
+        openacts.setAttribute('open','open');
+    });
+});
 
 // Left to itself, the launch link on activites works just fine 
 // with target=_blank set, but we want to update the UI of this 
