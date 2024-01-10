@@ -104,6 +104,30 @@ $this->assign('title', h($pathway->name));
 
 <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
 <details>
+    <summary>Re-order Steps</summary>
+    <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-steps', 'action' => 'reorder']]) ?>
+    <?= $this->Form->control('pathway_id', ['type' => 'hidden', 'value' => $pathway->id]) ?>
+    <?php $count = 0 ?>
+    <div id="items">
+    <?php foreach($pathway->steps as $s): ?>
+    <div class="flex mb-1 p-2 bg-slate-100 rounded-lg" data-id="<?= $s->id ?>">
+    <?php $count++ ?>
+    <div class="handle hover:cursor-pointer" style="height: 1em; width: 3em;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" style="margin: .5em 0 0 1em" viewBox="0 0 320 512">
+            <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/>
+        </svg>
+    </div>
+    <?= $this->Form->control('steporder[]', ['type' => 'hidden', 'class' => 'stepcount step' . $s->id, 'value' => $count]) ?>
+    <div><?= $s->name ?></div>
+    <?= $this->Form->control('steps[]', ['type' => 'hidden', 'value' => $s->_joinData->id]) ?>
+    </div>
+    <?php endforeach ?>
+    </div>
+    <?= $this->Form->button(__('Update Step Order'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
+    <?= $this->Form->end() ?>
+</details>
+<details>
     <summary>Add Step</summary>
     <div class="px-4 py-3">
     <?= $this->Form->create(null, ['url' => [
@@ -276,6 +300,23 @@ $this->assign('title', h($pathway->name));
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             
 
         <?php //if(empty($pathway->version) || $environment == 'learningcurator.gov.bc.ca') : ?>
@@ -283,38 +324,34 @@ $this->assign('title', h($pathway->name));
 
 
             <?php if (!empty($pathway->steps)) : ?>
-                <?php $count = 0 ?>
+                
+            <button id="expcol" class="px-6 py-1 bg-slate-50 text-sm">Expand All</button>
 
-                <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
-                <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-steps', 'action' => 'reorder']]) ?>
-                <?= $this->Form->control('pathway_id', ['type' => 'hidden', 'value' => $pathway->id]) ?>
-                <?php endif ?>
+            <?php $count = 0 ?>
 
+            <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+            <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-steps', 'action' => 'reorder']]) ?>
+            <?= $this->Form->control('pathway_id', ['type' => 'hidden', 'value' => $pathway->id]) ?>
+            <?php endif ?>
+            <div id="steplist">
                 <?php foreach ($pathway->steps as $steps) : ?>
                     <?php $requiredacts = 0; ?>
                     <script>
-                    var stepactids = [
-                    <?php foreach ($steps->activities as $act) : ?>
-                        <?php if ($act->_joinData->required == 1): ?>
-                            <?= $act->id ?>,
-                            <?php $requiredacts++; ?>
-                        <?php endif ?>
-                    <?php endforeach ?>
-                        ];
-
-                    
+                    var stepactids = [<?php foreach ($steps->activities as $act) : ?><?php if ($act->_joinData->required == 1): ?><?= $act->id ?>,<?php $requiredacts++; ?><?php endif ?><?php endforeach ?>];
                     </script>
 
                     <?php $count++ ?>
                     
-                    <div id="step-<?= $count ?>" class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
+                    <div id="step-<?= $count ?>" data-stepid="step-<?= $steps->id ?>" class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
 
                         <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3">
                             <?= $count ?>
                         </h3>
         
                         <div class="flex-1 basis-6/7 p-3">
+
                             <h4 class="text-xl font-semibold mb-2">
+                                <a href="/a/<?= h($pathway->slug) ?>#step-<?= $count ?>">#</a>
                                 <?= h($steps->name) ?>
                                 <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                                 <a href="/steps/edit/<?= $steps->id ?>" class="group float-right text-xs">
@@ -336,6 +373,7 @@ $this->assign('title', h($pathway->name));
                         <details class="activitylist py-2 px-4 bg-slate-100 rounded-lg">
                             <summary class="font-bold hover:cursor-pointer"><?= count($steps->activities) ?> Activities</summary>
                             <?php foreach($steps->activities as $a): ?>
+                            <?php //if ($a->_joinData->required == 1) : ?>
                             <?php $actcount++ ?>
                             <details id="activity-<?= $a->id ?>" class="activity px-4 py-2 border-b-2">
                                 <summary class="text-lg hover:cursor-pointer hover:text-blue-700">
@@ -361,6 +399,7 @@ $this->assign('title', h($pathway->name));
                                 </div>
                                 </div>
                             </details>
+                            <?php //endif ?>
                             <?php endforeach ?>
                         </details>
 
@@ -373,11 +412,50 @@ $this->assign('title', h($pathway->name));
                         </div>
                         </div>
                 <?php endforeach ?>
+            </div>
         </div>
     </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="module">
+<?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+var el = document.getElementById('items');
+var sortable = Sortable.create(el, {
+  animation: 150,
+  handle: ".handle",
+  onEnd: function (/**Event*/evt) {
+        resort();
+	},
+});
+function resort () {
+    let stepcount = document.getElementsByClassName('stepcount');
+    let count = 1;
+    Array.from(stepcount).forEach(function(element) {
+        element.setAttribute('value', count);
+        count++;
+    });
+}
+<?php endif ?>
+// By default, all the activities are hidden behind a details/summary
+// and subsequently the description/launch links are as well.
+// This supports allowing the learner to choose to "expand all" and 
+// show everything on the page all at once. 
+// It toggles to "collapse all."
+let expcol = document.getElementById('expcol');
+expcol.addEventListener('click', (e) => {
+    let steplist = document.getElementById('steplist');
+    let deets = steplist.querySelectorAll('details');
+    Array.from(deets).forEach(function(element) {
+        let stat = element.getAttribute('open');
+        if(stat == 'open') {
+            expcol.innerHTML = 'Expand All';
+            element.removeAttribute('open');
+        } else {
+            expcol.innerHTML = 'Collapse All';
+            element.setAttribute('open','open');
+        }
+    });
+});
 
 // If we are linking directly to a step via a URL hash then open the 
 // activities for that step automatically by adding an open attribute
@@ -388,7 +466,6 @@ if(window.location.hash) {
     let stepacts = document.getElementById(step);
     let toopen = stepacts.getElementsByClassName('activitylist');
     toopen[0].setAttribute('open','open');
-    
 }
 
 // This is a list of all the activity IDs on this pathway from every step.
@@ -453,6 +530,7 @@ function updateProgress (launched) {
     // Calculate pathway progress and update the UI.
     let intersection = pathacts.filter(x => launched.includes(x));
     let progress = (intersection.length / pathacts.length) * 100;
+    let togo = pathacts.length - intersection.length;
     let perc = Math.floor(progress) + '%';
     let pbar = document.getElementById('progressbar');
     let zero = document.getElementById('zero');

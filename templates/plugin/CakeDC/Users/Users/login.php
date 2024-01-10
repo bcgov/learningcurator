@@ -12,29 +12,34 @@
 
 // This should happen at the controller level, likely, but I'm hoping this works
 // as a band-aid until I can figure this out properly.
-$environment = $_SERVER['SERVER_NAME'];
+$environment = urlencode($_SERVER['SERVER_NAME']);
 $go = $_GET['redirect'] ?? 'https://' . $environment . '/categories';
+// echo $go; exit;
 $rediroldprodtonew = str_replace('learningcurator.apps.silver.devops.gov.bc.ca','learningcurator.gww.gov.bc.ca',$go);
+// echo $rediroldprodtonew; exit;
 if($environment == 'learningcurator.apps.silver.devops.gov.bc.ca') {
     header('Location: https://learningcurator.gww.gov.bc.ca/login?redirect=' . $rediroldprodtonew);
     exit;
 }
 
+if($go) {
+    setcookie("RedirectionTo", $rediroldprodtonew, time()+3600);  /* expire in 1 hour */
+}
 
 use Cake\Core\Configure;
 $this->loadHelper('Authentication.Identity');
 $this->layout = 'ajax';
 $this->assign('title', 'Learning on demand');
 
-if($go) {
-    setcookie("RedirectionTo", $rediroldprodtonew, time()+3600);  /* expire in 1 hour */
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 
 <head>
+    <script>
+        let hashfrag = document.location.hash;
+        document.cookie = "hash="+hashfrag;
+    </script>
     <?= $this->Html->charset() ?>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
