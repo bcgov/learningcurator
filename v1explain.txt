@@ -1,0 +1,9 @@
+
+
+Single page pathway is more portable and better aligns with an evolving architecture.
+
+
+"Supplemental" is not plain language.
+Topic,Path,Step,Required/Not
+Topic,Path,Step,Activity
+

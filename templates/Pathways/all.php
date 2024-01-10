@@ -276,6 +276,23 @@ $this->assign('title', h($pathway->name));
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             
 
         <?php //if(empty($pathway->version) || $environment == 'learningcurator.gov.bc.ca') : ?>
@@ -301,7 +318,7 @@ $this->assign('title', h($pathway->name));
 
                     <?php $count++ ?>
                     
-                    <div id="step-<?= $count ?>" class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
+                    <div id="step-<?= $count ?>" data-stepid="step-<?= $steps->id ?>" class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
 
                         <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3">
                             <?= $count ?>

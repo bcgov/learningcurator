@@ -316,9 +316,9 @@ class PathwaysController extends AppController
                             contain([
                                 'Topics',
                                 'Topics.Categories', 
-                                'Steps' => ['sort' => ['PathwaysSteps.sortorder' => 'asc']],
+                                'Steps' => ['sort' => ['PathwaysSteps.sortorder' => 'desc']],
                                 'Steps.Statuses', 
-                                'Steps.Activities',
+                                'Steps.Activities' => ['sort' => ['ActivitiesSteps.steporder' => 'desc']],
                                 'Users'])->firstOrFail();
         
         $user = $this->request->getAttribute('authentication')->getIdentity();
@@ -770,7 +770,7 @@ class PathwaysController extends AppController
     public function edit($id = null)
     {
         $pathway = $this->Pathways->get($id, [
-            'contain' => ['Competencies', 'Steps', 'Users'],
+            'contain' => ['Steps', 'Users'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             //echo '<pre>'; print_r($this->request->getData()); exit;
@@ -787,13 +787,18 @@ class PathwaysController extends AppController
         }
 
         $topics = $this->Pathways->Topics->find('list', ['limit' => 200])->where(['featured' => 1]);
-
-        $ministries = $this->Pathways->Ministries->find('list', ['limit' => 200]);
         $statuses = $this->Pathways->Statuses->find('list', ['limit' => 200]);
-        $competencies = $this->Pathways->Competencies->find('list', ['limit' => 200]);
-        $steps = $this->Pathways->Steps->find('list', ['limit' => 200]);
         $users = $this->Pathways->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pathway', 'topics', 'ministries', 'statuses', 'competencies', 'steps', 'users'));
+        $steporder = [];
+        $sortedsteps = [];
+        foreach ($pathway->steps as $s) {
+            $steporder[] = $s->_joinData->sortorder;
+            array_push($sortedsteps,$s);
+        }
+        // Use the tmp array to sort steps list
+        array_multisort($steporder, SORT_ASC, $sortedsteps);
+        
+        $this->set(compact('pathway', 'topics', 'statuses', 'users', 'sortedsteps'));
     }
 
     /**

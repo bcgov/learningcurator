@@ -6,6 +6,7 @@
  */
 $this->loadHelper('Authentication.Identity');
 ?>
+
 <header class="w-full h-32 md:h-52 bg-darkblue px-8 flex items-center">
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
 </header>
@@ -20,7 +21,6 @@ $this->loadHelper('Authentication.Identity');
             <!-- <a href="/pathways/<?= $pathway->slug ?>/export" class="float-right ml-3 p-3 bg-slate-100/80 hover:no-underline rounded-lg">Export Pathway</a> -->
 
             <?= $this->Form->create($pathway) ?>
-
             <label><?php echo $this->Form->checkbox('featured'); ?> Featured?</label>
 
             <?php echo $this->Form->hidden('modifiedby', ['value' => $this->Identity->get('id')]);
@@ -62,6 +62,72 @@ $this->loadHelper('Authentication.Identity');
             <?= $this->Form->button(__('Save Pathway'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
             <?= $this->Form->end() ?>
             <?= $this->Form->postLink(__('Delete Pathway'), ['action' => 'delete', $pathway->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pathway->id), 'class' => 'inline-block mt-3 text-red-500 underline hover:text-red-700 hover:cursor-pointer text-base']) ?>
+
+
+
+
+
+
+            <h3 class="mt-4 text-xl">Re-order Steps</h3>
+            <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-steps', 'action' => 'reorder']]) ?>
+            <?= $this->Form->control('pathway_id', ['type' => 'hidden', 'value' => $pathway->id]) ?>
+            <?php $count = 0 ?>
+            <div id="items">
+            <?php foreach($sortedsteps as $s): ?>
+            <div class="flex mb-2 p-2 bg-slate-100 rounded-lg" data-id="<?= $s->id ?>">
+            <?php $count++ ?>
+            <?= $this->Form->control('steporder[]', ['type' => 'hidden', 'class' => 'stepcount step' . $s->id, 'value' => $count]) ?>
+            <div><?= $s->name ?></div>
+            <?= $this->Form->control('steps[]', ['type' => 'hidden', 'value' => $s->_joinData->id]) ?>
+            </div>
+            <?php endforeach ?>
+            <?= $this->Form->button(__('Update Step Order'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
+            <?= $this->Form->end() ?>
+
+
+
+
+
+
+
+        </div>
         </div>
     </div>
 </div>
+
+<!-- jsDelivr :: Sortable :: Latest (https://www.jsdelivr.com/package/npm/sortablejs) -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script>
+var el = document.getElementById('items');
+var sortable = Sortable.create(el, {
+  animation: 150,
+  onEnd: function (/**Event*/evt) {
+		var itemEl = evt.item;  // dragged HTMLElement
+		evt.to;    // target list
+		evt.from;  // previous list
+		evt.oldIndex;  // element's old index within old parent
+		evt.newIndex;  // element's new index within new parent
+		evt.oldDraggableIndex; // element's old index within old parent, only counting draggable elements
+		evt.newDraggableIndex; // element's new index within new parent, only counting draggable elements
+		evt.clone // the clone element
+		evt.pullMode;  // when item is in another sortable: `"clone"` if cloning, `true` if moving
+        // console.log(evt.newIndex);
+        // let x = itemEl.getAttribute('data-id');
+        // let step = 'step' + x;
+        // let orderval = itemEl.getElementsByClassName(step);
+        // console.log(orderval);
+        //let neworder = parseInt(evt.newIndex) + 1;
+        //orderval[0].setAttribute('value',neworder);
+        resort();
+
+	},
+});
+function resort () {
+    let stepcount = document.getElementsByClassName('stepcount');
+    let count = 1;
+    Array.from(stepcount).forEach(function(element) {
+        element.setAttribute('value', count);
+        count++;
+    });
+}
+</script>
