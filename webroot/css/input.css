@@ -45,7 +45,7 @@ p {
 
 @layer components {
     .form-field {
-        @apply block w-full px-3 py-1 m-0 border-solid border-2 border-slate-200 dark:border-black dark:text-white bg-slate-100/80 dark:bg-slate-800 rounded-lg;
+        @apply block w-full px-3 py-1 m-0 border-solid border-2 border-slate-200 bg-slate-100/80 rounded-lg;
     }
 }
 

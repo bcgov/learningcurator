@@ -110,7 +110,7 @@ $this->assign('title', h($pathway->name));
     <?php $count = 0 ?>
     <div id="items">
     <?php foreach($pathway->steps as $s): ?>
-    <div class="flex mb-2 p-2 bg-slate-100 rounded-lg" data-id="<?= $s->id ?>">
+    <div class="flex mb-1 p-2 bg-slate-100 rounded-lg" data-id="<?= $s->id ?>">
     <?php $count++ ?>
     <div class="handle hover:cursor-pointer" style="height: 1em; width: 3em;">
         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" style="margin: .5em 0 0 1em" viewBox="0 0 320 512">
@@ -530,6 +530,7 @@ function updateProgress (launched) {
     // Calculate pathway progress and update the UI.
     let intersection = pathacts.filter(x => launched.includes(x));
     let progress = (intersection.length / pathacts.length) * 100;
+    let togo = pathacts.length - intersection.length;
     let perc = Math.floor(progress) + '%';
     let pbar = document.getElementById('progressbar');
     let zero = document.getElementById('zero');
