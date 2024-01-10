@@ -32,6 +32,8 @@ class RedirectController extends AppController
             $goto = $_COOKIE['RedirectionTo'] . $_COOKIE['hash'];
             setcookie('RedirectionTo', '', time()-3600);
             unset($_COOKIE['RedirectionTo']);
+            setcookie('hash', '', time()-3600);
+            unset($_COOKIE['hash']);
             return $this->redirect($goto);
         } else {
             return $this->redirect(['Topics' => 'index']);
