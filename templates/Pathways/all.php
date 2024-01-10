@@ -37,7 +37,7 @@ $this->assign('title', h($pathway->name));
     </nav>
 
 
-
+    <!-- max-w-prose -->
     <div class="">
         <div class="p-3 mb-3 mt-8 bg-bluegreen text-white rounded-lg flex justify-start items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 mx-3 grow-0" viewBox="0 0 16 16">
@@ -351,7 +351,7 @@ $this->assign('title', h($pathway->name));
                         <div class="flex-1 basis-6/7 p-3">
 
                             <h4 class="text-xl font-semibold mb-2">
-                                <a href="/a/<?= h($pathway->slug) ?>#step-<?= $count ?>">#</a>
+                                <a class="permalink" href="/a/<?= h($pathway->slug) ?>#step-<?= $count ?>">#</a>
                                 <?= h($steps->name) ?>
                                 <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                                 <a href="/steps/edit/<?= $steps->id ?>" class="group float-right text-xs">
@@ -373,6 +373,7 @@ $this->assign('title', h($pathway->name));
                         <details class="activitylist py-2 px-4 bg-slate-100 rounded-lg">
                             <summary class="font-bold hover:cursor-pointer"><?= count($steps->activities) ?> Activities</summary>
                             <?php foreach($steps->activities as $a): ?>
+                            <?php if ($a->status_id == 2) : ?>
                             <?php //if ($a->_joinData->required == 1) : ?>
                             <?php $actcount++ ?>
                             <details id="activity-<?= $a->id ?>" class="activity px-4 py-2 border-b-2">
@@ -399,6 +400,7 @@ $this->assign('title', h($pathway->name));
                                 </div>
                                 </div>
                             </details>
+                            <?php endif ?>
                             <?php //endif ?>
                             <?php endforeach ?>
                         </details>
