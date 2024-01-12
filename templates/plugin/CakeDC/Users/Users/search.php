@@ -57,7 +57,7 @@
                         <?= ucfirst($user->role) ?>
                     </td>
                     <td class="px-2 py-1 border border-slate-300">
-                        <?= $user->last_login ?>
+                    <?php echo $this->Time->format($user->last_login,\IntlDateFormatter::MEDIUM,null,'America/Vancouver'); ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
