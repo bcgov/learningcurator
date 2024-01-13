@@ -117,7 +117,7 @@ class ActivitiesController extends AppController
                                         ->where(['Activities.status_id' => 2])
                                         ->where(['Activities.audited < ' => $weekago->i18nFormat('yyyy-MM-dd HH:mm:ss')])
                                         ->where(['Activities.moderation_flag' => 0])
-                                        ->limit(10)
+                                        ->limit(5)
                                         ->toList();
 
         $report = TableRegistry::getTableLocator()->get('Reports');
@@ -129,6 +129,10 @@ class ActivitiesController extends AppController
         
         foreach($activities as $a) {
     
+            $fp = '/mnt/published/last-audit.txt';
+            $p = $now->i18nFormat('yyyy-MM-dd HH:mm:ss','America/Vancouver');
+            file_put_contents($fp, $p);
+
             $url = trim($a->hyperlink);
             // First check to see if this even a valid URL to attempt to check
             if (filter_var($url, FILTER_VALIDATE_URL) !== FALSE) {
@@ -172,16 +176,28 @@ class ActivitiesController extends AppController
                     if($headers) {
                         $code = explode(' ', $headers[0]);
                         // Anything other than 
-                        // * 200 OK
-                        // * 302 Moved Temporarily??
-                        // gets reported
+                        // 200 OK gets reported. Filter for known codes.
                         if ($code[1] != 200) {
+
+                            $reportbody = $headers[0];
+                            
+                            if ($code[1] == 301) {
+                                $reportbody = 'Moved Permanently means that the URL has been updated. Visit the resource and update the record here with the new URL. ';
+                            }
+                            if ($code[1] == 302) {
+                                $reportbody = 'Temporary redirect. Probably do nothing.';
+                            }
+                            if ($code[1] == 303) {
+                                $reportbody = 'This is likely a YouTube video that is using a short version rather than the full url.';
+                            }
+
                             $newreport = $report->newEmptyEntity();
                             $reportdata = [
                                 'activity_id' => $a->id,
                                 'user_id' => '00001FC1A510420B9A19A46D24069FFD', // always as superadmin
-                                'issue' => $headers[0]
+                                'issue' => $reportbody
                             ];
+                            
                             $newreport = $report->patchEntity($newreport, $reportdata);
                             if ($report->save($newreport)) {
                                 $reportcount++;

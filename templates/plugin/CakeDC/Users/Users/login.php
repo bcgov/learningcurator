@@ -51,28 +51,28 @@ $this->assign('title', 'Learning on demand');
 <body class="bg-cover bg-center font-BCSans" style="background-image: url('/img/cape-scott-trail-n-r-t-on-flckr.jpg')">
 
 <?php if($environment == 'learningcurator.ca') : ?>
-<div class="px-3 py-2 bg-yellow-100 font-bold text-center">
+<div class="px-3 py-2 bg-yellow-100 font-bold text-center" role="alert">
     You're in ALLAN'S LOCAL ENVIRONMENT - 
     <a href="https://learningcurator.gww.gov.bc.ca" target="_blank">
         Production
     </a>
 </div>
 <?php elseif($environment == 'nori.learningcurator.ca') : ?>
-<div class="px-3 py-2 bg-yellow-100 font-bold text-center">
+<div class="px-3 py-2 bg-yellow-100 font-bold text-center" role="alert">
     You're in NORI'S LOCAL ENVIRONMENT - 
     <a href="https://learningcurator.gww.gov.bc.ca" target="_blank">
         Production
     </a>
 </div>
 <?php elseif($environment == 'learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca') : ?>
-<div class="px-3 py-2 bg-yellow-100 font-bold text-center">
+<div class="px-3 py-2 bg-yellow-100 font-bold text-center" role="alert">
     You're in the OpenShift DEVELOPMENT ENVIRONMENT - 
     <a href="https://learningcurator.gww.gov.bc.ca" target="_blank">
         Production
     </a>
 </div>
 <?php elseif($environment == 'learningcurator-a58ce1-test.apps.silver.devops.gov.bc.ca') : ?>
-<div class="px-3 py-2 bg-yellow-100 font-bold text-center">
+<div class="px-3 py-2 bg-yellow-100 font-bold text-center" role="alert">
     You're in the OpenShift TEST ENVIRONMENT - 
     <a href="https://learningcurator.gww.gov.bc.ca" target="_blank">
         Production
@@ -100,7 +100,7 @@ $this->assign('title', 'Learning on demand');
             </div>
         </div>
 
-        <div class="w-full md:w-3/4 lg:w-2/3 xl:w-3/5 px-6 py-10 md:p-20 grow gap-4 flex flex-col justify-between">
+        <main class="w-full md:w-3/4 lg:w-2/3 xl:w-3/5 px-6 py-10 md:p-20 grow gap-4 flex flex-col justify-between">
 
             <div class="p-6 md:p-10 text-2xl bg-white/80 rounded-lg">
                 <h1 class="mb-6 text-4xl text-darkblue">
@@ -121,7 +121,7 @@ $this->assign('title', 'Learning on demand');
 
             <p class="bg-white/50 flex-none self-start py-1 px-2 rounded-md mb-0">Photo: <a href="https://www.flickr.com/photos/n-r-t/1200374518/" target="_blank">Cape Scott Trail</a> by <a href="https://www.flickr.com/photos/n-r-t/" target="_blank">Nick Thompson on Flickr</a> (<a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC BY-NC-ND 2.0</a>)</p>
 
-        </div>
+        </main>
         <div class="p-10 pb-0 bg-slate-900/90 text-white flex-none" role="contentinfo">
             <div class="flex flex-col md:flex-row justify-between">
             <div class="my-5 max-w-prose text-slate-50">

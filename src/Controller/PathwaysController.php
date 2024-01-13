@@ -302,6 +302,28 @@ class PathwaysController extends AppController
 
     }
     /**
+     * Launch report method
+     *
+     * @param string|null $id Pathway id.
+     * @return \Cake\Http\Response|null|void Renders view
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function launchreport($slug = null)
+    {
+        $pathway = $this->Pathways->findBySlug($slug)->contain(['Steps.Activities.Users'])->firstOrFail();
+        $count = 0;
+        foreach($pathway->steps as $p) {
+            foreach($p->activities as $a) {
+                foreach($a->users as $u) {
+                    $count++;
+                }
+            }
+        }
+        $this->viewBuilder()->setLayout('ajax');
+        $this->set(compact('count'));
+        
+    }
+    /**
      * All method
      *
      * @param string|null $id Pathway id.

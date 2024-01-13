@@ -178,3 +178,21 @@ $followcount = 0;
         </div>-->
     </div>
 </div>
+
+<script>
+
+function getPathwayLaunchReport (slug) {
+
+    // Make the call
+    let url = '/a/' + slug + '/launchreport';
+    let learner = fetch(url, {
+            method: 'GET'
+        })
+        .then((res) => res.json())
+        .then((json) => {
+            
+        })
+        .catch((err) => console.error('error:', err));
+
+}
+</script>
