@@ -194,12 +194,12 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Pathways',
-            'action' => ['edit','add','delete','export','import','launchreport'],
+            'action' => ['edit','add','delete','export','import','launchreport','launchreports'],
         ],
         [
             'role' => 'manager',
             'controller' => 'Pathways',
-            'action' => ['publish','edit','add','delete','export','import','launchreport'],
+            'action' => ['publish','edit','add','delete','export','import','launchreport','launchreports'],
         ],
         [
             'role' => 'curator',
