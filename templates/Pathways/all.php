@@ -88,7 +88,7 @@ $this->assign('title', h($pathway->name));
             <div class="flex pbarcontainer w-full bg-slate-200 rounded-lg content-center justify-start">
                 <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar flex-none"></span>
                 <span id="progressbar" 
-                        class="hidden py-1 px-3 text-base pbar pro_sm flex-none bg-slate-500 rounded-lg text-center text-white">
+                        class="hidden py-1 px-3 text-base pbar pro_sm flex-none bg-darkblue rounded-lg text-center text-white">
                     </span>
                 <span id="zero" class="py-1 px-3 text-base text-right">0 of <?= $totalacts ?></span>
             </div>

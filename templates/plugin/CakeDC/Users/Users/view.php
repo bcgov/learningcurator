@@ -34,7 +34,7 @@ if ($this->Identity->isLoggedIn()) {
                 ['action' => 'delete', $Users->id],
                 [
                     'confirm' => __d('cake_d_c/users', 'Are you sure you want to delete # {0}?', $Users->id),
-                    'class' => 'inline-block px-3 py-1 text-base hover:bg-red-700/80 text-white bg-red-700 hover:no-underline rounded-lg'
+                    'class' => 'inline-block px-4 py-2 text-md text-white bg-red-600 hover:bg-red-700/80 focus:bg-red-700/80 hover:no-underline rounded-lg'
                 ]
             ) ?>
         </div>
@@ -56,17 +56,22 @@ if ($this->Identity->isLoggedIn()) {
             <li class="px-2"><strong>Last Modified:</strong> <?= $this->Time->format($Users->modified, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></li>
         </ul>
     </div>
-    <?php if (!empty($topicsmanaged)) : ?>
-        <h3 class="mt-4 font-semibold text-xl">Topics Managed</h3>
+    <?php if (!$topicsmanaged->isEmpty()) : ?>
+    <details>
+        <summary class="mt-4 font-semibold text-xl"><?= $topicsmanaged->count() ?> Topics Managed</summary>
         <ul class="list-disc pl-8 mt-2">
             <?php foreach ($topicsmanaged as $topic) : ?>
                 <li class="px-2"><a href="/topic/<?= $topic->slug ?>"><?= h($topic->name) ?></a>
                 </li>
             <?php endforeach ?>
         </ul>
+    </details>
+    <?php else : ?>
+        <p class="px-8 py-4">This user doesn't manage any topics yet.</p>
     <?php endif ?>
-    <h3 class="mt-4 font-semibold text-xl">Activities Claimed</h3>
     <?php if (!empty($Users->activities_users)) : ?>
+    <details>
+    <summary class="mt-4 font-semibold text-xl"><?= count($Users->activities_users) ?> Activities Launched</summary>
         <ul class="list-disc pl-8 mt-2">
             <?php foreach ($Users->activities_users as $act) : ?>
                 <li class="px-2"><a href="/activities/view/<?= $act->activity->id ?>"><?= h($act->activity->name) ?></a>
@@ -74,11 +79,13 @@ if ($this->Identity->isLoggedIn()) {
             <?php endforeach ?>
         </ul>
         <!-- TODO Nori/Allan add claimed date? -->
+    </details>
     <?php else : ?>
-        <p>This user hasn't claimed any activities yet.</p>
+        <p class="px-8 py-4">This user hasn't launched any activities yet.</p>
     <?php endif ?>
-    <h3 class="mt-4 font-semibold text-xl">Activities Contributed</h3>
     <?php if (!$actsadded->isEmpty()) : ?>
+    <details>
+        <summary class="mt-4 font-semibold text-xl"><?= $actsadded->count() ?> Activities Contributed</summary>
         <ul class="list-disc pl-8 mt-2">
             <?php foreach ($actsadded as $act) : ?>
                 <li class="px-2"> <a href="/activities/view/<?= $act->id ?>">
@@ -87,11 +94,14 @@ if ($this->Identity->isLoggedIn()) {
                 </li>
             <?php endforeach ?>
         </ul>
+    </details>
     <?php else : ?>
-        <p>This user hasn't contributed any activities yet.</p>
+        <p class="px-8 py-4">This user hasn't contributed any activities yet.</p>
     <?php endif ?>
-    <h3 class="mt-4 font-semibold text-xl">Pathways Followed</h3>
+
     <?php if (!empty($Users->pathways_users)) : ?>
+    <details>
+        <summary class="mt-4 font-semibold text-xl"><?= count($Users->pathways_users) ?> Pathways Followed</summary>
         <ul class="list-disc pl-8 mt-2">
             <?php foreach ($Users->pathways_users as $path) : ?>
                 <li class="px-2"><a href="/pathways/<?= $path->pathway->slug ?>">
@@ -101,11 +111,13 @@ if ($this->Identity->isLoggedIn()) {
 
             <?php endforeach ?>
         </ul>
+    </details>
     <?php else : ?>
-        <p>This user hasn't followed any pathways yet.</p>
+        <p class="px-8 py-4">This user hasn't followed any pathways yet.</p>
     <?php endif ?>
-    <h3 class="mt-4 font-semibold text-xl">Pathways Contributed</h3>
     <?php if (!$pathsadded->all()->isEmpty()) : ?>
+    <details>
+        <summary class="mt-4 font-semibold text-xl">Pathways Contributed</summary>
         <ul class="list-disc pl-8 mt-2">
 
             <?php foreach ($pathsadded as $path) : ?>
@@ -115,7 +127,8 @@ if ($this->Identity->isLoggedIn()) {
                 </li>
             <?php endforeach ?>
         </ul>
+    </details>
     <?php else : ?>
-        <p>This user hasn't contributed any pathways yet.</p>
+        <p class="px-8 py-4">This user hasn't contributed any pathways yet.</p>
     <?php endif ?>
 </div>

@@ -342,7 +342,6 @@ class PathwaysController extends AppController
             $newpathname = $pathway->name;
             foreach($pathway->steps as $p) {
                 foreach($p->activities as $a) {
-                    print_r($a->users); exit;
                     foreach($a->users as $u) {
                         $count++;
                     }
@@ -356,7 +355,7 @@ class PathwaysController extends AppController
             $totalcount = $totalcount + (int) $p[1];
         }
         echo $totalcount;
-        echo '<pre>';print_r($paths); 
+        print_r($paths); 
         exit;
         $this->viewBuilder()->setLayout('ajax');
         $this->set(compact('count'));
