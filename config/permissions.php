@@ -194,7 +194,7 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Pathways',
-            'action' => ['edit','add','delete','export','import'],
+            'action' => ['edit','add','delete','export','import','launchreport'],
         ],
         [
             'role' => 'manager',

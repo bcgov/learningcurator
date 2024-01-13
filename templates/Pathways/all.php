@@ -153,8 +153,11 @@ $this->assign('title', h($pathway->name));
 </details>
 <details>
     <summary>Curator Details</summary>
-        <div class="p-3 pb-0"><?= $followcount ?> follows</div>
-        <div class="p-3 text-sm">
+        <div class="flex m-3 p-3 bg-white rounded-lg">
+            <div class="mr-3"><strong><?= $followcount ?></strong> follows</div>
+            <div id="activitylaunches" class=""></div>
+        </div>
+        <div class="m-3 p-3 bg-white rounded-lg">
             <?php if(!empty($createdby[0]->first_name)): ?>
             
                 Created by:
@@ -209,7 +212,7 @@ $this->assign('title', h($pathway->name));
 
 
 
-            <div class="mb-3 p-3 bg-yellow-100 rounded-lg">
+            <div class="m-3 p-3 bg-yellow-100 rounded-lg">
 
             <div><strong>This pathway has not be published.</strong></div>
 
@@ -351,8 +354,9 @@ $this->assign('title', h($pathway->name));
                         <div class="flex-1 basis-6/7 p-3">
 
                             <h4 class="text-xl font-semibold mb-2">
-                                <a class="permalink" href="/a/<?= h($pathway->slug) ?>#step-<?= $count ?>">#</a>
-                                <?= h($steps->name) ?>
+                                <a class="permalink" href="/a/<?= h($pathway->slug) ?>#step-<?= $count ?>">
+                                    <?= h($steps->name) ?>
+                                </a>
                                 <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
                                 <a href="/steps/edit/<?= $steps->id ?>" class="group float-right text-xs">
                                     Edit
@@ -374,7 +378,8 @@ $this->assign('title', h($pathway->name));
                             <?php $actcount++ ?>
                             <details id="activity-<?= $a->id ?>" class="activity px-4 py-2 border-b-2">
                                 <summary class="text-lg hover:cursor-pointer hover:text-blue-700">
-                                    <span id="launched-<?= $a->id ?>" class="hidden launched p-0.5 px-2 bg-emerald-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-emerald-700/80"></span> 
+                                    <span id="launched-<?= $a->id ?>" class="hidden launched "></span> 
+                                    <!-- p-0.5 px-2 bg-emerald-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-emerald-700/80 -->
                                     <?= $a->name ?>
                                 </summary>
                                 <div class="p-3 ml-6 bg-white rounded-lg">
@@ -411,11 +416,13 @@ $this->assign('title', h($pathway->name));
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="module">
+
+
 <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
 var el = document.getElementById('items');
 var sortable = Sortable.create(el, {
   animation: 150,
-  handle: ".handle",
+  handle: '.handle',
   onEnd: function (/**Event*/evt) {
         resort();
 	},
@@ -427,6 +434,23 @@ function resort () {
         element.setAttribute('value', count);
         count++;
     });
+}
+
+getPathwayLaunchReport();
+function getPathwayLaunchReport () {
+
+    // Make the call
+    let learner = fetch('/a/<?= $pathway->slug ?>/launchreport', {
+            method: 'GET'
+        })
+        .then((res) => res.json())
+        .then((json) => {
+            let activitylaunches = document.getElementById('activitylaunches');
+            activitylaunches.innerHTML = '<strong>' + json.count + '</strong> activity launches';
+            
+        })
+        .catch((err) => console.error('error:', err));
+
 }
 <?php endif ?>
 // By default, all the activities are hidden behind a details/summary
@@ -528,9 +552,11 @@ function getLearnerData () {
                         // Now calculate pathway progress and update the UI
                         updateProgress(launched);
                     })
-                    .catch((err) => console.error("error:", err));
+                    .catch((err) => console.error('error:', err));
 
 }
+
+
 // Update the progress bar UI with the info returned by getLearnerData()
 function updateProgress (launched) {
     // Calculate pathway progress and update the UI.
@@ -574,8 +600,8 @@ function updateLaunches (launched) {
             // so we get by class and refer to the first (and expected to be
             // only) instance of it with [0].
             badge[0].classList.remove('hidden');
-            badge[0].innerHTML = 'Launched';
-            // badge[0].innerHTML = '🚀';
+            // badge[0].innerHTML = 'Launched';
+            badge[0].innerHTML = '🚀';
         }
     });
 }
