@@ -145,10 +145,10 @@
 
             </main>
         </div>
-        <div class="grid gap-4 grid-cols-3 p-6 bg-slate-200">
+        <div class="md:grid md:gap-4 md:grid-cols-3 p-6 bg-slate-200">
         
         
-            <div class="p-6 bg-slate-100 rounded-lg text-slate-600">
+            <div class="p-6 my-3 md:my-0 bg-slate-100 rounded-lg text-slate-600">
         
                 The BC Public Service acknowledges the territories of First Nations 
                 around B.C. and is grateful to carry out our work on these lands. 
@@ -159,7 +159,7 @@
         
         
             
-            <div class="p-6 bg-slate-100 rounded-lg text-slate-600">
+            <div class="p-6 my-3 md:my-0 bg-slate-100 rounded-lg text-slate-600">
                 <div class="text-lg">Your one-stop-shop for learning that is available to 
                     public service employees from any ministry:</div>
                 <a class="inline-block my-3 px-5 py-2 rounded-lg text-white bg-slate-700 hover:no-underline hover:bg-slate-800" 
@@ -169,7 +169,7 @@
                         Visit the Learning<span class="text-yellow-500 font-bold">HUB</span>
                 </a>
             </div>
-        <div class="p-3 bg-slate-100 rounded-lg text-slate-700">
+        <div class="p-3 my-3 md:my-0 bg-slate-100 rounded-lg text-slate-700">
 
             <img class="block" src="/img/wiw.svg" height="110" width="380px" alt="Where Ideas Work logo">
 

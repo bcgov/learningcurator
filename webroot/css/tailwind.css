@@ -803,10 +803,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: table;
 }
 
-.grid {
-  display: grid;
-}
-
 .hidden {
   display: none;
 }
@@ -984,10 +980,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .list-decimal {
   list-style-type: decimal;
-}
-
-.grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .flex-row {
@@ -1372,6 +1364,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(15 23 42 / 0.9);
 }
 
+.bg-red-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
+}
+
 .bg-cover {
   background-size: cover;
 }
@@ -1475,6 +1472,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-right: 1.5rem;
 }
 
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -1493,6 +1495,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .py-10 {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .pl-8 {
@@ -1527,12 +1534,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-top: 0.75rem;
 }
 
-.pb-0 {
-  padding-bottom: 0px;
+.pl-3 {
+  padding-left: 0.75rem;
 }
 
 .pl-10 {
   padding-left: 2.5rem;
+}
+
+.pb-0 {
+  padding-bottom: 0px;
 }
 
 .pl-16 {
@@ -1557,10 +1568,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .text-right {
   text-align: right;
-}
-
-.align-baseline {
-  vertical-align: baseline;
 }
 
 .align-top {
@@ -2093,6 +2100,10 @@ details[open] > summary {
   background-color: rgb(203 213 225 / 0.8);
 }
 
+.focus\:bg-red-700\/80:focus {
+  background-color: rgb(185 28 28 / 0.8);
+}
+
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -2131,6 +2142,11 @@ details[open] > summary {
 }
 
 @media (min-width: 768px) {
+  .md\:my-0 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
   .md\:mx-0 {
     margin-left: 0px;
     margin-right: 0px;
@@ -2152,6 +2168,14 @@ details[open] > summary {
     display: block;
   }
 
+  .md\:flex {
+    display: flex;
+  }
+
+  .md\:grid {
+    display: grid;
+  }
+
   .md\:hidden {
     display: none;
   }
@@ -2168,12 +2192,32 @@ details[open] > summary {
     width: 75%;
   }
 
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .md\:flex-row {
     flex-direction: row;
   }
 
+  .md\:items-center {
+    align-items: center;
+  }
+
+  .md\:justify-start {
+    justify-content: flex-start;
+  }
+
+  .md\:gap-4 {
+    gap: 1rem;
+  }
+
   .md\:overflow-y-auto {
     overflow-y: auto;
+  }
+
+  .md\:p-8 {
+    padding: 2rem;
   }
 
   .md\:p-20 {
@@ -2182,6 +2226,15 @@ details[open] > summary {
 
   .md\:p-10 {
     padding: 2.5rem;
+  }
+
+  .md\:px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .md\:pl-8 {
+    padding-left: 2rem;
   }
 
   .md\:pb-0 {
