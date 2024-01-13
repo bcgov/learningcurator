@@ -199,7 +199,7 @@ return [
         [
             'role' => 'manager',
             'controller' => 'Pathways',
-            'action' => ['publish','edit','add','delete','export','import'],
+            'action' => ['publish','edit','add','delete','export','import','launchreport'],
         ],
         [
             'role' => 'curator',
