@@ -24,7 +24,7 @@ $this->assign('title', h($pathway->name));
     </div>
     <p class="text-xs text-white float-right -mt-3 mb-0 bg-black/20 p-0.5">Photo: <a href="https://flic.kr/p/JULZFP" target="_blank">Paradise Meadows Boardwalk</a> by <a href="https://flic.kr/ps/3bxUBu" target="_blank">Fyre Mael on Flickr</a> (<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank">CC BY 2.0</a>)</p>
 </header>
-<div class="p-8 pt-4 w-full text-lg" id="mainContent">
+<div class="p-3 md:p-8 pt-4 w-full text-lg" id="mainContent">
 
     <nav class="mb-4 text-slate-500 text-sm" aria-label="breadcrumb">
         <a href="/topics">All Topics</a> > 
@@ -39,7 +39,7 @@ $this->assign('title', h($pathway->name));
 
     <!-- max-w-prose -->
     <div class="">
-        <div class="p-3 mb-3 mt-8 bg-bluegreen text-white rounded-lg flex justify-start items-center">
+        <div class="p-3 mb-3 mt-8 bg-bluegreen text-white rounded-lg md:flex md:justify-start md:items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 mx-3 grow-0" viewBox="0 0 16 16">
                 <path d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z" />
             </svg>
@@ -51,7 +51,7 @@ $this->assign('title', h($pathway->name));
             <span class="text-sm ml-3 justify-self-end flex-none"><?= $stepcount ?> steps | <?= $requiredacts ?> activities</span>
         </div>
 
-        <div class="pl-8 text-xl">
+        <div class="pl-3 md:pl-8 text-xl">
 
             <div class="mb-5 block">
             <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
@@ -370,13 +370,13 @@ $this->assign('title', h($pathway->name));
                                 </p>
                             </div>
 
-                        <details class="activitylist py-2 px-4 bg-slate-100 rounded-lg">
+                        <details class="activitylist py-2 px-2 md:px-4 bg-slate-100 rounded-lg">
                             <summary class="font-bold hover:cursor-pointer"><?= count($steps->activities) ?> Activities</summary>
                             <?php foreach($steps->activities as $a): ?>
                             <?php if ($a->status_id == 2) : ?>
                             <?php //if ($a->_joinData->required == 1) : ?>
                             <?php $actcount++ ?>
-                            <details id="activity-<?= $a->id ?>" class="activity px-4 py-2 border-b-2">
+                            <details id="activity-<?= $a->id ?>" class="activity px-0 md:px-4 py-2 border-b-2">
                                 <summary class="text-lg hover:cursor-pointer hover:text-blue-700">
                                     <span id="launched-<?= $a->id ?>" class="hidden launched "></span> 
                                     <!-- p-0.5 px-2 bg-emerald-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-emerald-700/80 -->

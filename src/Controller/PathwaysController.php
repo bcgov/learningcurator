@@ -324,6 +324,45 @@ class PathwaysController extends AppController
         
     }
     /**
+     * Launch reports method returning a simple array of pathways
+     * with an activity launch count.
+     *
+     * @param string|null $id Pathway id.
+     * @return \Cake\Http\Response|null|void Renders view
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function launchreports()
+    {
+
+        $pathways = $this->Pathways->find('all')->contain(['Steps.Activities.Users']);
+        $paths = [];
+        echo '<pre>';
+        foreach($pathways as $pathway) {
+            $count = 0;
+            $newpathname = $pathway->name;
+            foreach($pathway->steps as $p) {
+                foreach($p->activities as $a) {
+                    print_r($a->users); exit;
+                    foreach($a->users as $u) {
+                        $count++;
+                    }
+                }
+            }
+            $newpaths = [$newpathname, $count];
+            array_push($paths,$newpaths);
+        }
+        $totalcount = 0;
+        foreach($paths as $p) {
+            $totalcount = $totalcount + (int) $p[1];
+        }
+        echo $totalcount;
+        echo '<pre>';print_r($paths); 
+        exit;
+        $this->viewBuilder()->setLayout('ajax');
+        $this->set(compact('count'));
+        
+    }
+    /**
      * All method
      *
      * @param string|null $id Pathway id.
