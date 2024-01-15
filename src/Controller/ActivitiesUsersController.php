@@ -109,9 +109,11 @@ class ActivitiesUsersController extends AppController
     {
         $user = $this->request->getAttribute('authentication')->getIdentity();
         $aid = $this->request->getQuery('activity_id');
+        $stepid = $this->request->getQuery('step_id');
         $activitiesUser = $this->ActivitiesUsers->newEmptyEntity();
         $activitiesUser->user_id = $user->id;
         $activitiesUser->activity_id = $aid;
+        $activitiesUser->step_id = $stepid;
         if ($this->ActivitiesUsers->save($activitiesUser)) {
             $act = TableRegistry::getTableLocator()->get('Activities');
             $activity = $act->get($aid);

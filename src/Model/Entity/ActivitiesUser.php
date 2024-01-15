@@ -30,6 +30,7 @@ class ActivitiesUser extends Entity
     protected $_accessible = [
         'activity_id' => true,
         'user_id' => true,
+        'step_id' => true,
         'created' => true,
         'activity' => true,
         'user' => true,

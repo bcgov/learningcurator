@@ -84,7 +84,7 @@ $this->assign('title', h($pathway->name));
 
 
 
-            <div class="py-3 sticky top-0 bg-white">
+        <div class="py-3 sticky top-0 bg-white">
             <div class="flex pbarcontainer w-full bg-slate-200 rounded-lg content-center justify-start">
                 <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar flex-none"></span>
                 <span id="progressbar" 
@@ -92,7 +92,8 @@ $this->assign('title', h($pathway->name));
                     </span>
                 <span id="zero" class="py-1 px-3 text-base text-right">0 of <?= $totalacts ?></span>
             </div>
-            </div>
+            <button id="expcol" class="mt-3 px-6 py-1 bg-slate-50 text-sm">Expand All</button>
+        </div>
 
 
 
@@ -157,7 +158,7 @@ $this->assign('title', h($pathway->name));
             <div class="mr-3"><strong><?= $followcount ?></strong> follows</div>
             <div id="activitylaunches" class=""></div>
             <div id="allreports" class="pl-3">
-                <a href="/launchreports">All Reports</a>
+                <a href="/stats">All Reports</a>
             </div>
         </div>
         <div class="m-3 p-3 bg-white rounded-lg">
@@ -331,7 +332,7 @@ $this->assign('title', h($pathway->name));
 
             <?php if (!empty($pathway->steps)) : ?>
                 
-            <button id="expcol" class="px-6 py-1 bg-slate-50 text-sm">Expand All</button>
+            
 
             <?php $count = 0 ?>
 
@@ -381,6 +382,11 @@ $this->assign('title', h($pathway->name));
                             <?php $actcount++ ?>
                             <details id="activity-<?= $a->id ?>" class="activity px-0 md:px-4 py-2 border-b-2">
                                 <summary class="text-lg hover:cursor-pointer hover:text-blue-700">
+                                    <?php if (!empty($a->_joinData->required)) : ?>
+                                    <span id="required-<?= $a->id ?>" class="required ">Required</span> 
+                                    <?php else: ?>
+                                    <span id="required-<?= $a->id ?>" class="bonus ">Bonus</span> 
+                                    <?php endif ?>
                                     <span id="launched-<?= $a->id ?>" class="hidden launched "></span> 
                                     <!-- p-0.5 px-2 bg-emerald-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-emerald-700/80 -->
                                     <?= $a->name ?>
@@ -396,7 +402,7 @@ $this->assign('title', h($pathway->name));
                                         rel="noopener" 
                                         title="Launch this activity" 
                                         data-activity="act-<?= $a->id ?>" 
-                                        href="/activities-users/launch?activity_id=<?= $a->id ?>" 
+                                        href="/activities-users/launch?activity_id=<?= $a->id ?>&step_id=<?= $steps->id ?>" 
                                         class="launch inline-block my-2 py-2 px-5 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-xl hover:no-underline">
                                             Launch
                                     </a>
@@ -503,7 +509,6 @@ getLearnerData ();
 let permalinks = document.getElementsByClassName('permalink');
 Array.from(permalinks).forEach(function(element) {
     element.addEventListener('click', (e) => { 
-
         // This is a bit fragile as it depends on the structure of the HTML
         // being in a certain order...
         let openacts = element.parentNode.nextElementSibling.nextElementSibling;

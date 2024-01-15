@@ -227,8 +227,8 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                                     if (!empty($youtube[1])) :
                                     ?>
                                     <div class="placehold<?= $activity->id ?> videoplace relative">
-                                        <img class="" alt="Embedded video placeholder" src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" onclick="showembed(<?= $activity->id ?>)">
-                                        <img class="absolute z-100 top-32 left-32" alt="Embedded video play button" src="/img/video-play.png" onclick="showembed(<?= $activity->id ?>)">
+                                        <img class="" alt="Embedded video placeholder" src="https://i.ytimg.com/vi/<?= $youtube[1] ?>/hqdefault.jpg" onclick="showembed(<?= $activity->id ?>,<?= $step->id ?>)">
+                                        <img class="absolute z-100 top-32 left-32" alt="Embedded video play button" src="/img/video-play.png" onclick="showembed(<?= $activity->id ?>,<?= $step->id ?>)">
                                     </div>
                                     <div class="embed<?= $activity->id ?> hidden w-full z-50 h-auto bg-black/50">
                                         <iframe loading="lazy" width="100%" height="240" src="https://www.youtube.com/embed/<?= $youtube[1] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -245,7 +245,7 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                                         rel="noopener" 
                                         title="Launch this activity" 
                                         data-activity="act-<?= $activity->id ?>" 
-                                        href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
+                                        href="/activities-users/launch?activity_id=<?= $activity->id ?>&step_id=<?= $step->id ?>" 
                                         class="launch inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
                                             Launch
                                     </a>
@@ -410,7 +410,7 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                                                 rel="noopener" 
                                                 title="Launch this activity" 
                                                 data-activity="act-<?= $activity->id ?>" 
-                                                href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
+                                                href="/activities-users/launch?activity_id=<?= $activity->id ?>&step_id=<?= $step->id ?>" 
                                                 class="launch inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
                                                     Launch
                                             </a>
@@ -665,9 +665,9 @@ function loadStatus() {
     .catch((err) => console.error("error:", err));
 }
 
-function showembed(actid) {
+function showembed(actid,stepid) {
     
-    fetch('/activities-users/launch?activity_id=' + actid, {
+    fetch('/activities-users/launch?activity_id=' + actid + '&step_id=' + stepid, {
         method: 'GET'
     })
     .then((res) => { return false })

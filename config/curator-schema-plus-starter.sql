@@ -165,13 +165,13 @@ UNLOCK TABLES;
 --
 -- Table structure for table `activities_users`
 --
-
 DROP TABLE IF EXISTS `activities_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `activities_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `activity_id` int(11) NOT NULL,
+  `step_id` int(11) NOT NULL,
   `user_id` char(36) NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`),
