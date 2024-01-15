@@ -80,7 +80,6 @@ class TopicsController extends AppController
     {
         $topics = $this->Topics->find()->contain(['Users','Pathways.Users','Pathways.Steps.Activities.Users'])->where(['featured = ' => 1]);
         $newtopics = [];
-        $topfollows = 0;
         foreach($topics as $t) {
             $newtopic = [];
             $topname = $t->name;
@@ -88,9 +87,14 @@ class TopicsController extends AppController
             $topid = $t->id;
             $paths = [];
             $toplaunches = 0;
+            $topfollows = 0;
+            $topsteps = 0;
+            $topacts = 0;
             foreach($t->pathways as $pathway) {
                 $count = 0;
                 $pathfollowcount = 0;
+                $pathstepcount = 0;
+                $pathactcount = 0;
                 $newpathid = $pathway->id;
                 $newpathname = $pathway->name;
                 $newpathslug = $pathway->slug;
@@ -98,7 +102,9 @@ class TopicsController extends AppController
                     $pathfollowcount++;
                 }
                 foreach($pathway->steps as $p) {
+                    $pathstepcount++;
                     foreach($p->activities as $a) {
+                        $pathactcount++;
                         foreach($a->users as $u) {
                             $count++;
                         }
@@ -109,11 +115,15 @@ class TopicsController extends AppController
                                 'pathslug' => $newpathslug, 
                                 'pathid' => $newpathid,
                                 'launchcount' => $count,
+                                'pathstepcount' => $pathstepcount,
+                                'pathactcount' => $pathactcount,
                                 'pathfollowcount' => $pathfollowcount
                             ];
                 array_push($paths,$newpaths);
                 $toplaunches = $toplaunches + $count;
                 $topfollows = $topfollows + $pathfollowcount;
+                $topsteps = $topsteps + $pathstepcount;
+                $topacts = $topacts + $pathactcount;
             } // end pathways loop
             
             $newtopic = [
@@ -122,13 +132,14 @@ class TopicsController extends AppController
                             'topicslug' => $topslug, 
                             'topiclaunches' => $toplaunches, 
                             'topicfollows' => $topfollows, 
+                            'topicsteps' => $topsteps, 
+                            'topicactvitities' => $topacts, 
                             'pathways' => $paths
                         ];
             array_push($newtopics,$newtopic);
 
         } // end topics loop
         
-        // $this->viewBuilder()->setLayout('ajax');
         $this->set(compact('newtopics'));
         
     }

@@ -33,29 +33,35 @@ if ($this->Identity->isLoggedIn()) {
 <table class="w-full table-auto">
 <thead>
 <tr class="text-left">
-    <th class="w-2/3">Pathway Name</th>
+    <th class="w-1/2">Pathway</th>
+    <th>Steps</th>
+    <th>Activities</th>
     <th>Follows</th>
     <th>Launches</th>
 </tr>
 </thead>
 <tbody>
 <?php foreach($t['pathways'] as $path): ?>
-<tr>
-    <td class="w-2/3 pr-4 py-1">
+<tr class="even:bg-slate-100 odd:bg-slate-200">
+    <td class="w-1/2 pr-4 py-1">
         <a href="/a/<?= $path['pathslug'] ?>">
             <?= $path['pathname'] ?>
         </a>
     </td>
-    <td class="py-1"><?= $path['pathfollowcount'] ?></td>
-    <td class="py-1"><?= $path['launchcount'] ?></td>
+    <td class="py-1 text-center"><?= $path['pathstepcount'] ?></td>
+    <td class="py-1 text-center"><?= $path['pathactcount'] ?></td>
+    <td class="py-1 text-center"><?= $path['pathfollowcount'] ?></td>
+    <td class="py-1 text-center"><?= $path['launchcount'] ?></td>
 </tr>
 <?php endforeach ?>
-<tr>
+<tr class="even:bg-slate-100 odd:bg-slate-200">
     <td class="w-2/3 pr-4 py-1 text-right">
         Totals:
     </td>
-    <td class="py-1"><strong><?= $t['topicfollows'] ?></strong></td>
-    <td class="py-1"><strong><?= $t['topiclaunches'] ?></strong></td>
+    <td class="py-1 text-center"><strong><?= $t['topicsteps'] ?></strong></td>
+    <td class="py-1 text-center"><strong><?= $t['topicactvitities'] ?></strong></td>
+    <td class="py-1 text-center"><strong><?= $t['topicfollows'] ?></strong></td>
+    <td class="py-1 text-center"><strong><?= $t['topiclaunches'] ?></strong></td>
 </tr>
 </tbody>
 </table>
