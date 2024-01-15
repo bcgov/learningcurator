@@ -33,7 +33,7 @@ if ($this->Identity->isLoggedIn()) {
 <table class="w-full table-auto">
 <thead>
 <tr class="text-left">
-    <th class="w-1/2">Pathway</th>
+    <th class="w-2/3">Pathway</th>
     <th>Steps</th>
     <th>Activities</th>
     <th>Follows</th>
@@ -42,8 +42,8 @@ if ($this->Identity->isLoggedIn()) {
 </thead>
 <tbody>
 <?php foreach($t['pathways'] as $path): ?>
-<tr class="even:bg-slate-100 odd:bg-slate-200">
-    <td class="w-1/2 pr-4 py-1">
+<tr class="even:bg-slate-100 odd:bg-slate-200 hover:bg-white">
+    <td class="w-2/3 pr-4 py-1">
         <a href="/a/<?= $path['pathslug'] ?>">
             <?= $path['pathname'] ?>
         </a>

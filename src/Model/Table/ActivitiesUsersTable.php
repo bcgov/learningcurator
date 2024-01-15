@@ -85,6 +85,7 @@ class ActivitiesUsersTable extends Table
         $rules->add($rules->existsIn(['activity_id'], 'Activities'), ['errorField' => 'activity_id']);
         $rules->add($rules->existsIn(['user_id'], 'Users'), ['errorField' => 'user_id']);
 
+
         return $rules;
     }
 }

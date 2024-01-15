@@ -101,12 +101,18 @@ class TopicsController extends AppController
                 foreach($pathway->users as $u) {
                     $pathfollowcount++;
                 }
-                foreach($pathway->steps as $p) {
+                foreach($pathway->steps as $s) {
                     $pathstepcount++;
-                    foreach($p->activities as $a) {
+                    foreach($s->activities as $a) {
                         $pathactcount++;
                         foreach($a->users as $u) {
-                            $count++;
+                            // Ensure that this activity launch is from the
+                            // current step or we end up counting multiples
+                            // of the same launch on every step it's included
+                            // on.
+                            if($u->_joinData->step_id == $s->id) {
+                                $count++;
+                            }
                         }
                     }
                 }

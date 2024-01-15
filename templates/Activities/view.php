@@ -85,7 +85,7 @@ if ($this->Identity->isLoggedIn()) {
                                 <a target="_blank" 
                                     rel="noopener" 
                                     title="Launch this activity" 
-                                    href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
+                                    href="/activities-users/launch?activity_id=<?= $activity->id ?>&step_id=0" 
                                     onclick="showBadge()"
                                     class="inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
                                         Launch
@@ -228,7 +228,7 @@ if ($this->Identity->isLoggedIn()) {
 <script>
 function showembed(actid) {
     
-    fetch('/activities-users/launch?activity_id=' + actid, {
+    fetch('/activities-users/launch?activity_id=' + actid + '&step_id=0', {
         method: 'GET'
     })
     .then((res) => { return false })

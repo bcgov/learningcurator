@@ -174,7 +174,7 @@ if ($this->Identity->isLoggedIn()) {
                                         rel="noopener" 
                                         title="Launch this activity" 
                                         data-activity="lbad<?= $activity->id ?>" 
-                                        href="/activities-users/launch?activity_id=<?= $activity->id ?>" 
+                                        href="/activities-users/launch?activity_id=<?= $activity->id ?>&step_id=0" 
                                         class="launch inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
                                             Launch
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline bi bi-box-arrow-up-right" viewBox="0 0 16 16">
@@ -316,7 +316,7 @@ Array.from(launchlinks).forEach(function(element) {
 });
 function showembed(actid) {
     
-    fetch('/activities-users/launch?activity_id=' + actid, {
+    fetch('/activities-users/launch?activity_id=' + actid + '&step_id=0', {
         method: 'GET'
     })
     .then((res) => { return false })

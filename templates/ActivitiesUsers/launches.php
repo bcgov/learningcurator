@@ -115,7 +115,7 @@ if ($this->Identity->isLoggedIn()) {
                                         data-toggle="tooltip" 
                                         data-placement="bottom" 
                                         title="Launch this activity" 
-                                        href="/activities-users/launch?activity_id=<?= $a['id'] ?>" 
+                                        href="/activities-users/launch?activity_id=<?= $a['id'] ?> + '&step_id=<?= $a['step_id'] ?>'" 
                                         class="hover:underline hover:text-sky-700">
                                             Launch Activity
                                     </a>
