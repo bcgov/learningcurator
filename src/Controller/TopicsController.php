@@ -80,6 +80,7 @@ class TopicsController extends AppController
     {
         $topics = $this->Topics->find()->contain(['Users','Pathways.Users','Pathways.Steps.Activities.Users'])->where(['featured = ' => 1]);
         $newtopics = [];
+        $topfollows = 0;
         foreach($topics as $t) {
             $newtopic = [];
             $topname = $t->name;
