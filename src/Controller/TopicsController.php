@@ -69,7 +69,68 @@ class TopicsController extends AppController
 
         $this->set(compact('topic'));
     }
+    /**
+     * Stats method creating a dashboard of statistics for all pathways.
+     *
+     * @param string|null $id Pathway id.
+     * @return \Cake\Http\Response|null|void Renders view
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function stats()
+    {
+        $topics = $this->Topics->find()->contain(['Users','Pathways.Users','Pathways.Steps.Activities.Users'])->where(['featured = ' => 1]);
+        $newtopics = [];
+        foreach($topics as $t) {
+            $newtopic = [];
+            $topname = $t->name;
+            $topslug = $t->slug;
+            $topid = $t->id;
+            $paths = [];
+            $toplaunches = 0;
+            foreach($t->pathways as $pathway) {
+                $count = 0;
+                $pathfollowcount = 0;
+                $newpathid = $pathway->id;
+                $newpathname = $pathway->name;
+                $newpathslug = $pathway->slug;
+                foreach($pathway->users as $u) {
+                    $pathfollowcount++;
+                }
+                foreach($pathway->steps as $p) {
+                    foreach($p->activities as $a) {
+                        foreach($a->users as $u) {
+                            $count++;
+                        }
+                    }
+                }
+                $newpaths = [
+                                'pathname' => $newpathname, 
+                                'pathslug' => $newpathslug, 
+                                'pathid' => $newpathid,
+                                'launchcount' => $count,
+                                'pathfollowcount' => $pathfollowcount
+                            ];
+                array_push($paths,$newpaths);
+                $toplaunches = $toplaunches + $count;
+                $topfollows = $topfollows + $pathfollowcount;
+            } // end pathways loop
+            
+            $newtopic = [
+                            'topicid' => $topid, 
+                            'topicname' => $topname, 
+                            'topicslug' => $topslug, 
+                            'topiclaunches' => $toplaunches, 
+                            'topicfollows' => $topfollows, 
+                            'pathways' => $paths
+                        ];
+            array_push($newtopics,$newtopic);
 
+        } // end topics loop
+        
+        // $this->viewBuilder()->setLayout('ajax');
+        $this->set(compact('newtopics'));
+        
+    }
     /**
      * Add method
      *

@@ -69,6 +69,7 @@ if ($this->Identity->isLoggedIn()) {
                 <div class="basis-1/2">
                 <h3 class="mt-4 font-bold">View</h3>
                 <ul class="list-disc pl-8 mt-2">
+                    <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/stats">Stats Dashboard</a></li>
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/reports/index">Open Issue Reports</a></li>
                     <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/reports/closed">Closed Issue Reports</a></li>
                     <!-- <li class="px-2"><a class="hover:underline hover:text-sky-700" href="/activity-types">Activity Types</a></li> -->

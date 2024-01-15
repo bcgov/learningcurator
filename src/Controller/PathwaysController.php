@@ -334,11 +334,11 @@ class PathwaysController extends AppController
     public function launchreports()
     {
 
-        $pathways = $this->Pathways->find('all')->contain(['Steps.Activities.Users']);
+        $pathways = $this->Pathways->find('all')->contain(['Topics','Steps.Activities.Users']);
         $paths = [];
-        echo '<pre>';
         foreach($pathways as $pathway) {
             $count = 0;
+            $newpathid = $pathway->id;
             $newpathname = $pathway->name;
             foreach($pathway->steps as $p) {
                 foreach($p->activities as $a) {
@@ -347,18 +347,18 @@ class PathwaysController extends AppController
                     }
                 }
             }
-            $newpaths = [$newpathname, $count];
+            $newpaths = [
+                            'topicname' => $pathway->topic->name, 
+                            'topicid' => $pathway->topic->id, 
+                            'pathname' => $newpathname, 
+                            'pathid' => $newpathid,
+                            'launchcount' => $count
+                        ];
             array_push($paths,$newpaths);
         }
-        $totalcount = 0;
-        foreach($paths as $p) {
-            $totalcount = $totalcount + (int) $p[1];
-        }
-        echo $totalcount;
-        print_r($paths); 
-        exit;
+    
         $this->viewBuilder()->setLayout('ajax');
-        $this->set(compact('count'));
+        $this->set(compact('paths'));
         
     }
     /**
