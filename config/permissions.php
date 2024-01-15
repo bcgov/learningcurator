@@ -184,7 +184,12 @@ return [
         [
             'role' => 'curator',
             'controller' => 'Topics',
-            'action' => ['manage'],
+            'action' => ['stats'],
+        ],
+        [
+            'role' => 'manager',
+            'controller' => 'Topics',
+            'action' => ['manage','stats'],
         ],
         [
             'role' => '*',
@@ -199,7 +204,7 @@ return [
         [
             'role' => 'manager',
             'controller' => 'Pathways',
-            'action' => ['publish','edit','add','delete','export','import','launchreport','launchreports'],
+            'action' => ['publish','edit','add','delete','export','import','launchreport'],
         ],
         [
             'role' => 'curator',

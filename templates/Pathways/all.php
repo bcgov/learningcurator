@@ -156,6 +156,9 @@ $this->assign('title', h($pathway->name));
         <div class="flex m-3 p-3 bg-white rounded-lg">
             <div class="mr-3"><strong><?= $followcount ?></strong> follows</div>
             <div id="activitylaunches" class=""></div>
+            <div id="allreports" class="pl-3">
+                <a href="/launchreports">All Reports</a>
+            </div>
         </div>
         <div class="m-3 p-3 bg-white rounded-lg">
             <?php if(!empty($createdby[0]->first_name)): ?>

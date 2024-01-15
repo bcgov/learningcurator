@@ -85,8 +85,12 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/topic/{slug}', ['controller' => 'Topics', 'action' => 'view'])->setPass(['slug']);
     $builder->connect('/topic/{topicslug}/{pathwayid}/{pathwayslug}', ['controller' => 'Pathways', 'action' => 'view'])->setPass(['pathwayslug']);
     $builder->connect('/p/{pathwayslug}', ['controller' => 'Pathways', 'action' => 'view'])->setPass(['pathwayslug']);
+
+
     $builder->connect('/a/{pathwayslug}/launchreport', ['controller' => 'Pathways', 'action' => 'launchreport'])->setPass(['pathwayslug']);
-    $builder->connect('/launchreports', ['controller' => 'Pathways', 'action' => 'launchreports'])->setPass(['pathwayslug']);
+    $builder->connect('/stats', ['controller' => 'Topics', 'action' => 'stats']);
+    
+    
     $builder->connect('/topic/{topicslug}/{pathwayid}/{pathwayslug}/{stepid}/{stepslug}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
     $builder->connect('/s/{stepid}', ['controller' => 'Steps', 'action' => 'view'])->setPass(['stepid']);
     $builder->connect('/a/{pathwayslug}', ['controller' => 'Pathways', 'action' => 'all'])->setPass(['pathwayslug']);
