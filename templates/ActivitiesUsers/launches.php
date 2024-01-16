@@ -103,24 +103,25 @@ if ($this->Identity->isLoggedIn()) {
                             </h4>
 
 
-                            <ul class="list-disc pl-8 mt-2 text-lg ">
+                            <ul class="list-disc pl-8 my-3 text-lg ">
                                 <li>
                                     <a class="hover:underline hover:text-sky-700" href="/activities/view/<?= $a['id'] ?>">
                                         View Activity Record
                                     </a>
                                 </li>
-                                <li>
-                                    <a target="_blank" 
-                                        rel="noopener" 
-                                        data-toggle="tooltip" 
-                                        data-placement="bottom" 
-                                        title="Launch this activity" 
-                                        href="/activities-users/launch?activity_id=<?= $a['id'] ?> + '&step_id=<?= $a['step_id'] ?>'" 
-                                        class="hover:underline hover:text-sky-700">
-                                            Launch Activity
-                                    </a>
-                                </li>
                             </ul>
+                            <div>
+                                <a target="_blank" 
+                                    rel="noopener" 
+                                    data-toggle="tooltip" 
+                                    data-placement="bottom" 
+                                    title="Launch this activity" 
+                                    href="/activities-users/launch?activity_id=<?= $a['id'] ?>&step_id=<?= trim($a['launches'][0]['step_id']) ?>" 
+                                    class="launch inline-block my-2 p-2 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-lg hover:no-underline">
+                                        Launch
+                                </a>
+                            </div>
+
                             <div class="mt-3 text-sm">
                                 <p class="mb-0">
                                     <span class="font-semibold">Launched: </span><?= count($a['launches']) ?> times
