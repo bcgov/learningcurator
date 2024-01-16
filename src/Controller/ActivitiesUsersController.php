@@ -55,7 +55,7 @@ class ActivitiesUsersController extends AppController
                                 'iconclass' => $aid->activity->activity_type->image_path,
                                 'color' => $aid->activity->activity_type->color
                             ];
-                    array_push($launches,['date' => $aid['created']]);
+                    array_push($launches,['date' => $aid['created'],'step_id' => $aid['step_id']]);
                 }
             }
             $thisone = ['id' => $id, 'name' => $name, 'type' => $type, 'launches' => $launches];
