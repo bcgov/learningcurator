@@ -44,7 +44,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach($t['pathways'] as $path): ?>
 <tr class="even:bg-slate-100 odd:bg-slate-200 hover:bg-white">
     <td class="w-2/3 pr-4 py-1">
-        <a href="/a/<?= $path['pathslug'] ?>">
+        <a href="/p/<?= $path['pathslug'] ?>">
             <?= $path['pathname'] ?>
         </a>
     </td>
