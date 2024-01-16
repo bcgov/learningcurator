@@ -312,10 +312,12 @@ class PathwaysController extends AppController
     {
         $pathway = $this->Pathways->findBySlug($slug)->contain(['Steps.Activities.Users'])->firstOrFail();
         $count = 0;
-        foreach($pathway->steps as $p) {
-            foreach($p->activities as $a) {
+        foreach($pathway->steps as $s) {
+            foreach($s->activities as $a) {
                 foreach($a->users as $u) {
-                    $count++;
+                    if($u->_joinData->step_id == $s->id) {
+                        $count++;
+                    }
                 }
             }
         }
