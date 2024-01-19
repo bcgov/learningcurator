@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+Use Cake\ORM\TableRegistry;
 
 /**
  * Ministries Controller
@@ -18,9 +19,50 @@ class MinistriesController extends AppController
      */
     public function index()
     {
-        $ministries = $this->paginate($this->Ministries);
 
-        $this->set(compact('ministries'));
+        $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
+        $pu = TableRegistry::getTableLocator()->get('PathwaysUsers');
+
+        $ministries = $this->Ministries->find('all')->contain(['Users']);
+        $newmins = [];
+        foreach($ministries as $m) {
+            $usercount = 0;
+            $followcount = 0;
+            $launchcount = 0;
+            foreach($m->users as $u) {
+                // User count from ministry
+                $usercount++;
+                $usefollow = $pu->find()->where(['user_id = ' => $u->id])->toList();
+                foreach($usefollow as $uf) {
+                    $followcount++;
+                }
+                $useacts = $au->find()->where(['user_id = ' => $u->id])->toList();
+                foreach($useacts as $uact) {
+                    $launchcount++;
+                }
+            }
+            $next = [
+                        'slug' => $m->slug, 
+                        'name' => $m->name, 
+                        'id' => $m->id, 
+                        'usercount' => $usercount, 
+                        'followcount' => $followcount,
+                        'launchcount' => $launchcount
+                    ];
+            array_push($newmins,$next);
+        }
+        $userorder = [];
+        $orderedmins = [];
+        foreach ($newmins as $min){
+            $userorder[] = $min['usercount'];
+            array_push($orderedmins,$min);   
+        }
+        // Use the tmp array to sort steps list
+        array_multisort($userorder, SORT_DESC, $orderedmins);
+        // print_r($newmins);
+        // exit;
+
+        $this->set(compact('orderedmins'));
     }
 
     /**
