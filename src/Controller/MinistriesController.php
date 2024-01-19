@@ -19,10 +19,8 @@ class MinistriesController extends AppController
      */
     public function index()
     {
-
         $au = TableRegistry::getTableLocator()->get('ActivitiesUsers');
         $pu = TableRegistry::getTableLocator()->get('PathwaysUsers');
-
         $ministries = $this->Ministries->find('all')->contain(['Users']);
         $newmins = [];
         foreach($ministries as $m) {
@@ -59,9 +57,6 @@ class MinistriesController extends AppController
         }
         // Use the tmp array to sort steps list
         array_multisort($userorder, SORT_DESC, $orderedmins);
-        // print_r($newmins);
-        // exit;
-
         $this->set(compact('orderedmins'));
     }
 
