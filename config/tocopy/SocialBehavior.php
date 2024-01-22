@@ -315,6 +315,38 @@ class SocialBehavior extends BaseTokenBehavior
                 $min = explode('EDUC:EX', $name[1]);
                 $fn = trim($min[0]);
                 $ministry = 20;
+            } elseif(str_contains($name[1],'EAO:EX')) {
+                $min = explode('EAO:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 21;
+            } elseif(str_contains($name[1],'EMBC:EX')) {
+                $min = explode('EMBC:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 22;
+            } elseif(str_contains($name[1],'DBC:EX')) {
+                $min = explode('DBC:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 23;
+            } elseif(str_contains($name[1],'MCF:EX')) {
+                $min = explode('EDUC:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 24;
+            } elseif(str_contains($name[1],'AG:EX')) {
+                $min = explode('AG:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 25;
+            } elseif(str_contains($name[1],'ALC:EX')) {
+                $min = explode('ALC:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 26;
+            } elseif(str_contains($name[1],'AGRI:EX')) {
+                $min = explode('AGRI:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 27;
+            } elseif(str_contains($name[1],'AEST:EX')) {
+                $min = explode('AEST:EX', $name[1]);
+                $fn = trim($min[0]);
+                $ministry = 28;
             } else {
                 $fn = trim($name[1]);
                 $ministry = 1;
