@@ -50,10 +50,15 @@ trait SimpleCrudTrait
         $managers = $users->find('all')->where(['role' => 'manager'])->order(['last_name' => 'asc']);
         $supers = $users->find('all')->where(['role' => 'superuser'])->order(['last_name' => 'asc']);
 
+        $reports = TableRegistry::getTableLocator()->get('Reports');
+        $noresponses = $reports->find('all', array('conditions' => array('Reports.response IS NULL')))
+                                ->contain(['Activities', 'Users'])
+                                ->order(['Reports.created' => 'desc']);
+
         $this->set('supers', $supers);
         $this->set('curators', $curators);
         $this->set('managers', $managers);
-        
+        $this->set('noresponses', $noresponses);
     }
 
 
