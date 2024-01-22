@@ -24,7 +24,19 @@ if ($this->Identity->isLoggedIn()) {
     <p class="flex-none text-white">Welcome <?= $this->Identity->get('first_name') ?> <?= $this->Identity->get('last_name') ?></p>
 </header>
 <div class="p-6">
-<h2 class="text-2xl mb-3">Activity Stats</h2>
+<h2 class="text-2xl mb-3">Topics Report</h2>
+<ul class="flex flex-wrap text-sm font-medium text-center">
+    <li class="me-2">
+        <a href="/ministries" class="inline-block p-4">
+            Ministries
+        </a>
+    </li>
+    <li class="me-2">
+        <a href="/stats" aria-current="page" class="inline-block p-4 ">
+            Topics
+        </a>
+    </li>
+</ul>
 <?php foreach($newtopics as $t): ?>
 <div class="mb-3 p-3 bg-slate-100 rounded-lg">
 <h3 class="text-xl mb-3">
@@ -44,7 +56,7 @@ if ($this->Identity->isLoggedIn()) {
 <?php foreach($t['pathways'] as $path): ?>
 <tr class="even:bg-slate-100 odd:bg-slate-200 hover:bg-white">
     <td class="w-2/3 pr-4 py-1">
-        <a href="/a/<?= $path['pathslug'] ?>">
+        <a href="/p/<?= $path['pathslug'] ?>">
             <?= $path['pathname'] ?>
         </a>
     </td>

@@ -1,41 +1,69 @@
 <?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Ministry[]|\Cake\Collection\CollectionInterface $ministries
- */
-?>
-<div class="container-fluid" id="colorful">
-<div class="row justify-content-md-center">
-<div class="col-md-6">
-<div class="m-5 p-5 bg-white rounded-lg shadow-sm">
-    <h1>Ministries</h1>
-</div>
-</div>
-</div>
-</div>
-<div class="container-fluid">
-<div class="row justify-content-md-center">
-<div class="col-md-4">
 
-    <?php foreach ($ministries as $ministry): ?>
-    <div class="my-3 p-3 bg-white rounded-lg shadow-sm">
-    <?= $this->Html->link(h($ministry->name), ['action' => 'view', $ministry->id]) ?> - 
-    <span class="text-uppercase"><?= h($ministry->slug) ?></span>
-    </div>
-    <?php endforeach; ?>
-     
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-    </div>
+/**
+ * Copyright 2010 - 2019, Cake Development Corporation (https://www.cakedc.com)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright 2010 - 2018, Cake Development Corporation (https://www.cakedc.com)
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+
+$this->loadHelper('Authentication.Identity');
+$uid = 0;
+$role = 0;
+$environment = $_SERVER['SERVER_NAME'];
+if ($this->Identity->isLoggedIn()) {
+    $role = $this->Identity->get('role');
+    $uid = $this->Identity->get('id');
+}
+?>
+<header class="w-full h-32 md:h-52 bg-darkblue px-8 flex flex-col justify-center">
+    <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
+    <p class="flex-none text-white">Welcome <?= $this->Identity->get('username') ?></p>
+</header>
+<div class="p-6">
+<h2 class="text-2xl mb-3">Ministries Report</h2>
+
+
+<ul class="flex flex-wrap text-sm font-medium text-center">
+    <li class="me-2">
+        <a href="/ministries" class="inline-block p-4">
+            Ministries
+        </a>
+    </li>
+    <li class="me-2">
+        <a href="/stats" aria-current="page" class="inline-block p-4 ">
+            Topics
+        </a>
+    </li>
+</ul>
+
+<table class="w-full table-auto">
+<thead>
+<tr class="text-left">
+    <th class="w-2/3">Ministry</th>
+    <th class="p-1 text-center">Learners</th>
+    <th class="p-1 text-center">Follows</th>
+    <th class="p-1 text-center">Launches</th>
+</tr>
+</thead>
+<tbody>
+<?php foreach ($orderedmins as $ministry): ?>
+    <tr class="even:bg-slate-100 odd:bg-slate-200 hover:bg-white">
+        <td class="w-2/3 pr-4 p-1">
+            <?= $ministry['name'] ?>
+            <span class="text-xs"><?= $ministry['id'] ?></span> - 
+            <span class="text-xs"><?= $ministry['slug'] ?></span>
+        </td>
+        <td class="p-1 text-center"><?= h($ministry['usercount']) ?></td> 
+        <td class="p-1 text-center"><?= h($ministry['followcount']) ?></td>
+        <td class="p-1 text-center"><?= h($ministry['launchcount']) ?></td>
+    </tr>
+<?php endforeach; ?>
+</tbody>
+</table>
+
+
 </div>
-</div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
