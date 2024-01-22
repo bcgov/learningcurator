@@ -30,6 +30,11 @@ class MinistriesController extends AppController
             foreach($m->users as $u) {
                 // User count from ministry
                 $usercount++;
+                // Rather than directly querying these within the loop
+                // Perhaps would be better to do a find all for both 
+                // up front and then iterate through the resulting arrays.
+                // Probably would have gone that route if we weren't 
+                // simply looping through and tallying the number of records...
                 $usefollow = $pu->find()->where(['user_id = ' => $u->id])->toList();
                 foreach($usefollow as $uf) {
                     $followcount++;

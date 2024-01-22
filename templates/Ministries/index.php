@@ -21,10 +21,24 @@ if ($this->Identity->isLoggedIn()) {
 ?>
 <header class="w-full h-32 md:h-52 bg-darkblue px-8 flex flex-col justify-center">
     <h1 class="text-white text-3xl font-bold tracking-wide">Curator Dashboard</h1>
-    <p class="flex-none text-white">Welcome <?= $this->Identity->get('first_name') ?> <?= $this->Identity->get('last_name') ?></p>
+    <p class="flex-none text-white">Welcome <?= $this->Identity->get('username') ?></p>
 </header>
 <div class="p-6">
 <h2 class="text-2xl mb-3">Ministries Report</h2>
+
+
+<ul class="flex flex-wrap text-sm font-medium text-center">
+    <li class="me-2">
+        <a href="/ministries" class="inline-block p-4">
+            Ministries
+        </a>
+    </li>
+    <li class="me-2">
+        <a href="/stats" aria-current="page" class="inline-block p-4 ">
+            Topics
+        </a>
+    </li>
+</ul>
 
 <table class="w-full table-auto">
 <thead>
@@ -38,7 +52,11 @@ if ($this->Identity->isLoggedIn()) {
 <tbody>
 <?php foreach ($orderedmins as $ministry): ?>
     <tr class="even:bg-slate-100 odd:bg-slate-200 hover:bg-white">
-        <td class="w-2/3 pr-4 p-1"><?= $ministry['name'] ?></td>
+        <td class="w-2/3 pr-4 p-1">
+            <?= $ministry['name'] ?>
+            <span class="text-xs"><?= $ministry['id'] ?></span> - 
+            <span class="text-xs"><?= $ministry['slug'] ?></span>
+        </td>
         <td class="p-1 text-center"><?= h($ministry['usercount']) ?></td> 
         <td class="p-1 text-center"><?= h($ministry['followcount']) ?></td>
         <td class="p-1 text-center"><?= h($ministry['launchcount']) ?></td>
