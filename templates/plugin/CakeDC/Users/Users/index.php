@@ -139,37 +139,5 @@ if ($this->Identity->isLoggedIn()) {
 
             </div>
         </div>
-        <?php if($environment == 'learningcurator.apps.silver.devops.gov.bc.ca' || $environment == 'learningcurator.gww.gov.bc.ca') : ?>
-        <div class="border-2 border-darkblue p-3 rounded-lg lg:col-span-2 lg:grid order-2">
-            <h2 class="text-2xl text-darkblue">Stats To Date</h2>
-
-            <div class="text-xl">
-                <p class="mt-2"><span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $totalfollowcount ?></span> Pathway Follows</p>
-                <h3 class="mt-4 font-semibold">Top 5 Followed Pathways</h3>
-                <!-- TODO Nori add styling to the follows piece of the link - formatting in SimpleCrudTrait.php -->
-                <ol class="pl-8 text-base mt-2 list-decimal leading-snug">
-                    <?php
-                    // these links are templated/built within the controller for noted reasons there
-                    ?>
-                    <?php foreach ($top5follows as $link) : ?>
-                        <li class="px-2 "><?= $link ?></li>
-                    <?php endforeach ?>
-                </ol>
-
-                <p class="mt-4"><span class="bg-sky-700 text-white rounded-lg text-lg inline-block px-2"><?= $launchcount ?></span> Activity Launches
-                </p>
-                <h3 class="mt-2 font-semibold">Top 5 Launched Activities</h3>
-                <ol class="pl-8 text-base mt-2 list-decimal leading-snug">
-                    <?php
-                    // these links are templated/built within the controller for noted reasons there
-
-                    ?>
-                    <?php foreach ($top5links as $link) : ?>
-                        <li class="px-2 "><?= $link ?></li>
-                    <?php endforeach ?>
-                </ol>
-            </div>
-        </div>
-        <?php endif ?>
     </div>
 </div>
