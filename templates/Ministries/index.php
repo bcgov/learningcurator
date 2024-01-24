@@ -29,6 +29,11 @@ if ($this->Identity->isLoggedIn()) {
 
 <ul class="flex flex-wrap text-sm font-medium text-center">
     <li class="me-2">
+        <a href="/activities/stats" class="inline-block p-4">
+            Activities
+        </a>
+    </li>
+    <li class="me-2">
         <a href="/ministries" class="inline-block p-4">
             Ministries
         </a>

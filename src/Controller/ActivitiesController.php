@@ -64,6 +64,28 @@ class ActivitiesController extends AppController
         $this->set(compact('activities','useractivitylist'));
     }
 
+    /**
+     * Stats method returns launch numbers per activity
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function stats()
+    {
+        // 
+        // https://book.cakephp.org/4/en/orm/entities.html#exposing-virtual-fields
+        $acts = $this->Activities->find('all')->contain(['Users','Steps','Reports']);
+        $activities = [];
+        $sort = [];
+        foreach ($acts as $a) {
+            $next = [$a->name,$a->id,count($a->users),count($a->steps),count($a->reports)];
+            array_push($activities,$next);
+            array_push($sort,count($a->users));
+        }
+        // Use the tmp array to sort steps list
+        array_multisort($sort, SORT_DESC, $activities);
+        $this->set(compact('activities'));
+    }
+
 
     /**
      * Flagged activities need to be manually audited
