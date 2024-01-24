@@ -187,6 +187,11 @@ return [
             'action' => ['stats'],
         ],
         [
+            'role' => 'reporter',
+            'controller' => 'Topics',
+            'action' => ['stats'],
+        ],
+        [
             'role' => 'manager',
             'controller' => 'Topics',
             'action' => ['manage','stats'],
@@ -237,6 +242,21 @@ return [
             'action' => ['edit','add','delete','publishtoggle'],
         ],
         [
+            'role' => 'reporter',
+            'controller' => 'Ministries',
+            'action' => ['index'],
+        ],
+        [
+            'role' => 'curator',
+            'controller' => 'Ministries',
+            'action' => ['index'],
+        ],
+        [
+            'role' => 'manager',
+            'controller' => 'Ministries',
+            'action' => ['index'],
+        ],
+        [
             'role' => '*',
             'controller' => 'Activities',
             'action' => ['index','view','claim','find','like'],
@@ -245,6 +265,11 @@ return [
             'role' => 'curator',
             'controller' => 'Activities',
             'action' => ['edit','delete','add','addtopath','addacttostep','stepfind','getinfo','linkcheck','audit','flagged'],
+        ],
+        [
+            'role' => 'reporter',
+            'controller' => 'Activities',
+            'action' => ['stats'],
         ],
         [
             'role' => 'curator',

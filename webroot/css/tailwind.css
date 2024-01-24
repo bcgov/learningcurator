@@ -585,10 +585,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   order: 9999;
 }
 
-.order-2 {
-  order: 2;
-}
-
 .float-right {
   float: right;
 }
@@ -982,10 +978,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   list-style-type: disc;
 }
 
-.list-decimal {
-  list-style-type: decimal;
-}
-
 .flex-row {
   flex-direction: row;
 }
@@ -1189,11 +1181,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(226 232 240 / var(--tw-border-opacity));
 }
 
-.border-darkblue {
-  --tw-border-opacity: 1;
-  border-color: rgb(35 64 117 / var(--tw-border-opacity));
-}
-
 .bg-darkblue {
   --tw-bg-opacity: 1;
   background-color: rgb(35 64 117 / var(--tw-bg-opacity));
@@ -1258,6 +1245,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .bg-black\/50 {
   background-color: rgb(0 0 0 / 0.5);
+}
+
+.bg-yellow-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(234 179 8 / var(--tw-bg-opacity));
 }
 
 .bg-red-700 {
@@ -1529,12 +1521,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-bottom: 0.25rem;
 }
 
-.pt-4 {
-  padding-top: 1rem;
-}
-
 .pr-4 {
   padding-right: 1rem;
+}
+
+.pt-4 {
+  padding-top: 1rem;
 }
 
 .pt-3 {
@@ -1637,12 +1629,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-weight: 600;
 }
 
-.font-normal {
-  font-weight: 400;
-}
-
 .font-medium {
   font-weight: 500;
+}
+
+.font-normal {
+  font-weight: 400;
 }
 
 .font-light {
@@ -2013,13 +2005,13 @@ details[open] > summary {
   background-color: rgb(35 64 117 / 0.8);
 }
 
-.hover\:bg-red-700\/80:hover {
-  background-color: rgb(185 28 28 / 0.8);
-}
-
 .hover\:bg-white:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-red-700\/80:hover {
+  background-color: rgb(185 28 28 / 0.8);
 }
 
 .hover\:bg-slate-200\/80:hover {
@@ -2267,10 +2259,6 @@ details[open] > summary {
 
   .lg\:col-span-3 {
     grid-column: span 3 / span 3;
-  }
-
-  .lg\:col-span-2 {
-    grid-column: span 2 / span 2;
   }
 
   .lg\:my-3 {

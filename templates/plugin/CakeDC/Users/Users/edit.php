@@ -38,6 +38,7 @@ if ($this->Identity->isLoggedIn()) {
             $roles = [
                 ['text' => 'Regular User', 'value' => 'user'],
                 ['text' => 'Curator', 'value' => 'curator'],
+                ['text' => 'Reporter', 'value' => 'reporter'],
                 ['text' => 'Manager', 'value' => 'manager'],
                 ['text' => 'Super User', 'value' => 'superuser'],
             ];
