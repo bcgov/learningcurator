@@ -28,7 +28,15 @@ p {
     line-height: 1.5;
     margin-bottom: 1em;
 }
-
+li {
+    list-style-type: disc;
+    margin-left: 1em;
+}
+blockquote {
+    border-left: 4px solid #333;
+    margin: 1em;
+    padding-left: 1em;
+}
 .autop>p {
     margin-bottom: 0.5em;
 }

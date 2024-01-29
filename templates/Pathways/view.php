@@ -549,7 +549,7 @@ $this->assign('title', h($pathway->name));
 
 <?php //endif ?>
 <?php if(!empty($pathway->acknowledgments)): ?>
-<div class="max-w-prose p-6 ml-10">
+<div class="max-w-prose p-6 md:ml-12">
 <h4 class="mb-3 text-lg font-bold">Notes of Acknowledgment</h4>
 <?php echo $this->Markdown->transform($pathway->acknowledgments) ?>
 </div>

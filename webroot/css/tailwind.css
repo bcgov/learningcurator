@@ -767,10 +767,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 2rem;
 }
 
-.ml-10 {
-  margin-left: 2.5rem;
-}
-
 .mt-6 {
   margin-top: 1.5rem;
 }
@@ -1901,6 +1897,17 @@ p {
   margin-bottom: 1em;
 }
 
+li {
+  list-style-type: disc;
+  margin-left: 1em;
+}
+
+blockquote {
+  border-left: 4px solid #333;
+  margin: 1em;
+  padding-left: 1em;
+}
+
 .autop>p {
   margin-bottom: 0.5em;
 }
@@ -2150,6 +2157,14 @@ details[open] > summary {
 
   .md\:-mt-1 {
     margin-top: -0.25rem;
+  }
+
+  .md\:ml-12 {
+    margin-left: 3rem;
+  }
+
+  .md\:ml-28 {
+    margin-left: 7rem;
   }
 
   .md\:-mt-4 {

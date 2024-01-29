@@ -72,7 +72,14 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                     <?= $this->Form->end(); ?>
                 </div>
             <?php endif ?>
-
+            <?php if(!empty($step->pathways[0]->content_warning)): ?>
+            <details class="p-6 bg-yellow-100 rounded-lg">
+                <summary>Content Warning</summary>
+                <div class="warning mt-5">
+                <?php echo $this->Markdown->transform($step->pathways[0]->content_warning) ?>
+                </div>
+            </details>
+            <?php endif ?>
 
 
 
@@ -582,6 +589,12 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
         <!--end step outer box -->
     </div>
 </div>
+<?php if(!empty($step->pathways[0]->acknowledgments)): ?>
+<div class="max-w-prose p-6 md:ml-28">
+<h4 class="mb-3 text-lg font-bold">Notes of Acknowledgment</h4>
+<?php echo $this->Markdown->transform($step->pathways[0]->acknowledgments) ?>
+</div>
+<?php endif ?>
 <script>
 window.onload = function(event) {
     loadStatus();
