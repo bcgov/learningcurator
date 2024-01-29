@@ -78,7 +78,12 @@ $this->assign('title', h($pathway->name));
                 </div>
             <?php endif ?>
 
-
+            <?php if(!empty($pathway->content_warning)): ?>
+            <details class="p-6 bg-yellow-100 rounded-lg">
+                <summary>Content Warning</summary>
+                <?php echo $this->Markdown->transform($pathway->content_warning) ?>
+            </details>
+            <?php endif ?>
 
 
 
@@ -543,6 +548,12 @@ $this->assign('title', h($pathway->name));
       </div> -->
 
 <?php //endif ?>
+<?php if(!empty($pathway->acknowledgments)): ?>
+<div class="max-w-prose p-6 ml-10">
+<h4 class="mb-3 text-lg font-bold">Notes of Acknowledgment</h4>
+<?php echo $this->Markdown->transform($pathway->acknowledgments) ?>
+</div>
+<?php endif ?>
 
 </div>
 </div>
