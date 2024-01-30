@@ -121,7 +121,7 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
 
 
     <!-- TODO Allan prevent current tab from being clicked -->
-    <div class="flex mt-8">
+    <div class="flex mt-8" id="stepstart">
         <div class="basis-1/7 flex-none">
             <nav class="flex flex-col gap-2">
 
