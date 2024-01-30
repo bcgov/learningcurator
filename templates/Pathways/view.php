@@ -78,12 +78,20 @@ $this->assign('title', h($pathway->name));
                 </div>
             <?php endif ?>
 
+
+
+
+
+
             <?php if(!empty($pathway->content_warning)): ?>
-            <details class="p-6 bg-yellow-100 rounded-lg">
+            <details class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-yellow-100 hover:cursor-pointer open:bg-yellow-100">
                 <summary>Content Warning</summary>
                 <?php echo $this->Markdown->transform($pathway->content_warning) ?>
             </details>
             <?php endif ?>
+
+
+
 
 
 
