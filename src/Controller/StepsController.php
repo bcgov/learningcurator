@@ -14,6 +14,11 @@ use Cake\Utility\Text;
  */
 class StepsController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->viewBuilder()->setHelpers(['Tanuck/Markdown.Markdown']);
+    }
     /**
      * Index method
      *

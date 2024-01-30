@@ -72,11 +72,16 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                     <?= $this->Form->end(); ?>
                 </div>
             <?php endif ?>
+            <?php if(!empty($step->pathways[0]->content_warning)): ?>
+            <details class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-yellow-100 hover:cursor-pointer open:bg-yellow-100">
+                <summary>Content Warning</summary>
+                <?php echo $this->Markdown->transform($step->pathways[0]->content_warning) ?>
+            </details>
+            <?php endif ?>
 
 
 
-
-            <h3 class="mt-6 mb-1 text-darkblue font-semibold">Pathway Activity Progress <span class="words text-xs"></span></h3>
+            <h3 class="mt-4 mb-1 text-darkblue font-semibold">Pathway Activity Progress <span class="words text-xs"></span></h3>
    
 
             <div class="flex pbarcontainer_<?= $step->pathways[0]->id ?> mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
@@ -153,9 +158,9 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                 <strong><?= $step->name ?></strong>
             </h2>
 
-            <p><span class="font-bold">Objective: </span>
-                <?= h($step->description) ?>
-            </p>
+            <p class="font-bold mb-0">Objective:</p>
+                <?php echo $this->Markdown->transform($step->description) ?>
+            
             <!-- TODO objectives should be edited to remove p tags, or use autoparagraph and change heading to not be inline. Or can we omit the word objective entirely? -->
             <?php if (!empty($requiredacts)) : ?>
                 <?php if (count($requiredacts) === 1) : ?>
@@ -204,13 +209,13 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                                     </h4>
                                     <div class="text-lg">
                                         <?php if (!empty($activity->description)) : ?>
-                                            <div class="autop"><?= $this->Text->autoParagraph(h($activity->description)); ?></div>
+                                            <div class=""><?php echo $this->Markdown->transform($activity->description); ?></div>
                                         <?php else : ?>
                                             <p><em>No description provided&hellip;</em></p>
                                         <?php endif ?>
                                         <?php if (!empty($activity->_joinData->stepcontext)) : ?>
                                             <div class="text-sm italic mt-2">Curator says:</div>
-                                            <blockquote class="border-l-2 p-2 m-2"><?= h($activity->_joinData->stepcontext) ?></blockquote>
+                                            <blockquote class="border-l-2 p-2 m-2"><?php echo $this->Markdown->transform($activity->_joinData->stepcontext) ?></blockquote>
                                         <?php endif ?>
                                         <?php if (!empty($activity->isbn)) : ?>
                                             <p>ISBN: <?= $activity->isbn ?></p>
@@ -344,7 +349,9 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                                                         );
                                                         ?>
                                                     </label>
-                                                    <input type="submit" class="inline-block px-3 py-1 text-white text-sm bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg cursor-pointer mt-3 mb-1" value="Submit Report">
+                                                    <div>
+                                                        <input type="submit" class="px-3 py-1 text-white text-sm bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg cursor-pointer mt-3 mb-1" value="Submit Report">
+                                                    </div>
                                                     <span x-text="message" class="ml-1 text-sm text-sky-700"></span>
                                                     <?= $this->Form->end() ?>
                                                 </div>
@@ -582,6 +589,12 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
         <!--end step outer box -->
     </div>
 </div>
+<?php if(!empty($step->pathways[0]->acknowledgments)): ?>
+<div class="max-w-prose p-6 md:ml-28">
+<h4 class="mb-3 text-lg font-bold">Notes of Acknowledgment</h4>
+<?php echo $this->Markdown->transform($step->pathways[0]->acknowledgments) ?>
+</div>
+<?php endif ?>
 <script>
 window.onload = function(event) {
     loadStatus();

@@ -484,12 +484,13 @@ CREATE TABLE `pathways` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
-
 alter table pathways add column published_on datetime DEFAULT NULL;
 alter table pathways add column published_by char(36) DEFAULT NULL, ADD CONSTRAINT `pathway_publish_user` FOREIGN KEY (`published_by`) REFERENCES `users` (`id`);
 alter table pathways add column version varchar(100) DEFAULT NULL;
 alter table pathways add column keywords varchar(500) DEFAULT NULL;
 
+alter table pathways add column content_warning text DEFAULT NULL;
+alter table pathways add column acknowledgments text DEFAULT NULL;
 
 
 

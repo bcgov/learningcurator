@@ -82,6 +82,19 @@ $this->assign('title', h($pathway->name));
 
 
 
+
+            <?php if(!empty($pathway->content_warning)): ?>
+            <details class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-yellow-100 hover:cursor-pointer open:bg-yellow-100">
+                <summary>Content Warning</summary>
+                <?php echo $this->Markdown->transform($pathway->content_warning) ?>
+            </details>
+            <?php endif ?>
+
+
+
+
+
+
             <h3 class="mt-4 mb-1 text-darkblue font-semibold text-lg">Pathway Activity Progress</h3>
             <div class="flex pbarcontainer mb-4 w-full bg-slate-200 rounded-lg content-center justify-start">
                 <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar flex-none"></span>
@@ -543,6 +556,12 @@ $this->assign('title', h($pathway->name));
       </div> -->
 
 <?php //endif ?>
+<?php if(!empty($pathway->acknowledgments)): ?>
+<div class="max-w-prose p-6 md:ml-12">
+<h4 class="mb-3 text-lg font-bold">Notes of Acknowledgment</h4>
+<?php echo $this->Markdown->transform($pathway->acknowledgments) ?>
+</div>
+<?php endif ?>
 
 </div>
 </div>

@@ -8,6 +8,7 @@ Use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
 use Cake\I18n\FrozenTime;
 
+
 /**
  * Pathways Controller
  *
@@ -23,6 +24,7 @@ class PathwaysController extends AppController
         $this->loadComponent('Search.Search', [
             'actions' => ['search'],
         ]);
+        $this->viewBuilder()->setHelpers(['Tanuck/Markdown.Markdown']);
     }
     /**
      * API method outputs RSS XML of the index listing of newly published pathways

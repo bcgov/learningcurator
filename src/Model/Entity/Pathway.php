@@ -71,5 +71,7 @@ class Pathway extends Entity
         'published_by' => true,
         'version' => true,
         'keywords' => true,
+        'acknowledgments' => true,
+        'content_warning' => true,
     ];
 }

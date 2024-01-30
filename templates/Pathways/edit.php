@@ -40,9 +40,17 @@ $this->loadHelper('Authentication.Identity');
            <?php //echo $this->Form->textarea('description', ['class' => 'form-field mb-3', 'aria-describedby' => 'descriptionHelp']); ?>
             <label for="objective">Pathway Goal</label>
              <span class="text-slate-600 block mb-1 text-sm" id="goalHelp"><i class="bi bi-info-circle"></i> What learning goal will your learners work toward over the course of the whole pathway? (1&nbsp;sentence).</span>
-            <?php echo $this->Form->textarea('objective', ['class' => 'form-field mb-3', 'aria-describedby' => 'goalHelp']); 
+             <?php echo $this->Form->textarea('objective', ['class' => 'form-field mb-3', 'aria-describedby' => 'goalHelp']); ?>
+
+             <label for="acknowledgments">Acknowledgments</label>
+             <span class="text-slate-600 block mb-1 text-sm" id="acknowledgments"><i class="bi bi-info-circle"></i> Provide any acknowledgments you wish to make to contributors. Will be included in the footer of each path.</span>
+             <?php echo $this->Form->textarea('acknowledgments', ['class' => 'form-field mb-3', 'aria-describedby' => 'acknowledgments']); ?>
+
+             <label for="content_warning">Content Warning</label>
+             <span class="text-slate-600 block mb-1 text-sm" id="content_warning"><i class="bi bi-info-circle"></i> Provide a content warning for pathways which may require it.</span>
+            <?php echo $this->Form->textarea('content_warning', ['class' => 'form-field mb-3', 'aria-describedby' => 'content_warning']); 
              
-            //  echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true, 'class' => 'form-field mb-3']);
+            //echo $this->Form->control('topics._ids', ['options' => $topics, 'empty' => true, 'class' => 'form-field mb-3']);
             //echo $this->Form->control('category_id', ['options' => $categories, 'empty' => true, 'class' => 'form-field mb-3']);
             //echo $this->Form->control('color');
             //echo $this->Form->control('file_path', ['class' => 'form-field mb-3','label' => 'Import history']);
