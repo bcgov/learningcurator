@@ -80,7 +80,12 @@ $this->assign('title', h($pathway->name));
                 </div>
             <?php endif ?>
 
-
+            <?php if(!empty($pathway->content_warning)): ?>
+            <details class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-yellow-100 hover:cursor-pointer open:bg-yellow-100">
+                <summary>Content Warning</summary>
+                <?php echo $this->Markdown->transform($pathway->content_warning) ?>
+            </details>
+            <?php endif ?>
 
 
 
@@ -340,7 +345,7 @@ $this->assign('title', h($pathway->name));
             <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-steps', 'action' => 'reorder']]) ?>
             <?= $this->Form->control('pathway_id', ['type' => 'hidden', 'value' => $pathway->id]) ?>
             <?php endif ?>
-            <div id="steplist" class="max-w-prose">
+            <div id="steplist" class="">
                 <?php foreach ($pathway->steps as $steps) : ?>
                     <?php $requiredacts = 0; ?>
                     <script>
@@ -376,20 +381,15 @@ $this->assign('title', h($pathway->name));
 
                         <details class="activitylist py-2 px-2 md:px-4 bg-slate-100 rounded-lg">
                             <summary class="font-bold hover:cursor-pointer"><?= count($steps->activities) ?> Activities</summary>
+                            <?php $bonuses = [] ?>
                             <?php foreach($steps->activities as $a): ?>
                             <?php if ($a->status_id == 2) : ?>
-                            <?php //if ($a->_joinData->required == 1) : ?>
+                            <?php if ($a->_joinData->required == 1) : ?>
                             <?php $actcount++ ?>
                             <details id="activity-<?= $a->id ?>" class="activity px-0 md:px-4 py-2 border-b-2">
                                 <summary class="text-lg hover:cursor-pointer hover:text-blue-700">
-                                    <?php if (!empty($a->_joinData->required)) : ?>
-                                    <span id="required-<?= $a->id ?>" class="required ">Required</span> 
-                                    <?php else: ?>
-                                    <span id="required-<?= $a->id ?>" class="bonus ">Bonus</span> 
-                                    <?php endif ?>
-                                    <span id="launched-<?= $a->id ?>" class="hidden launched "></span> 
-                                    <!-- p-0.5 px-2 bg-emerald-700 text-white text-xs text-center rounded-lg hover:no-underline hover:bg-emerald-700/80 -->
                                     <?= $a->name ?>
+                                    <span id="launched-<?= $a->id ?>" class="hidden launched "></span> 
                                 </summary>
                                 <div class="p-3 ml-6 bg-white rounded-lg">
                                 <div><?= $a->description ?></div>
@@ -410,9 +410,41 @@ $this->assign('title', h($pathway->name));
                                 </div>
                                 </div>
                             </details>
+                            <?php else: ?>
+                                <?php array_push($bonuses,$a) ?>
                             <?php endif ?>
-                            <?php //endif ?>
+                            <?php endif ?>
                             <?php endforeach ?>
+                            <?php if(!empty($bonuses)): ?>
+                            <h3 class="mt-5 ml-3 text-xl">Bonus Activities</h3>
+                            <p class="ml-3 italic">Launching these activities does not count towards your progress along this pathway.</p>
+                            <?php foreach($bonuses as $a): ?>
+                                <details id="activity-<?= $a->id ?>" class="activity px-0 md:px-4 py-2 border-b-2">
+                                <summary class="text-lg hover:cursor-pointer hover:text-blue-700">
+                                    <?= $a->name ?>
+                                    <span id="launched-<?= $a->id ?>" class="hidden launched "></span> 
+                                </summary>
+                                <div class="p-3 ml-6 bg-white rounded-lg">
+                                <div><?= $a->description ?></div>
+                                <?php if (!empty($a->_joinData->stepcontext)) : ?>
+                                <div class="text-sm italic mt-2">Curator says:</div>
+                                <blockquote class="border-l-2 p-2 m-2"><?= h($a->_joinData->stepcontext) ?></blockquote>
+                                <?php endif ?>
+                                <div>
+                                    <a target="_blank" 
+                                        rel="noopener" 
+                                        title="Launch this activity" 
+                                        data-activity="act-<?= $a->id ?>" 
+                                        href="/activities-users/launch?activity_id=<?= $a->id ?>&step_id=<?= $steps->id ?>" 
+                                        class="launch inline-block my-2 py-2 px-5 bg-darkblue hover:bg-darkblue/80 rounded-lg text-white text-xl hover:no-underline">
+                                            Launch
+                                    </a>
+                                    <a href="/activities/view/<?= $a->id ?>" class="inline-block ml-3 underline hover:text-blue-700">Details</a>
+                                </div>
+                                </div>
+                            </details>
+                            <?php endforeach ?>
+                            <?php endif ?>
                         </details>
 
 
@@ -634,7 +666,12 @@ function updateLaunches (launched) {
       </div> -->
 
 <?php //endif ?>
-
+<?php if(!empty($pathway->acknowledgments)): ?>
+<div class="max-w-prose p-6 md:ml-20">
+<h4 class="mb-3 text-lg font-bold">Notes of Acknowledgment</h4>
+<?php echo $this->Markdown->transform($pathway->acknowledgments) ?>
+</div>
+<?php endif ?>
 </div>
 </div>
 </div>

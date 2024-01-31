@@ -7,6 +7,7 @@ namespace App\Controller;
 Use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
 use Cake\I18n\FrozenTime;
+use Cake\ORM\Query;
 
 
 /**
@@ -366,7 +367,7 @@ class PathwaysController extends AppController
         
     }
     /**
-     * All method
+     * All-in-one pathway design method
      *
      * @param string|null $id Pathway id.
      * @return \Cake\Http\Response|null|void Renders view
@@ -383,7 +384,14 @@ class PathwaysController extends AppController
                                 'Steps' => ['sort' => ['PathwaysSteps.sortorder' => 'asc']],
                                 'Steps.Statuses', 
                                 'Steps.Activities' => ['sort' => ['ActivitiesSteps.steporder' => 'desc']],
-                                'Users'])->firstOrFail();
+                                'Users'])
+                            ->firstOrFail();
+                            // Sigh. I can't make below work without wrecking the sort order
+                            // If it's between properly sorting them and having to filter out unpublished
+                            // and only getting published activities but in the wrong order ...
+                            //'Steps.Activities' => function (Query $q) {
+                            //    return $q->where(['Activities.status_id' => 2])->order(['ActivitiesSteps.steporder' => 'desc']);
+                            //},
         
         $user = $this->request->getAttribute('authentication')->getIdentity();
         // We need to count how many activities this person has claimed 
@@ -410,27 +418,20 @@ class PathwaysController extends AppController
             }
         }
         $percentage = 0;
-        $totalclaimed = 0;
         $totalacts = 0;
         $requiredacts = 0;
         $suppacts = 0;
         $curators = [];
         $activityids = [];
         if (!empty($pathway->steps)):
-
             foreach ($pathway->steps as $steps):
                 foreach ($steps->activities as $activity):
                     if($activity->status_id == 2) {
-
-                        array_push($activityids,$activity->id);
                         array_push($curators,$activity->createdby_id);
-
                         $totalacts++;
                         if($activity->_joinData->required == 1) {
+                            array_push($activityids,$activity->id);
                             $requiredacts++;
-                            if(in_array($activity->id, $useractivitylist)) {
-                                $totalclaimed++;
-                            }
                         } else {
                             $suppacts++;
                         }

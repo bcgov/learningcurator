@@ -1288,6 +1288,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(47 97 115 / var(--tw-bg-opacity));
 }
 
+.bg-yellow-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 240 138 / var(--tw-bg-opacity));
+}
+
 .bg-slate-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(248 250 252 / var(--tw-bg-opacity));
@@ -1306,11 +1311,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-green-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(74 222 128 / var(--tw-bg-opacity));
-}
-
-.bg-yellow-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 240 138 / var(--tw-bg-opacity));
 }
 
 .bg-darkblue\/90 {
@@ -1885,7 +1885,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 :target {
-  scroll-margin-top: 3em;
+  scroll-margin-top: 6em;
 }
 
 [x-cloak] {
@@ -2015,17 +2015,13 @@ details[open] > summary {
   background-color: rgb(226 232 240 / 0.8);
 }
 
-.hover\:bg-emerald-700\/80:hover {
-  background-color: rgb(4 120 87 / 0.8);
+.hover\:bg-yellow-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 249 195 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-bluegreen\/80:hover {
   background-color: rgb(47 97 115 / 0.8);
-}
-
-.hover\:bg-yellow-100:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 249 195 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-red-700\/70:hover {
@@ -2171,6 +2167,10 @@ details[open] > summary {
 
   .md\:-mt-1 {
     margin-top: -0.25rem;
+  }
+
+  .md\:ml-20 {
+    margin-left: 5rem;
   }
 
   .md\:ml-12 {
