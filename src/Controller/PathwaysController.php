@@ -417,7 +417,7 @@ class PathwaysController extends AppController
                 $followid = $pu->_joinData->id;
             }
         }
-        $percentage = 0;
+
         $totalacts = 0;
         $requiredacts = 0;
         $suppacts = 0;
@@ -438,11 +438,7 @@ class PathwaysController extends AppController
                     }
                 endforeach; // activities
             endforeach; // steps
-            if($totalclaimed > 0) {
-                $percentage = floor(($totalclaimed / $requiredacts) * 100);
-            } else {
-                $percentage = 0;
-            }
+            
         endif;
         $stepcount = count($pathway->steps);
 
@@ -475,7 +471,6 @@ class PathwaysController extends AppController
                             'stepcount', 
                             'requiredacts', 
                             'suppacts', 
-                            'percentage', 
                             'followid',
                             'activityids'));
 
