@@ -1916,6 +1916,22 @@ blockquote {
   margin-bottom: 0.5em;
 }
 
+#contentwarning a {
+  text-decoration: underline !important;
+}
+
+#contentwarning h1 {
+  font-size: 1.3em;
+}
+
+#contentwarning h2 {
+  font-size: 1.2em;
+}
+
+#contentwarning h3 {
+  font-size: 1.1em;
+}
+
 .pagfirst, .pagnextactive, .pagprevactive, .paglast {
   margin: 0px;
   display: inline-block;

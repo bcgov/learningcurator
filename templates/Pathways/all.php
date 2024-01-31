@@ -81,9 +81,12 @@ $this->assign('title', h($pathway->name));
             <?php endif ?>
 
             <?php if(!empty($pathway->content_warning)): ?>
-            <details class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-yellow-100 hover:cursor-pointer open:bg-yellow-100">
-                <summary>Content Warning</summary>
-                <?php echo $this->Markdown->transform($pathway->content_warning) ?>
+            <details id="contentwarning" class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-yellow-100 open:bg-yellow-100">
+                <summary class="hover:cursor-pointer">Content Warning</summary>
+                <hr class="my-5">
+                <div>
+                    <?php echo $this->Markdown->transform($pathway->content_warning) ?>
+                </div>
             </details>
             <?php endif ?>
 
@@ -527,16 +530,6 @@ if(window.location.hash) {
     toopen[0].setAttribute('open','open');
 }
 
-// This is a list of all the activity IDs on this pathway from every step.
-let pathacts = [<?php foreach($activityids as $a) { echo $a . ','; } ?>];
-
-// Grab the list of activities in the DOM so we can iterate over them
-// assigning launched status.
-let activities = document.getElementsByClassName('activity');
-
-// Setup the statuses on the initial page load.
-getLearnerData ();
-
 // When you click the permalink it will open the activities on that step.
 let permalinks = document.getElementsByClassName('permalink');
 Array.from(permalinks).forEach(function(element) {
@@ -547,6 +540,21 @@ Array.from(permalinks).forEach(function(element) {
         openacts.setAttribute('open','open');
     });
 });
+
+// ||||||||||||||||||||
+// Pathway Progress and launch indicators
+// ||||||||||||||||||||
+
+
+// This is a list of all the activity IDs on this pathway from every step.
+let pathacts = [<?php foreach($activityids as $a) { echo $a . ','; } ?>];
+
+// Grab the list of activities in the DOM so we can iterate over them
+// assigning launched status.
+let activities = document.getElementsByClassName('activity');
+
+// Setup the statuses on the initial page load.
+getLearnerData ();
 
 // Left to itself, the launch link on activites works just fine 
 // with target=_blank set, but we want to update the UI of this 
@@ -578,21 +586,21 @@ Array.from(launchlinks).forEach(function(element) {
 function getLearnerData () {
 
     // Make the call
-    let learner = fetch('/users/api', {
-                        method: 'GET'
-                    })
-                    .then((res) => res.json())
-                    .then((json) => {
-                        // Pathway follow statuses
-                        let followed = json['followed'];
-                        // Activity launch statuses
-                        let launched = json['launched'];
-                        // Update UI with launch statuses.
-                        updateLaunches(launched);
-                        // Now calculate pathway progress and update the UI
-                        updateProgress(launched);
-                    })
-                    .catch((err) => console.error('error:', err));
+    fetch('/users/api', {
+            method: 'GET'
+        })
+        .then((res) => res.json())
+        .then((json) => {
+            // Pathway follow statuses
+            let followed = json['followed'];
+            // Activity launch statuses
+            let launched = json['launched'];
+            // Update UI with launch statuses.
+            updateLaunches(launched);
+            // Now calculate pathway progress and update the UI
+            updateProgress(launched);
+        })
+        .catch((err) => console.error('error:', err));
 
 }
 
