@@ -73,9 +73,12 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                 </div>
             <?php endif ?>
             <?php if(!empty($step->pathways[0]->content_warning)): ?>
-            <details class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-yellow-100 hover:cursor-pointer open:bg-yellow-100">
-                <summary>Content Warning</summary>
-                <?php echo $this->Markdown->transform($step->pathways[0]->content_warning) ?>
+            <details id="contentwarning" class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-yellow-100 open:bg-yellow-100">
+                <summary class="hover:cursor-pointer">Content Warning</summary>
+                <hr class="my-5">
+                <div>
+                    <?php echo $this->Markdown->transform($step->pathways[0]->content_warning) ?>
+                </div>
             </details>
             <?php endif ?>
 

@@ -39,6 +39,18 @@ blockquote {
     margin-bottom: 0.5em;
 }
 
+#contentwarning a {
+    text-decoration: underline !important;
+}
+#contentwarning h1 {
+    font-size: 1.3em;
+}
+#contentwarning h2 {
+    font-size: 1.2em;
+}
+#contentwarning h3 {
+    font-size: 1.1em;
+}
 @layer components {
     .form-field {
         @apply block w-full px-3 py-1 m-0 border-solid border-2 border-slate-200 bg-slate-100/80 rounded-lg;
