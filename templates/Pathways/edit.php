@@ -46,7 +46,7 @@ $this->loadHelper('Authentication.Identity');
              <span class="text-slate-600 block mb-1 text-sm" id="acknowledgments"><i class="bi bi-info-circle"></i> Provide any acknowledgments you wish to make to contributors. Will be included in the footer of each path.</span>
              <?php echo $this->Form->textarea('acknowledgments', ['class' => 'form-field mb-3', 'aria-describedby' => 'acknowledgments']); ?>
 
-             <label for="content_warning">Content Warning</label>
+             <label for="content_warning">Before You Proceed&hellip;</label>
              <span class="text-slate-600 block mb-1 text-sm" id="content_warning"><i class="bi bi-info-circle"></i> Provide a content warning for pathways which may require it.</span>
             <?php echo $this->Form->textarea('content_warning', ['class' => 'form-field mb-3', 'aria-describedby' => 'content_warning']); 
              

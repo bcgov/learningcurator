@@ -85,7 +85,7 @@ $this->assign('title', h($pathway->name));
 
             <?php if(!empty($pathway->content_warning)): ?>
             <details id="contentwarning" class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-yellow-100 open:bg-yellow-100">
-                <summary class="hover:cursor-pointer">Content Warning</summary>
+                <summary class="hover:cursor-pointer">Before You Proceed</summary>
                 <hr class="my-5">
                 <div>
                     <?php echo $this->Markdown->transform($pathway->content_warning) ?>
