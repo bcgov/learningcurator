@@ -340,7 +340,7 @@ $this->assign('title', h($pathway->name));
             <?= $this->Form->create(null, ['url' => ['controller' => 'pathways-steps', 'action' => 'reorder']]) ?>
             <?= $this->Form->control('pathway_id', ['type' => 'hidden', 'value' => $pathway->id]) ?>
             <?php endif ?>
-            <div id="steplist">
+            <div id="steplist" class="max-w-prose">
                 <?php foreach ($pathway->steps as $steps) : ?>
                     <?php $requiredacts = 0; ?>
                     <script>
@@ -609,7 +609,7 @@ function updateLaunches (launched) {
             // only) instance of it with [0].
             badge[0].classList.remove('hidden');
             // badge[0].innerHTML = 'Launched';
-            badge[0].innerHTML = '🚀';
+            badge[0].innerHTML = '✅';
         }
     });
 }
