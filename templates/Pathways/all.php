@@ -82,7 +82,7 @@ $this->assign('title', h($pathway->name));
 
             <?php if(!empty($pathway->content_warning)): ?>
             <details id="contentwarning" class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-yellow-100 open:bg-yellow-100">
-                <summary class="hover:cursor-pointer">Content Warning</summary>
+                <summary class="hover:cursor-pointer">Before You Proceed</summary>
                 <hr class="my-5">
                 <div>
                     <?php echo $this->Markdown->transform($pathway->content_warning) ?>
@@ -100,7 +100,8 @@ $this->assign('title', h($pathway->name));
                     </span>
                 <span id="zero" class="py-1 px-3 text-base text-right">0 of <?= $totalacts ?></span>
             </div>
-            <button id="expcol" class="mt-3 px-6 py-1 bg-slate-50 text-sm">Expand All</button>
+            <button id="expall" class="mt-3 px-6 py-1 bg-slate-50 text-sm">Expand All</button>
+            <button id="collapseall" class="mt-3 px-6 py-1 bg-slate-50 text-sm">Collapse All</button>
         </div>
 
 
@@ -501,23 +502,31 @@ function getPathwayLaunchReport () {
 // and subsequently the description/launch links are as well.
 // This supports allowing the learner to choose to "expand all" and 
 // show everything on the page all at once. 
-// It toggles to "collapse all."
-let expcol = document.getElementById('expcol');
-expcol.addEventListener('click', (e) => {
+let expall = document.getElementById('expall');
+expall.addEventListener('click', (e) => {
+    let steplist = document.getElementById('steplist');
+    let deets = steplist.querySelectorAll('details');
+    Array.from(deets).forEach(function(element) {
+        let stat = element.getAttribute('open');
+        if(stat != 'open') {
+            element.setAttribute('open','open');
+        }
+    });
+});
+// Conversley, "collapse all" hides everyting open in one fell swoop.
+// #TODO this doesn't work consistently!! Activities sections that you manually
+// click to open don't close.
+let collapseall = document.getElementById('collapseall');
+collapseall.addEventListener('click', (e) => {
     let steplist = document.getElementById('steplist');
     let deets = steplist.querySelectorAll('details');
     Array.from(deets).forEach(function(element) {
         let stat = element.getAttribute('open');
         if(stat == 'open') {
-            expcol.innerHTML = 'Expand All';
             element.removeAttribute('open');
-        } else {
-            expcol.innerHTML = 'Collapse All';
-            element.setAttribute('open','open');
         }
     });
 });
-
 
 // If we are linking directly to a step via a URL hash then open the 
 // activities for that step automatically by adding an open attribute
