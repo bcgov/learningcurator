@@ -84,7 +84,7 @@ $this->assign('title', h($pathway->name));
             <details id="contentwarning" class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-yellow-100 open:bg-yellow-100">
                 <summary class="hover:cursor-pointer">Before You Proceed</summary>
                 <hr class="my-5">
-                <div>
+                <div class="max-w-prose">
                     <?php echo $this->Markdown->transform($pathway->content_warning) ?>
                 </div>
             </details>
@@ -384,17 +384,19 @@ $this->assign('title', h($pathway->name));
 
                         <details class="activitylist py-2 px-2 md:px-4 bg-slate-100 rounded-lg">
                             <summary class="font-bold hover:cursor-pointer"><?= count($steps->activities) ?> Activities</summary>
+                            <h3 class="mt-4 text-xl">Required Activities</h3>
+                            <div class="pb-4 italic border-b-2 border-white">Launch these activities and fill in your progress bar.</div>
                             <?php $bonuses = [] ?>
                             <?php foreach($steps->activities as $a): ?>
                             <?php if ($a->status_id == 2) : ?>
                             <?php if ($a->_joinData->required == 1) : ?>
                             <?php $actcount++ ?>
-                            <details id="activity-<?= $a->id ?>" class="activity px-0 md:px-4 py-2 border-b-2">
-                                <summary class="text-lg hover:cursor-pointer hover:text-blue-700">
+                            <details id="activity-<?= $a->id ?>" class="activity border-b-2 border-white open:bg-slate-50">
+                                <summary class="py-2 text-lg hover:cursor-pointer hover:text-blue-900 hover:bg-slate-50">
                                     <?= $a->name ?>
                                     <span id="launched-<?= $a->id ?>" class="hidden launched "></span> 
                                 </summary>
-                                <div class="p-3 ml-6 bg-white rounded-lg max-w-prose">
+                                <div class="p-3 ml-6 mb-2 bg-white rounded-lg max-w-prose">
                                 <div><?= $a->description ?></div>
                                 <?php if (!empty($a->_joinData->stepcontext)) : ?>
                                 <div class="text-sm italic mt-2">Curator says:</div>

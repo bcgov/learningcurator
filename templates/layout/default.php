@@ -140,7 +140,7 @@
 
 
             <main class="bg-white w-full"> 
-            <!-- dark:bg-slate-900 dark:text-white -->
+            <!-- dark:bg-slate-800 dark:text-white -->
                 <?= $this->fetch('content') ?>
 
             </main>
