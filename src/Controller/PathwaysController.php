@@ -670,7 +670,9 @@ class PathwaysController extends AppController
             'modifiedby' => $path->modifiedby,
             'published_by' => $path->published_by,
             'published_on' => $path->published_on,
-            'version' => $path->version
+            'version' => $path->version,
+            'content_warning' => $path->content_warning,
+            'acknowledgments' => $path->acknowledgments
         ];
         //echo '<pre>'; print_r($pathdeets); exit;
         
