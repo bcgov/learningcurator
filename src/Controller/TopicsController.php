@@ -57,15 +57,12 @@ class TopicsController extends AppController
     public function view($slug = null)
     {
         $user = $this->request->getAttribute('authentication')->getIdentity();
-        if($user->role == 'curator' || $user->role == 'manager' || $user->role == 'superuser') {
-            $topic = $this->Topics->findBySlug($slug)->contain(['Users', 'Pathways', 'Pathways.Users'])->firstOrFail();
-        } else {
-            $topic = $this->Topics->findBySlug($slug)->contain(['Users', 'Pathways'])->firstOrFail();
-        }
-        // $topic = $this->Topics->get($id, [
-        //     'contain' => ['Users', 'Categories', 'Pathways', 'Pathways.Statuses'],
-        // ]);
         
+            $topic = $this->Topics->findBySlug($slug)->contain([
+                                                                'Users', 
+                                                                'Pathways' => ['sort' => ['Pathways.created' => 'desc']]
+                                                                ]
+                                                            )->firstOrFail();
 
         $this->set(compact('topic'));
     }
