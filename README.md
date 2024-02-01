@@ -2,23 +2,24 @@
 
 Learning Curator Pathways feature informal learning by theme or community. Here you’ll find recommendations for resources to watch, read, listen to, and courses that will help you reach your goals. Pathways are created by BC Public Service learning curators. 
 
-An emerging project from the Learning Centre for the BC Public Service Agency.
+## Introduction to Learning Curation 
 
-[![Lifecycle:Maturing](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)](<Redirect-URL>)
+Lists of links to other resources have long been a part of online courses. Sometimes these lists were at the module-level, sometimes at the whole-course level. The best ones would give a brief description of each item, but sometimes they didn’t. They served a purpose that learning curation still does today—it saved learners the trouble of wading through a sea of content to find what’s relevant to their learning needs. 
+
+Now, instructional designers are increasingly using content curation as a best practice for learning and training. There’s an impressive array of content online and offline. It’s not possible—or necessary—to create it all ourselves. The BC Public Service is taking existing material and putting our own spin on it to give our learners added value. The added value part is key—rather than just presenting a nice collection of resources with no commentary other than “hey, this all fits in this topic,” there’s a careful approach that shows your audience how the items will help them achieve their desired outcomes. 
 
 ## Features
 
-There are topics which have pathways. Pathways have steps; steps have activities; activies are categorized and tagged. A signed in user can follow pathways and claim activites, tracking their own progress via activity rings.
+* Topics align with the [Corporate Learning Framework](https://learningcentre.gww.gov.bc.ca/learninghub/what-is-corp-learning-framework/).
+* There are topics which have pathways. Pathways have steps; steps have activities which are links to great resources.
+* A signed in user can follow pathways and can see a progress bar grow as they launch activites.
+* We regularly audit activities, but learners can also report problem activities through a simple form.
 
-Area > Topic > Pathway > Step > Activity 
+## Code Requirements/Installation
 
-## Usage
-Follow pathways and complete the activities; informal, self-directed learning but guided by a curated structure that makes sense and is timely.
-
-## Requirements
-
-CakePHP 4.03
-MySQL/MariaDB
+* Learning Curator utilizes CakePHP 4+ and employs MariaDB as its database technology.
+* It is a "classical" MVC architecture that queries the database on each page load and dynamically composes the pages via PHP.
+* Vanilla Javascript is used to apply dynamic features calling a single user API to get user pathway follows and activity launches.
 
 - mysql source config/curator-schema-plus-starter.sql
 - update fullBaseUrl value in config/app_local.php
@@ -32,14 +33,14 @@ MySQL/MariaDB
 - cp config/tocopy/SocialBehavior.php vendor/cakedc/users/src/Model/Behavior/SocialBehavior.php
 - cp config/tocopy/User.php vendor/cakedc/users/src/Model/Entity/User.php
 
-
 ## Project Status
 
 Under active development.
 
 ## Goals/Roadmap
 
-- World-class interface for Curator collaborators to create and manage pathways
+- World-class interface for Curator collaborators to create and manage pathways.
+- Split off the user tracking API into its own app and start generating static HTML pathways.
 
 ## Getting Help or Reporting an Issue
 
@@ -63,3 +64,5 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+[![Lifecycle:Maturing](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)](<Redirect-URL>)
