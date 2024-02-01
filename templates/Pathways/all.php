@@ -18,7 +18,6 @@ $environment = $_SERVER['SERVER_NAME'];
 $this->assign('title', h($pathway->name));
 
 ?>
-<div class="dark:bg-slate-800 dark:text-white">
 <header class="w-full h-52 bg-cover bg-center pb-2 px-2" style="background-image: url(/img/categories/1200w/Paradise_Meadows_Boardwalk-strathcona_Provincial-park-compressed_1200w.jpg);">
     <div class="bg-bluegreen/90 h-44 w-72 drop-shadow-lg mb-6 mx-6 p-4 flex">
         <h1 class="text-white text-3xl font-bold m-auto tracking-wide">Pathway</h1>
@@ -82,7 +81,7 @@ $this->assign('title', h($pathway->name));
             <?php endif ?>
 
             <?php if(!empty($pathway->content_warning)): ?>
-            <details id="contentwarning" class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-yellow-100 open:bg-yellow-100 dark:bg-slate-600 dark:text-white dark:open:bg-slate-700 dark:hover:bg-slate-700">
+            <details id="contentwarning" class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-yellow-100 open:bg-yellow-100">
                 <summary class="hover:cursor-pointer">Before You Proceed</summary>
                 <hr class="my-5">
                 <div class="max-w-prose">
@@ -93,7 +92,7 @@ $this->assign('title', h($pathway->name));
 
 
 
-        <div class="py-3 sticky top-0 bg-white dark:bg-slate-800 dark:text-white">
+        <div class="py-3 sticky top-0 bg-white">
             <div class="flex pbarcontainer w-full bg-slate-200 rounded-lg content-center justify-start">
                 <span class="hidden py-2 px-3 bg-darkblue text-white rounded-lg text-base pbar flex-none"></span>
                 <span id="progressbar" 
@@ -101,8 +100,8 @@ $this->assign('title', h($pathway->name));
                     </span>
                 <span id="zero" class="py-1 px-3 text-base text-right">0 of <?= $totalacts ?></span>
             </div>
-            <button id="expall" class="mt-3 px-6 py-1 bg-slate-50 text-sm hover:bg-slate-100 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800">Expand All</button>
-            <button id="collapseall" class="mt-3 px-6 py-1 bg-slate-50 text-sm hover:bg-slate-100 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800">Collapse All</button>
+            <button id="expall" class="mt-3 px-6 py-1 bg-slate-50 text-sm hover:bg-slate-100">Expand All</button>
+            <button id="collapseall" class="mt-3 px-6 py-1 bg-slate-50 text-sm hover:bg-slate-100">Collapse All</button>
         </div>
 
 
@@ -383,7 +382,7 @@ $this->assign('title', h($pathway->name));
                                 </div>
                             </div>
 
-                        <details class="activitylist py-2 px-2 md:px-4 bg-slate-100 rounded-lg dark:bg-slate-900">
+                        <details class="activitylist py-2 px-2 md:px-4 bg-slate-100 rounded-lg">
                             <summary class="font-bold hover:cursor-pointer"><?= count($steps->activities) ?> Activities</summary>
                             <h3 class="mt-4 text-xl">Required Activities</h3>
                             <div class="pb-4 italic border-b-2 border-white">Launch these activities and fill in your progress bar.</div>
@@ -392,12 +391,12 @@ $this->assign('title', h($pathway->name));
                             <?php if ($a->status_id == 2) : ?>
                             <?php if ($a->_joinData->required == 1) : ?>
                             <?php $actcount++ ?>
-                            <details id="activity-<?= $a->id ?>" class="activity border-b-2 border-white">
-                                <summary class="py-2 text-lg hover:cursor-pointer hover:text-slate-900 hover:bg-slate-50 dark:hover:bg-slate-700 dark:hover:text-white">
+                            <details id="activity-<?= $a->id ?>" class="activity border-b-2 border-white open:bg-slate-50">
+                                <summary class="py-2 text-lg hover:cursor-pointer hover:text-blue-900 hover:bg-slate-50">
                                     <?= $a->name ?>
                                     <span id="launched-<?= $a->id ?>" class="hidden launched "></span> 
                                 </summary>
-                                <div class="p-3 ml-6 mb-2 bg-slate-50 rounded-lg max-w-prose dark:bg-slate-900 dark:text-white">
+                                <div class="p-3 ml-6 mb-2 bg-white rounded-lg max-w-prose">
                                 <div><?= $a->description ?></div>
                                 <?php if (!empty($a->_joinData->stepcontext)) : ?>
                                 <div class="text-sm italic mt-2">Curator says:</div>
@@ -430,7 +429,7 @@ $this->assign('title', h($pathway->name));
                                     <?= $a->name ?>
                                     <span id="launched-<?= $a->id ?>" class="hidden launched "></span> 
                                 </summary>
-                                <div class="p-3 ml-6 bg-white rounded-lg dark:bg-slate-900 dark:text-white">
+                                <div class="p-3 ml-6 bg-white rounded-lg">
                                 <div><?= $a->description ?></div>
                                 <?php if (!empty($a->_joinData->stepcontext)) : ?>
                                 <div class="text-sm italic mt-2">Curator says:</div>
@@ -683,7 +682,6 @@ function updateLaunches (launched) {
 <?php echo $this->Markdown->transform($pathway->acknowledgments) ?>
 </div>
 <?php endif ?>
-</div>
 </div>
 </div>
 </div>
