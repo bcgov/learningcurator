@@ -24,8 +24,8 @@ if ($this->Identity->isLoggedIn()) {
     <p class="flex-none text-white">Welcome <?= $this->Identity->get('first_name') ?> <?= $this->Identity->get('last_name') ?></p>
 </header>
 <div class="p-8 text-lg" id="mainContent">
-    <div class="lg:grid lg:grid-cols-5 lg:gap-4 items-start">
-        <div class="lg:col-span-3">
+    <div class="lg:grid lg:grid-cols-12 lg:gap-4 items-start">
+        <div class="lg:col-span-10">
             <div class="p-3 rounded-lg bg-slate-100">
                 <h2 class="text-2xl text-darkblue font-semibold mb-2">Admin Options</h2>
                 <hr class="my-5">

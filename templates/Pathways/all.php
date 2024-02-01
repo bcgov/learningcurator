@@ -100,8 +100,8 @@ $this->assign('title', h($pathway->name));
                     </span>
                 <span id="zero" class="py-1 px-3 text-base text-right">0 of <?= $totalacts ?></span>
             </div>
-            <button id="expall" class="mt-3 px-6 py-1 bg-slate-50 text-sm">Expand All</button>
-            <button id="collapseall" class="mt-3 px-6 py-1 bg-slate-50 text-sm">Collapse All</button>
+            <button id="expall" class="mt-3 px-6 py-1 bg-slate-50 text-sm hover:bg-slate-100">Expand All</button>
+            <button id="collapseall" class="mt-3 px-6 py-1 bg-slate-50 text-sm hover:bg-slate-100">Collapse All</button>
         </div>
 
 
@@ -377,10 +377,9 @@ $this->assign('title', h($pathway->name));
                                 <?php endif ?>
                             </h4>
                             <div class="mb-2">
-                                <p>
-                                    <span class="font-bold">Objective: </span>
-                                    <?= h($steps->description) ?>
-                                </p>
+                                <div class="max-w-prose"><span class="font-bold">Objective</span>
+                                <?php echo $this->Markdown->transform($steps->description) ?>
+                                </div>
                             </div>
 
                         <details class="activitylist py-2 px-2 md:px-4 bg-slate-100 rounded-lg">
@@ -395,7 +394,7 @@ $this->assign('title', h($pathway->name));
                                     <?= $a->name ?>
                                     <span id="launched-<?= $a->id ?>" class="hidden launched "></span> 
                                 </summary>
-                                <div class="p-3 ml-6 bg-white rounded-lg">
+                                <div class="p-3 ml-6 bg-white rounded-lg max-w-prose">
                                 <div><?= $a->description ?></div>
                                 <?php if (!empty($a->_joinData->stepcontext)) : ?>
                                 <div class="text-sm italic mt-2">Curator says:</div>
@@ -507,24 +506,16 @@ expall.addEventListener('click', (e) => {
     let steplist = document.getElementById('steplist');
     let deets = steplist.querySelectorAll('details');
     Array.from(deets).forEach(function(element) {
-        let stat = element.getAttribute('open');
-        if(stat != 'open') {
-            element.setAttribute('open','open');
-        }
+        element.setAttribute('open','open');
     });
 });
 // Conversley, "collapse all" hides everyting open in one fell swoop.
-// #TODO this doesn't work consistently!! Activities sections that you manually
-// click to open don't close.
 let collapseall = document.getElementById('collapseall');
 collapseall.addEventListener('click', (e) => {
     let steplist = document.getElementById('steplist');
     let deets = steplist.querySelectorAll('details');
     Array.from(deets).forEach(function(element) {
-        let stat = element.getAttribute('open');
-        if(stat == 'open') {
-            element.removeAttribute('open');
-        }
+        element.removeAttribute('open');
     });
 });
 
