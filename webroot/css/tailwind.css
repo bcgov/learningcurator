@@ -2036,6 +2036,11 @@ details[open] > summary {
   background-color: rgb(254 249 195 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-slate-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-bluegreen\/80:hover {
   background-color: rgb(47 97 115 / 0.8);
 }
@@ -2288,8 +2293,8 @@ details[open] > summary {
     order: -9999;
   }
 
-  .lg\:col-span-3 {
-    grid-column: span 3 / span 3;
+  .lg\:col-span-10 {
+    grid-column: span 10 / span 10;
   }
 
   .lg\:my-3 {
@@ -2322,8 +2327,8 @@ details[open] > summary {
          columns: 2;
   }
 
-  .lg\:grid-cols-5 {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+  .lg\:grid-cols-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
   }
 
   .lg\:flex-row {
