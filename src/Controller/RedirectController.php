@@ -6,10 +6,7 @@ Use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
 
 /**
- * Categories Controller
- *
- * @property \App\Model\Table\CategoriesTable $Categories
- * @method \App\Model\Entity\Category[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * Redirect the learner to their destination.
  */
 class RedirectController extends AppController
 {
