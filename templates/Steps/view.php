@@ -369,8 +369,8 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                     <!-- end activity card -->
                 <?php endforeach; // end of activities loop for this step
                 ?>
-            <?php endif; //end of required activities
-            ?>
+            <?php endif; //end of required activities ?>
+            
             <?php if (count($supplementalacts) > 0) : ?>
                 <div class="my-3 text-center text-sm">End of required activities for this module.</div>
                 <?php if (count($supplementalacts) === 1) : ?>
@@ -525,8 +525,15 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                             </div>
                         </div>
                     </div><!-- end activity card -->
-                <?php endforeach; // end of activities loop for this step
-                ?>
+                    
+                <?php endforeach; // end of activities loop for this step ?>
+                <?php if(!empty($step->reflect)): ?>
+                <hr>
+                <div class="my-4 max-w-prose p-6 bg-slate-50 rounded-lg">
+                <h4 class="mb-3 text-lg font-bold">Pause &amp; Reflect</h4>
+                <?php echo $this->Markdown->transform($step->reflect) ?>
+                </div>
+                <?php endif ?>
             <?php endif ?>
             <?php if (!empty($archivedacts)) : ?>
                 <div x-data="{ open: false }">
@@ -564,6 +571,7 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                             </div>
 
                         <?php endforeach ?>
+                        
                     </div>
                 </div>
             <?php endif ?>

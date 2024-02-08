@@ -111,6 +111,9 @@ $this->loadHelper('Authentication.Identity');
                 <div class="mt-2"><label for="description">Step Objective</label>
                     <span class="text-slate-600 block mb-1 text-sm" id="descriptionHelp"><i class="bi bi-info-circle"></i> What measurable target is the learner working towards at this step specifically? Imagine it beginning “At the completion of this step, learners will be able to…” (1&nbsp;phrase/sentence).</span><?= $this->Form->textarea('description', ['class' => 'form-field', 'aria-describedby' => 'descriptionHelp']) ?>
                 </div>
+                <div class="mt-2"><label for="reflect">Pause & Reflect</label>
+                    <span class="text-slate-600 block mb-1 text-sm" id="reflectHelp"><i class="bi bi-info-circle"></i> What are the things that the learner should relfect upon at this point?</span><?= $this->Form->textarea('reflect', ['class' => 'form-field', 'aria-describedby' => 'reflectHelp']) ?>
+                </div>
 
                 <?= $this->Form->button(__('Save Step Details'), ['class' => 'mt-3 inline-block px-4 py-2 text-white text-md bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg']) ?>
                 <?= $this->Form->end() ?>
