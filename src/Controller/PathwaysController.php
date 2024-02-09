@@ -384,6 +384,7 @@ class PathwaysController extends AppController
                                 'Steps' => ['sort' => ['PathwaysSteps.sortorder' => 'asc']],
                                 'Steps.Statuses', 
                                 'Steps.Activities' => ['sort' => ['ActivitiesSteps.steporder' => 'desc']],
+                                'Steps.Activities.ActivityTypes',
                                 'Users'])
                             ->firstOrFail();
                             // Sigh. I can't make below work without wrecking the sort order
@@ -423,20 +424,25 @@ class PathwaysController extends AppController
         $suppacts = 0;
         $curators = [];
         $activityids = [];
+        $stepids = [];
         if (!empty($pathway->steps)):
             foreach ($pathway->steps as $steps):
+                $stepactids = [];
                 foreach ($steps->activities as $activity):
                     if($activity->status_id == 2) {
                         array_push($curators,$activity->createdby_id);
                         $totalacts++;
                         if($activity->_joinData->required == 1) {
                             array_push($activityids,$activity->id);
+                            array_push($stepactids,$activity->id);
                             $requiredacts++;
                         } else {
                             $suppacts++;
                         }
                     }
                 endforeach; // activities
+                $ses = [$steps->id => $stepactids];
+                array_push($stepids,$ses);
             endforeach; // steps
             
         endif;
@@ -472,7 +478,8 @@ class PathwaysController extends AppController
                             'requiredacts', 
                             'suppacts', 
                             'followid',
-                            'activityids'));
+                            'activityids',
+                            'stepids'));
 
     }
 
