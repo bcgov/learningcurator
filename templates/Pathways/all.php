@@ -316,29 +316,6 @@ $this->assign('title', h($pathway->name));
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-
-        <?php //if(empty($pathway->version) || $environment == 'learningcurator.gov.bc.ca') : ?>
-
-
-
             <?php if (!empty($pathway->steps)) : ?>
                 
             
@@ -351,10 +328,6 @@ $this->assign('title', h($pathway->name));
             <?php endif ?>
             <div id="steplist" class="">
                 <?php foreach ($pathway->steps as $steps) : ?>
-                    <?php $requiredacts = 0; ?>
-                    <script>
-                    var stepactids = [<?php foreach ($steps->activities as $act) : ?><?php if ($act->_joinData->required == 1): ?><?= $act->id ?>,<?php $requiredacts++; ?><?php endif ?><?php endforeach ?>];
-                    </script>
 
                     <?php $count++ ?>
                     
@@ -384,19 +357,23 @@ $this->assign('title', h($pathway->name));
 
                         <details class="activitylist py-2 px-2 md:px-4 bg-slate-100 rounded-lg">
                             <summary class="font-bold hover:cursor-pointer"><?= count($steps->activities) ?> Activities</summary>
-                            <h3 class="mt-4 text-xl">Required Activities</h3>
-                            <div class="pb-4 italic border-b-2 border-white">Launch these activities and fill in your progress bar.</div>
+                            <div class="mb-3 max-w-prose bg-slate-50 rounded-lg">
+                                <h3 class="mt-4 p-2 pb-0 text-xl font-bold">Required Activities</h3>
+                                <div class="p-2 italic fs-6">Launch these activities and fill in your progress bar.</div>
+                            </div>
                             <?php $bonuses = [] ?>
                             <?php foreach($steps->activities as $a): ?>
                             <?php if ($a->status_id == 2) : ?>
                             <?php if ($a->_joinData->required == 1) : ?>
                             <?php $actcount++ ?>
-                            <details id="activity-<?= $a->id ?>" class="activity border-b-2 border-white open:bg-slate-50">
-                                <summary class="py-2 text-lg hover:cursor-pointer hover:text-blue-900 hover:bg-slate-50">
+                            <details id="activity-<?= $a->id ?>" class="activity mb-3 border-b-2 border-white open:bg-slate-50 hover:bg-white rounded-lg">
+                                <summary class="fs-4 py-2 text-lg hover:cursor-pointer hover:text-blue-900 hover:bg-white rounded-lg">
+                                    <!-- <span id="launched-<?= $a->id ?>" class="hidden launched inline-block p-0.5 px-2 bg-emerald-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80"></span>  -->
+                                    <i id="launched-<?= $a->id ?>" class="launched bi bi-circle ml-2" style="color:rgb(47 97 115 / var(--tw-bg-opacity))" aria-label="Not yet launched" title="Not yet launched"></i>
+                                    <i class="<?= h($a->activity_type->image_path) ?> mr-1" style="color:rgb(47 97 115 / var(--tw-bg-opacity))" aria-label="<?= h($a->activity_type->name) ?>" title="This is an <?= h($a->activity_type->name) ?> activity."></i>
                                     <?= $a->name ?>
-                                    <span id="launched-<?= $a->id ?>" class="hidden launched "></span> 
                                 </summary>
-                                <div class="p-3 ml-6 mb-2 bg-white rounded-lg max-w-prose">
+                                <div class="p-3 ml-4 mb-2 rounded-lg max-w-prose">
                                 <div><?= $a->description ?></div>
                                 <?php if (!empty($a->_joinData->stepcontext)) : ?>
                                 <div class="text-sm italic mt-2">Curator says:</div>
@@ -421,15 +398,20 @@ $this->assign('title', h($pathway->name));
                             <?php endif ?>
                             <?php endforeach ?>
                             <?php if(!empty($bonuses)): ?>
-                            <h3 class="mt-5 ml-3 text-xl">Bonus Activities</h3>
-                            <p class="ml-3 italic">Launching these activities does not count towards your progress along this pathway.</p>
+                            <div class="my-6 max-w-prose bg-slate-50 rounded-lg">
+                                <h3 class="mt-4 p-2 pb-0 text-xl font-bold">Bonus Activities</h3>
+                                <div class="p-2 italic fs-6">Launching these activities does not count towards your progress.</div>
+                            </div>
+
                             <?php foreach($bonuses as $a): ?>
-                                <details id="activity-<?= $a->id ?>" class="activity px-0 md:px-4 py-2 border-b-2">
-                                <summary class="text-lg hover:cursor-pointer hover:text-blue-700">
+                                <details id="activity-<?= $a->id ?>" class="activity mb-3 border-b-2 border-white open:bg-slate-50 hover:bg-white rounded-lg">
+                                <summary class="fs-4 py-2 text-lg hover:cursor-pointer hover:text-blue-900 hover:bg-slate-50 hover:bg-white rounded-lg">
+                                    <i id="launched-<?= $a->id ?>" class="launched bi bi-circle ml-2" style="color:rgb(47 97 115 / var(--tw-bg-opacity))" aria-label="Not launched" title="Not yet launched"></i>
+                                    <i class="<?= h($a->activity_type->image_path) ?> mr-1"  aria-label="<?= h($a->activity_type->name) ?>"></i>
                                     <?= $a->name ?>
-                                    <span id="launched-<?= $a->id ?>" class="hidden launched "></span> 
+                                    <span id="launched-<?= $a->id ?>" class="hidden launched inline-block p-0.5 px-2 bg-emerald-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80"></span> 
                                 </summary>
-                                <div class="p-3 ml-6 bg-white rounded-lg">
+                                <div class="p-3 ml-4 rounded-lg">
                                 <div><?= $a->description ?></div>
                                 <?php if (!empty($a->_joinData->stepcontext)) : ?>
                                 <div class="text-sm italic mt-2">Curator says:</div>
@@ -450,21 +432,34 @@ $this->assign('title', h($pathway->name));
                             </details>
                             <?php endforeach ?>
                             <?php endif ?>
+                            <?php if(!empty($steps->reflect)): ?>
+                            <div class="mb-4 mt-10 max-w-prose p-6 bg-white rounded-lg">
+                            <h4 class="mb-3 text-lg font-bold">Pause &amp; Reflect</h4>
+                            <?php echo $this->Markdown->transform($steps->reflect) ?>
+                            </div>
+                            <?php endif ?>
+                            </div>
+                            </div>
                         </details>
 
-
-                        </div>
-                        </div>
                 <?php endforeach ?>
             </div>
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script src="/js/sortable.min.js"></script>
 <script type="module">
 
 
 <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+// ||||||||||||||||||||
+// 
+// Administrative functions only.
+//
+// * Allow curator drag-n-drop sorting of steps.
+// * Update pathway launch count.
+// 
+// ||||||||||||||||||||
 var el = document.getElementById('items');
 var sortable = Sortable.create(el, {
   animation: 150,
@@ -498,11 +493,26 @@ function getPathwayLaunchReport () {
         .catch((err) => console.error('error:', err));
 
 }
-<?php endif ?>
+<?php endif; // end of curator-only functions ?>
+
+// ||||||||||||||||||||
+// 
+// Details/Summary niceties
+//
 // By default, all the activities are hidden behind a details/summary
 // and subsequently the description/launch links are as well.
 // This supports allowing the learner to choose to "expand all" and 
-// show everything on the page all at once. 
+// show everything on the page all at once, or "collapse all" and 
+// hide everything. 
+// 
+// As well, clicking on the step header will expand
+// the activity list (while not expanding the activity itself),
+// and update the URL with the fragment ID, so you can link people
+// direcrtly to step with its activities open already.
+//
+// ||||||||||||||||||||
+
+// Show everything all in once fell swoop.
 let expall = document.getElementById('expall');
 expall.addEventListener('click', (e) => {
     let steplist = document.getElementById('steplist');
@@ -532,7 +542,8 @@ if(window.location.hash) {
     toopen[0].setAttribute('open','open');
 }
 
-// When you click the permalink it will open the activities on that step.
+// When you click the permalink it will open the activities on that step 
+// and update the URI with the fragment ID.
 let permalinks = document.getElementsByClassName('permalink');
 Array.from(permalinks).forEach(function(element) {
     element.addEventListener('click', (e) => { 
@@ -544,11 +555,12 @@ Array.from(permalinks).forEach(function(element) {
 });
 
 // ||||||||||||||||||||
+//
 // Pathway Progress and launch indicators
+// 
 // ||||||||||||||||||||
 
-
-// This is a list of all the activity IDs on this pathway from every step.
+// This is a list of all the required activity IDs on this pathway from every step.
 let pathacts = [<?php foreach($activityids as $a) { echo $a . ','; } ?>];
 
 // Grab the list of activities in the DOM so we can iterate over them
@@ -649,9 +661,10 @@ function updateLaunches (launched) {
             // I had issues with getting the element by ID for some reason
             // so we get by class and refer to the first (and expected to be
             // only) instance of it with [0].
-            badge[0].classList.remove('hidden');
-            // badge[0].innerHTML = 'Launched';
-            badge[0].innerHTML = '✅';
+            badge[0].classList.remove('bi-circle');
+            badge[0].classList.add('bi-check-circle-fill');
+            badge[0].setAttribute('title','You have launched this activity!');
+            badge[0].setAttribute('aria-label','You have launched this activity!');
         }
     });
 }
@@ -662,22 +675,9 @@ function updateLaunches (launched) {
     <div>There don't appear to be any steps assigned to this pathway yet.</div>
 <?php endif; // are there any steps at all? ?>
     
-<?php //else : ?>
 
-    <!-- <div class="my-3 p-3 bg-yellow-100 rounded-lg">
-          
-          This pathway has been 
-          <a href="https://learningcurator.gww.gov.bc.ca/p/<?= h($pathway->slug) ?>" 
-              class="underline font-bold">
-                  published to production
-          </a>
-          and can no longer be edited here.
-              
-      </div> -->
-
-<?php //endif ?>
 <?php if(!empty($pathway->acknowledgments)): ?>
-<div class="max-w-prose p-6 md:ml-20">
+<div class="mb-5 max-w-prose p-6 md:ml-20">
 <h4 class="mb-3 text-lg font-bold">Notes of Acknowledgment</h4>
 <?php echo $this->Markdown->transform($pathway->acknowledgments) ?>
 </div>

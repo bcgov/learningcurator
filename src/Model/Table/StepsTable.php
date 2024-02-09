@@ -91,6 +91,10 @@ class StepsTable extends Table
         $validator
             ->scalar('description')
             ->allowEmptyString('description');
+            
+        $validator
+            ->scalar('reflect')
+            ->allowEmptyString('reflect');
 
         $validator
             ->scalar('image_path')

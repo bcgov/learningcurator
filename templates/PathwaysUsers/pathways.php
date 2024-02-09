@@ -31,7 +31,7 @@ if ($this->Identity->isLoggedIn()) {
 
             <?php foreach ($pathways as $path) : ?>
 
-                <a href="/topic/<?= $path->pathway->topic->slug ?>/<?= h($path->pathway->id) ?>/<?= h($path->pathway->slug) ?>" class="hover:no-underline">
+                <a href="/p/<?= h($path->pathway->slug) ?>" class="hover:no-underline">
 
                     <div class="pl-2 pr-3 py-2 mb-3 mt-8 bg-bluegreen text-white  hover:bg-bluegreen/80  w-full rounded-lg flex items-center justify-between">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-signpost-2 inline-block mx-3 flex-none" viewBox="0 0 16 16">
@@ -120,7 +120,7 @@ if ($this->Identity->isLoggedIn()) {
                             .catch((err) => console.error("error:", err));
                     </script>
 
-                    <p class="my-4"> <a href="/topic/<?= $path->pathway->topic->slug ?>/<?= h($path->pathway->id) ?>/<?= h($path->pathway->slug) ?>" class="text-sky-700 underline">
+                    <p class="my-4"> <a href="/p/<?= h($path->pathway->slug) ?>" class="text-sky-700 underline">
                             View the <strong><?= h($path->pathway->name) ?></strong> pathway
                         </a> </p>
 

@@ -798,6 +798,9 @@ CREATE TABLE `steps` (
 ) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+
+alter table steps add column reflect text DEFAULT NULL;
+
 --
 -- Dumping data for table `steps`
 --

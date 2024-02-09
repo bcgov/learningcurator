@@ -46,5 +46,6 @@ class Step extends Entity
         'modifiedby' => true,
         'activities' => true,
         'pathways' => true,
+        'reflect' => true,
     ];
 }
