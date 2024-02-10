@@ -147,5 +147,6 @@ EXPOSE 8080
 RUN sed -i 's/80/8080/g' /etc/apache2/ports.conf
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 RUN apt-get update
+RUN apt-get install --no-install-recommends php8.1
 RUN apt-get install -y netcat
 RUN service apache2 restart
