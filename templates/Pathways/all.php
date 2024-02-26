@@ -85,7 +85,7 @@ $this->assign('title', h($pathway->name));
                 <summary class="hover:cursor-pointer">Before You Proceed</summary>
                 <hr class="my-5">
                 <div class="max-w-prose">
-                    <?php echo $this->Markdown->transform($pathway->content_warning) ?>
+                    <?= $pathway->content_warning ?>
                 </div>
             </details>
             <?php endif ?>
@@ -351,7 +351,7 @@ $this->assign('title', h($pathway->name));
                             </h4>
                             <div class="mb-2">
                                 <div class="max-w-prose"><span class="font-bold">Objective</span>
-                                <?php echo $this->Markdown->transform($steps->description) ?>
+                                <?= $steps->description ?>
                                 </div>
                             </div>
 
@@ -435,7 +435,7 @@ $this->assign('title', h($pathway->name));
                             <?php if(!empty($steps->reflect)): ?>
                             <div class="mb-4 mt-10 max-w-prose p-6 bg-white rounded-lg">
                             <h4 class="mb-3 text-lg font-bold">Pause &amp; Reflect</h4>
-                            <?php echo $this->Markdown->transform($steps->reflect) ?>
+                            <?= $steps->reflect ?>
                             </div>
                             <?php endif ?>
                             </div>
@@ -679,7 +679,7 @@ function updateLaunches (launched) {
 <?php if(!empty($pathway->acknowledgments)): ?>
 <div class="mb-5 max-w-prose p-6 md:ml-20">
 <h4 class="mb-3 text-lg font-bold">Notes of Acknowledgment</h4>
-<?php echo $this->Markdown->transform($pathway->acknowledgments) ?>
+<?= $pathway->acknowledgments ?>
 </div>
 <?php endif ?>
 </div>
