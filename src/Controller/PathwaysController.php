@@ -25,7 +25,7 @@ class PathwaysController extends AppController
         $this->loadComponent('Search.Search', [
             'actions' => ['search'],
         ]);
-        $this->viewBuilder()->setHelpers(['Tanuck/Markdown.Markdown']);
+        // $this->viewBuilder()->setHelpers(['Tanuck/Markdown.Markdown']);
     }
     /**
      * API method outputs RSS XML of the index listing of newly published pathways

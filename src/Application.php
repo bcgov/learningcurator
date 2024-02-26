@@ -67,7 +67,7 @@ class Application extends BaseApplication
         // Load more plugins here
         $this->addPlugin(\CakeDC\Users\Plugin::class);
         $this->addPlugin('Search');
-        $this->addPlugin('Tanuck/Markdown');
+        // $this->addPlugin('Tanuck/Markdown');
         
     }
 

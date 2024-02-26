@@ -88,7 +88,7 @@ $this->assign('title', h($pathway->name));
                 <summary class="hover:cursor-pointer">Before You Proceed</summary>
                 <hr class="my-5">
                 <div>
-                    <?php echo $this->Markdown->transform($pathway->content_warning) ?>
+                    <?= $pathway->content_warning ?>
                 </div>
             </details>
             <?php endif ?>
@@ -562,7 +562,7 @@ $this->assign('title', h($pathway->name));
 <?php if(!empty($pathway->acknowledgments)): ?>
 <div class="max-w-prose p-6 md:ml-12">
 <h4 class="mb-3 text-lg font-bold">Notes of Acknowledgment</h4>
-<?php echo $this->Markdown->transform($pathway->acknowledgments) ?>
+<?= $pathway->acknowledgments ?>
 </div>
 <?php endif ?>
 

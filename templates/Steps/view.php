@@ -77,7 +77,7 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                 <summary class="hover:cursor-pointer">Before You Proceed</summary>
                 <hr class="my-5">
                 <div>
-                    <?php echo $this->Markdown->transform($step->pathways[0]->content_warning) ?>
+                    <?= $step->pathways[0]->content_warning ?>
                 </div>
             </details>
             <?php endif ?>
@@ -162,7 +162,7 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
             </h2>
 
             <p class="font-bold mb-0">Objective:</p>
-                <?php echo $this->Markdown->transform($step->description) ?>
+                <?= $step->description ?>
             
             <!-- TODO objectives should be edited to remove p tags, or use autoparagraph and change heading to not be inline. Or can we omit the word objective entirely? -->
             <?php if (!empty($requiredacts)) : ?>
@@ -212,13 +212,13 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                                     </h4>
                                     <div class="text-lg">
                                         <?php if (!empty($activity->description)) : ?>
-                                            <div class=""><?php echo $this->Markdown->transform($activity->description); ?></div>
+                                            <div class=""><?= $activity->description ?></div>
                                         <?php else : ?>
                                             <p><em>No description provided&hellip;</em></p>
                                         <?php endif ?>
                                         <?php if (!empty($activity->_joinData->stepcontext)) : ?>
                                             <div class="text-sm italic mt-2">Curator says:</div>
-                                            <blockquote class="border-l-2 p-2 m-2"><?php echo $this->Markdown->transform($activity->_joinData->stepcontext) ?></blockquote>
+                                            <blockquote class="border-l-2 p-2 m-2"><?= $activity->_joinData->stepcontext ?></blockquote>
                                         <?php endif ?>
                                         <?php if (!empty($activity->isbn)) : ?>
                                             <p>ISBN: <?= $activity->isbn ?></p>
@@ -531,7 +531,7 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
                 <hr>
                 <div class="my-4 max-w-prose p-6 bg-slate-50 rounded-lg">
                 <h4 class="mb-3 text-lg font-bold">Pause &amp; Reflect</h4>
-                <?php echo $this->Markdown->transform($step->reflect) ?>
+                <?= $step->reflect ?>
                 </div>
                 <?php endif ?>
             <?php endif ?>
@@ -603,7 +603,7 @@ foreach ($step->pathways as $pathways) { } // $10 to the person who can tell me 
 <?php if(!empty($step->pathways[0]->acknowledgments)): ?>
 <div class="max-w-prose p-6 md:ml-28">
 <h4 class="mb-3 text-lg font-bold">Notes of Acknowledgment</h4>
-<?php echo $this->Markdown->transform($step->pathways[0]->acknowledgments) ?>
+<?= $step->pathways[0]->acknowledgments ?>
 </div>
 <?php endif ?>
 <script>

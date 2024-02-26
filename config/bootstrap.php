@@ -220,4 +220,4 @@ Configure::write('Users.config', ['users']);
 Configure::write('OAuth.providers.azuread.options.clientId', env('AZURE_AD_CLIENT_ID', null));
 Configure::write('OAuth.providers.azuread.options.clientSecret', env('AZURE_AD_CLIENT_SECRET', null));
 
-\App\Application::addPlugin('Tanuck/Markdown');
+// \App\Application::addPlugin('Tanuck/Markdown');
