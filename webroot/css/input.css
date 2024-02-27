@@ -74,3 +74,6 @@ details summary::-webkit-details-marker,
 details[open] summary::-webkit-details-marker {
 	display:none;
 }
+details summary:hover {
+    cursor: pointer;
+}
