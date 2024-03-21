@@ -441,7 +441,7 @@ class PathwaysController extends AppController
                         }
                     }
                 endforeach; // activities
-                $ses = [$steps->id => $stepactids];
+                $ses = ['stepid' => $steps->id, 'reqactids' => $stepactids, 'bonusacts' => $suppacts];
                 array_push($stepids,$ses);
             endforeach; // steps
             

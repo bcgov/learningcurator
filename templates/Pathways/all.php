@@ -122,11 +122,8 @@ $this->assign('title', h($pathway->name));
     <?php foreach($pathway->steps as $s): ?>
     <div class="flex mb-1 p-2 bg-slate-100 rounded-lg" data-id="<?= $s->id ?>">
     <?php $count++ ?>
-    <div class="handle hover:cursor-pointer" style="height: 1em; width: 3em;">
-        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" style="margin: .5em 0 0 1em" viewBox="0 0 320 512">
-            <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-            <path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/>
-        </svg>
+    <div class="handle hover:cursor-pointer text-center" style="height: 1em; width: 2em;">
+        <i class="bi bi-grip-vertical"></i>
     </div>
     <?= $this->Form->control('steporder[]', ['type' => 'hidden', 'class' => 'stepcount step' . $s->id, 'value' => $count]) ?>
     <div><?= $s->name ?></div>
@@ -139,7 +136,7 @@ $this->assign('title', h($pathway->name));
 </details>
 <details>
     <summary>Add Step</summary>
-    <div class="px-4 py-3">
+    <div class="px-4 py-3 bg-slate-50 rounded-lg">
     <?= $this->Form->create(null, ['url' => [
         'controller' => 'Steps',
         'action' => 'add'
@@ -163,14 +160,16 @@ $this->assign('title', h($pathway->name));
 </details>
 <details>
     <summary>Curator Details</summary>
-        <div class="flex m-3 p-3 bg-white rounded-lg">
+        <div class="p-3 bg-slate-50 rounded-lg">
+        <div class="flex mb-3">
             <div class="mr-3"><strong><?= $followcount ?></strong> follows</div>
             <div id="activitylaunches" class=""></div>
             <div id="allreports" class="pl-3">
                 <a href="/stats">All Reports</a>
             </div>
         </div>
-        <div class="m-3 p-3 bg-white rounded-lg">
+        <hr>
+        <div class="mt-3">
             <?php if(!empty($createdby[0]->first_name)): ?>
             
                 Created by:
@@ -307,9 +306,9 @@ $this->assign('title', h($pathway->name));
             
             <?php endif; // published status check ?>
             
-        
-        </details>
-        <?php endif; // role check ?>
+        </div>
+</details>
+<?php endif; // role check ?>
 
 
 
@@ -331,7 +330,7 @@ $this->assign('title', h($pathway->name));
 
                     <?php $count++ ?>
                     
-                    <div id="step-<?= $count ?>" data-stepid="step-<?= $steps->id ?>" class="mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
+                    <div id="step-<?= $count ?>" data-stepid="<?= $steps->id ?>" class="steps mt-4 text-lg border-2 border-bluegreen group-hover:border-bluegreen/80 rounded-lg flex justify-start">
 
                         <h3 class="text-2xl font-semibold flex-none items-start bg-bluegreen group-hover:bg-bluegreen/80 text-white basis-1/7 p-3">
                             <?= $count ?>
@@ -356,25 +355,33 @@ $this->assign('title', h($pathway->name));
                             </div>
 
                         <details class="activitylist py-2 px-2 md:px-4 bg-slate-100 rounded-lg">
-                            <summary class="font-bold hover:cursor-pointer"><?= count($steps->activities) ?> Activities</summary>
+                            <summary class="font-bold hover:cursor-pointer">
+                                <?= count($steps->activities) ?> Activities
+                                <div class="stepprogress"></div>
+                            </summary>
                             <div class="mb-3 max-w-prose bg-slate-50 rounded-lg">
                                 <h3 class="mt-4 p-2 pb-0 text-xl font-bold">Required Activities</h3>
                                 <div class="p-2 italic fs-6">Launch these activities and fill in your progress bar.</div>
                             </div>
+
+
+
+
+
                             <?php $bonuses = [] ?>
                             <?php foreach($steps->activities as $a): ?>
                             <?php if ($a->status_id == 2) : ?>
                             <?php if ($a->_joinData->required == 1) : ?>
                             <?php $actcount++ ?>
-                            <details id="activity-<?= $a->id ?>" class="activity mb-3 border-b-2 border-white open:bg-slate-50 hover:bg-white rounded-lg">
-                                <summary class="fs-4 py-2 text-lg hover:cursor-pointer hover:text-blue-900 hover:bg-white rounded-lg">
+                            <details id="activity-<?= $a->id ?>" class="activity mb-3 border-b-2 border-white open:bg-slate-50 rounded-lg">
+                                <summary class="font-semibold fs-4 py-2 text-lg hover:cursor-pointer hover:text-blue-900 rounded-lg">
                                     <!-- <span id="launched-<?= $a->id ?>" class="hidden launched inline-block p-0.5 px-2 bg-emerald-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80"></span>  -->
                                     <i id="launched-<?= $a->id ?>" class="launched bi bi-circle ml-2" style="color:rgb(47 97 115 / var(--tw-bg-opacity))" aria-label="Not yet launched" title="Not yet launched"></i>
-                                    <i class="<?= h($a->activity_type->image_path) ?> mr-1" style="color:rgb(47 97 115 / var(--tw-bg-opacity))" aria-label="<?= h($a->activity_type->name) ?>" title="This is an <?= h($a->activity_type->name) ?> activity."></i>
+                                    <i class="<?= h($a->activity_type->image_path) ?> mr-1" style="color:rgb(47 97 115 / var(--tw-bg-opacity))" aria-label="<?= h($a->activity_type->name) ?> activity" title="<?= h($a->activity_type->name) ?> activity."></i>
                                     <?= $a->name ?>
                                 </summary>
                                 <div class="p-3 ml-4 mb-2 rounded-lg max-w-prose">
-                                <div><?= $a->description ?></div>
+                                <div class="mb-3"><?= $a->description ?></div>
                                 <?php if (!empty($a->_joinData->stepcontext)) : ?>
                                 <div class="text-sm italic mt-2">Curator says:</div>
                                 <blockquote class="border-l-2 p-2 m-2"><?= h($a->_joinData->stepcontext) ?></blockquote>
@@ -404,15 +411,15 @@ $this->assign('title', h($pathway->name));
                             </div>
 
                             <?php foreach($bonuses as $a): ?>
-                                <details id="activity-<?= $a->id ?>" class="activity mb-3 border-b-2 border-white open:bg-slate-50 hover:bg-white rounded-lg">
-                                <summary class="fs-4 py-2 text-lg hover:cursor-pointer hover:text-blue-900 hover:bg-slate-50 hover:bg-white rounded-lg">
+                                <details id="activity-<?= $a->id ?>" class="activity mb-3 border-b-2 border-white open:bg-slate-50 rounded-lg">
+                                <summary class="font-bold fs-4 py-2 text-lg hover:cursor-pointer hover:text-blue-900 hover:bg-slate-50 rounded-lg">
                                     <i id="launched-<?= $a->id ?>" class="launched bi bi-circle ml-2" style="color:rgb(47 97 115 / var(--tw-bg-opacity))" aria-label="Not launched" title="Not yet launched"></i>
                                     <i class="<?= h($a->activity_type->image_path) ?> mr-1"  aria-label="<?= h($a->activity_type->name) ?>"></i>
                                     <?= $a->name ?>
                                     <span id="launched-<?= $a->id ?>" class="hidden launched inline-block p-0.5 px-2 bg-emerald-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80"></span> 
                                 </summary>
                                 <div class="p-3 ml-4 rounded-lg">
-                                <div><?= $a->description ?></div>
+                                <div class="mb-3"><?= $a->description ?></div>
                                 <?php if (!empty($a->_joinData->stepcontext)) : ?>
                                 <div class="text-sm italic mt-2">Curator says:</div>
                                 <blockquote class="border-l-2 p-2 m-2"><?= h($a->_joinData->stepcontext) ?></blockquote>
@@ -434,8 +441,8 @@ $this->assign('title', h($pathway->name));
                             <?php endif ?>
                             <?php if(!empty($steps->reflect)): ?>
                             <div class="mb-4 mt-10 max-w-prose p-6 bg-white rounded-lg">
-                            <h4 class="mb-3 text-lg font-bold">Pause &amp; Reflect</h4>
-                            <?= $steps->reflect ?>
+                                <h4 class="mb-3 text-lg font-bold">Pause and Reflect</h4>
+                                <?= $steps->reflect ?>
                             </div>
                             <?php endif ?>
                             </div>
@@ -447,9 +454,9 @@ $this->assign('title', h($pathway->name));
         </div>
     </div>
 </div>
+
 <script src="/js/sortable.min.js"></script>
 <script type="module">
-
 
 <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
 // ||||||||||||||||||||
@@ -563,9 +570,21 @@ Array.from(permalinks).forEach(function(element) {
 // This is a list of all the required activity IDs on this pathway from every step.
 let pathacts = [<?php foreach($activityids as $a) { echo $a . ','; } ?>];
 
+
+let stepids = [
+    <?php foreach($stepids as $st): ?>
+    [{'stepid': '<?= $st['stepid']?>',
+    'Required': '<?php echo count($st['reqactids']) ?>',
+    'Bonus': '<?= $st['bonusacts']?>'}],
+<?php endforeach ?>
+];
+console.log(stepids);
+
+
 // Grab the list of activities in the DOM so we can iterate over them
 // assigning launched status.
 let activities = document.getElementsByClassName('activity');
+let steps = document.getElementsByClassName('steps');
 
 // Setup the statuses on the initial page load.
 getLearnerData ();
@@ -666,6 +685,22 @@ function updateLaunches (launched) {
             badge[0].setAttribute('title','You have launched this activity!');
             badge[0].setAttribute('aria-label','You have launched this activity!');
         }
+    });
+}
+updateStepStats();
+// Update the status of individual activities with the info returned 
+// by getLearnerData()
+function updateStepStats () {
+    // Grab all the activities on the page and loop through them.
+    Array.from(steps).forEach(function(element) {
+
+        console.log(element.dataset.stepid);
+        let prog = element.getElementsByClassName('stepprogress');
+        Array.from(stepids).forEach(function(e) {
+            console.log(e);
+        });
+
+
     });
 }
 </script>

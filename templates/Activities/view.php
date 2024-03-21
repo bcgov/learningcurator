@@ -223,6 +223,31 @@ if ($this->Identity->isLoggedIn()) {
                 <?= $this->Form->end() ?>
             </div>
         </div>
+        <?php if ($role == 'curator' || $role == 'manager' || $role == 'superuser') : ?>
+        <h4 class="font-semibold text-xl mb-3 mt-5">Reports</h4>
+        <?php foreach($activity->reports as $report): ?>
+            <div class="border-2 border-slate-700 mb-3 rounded-md">
+                <div class="flex justify-between gap-4 items-center bg-slate-700 text-white p-2"> <span class="ml-2 font-semibold">Issue report #<?= $report->id ?></span>
+                    <span class="text-sm"><?= $this->Time->format($report->created, \IntlDateFormatter::MEDIUM, null, 'GMT-8') ?></span>
+                </div>
+                <div class="p-3">
+                    <div class="text-sm italic mt-2">User said:</div>
+                    <blockquote class="border-l-2 p-2 m-2">
+                        <?= h($report->issue) ?>
+                    </blockquote>
+                    <?php if(!empty($report->response)): ?>
+                    <div class="text-sm italic mt-2">Curator replied:</div>
+                    <blockquote class="border-l-2 p-2 m-2">
+                        <?= h($report->response) ?>
+                    </blockquote>
+                    <?php endif ?>
+                    <a title="View this report" href="/reports/view/<?= $report->id ?>" class="inline-block px-4 py-2 text-md text-white bg-slate-700 hover:bg-slate-700/80 focus:bg-slate-700/80  hover:no-underline rounded-lg mt-3 mb-1">
+                        View Report
+                    </a>
+                </div>
+            </div>
+        <?php endforeach ?>
+        <?php endif ?>
     </div>
 </div>
 <script>
