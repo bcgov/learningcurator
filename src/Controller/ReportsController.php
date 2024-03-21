@@ -139,11 +139,11 @@ class ReportsController extends AppController
                         $toemails .= $ce . ';';
                     }
                     //print_r($mailer); exit;
-                    $message = '<p>Someone filed an report on activity #' . $actid . ' ';
-                    $message .= '<a href="https://learningcurator.gww.gov.bc.ca/activities/view/' . $actid . '">';
-                    $message .= 'Go check it out';
-                    $message .= '</a></p>';
-                    $message .= $toemails;
+                    $message = 'Someone filed an report on activity #' . $actid . ' ';
+                    // $message .= '<a href="https://learningcurator.gww.gov.bc.ca/activities/view/' . $actid . '">';
+                    // $message .= 'Go check it out';
+                    // $message .= '</a></p>';
+                    // $message .= $toemails;
                     //$mailer->deliver($message);
                     
 
