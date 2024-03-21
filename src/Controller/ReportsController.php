@@ -166,8 +166,8 @@ class ReportsController extends AppController
 
                     $tokenres = curl_exec($curl);
                     $token = json_decode($tokenres);
-                    echo $chesapicredential . '<br>';
-                    echo '<pre>'; print_r($token); exit;
+                    // echo $chesapicredential . '<br>';
+                    // echo '<pre>'; print_r($token); exit;
 
                     curl_setopt_array($curl, array(
                         CURLOPT_URL => 'https://ches-dev.api.gov.bc.ca/api/v1/email',
@@ -201,6 +201,8 @@ class ReportsController extends AppController
                     $response = curl_exec($curl);
 
                     curl_close($curl);
+                   
+                    echo 'Success :)';
                     
                 } catch (Exception $e) {
                     echo 'Caught exception: ',  $e->getMessage(), "\n";
