@@ -174,7 +174,7 @@ class ReportsController extends AppController
                         CURLOPT_POSTFIELDS =>'{
                             "bcc": [],
                             "bodyType": "html",
-                            "body": ' . $message . ',
+                            "body": "' . $message . '",
                             "cc": [],
                             "delayTS": 0,
                             "encoding": "utf-8",
