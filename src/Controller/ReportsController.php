@@ -141,7 +141,7 @@ class ReportsController extends AppController
                     }
                     //print_r($mailer); exit;
                     $message = '<p>Someone filed an report on activity #' . $actid . ' ';
-                    $message .= '<a href="https://learningcurator.gww.gov.bc.ca/activities/view/' . $actid . '">';
+                    $message .= '<a href=https://learningcurator.gww.gov.bc.ca/activities/view/' . $actid . '>';
                     $message .= 'Go check it out';
                     $message .= '</a></p>';
                     $message .= $toemails;
@@ -167,8 +167,7 @@ class ReportsController extends AppController
 
                     $tokenres = curl_exec($curl);
                     $token = json_decode($tokenres);
-
-                    curl_setopt_array($curl, array(
+                    $opts = array(
                         CURLOPT_URL => 'https://ches-dev.api.gov.bc.ca/api/v1/email',
                         CURLOPT_RETURNTRANSFER => true,
                         CURLOPT_ENCODING => '',
@@ -180,7 +179,7 @@ class ReportsController extends AppController
                         CURLOPT_POSTFIELDS =>'{
                             "bcc": [],
                             "bodyType": "html",
-                            "body": "' . $message . '",
+                            "body": "",
                             "cc": [],
                             "delayTS": 0,
                             "encoding": "utf-8",
@@ -195,13 +194,15 @@ class ReportsController extends AppController
                             'Authorization: Bearer ' . $token->access_token,
                             'Cookie: 0662357d14092c112d042bc0007de896=0103b8f16bed8abcb82235ad88974279'
                         ),
-                    ));
+                    );
+                    curl_setopt_array($curl, $opts);
 
                     $response = curl_exec($curl);
 
                     curl_close($curl);
                     echo $chesapicredential . '<br>';
                     echo '<pre>'; print_r($token); 
+                    echo '<br>'; print_r($opts); 
                     echo '<br>'; print_r($response); exit;
                    
                     echo 'Success :)';
