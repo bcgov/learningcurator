@@ -127,6 +127,7 @@ class ReportsController extends AppController
             if ($this->Reports->save($report)) {
 
                 try {
+
                     $chesapicredential = env('CHES_CRED', null);
                     
                     echo __('The report has been saved.');
@@ -139,11 +140,11 @@ class ReportsController extends AppController
                         $toemails .= $ce . ';';
                     }
                     //print_r($mailer); exit;
-                    $message = 'Someone filed an report on activity #' . $actid . ' ';
-                    // $message .= '<a href="https://learningcurator.gww.gov.bc.ca/activities/view/' . $actid . '">';
-                    // $message .= 'Go check it out';
-                    // $message .= '</a></p>';
-                    // $message .= $toemails;
+                    $message = '<p>Someone filed an report on activity #' . $actid . ' ';
+                    $message .= '<a href="https://learningcurator.gww.gov.bc.ca/activities/view/' . $actid . '">';
+                    $message .= 'Go check it out';
+                    $message .= '</a></p>';
+                    $message .= $toemails;
                     //$mailer->deliver($message);
                     
 
@@ -179,7 +180,7 @@ class ReportsController extends AppController
                         CURLOPT_POSTFIELDS =>'{
                             "bcc": [],
                             "bodyType": "html",
-                            "body": ' . $message . ',
+                            "body": "' . $message . '",
                             "cc": [],
                             "delayTS": 0,
                             "encoding": "utf-8",
