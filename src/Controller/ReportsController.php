@@ -141,7 +141,7 @@ class ReportsController extends AppController
                     }
                     //print_r($mailer); exit;
                     $message = '<p>Someone filed an report on activity #' . $actid . ' ';
-                    $message .= '<a href="https://learningcurator.gww.gov.bc.ca/activities/view/' . $actid . '">';
+                    $message .= '<a href=https://learningcurator.gww.gov.bc.ca/activities/view/' . $actid . '>';
                     $message .= 'Go check it out';
                     $message .= '</a></p>';
                     $message .= $toemails;
@@ -179,7 +179,7 @@ class ReportsController extends AppController
                         CURLOPT_POSTFIELDS =>'{
                             "bcc": [],
                             "bodyType": "html",
-                            "body": "' . $message . '",
+                            "body": "",
                             "cc": [],
                             "delayTS": 0,
                             "encoding": "utf-8",
