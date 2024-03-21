@@ -143,8 +143,6 @@ class ReportsController extends AppController
 
                     $message = json_encode($message);
 
-                    
-
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
                         CURLOPT_URL => 'https://dev.loginproxy.gov.bc.ca/auth/realms/comsvcauth/protocol/openid-connect/token',
@@ -197,12 +195,13 @@ class ReportsController extends AppController
                     $response = curl_exec($curl);
 
                     curl_close($curl);
-                    // echo $chesapicredential . '<br>';
-                    // echo '<pre>'; print_r($token); 
-                    // echo '<br>'; print_r($opts); 
-                    // echo '<br>'; print_r($response); exit;
                    
-                    echo 'Success :)';
+                    if($this->request->getData('redirectback') == 1) {
+                        $go = $this->referer();
+                    } else {
+                        $go = '/activities/view/' . $actid;
+                    }
+                    return $this->redirect($go);
 
                 } catch (Exception $e) {
                     echo 'Caught exception: ',  $e->getMessage(), "\n";
