@@ -130,23 +130,18 @@ class ReportsController extends AppController
 
                     $chesapicredential = env('CHES_CRED', null);
                     
-                    echo __('The report has been saved.');
-                    // $mailer = new Mailer('default');
-                    // $mailer->setFrom(['allan.haggett@gov.bc.ca' => 'Learning Curator'])
-                    //         ->setTo('allan.haggett@gov.bc.ca')
-                    //         ->setSubject('Curator Activity Report');
                     $toemails = '';
                     foreach($curatoremails as $ce) {
                         $toemails .= $ce . ';';
                     }
-                    //print_r($mailer); exit;
+
                     $message = '<p>Someone filed an report on activity #' . $actid . ' ';
-                    $message .= '<a href="https://learningcurator.gww.gov.bc.ca/activities/view/' . $actid . '">';
+                    $message .= '<a href=https://learningcurator.gww.gov.bc.ca/activities/view/' . $actid . '>';
                     $message .= 'Go check it out';
                     $message .= '</a></p>';
                     $message .= $toemails;
-                    //$mailer->deliver($message);
-                    
+
+                    $message = json_encode($message);
 
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
@@ -179,7 +174,7 @@ class ReportsController extends AppController
                         CURLOPT_POSTFIELDS =>'{
                             "bcc": [],
                             "bodyType": "html",
-                            "body": "<p>Someone filed an report on activity.</p>",
+                            "body": "' . $message . '",
                             "cc": [],
                             "delayTS": 0,
                             "encoding": "utf-8",
@@ -200,12 +195,13 @@ class ReportsController extends AppController
                     $response = curl_exec($curl);
 
                     curl_close($curl);
-                    echo $chesapicredential . '<br>';
-                    echo '<pre>'; print_r($token); 
-                    echo '<br>'; print_r($opts); 
-                    echo '<br>'; print_r($response); exit;
                    
-                    echo 'Success :)';
+                    if($this->request->getData('redirectback') == 1) {
+                        $go = $this->referer();
+                    } else {
+                        $go = '/activities/view/' . $actid;
+                    }
+                    return $this->redirect($go);
 
                 } catch (Exception $e) {
                     echo 'Caught exception: ',  $e->getMessage(), "\n";
