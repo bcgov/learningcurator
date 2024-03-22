@@ -153,10 +153,13 @@ class ReportsController extends AppController
                         $toemails .= $ce . ';';
                     }
 
-                    $message = '<p>Someone filed an report on activity #' . $actid . ' <a href=\"https://learningcurator.gww.gov.bc.ca/activities/view/' . $actid . '\">Go check it out<\/a><\/p>';
-                    // $message .= $toemails;
-                    // $message = urlencode($message);
-
+                    $subject = 'Curator Activity Report for ' . $actdeets->title . ' ';
+                    $message = '<p>Someone filed an report on activity #' . $actdeets->title . ' ';
+                    $message .= '<a href=\"https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/activities/view/' . $actid . '\">Go check it out<\/a><\/p>';
+                    $message .= '<p>The learner said:<\/p>';
+                    $message .= '<blockquote>' . $this->request->getData()['issue'] . '<\/blockquote>';
+                    $message .= '<p>Curators this message would be sent to: ' . $toemails . '<\/p>';
+                    $message .= '<p>Direct link: <a href=\"' . $actdeets->hyperlink . '\">' . $actdeets->hyperlink . '<\/a><\/p>';
                     
                     $opts = array(
                         CURLOPT_URL => 'https://ches-dev.api.gov.bc.ca/api/v1/email',
@@ -176,7 +179,7 @@ class ReportsController extends AppController
                             "encoding": "utf-8",
                             "from": "noreply_curator@gov.bc.ca",
                             "priority": "normal",
-                            "subject": "Curator Activity Report",
+                            "subject": ' . $subject . ',
                             "to": ["allan.haggett@gov.bc.ca"],
                             "tag": "email_0b7565ca"
                         }',
