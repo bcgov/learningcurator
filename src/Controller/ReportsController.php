@@ -177,18 +177,19 @@ class ReportsController extends AppController
 
                     // Start building the HTML message. Probably redo this with ```
                     // or put the messages into the database...
-                    $message = '<p>Hello, Curator!</p>';
+                    $message = '<div style=\"background-color: rgb(254 249 195); padding: 1em; margin-bottom: 1em;\">Please do not reply to this email.</div>';
+                    $message .= '<p>Hello, Curator!</p>';
                     $message .= '<p>You are receiving this email because you are listed';
                     $message .= ' as the owner of a pathway on the ';
                     $message .= '<a href=\"'.$host.'\">Learning Curator<\/a>.</p>';
                     $message .= '<p>Learner <a href=\"' . $host . '/users/view/' . $reporterid . '\">' . $reportedby->username . '<\/a> filed a report on:</p>';
-                    $message .= '<p><a href=\"' . $host . '/activities/view/' . $actid . '\">';
+                    $message .= '<p><a style=\"font-weight: bold;\" href=\"' . $host . '/activities/view/' . $actid . '\">';
                     $message .= '' . $actdeets[0]->name . ' ';
                     $message .= '<\/a><\/p>';
                     $message .= '<p><a href=\"' . $host . '/users/view/' . $reporterid . '\">' . $reportedby->username . '<\/a> said:</p>';
                     $message .= '<blockquote style=\"background-color: #F1F1F1; padding: 2em;\">' . $reportedissue . '<\/blockquote>';
-                    $message .= '<p>Please investigate this report as soon as is practical and action it.';
-                    $message .= ' <a href=\"#\">Learn more about responding to reports in the Curator manual.</a></p>';
+                    $message .= '<p><strong>Please investigate this report as soon as possible.</strong></p>';
+                    $message .= '<p><a href=\"#\">Learn more about responding to reports in the Curator manual.</a></p>';
                     $message .= '<p>Direct link to activity in question:<p>';
                     $message .= '<p><a href=\"' . $actdeets[0]->hyperlink . '\">' . $actdeets[0]->hyperlink . '<\/a><\/p>';
                     $message .= '<p>This activity is on these pathways:</p>';
@@ -216,7 +217,7 @@ class ReportsController extends AppController
                             "cc": [],
                             "delayTS": 0,
                             "encoding": "utf-8",
-                            "from": "noreply_curator@gov.bc.ca",
+                            "from": "No Reply - Learning Curator <noreply_curator@gov.bc.ca>",
                             "priority": "normal",
                             "subject": "' . $subject . '",
                             "to": ["allan.haggett@gov.bc.ca"],
