@@ -106,6 +106,7 @@ class ReportsController extends AppController
 
             // Let's get the activity details, including the steps and pathways it's on
             $actid = $this->request->getData()['activity_id'];
+            $reportedby = $this->request->getData()['user_id'];
             $actdeets = $act->find()->contain(['Steps','Steps.Pathways'])->where(['id = ' => $actid])->toList();
 
             // #dumbstuff setup an array of email addresses to send to
@@ -122,6 +123,8 @@ class ReportsController extends AppController
             }
             // All this because I just cannot seem to grok this framework; 
             // don't blame the framework, I don't really understand 
+            
+            $reporter = $use->find()->where(['id = ' => $reportedby])->firstOrFail();
             
             $report = $this->Reports->patchEntity($report, $this->request->getData());
 
@@ -153,14 +156,16 @@ class ReportsController extends AppController
                     foreach($curatoremails as $ce) {
                         $toemails .= $ce . ';';
                     }
-
+                    $host = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca';
                     $subject = 'Curator Activity Report for ' . $actdeets[0]->name . ' ';
-                    $message = '<p>Someone filed an report on activity #' . $actdeets[0]->name . ' ';
-                    $message .= '<a href=\"https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/activities/view/' . $actid . '\">Go check it out<\/a><\/p>';
-                    $message .= '<p>The learner said:<\/p>';
-                    $message .= '<blockquote>' . $this->request->getData()['issue'] . '<\/blockquote>';
-                    $message .= '<p>Curators this message would be sent to: ' . $toemails . '<\/p>';
+                    $message = '<p>' . $reporter->username . ' <' . $reporter->email . '> filed an report on an activity:</p>';
+                    $message .= '<p><a href=\"' . $host . '/activities/view/' . $actid . '\">';
+                    $message .= '' . $actdeets[0]->name . ' ';
+                    $message .= '<\/a><>\/p>';
+                    $message .= '<p>' . $reporter->username . ' said:<\/p>';
+                    $message .= '<blockquote>' . addslashes($$this->request->getData()['issue']) . '<\/blockquote>';
                     $message .= '<p>Direct link: <a href=\"' . $actdeets[0]->hyperlink . '\">' . $actdeets[0]->hyperlink . '<\/a><\/p>';
+                    $message .= '<p>Curators this message would be sent to: ' . $toemails . '<\/p>';
                     
                     $opts = array(
                         CURLOPT_URL => 'https://ches-dev.api.gov.bc.ca/api/v1/email',
@@ -191,25 +196,14 @@ class ReportsController extends AppController
                         ),
                     );
                     curl_setopt_array($curl, $opts);
-
                     $response = curl_exec($curl);
-
                     curl_close($curl);
                     
-                    // echo '<pre>'; 
-                    // echo $toemails;
-                    // echo '<br><hr>Options:<br>'; 
-                    // print_r($opts); 
-                    // echo '<br><hr>Repsonse:<br>'; 
-                    // print_r($response); 
-                    // exit;
-
-                    if($this->request->getData('redirectback') == 1) {
-                        $go = $this->referer();
+                    if($this->request->getData('ajaxcall') == 1) {
+                        return 'Success.';
                     } else {
-                        $go = '/activities/view/' . $actid;
+                        return $this->redirect($this->referer());
                     }
-                    return $this->redirect($go);
 
                 } catch (Exception $e) {
                     echo 'Caught exception: ',  $e->getMessage(), "\n";
