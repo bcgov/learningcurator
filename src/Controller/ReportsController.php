@@ -196,13 +196,13 @@ class ReportsController extends AppController
 
                     curl_close($curl);
                     
-                    echo '<pre>'; 
-                    echo $toemails;
-                    echo '<br><hr>Options:<br>'; 
-                    print_r($opts); 
-                    echo '<br><hr>Repsonse:<br>'; 
-                    print_r($response); 
-                    exit;
+                    // echo '<pre>'; 
+                    // echo $toemails;
+                    // echo '<br><hr>Options:<br>'; 
+                    // print_r($opts); 
+                    // echo '<br><hr>Repsonse:<br>'; 
+                    // print_r($response); 
+                    // exit;
 
                     if($this->request->getData('redirectback') == 1) {
                         $go = $this->referer();
