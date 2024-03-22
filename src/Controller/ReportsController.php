@@ -189,7 +189,6 @@ class ReportsController extends AppController
                     $message .= '<\/a><\/p>';
                     $message .= '<p><a href=\"' . $host . '/users/view/' . $reporterid . '\">' . $reportedby->username . '<\/a> said:</p>';
                     $message .= '<blockquote style=\"background-color: #F1F1F1; padding: 2em;\">' . $reportedissue . '<\/blockquote>';
-                    $message .= '<p><strong>Please investigate this report as soon as possible.</strong></p>';
                     $message .= '<p><a href=\"' . $manuallink . '\">Learn more about responding to reports in the Curator manual.</a></p>';
                     $message .= '<p>Direct link to activity in question:<p>';
                     $message .= '<p><a href=\"' . $actdeets[0]->hyperlink . '\">' . $actdeets[0]->hyperlink . '<\/a><\/p>';
