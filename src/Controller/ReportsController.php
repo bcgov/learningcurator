@@ -160,7 +160,7 @@ class ReportsController extends AppController
                     $message .= '<p>The learner said:<\/p>';
                     $message .= '<blockquote>' . $this->request->getData()['issue'] . '<\/blockquote>';
                     $message .= '<p>Curators this message would be sent to: ' . $toemails . '<\/p>';
-                    $message .= '<p>Direct link: <a href=\"' . $actdeets[0]->hyperlink . '\">' . $actdeets->hyperlink . '<\/a><\/p>';
+                    $message .= '<p>Direct link: <a href=\"' . $actdeets[0]->hyperlink . '\">' . $actdeets[0]->hyperlink . '<\/a><\/p>';
                     
                     $opts = array(
                         CURLOPT_URL => 'https://ches-dev.api.gov.bc.ca/api/v1/email',
@@ -196,13 +196,13 @@ class ReportsController extends AppController
 
                     curl_close($curl);
                     
-                    echo '<pre>'; 
-                    echo $toemails;
-                    echo '<br><hr>Options:<br>'; 
-                    print_r($opts); 
-                    echo '<br><hr>Repsonse:<br>'; 
-                    print_r($response); 
-                    exit;
+                    // echo '<pre>'; 
+                    // echo $toemails;
+                    // echo '<br><hr>Options:<br>'; 
+                    // print_r($opts); 
+                    // echo '<br><hr>Repsonse:<br>'; 
+                    // print_r($response); 
+                    // exit;
 
                     if($this->request->getData('redirectback') == 1) {
                         $go = $this->referer();
