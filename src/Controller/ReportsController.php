@@ -174,6 +174,7 @@ class ReportsController extends AppController
                     $host = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca';
                     $subject = 'Curator Activity Report for ' . $actdeets[0]->name . '';
                     $reportedissue = addslashes($this->request->getData()['issue']);
+                    $manuallink = 'https://bcgov.sharepoint.com/:f:/r/teams/00404/Shared%20Documents/Curators/Handbook%20-%20Documentation%20for%20Curators?csf=1&web=1&e=Y7b0BO';
 
                     // Start building the HTML message. Probably redo this with ```
                     // or put the messages into the database...
@@ -189,7 +190,7 @@ class ReportsController extends AppController
                     $message .= '<p><a href=\"' . $host . '/users/view/' . $reporterid . '\">' . $reportedby->username . '<\/a> said:</p>';
                     $message .= '<blockquote style=\"background-color: #F1F1F1; padding: 2em;\">' . $reportedissue . '<\/blockquote>';
                     $message .= '<p><strong>Please investigate this report as soon as possible.</strong></p>';
-                    $message .= '<p><a href=\"#\">Learn more about responding to reports in the Curator manual.</a></p>';
+                    $message .= '<p><a href=\"' . $manuallink . '\">Learn more about responding to reports in the Curator manual.</a></p>';
                     $message .= '<p>Direct link to activity in question:<p>';
                     $message .= '<p><a href=\"' . $actdeets[0]->hyperlink . '\">' . $actdeets[0]->hyperlink . '<\/a><\/p>';
                     $message .= '<p>This activity is on these pathways:</p>';
@@ -217,7 +218,7 @@ class ReportsController extends AppController
                             "cc": [],
                             "delayTS": 0,
                             "encoding": "utf-8",
-                            "from": "No Reply - Learning Curator <noreply_curator@gov.bc.ca>",
+                            "from": "Learning Curator - No Reply <noreply_curator@gov.bc.ca>",
                             "priority": "normal",
                             "subject": "' . $subject . '",
                             "to": ["allan.haggett@gov.bc.ca"],
