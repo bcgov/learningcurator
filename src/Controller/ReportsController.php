@@ -108,10 +108,6 @@ class ReportsController extends AppController
             $actid = $this->request->getData()['activity_id'];
             $actdeets = $act->find()->contain(['Steps','Steps.Pathways'])->where(['id = ' => $actid])->toList();
 
-            // Who reported it?
-            $reporterid = $this->request->getData()['user_id'];
-            $reportedby = $use->find()->where(['id = ' => $reporterid])->firstOrFail();
-
             // #dumbstuff setup an array of email addresses to send to
             // as we loop through the pathways on which this activity is included
             // we'll add to this and then use it to send the emails
@@ -131,10 +127,20 @@ class ReportsController extends AppController
             
             $report = $this->Reports->patchEntity($report, $this->request->getData());
 
+            
             if ($this->Reports->save($report)) {
 
-                try {
+                // Who reported it?
+                $reporterid = $this->request->getData()['user_id'];
+                $reportedby = $use->find()->where(['id = ' => $reporterid])->firstOrFail();
 
+                try {
+                    // Sending an email through CHES is a two-stage process:
+                    // 1. Use the CHES_CRED environment variable (which is the 
+                    //     result of base64(client_id,client_secret) credentials
+                    // 2. Send the email via the API using the token that we got
+                    //     from the first request.
+                    // Get the token:
                     $chesapicredential = env('CHES_CRED', null);
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
@@ -154,24 +160,33 @@ class ReportsController extends AppController
                     ));
                     $tokenres = curl_exec($curl);
                     $token = json_decode($tokenres);
-                    
+
+                    // Now that we have a useful token, we can proceed to 
+                    // compose and send the email.
                     $toemails = '';
                     foreach($curatoremails as $ce) {
                         $toemails .= $ce . ';';
                     }
-                    $host = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca';
-                    $subject = 'Curator Activity Report for ' . $actdeets[0]->name . ' ';
 
-                    // Start building the HTML message
-                    $message = '<p>Hello, </p>';
-                    $message = '<p>You are receiving this email because you are listed';
-                    $message .= ' as the owner of a pathway on the Learning Curator.</p>';
-                    $message .= '<p>' . $reportedby->username . ' <' . $reportedby->email . '> filed an report on:</p>';
+                    // Set the host var based on the environment so that 
+                    // this also works in dev as well as prod 
+                    // (even though dev isn't open to public)
+                    $host = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca';
+                    $subject = 'Curator Activity Report for ' . $actdeets[0]->name . '';
+                    $reportedissue = addslashes($this->request->getData()['issue']);
+
+                    // Start building the HTML message. Probably redo this with ```
+                    // or put the messages into the database...
+                    $message = '<p>Hello, Curator!</p>';
+                    $message .= '<p>You are receiving this email because you are listed';
+                    $message .= ' as the owner of a pathway on the ';
+                    $message .= '<a href=\"'.$host.'\">Learning Curator<\/a>.</p>';
+                    $message .= '<p>Learner <a href=\"' . $host . '/users/view/' . $reporterid . '\">' . $reportedby->username . '<\/a> filed an report on:</p>';
                     $message .= '<p><a href=\"' . $host . '/activities/view/' . $actid . '\">';
                     $message .= '' . $actdeets[0]->name . ' ';
-                    $message .= '<\/a><>\/p>';
+                    $message .= '<\/a><\/p>';
                     $message .= '<p>' . $reportedby->username . ' said:<\/p>';
-                    $message .= '<blockquote>' . addslashes($this->request->getData()['issue']) . '<\/blockquote>';
+                    $message .= '<blockquote>' . $reportedissue . '<\/blockquote>';
                     $message .= '<p>Please investigate this report as soon as is practical and action it.';
                     $message .= ' <a href=\"#\">Learn more about responding to reports in the Curator manual.</a></p>';
                     $message .= '<p>Direct link to activity in question:<p>';
@@ -184,7 +199,7 @@ class ReportsController extends AppController
                     $message .= '<\/ul>';
                     $message .= '<p>Curators this message has been sent to: ' . $toemails . '<\/p>';
 
-                    
+                    // Now that the message is ready, let's send the email.
                     $opts = array(
                         CURLOPT_URL => 'https://ches-dev.api.gov.bc.ca/api/v1/email',
                         CURLOPT_RETURNTRANSFER => true,
