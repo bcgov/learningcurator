@@ -160,9 +160,6 @@ class ReportsController extends AppController
                     $message .= '<blockquote>' . $this->request->getData()['issue'] . '<\/blockquote>';
                     $message .= '<p>Curators this message would be sent to: ' . $toemails . '<\/p>';
                     $message .= '<p>Direct link: <a href=\"' . $actdeets->hyperlink . '\">' . $actdeets->hyperlink . '<\/a><\/p>';
-
-                    // $message = urlencode($message);
-
                     
                     $opts = array(
                         CURLOPT_URL => 'https://ches-dev.api.gov.bc.ca/api/v1/email',
