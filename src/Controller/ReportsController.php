@@ -106,16 +106,21 @@ class ReportsController extends AppController
 
             // Let's get the activity details, including the steps and pathways it's on
             $actid = $this->request->getData()['activity_id'];
-            $reportedby = $this->request->getData()['user_id'];
             $actdeets = $act->find()->contain(['Steps','Steps.Pathways'])->where(['id = ' => $actid])->toList();
+
+            // Who reported it?
+            $reporterid = $this->request->getData()['user_id'];
+            $reportedby = $use->find()->where(['id = ' => $reporterid])->firstOrFail();
 
             // #dumbstuff setup an array of email addresses to send to
             // as we loop through the pathways on which this activity is included
             // we'll add to this and then use it to send the emails
             $curatoremails = [];
+            $paths = [];
             foreach($actdeets as $a) {
                 foreach($a->steps as $s) {
                     foreach($s->pathways as $path) {
+                        array_push($paths,[$path->name, $path->slug]);
                         $curator = $use->find()->where(['id = ' => $path->createdby])->all()->toList();
                         array_push($curatoremails,$curator[0]['email']);
                     }
@@ -123,8 +128,6 @@ class ReportsController extends AppController
             }
             // All this because I just cannot seem to grok this framework; 
             // don't blame the framework, I don't really understand 
-            
-            $reporter = $use->find()->where(['id = ' => $reportedby])->firstOrFail();
             
             $report = $this->Reports->patchEntity($report, $this->request->getData());
 
@@ -158,14 +161,29 @@ class ReportsController extends AppController
                     }
                     $host = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca';
                     $subject = 'Curator Activity Report for ' . $actdeets[0]->name . ' ';
-                    $message = '<p>' . $reporter->username . ' <' . $reporter->email . '> filed an report on an activity:</p>';
+
+                    // Start building the HTML message
+                    $message = '<p>Hello, </p>';
+                    $message = '<p>You are receiving this email because you are listed';
+                    $message .= ' as the owner of a pathway on the Learning Curator.</p>';
+                    $message .= '<p>' . $reportedby->username . ' <' . $reportedby->email . '> filed an report on:</p>';
                     $message .= '<p><a href=\"' . $host . '/activities/view/' . $actid . '\">';
                     $message .= '' . $actdeets[0]->name . ' ';
                     $message .= '<\/a><>\/p>';
-                    $message .= '<p>' . $reporter->username . ' said:<\/p>';
-                    $message .= '<blockquote>' . addslashes($$this->request->getData()['issue']) . '<\/blockquote>';
-                    $message .= '<p>Direct link: <a href=\"' . $actdeets[0]->hyperlink . '\">' . $actdeets[0]->hyperlink . '<\/a><\/p>';
-                    $message .= '<p>Curators this message would be sent to: ' . $toemails . '<\/p>';
+                    $message .= '<p>' . $reportedby->username . ' said:<\/p>';
+                    $message .= '<blockquote>' . addslashes($this->request->getData()['issue']) . '<\/blockquote>';
+                    $message .= '<p>Please investigate this report as soon as is practical and action it.';
+                    $message .= ' <a href=\"#\">Learn more about responding to reports in the Curator manual.</a></p>';
+                    $message .= '<p>Direct link to activity in question:<p>';
+                    $message .= '<p><a href=\"' . $actdeets[0]->hyperlink . '\">' . $actdeets[0]->hyperlink . '<\/a><\/p>';
+                    $message .= '<p>This activity is on these pathways:</p>';
+                    $message .= '<ul>';
+                    foreach($paths as $p) {
+                        $message .= '<li><a href=\"' . $host . '\/p\/' . $p[1] . '\">' . $p[0] . '<\/a><\/li>';
+                    }
+                    $message .= '<\/ul>';
+                    $message .= '<p>Curators this message has been sent to: ' . $toemails . '<\/p>';
+
                     
                     $opts = array(
                         CURLOPT_URL => 'https://ches-dev.api.gov.bc.ca/api/v1/email',
