@@ -106,7 +106,8 @@ class ReportsController extends AppController
 
             // Let's get the activity details, including the steps and pathways it's on
             $actid = $this->request->getData()['activity_id'];
-            $actdeets = $act->find()->contain(['Steps','Steps.Pathways'])->where(['id = ' => $actid]);
+            $actdeets = $act->find()->contain(['Steps','Steps.Pathways'])->where(['id = ' => $actid])->toList();
+
             // #dumbstuff setup an array of email addresses to send to
             // as we loop through the pathways on which this activity is included
             // we'll add to this and then use it to send the emails
@@ -153,13 +154,13 @@ class ReportsController extends AppController
                         $toemails .= $ce . ';';
                     }
 
-                    $subject = 'Curator Activity Report for ' . $actdeets->title . ' ';
-                    $message = '<p>Someone filed an report on activity #' . $actdeets->title . ' ';
+                    $subject = 'Curator Activity Report for ' . $actdeets[0]->name . ' ';
+                    $message = '<p>Someone filed an report on activity #' . $actdeets[0]->name . ' ';
                     $message .= '<a href=\"https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca/activities/view/' . $actid . '\">Go check it out<\/a><\/p>';
                     $message .= '<p>The learner said:<\/p>';
                     $message .= '<blockquote>' . $this->request->getData()['issue'] . '<\/blockquote>';
                     $message .= '<p>Curators this message would be sent to: ' . $toemails . '<\/p>';
-                    $message .= '<p>Direct link: <a href=\"' . $actdeets->hyperlink . '\">' . $actdeets->hyperlink . '<\/a><\/p>';
+                    $message .= '<p>Direct link: <a href=\"' . $actdeets[0]->hyperlink . '\">' . $actdeets->hyperlink . '<\/a><\/p>';
                     
                     $opts = array(
                         CURLOPT_URL => 'https://ches-dev.api.gov.bc.ca/api/v1/email',
@@ -179,7 +180,7 @@ class ReportsController extends AppController
                             "encoding": "utf-8",
                             "from": "noreply_curator@gov.bc.ca",
                             "priority": "normal",
-                            "subject": ' . $subject . ',
+                            "subject": "' . $subject . '",
                             "to": ["allan.haggett@gov.bc.ca"],
                             "tag": "email_0b7565ca"
                         }',
