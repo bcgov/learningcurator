@@ -129,20 +129,6 @@ class ReportsController extends AppController
                 try {
 
                     $chesapicredential = env('CHES_CRED', null);
-                    
-                    $toemails = '';
-                    foreach($curatoremails as $ce) {
-                        $toemails .= $ce . ';';
-                    }
-
-                    $message = '<p>Someone filed an report on activity #' . $actid . ' ';
-                    $message .= '<a href=https://learningcurator.gww.gov.bc.ca/activities/view/' . $actid . '>';
-                    $message .= 'Go check it out';
-                    $message .= '</a></p>';
-                    $message .= $toemails;
-
-                    $message = urlencode($message);
-
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
                         CURLOPT_URL => 'https://dev.loginproxy.gov.bc.ca/auth/realms/comsvcauth/protocol/openid-connect/token',
@@ -159,9 +145,19 @@ class ReportsController extends AppController
                             'Authorization: Basic ' . $chesapicredential
                         ),
                     ));
-
                     $tokenres = curl_exec($curl);
                     $token = json_decode($tokenres);
+                    
+                    $toemails = '';
+                    foreach($curatoremails as $ce) {
+                        $toemails .= $ce . ';';
+                    }
+
+                    $message = '<p>Someone filed an report on activity #' . $actid . ' <a href=\"https://learningcurator.gww.gov.bc.ca/activities/view/' . $actid . '\">Go check it out<\/a><\/p>';
+                    // $message .= $toemails;
+                    // $message = urlencode($message);
+
+                    
                     $opts = array(
                         CURLOPT_URL => 'https://ches-dev.api.gov.bc.ca/api/v1/email',
                         CURLOPT_RETURNTRANSFER => true,
