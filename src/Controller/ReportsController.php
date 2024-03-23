@@ -189,7 +189,6 @@ class ReportsController extends AppController
                     $message .= '<\/a><\/p>';
                     $message .= '<p><a href=\"' . $host . '/users/view/' . $reporterid . '\">' . $reportedby->username . '<\/a> said:</p>';
                     $message .= '<blockquote style=\"background-color: #F1F1F1; padding: 2em;\">' . $reportedissue . '<\/blockquote>';
-                    $message .= '<p><a href=\"' . $manuallink . '\">Learn more about responding to reports in the Curator manual.</a></p>';
                     $message .= '<p>Direct link to activity in question:<p>';
                     $message .= '<p><a href=\"' . $actdeets[0]->hyperlink . '\">' . $actdeets[0]->hyperlink . '<\/a><\/p>';
                     $message .= '<p>This activity is on these pathways:</p>';
@@ -198,6 +197,7 @@ class ReportsController extends AppController
                         $message .= '<li><a href=\"' . $host . '\/p\/' . $p[1] . '\">' . $p[0] . '<\/a><\/li>';
                     }
                     $message .= '<\/ul>';
+                    $message .= '<p><a href=\"' . $manuallink . '\">Learn more about responding to reports in the Curator manual.</a></p>';
                     $message .= '<p>Curators this message has been sent to: ' . $toemails . '<\/p>';
 
                     // Now that the message is ready, let's send the email.
