@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+Use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
 
 /**
@@ -75,6 +76,8 @@ class TopicsController extends AppController
      */
     public function stats()
     {
+        $spp = TableRegistry::getTableLocator()->get('StatsPerpath');
+
         $topics = $this->Topics->find()->contain(['Users','Pathways.Users','Pathways.Steps.Activities.Users'])->where(['featured = ' => 1]);
         $newtopics = [];
         foreach($topics as $t) {
@@ -127,9 +130,32 @@ class TopicsController extends AppController
                 $topfollows = $topfollows + $pathfollowcount;
                 $topsteps = $topsteps + $pathstepcount;
                 $topacts = $topacts + $pathactcount;
+
+
+                // `pathways_id` int(11) NOT NULL,
+                // `steps` int(11) NOT NULL,
+                // `activities` int(11) NOT NULL,
+                // `follows` int(11) NOT NULL,
+                // `launches` int(11) NOT NULL,
+                $pathstat = $spp->newEmptyEntity();
+                $pathdeets = [
+                    'pathways_id' => $pathway->id,
+                    'steps' => $pathstepcount,
+                    'activities' => $pathactcount,
+                    'follows' => $pathfollowcount,
+                    'launches' => $count
+                ];
+                
+                $pathstat = $spp->patchEntity($pathstat,$pathdeets);
+                if ($spp->save($pathstat)) {
+                    $saved = 1;
+                }
+
+
             } // end pathways loop
             
             $newtopic = [
+                            'saved' => $saved, 
                             'topicid' => $topid, 
                             'topicname' => $topname, 
                             'topicslug' => $topslug, 

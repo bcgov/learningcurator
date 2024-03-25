@@ -76,6 +76,7 @@ class PathwaysTable extends Table
             'targetForeignKey' => 'user_id',
             'joinTable' => 'pathways_users',
         ]);
+        $this->hasMany('StatsPerpath',['foreignKey' => 'pathways_id',]);
 
         $this->addBehavior('Search.Search');
 

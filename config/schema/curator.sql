@@ -564,6 +564,28 @@ CREATE TABLE `social_accounts` (
 
 
 --
+-- Table structure for table `stats_perpath`
+--
+
+DROP TABLE IF EXISTS `stats_perpath`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stats_perpath` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pathways_id` int(11) NOT NULL,
+  `steps` int(11) NOT NULL,
+  `activities` int(11) NOT NULL,
+  `follows` int(11) NOT NULL,
+  `launches` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `stat_pathwayid_ibfk_1` (`pathways_id`),
+  CONSTRAINT `stat_pathwaysid_ibfk_1` FOREIGN KEY (`pathways_id`) REFERENCES `pathways` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+--
 -- Table structure for table `statuses`
 --
 
