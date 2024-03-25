@@ -210,6 +210,7 @@ class PathwaysController extends AppController
                                 'Steps' => ['sort' => ['PathwaysSteps.sortorder' => 'asc']],
                                 'Steps.Statuses', 
                                 'Steps.Activities',
+                                'StatsPerpath',
                                 'Users'])->firstOrFail();
         
         $user = $this->request->getAttribute('authentication')->getIdentity();
