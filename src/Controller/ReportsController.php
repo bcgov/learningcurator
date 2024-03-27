@@ -161,6 +161,8 @@ class ReportsController extends AppController
                     $tokenres = curl_exec($curl);
                     $token = json_decode($tokenres);
 
+                    if(empty($token)) echo 'Could not get access token to send email.'; exit;
+
                     // Now that we have a useful token, we can proceed to 
                     // compose and send the email.
                     $toemails = '';
@@ -168,13 +170,30 @@ class ReportsController extends AppController
                         $toemails .= $ce . ';';
                     }
 
-                    // Set the host var based on the environment so that 
+                    // #TODO Set the host var based on the environment so that 
                     // this also works in dev as well as prod 
                     // (even though dev isn't open to public)
-                    $host = 'https://learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca';
+                    $host = 'https://learningcurator.gww.gov.bc.ca';
                     $subject = 'Curator Activity Report for ' . $actdeets[0]->name . '';
                     $reportedissue = addslashes($this->request->getData()['issue']);
                     $manuallink = 'https://bcgov.sharepoint.com/:f:/r/teams/00404/Shared%20Documents/Curators/Handbook%20-%20Documentation%20for%20Curators?csf=1&web=1&e=Y7b0BO';
+
+
+
+
+
+
+
+
+                    //RECORD WHEN A USER COMPLETES A PATH!!
+
+
+
+
+
+
+
+
 
                     // Start building the HTML message. Probably redo this with ```
                     // or put the messages into the database...
