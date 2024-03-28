@@ -189,11 +189,13 @@ class ReportsController extends AppController
                     $message .= '<p>You are receiving this email because you are listed';
                     $message .= ' as the owner of a pathway on the ';
                     $message .= '<a href=\"'.$host.'\">Learning Curator<\/a>.</p>';
-                    $message .= '<p>Learner <a href=\"' . $host . '/users/view/' . $reporterid . '\">' . $reportedby->username . '<\/a> filed a report on:</p>';
+                    // $message .= '<p>Learner <a href=\"' . $host . '/users/view/' . $reporterid . '\">' . $reportedby->username . '<\/a> filed a report on:</p>';
+                    $message .= '<p>A learner filed a report on:</p>';
                     $message .= '<p><a style=\"font-weight: bold;\" href=\"' . $host . '/activities/view/' . $actid . '\">';
                     $message .= '' . $actdeets[0]->name . ' ';
                     $message .= '<\/a><\/p>';
-                    $message .= '<p><a href=\"' . $host . '/users/view/' . $reporterid . '\">' . $reportedby->username . '<\/a> said:</p>';
+                    // $message .= '<p><a href=\"' . $host . '/users/view/' . $reporterid . '\">' . $reportedby->username . '<\/a> said:</p>';
+                    $message .= '<p>The learner said:</p>';
                     $message .= '<blockquote style=\"background-color: #F1F1F1; padding: 2em;\">' . $reportedissue . '<\/blockquote>';
                     $message .= '<p>Direct link to activity in question:<p>';
                     $message .= '<p><a href=\"' . $actdeets[0]->hyperlink . '\">' . $actdeets[0]->hyperlink . '<\/a><\/p>';
