@@ -149,7 +149,7 @@ class ReportsController extends AppController
                         CURLOPT_ENCODING => '',
                         CURLOPT_MAXREDIRS => 10,
                         CURLOPT_TIMEOUT => 0,
-                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_FOLLOWLOCATION => true ,
                         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                         CURLOPT_CUSTOMREQUEST => 'POST',
                         CURLOPT_POSTFIELDS => 'grant_type=client_credentials',
@@ -161,7 +161,7 @@ class ReportsController extends AppController
                     $tokenres = curl_exec($curl);
                     $token = json_decode($tokenres);
 
-                    if(empty($token->error)) {
+                    if(!empty($token->error)) {
                         echo 'Could not get access token to send email. '; 
                         echo $token->error_description;
                         exit;
