@@ -161,7 +161,7 @@ class ReportsController extends AppController
                     $tokenres = curl_exec($curl);
                     $token = json_decode($tokenres);
 
-                    if($token->error) {
+                    if(empty($token->error)) {
                         echo 'Could not get access token to send email. '; 
                         echo $token->error_description;
                         exit;
