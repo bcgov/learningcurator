@@ -422,31 +422,94 @@ class PathwaysController extends AppController
 
         $totalacts = 0;
         $requiredacts = 0;
-        $suppacts = 0;
+        
+        $bonusacts = 0;
         $curators = [];
         $activityids = [];
-        $stepids = [];
+        
+        $newsource = [
+            'pathstatus' => $pathway->status_id, 
+            'topicslug' => $pathway->topic->slug, 
+            'topicname' => $pathway->topic->name, 
+            'pathid' => $pathway->id, 
+            'pathname' => $pathway->name, 
+            'pathslug' => $pathway->slug, 
+            'version' => $pathway->version, 
+            'pathpublishedby' => $pathway->publishedby, 
+            'pathobjective' => $pathway->objective, 
+            'pathwarning' => $pathway->content_warning, 
+            'pathacknowledge' => $pathway->acknowledgments, 
+            'total_count' => 0, 
+            'required_count' => 0, 
+            'bonus_count' => 0, 
+            'steps' => []
+        ];
         if (!empty($pathway->steps)):
             foreach ($pathway->steps as $steps):
-                $stepactids = [];
+                $requiredactivities = [];
+                $bonusactivities = [];
+                $step_requiredacts = 0;
+                $step_bonusacts = 0;
+                $actids = '';
                 foreach ($steps->activities as $activity):
                     if($activity->status_id == 2) {
                         array_push($curators,$activity->createdby_id);
                         $totalacts++;
                         if($activity->_joinData->required == 1) {
-                            array_push($activityids,$activity->id);
-                            array_push($stepactids,$activity->id);
+                            $step_requiredacts++;
                             $requiredacts++;
+                            $actids = $activity->id . ',' . $actids;
+                            $ad = [
+                                'id' => $activity->id,
+                                'name' => $activity->name,  
+                                'slug' => $activity->slug,  
+                                'description' => $activity->description,
+                                'hyperlink' => $activity->hyperlink,
+                                'curator_context' => $activity->_joinData->stepcontext,
+                                'activity_type' => $activity->activity_type->name,
+                                'activity_type_icon' => $activity->activity_type->image_path
+                            ];
+                            array_push($requiredactivities,$ad);
+                            array_push($activityids,$activity->id);
                         } else {
-                            $suppacts++;
+                            $bonusacts++;
+                            $step_bonusacts++;
+                            $ad = [
+                                'id' => $activity->id,
+                                'name' => $activity->name,  
+                                'slug' => $activity->slug,  
+                                'description' => $activity->description,
+                                'hyperlink' => $activity->hyperlink,
+                                'curator_context' => $activity->_joinData->stepcontext,
+                                'activity_type' => $activity->activity_type->name,
+                                'activity_type_icon' => $activity->activity_type->image_path
+                            ];
+                            array_push($bonusactivities,$ad);
                         }
                     }
                 endforeach; // activities
-                $ses = ['stepid' => $steps->id, 'reqactids' => $stepactids, 'bonusacts' => $suppacts];
-                array_push($stepids,$ses);
+
+                $ses = [
+                    'stepid' => $steps->id, 
+                    'stepname' => $steps->name,
+                    'stepslug' => $steps->slug,
+                    'reflect' => $steps->reflect,
+                    'stepdescription' => $steps->description,
+                    'activities_required_count' => $step_requiredacts,
+                    'activities_bonus_count' => $step_bonusacts,
+                    'actidlist' => $actids, 
+                    'activities_required' => $requiredactivities, 
+                    'activities_bonus' => $bonusactivities,
+                    'stepactjoinid' => $steps->_joinData->id
+                ];
+                array_push($newsource['steps'],$ses);
+
             endforeach; // steps
-            
         endif;
+        $newsource['total_count'] = $totalacts;
+        $newsource['required_count'] = $requiredacts;
+        $newsource['bonus_count'] = $bonusacts;
+
         $stepcount = count($pathway->steps);
 
         $attribution = TableRegistry::getTableLocator()->get('Users');
@@ -468,8 +531,7 @@ class PathwaysController extends AppController
             $publishedby = '';
         }
 
-        $this->set(compact('pathway', 
-                            'followcount', 
+        $this->set(compact('followcount', 
                             'contributors', 
                             'createdby', 
                             'publishedby', 
@@ -477,10 +539,9 @@ class PathwaysController extends AppController
                             'totalacts', 
                             'stepcount', 
                             'requiredacts', 
-                            'suppacts', 
                             'followid',
-                            'activityids',
-                            'stepids'));
+                            'newsource',
+                            'activityids'));
 
     }
 
