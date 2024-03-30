@@ -12,7 +12,6 @@ if ($this->Identity->isLoggedIn()) {
     $role = $this->Identity->get('role');
     $uid = $this->Identity->get('id');
 }
-$actcount = 0;
 $environment = $_SERVER['SERVER_NAME'];
 
 $this->assign('title', h($newsource['pathname']));
@@ -617,15 +616,15 @@ function getLearnerData () {
         })
         .then((res) => res.json())
         .then((json) => {
-            // Pathway follow statuses
+            // Pathway follow statuses.
             let followed = json['followed'];
-            // Activity launch statuses
+            // Activity launch statuses.
             let launched = json['launched'];
             // Update UI with launch statuses.
             updateLaunches(launched);
-            // Now calculate pathway progress and update the UI
+            // Now update overall pathway progress.
             updateProgress(launched);
-            // Update per-step progress bar
+            // Update per-step progress.
             updateStepStats(launched);
         })
         .catch((err) => console.error('error:', err));
