@@ -499,7 +499,8 @@ class PathwaysController extends AppController
                     'activities_bonus_count' => $step_bonusacts,
                     'actidlist' => $actids, 
                     'activities_required' => $requiredactivities, 
-                    'activities_bonus' => $bonusactivities
+                    'activities_bonus' => $bonusactivities,
+                    'stepactjoinid' => $steps->_joinData->id
                 ];
                 array_push($newsource['steps'],$ses);
 

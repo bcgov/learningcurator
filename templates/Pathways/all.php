@@ -127,7 +127,7 @@ $this->assign('title', h($newsource['pathname']));
     </div>
     <?= $this->Form->control('steporder[]', ['type' => 'hidden', 'class' => 'stepcount step' . $s['stepid'], 'value' => $count]) ?>
     <div><?= $s['stepname'] ?></div>
-    <?= $this->Form->control('steps[]', ['type' => 'hidden', 'value' => $s['stepid']]) ?>
+    <?= $this->Form->control('steps[]', ['type' => 'hidden', 'value' => $s['stepactjoinid']]) ?>
     </div>
     <?php endforeach ?>
     </div>
