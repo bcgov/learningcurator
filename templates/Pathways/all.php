@@ -358,22 +358,16 @@ echo $this->Form->hidden('pathways.0.id', ['value' => $newsource['pathid']]);
                         <summary class="font-bold hover:cursor-pointer">
                             <span class="inline-block px-3 py-0 bg-bluegreen text-white text-sm rounded-lg">
                                 <?= $steps['activities_required_count'] ?>
-                            </span> Required 
+                            </span> Activities 
                             <!-- <span class="inline-block px-3 py-0 bg-bluegreen text-white text-sm rounded-lg">
                                 <?= $steps['activities_bonus_count'] ?>
                             </span> Bonus -->
                             <span class="inline-block px-3 py-0 bg-darkblue text-white text-sm rounded-lg"><span class="stepprogress"></span></span> Launched
                         </summary>
-                        <div class="mb-3 max-w-prose bg-slate-50 rounded-lg">
-                            <h3 class="mt-4 p-2 pb-0 text-xl font-bold">
-                                <?= $steps['activities_required_count'] ?> 
-                                Required Activities
-                            </h3>
-                            <div class="p-2 italic fs-6">Launch these activities and fill in your progress bar.</div>
-                        </div>
+                       
 
                         <?php foreach($steps['activities_required'] as $a): ?>
-                        <details id="activity-<?= $a['id'] ?>" class="activity mb-3 border-b-2 border-white open:bg-slate-50 rounded-lg">
+                        <details id="activity-<?= $a['id'] ?>" class="activity my-3 border-b-2 border-white open:bg-slate-50 rounded-lg">
                             <summary class="font-semibold fs-4 py-2 text-lg hover:cursor-pointer hover:text-blue-900 rounded-lg">
                                 <!-- <span id="launched-<?= $a['id'] ?>" class="hidden launched inline-block p-0.5 px-2 bg-emerald-700 text-white text-xs text-center uppercase rounded-lg hover:no-underline hover:bg-sky-700/80"></span>  -->
                                 <i id="launched-<?= $a['id'] ?>" class="launched bi bi-circle ml-2" style="color:rgb(35 64 117 / var(--tw-bg-opacity))" aria-label="Not yet launched" title="Not yet launched"></i>
@@ -575,6 +569,8 @@ let pathacts = [<?php foreach($activityids as $a) { echo $a . ','; } ?>];
 let activities = document.getElementsByClassName('activity');
 let steps = document.getElementsByClassName('steps');
 
+let thispathwayid = <?= $newsource['pathid'] ?>;
+
 // Setup the statuses on the initial page load.
 getLearnerData ();
 
@@ -615,12 +611,20 @@ function getLearnerData () {
         .then((json) => {
             // Pathway follow statuses.
             let followed = json['followed'];
+            let pathdeets = [];
+            // console.log(followed);
+            followed.forEach(function(e){
+                if(e[0] == thispathwayid){
+                    pathdeets = e;
+                }
+            });
+            // console.log(pathdeets[2]);
             // Activity launch statuses.
             let launched = json['launched'];
             // Update UI with launch statuses.
             updateLaunches(launched);
             // Now update overall pathway progress.
-            updateProgress(launched);
+            updateProgress(launched,pathdeets);
             // Update per-step progress.
             updateStepStats(launched);
         })
@@ -630,26 +634,65 @@ function getLearnerData () {
 
 
 // Update the progress bar UI with the info returned by getLearnerData()
-function updateProgress (launched) {
+function updateProgress (launched,pathdeets) {
+    // pathdeets[0] pathwayid
+    // pathdeets[1] date_start
+    // pathdeets[2] date_end
+    // pathdeets[3] pathfollowid
     // Calculate pathway progress and update the UI.
     let intersection = pathacts.filter(x => launched.includes(x));
     let progress = (intersection.length / pathacts.length) * 100;
     let togo = pathacts.length - intersection.length;
-    let perc = Math.floor(progress) + '%';
+    let perc = Math.floor(progress);
     let pbar = document.getElementById('progressbar');
     let zero = document.getElementById('zero');
-    pbar.setAttribute('style','width:' + perc);
-    if(intersection.length > 3) {
+    // console.log(pathdeets[2]);
+    // If there is no existing completion date and the new calculation
+    // comes up 100 percent, we need to post to the completion endpoint
+    // and update it with now()
+    if(pathdeets[2]) {
+        //
+        // There's a completion date! 
+        pbar.innerHTML = '<span class="text-xs">Pathway completed!</span>';
         zero.innerHTML = '';
         pbar.classList.remove('hidden');
-        pbar.innerHTML = '<span class="text-xs">' + intersection.length + ' of ' + pathacts.length + '</span>';
-    } else {
-        if(intersection.length > 0) {
-            pbar.classList.remove('hidden');
-        }
-        zero.innerHTML = '<span class="text-xs">' + intersection.length + ' of ' + pathacts.length + '</span>';
+        pbar.setAttribute('style','width:100%');
+        //
+    } else if(!pathdeets[2] && perc === 100) {
+        let pathfollowid = pathdeets[3];
+        //
+        // completePathway(pathfollowid);
+        // fetch('/users/api', {
+        //         method: 'POST',
+        //         body: JSON.stringify({})
+        //     })
+        //     .then((res) => res.json())
+        //     .then((json) => {
+        //
+        //     })
+        //     .catch((err) => console.error('error:', err));
+        //
+        pbar.innerHTML = '<span class="text-xs">Pathway completed!</span>';
+        zero.innerHTML = '';
+        pbar.classList.remove('hidden');
+        pbar.setAttribute('style','width:100%');
 
+    } else {
+
+        pbar.setAttribute('style','width:' + perc + '%');
+        if(intersection.length > 3) {
+            zero.innerHTML = '';
+            pbar.classList.remove('hidden');
+            pbar.innerHTML = '<span class="text-xs">' + intersection.length + ' of ' + pathacts.length + '</span>';
+        } else {
+            if(intersection.length > 0) {
+                pbar.classList.remove('hidden');
+            }
+            zero.innerHTML = '<span class="text-xs">' + intersection.length + ' of ' + pathacts.length + '</span>';
+        }
+        
     }
+
 }
 
 // Update the status of individual activities with the info returned 
