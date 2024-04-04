@@ -163,7 +163,8 @@ class ReportsController extends AppController
 
                     if(!empty($token->error)) {
                         echo 'Could not get access token to send email. '; 
-                        echo $token->error_description;
+                        echo $token->error_description . '<br>';
+                        print_r($tokenres);
                         exit;
                     }
 
