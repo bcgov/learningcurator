@@ -141,10 +141,10 @@ class ReportsController extends AppController
                     // 2. Send the email via the API using the token that we got
                     //     from the first request.
                     // Get the token:
-                    $chesapicredential = env('CHES_CRED', null);
+                    $chesapicredential = env('CHES_CRED_PROD', null);
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
-                        CURLOPT_URL => 'https://dev.loginproxy.gov.bc.ca/auth/realms/comsvcauth/protocol/openid-connect/token',
+                        CURLOPT_URL => 'https://loginproxy.gov.bc.ca/auth/realms/comsvcauth/protocol/openid-connect/token',
                         CURLOPT_RETURNTRANSFER => true,
                         CURLOPT_ENCODING => '',
                         CURLOPT_MAXREDIRS => 10,
@@ -189,11 +189,13 @@ class ReportsController extends AppController
                     $message .= '<p>You are receiving this email because you are listed';
                     $message .= ' as the owner of a pathway on the ';
                     $message .= '<a href=\"'.$host.'\">Learning Curator<\/a>.</p>';
-                    $message .= '<p>Learner <a href=\"' . $host . '/users/view/' . $reporterid . '\">' . $reportedby->username . '<\/a> filed a report on:</p>';
+                    // $message .= '<p>Learner <a href=\"' . $host . '/users/view/' . $reporterid . '\">' . $reportedby->username . '<\/a> filed a report on:</p>';
+                    $message .= '<p>A learner filed a report on:</p>';
                     $message .= '<p><a style=\"font-weight: bold;\" href=\"' . $host . '/activities/view/' . $actid . '\">';
                     $message .= '' . $actdeets[0]->name . ' ';
                     $message .= '<\/a><\/p>';
-                    $message .= '<p><a href=\"' . $host . '/users/view/' . $reporterid . '\">' . $reportedby->username . '<\/a> said:</p>';
+                    // $message .= '<p><a href=\"' . $host . '/users/view/' . $reporterid . '\">' . $reportedby->username . '<\/a> said:</p>';
+                    $message .= '<p>The learner said:</p>';
                     $message .= '<blockquote style=\"background-color: #F1F1F1; padding: 2em;\">' . $reportedissue . '<\/blockquote>';
                     $message .= '<p>Direct link to activity in question:<p>';
                     $message .= '<p><a href=\"' . $actdeets[0]->hyperlink . '\">' . $actdeets[0]->hyperlink . '<\/a><\/p>';
