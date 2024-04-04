@@ -141,10 +141,10 @@ class ReportsController extends AppController
                     // 2. Send the email via the API using the token that we got
                     //     from the first request.
                     // Get the token:
-                    $chesapicredential = env('CHES_CRED', null);
+                    $chesapicredential = env('CHES_CRED_PROD', null);
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
-                        CURLOPT_URL => 'https://dev.loginproxy.gov.bc.ca/auth/realms/comsvcauth/protocol/openid-connect/token',
+                        CURLOPT_URL => 'https://loginproxy.gov.bc.ca/auth/realms/comsvcauth/protocol/openid-connect/token',
                         CURLOPT_RETURNTRANSFER => true,
                         CURLOPT_ENCODING => '',
                         CURLOPT_MAXREDIRS => 10,
