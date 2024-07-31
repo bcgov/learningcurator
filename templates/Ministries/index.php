@@ -25,20 +25,28 @@ if ($this->Identity->isLoggedIn()) {
 </header>
 <div class="p-6">
 <h2 class="text-2xl mb-3">Ministries Report</h2>
+<div class="px-6 py-3 bg-yellow-200 rounded-lg hover:bg-yellow-100">
+    <strong>Please note:</strong> the data represented on this page is intended for internal 
+    Curator use only and should only be used for maintenance purposes. 
+    The data is not reflective of actual usage and should not be used in any 
+    data analytics or reporting capacity.
+</div>
 
 
 <ul class="flex flex-wrap text-sm font-medium text-center">
-    <li class="me-2">
+    <li class="me-2 list-none">
         <a href="/activities/stats" class="inline-block p-4">
             Activities
         </a>
     </li>
-    <li class="me-2">
+    <?php if ($role == 'superuser') : ?>
+    <li class="me-2 list-none">
         <a href="/ministries" class="inline-block p-4">
             Ministries
         </a>
     </li>
-    <li class="me-2">
+    <?php endif ?>
+    <li class="me-2 list-none">
         <a href="/stats" aria-current="page" class="inline-block p-4 ">
             Topics
         </a>
