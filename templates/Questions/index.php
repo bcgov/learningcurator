@@ -82,6 +82,13 @@ if ($this->Identity->isLoggedIn()) {
             <?php endif ?>
         <?php endforeach; ?>
         <h4 class="text-xl font-semibold mt-5">Still need help?</h4>
-        <p>If you have unanswered questions about the Learning Curator, we're here to help. Please submit an <a href="https://sfs7.gov.bc.ca/affwebservices/public/saml2sso?SPID=urn:ca:bc:gov:customerportal:prod" class="text-sky-700 hover:underline hover:cursor-pointer" target="_blank">AskMyHR ticket</a> using the "Learning Centre" service category.</p>
+        <p>If you have unanswered questions about the Learning Curator, we're here to help. 
+            Please submit an 
+                <a href="https://sfs7.gov.bc.ca/affwebservices/public/saml2sso?SPID=urn:ca:bc:gov:customerportal:prod" 
+                    class="text-sky-700 hover:underline hover:cursor-pointer" 
+                    target="_blank">
+                        AskMyHR ticket
+                </a> 
+            using the "Corporate Learning" service category.</p>
     </div>
 </div>

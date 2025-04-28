@@ -52,6 +52,16 @@ $routes->scope('/', function (RouteBuilder $builder) {
      */
     $builder->connect('/', ['controller' => 'PathwaysUsers', 'action' => 'pathways']);
 
+    // Redirect old page to new location (301)
+    $builder->connect('/p/anti-racism-in-the-british-columbia-public-service', [], [
+        'redirect' => 'https://learningcentre.gww.gov.bc.ca/learninghub/course/anti-racism-in-the-bc-public-service/',
+        'status' => 301
+    ]);
+    $builder->connect('/topic/equity-diversity-and-inclusion/106/anti-racism-in-the-british-columbia-public-service', [], [
+        'redirect' => 'https://learningcentre.gww.gov.bc.ca/learninghub/course/anti-racism-in-the-bc-public-service/',
+        'status' => 301
+    ]);
+
     /*
      * ...and connect the rest of 'Pages' controller's URLs.
      */
