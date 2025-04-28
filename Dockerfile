@@ -1,5 +1,4 @@
-FROM php:7.4-apache
-# TODO switch to buster once https://github.com/docker-library/php/issues/865 is resolved in a clean way (either in the PHP image or in PHP itself)
+FROM docker.io/library/php:7.4-apache
 
 RUN rm -vfr /var/lib/apt/lists/*
 
