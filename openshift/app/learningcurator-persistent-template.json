@@ -151,7 +151,6 @@
                 {
                   "image": "${IMAGE_REGISTRY}/${BUILD_NAMESPACE}/${IMAGE_STREAM_TAG}",
                   "name": "${APP_NAME}",
-                  "restartPolicy": "Always",
                   "imagePullPolicy": "Always",
                   "ports": [
                     {
