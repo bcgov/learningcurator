@@ -20,7 +20,6 @@ jobs:
           echo Git Base Ref: ${{ github.base_ref }}
           echo Git Build ID: ${{ github.event.number }}
           echo Git Pull Request Ref: ${{ github.event.pull_request.head.sha }}
-          echo OC CLI Version: $(oc version)
 
   # Build the static sunset page
   build:
