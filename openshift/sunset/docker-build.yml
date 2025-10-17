@@ -1,0 +1,52 @@
+# Simplified template for building a static nginx container
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: ${NAME}
+objects:
+  - kind: ImageStream
+    apiVersion: v1
+    metadata:
+      name: ${NAME}
+    spec:
+      lookupPolicy:
+        local: false
+  - apiVersion: v1
+    kind: BuildConfig
+    metadata:
+      name: ${NAME}
+    spec:
+      resources:
+        limits:
+          cpu: 500m
+          memory: 512Mi
+        requests:
+          cpu: 250m
+          memory: 256Mi
+      output:
+        to:
+          kind: ImageStreamTag
+          name: "${NAME}:${TAG}"
+      runPolicy: SerialLatestOnly
+      source:
+        contextDir: "${SOURCE_CONTEXT_DIR}"
+        git:
+          uri: "${SOURCE_REPOSITORY_URL}"
+          ref: "${SOURCE_REPOSITORY_REF}"
+        type: Git
+      strategy:
+        dockerStrategy: {}
+        type: Docker
+parameters:
+  - name: NAME
+    required: true
+  - name: SOURCE_CONTEXT_DIR
+    required: true
+    value: sunset
+  - name: SOURCE_REPOSITORY_URL
+    required: true
+    value: https://github.com/bcgov/learningcurator.git
+  - name: SOURCE_REPOSITORY_REF
+    required: true
+  - name: TAG
+    value: "latest"
