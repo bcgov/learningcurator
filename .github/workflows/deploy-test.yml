@@ -42,8 +42,10 @@ jobs:
       - name: Install oc
         uses: redhat-actions/oc-installer@v1
         with:
-          oc_version: '4.12'
-      # Log in to OpenShift
+          oc_version: 'latest'
+      # Log in to OpenShift.
+      # Note: The secrets needed to log in are NOT available if the PR comes from a FORK.
+      # PR's must originate from a branch off the original repo or else all openshift `oc` commands will fail.
       - name: Log in to OpenShift
         run: |
           oc login --token=${{ secrets.SA_TOKEN }} --server=https://api.silver.devops.gov.bc.ca:6443
@@ -79,9 +81,11 @@ jobs:
       - name: Install oc
         uses: redhat-actions/oc-installer@v1
         with:
-          oc_version: '4.12'
+          oc_version: 'latest'
 
-      # Log in to OpenShift
+       # Log in to OpenShift.
+       # Note: The secrets needed to log in are NOT available if the PR comes from a FORK.
+       # PR's must originate from a branch off the original repo or else all openshift `oc` commands will fail.
       - name: Log in to OpenShift
         run: |
           oc login --token=${{ secrets.SA_TOKEN }} --server=https://api.silver.devops.gov.bc.ca:6443
