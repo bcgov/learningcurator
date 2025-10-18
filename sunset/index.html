@@ -1,88 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="auto">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learning Curator - We've Moved</title>
-    <style>
-        :root {
-            --primary-color: #003366;
-            --text-color: #313132;
-            --background-light: #f8f9fa;
-            --border-color: #dee2e6;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --primary-color: #4a90e2;
-                --text-color: #e9ecef;
-                --background-light: #212529;
-                --border-color: #495057;
-            }
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--background-light);
-            color: var(--text-color);
-            line-height: 1.6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 1rem;
-        }
-
-        .container {
-            max-width: 600px;
-            background: var(--background-light);
-            padding: 2rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            text-align: center;
-        }
-
-        h1 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-        }
-
-        p {
-            margin-bottom: 1rem;
-            font-size: 1.125rem;
-        }
-
-        .message {
-            margin-top: 2rem;
-            padding: 1rem;
-            background: var(--border-color);
-            border-radius: 4px;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-
-            p {
-                font-size: 1rem;
-            }
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
 </head>
-<body>
+<body class="d-flex align-items-center min-vh-100 bg-body-secondary">
     <main class="container" role="main">
-        <h1>Learning Curator</h1>
-        <p>We're sorry, but this service has moved.</p>
-        <div class="message">
-            <p>Thank you for your interest in Learning Curator. This application is no longer available at this location.</p>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="bg-body border rounded p-4 p-md-5">
+                    <div class="mb-5">
+                        <h1 class="text-primary mb-4">Learning Curator</h1>
+                        <p class="fs-5">We're sorry, but this service has moved.</p>
+                        <div class="alert alert-secondary mt-4" role="alert">
+                            <p class="mb-0">Thank you for your interest in Learning Curator. This application is no longer available at this location. Please find the pathways below.</p>
+                        </div>
+                    </div>
+
+                    <div id="pathway-list" class="mt-5">
+                        <div class="mb-4">
+                            <label for="search" class="form-label fw-semibold">Search pathways:</label>
+                            <input type="text" id="search" class="search form-control form-control-lg" placeholder="Search by pathway name or topic...">
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"><button class="sort btn btn-link text-decoration-none p-0" data-sort="pathway">Pathway Name ↕</button></th>
+                                        <th scope="col"><button class="sort btn btn-link text-decoration-none p-0" data-sort="topic">Topic ↕</button></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="list">
+                                    <tr>
+                                        <td class="pathway fw-semibold"><a href="#" class="text-primary" target="_blank" rel="noopener noreferrer">Respectful Workplace</a></td>
+                                        <td class="topic">Respectful Workplace</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pathway fw-semibold"><a href="#" class="text-primary" target="_blank" rel="noopener noreferrer">Remove Barriers to Shift Culture</a></td>
+                                        <td class="topic">Equity, Diversity and Inclusion</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pathway fw-semibold"><a href="#" class="text-primary" target="_blank" rel="noopener noreferrer">Understand Barriers to Improve Access</a></td>
+                                        <td class="topic">Equity, Diversity and Inclusion</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pathway fw-semibold"><a href="#" class="text-primary" target="_blank" rel="noopener noreferrer">Foster Inclusion in your Workplace</a></td>
+                                        <td class="topic">Equity, Diversity and Inclusion</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pathway fw-semibold"><a href="#" class="text-primary" target="_blank" rel="noopener noreferrer">What is Workplace Inclusion?</a></td>
+                                        <td class="topic">Equity, Diversity and Inclusion</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pathway fw-semibold"><a href="#" class="text-primary" target="_blank" rel="noopener noreferrer">Hiring for Diversity</a></td>
+                                        <td class="topic">Equity, Diversity and Inclusion</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pathway fw-semibold"><a href="#" class="text-primary" target="_blank" rel="noopener noreferrer">Basics of Diversity in the BCPS</a></td>
+                                        <td class="topic">Equity, Diversity and Inclusion</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pathway fw-semibold"><a href="#" class="text-primary" target="_blank" rel="noopener noreferrer">Pathway to Change Leadership</a></td>
+                                        <td class="topic">House of Indigenous Learning</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pathway fw-semibold"><a href="#" class="text-primary" target="_blank" rel="noopener noreferrer">Introduction to the BC Declaration on the Rights of Indigenous Peoples Act</a></td>
+                                        <td class="topic">House of Indigenous Learning</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pathway fw-semibold"><a href="#" class="text-primary" target="_blank" rel="noopener noreferrer">Pathway to Sustained Learning and Development</a></td>
+                                        <td class="topic">House of Indigenous Learning</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pathway fw-semibold"><a href="#" class="text-primary" target="_blank" rel="noopener noreferrer">Pathway to Self Discovery and Awareness</a></td>
+                                        <td class="topic">House of Indigenous Learning</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pathway fw-semibold"><a href="#" class="text-primary" target="_blank" rel="noopener noreferrer">Cultural Agility - Building Trusting Relationships and Cultural Safety</a></td>
+                                        <td class="topic">House of Indigenous Learning</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <script>
+                        var options = {
+                            valueNames: ['pathway', 'topic']
+                        };
+                        var pathwayList = new List('pathway-list', options);
+                    </script>
+                </div>
+            </div>
         </div>
     </main>
 </body>
