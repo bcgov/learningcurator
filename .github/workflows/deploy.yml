@@ -135,6 +135,11 @@ jobs:
           test -n "${BUILD_NAMESPACE}"
           test -n "${BRANCH}"
           echo "Current namespace is ${NAMESPACE}"
+          echo "Archiving legacy learningcurator deployment (if present)..."
+          oc -n ${NAMESPACE} scale dc/learningcurator --replicas=0 || true
+          oc -n ${NAMESPACE} delete route learningcurator --ignore-not-found
+          oc -n ${NAMESPACE} delete service learningcurator --ignore-not-found
+          echo "Deploying static sunset page..."
           oc -n ${BUILD_NAMESPACE} policy add-role-to-group system:image-puller system:serviceaccounts:${NAMESPACE}
           oc -n ${NAMESPACE} process -f openshift/sunset/sunset-template.json \
                 -p APP_NAME=${APP} \
@@ -156,7 +161,8 @@ jobs:
           echo "Listing pods.."
           oc get pods|grep ${APP}
           export ROUTE="$(oc get route ${APP} -o jsonpath='{.spec.host}')"
-          echo "${APP} is exposed at 'https://'${ROUTE}"
+          echo "${APP} is exposed at https://${ROUTE}"
+
 
   # Deploy App images in Dev
   deployDevArchived:
