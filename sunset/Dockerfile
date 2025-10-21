@@ -1,7 +1,10 @@
 FROM nginx:alpine
 
-# Copy the HTML file to nginx's default public directory
+# Copy static assets to nginx's default public directory
 COPY index.html /usr/share/nginx/html/index.html
+COPY css /usr/share/nginx/html/css
+COPY fonts /usr/share/nginx/html/fonts
+COPY img /usr/share/nginx/html/img
 
 # Create a simple nginx config that serves the page on port 8080
 RUN echo 'server { \
