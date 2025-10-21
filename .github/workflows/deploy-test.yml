@@ -1,6 +1,8 @@
 # Deploy Sunset Page to Test Namespace
 # Builds and deploys a simple static HTML sunset page to the OpenShift test environment.
 name: Deploy Sunset to Test
+permissions:
+  contents: read
 
 on:
   # Trigger manually via GitHub Actions UI or on push to sunset branch
