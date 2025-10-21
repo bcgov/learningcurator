@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>We've Moved | Learning Curator</title>
+    <link href="./css/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+</head>
+<body class="bg-slate-50 font-BCSans dark:bg-slate-900">
+<a href="#mainContent" class="sr-only focus:not-sr-only"><span class="p-3">Skip to Content</span></a>
+<div class="flex flex-col max-w-7xl mx-auto min-h-screen justify-between">
+    <div class="flex flex-col md:flex-row grow">
+        <div @click.away="open = false" class="flex flex-col shrink-0 justify-between w-full md:w-60 text-slate-700 bg-sagegreen" x-data="{ open: false }">
+            <div class="sticky top-0">
+                <div class="shrink-0 px-8 py-5 flex flex-row items-center justify-between h-16" role="banner">
+                    <a class="leading-3 text-xl tracking-widest text-slate-900 uppercase rounded-lg focus:outline-none focus:shadow-outline hover:no-underline"
+                       href="#mainContent">
+                        <span class="text-xs">Learning</span>
+                        <br>
+                        <span class="text-darkblue">Curator</span>
+                    </a>
+                    <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open" aria-label="Menu Toggle">
+                        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+                            <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1Zm0 5a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1Zm6 5a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2h-6a1 1 0 0 1-1-1Z" clip-rule="evenodd"></path>
+                            <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 0 1 1.414 0L10 8.586l4.293-4.293a1 1 0 0 1 1.414 1.414L11.414 10l4.293 4.293a1 1 0 0 1-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 0 1-1.414-1.414L8.586 10 4.293 5.707a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <main class="bg-white w-full" id="mainContent">
+            <section class="px-8 py-10" id="pathways">
+                <h1 class="text-3xl font-semibold text-darkblue mb-5">Learning Curator</h1>
+                <div id="pathway-list" class="max-w-4xl">
+                    <div class="md:flex md:items-center md:justify-between">
+                        <div>
+                            <h2 class="text-2xl font-semibold text-slate-900">What are Curated Pathways?</h2>
+                            <p class="mt-2 text-slate-600"></p>Curated Pathways step learners through learning from a collection of 
+                            readings, courses, activities and media chosen by BC Public Service subject-matter experts.
+                            These curators provide you with guidance along the way.</p>
+                            <h2 class="text-2xl font-semibold text-slate-900">Where do I find Curated Pathways?</h2>
+                            <p class="mt-2 text-slate-600"></p>You can now access your Curated Pathways for Equity, Diversity and Inclusion, 
+                            Indigenous Learning and Respectful Workplace through the LearningHUB, and register for them on the PSA Learning System. 
+                            Your pathway completion can now be connected to your learning record.</p>
+                            <div class="bg-sagegreen p-5 rounded-lg my-6">
+                                <strong>This web page is moving. Please change your bookmarks! Beginning [insert date], this page will redirect 
+                                    to the collection of curated pathways on the LearningHUB.</strong>
+                            </div>
+                            <p class="mb-5">
+                                <strong><a class="underline" style="font-size: 1.3em;" href="https://corporatelearning.gww.gov.bc.ca/learninghub/filter/?keyword=&delivery_method%5B%5D=curated-pathway">
+                                    Visit the LearningHUB now for a full list of curated pathways.
+                                </a></strong>
+                            </p>
+
+                            <h2 class="text-2xl font-semibold text-slate-900">I was following a pathway on this site. What do I do now?</h2>
+                            <p class="mt-2 text-slate-600">If you were following a curated pathway on this web page, you will need to register for your curated pathway and continue the pathway in its new home. Visit the LearningHUB now, find your pathway, and register for it.</p>
+                            <p class="mt-2 text-slate-600">When you are finished your pathway, you will be able to be marked complete on your learning record in the PSA Learning System.</p>
+
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <label for="search" class="block text-sm font-medium text-slate-700">Search pathways</label>
+                        <input type="text" id="search" class="search mt-2 w-full rounded-md border border-slate-300 bg-white px-4 py-3 text-base text-slate-900 shadow-sm focus:border-darkblue focus:outline-none focus:ring-2 focus:ring-darkblue/40" placeholder="Search by pathway name or topic...">
+                    </div>
+
+                    <div class="mt-8 overflow-hidden rounded-xl border border-slate-200 shadow-sm">
+                        <table class="min-w-full divide-y divide-slate-200">
+                            <thead class="bg-slate-100">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-600">
+                                        <button class="sort flex items-center gap-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-600" data-sort="pathway">
+                                            Pathway Name
+                                            <span aria-hidden="true">↕</span>
+                                        </button>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-600">
+                                        <button class="sort flex items-center gap-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-600" data-sort="topic">
+                                            Topic
+                                            <span aria-hidden="true">↕</span>
+                                        </button>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="list divide-y divide-slate-200 bg-white">
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="pathway px-6 py-4 font-semibold text-darkblue">
+                                        <a href="https://corporatelearning.gww.gov.bc.ca/learninghub/course/anti-racism-in-the-bc-public-service/" class="hover:underline" target="_blank" rel="noopener noreferrer">Anti-Racism in the BC Public Service</a>
+                                    </td>
+                                    <td class="topic px-6 py-4 text-slate-700">Respectful Workplace</td>
+                                </tr>
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="pathway px-6 py-4 font-semibold text-darkblue">
+                                        <a href="https://corporatelearning.gww.gov.bc.ca/learninghub/course/respectful-workplace/" class="hover:underline" target="_blank" rel="noopener noreferrer">Respectful Workplace</a>
+                                    </td>
+                                    <td class="topic px-6 py-4 text-slate-700">Respectful Workplace</td>
+                                </tr>
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="pathway px-6 py-4 font-semibold text-darkblue">
+                                        <a href="" class="hover:underline" target="_blank" rel="noopener noreferrer">Remove Barriers to Shift Culture</a>
+                                    </td>
+                                    <td class="topic px-6 py-4 text-slate-700">Equity, Diversity and Inclusion</td>
+                                </tr>
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="pathway px-6 py-4 font-semibold text-darkblue">
+                                        <a href="#" class="hover:underline" target="_blank" rel="noopener noreferrer">Understand Barriers to Improve Access</a>
+                                    </td>
+                                    <td class="topic px-6 py-4 text-slate-700">Equity, Diversity and Inclusion</td>
+                                </tr>
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="pathway px-6 py-4 font-semibold text-darkblue">
+                                        <a href="https://corporatelearning.gww.gov.bc.ca/learninghub/course/foster-inclusion-in-your-workplace/" class="hover:underline" target="_blank" rel="noopener noreferrer">Foster Inclusion in your Workplace</a>
+                                    </td>
+                                    <td class="topic px-6 py-4 text-slate-700">Equity, Diversity and Inclusion</td>
+                                </tr>
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="pathway px-6 py-4 font-semibold text-darkblue">
+                                        <a href="#" class="hover:underline" target="_blank" rel="noopener noreferrer">What is Workplace Inclusion?</a>
+                                    </td>
+                                    <td class="topic px-6 py-4 text-slate-700">Equity, Diversity and Inclusion</td>
+                                </tr>
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="pathway px-6 py-4 font-semibold text-darkblue">
+                                        <a href="#" class="hover:underline" target="_blank" rel="noopener noreferrer">Hiring for Diversity</a>
+                                    </td>
+                                    <td class="topic px-6 py-4 text-slate-700">Equity, Diversity and Inclusion</td>
+                                </tr>
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="pathway px-6 py-4 font-semibold text-darkblue">
+                                        <a href="#" class="hover:underline" target="_blank" rel="noopener noreferrer">Basics of Diversity in the BCPS</a>
+                                    </td>
+                                    <td class="topic px-6 py-4 text-slate-700">Equity, Diversity and Inclusion</td>
+                                </tr>
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="pathway px-6 py-4 font-semibold text-darkblue">
+                                        <a href="#" class="hover:underline" target="_blank" rel="noopener noreferrer">Pathway to Change Leadership</a>
+                                    </td>
+                                    <td class="topic px-6 py-4 text-slate-700">House of Indigenous Learning</td>
+                                </tr>
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="pathway px-6 py-4 font-semibold text-darkblue">
+                                        <a href="https://corporatelearning.gww.gov.bc.ca/learninghub/course/introduction-to-the-bc-declaration-on-the-rights-of-indigenous-peoples-act/" class="hover:underline" target="_blank" rel="noopener noreferrer">Introduction to the BC Declaration on the Rights of Indigenous Peoples Act</a>
+                                    </td>
+                                    <td class="topic px-6 py-4 text-slate-700">House of Indigenous Learning</td>
+                                </tr>
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="pathway px-6 py-4 font-semibold text-darkblue">
+                                        <a href="https://corporatelearning.gww.gov.bc.ca/learninghub/course/pathway-to-sustained-learning-and-development/" class="hover:underline" target="_blank" rel="noopener noreferrer">Pathway to Sustained Learning and Development</a>
+                                    </td>
+                                    <td class="topic px-6 py-4 text-slate-700">House of Indigenous Learning</td>
+                                </tr>
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="pathway px-6 py-4 font-semibold text-darkblue">
+                                        <a href="https://corporatelearning.gww.gov.bc.ca/learninghub/course/pathway-to-self-discovery-and-awareness/" class="hover:underline" target="_blank" rel="noopener noreferrer">Pathway to Self Discovery and Awareness</a>
+                                    </td>
+                                    <td class="topic px-6 py-4 text-slate-700">House of Indigenous Learning</td>
+                                </tr>
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="pathway px-6 py-4 font-semibold text-darkblue">
+                                        <a href="#" class="hover:underline" target="_blank" rel="noopener noreferrer">Cultural Agility - Building Trusting Relationships and Cultural Safety</a>
+                                    </td>
+                                    <td class="topic px-6 py-4 text-slate-700">House of Indigenous Learning</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p class="mt-4 text-sm text-slate-500">Tip: click a column heading to sort the pathways.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="md:grid md:gap-4 md:grid-cols-3 p-6 bg-slate-200">
+        <div class="p-6 my-3 md:my-0 bg-slate-100 rounded-lg text-slate-600">
+            The BC Public Service acknowledges the territories of First Nations around B.C. and is grateful to carry out our work on these lands. We acknowledge the rights, interests, priorities and concerns of all Indigenous Peoples (First Nations, Métis and Inuit), respecting and acknowledging their distinct cultures, histories, rights, laws and governments.
+        </div>
+        <div class="p-6 my-3 md:my-0 bg-slate-100 rounded-lg text-slate-600">
+            <div class="text-lg">Your one-stop-shop for learning that is available to public service employees from any ministry:</div>
+            <a class="inline-block my-3 px-5 py-2 rounded-lg text-white bg-slate-700 hover:no-underline hover:bg-slate-800" href="https://learningcentre.gww.gov.bc.ca/learninghub/" target="_blank" rel="noopener">
+                Visit the Learning<span class="text-yellow-500 font-bold">HUB</span>
+            </a>
+        </div>
+        <div class="p-3 my-3 md:my-0 bg-slate-100 rounded-lg text-slate-700">
+            <img class="block" src="./img/wiw.svg" height="110" width="380" alt="Where Ideas Work logo">
+            <details class="leading-snug my-4 mx-2">
+                <summary class="text-darkblue text-sm hover:underline hover:cursor-pointer">Privacy Statement</summary>
+                <div class="text-sm my-3">
+                    Your personal information is collected by the BC Public Service Agency in accordance with section 26(c) of the Freedom of Information and Protection of Privacy Act for the purposes of managing and administering employee development and training. If you have any questions, submit an AskMyHR request at www.gov.bc.ca/myhr/contact or call 250-952-6000.
+                </div>
+            </details>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<script>
+    const options = { valueNames: ['pathway', 'topic'] };
+    const pathwayList = new List('pathway-list', options);
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.x.x/dist/alpine-clipboard.js"></script>
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</body>
+</html>

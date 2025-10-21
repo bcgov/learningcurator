@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'BCSans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap; /* or block, swap, fallback, optional */
+    src: local('BCSans'),
+         url('/fonts/BCSans-Regular.woff2') format('woff2');
+    unicode-range: U+000-5FF; /* Latin glyphs */
+  }
+
+
+:target {
+    scroll-margin-top: 6em;
+}
+
+[x-cloak] { display: none !important; }
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    line-height: 1.5;
+    margin-bottom: 1em;
+}
+li {
+    list-style-type: disc;
+    margin-left: 1em;
+}
+blockquote {
+    border-left: 4px solid #333;
+    margin: 1em;
+    padding-left: 1em;
+}
+.autop>p {
+    margin-bottom: 0.5em;
+}
+
+#contentwarning a {
+    text-decoration: underline !important;
+}
+#contentwarning h1 {
+    font-size: 1.3em;
+}
+#contentwarning h2 {
+    font-size: 1.2em;
+}
+#contentwarning h3 {
+    font-size: 1.1em;
+}
+@layer components {
+    .form-field {
+        @apply block w-full px-3 py-1 m-0 border-solid border-2 border-slate-200 bg-slate-100/80 rounded-lg;
+    }
+}
+
+@layer utilities {
+    .point-left {
+        clip-path: polygon(5% 0%, 100% 0%, 100% 100%, 5% 100%, 0% 50%);
+    }
+}
+
+.pagfirst,
+.pagnextactive,
+.pagprevactive,
+.paglast {
+    @apply inline-block py-2 px-4 m-0 bg-slate-100 hover:bg-gray-100 hover:no-underline rounded-lg;
+}
+
+details summary::-webkit-details-marker,
+details[open] summary::-webkit-details-marker {
+	display:none;
+}
+details summary:hover {
+    cursor: pointer;
+}
