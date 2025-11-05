@@ -1,0 +1,137 @@
+# Deploy Sunset Page to Production
+# Deploys the sunset page to the OpenShift production environment.
+name: Deploy Sunset to Production
+permissions:
+  contents: read
+
+on:
+  # Manual trigger only for production deployments
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "deploy-to-production" to confirm'
+        required: true
+        default: ''
+
+jobs:
+  # Print variables for logging and debugging purposes
+  checkEnv:
+    name: Check Env variables
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Env Vars
+        run: |
+          echo Git Base Ref: ${{ github.base_ref }}
+          echo Git Build ID: ${{ github.event.number }}
+          echo Git Pull Request Ref: ${{ github.event.pull_request.head.sha }}
+          echo Confirmation: ${{ github.event.inputs.confirm }}
+
+  # Verify confirmation before proceeding
+  verifyConfirmation:
+    name: Verify Deployment Confirmation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check confirmation
+        run: |
+          if [ "${{ github.event.inputs.confirm }}" != "deploy-to-production" ]; then
+            echo "Error: Confirmation text does not match. Deployment cancelled."
+            exit 1
+          fi
+          echo "Confirmation verified. Proceeding with production deployment."
+
+  # Build the static sunset page
+  build:
+    name: Build Sunset Page
+    runs-on: ubuntu-latest
+    needs:
+      - verifyConfirmation
+    env:
+      BUILD_ID: ${{ github.event.number }}
+      BUILD_NAMESPACE: a58ce1-tools
+      BRANCH: ${{ github.ref_name }}
+      BUILD_TAG: latest
+      APP: learningcurator-sunset
+    steps:
+      - name: Print env
+        run: |
+          echo BUILD ID: $BUILD_ID
+          echo BUILD NAMESPACE: $BUILD_NAMESPACE
+          echo BRANCH: $BRANCH
+      - name: Checkout Target Branch
+        uses: actions/checkout@v4
+      - name: Install oc
+        uses: redhat-actions/oc-installer@v1
+        with:
+          oc_version: 'latest'
+      - name: Log in to OpenShift
+        run: |
+          oc login --token=${{ secrets.SA_TOKEN }} --server=https://api.silver.devops.gov.bc.ca:6443
+      - name: Build Sunset Page image
+        working-directory: "./openshift/sunset"
+        run: |
+          test -n "${BRANCH}"
+          test -n "${BUILD_NAMESPACE}"
+          echo "BUILDING ${APP} with tag: ${BUILD_TAG}"
+          oc -n ${BUILD_NAMESPACE} process -f docker-build.yml \
+            -p TAG=${BUILD_TAG} -p SOURCE_REPOSITORY_REF=${BRANCH} \
+            -p SOURCE_CONTEXT_DIR=sunset \
+            -p NAME=${APP} | oc -n ${BUILD_NAMESPACE} apply -f -
+          oc -n ${BUILD_NAMESPACE} start-build bc/${APP} --no-cache --wait
+
+  # Deploy Sunset Page to Production environment
+  deployProd:
+    name: Deploy Sunset Page to Production environment
+    runs-on: ubuntu-latest
+    env:
+      BUILD_ID: ${{ github.event.number }}
+      NAMESPACE: a58ce1-prod
+      BUILD_NAMESPACE: a58ce1-tools
+      BRANCH: ${{ github.ref_name }}
+      APP: learningcurator-sunset
+      APP_HOST: learningcurator.gov.bc.ca
+    needs:
+      - build
+    steps:
+      - name: Checkout Target Branch
+        uses: actions/checkout@v4
+      - name: Install oc
+        uses: redhat-actions/oc-installer@v1
+        with:
+          oc_version: 'latest'
+      - name: Log in to OpenShift
+        run: |
+          oc login --token=${{ secrets.SA_TOKEN }} --server=https://api.silver.devops.gov.bc.ca:6443
+      - name: Deploy Sunset Page
+        run: |
+          test -n "${NAMESPACE}"
+          test -n "${BUILD_NAMESPACE}"
+          test -n "${BRANCH}"
+          echo "Current namespace is ${NAMESPACE}"
+          echo "Archiving legacy learningcurator deployment (if present)..."
+          oc -n ${NAMESPACE} scale dc/learningcurator --replicas=0 || true
+          oc -n ${NAMESPACE} delete route learningcurator --ignore-not-found
+          oc -n ${NAMESPACE} delete service learningcurator --ignore-not-found
+          echo "Deploying static sunset page..."
+          oc -n ${BUILD_NAMESPACE} policy add-role-to-group system:image-puller system:serviceaccounts:${NAMESPACE}
+          oc -n ${NAMESPACE} process -f openshift/sunset/sunset-template.json \
+                -p APP_NAME=${APP} \
+                -p SITE_URL=${APP_HOST} \
+                -p PROJECT_NAMESPACE=${NAMESPACE} \
+                -p BUILD_NAMESPACE=${BUILD_NAMESPACE} \
+                -p IMAGE_STREAM_TAG="${APP}:latest" | \
+          oc -n ${NAMESPACE} apply -f -
+          sleep 30
+          oc rollout latest dc/${APP} -n ${NAMESPACE}
+          # Check deployment rollout status every 10 seconds (max 10 minutes) until complete.
+          ATTEMPTS=0
+          ROLLOUT_STATUS_CMD="oc rollout status dc/${APP} -n ${NAMESPACE}"
+          until $ROLLOUT_STATUS_CMD || [ $ATTEMPTS -eq 60 ]; do
+            $ROLLOUT_STATUS_CMD
+            ATTEMPTS=$((ATTEMPTS + 1))
+            sleep 10
+          done
+          oc project ${NAMESPACE}
+          echo "Listing pods.."
+          oc get pods|grep ${APP}
+          export ROUTE="$(oc get route ${APP} -o jsonpath='{.spec.host}')"
+          echo "${APP} is exposed at https://${ROUTE}"
