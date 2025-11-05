@@ -35,7 +35,7 @@ export BRANCH=master
 export NAMESPACE=a58ce1-prod
 export BUILD_NAMESPACE=a58ce1-tools
 export APP=learningcurator-sunset
-export APP_HOST=learningcurator.gov.bc.ca
+export APP_HOST=learningcurator.gww.gov.bc.ca
 export BRANCH=master
 ```
 
