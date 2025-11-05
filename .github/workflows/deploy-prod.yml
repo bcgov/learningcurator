@@ -88,7 +88,7 @@ jobs:
       BUILD_NAMESPACE: a58ce1-tools
       BRANCH: ${{ github.ref_name }}
       APP: learningcurator-sunset
-      APP_HOST: learningcurator.gov.bc.ca
+      APP_HOST: learningcurator.gww.gov.bc.ca
     needs:
       - build
     steps:
@@ -107,21 +107,31 @@ jobs:
           test -n "${BUILD_NAMESPACE}"
           test -n "${BRANCH}"
           echo "Current namespace is ${NAMESPACE}"
-          echo "Archiving legacy learningcurator deployment (if present)..."
-          oc -n ${NAMESPACE} scale dc/learningcurator --replicas=0 || true
-          oc -n ${NAMESPACE} delete route learningcurator --ignore-not-found
-          oc -n ${NAMESPACE} delete service learningcurator --ignore-not-found
-          echo "Deploying static sunset page..."
-          oc -n ${BUILD_NAMESPACE} policy add-role-to-group system:image-puller system:serviceaccounts:${NAMESPACE}
-          oc -n ${NAMESPACE} process -f openshift/sunset/sunset-template.json \
-                -p APP_NAME=${APP} \
-                -p SITE_URL=${APP_HOST} \
-                -p PROJECT_NAMESPACE=${NAMESPACE} \
-                -p BUILD_NAMESPACE=${BUILD_NAMESPACE} \
-                -p IMAGE_STREAM_TAG="${APP}:latest" | \
-          oc -n ${NAMESPACE} apply -f -
-          sleep 30
-          oc rollout latest dc/${APP} -n ${NAMESPACE}
+
+          # Check if this is initial deployment or update
+          if oc -n ${NAMESPACE} get dc/${APP} >/dev/null 2>&1; then
+            echo "Sunset deployment already exists - performing update without touching route..."
+            # Just trigger a new rollout with the updated image
+            oc rollout latest dc/${APP} -n ${NAMESPACE}
+          else
+            echo "Initial deployment - setting up everything..."
+            echo "Archiving legacy learningcurator deployment (if present)..."
+            oc -n ${NAMESPACE} scale dc/learningcurator --replicas=0 || true
+            oc -n ${NAMESPACE} delete route learningcurator --ignore-not-found
+            oc -n ${NAMESPACE} delete service learningcurator --ignore-not-found
+            echo "Deploying static sunset page..."
+            oc -n ${BUILD_NAMESPACE} policy add-role-to-group system:image-puller system:serviceaccounts:${NAMESPACE}
+            oc -n ${NAMESPACE} process -f openshift/sunset/sunset-template.json \
+                  -p APP_NAME=${APP} \
+                  -p SITE_URL=${APP_HOST} \
+                  -p PROJECT_NAMESPACE=${NAMESPACE} \
+                  -p BUILD_NAMESPACE=${BUILD_NAMESPACE} \
+                  -p IMAGE_STREAM_TAG="${APP}:latest" | \
+            oc -n ${NAMESPACE} apply -f -
+            sleep 30
+            oc rollout latest dc/${APP} -n ${NAMESPACE}
+          fi
+
           # Check deployment rollout status every 10 seconds (max 10 minutes) until complete.
           ATTEMPTS=0
           ROLLOUT_STATUS_CMD="oc rollout status dc/${APP} -n ${NAMESPACE}"
