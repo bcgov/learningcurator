@@ -99,6 +99,7 @@ oc -n ${NAMESPACE} delete service learningcurator --ignore-not-found
 # Shut down legacy MySQL (ignore errors if the statefulset is already gone)
 oc -n ${NAMESPACE} scale statefulset/mysql --replicas=0 || true
 oc -n ${NAMESPACE} scale dc/mysql --replicas=0 || true
+oc -n ${NAMESPACE} scale deployment/mysql --replicas=0 || true
 oc -n ${NAMESPACE} delete service mysql --ignore-not-found
 ```
 
@@ -173,6 +174,7 @@ oc -n ${NAMESPACE} delete route learningcurator --ignore-not-found && \
 oc -n ${NAMESPACE} delete service learningcurator --ignore-not-found && \
 oc -n ${NAMESPACE} scale statefulset/mysql --replicas=0 || true && \
 oc -n ${NAMESPACE} scale dc/mysql --replicas=0 || true && \
+oc -n ${NAMESPACE} scale deployment/mysql --replicas=0 || true && \
 oc -n ${NAMESPACE} delete service mysql --ignore-not-found && \
 echo "Deploying static sunset page..." && \
 oc -n ${BUILD_NAMESPACE} policy add-role-to-group system:image-puller system:serviceaccounts:${NAMESPACE} && \

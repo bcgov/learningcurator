@@ -114,6 +114,7 @@ jobs:
           echo "Ensuring legacy MySQL workload is stopped..."
           oc -n ${NAMESPACE} scale statefulset/mysql --replicas=0 || true
           oc -n ${NAMESPACE} scale dc/mysql --replicas=0 || true
+          oc -n ${NAMESPACE} scale deployment/mysql --replicas=0 || true
           oc -n ${NAMESPACE} delete service mysql --ignore-not-found
 
           # Check if this is initial deployment or update
