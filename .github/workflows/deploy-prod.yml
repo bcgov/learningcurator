@@ -107,6 +107,14 @@ jobs:
           test -n "${BUILD_NAMESPACE}"
           test -n "${BRANCH}"
           echo "Current namespace is ${NAMESPACE}"
+          echo "Ensuring legacy learningcurator deployment is scaled down..."
+          oc -n ${NAMESPACE} scale dc/learningcurator --replicas=0 || true
+          oc -n ${NAMESPACE} delete route learningcurator --ignore-not-found
+          oc -n ${NAMESPACE} delete service learningcurator --ignore-not-found
+          echo "Ensuring legacy MySQL workload is stopped..."
+          oc -n ${NAMESPACE} scale statefulset/mysql --replicas=0 || true
+          oc -n ${NAMESPACE} scale dc/mysql --replicas=0 || true
+          oc -n ${NAMESPACE} delete service mysql --ignore-not-found
 
           # Check if this is initial deployment or update
           if oc -n ${NAMESPACE} get dc/${APP} >/dev/null 2>&1; then
@@ -115,10 +123,6 @@ jobs:
             oc rollout latest dc/${APP} -n ${NAMESPACE}
           else
             echo "Initial deployment - setting up everything..."
-            echo "Archiving legacy learningcurator deployment (if present)..."
-            oc -n ${NAMESPACE} scale dc/learningcurator --replicas=0 || true
-            oc -n ${NAMESPACE} delete route learningcurator --ignore-not-found
-            oc -n ${NAMESPACE} delete service learningcurator --ignore-not-found
             echo "Deploying static sunset page..."
             oc -n ${BUILD_NAMESPACE} policy add-role-to-group system:image-puller system:serviceaccounts:${NAMESPACE}
             oc -n ${NAMESPACE} process -f openshift/sunset/sunset-template.json \

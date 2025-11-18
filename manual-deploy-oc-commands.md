@@ -76,9 +76,9 @@ oc -n ${BUILD_NAMESPACE} start-build bc/${APP} --no-cache --wait
 cd ../..
 ```
 
-### 3. Archive the Legacy Learning Curator Deployment
+### 3. Archive the Legacy Learning Curator Deployment and Database
 
-This step scales down the old `learningcurator` deployment and removes its route and service:
+This step scales down the old `learningcurator` deployment, turns off the backing MySQL pods (which used to run in a statefulset), and removes its route and service:
 
 ```bash
 # Verify environment variables are set
@@ -95,6 +95,11 @@ oc -n ${NAMESPACE} scale dc/learningcurator --replicas=0 || true
 # Delete the old route and service
 oc -n ${NAMESPACE} delete route learningcurator --ignore-not-found
 oc -n ${NAMESPACE} delete service learningcurator --ignore-not-found
+
+# Shut down legacy MySQL (ignore errors if the statefulset is already gone)
+oc -n ${NAMESPACE} scale statefulset/mysql --replicas=0 || true
+oc -n ${NAMESPACE} scale dc/mysql --replicas=0 || true
+oc -n ${NAMESPACE} delete service mysql --ignore-not-found
 ```
 
 ### 4. Deploy the Sunset Page
@@ -166,6 +171,9 @@ echo "Archiving legacy learningcurator deployment (if present)..." && \
 oc -n ${NAMESPACE} scale dc/learningcurator --replicas=0 || true && \
 oc -n ${NAMESPACE} delete route learningcurator --ignore-not-found && \
 oc -n ${NAMESPACE} delete service learningcurator --ignore-not-found && \
+oc -n ${NAMESPACE} scale statefulset/mysql --replicas=0 || true && \
+oc -n ${NAMESPACE} scale dc/mysql --replicas=0 || true && \
+oc -n ${NAMESPACE} delete service mysql --ignore-not-found && \
 echo "Deploying static sunset page..." && \
 oc -n ${BUILD_NAMESPACE} policy add-role-to-group system:image-puller system:serviceaccounts:${NAMESPACE} && \
 oc -n ${NAMESPACE} process -f openshift/sunset/sunset-template.json \

@@ -1,4 +1,7 @@
-FROM nginx:alpine
+FROM nginx:1.27.2-alpine
+
+# Pull in patched pcre2 to address CVE-2025-58050
+RUN apk upgrade --no-cache pcre2
 
 # Copy static assets to nginx's default public directory
 COPY index.html /usr/share/nginx/html/index.html

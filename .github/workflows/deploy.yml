@@ -23,54 +23,6 @@ jobs:
           echo Git Pull Request Ref: ${{ github.event.pull_request.head.sha }}
           echo OC CLI Version: $(oc version)
   
-  # #Build the app
-
-  build:
-    name: Build APP
-    runs-on: ubuntu-latest
-    # if: ${{ github.event.pull_request.merged == true}}
-    env:
-      BUILD_ID: ${{ github.event.number }}
-      BUILD_NAMESPACE: a58ce1-tools
-      BRANCH: master
-      BUILD_TAG: latest
-      APP: learningcurator
-      #KC_AUTH_URL: https://dev.oidc.gov.bc.ca/auth/
-    steps:
-      # Checkout the PR branch
-      - name: Print env
-        run: |
-          echo BUILD ID: $BUILD_ID
-          echo BUILD NAMESPACE: $BUILD_NAMESPACE
-          echo BRANCH: $BRANCH
-      - name: Checkout Target Branch
-        uses: actions/checkout@v4
-      - name: Install oc
-        uses: redhat-actions/oc-installer@v1
-        with:
-          oc_version: 'latest'
-      # Log in to OpenShift.
-      # Note: The secrets needed to log in are NOT available if the PR comes from a FORK.
-      # PR's must originate from a branch off the original repo or else all openshift `oc` commands will fail.
-      - name: Log in to OpenShift
-        run: |
-          oc login --token=${{ secrets.SA_TOKEN }} --server=https://api.silver.devops.gov.bc.ca:6443
-      # Build the app images
-      - name: Build App images
-        working-directory: "./openshift/app"
-        run: |
-          test -n "${BRANCH}"
-          test -n "${BUILD_NAMESPACE}"
-          echo "BUILIDING ${APP} with tag: ${BUILD_TAG}"
-                oc -n ${BUILD_NAMESPACE} process -f docker-build.yml \
-                -p TAG=${BUILD_TAG} -p SOURCE_REPOSITORY_REF=${BRANCH} \
-                -p BASE_IMAGE_NAME="php" -p BASE_IMAGE_TAG="7.4-apache" \
-                -p BASE_IMAGE_REPO="" \
-                -p GITHUB_AUTH_TOKEN=${{secrets.AUTH_TOKEN}} \
-                -p SOURCE_CONTEXT_DIR=. \
-                -p NAME=${APP} | oc -n ${BUILD_NAMESPACE} apply -f -
-          oc -n ${BUILD_NAMESPACE} start-build bc/${APP} --no-cache --wait
-
   buildSunset:
     name: Build Sunset Page
     runs-on: ubuntu-latest
@@ -139,6 +91,10 @@ jobs:
           oc -n ${NAMESPACE} scale dc/learningcurator --replicas=0 || true
           oc -n ${NAMESPACE} delete route learningcurator --ignore-not-found
           oc -n ${NAMESPACE} delete service learningcurator --ignore-not-found
+          echo "Ensuring legacy MySQL workload is stopped..."
+          oc -n ${NAMESPACE} scale statefulset/mysql --replicas=0 || true
+          oc -n ${NAMESPACE} scale dc/mysql --replicas=0 || true
+          oc -n ${NAMESPACE} delete service mysql --ignore-not-found
           echo "Deploying static sunset page..."
           oc -n ${BUILD_NAMESPACE} policy add-role-to-group system:image-puller system:serviceaccounts:${NAMESPACE}
           oc -n ${NAMESPACE} process -f openshift/sunset/sunset-template.json \
@@ -164,86 +120,63 @@ jobs:
           echo "${APP} is exposed at https://${ROUTE}"
 
 
-  # Deploy App images in Dev
-  deployDevArchived:
-    name: Deploy APP to Dev environment (archived)
+  deploySunsetTest:
+    name: Deploy Sunset Page to Test environment
     runs-on: ubuntu-latest
-    if: ${{ false }}
     env:
       BUILD_ID: ${{ github.event.number }}
-      NAMESPACE: a58ce1-dev
+      NAMESPACE: a58ce1-test
       BUILD_NAMESPACE: a58ce1-tools
-      BRANCH: main
-      APP: learningcurator
-      APP_HOST: learningcurator-a58ce1-dev.apps.silver.devops.gov.bc.ca
+      BRANCH: ${{ github.ref_name }}
+      APP: learningcurator-sunset
+      APP_HOST: learningcurator-sunset-a58ce1-test.apps.silver.devops.gov.bc.ca
     needs:
-      - build
+      - deploySunsetDev
     steps:
-       # - name: Print env
-       #   run: |
-       #     echo BUILD ID: $BUILD_ID
-       #     echo BUILD NAMESPACE: $BUILD_NAMESPACE
-       #     echo BRANCH: $BRANCH
       - name: Checkout Target Branch
         uses: actions/checkout@v4
       - name: Install oc
         uses: redhat-actions/oc-installer@v1
         with:
           oc_version: 'latest'
-
-       # Log in to OpenShift.
-       # Note: The secrets needed to log in are NOT available if the PR comes from a FORK.
-       # PR's must originate from a branch off the original repo or else all openshift `oc` commands will fail.
       - name: Log in to OpenShift
         run: |
           oc login --token=${{ secrets.SA_TOKEN }} --server=https://api.silver.devops.gov.bc.ca:6443
-      - name: Deploy APP
+      - name: Deploy Sunset Page
         run: |
           test -n "${NAMESPACE}"
           test -n "${BUILD_NAMESPACE}"
           test -n "${BRANCH}"
           echo "Current namespace is ${NAMESPACE}"
+          echo "Archiving legacy learningcurator deployment (if present)..."
+          oc -n ${NAMESPACE} scale dc/learningcurator --replicas=0 || true
+          oc -n ${NAMESPACE} delete route learningcurator --ignore-not-found
+          oc -n ${NAMESPACE} delete service learningcurator --ignore-not-found
+          echo "Ensuring legacy MySQL workload is stopped..."
+          oc -n ${NAMESPACE} scale statefulset/mysql --replicas=0 || true
+          oc -n ${NAMESPACE} scale dc/mysql --replicas=0 || true
+          oc -n ${NAMESPACE} delete service mysql --ignore-not-found
+          echo "Deploying static sunset page..."
           oc -n ${BUILD_NAMESPACE} policy add-role-to-group system:image-puller system:serviceaccounts:${NAMESPACE}
-          oc -n ${NAMESPACE} process -f openshift/app/learningcurator-persistent-template.json \
+          oc -n ${NAMESPACE} process -f openshift/sunset/sunset-template.json \
                 -p APP_NAME=${APP} \
                 -p SITE_URL=${APP_HOST} \
-                -p AZURE_AD_CLIENT_ID=${{ secrets.AZURE_AD_CLIENT_ID }} \
-                -p AZURE_AD_CLIENT_SECRET=${{ secrets.AZURE_AD_CLIENT_SECRET }} \
-                -p CHES_CRED=${{ secrets.CHES_CRED }} \
-                -p DB_HOST=mysql-0.mysql \
-                -p DB_SECONDARY_NAME=mysql-read \
-                -p LEARNINGCURATOR_MEMORY_LIMIT=1Gi \
-                -p PROJECT_NAMESPACE=a58ce1-dev \
-                -p DB_SERVICE_NAME=mysql-0.mysql \
-                -p LEARNINGCURATOR_VOLUME_CAPACITY=10Gi \
-                -p DB_NAME=learningcurator \
-                -p DB_USER=learningcurator \
-                -p HTTP_PORT=8080 \
-                -p DB_PORT=3306 \
-                -p APACHE_DOCUMENT_ROOT="/var/www/html" \
-                -p SITE_NAME=LearningCurator \
-                -p DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
-                -p GIT_PROJECT=learningcurator \
-                -p LEARNINGCURATOR_DATA_PATH="/mnt" \
-                -p LEARNINGCURATOR_DATA_MOUNT_PATH="/mnt" \
-                -p BUILD_NAMESPACE="a58ce1-tools" \
-                -p IMAGE_STREAM_TAG="learningcurator:latest" \
-                -p GIT_URL="https://github.com/bcgov/learningcurator.git" \
-                -p GIT_TAG=openshift \
-                -p GITHUB_AUTH_TOKEN="${{ secrets.AUTH_TOKEN }}" | \
+                -p PROJECT_NAMESPACE=${NAMESPACE} \
+                -p BUILD_NAMESPACE=${BUILD_NAMESPACE} \
+                -p IMAGE_STREAM_TAG="${APP}:latest" | \
           oc -n ${NAMESPACE} apply -f -
           sleep 30
-          oc rollout latest dc/learningcurator -n ${NAMESPACE}
+          oc rollout latest dc/${APP} -n ${NAMESPACE}
           # Check deployment rollout status every 10 seconds (max 10 minutes) until complete.
           ATTEMPTS=0
-          ROLLOUT_STATUS_CMD="oc rollout status dc/learningcurator -n ${NAMESPACE}"
+          ROLLOUT_STATUS_CMD="oc rollout status dc/${APP} -n ${NAMESPACE}"
           until $ROLLOUT_STATUS_CMD || [ $ATTEMPTS -eq 60 ]; do
             $ROLLOUT_STATUS_CMD
-            ATTEMPTS=$((attempts + 1))
+            ATTEMPTS=$((ATTEMPTS + 1))
             sleep 10
           done
-          oc project ${NAMESPACE}     
+          oc project ${NAMESPACE}
           echo "Listing pods.."
-          oc get pods|grep learningcurator
-          export ROUTE="$(oc get route learningcurator -o jsonpath='{.spec.host}')"
-          echo "${APP} is exposed at 'https://'${ROUTE}" 
+          oc get pods|grep ${APP}
+          export ROUTE="$(oc get route ${APP} -o jsonpath='{.spec.host}')"
+          echo "${APP} is exposed at https://${ROUTE}"
